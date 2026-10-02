@@ -22,7 +22,7 @@ copying `research_full\` from the backup drive on top restores the data.
 |---|---|
 | Raw run outputs (CSV/NPZ/H5/BIN/PT > 1 MB, zips, videos) - listed per project in `DATA_MANIFEST.csv` | `D:\NMSU_backups\laptop_2026-10-01\research_full\` |
 | ACC2027 paper snapshots v7-v11, advisor share bundles, review evidence copies | same, under `papers\ACC2027_Gate_Residual_Control\` |
-| ACC2027 git history (single checkpoint commit `67e7e03`, 60 GB with data) | `D:\NMSU_backups\laptop_2026-10-01\papers_teaching_complete\` |
+| ACC2027 git history (single checkpoint commit `67e7e03`, 60 GB with data) and every `.venv` under `papers\` | `D:\NMSU_backups\laptop_2026-10-01\research_full\papers\` (papers are backed up complete) |
 | Presentations (`.pptx`) | `research_full\presentations\` |
 | `.venv`, caches, third-party papers, licenses | rebuild from `environments/` and `SETUP.md` |
 
