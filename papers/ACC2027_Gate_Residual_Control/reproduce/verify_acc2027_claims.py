@@ -230,6 +230,47 @@ check("Fig. 4", "legend degrees PD/CMG per level", "16.85/7.91,4.07/2.19,0.60/0.
       ",".join(f"{deg[('pd', l)]:.2f}/{deg[('cmg', l)]:.2f}" for l in (0, 1, 2)),
       "final_robustness_gating/figures_out/ladder/x2_hard45_ladder_C.json  (make_ladder_figure.py)")
 
+# ---------------------------------------------------------------- 11. reduced CMG and latching (Sec. VI-C, Table II, abstract) [v31]
+MC = E / "cmg_mechanism_controls_2026-10-01"
+SX = NB / "results" / "strict_exact"
+CF = MC / "results" / "confirm"
+SRC_MC = "cmg_mechanism_controls_2026-10-01/results/{confirm,development}  (run_campaign.py -> analyze.py)"
+base = lambda p, m: err(SX / p / m / "classical")
+arm = lambda p, m, a: err((SX if a == "cmg" else CF) / p / m / a)
+check("VI-C reduced CMG", "strict_exact classical == final_nominal PD+ff (max rel diff < 1e-12)", "True",
+      str(max(abs(base(p, m) - q(p, m, "pdff_rho3")) / q(p, m, "pdff_rho3") for p in (X, C) for m in M) < 1e-12), SRC_MC)
+geo_arm = lambda p, a: red(gm([base(p, m) for m in M]), gm([arm(p, m, a) for m in M]))
+check("VI-C reduced CMG", "reduced CMG geo X2/CF2 (abstract, Table II)", "46.3/28.6", f"{f1(geo_arm(X, 'lpf-logistic'))}/{f1(geo_arm(C, 'lpf-logistic'))}", SRC_MC)
+for p, s_ in ((X, "78.5,35.2,45.5,-0.6,41.8"), (C, "60.1,23.0,24.6,-0.4,20.3")):
+    check("VI-C reduced CMG", f"{p} Table II row", s_, ",".join(f1(red(base(p, m), arm(p, m, "lpf-logistic"))) for m in M), SRC_MC)
+eff = lambda p, a: st.mean(summary((SX if a == "cmg" else CF) / p / m / a)["metrics"]["realized_residual_normalized_rms"] for m in M)
+check("VI-C reduced CMG", "mean effort reduced X2/CF2 vs CMG X2/CF2", "0.033/0.016 vs 0.032/0.015",
+      f"{eff(X, 'lpf-logistic'):.3f}/{eff(C, 'lpf-logistic'):.3f} vs {eff(X, 'cmg'):.3f}/{eff(C, 'cmg'):.3f}", SRC_MC)
+gap = max(abs(red(base(p, m), arm(p, m, "lpf-logistic")) - red(base(p, m), arm(p, m, "cmg"))) for p in (X, C) for m in ("roll", "yaw360", "hardstep"))
+check("VI-C reduced CMG", "max |reduced - CMG| on Roll/Yaw360/Hardstep (pp)", "1.5", f1(gap), SRC_MC)
+for a, s_ in (("cmg_G1e3", "9.0/3.6"), ("cmg_G1", "4.4/1.7"), ("latch-replay", "9.6/3.8")):
+    check("VI-C reduced CMG", f"{a} geo X2/CF2", s_, f"{f1(geo_arm(X, a))}/{f1(geo_arm(C, a))}", SRC_MC)
+dev = MC / "results" / "development"
+chi_gap = [abs(geo_arm(p, "cmg_chi0") - geo_arm(p, "cmg")) for p in (X, C)]
+chi_gap += [abs(err(dev / f"G{g}_chi0" / m) - err(dev / f"G{g}_chi1" / m)) / err(dev / f"G{g}_chi1" / m) * 100 for g in ("1e00", "1e03", "1e05") for m in ("roll", "hard45")]
+check("VI-C ablation", "chi toggle, max effect at every tested G (pp)", "0.0", f1(max(chi_gap)), SRC_MC)
+ah, gam, Gr = 50.0, 2.0, 1e5
+rpm = [0.5 * (1 + s * math.sqrt(1 - 4 / (ah * gam))) for s in (-1, 1)]
+vf = [1.0 - gam * r + math.log(r / (1 - r)) / ah for r in rpm]
+check("VI-C ablation", "gate folds v_on/v_off (Table I)", "0.888/-0.888", f"{vf[0]:.3f}/{vf[1]:.3f}", "Table I parameters, closed form")
+rel = 0
+for p in (X, C):
+    for m in M:
+        r_ = np.load(SX / p / m / "cmg" / "neural_trace_full_rate.npz")["gate"]
+        for j in range(r_.shape[1]):
+            on = np.flatnonzero(r_[:, j] > 0.5)
+            rel += int(on.size > 0 and bool(np.any(r_[on[0]:, j] < 0.5)))
+check("VI-C ablation", "gate releases after latching, ten primary runs", "0", str(rel), "neuron_basis_decisive/results/strict_exact/*/cmg/neural_trace_full_rate.npz")
+check("VI-C reduced CMG", "removed-term bounds alpha*gamma/G, c_max (1/s)", "1e-03, <2e-08",
+      f"{ah * gam / Gr:.0e}, {'<2e-08' if (120 + 30 * 2.0) / Gr ** 2 < 2e-8 else 'FAIL'}", "Table I parameters, closed form")
+a1 = np.load(SX / X / "hard45" / "constant-one" / "neural_trace_full_rate.npz")["activity"]
+check("VI-D", "constant basis is a = 1", "1", str(int(np.all(a1 == 1.0))), "neuron_basis_decisive/results/strict_exact/x2/hard45/constant-one")
+
 # ---------------------------------------------------------------- report
 out = ROOT / "reproduce"
 with (out / "claims_check.csv").open("w", newline="", encoding="utf-8") as fh:

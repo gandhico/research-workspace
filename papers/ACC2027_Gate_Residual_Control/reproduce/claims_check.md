@@ -59,3 +59,17 @@
 | 57 | VI-A | Nengo vs NumPy worst relative error over ten cases | 2.013e-06 (10) | 2.013e-06 (10) | OK | `nengo_nef_replication/results/compiled/archived_equivalence.csv  (verify_archived_equivalence.py)` |
 | 58 | VI-C ablation | PES corner (rad/s) | 9.60 | 9.60 | OK | `theory_certificate/certificate_macros.tex  (compute_local_certificate.py)` |
 | 59 | Fig. 4 | legend degrees PD/CMG per level | 16.85/7.91,4.07/2.19,0.60/0.52 | 16.85/7.91,4.07/2.19,0.60/0.52 | OK | `final_robustness_gating/figures_out/ladder/x2_hard45_ladder_C.json  (make_ladder_figure.py)` |
+| 60 | VI-C reduced CMG | strict_exact classical == final_nominal PD+ff (max rel diff < 1e-12) | True | True | OK | `cmg_mechanism_controls_2026-10-01/results/{confirm,development}  (run_campaign.py -> analyze.py)` |
+| 61 | VI-C reduced CMG | reduced CMG geo X2/CF2 (abstract, Table II) | 46.3/28.6 | 46.3/28.6 | OK | `cmg_mechanism_controls_2026-10-01/results/{confirm,development}  (run_campaign.py -> analyze.py)` |
+| 62 | VI-C reduced CMG | x2 Table II row | 78.5,35.2,45.5,-0.6,41.8 | 78.5,35.2,45.5,-0.6,41.8 | OK | `cmg_mechanism_controls_2026-10-01/results/{confirm,development}  (run_campaign.py -> analyze.py)` |
+| 63 | VI-C reduced CMG | cf2-rotor Table II row | 60.1,23.0,24.6,-0.4,20.3 | 60.1,23.0,24.6,-0.4,20.3 | OK | `cmg_mechanism_controls_2026-10-01/results/{confirm,development}  (run_campaign.py -> analyze.py)` |
+| 64 | VI-C reduced CMG | mean effort reduced X2/CF2 vs CMG X2/CF2 | 0.033/0.016 vs 0.032/0.015 | 0.033/0.016 vs 0.032/0.015 | OK | `cmg_mechanism_controls_2026-10-01/results/{confirm,development}  (run_campaign.py -> analyze.py)` |
+| 65 | VI-C reduced CMG | max |reduced - CMG| on Roll/Yaw360/Hardstep (pp) | 1.5 | 1.5 | OK | `cmg_mechanism_controls_2026-10-01/results/{confirm,development}  (run_campaign.py -> analyze.py)` |
+| 66 | VI-C reduced CMG | cmg_G1e3 geo X2/CF2 | 9.0/3.6 | 9.0/3.6 | OK | `cmg_mechanism_controls_2026-10-01/results/{confirm,development}  (run_campaign.py -> analyze.py)` |
+| 67 | VI-C reduced CMG | cmg_G1 geo X2/CF2 | 4.4/1.7 | 4.4/1.7 | OK | `cmg_mechanism_controls_2026-10-01/results/{confirm,development}  (run_campaign.py -> analyze.py)` |
+| 68 | VI-C reduced CMG | latch-replay geo X2/CF2 | 9.6/3.8 | 9.6/3.8 | OK | `cmg_mechanism_controls_2026-10-01/results/{confirm,development}  (run_campaign.py -> analyze.py)` |
+| 69 | VI-C ablation | chi toggle, max effect at every tested G (pp) | 0.0 | 0.0 | OK | `cmg_mechanism_controls_2026-10-01/results/{confirm,development}  (run_campaign.py -> analyze.py)` |
+| 70 | VI-C ablation | gate folds v_on/v_off (Table I) | 0.888/-0.888 | 0.888/-0.888 | OK | `Table I parameters, closed form` |
+| 71 | VI-C ablation | gate releases after latching, ten primary runs | 0 | 0 | OK | `neuron_basis_decisive/results/strict_exact/*/cmg/neural_trace_full_rate.npz` |
+| 72 | VI-C reduced CMG | removed-term bounds alpha*gamma/G, c_max (1/s) | 1e-03, <2e-08 | 1e-03, <2e-08 | OK | `Table I parameters, closed form` |
+| 73 | VI-D | constant basis is a = 1 | 1 | 1 | OK | `neuron_basis_decisive/results/strict_exact/x2/hard45/constant-one` |

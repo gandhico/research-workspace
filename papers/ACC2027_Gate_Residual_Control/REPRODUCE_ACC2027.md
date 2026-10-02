@@ -3,8 +3,13 @@
 *Online PES Decoder Learning in Neuromorphic Residual UAV Attitude Control* (Contreras, Sandoval, Garcia Carrillo).
 Every number in the paper, the script that produces it, the file it lands in, and one command to check it.
 
-**Status (2026-09-30, manuscript version of Sept. 30):** `reproduce/verify_acc2027_claims.py` recomputes 59 paper
-numbers from the raw run outputs; **59/59 match** (the 8 mismatches found earlier, Section 7, were corrected in the paper).
+**Status (2026-10-02, manuscript v31):** `reproduce/verify_acc2027_claims.py` recomputes 73 paper numbers from the raw
+run outputs; **73/73 match**. Claims 60–73 (added for v31) cover the reduced-CMG ablation, gate latching, the G and χ
+ablations and the constant-basis definition, from `experiments/cmg_mechanism_controls_2026-10-01`. Manuscript and change
+log: `paper/v31_2026-10-02_reduced_cmg/`.
+
+*Earlier status (2026-09-30, manuscript version of Sept. 30):* 59/59 match (the 8 mismatches found earlier, Section 7,
+were corrected in the paper).
 
 **Equation-to-code companion:** `paper/companion_2026-09-30/ACC2027_equation_code_companion.pdf` — every equation (1)–(30)
 and both propositions with derivation, citations, the exact implementing code lines, and an audit appendix (source/model
