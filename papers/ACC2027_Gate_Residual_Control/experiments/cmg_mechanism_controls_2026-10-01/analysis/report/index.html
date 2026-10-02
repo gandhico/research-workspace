@@ -132,6 +132,45 @@ a_k = clip(G·r_k, 0, 1),  G = 10⁵                 same readout as CMG</div>
 </section>
 
 <section class="col">
+  <h2>How CMG learns</h2>
+  <p>The six CMG units do not learn. They are a fixed temporal feature generator, and PES trains only the 3×6 decoder, as a leaky normalized-LMS update. Results therefore depend on how informative the features are and how well-conditioned the PES step is (corner η‖a‖²/h: about 1.4 rad/s unlatched, 9.6 rad/s fully latched).</p>
+  <div class="tablebox"><table>
+    <thead><tr><th>Unit regime</th><th>Readout</th><th>What PES can learn</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Below the onset fold (v &lt; 0.888)</th><td class="def">a ≈ min(1, G·e<sup>α(v − v<sub>th</sub>)</sup>): exponential tuning of the low-passed command, a<sub>rest</sub> = 0.3728</td><td class="def">Graded, error-correlated features. The source of the gain.</td></tr>
+      <tr><th scope="row">Latched (crossed the fold once)</th><td class="def">a = 1 forever; release fold v ≈ −0.89 lies below v<sub>reset</sub> = 0</td><td class="def">Only a bias: a leaky lagged-P tracker, constant-one performance.</td></tr>
+      <tr><th scope="row">Relaxation oscillation</th><td class="def">Periodic; needs v below the release fold</td><td class="def">Never reached in this application.</td></tr>
+    </tbody>
+  </table></div>
+  <h3 style="margin-top:18px">Principles to carry forward</h3>
+  <ol class="findings">
+    <li>Report the basis regime (graded, latched, oscillating) next to every learning result.</li>
+    <li>Treat irreversible latching as feature death, like a saturated sigmoid or a dead ReLU, and monitor the latched fraction.</li>
+    <li>Compare bases at matched η‖a‖², or normalize PES by ‖a‖²; G changes feature amplitude and learning rate together.</li>
+    <li>Graded content matters more than persistence: constant and two-level bases fail at matched ‖a‖².</li>
+    <li>The useful tail is bias-sensitive: a 1% shift in the bias current changes a<sub>rest</sub> by 1.45×, which matters on hardware.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Where this applies next</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>Project</th><th>What carries over</th><th>Next test (proposed)</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">ACC 2027 paper</th><td class="def">CMG works as a smooth temporal-feature unit in the tested regime; latching limits it; χ has no effect; rename the readout gain.</td><td class="def">η = 0 frozen-decoder control to split fixed feedforward from PES learning.</td></tr>
+      <tr><th scope="row">Neuromorphic RL pilot</th><td class="def">Latching likely turns actor and critic features into constants on large-error missions.</td><td class="def">Rerun the frozen protocol with LPF + logistic features; log latched fraction.</td></tr>
+      <tr><th scope="row">Drone racing</th><td class="def">Racing errors exceed Hard45, so a latching basis collapses within seconds.</td><td class="def">Non-latching basis, or gate reset per lap; log latched fraction.</td></tr>
+      <tr><th scope="row">DVS perception</th><td class="def">LPF + logistic is a natural event-rate encoder; the tail acts as contrast sensitivity near threshold.</td><td class="def">Compare against latching CMG at matched η‖a‖².</td></tr>
+      <tr><th scope="row">P1 HyperLIF Learning</th><td class="def">Fold stiffness (sensitivity ∝ α/τ<sub>r</sub>) and dead latched units shape the gradients.</td><td class="def">Track latched fraction and gradient norms; test τ<sub>r</sub> → 0 against EventProp gradients.</td></tr>
+      <tr><th scope="row">P5 dual self-tuning</th><td class="def">A latched residual basis degrades to a lagged-P term that overlaps the gain tuner.</td><td class="def">Ablate graded vs latched basis inside the dual architecture.</td></tr>
+      <tr><th scope="row">Hardware (Hover, Aero2, QArm)</th><td class="def">Current-encoder bias moves a<sub>rest</sub> exponentially.</td><td class="def">Measure encoder bias and recompute the tail range before arming.</td></tr>
+      <tr><th scope="row">Multi-agent systems</th><td class="def">Latching makes agents' features diverge by history rather than by state.</td><td class="def">Shared non-latching basis vs per-agent latching CMG on a formation task.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Full note with evidence labels: <code>MECHANISM_AND_TRANSFER.md</code>.</p>
+</section>
+
+<section class="col">
   <h2>Scope and open questions</h2>
   <ol class="findings">
     <li>Single deterministic seed, noise-free MuJoCo rigid-body plants; same scope as Sec. VI-D.</li>
