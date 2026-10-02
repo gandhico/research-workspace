@@ -1,0 +1,50 @@
+{
+  "G1 NumPy CMG (Nengo PES order) vs archived Nengo CMG": {
+    "max_abs_trace_diff": {
+      "activity": 5.573319583618286e-14,
+      "gate": 3.0196678491023476e-13,
+      "voltage": 9.181544413650045e-14,
+      "weights": 3.1988300897012323e-15,
+      "decoded_raw": 4.6074255521943996e-14,
+      "qerr_true_rad": 5.30825383648903e-16,
+      "q_true": 1.1102230246251565e-15,
+      "tau_command": 8.597289546941056e-15
+    },
+    "qerr_mean_new": 0.009080332801314537,
+    "qerr_mean_archived": 0.00908033280131453,
+    "qerr_mean_rel_diff": 7.641673555073562e-16,
+    "pass": true
+  },
+  "G2 Nengo CMG via new wrapper vs archived Nengo CMG": {
+    "max_abs_trace_diff": {
+      "activity": 0.0,
+      "gate": 0.0,
+      "voltage": 0.0,
+      "weights": 0.0,
+      "decoded_raw": 0.0,
+      "qerr_true_rad": 0.0,
+      "q_true": 0.0,
+      "tau_command": 0.0
+    },
+    "qerr_mean_new": 0.00908033280131453,
+    "qerr_mean_archived": 0.00908033280131453,
+    "qerr_mean_rel_diff": 0.0,
+    "pass": true
+  },
+  "G3 constant-one rerun vs archived constant-one": {
+    "max_abs_trace_diff": {
+      "activity": 0.0,
+      "gate": 0.0,
+      "voltage": 0.0,
+      "weights": 0.0,
+      "decoded_raw": 0.0,
+      "qerr_true_rad": 0.0,
+      "q_true": 0.0,
+      "tau_command": 0.0
+    },
+    "qerr_mean_new": 0.009313604033591409,
+    "qerr_mean_archived": 0.009313604033591409,
+    "qerr_mean_rel_diff": 0.0,
+    "pass": true
+  }
+}

@@ -1,0 +1,11 @@
+arm,x2_geomean_improvement_percent,cf2_geomean_improvement_percent,verdict
+cmg,37.30,22.42,
+constant-one,10.34,4.29,
+paired-current,11.88,4.75,
+lpf-logistic,46.34,28.61,reproduces CMG
+constant-rest,6.85,2.63,fails
+latch-replay,9.65,3.81,fails
+cmg_chi0,37.30,22.42,reproduces CMG
+constant-one-nengo-order,10.34,4.29,fails
+cmg_G1e3,9.01,3.58,fails
+cmg_G1,4.44,1.68,fails
