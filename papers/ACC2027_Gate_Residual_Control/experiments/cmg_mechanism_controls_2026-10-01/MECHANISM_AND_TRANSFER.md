@@ -49,8 +49,9 @@ Small-command behaviour of a pair, before any latch [derived]:
     a± ≈ a_rest · exp(α I_g · LPF_τ(n±)),   n± = max(±u₀/ℓ, 0),   α I_g = 62.5
     saturates (a = 1) once LPF(n) > ln(1/a_rest)/62.5 ≈ 0.016
 
-The initial decoder reads s₀ = a₊ − a₋ ≈ 2 a_rest sinh(62.5·LPF(n)): a lag-filtered, high-gain,
-saturating function of the baseline command. PES then reshapes it. (The initial and learned parts each exceed the
+The initial decoder reads s₀ = a₊ − a₋ = a_rest[e^{62.5·LPF(n₊)} − e^{62.5·LPF(n₋)}] (only one side moves for a
+given command sign), ≈ 23.3·LPF(u₀/ℓ) for small commands: a lag-filtered, high-gain, saturating function of the
+baseline command. PES then reshapes it. (The initial and learned parts each exceed the
 total output and largely cancel; an η = 0 control is needed to apportion the gain — not yet run.)
 
 ## 3. What the controls established [software]
