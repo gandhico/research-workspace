@@ -1,0 +1,29 @@
+{
+  "name": "yaw_360_12s",
+  "stage": 7,
+  "status": "fail",
+  "abort_reason": null,
+  "failed_gates": [
+    "peak_attitude_error_deg",
+    "rotation_progress_peak_error_deg"
+  ],
+  "completed_time_s": 21.999999999998685,
+  "planned_duration_s": 22.0,
+  "samples": 11001,
+  "peak_position_error_m": 0.0005109023611321768,
+  "peak_attitude_error_deg": 25.228967964761,
+  "tail_position_error_m": 6.715889981648177e-10,
+  "tail_attitude_error_deg": 6.981240860840363e-11,
+  "max_abs_input_N": 7.3302901177117095,
+  "saturated_steps": 0,
+  "steps_with_contacts": 0,
+  "peak_force_residual_N": 9.33823120400317e-14,
+  "peak_torque_residual_Nm": 1.6628010566055665e-14,
+  "rotation_progress_peak_error_deg": 25.228967964761267,
+  "tail_samples": 1001,
+  "saturation_fraction": 0.0,
+  "position_RMSE_m": 0.0002459188011019608,
+  "attitude_RMSE_deg": 11.88698715151471,
+  "actual_rotation_progress_deg": 359.99999999999125,
+  "rotation_endpoint_error_deg": 8.753886504564434e-12
+}

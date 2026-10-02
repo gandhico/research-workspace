@@ -1,0 +1,9 @@
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+& 'C:\Research\papers\_meeting_2026-08-22\Launch_Gate_Residual_Demo.ps1' -Mode adaptive-cf2 -Viewer -Dashboard -Python 'C:\actual\path\to\python.exe'
+
+& 'C:\Research\papers\_meeting_2026-08-22\Launch_Gate_Residual_Demo.ps1' -Mode learned-cf2 -Python 'C:\actual\path\to\python.exe'
+
+
+
+  

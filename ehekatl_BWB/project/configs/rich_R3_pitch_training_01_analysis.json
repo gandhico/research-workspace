@@ -1,0 +1,74 @@
+{
+  "file": "rich_R3_pitch_training_01_revised_20260712_181333.csv",
+  "frequencies_hz": [
+    0.35,
+    0.55,
+    0.8,
+    1.1
+  ],
+  "realized_input_amplitude": [
+    0.000116481819150908,
+    0.00019515066747604086,
+    0.00026317427122408884,
+    0.00031151979923640754
+  ],
+  "realized_input_snr": [
+    4.7635673388982065,
+    18.146484311682542,
+    18.774811396197762,
+    21.42908817714713
+  ],
+  "rate_response_amplitude_deg_s": [
+    0.013584242043365367,
+    0.020783970628447748,
+    0.026604458893292986,
+    0.03058232567343996
+  ],
+  "rate_response_snr": [
+    17.416561874068112,
+    31.85560183502223,
+    21.90552001816946,
+    26.932606847839505
+  ],
+  "distributed_surfaces": {
+    "distributed_elv1_wing2l_deg": {
+      "range_deg": [
+        -4.370731353759766,
+        -4.316897869110107
+      ],
+      "peak_to_peak_deg": 0.0538334846496582,
+      "correlation_with_total_pitch": -0.9999999999145642
+    },
+    "distributed_elv1_wing2r_deg": {
+      "range_deg": [
+        -4.370731353759766,
+        -4.316897869110107
+      ],
+      "peak_to_peak_deg": 0.0538334846496582,
+      "correlation_with_total_pitch": -0.9999999999145642
+    },
+    "distributed_elv1_outer_l_deg": {
+      "range_deg": [
+        -4.370731353759766,
+        -4.316897869110107
+      ],
+      "peak_to_peak_deg": 0.0538334846496582,
+      "correlation_with_total_pitch": -0.9999999999145642
+    },
+    "distributed_elv1_outer_r_deg": {
+      "range_deg": [
+        -4.370731353759766,
+        -4.316897869110107
+      ],
+      "peak_to_peak_deg": 0.0538334846496582,
+      "correlation_with_total_pitch": -0.9999999999145642
+    }
+  },
+  "checks": {
+    "minimum_input_spectral_snr": true,
+    "minimum_rate_spectral_snr": true,
+    "distributed_surface_motion": true,
+    "distributed_surface_correlation": true
+  },
+  "pass": true
+}

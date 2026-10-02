@@ -1,0 +1,45 @@
+EHEKATL BWB LQR validation
+Internal units: SI + radians. Degrees only for plots/reports.
+
+System: longitudinal | case: small | R=0.3
+K = [[  2.86278292  -4.85877891  -2.97033223 -40.12842065]]
+max |raw control| = 0.344422 rad = 19.734 deg
+max |applied control| = 0.344422 rad = 19.734 deg
+saturation fraction = 0.000%
+settling time = 6.356 s
+final ||x|| = 1.002927e-03
+
+System: longitudinal | case: stress_saturated | R=0.3
+K = [[  2.86278292  -4.85877891  -2.97033223 -40.12842065]]
+max |raw control| = 4.940842 rad = 283.089 deg
+max |applied control| = 0.436332 rad = 25.000 deg
+saturation fraction = 0.440%
+settling time = 5.926 s
+final ||x|| = 1.627851e-03
+
+System: lateral | case: small | R=1.0
+K = [[ 0.11366923  2.95176288 -0.16714788  2.67770629]]
+max |raw control| = 0.321224 rad = 18.405 deg
+max |applied control| = 0.321224 rad = 18.405 deg
+saturation fraction = 0.000%
+settling time = 4.176 s
+final ||x|| = 1.831351e-05
+
+System: lateral | case: stress_saturated | R=1.0
+K = [[ 0.11366923  2.95176288 -0.16714788  2.67770629]]
+max |raw control| = 1.466001 rad = 83.996 deg
+max |applied control| = 0.436332 rad = 25.000 deg
+saturation fraction = 0.020%
+settling time = 3.7680000000000002 s
+final ||x|| = 7.163018e-05
+
+Longitudinal R scan using small longitudinal initial condition:
+R=0.001    | max raw elevator=395.094    deg | sat=0.060  % | settling=6.356 s | fastest eig real=-2321.054
+R=0.003    | max raw elevator=226.662    deg | sat=0.060  % | settling=6.356 s | fastest eig real=-1339.881
+R=0.01     | max raw elevator=122.611    deg | sat=0.060  % | settling=6.356 s | fastest eig real=-733.536
+R=0.03     | max raw elevator=69.370     deg | sat=0.040  % | settling=6.356 s | fastest eig real=-422.932
+R=0.1      | max raw elevator=36.508     deg | sat=0.020  % | settling=6.356 s | fastest eig real=-230.531
+R=0.3      | max raw elevator=19.734     deg | sat=0.000  % | settling=6.356 s | fastest eig real=-131.164
+R=1        | max raw elevator=9.450      deg | sat=0.000  % | settling=6.36 s | fastest eig real=-67.329
+R=3        | max raw elevator=4.295      deg | sat=0.000  % | settling=6.37 s | fastest eig real=-31.410
+R=10       | max raw elevator=2.017      deg | sat=0.000  % | settling=6.406 s | fastest eig real=-20.638

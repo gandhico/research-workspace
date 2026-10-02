@@ -1,0 +1,14 @@
+{
+  "platform": "cf2-rotor-6dof-cascade",
+  "controller": "classical",
+  "mission": "circle_xy",
+  "duration": 15.0,
+  "dt": 0.0005,
+  "pos_err_mean_m": 0.003730191228172274,
+  "pos_err_max_m": 0.06805661810996849,
+  "qerr_mean_rad": 0.005336606744551623,
+  "qerr_max_rad": 0.1353121513751737,
+  "pos_ff": "fd",
+  "actuator_scale": 1.0,
+  "authority_scale": 1.0
+}

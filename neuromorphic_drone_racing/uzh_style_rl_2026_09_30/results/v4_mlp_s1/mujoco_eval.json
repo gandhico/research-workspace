@@ -1,0 +1,20 @@
+{
+ "run": "results\\v4_mlp_s1",
+ "arm": "mlp",
+ "gates_in_order": 7,
+ "collisions": 0,
+ "termination": "seven_gates",
+ "lap_completed": true,
+ "lap_time_s": 9.42,
+ "gate_times_s": [
+  1.22,
+  2.7,
+  3.92,
+  5.1,
+  6.4,
+  7.42,
+  9.42
+ ],
+ "mean_rotor_saturation": 0.37664543524416133,
+ "note": "full MuJoCo race world, frozen policy, perfect state, no learning during the flight"
+}

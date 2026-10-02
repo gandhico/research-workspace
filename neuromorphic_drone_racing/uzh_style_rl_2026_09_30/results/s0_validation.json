@@ -1,0 +1,29 @@
+{
+  "one_decision": {
+    "pos_mm_mean": 0.0033286684137650863,
+    "pos_mm_max": 0.06726393931060502,
+    "vel_mm_s_mean": 0.15260440071266615,
+    "vel_mm_s_max": 2.994785483492834,
+    "att_deg_mean": 0.0070195058631348185,
+    "att_deg_max": 0.15534535213656214,
+    "rate_rad_s_mean": 0.004547453202499578,
+    "rate_rad_s_max": 0.08316938625101122
+  },
+  "open_loop_position_drift_m": {
+    "0s": 0.00020005947603185815,
+    "1s": 0.0013595423400041358,
+    "2s": 0.005935778345414532,
+    "4s": 0.024042111069341666,
+    "8s": 0.10842267561287441,
+    "12s": 0.3087670953773954
+  },
+  "gate_passes_teacher_forced": {
+    "vec_sim": 4,
+    "mujoco": 4
+  },
+  "cmg_parity_max_abs_diff": {
+    "graded": 1.0547118733938987e-15,
+    "reset_spike": 1.1102230246251565e-15
+  },
+  "throughput_decisions_per_s_1024_drones_with_cmg": 15229
+}

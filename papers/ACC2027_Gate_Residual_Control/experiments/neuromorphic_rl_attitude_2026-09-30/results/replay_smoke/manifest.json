@@ -1,0 +1,73 @@
+{
+  "status": "exploratory",
+  "algorithm": "online linear Gaussian TD(lambda) actor-critic",
+  "learning_signal": "TD reward prediction error, not PES teacher error",
+  "development_missions": [
+    "full3",
+    "hard45"
+  ],
+  "held_out_missions": [
+    "roll",
+    "hardstep",
+    "yaw360"
+  ],
+  "family_settings": [
+    0.75,
+    1.25,
+    0.005
+  ],
+  "args": {
+    "platform": "x2",
+    "family": "cmg",
+    "mode": "eval",
+    "train_episodes": 12,
+    "train_duration": 15.0,
+    "eval_duration": 1.0,
+    "eval_missions": [
+      "roll"
+    ],
+    "dt": 0.0005,
+    "policy_dt": 0.02,
+    "beta": 0.5,
+    "seed": 1,
+    "disturbance_frac": 0.0,
+    "error_envelope_rad": 0.03,
+    "action_penalty": 0.3,
+    "checkpoint": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\neuromorphic_rl_attitude_2026-09-30\\results\\pilot_x2_cmg_envelope\\policy.npz",
+    "output": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\neuromorphic_rl_attitude_2026-09-30\\results\\replay_smoke"
+  },
+  "versions": {
+    "mujoco": "3.12.0",
+    "nengo": "4.1.0",
+    "numpy": "2.5.2"
+  },
+  "source_sha256": {
+    "runner": "f6c22dfaa607c5d098371cd9908a6aef7b0a35562148b66f0d2d286e0995efe8",
+    "cmg_neuron": "fbfd069d78d4040e738a8df702acb35a08b5141e34a7cdb70c9d4e954d782562",
+    "baseline": "3c12f663e4034fd94308f5d6293afaeda4ee2ad94cd590b57574b3b168b278e6",
+    "math3d": "31620612f184a22f15971b1a7d15548ff2997b09a093254ab71ddb289e502c5e"
+  },
+  "eval": [
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "family": "cmg",
+      "train": false,
+      "seed": 10001,
+      "duration_s": 1.0,
+      "dt_s": 0.0005,
+      "policy_dt_s": 0.02,
+      "beta": 0.5,
+      "error_envelope_rad": 0.03,
+      "action_penalty": 0.3,
+      "disturbance_frac_limits": 0.0,
+      "qerr_true_mean_rad": 0.0008969344776942198,
+      "qerr_true_mean_deg": 0.051390560071649674,
+      "qerr_true_max_deg": 0.20077112582817078,
+      "rotor_saturation_fraction": 0.0,
+      "output_gate_fraction": 0.0,
+      "realized_residual_normalized_rms": 0.0034811018003193606,
+      "model_sha256": "d932ffbe9f0d1fa4bcfe5746d4cfc0c5652960f00223fdaf2ffd6aff6b217c97"
+    }
+  ]
+}

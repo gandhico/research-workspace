@@ -1,0 +1,7 @@
+architecture,model,use_nsa,n,train_accuracy_mean,train_accuracy_std,test_accuracy_mean,test_accuracy_std,train_loss_mean,train_loss_std,test_loss_mean,test_loss_std,correct_test_total,seen_test_total
+dense,dense_lif_control,false,1,0.046875,0.0,0.0,0.0,3.281310558319092,0.0,3.517180919647217,0.0,0,64
+dense,dense_hyperlif_nsa,true,1,0.0625,0.0,0.03125,0.0,3.270397424697876,0.0,3.5137887001037598,0.0,2,64
+delay,delay_lif_control,false,1,0.015625,0.0,0.03125,0.0,3.4745795726776123,0.0,3.5134530067443848,0.0,2,64
+delay,delay_hyperlif_nsa,true,1,0.078125,0.0,0.046875,0.0,3.430290937423706,0.0,3.4720752239227295,0.0,3,64
+recurrent,recurrent_lif_control,false,1,0.046875,0.0,0.03125,0.0,3.4066591262817383,0.0,3.41569447517395,0.0,2,64
+recurrent,recurrent_hyperlif_nsa,true,1,0.03125,0.0,0.03125,0.0,3.2973685264587402,0.0,3.4023053646087646,0.0,2,64

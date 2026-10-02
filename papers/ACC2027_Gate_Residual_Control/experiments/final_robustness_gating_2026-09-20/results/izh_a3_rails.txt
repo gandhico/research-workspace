@@ -1,0 +1,19 @@
+Fraction of samples (t >= 2 s, all three axes) with |realized residual| >= 0.98 beta l  |  median |residual|/(beta l)  |  fraction <= 0.02 (idle)
+
+platform  mission     CMG rails  CMG med  CMG idle  Izh rails  Izh med  Izh idle
+x2        roll            0.000    0.001     1.000      0.443    0.783     0.043
+x2        full3           0.000    0.013     0.633      0.437    0.772     0.050
+x2        hard45          0.000    0.009     0.782      0.439    0.780     0.041
+x2        hardstep        0.008    0.001     0.682      0.348    0.451     0.249
+x2        yaw360          0.000    0.000     1.000      0.440    0.783     0.048
+cf2-rotor roll            0.000    0.000     0.784      0.412    0.623     0.138
+cf2-rotor full3           0.000    0.015     0.696      0.460    0.835     0.071
+cf2-rotor hard45          0.000    0.015     0.626      0.484    0.919     0.041
+cf2-rotor hardstep        0.000    0.000     0.730      0.412    0.621     0.210
+cf2-rotor yaw360          0.000    0.000     1.000      0.403    0.559     0.152
+
+Effort (normalized rms) against the PD+ff error of the mission, ten cells (2 airframes x 5 missions):
+  CMG        x2         effort by mission [0.003, 0.023, 0.023, 0.109, 0.001]   max/min     119.5   Spearman rho vs PD+ff error +1.00
+  CMG        cf2-rotor  effort by mission [0.005, 0.01, 0.012, 0.049, 0.0]   max/min     219.6   Spearman rho vs PD+ff error +1.00
+  Izhikevich x2         effort by mission [0.37, 0.37, 0.372, 0.327, 0.37]   max/min       1.1   Spearman rho vs PD+ff error -0.10
+  Izhikevich cf2-rotor  effort by mission [0.14, 0.15, 0.153, 0.139, 0.138]   max/min       1.1   Spearman rho vs PD+ff error +0.40

@@ -1,0 +1,35 @@
+{
+  "config": {
+    "execution_mode": "virtual_twin",
+    "model_variant": "helicopter_2dof",
+    "controller": "gate_residual",
+    "controller_kwargs": {
+      "neuron": "hyperlif",
+      "aug": "residual"
+    },
+    "application": "regulation_disturbance",
+    "duration_s": 20.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "out": "results_twin_campaign"
+  },
+  "metrics": {
+    "n": 4000,
+    "duration_s": 19.99553339999875,
+    "realized_hz": 199.9946661422665,
+    "pitch_rms": 0.03774895536299088,
+    "yaw_rms": 0.07728626572335415,
+    "tail_pitch_mae": 0.038305613758145556,
+    "tail_yaw_mae": 0.019760740509542827,
+    "pitch_sat_frac": 0.008,
+    "yaw_sat_frac": 0.0,
+    "theta_range": [
+      -0.05672320068981571,
+      -0.002181661564992912
+    ],
+    "psi_range": [
+      -0.023009711818284616,
+      0.12578642460662257
+    ]
+  }
+}

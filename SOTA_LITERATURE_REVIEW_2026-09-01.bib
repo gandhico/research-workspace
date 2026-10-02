@@ -1,0 +1,237 @@
+% Bibliography for CMG-PES / HyperLIF residual neuromorphic control manuscript.
+% Compiled from live web search results, 2026-09-01. Every entry below reflects
+% only facts actually returned by search (title, authors where given, venue/year
+% where given, URL). Fields NOT returned by search (exact volume/page/DOI for
+% several entries) are deliberately omitted rather than invented -- fill in from
+% the primary source before submission. Do not add fields not verified here.
+
+@article{eliasmith2003nef,
+  author  = {Eliasmith, Chris and Anderson, Charles H.},
+  title   = {Neural Engineering: Computation, Representation, and Dynamics in Neurobiological Systems},
+  year    = {2003},
+  note    = {Foundational text proposing the Neural Engineering Framework (representation, transformation, dynamics principles)}
+}
+
+@article{eliasmith2012nengo,
+  author  = {Eliasmith, Chris and Stewart, Terrence C. and others},
+  title   = {Nengo and the Neural Engineering Framework: From Spikes to Cognition},
+  year    = {2012},
+  url     = {https://compneuro.uwaterloo.ca/files/publications/eliasmith.2012a.pdf}
+}
+
+@article{bekolay2014nengo,
+  author  = {Bekolay, Trevor and Bergstra, James and Hunsberger, Eric and DeWolf, Travis and Stewart, Terrence C. and Rasmussen, Daniel and Choo, Xuan and Voelker, Aaron and Eliasmith, Chris},
+  title   = {Nengo: a Python tool for building large-scale functional brain models},
+  journal = {Frontiers in Neuroinformatics},
+  year    = {2014},
+  url     = {https://www.frontiersin.org/articles/10.3389/fninf.2013.00048/full}
+}
+
+@article{voelker2015pes,
+  author  = {Voelker, Aaron R. and Eliasmith, Chris},
+  title   = {A Solution to the Dynamics of the Prescribed Error Sensitivity Learning Rule},
+  year    = {2015},
+  url     = {https://www.compneuro.uwaterloo.ca/files/publications/voelker.2015.pdf},
+  note    = {PES learning-rule convergence analysis; see also gamma = (1 - kappa||a||^2) stability condition}
+}
+
+@inproceedings{blouw2020nengoloihi,
+  title   = {Nengo and low-power AI hardware for robust, embedded neurorobotics},
+  journal = {Frontiers in Neurorobotics},
+  year    = {2020},
+  url     = {https://arxiv.org/pdf/2007.10227}
+}
+
+@article{dewolf2016arm,
+  author  = {DeWolf, Travis and Stewart, Terrence C. and Slotine, Jean-Jacques and Eliasmith, Chris},
+  title   = {A spiking neural model of adaptive arm control},
+  journal = {Proceedings of the Royal Society B: Biological Sciences},
+  year    = {2016},
+  url     = {https://royalsocietypublishing.org/doi/10.1098/rspb.2016.2134},
+  note    = {Closest architectural precedent: Nengo/NEF + adaptive correction on a real robot arm (Kinova Jaco2); should be directly cited and differentiated against}
+}
+
+@article{fischl2022wheelchairarm,
+  title   = {Adaptive control of a wheelchair mounted robotic arm with neuromorphically integrated velocity readings and online-learning},
+  journal = {Frontiers in Neuroscience},
+  year    = {2022},
+  url     = {https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2022.1007736/full},
+  note    = {Deployed on Intel Loihi; neuromorphic adaptive control benchmarked against PID}
+}
+
+@article{izhikevich2003simple,
+  author  = {Izhikevich, Eugene M.},
+  title   = {Simple model of spiking neurons},
+  journal = {IEEE Transactions on Neural Networks},
+  volume  = {14},
+  pages   = {1569--1572},
+  year    = {2003},
+  url     = {https://www.izhikevich.org/publications/spikes.htm}
+}
+
+@article{bellec2020eprop,
+  author  = {Bellec, Guillaume and Scherr, Franz and Subramoney, Anand and Hajek, Elias and Salaj, Darjan and Legenstein, Robert and Maass, Wolfgang},
+  title   = {A solution to the learning dilemma for recurrent networks of spiking neurons},
+  journal = {Nature Communications},
+  year    = {2020},
+  url     = {https://www.nature.com/articles/s41467-020-17236-y},
+  note    = {Original e-prop (eligibility propagation) paper}
+}
+
+@article{snn_quadrotor_mdpi2024,
+  title   = {Trajectory Control of Quadrotors via Spiking Neural Networks},
+  journal = {Electronics (MDPI)},
+  volume  = {13},
+  number  = {16},
+  pages   = {3319},
+  year    = {2024},
+  url     = {https://www.mdpi.com/2079-9292/13/16/3319},
+  note    = {SNN update rules derived via Lyapunov stability theorem; PID/NN comparison}
+}
+
+@inproceedings{stagsted_snn_pid_uav,
+  author  = {Stagsted, Rasmus and Vitale, others},
+  title   = {Towards neuromorphic control: A spiking neural network based PID controller for UAV},
+  url     = {https://www.semanticscholar.org/paper/Towards-neuromorphic-control:-A-spiking-neural-PID-Stagsted-Vitale/43bb6293f76018886eaa700c15189141460ca8c1},
+  note    = {NEF-based SNN controller for quadrotor stabilization/trajectory tracking}
+}
+
+@article{evolving_snn_blimp2023,
+  title   = {Evolving Spiking Neural Networks to Mimic PID Control for Autonomous Blimps},
+  year    = {2023},
+  url     = {https://arxiv.org/pdf/2309.12937}
+}
+
+@article{neuromorphic_digital_twin_uav2025,
+  title   = {Neuromorphic Digital-Twin-based Controller for Indoor Multi-UAV Systems Deployment},
+  year    = {2025},
+  url     = {https://arxiv.org/pdf/2502.08115}
+}
+
+@article{embodied_neuromorphic_survey2024,
+  title   = {Embodied Neuromorphic Artificial Intelligence for Robotics: Perspectives, Challenges, and Research Development Stack},
+  year    = {2024},
+  url     = {https://arxiv.org/pdf/2404.03325}
+}
+
+@misc{residual_policy_learning_overview,
+  title   = {Residual Policy Learning in Robotics},
+  url     = {https://www.emergentmind.com/topics/residual-policy-learning-rpl}
+}
+
+@misc{residual_rl_overview,
+  title   = {Residual Reinforcement Learning},
+  url     = {https://www.emergentmind.com/topics/residual-reinforcement-learning-rl}
+}
+
+@article{residual_racing_2023,
+  title   = {Residual Policy Learning for Vehicle Control of Autonomous Racing Cars},
+  year    = {2023},
+  url     = {https://arxiv.org/pdf/2302.07035}
+}
+
+@article{johannink2019residual,
+  title   = {Residual Reinforcement Learning for Robot Control},
+  url     = {https://www.researchgate.net/publication/335140884_Residual_Reinforcement_Learning_for_Robot_Control}
+}
+
+@inproceedings{lee2010geometric,
+  author    = {Lee, Taeyoung and Leok, Melvin and McClamroch, N. Harris},
+  title     = {Geometric Tracking Control of a Quadrotor UAV on SE(3)},
+  booktitle = {49th IEEE Conference on Decision and Control (CDC)},
+  pages     = {5420--5425},
+  year      = {2010},
+  url       = {https://www.academia.edu/25234319/Geometric_tracking_control_of_a_quadrotor_UAV_on_SE_3_}
+}
+
+@article{lee2013nonlinear,
+  author  = {Lee, Taeyoung and Leok, Melvin and McClamroch, N. Harris},
+  title   = {Nonlinear robust tracking control of a quadrotor UAV on SE(3)},
+  journal = {Asian Journal of Control},
+  volume  = {15},
+  number  = {2},
+  pages   = {391--408},
+  year    = {2013},
+  url     = {https://onlinelibrary.wiley.com/doi/abs/10.1002/asjc.567}
+}
+
+@inproceedings{mellinger2011minsnap,
+  author    = {Mellinger, Daniel and Kumar, Vijay},
+  title     = {Minimum snap trajectory generation and control for quadrotors},
+  booktitle = {IEEE International Conference on Robotics and Automation (ICRA)},
+  address   = {Shanghai, China},
+  year      = {2011},
+  url       = {https://www.researchgate.net/publication/224252786_Minimum_snap_trajectory_generation_and_control_for_quadrotors}
+}
+
+@article{multirotor_survey2019,
+  title   = {Position and attitude control of multi-rotor aerial vehicles: A survey},
+  journal = {Annual Reviews in Control},
+  year    = {2019},
+  url     = {https://www.sciencedirect.com/science/article/abs/pii/S1367578819300483}
+}
+
+@article{kotaru2019l1,
+  author  = {Kotaru, Prasanth and Edmonson, others},
+  title   = {Geometric L1 Adaptive Attitude Control for a Quadrotor Unmanned Aerial Vehicle},
+  year    = {2019},
+  eprint  = {1910.07730},
+  archivePrefix = {arXiv},
+  url     = {https://arxiv.org/abs/1910.07730}
+}
+
+@article{davies2021loihi,
+  author  = {Davies, Mike and Wild, Andreas and others},
+  title   = {Advancing Neuromorphic Computing With Loihi: A Survey of Results and Outlook},
+  year    = {2021},
+  url     = {https://dynamicfieldtheory.org/upload/file/1631291311_c647b66b9e48f0a9baff/DavisEtAl2021.pdf}
+}
+
+@misc{neuromorphic_hw_robotics_survey,
+  title   = {Neuromorphic computing hardware and neural architectures for robotics},
+  url     = {https://www.researchgate.net/publication/361650236_Neuromorphic_computing_hardware_and_neural_architectures_for_robotics}
+}
+
+@article{sim2real_survey2020,
+  title   = {Sim-to-Real Transfer in Deep Reinforcement Learning for Robotics: a Survey},
+  year    = {2020},
+  url     = {https://arxiv.org/pdf/2009.13303}
+}
+
+@article{sim2multireal2019,
+  title   = {Sim-to-(Multi)-Real: Transfer of Low-Level Robust Control Policies to Multiple Quadrotors},
+  year    = {2019},
+  url     = {https://arxiv.org/html/1903.04628}
+}
+
+@misc{hil_mathworks,
+  title     = {What Is Hardware-in-the-Loop (HIL)?},
+  publisher = {MathWorks},
+  url       = {https://www.mathworks.com/discovery/hardware-in-the-loop-hil.html},
+  note      = {Industry reference, not peer-reviewed -- for background/definitions only}
+}
+
+@article{nonspiking_dynamic_leak2021,
+  title   = {A Non-spiking Neuron Model With Dynamic Leak to Avoid Instability in Recurrent Networks},
+  year    = {2021},
+  url     = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8173185/},
+  note    = {Relevant: non-spiking model shown to have higher output fidelity than spiking alternatives across input frequencies -- directly relevant to this paper's spiking-vs-continuous finding}
+}
+
+@article{spike_freq_adaptation2024,
+  title   = {Spike frequency adaptation: bridging neural models and neuromorphic applications},
+  journal = {Communications Engineering},
+  year    = {2024},
+  url     = {https://www.nature.com/articles/s44172-024-00165-9}
+}
+
+% --- Internal / project sources (this paper's own antecedent work; not
+% externally published, cite as unpublished technical reports or omit
+% depending on venue policy) ---
+
+@techreport{hyperlif_dossier2026,
+  title       = {Online-Learned HyperLIF Gate Residual: Full Results Dossier},
+  institution = {P3\_Gate\_Residual (internal)},
+  year        = {2026},
+  note        = {Precursor project; +86.7\% on Bitcraze/hard45, beats hand-tuned STN-PID-PES teacher. Same neuron ODE/parameters as this paper's CMG unit, predates the CMG naming.}
+}

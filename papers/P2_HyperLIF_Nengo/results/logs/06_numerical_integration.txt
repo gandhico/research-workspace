@@ -1,0 +1,14 @@
+Reference: RK4 of the continuous ODE, dt_ref=2e-06, drive I=1.5, T=0.08s
+dt=2.0e-03: voltage RMSE julia=2.374e-02, stable=8.770e-02; gate RMSE=1.601e-01
+dt=1.0e-03: voltage RMSE julia=3.068e-02, stable=6.091e-02; gate RMSE=2.003e-01
+dt=5.0e-04: voltage RMSE julia=2.040e-02, stable=3.657e-02; gate RMSE=1.336e-01
+dt=2.5e-04: voltage RMSE julia=1.184e-02, stable=2.024e-02; gate RMSE=8.064e-02
+dt=1.0e-04: voltage RMSE julia=5.217e-03, stable=8.601e-03; gate RMSE=3.668e-02
+dt=5.0e-05: voltage RMSE julia=2.699e-03, stable=4.389e-03; gate RMSE=1.913e-02
+Large-step stability (drive I=4.0, gate saturates open):
+dt=5.0e-03 (lambda*dt=0.75): julia max|v|=1.645e+00 (finite=True), stable max|v|=1.574e+00 (finite=True)
+dt=1.0e-02 (lambda*dt=1.50): julia max|v|=2.000e+00 (finite=True), stable max|v|=1.574e+00 (finite=True)
+dt=1.3e-02 (lambda*dt=1.95): julia max|v|=2.649e+00 (finite=True), stable max|v|=1.912e+00 (finite=True)
+dt=1.5e-02 (lambda*dt=2.25): julia max|v|=3.000e+00 (finite=True), stable max|v|=2.111e+00 (finite=True)
+dt=2.0e-02 (lambda*dt=3.00): julia max|v|=4.000e+00 (finite=True), stable max|v|=2.528e+00 (finite=True)
+dt=3.0e-02 (lambda*dt=4.50): julia max|v|=6.000e+00 (finite=True), stable max|v|=3.107e+00 (finite=True)

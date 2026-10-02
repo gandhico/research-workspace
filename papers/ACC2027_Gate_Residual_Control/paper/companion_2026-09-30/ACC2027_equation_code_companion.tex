@@ -1,0 +1,519 @@
+% =============================================================================
+% ACC 2027 CMG--PES paper: equation-to-code companion and audit record
+% =============================================================================
+% Build from this folder (no Perl needed):
+%   ..\..\.venv\Scripts\python.exe tools\build_companion_tables.py
+%   pdflatex ACC2027_equation_code_companion
+%   bibtex   ACC2027_equation_code_companion
+%   pdflatex ACC2027_equation_code_companion   (x2)
+% Paper numbers "P-(n)" refer to the manuscript PDF of 2026-09-30 (equations 1-30).
+% Every code listing is read from the repository file at the quoted lines
+% (\lstinputlisting), so a listing cannot silently disagree with the code; the
+% SHA-256 of every cited file is in Appendix A.
+% =============================================================================
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=0.9in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm,mathtools}
+\usepackage{booktabs,array,longtable}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{needspace}
+\usepackage{caption}
+\captionsetup[table]{position=top,skip=5pt,font=small}
+\usepackage{url}
+\urlstyle{tt}
+\makeatletter\g@addto@macro\UrlBreaks{\do\_\do\.\do\-}\makeatother
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=green!35!black,urlcolor=blue!50!black]{hyperref}
+
+\newcommand{\srcroot}{../..}
+\newcommand{\R}{\mathbb R}
+\newcommand{\T}{^{\mathsf T}}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\clip}{\operatorname{clip}}
+\newcommand{\sgnp}{\operatorname{sgn}_{+}}
+\newcommand{\vecpart}{\operatorname{vec}}
+\newcommand{\Peq}[1]{P-(#1)}
+\newcommand{\code}[1]{\path{#1}}
+
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem*{status}{Status}
+
+\definecolor{codebg}{gray}{0.97}
+\definecolor{notebg}{RGB}{255,248,225}
+\lstdefinestyle{py}{language=Python,basicstyle=\ttfamily\scriptsize,
+  numbers=left,numberstyle=\tiny\color{gray},numbersep=6pt,frame=single,
+  backgroundcolor=\color{codebg},rulecolor=\color{gray!60},breaklines=true,
+  columns=fullflexible,keepspaces=true,showstringspaces=false,
+  keywordstyle=\color{blue!60!black},commentstyle=\color{green!40!black},
+  stringstyle=\color{red!50!black},captionpos=t,xleftmargin=1.5em,framexleftmargin=1.5em}
+\newcommand{\listing}[4]{% file, first, last, title
+  \Needspace{8\baselineskip}%
+  \lstinputlisting[style=py,firstline=#2,lastline=#3,firstnumber=#2,
+    title={\scriptsize\texttt{\detokenize{#1}}\,:\,#2--#3\quad #4}]{\srcroot/#1}}
+\newcommand{\implnote}[1]{\par\smallskip\noindent\colorbox{notebg}{\parbox{\dimexpr\linewidth-2\fboxsep}{\small\textbf{Implementation note.} #1}}\par\smallskip}
+
+\input{audit_facts.tex}
+
+\title{Online PES Decoder Learning in Neuromorphic Residual UAV Attitude Control\\[4pt]
+\large Equation-to-code companion and audit record\\
+\normalsize for the ACC~2027 manuscript (version of September 30, 2026)}
+\author{Gandhi Contreras, Steven Sandoval, and Luis Rodolfo Garcia Carrillo}
+\date{September 30, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document lets a reader check, equation by equation, that the manuscript describes the code that produced its
+results. For each of the paper's equations (1)--(30) and both propositions it gives the statement, a short derivation
+with its standard sources, the exact lines of the implementation that compute it, and a status tag. Section~\ref{sec:audit}
+summarizes the machine checks: all \auditClaimsN{} numbers the verifier extracts from the paper are recomputed from the
+raw run outputs (\auditClaimsOK/\auditClaimsN{} agree), and every source and model file hash recorded by the published
+runs equals the file quoted here (\auditHashMatch/\auditHashChecked).
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% =============================================================================
+\section{How to read this document}
+% =============================================================================
+\begin{itemize}[leftmargin=1.2em]
+\item \textbf{Paper references.} ``\Peq{14}'' is equation (14) of the manuscript; Proposition~1, Table~II and Sec.~VI-B refer
+  to the manuscript likewise. Unprefixed numbers refer to this document.
+\item \textbf{Code.} Every listing is read directly from the repository file at the quoted line range, with the file's own
+  line numbers. Paths are relative to the repository root. Appendix~\ref{app:hashes} gives the SHA-256 of every cited file.
+\item \textbf{Status tags.} \emph{Standard}: a textbook result, cited. \emph{Derived here}: the steps are written out.
+  \emph{Verified}: the number is recomputed by a script named in the text. \emph{Implementation note}: a detail of the
+  code that the paper leaves implicit; each note says whether it changes any reported number.
+\item \textbf{Which code produced the numbers.} The noise-free, noise and disturbance results at $\rho=3$ come from
+  \code{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py} (X2) and its copy \code{run_a2_robustness.py}
+  (CF2, $\beta=.2$). Both call the shared modules listed in Table~\ref{tab:modules}. The $\rho=1$ and fixed-PD ladder
+  used the archived runners in \code{experiments/nengo_nef_replication_2026-08-29/}; the controller-family study used
+  \code{run_controllers_gated.py}; the neuron-basis study used \code{experiments/neuron_basis_decisive_2026-09-24/run_neuron_basis.py}.
+  \code{REPRODUCE_ACC2027.md} in the repository root maps every claim to its script and output file.
+\end{itemize}
+
+\begin{table}[H]
+\centering\small
+\caption{Shared modules and what they implement.}\label{tab:modules}
+\begin{tabular}{@{}p{0.52\linewidth}p{0.42\linewidth}@{}}
+\toprule
+Module & Implements\\\midrule
+\code{src/gra_control/math3d.py} & quaternion algebra, error, angle, mission references (\Peq{3}--\Peq{6})\\
+\code{src/gra_control/platforms/drone.py} & allocation matrix, torque box (\Peq{10}, $\bm\ell$)\\
+\code{src/gra_control/gate.py} & direct NumPy CMG--PES controller (\Peq{16}--\Peq{27})\\
+\code{experiments/nengo_nef_replication_2026-08-29/nengo_cmg.py} & Nengo CMG neuron and PES decoder (\Peq{16}--\Peq{27}), used for all reported runs\\
+\code{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py} & \code{AdvancedBaseline}: PD+ff (\Peq{15}) and the five other control families; $\bm\omega_d$\\
+\code{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py} & plant loop: sensing and noise, gate \Peq{28}, allocation \Peq{11}, collective \Peq{12}, disturbance, metrics\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% =============================================================================
+\section{Audit summary}\label{sec:audit}
+% =============================================================================
+\begin{table}[H]
+\centering\small
+\caption{Machine checks behind this document. Scripts are in the repository; each prints PASS/FAIL or the number shown.}\label{tab:audit}
+\begin{tabular}{@{}p{0.40\linewidth}p{0.22\linewidth}p{0.32\linewidth}@{}}
+\toprule
+Check & Result & Script / record\\\midrule
+Paper numbers recomputed from raw run outputs & \auditClaimsOK/\auditClaimsN{} agree & \code{reproduce/verify_acc2027_claims.py}; Appendix~\ref{app:claims}\\
+Cited source and model files vs.\ hashes recorded by the published runs & \auditHashMatch/\auditHashChecked{} identical & run \code{manifest.json}; Appendix~\ref{app:hashes}\\
+New runner vs.\ archived Table II $\rho=3$ block & worst relative error $5.0\times10^{-15}$ & \code{run_validation.py}\\
+Nengo vs.\ direct NumPy CMG--PES (ten cases) & worst relative mean error $2.013\times10^{-6}$ & \code{verify_archived_equivalence.py}\\
+Runner's reconstruction of the residual vs.\ the Nengo augmentor's command ($\auditReconRuns$ primary CMG runs) & worst $\auditReconWorst$\,N\,m & \code{summary.json}, field \code{max_native_vs_reconstructed_command_error_Nm}\\
+Exact recovery at $\beta=0$ (Prop.~1) for LQR, SMC, MPC, NMPC & relative difference $0$ (5 cases) & \code{certify_beta0_recovery.py}\\
+Backstepping (model feedforward off) $\equiv$ PD+ff \Peq{15} & 20/20 cells bit-identical & \code{run_campaign_a5_backstepping.py}\\
+Reference rate is the $\bm\omega_d$ of \Peq{7}--\Peq{8} & residual $\le4\times10^{-9}$ & \code{reproduce/check_rate_frame.py}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Software.} Python~\envPython, NumPy~\envNumpy, MuJoCo~\envMujoco{} and Nengo~4.1.0. The primary runs
+(\envRunDate) record repository commit \texttt{\envCommit}. Every run directory holds \code{trace.csv}, \code{summary.json}
+and a \code{manifest.json} with the configuration hash, source hashes and library versions.
+
+% =============================================================================
+\section{Quaternions, kinematics, and attitude error: \Peq{1}--\Peq{8}}\label{sec:quat}
+% =============================================================================
+\subsection{Hamilton product and rotation}
+For scalar-first $p=[p_0,\bm p\T]\T$, $q=[q_0,\bm q\T]\T$,
+\begin{equation}
+p\otimes q=\begin{bmatrix}p_0q_0-\bm p\T\bm q\\ p_0\bm q+q_0\bm p+\bm p\times\bm q\end{bmatrix},\qquad
+q^*=[q_0,-\bm q\T]\T,\qquad q^{-1}=q^*\ \text{for}\ \|q\|=1,
+\label{eq:hamilton}
+\end{equation}
+and a unit quaternion rotates vectors by $R(q)\bm v=\vecpart(q\otimes[0,\bm v\T]\T\otimes q^*)$
+\cite{diebel2006quaternion,schaub2018amss}.
+\begin{status}Standard.\end{status}
+\listing{src/gra_control/math3d.py}{12}{25}{conjugate and Hamilton product \eqref{eq:hamilton}}
+
+\subsection{Active and passive kinematics \Peq{1}, \Peq{3}}
+With $Q$ the body-to-inertial quaternion and $\bm\omega$ the body rate, $\dot Q=\tfrac12Q\otimes\tilde{\bm\omega}$,
+$\tilde{\bm\omega}=[0,\bm\omega\T]\T$ \cite{schaub2018amss}. For the passive $q=Q^{-1}=Q^*$, differentiate $Q\otimes Q^*=1$:
+\[
+\dot q=\dot{(Q^*)}=-Q^*\otimes\dot Q\otimes Q^*=-\tfrac12\,Q^*\otimes Q\otimes\tilde{\bm\omega}\otimes Q^*=-\tfrac12\,\tilde{\bm\omega}\otimes q,
+\]
+which is \Peq{3}. \emph{Derived here.}
+
+\textbf{Code convention.} MuJoCo's free joint stores $Q$ (body$\to$world) in \code{qpos}; the runner forms $q=Q^*$ and reads
+$\bm\omega$ in body axes from \code{qvel}. Measurement noise (Sec.~VI-E) left-multiplies a small Euler-angle quaternion into
+$q$ and adds Gaussian samples to $\bm\omega$; the \emph{true} $q$ is kept separately for scoring.
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{316}{339}{true and fed-back state, noise, reference, error}
+
+\subsection{Error quaternion, sign selection, and angle \Peq{4}--\Peq{6}}
+$q_e=q_d\otimes q^{-1}$. Writing $q_e=[\cos\frac\theta2,\ \sin\frac\theta2\,\bm n\T]\T$ gives
+$\|\bm q_{e,v}\|=|\sin\frac\theta2|$ and $|q_{e,0}|=|\cos\frac\theta2|$, so
+$\theta_q=2\operatorname{atan2}(\|\bm q_{e,v}\|,|q_{e,0}|)\in[0,\pi]$ is the smallest rotation angle and is invariant to
+$q_e\mapsto-q_e$. The selection $\bm e_q=\sgnp(q_{e,0})\bm q_{e,v}$ picks the hemisphere $q_{e,0}\ge0$; it is
+discontinuous at $q_{e,0}=0$, consistent with the fact that no continuous feedback stabilizes attitude globally
+\cite{bhat2000topological,chaturvedi2011rigid}; global designs need hybrid \cite{mayhew2011hybrid} or geometric-algebra
+\cite{rubioscola2026ga} methods. \emph{Standard; the paper states the local scope.}
+\listing{src/gra_control/math3d.py}{40}{51}{$q_e=q_d\otimes q^*$, $\sgnp$ (\code{if qe[0] < 0}), $\theta_q$}
+
+\subsection{Error kinematics \Peq{7}--\Peq{8}}
+With $\dot q_d=-\tfrac12\tilde{\bm\omega}_d\otimes q_d$ (same passive convention) and $\dot{(q^*)}=\tfrac12 q^*\otimes\tilde{\bm\omega}$,
+\[
+\dot q_e=\dot q_d\otimes q^*+q_d\otimes\dot{(q^*)}=-\tfrac12\tilde{\bm\omega}_d\otimes q_e+\tfrac12 q_e\otimes\tilde{\bm\omega}.
+\]
+Insert $q_e\otimes q_e^*=1$: $\tilde{\bm\omega}_d\otimes q_e=q_e\otimes[0,(R(q_e)\T\bm\omega_d)\T]\T$. Hence
+\begin{equation}
+\dot q_e=\tfrac12q_e\otimes[0,\bm\omega_e\T]\T,\quad \bm\omega_e=\bm\omega-R(q_e)\T\bm\omega_d,\quad
+\dot q_{e,0}=-\tfrac12\bm q_{e,v}\T\bm\omega_e,\quad
+\dot{\bm q}_{e,v}=\tfrac12\big(q_{e,0}\bm\omega_e+\bm q_{e,v}\times\bm\omega_e\big).
+\label{eq:qev_dot}
+\end{equation}
+The first three are \Peq{7}--\Peq{8}. \emph{Derived here.}
+
+\subsection{\texorpdfstring{References and the desired rate $\bm\omega_d$}{References and the desired rate}}\label{sec:rate}
+Mission references are closed-form Euler 3-2-1 triples (Sec.~VI-A) mapped to quaternions by the half-angle formula
+\cite{diebel2006quaternion}.
+\listing{src/gra_control/math3d.py}{28}{37}{Euler 3-2-1 to quaternion}
+\listing{src/gra_control/math3d.py}{54}{82}{mission references (Roll, Full3, Hard45, Hardstep, Yaw360; Hover)}
+
+The feedforward rate is a central difference of $q_d$ with $h=10^{-4}$\,s. Using $q_d(t\pm h)=q_d\pm h\dot q_d+O(h^2)$ and
+$\dot q_d=-\tfrac12\tilde{\bm\omega}_d\otimes q_d$,
+\[
+q_d(t+h)\otimes q_d(t-h)^*=1+2h\,\dot q_d\otimes q_d^*+O(h^2)=[1,\,-h\bm\omega_d\T]\T+O(h^2),
+\]
+so $\bm w=\tfrac{2}{2h}\vecpart(\cdot)=-\bm\omega_d$, and the \code{left-neg} mode returns $+\bm\omega_d$, the desired-frame rate of
+\Peq{7}--\Peq{8}. \emph{Derived here.}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{89}{107}{\code{reference_rate}: central difference, four sign/side modes}
+\begin{status}Verified (\code{reproduce/check_rate_frame.py}): propagating $q_d$ one step with the \code{left-neg} rate leaves a residual
+of $4\times10^{-9}$ (Hard45), $2\times10^{-9}$ (Full3) and $4\times10^{-11}$ (Yaw360); the other three modes miss by
+$2\times10^{-5}$--$10^{-4}$. The mode was originally chosen empirically (\code{select_rate_ff.py}); this derivation confirms it.\end{status}
+
+\implnote{The PD+ff law \Peq{15} damps $\bm\omega-\bm\omega_d$, exactly as written in the paper; it does not apply the transport
+$R(q_e)\T$ of \Peq{8}. The difference is bounded by $\|(I-R(q_e)\T)\bm\omega_d\|=2|\sin\frac{\theta_q}2|\,\|\bm\omega_{d,\perp}\|\le\theta_q\|\bm\omega_d\|$.
+Measured on the published $\rho=3$ runs it is $0.3$--$0.7\%$ of $\|\bm\omega_d\|$ on Full3 and Hard45 and $<10^{-4}\%$ on Roll
+and Yaw360 (single-axis references commute with $q_e$). On Hardstep the reference is piecewise constant, so $\bm\omega_d=0$
+except for one $0.5$-ms control sample at each step instant, where the difference straddles the jump
+($\|\bm\omega_d\|\approx8.3\times10^3$\,rad/s) and the baseline torque saturates for that sample in both arms. No reported
+number is affected by the notation; the Hardstep spike is part of every Hardstep result, identically in both arms.}
+
+% =============================================================================
+\section{Rigid body, inertia, and the torque box: \Peq{2}, \Peq{9}}
+% =============================================================================
+\Peq{2} is Euler's rotational equation in body axes \cite{schaub2018amss}; MuJoCo integrates it \cite{todorov2012mujoco}
+with the model files from MuJoCo Menagerie \cite{menagerieModels} (X2) and the 1.5$\times$ rotor design derived from its
+Crazyflie~2 model (CF2). \Peq{9} is the similarity transform of the principal-axis tensor. Controller gains use the
+principal moments \code{body_inertia} in their reported order ($\bm j_{\rm tune}$, Table~I).
+
+\textbf{Torque box.} $\ell_i=\max(j_{{\rm tune},i}\nu_i,10^{-6})$ with $\bm\nu=(12,12,10)$\,rad/s$^2$: the torque that gives axis $i$
+an angular acceleration $\nu_i$. For both rotor platforms the \code{model} policy returns this inertia limit.
+\listing{src/gra_control/platforms/drone.py}{76}{98}{\code{torque_limits}}
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{236}{254}{inertia, limits and the frozen $\rho=3$ baseline}
+
+% =============================================================================
+\section{Allocation and the height loop: \Peq{10}--\Peq{12}}
+% =============================================================================
+\subsection{Allocation matrix \Peq{10}}
+A rotor at $\bm p_i$ with thrust $[0,0,f_i]\T$ gives torque $\bm p_i\times[0,0,f_i]\T=[p_{i,y}f_i,\,-p_{i,x}f_i,\,0]\T$; the drag
+reaction adds $\kappa_if_i$ about $z$ \cite{garciacarrillo2013quad}. Summing, $[T,\bm\tau\T]\T=B\bm f$ with columns
+$(1,\ p_{i,y},\ -p_{i,x},\ \kappa_i)$. For four rotors $B$ is square and invertible, so $B^{-1}=B^\dagger$.
+\emph{Derived here.}
+\listing{src/gra_control/platforms/drone.py}{67}{73}{$B$ from rotor-site positions and actuator gear; \code{np.linalg.inv(B)}}
+
+\subsection{Clipped inverse allocation \Peq{11} and the CF2 rotor limit}
+$\bm f_{\rm req}=B^{-1}[T,\bm u\T]\T$ is clipped to $[\bm0,\bm f_{\max}]$; the realized wrench is $B\bm f_{\rm act}$. This is not an
+optimization-based allocator \cite{monteiro2016allocation}. The CF2 authority scale multiplies only the upper force limit
+($0.0875\to0.13125$\,N, Table~I).
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{280}{285}{\code{--actuator-scale} (1.5 for CF2, 1.0 for X2)}
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{412}{422}{$\bm f_{\rm req}$, clip, rotor-saturation flag, realized wrench}
+
+\subsection{Collective thrust \Peq{12}}
+Vertical balance $T\,R(Q)_{33}-Mg=M\ddot z$ with the imposed $\ddot z=6(z_d-z)-4\dot z$ gives
+$T=M[g+6(z_d-z)-4\dot z]/R_{33}$: a PD altitude loop with $\omega_{n,z}=\sqrt6=2.45$\,rad/s and $\zeta_z=4/(2\sqrt6)=0.82$.
+The guard $R_{33}\ge0.35$ caps tilt compensation at $\arccos0.35=69.5^\circ$ (factor $\le2.86$), and $T\le2.5Mg$.
+\emph{Derived here.}
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{397}{410}{collective thrust}
+
+% =============================================================================
+\section{Classical baselines: \Peq{13}--\Peq{15}}
+% =============================================================================
+\subsection{Gain design \Peq{13}}
+For one principal axis with small error, $e_q\approx\frac\theta2$ and, from \eqref{eq:qev_dot} with $q_{e,0}\approx1$,
+$\dot e_q\approx\frac12\omega$. With $j\dot\omega=-k_qe_q-k_\omega\omega$ and $\omega=\dot\theta$,
+\[
+j\ddot\theta+k_\omega\dot\theta+\tfrac{k_q}{2}\theta=0\quad\Longrightarrow\quad
+\omega_n^2=\frac{k_q}{2j},\qquad 2\zeta\omega_n=\frac{k_\omega}{j},
+\]
+so $k_q=2j\omega_n^2$ and $k_\omega=2\zeta j\omega_n$; the factor 2 compensates the half angle. Because the X2 tensor is not
+diagonal and $\bm j_{\rm tune}\ne\operatorname{diag}(\bm J)$, $\omega_n$ is a tuning label, not an exact closed-loop frequency.
+\emph{Derived here.}
+
+\subsection{Fixed PD \Peq{14} (Table II, lowest blocks)}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py}{163}{165}{$\bm\omega_n=(4,4,3.5)$, $\bm k_q$, $\bm k_\omega$ with $\zeta=0.95$}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py}{226}{230}{\Peq{14} and the PES target \Peq{24}}
+
+\subsection{PD with desired-rate feedforward \Peq{15} and the $\rho$ scaling}
+The $\rho=1$ ladder (Table II) used the archived runner's PD+ff branch, with $\bm\omega_d$ from Sec.~\ref{sec:rate}:
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{463}{470}{\Peq{15} (integral gain zero in the paper's runs)}
+
+The $\rho=3$ primary baseline is \code{AdvancedBaseline} with the backstepping family, bandwidth $\rho\bm\omega_n$ and model
+feedforward off. Its law is
+$\bm\tau=\sat_{\bm\ell}\big(\bm J[\dot{\bm\omega}_d-k_1(2\bm e_q)-k_2(\bm\omega-\bm\omega_d)]+\bm\omega\times\bm J\bm\omega\big)$ with
+$k_1=(\rho\omega_n)^2$, $k_2=2\zeta\rho\omega_n$. With model feedforward off, $\dot{\bm\omega}_d=0$ and the gyroscopic term is
+dropped, and since \code{self.J} holds $\bm j_{\rm tune}$,
+\[
+\bm\tau=\sat_{\bm\ell}\big(-2\bm j_{\rm tune}\odot(\rho\bm\omega_n)^2\odot\bm e_q-2\zeta\,\bm j_{\rm tune}\odot\rho\bm\omega_n\odot(\bm\omega-\bm\omega_d)\big),
+\]
+which is \Peq{13}--\Peq{15} with $\bm\omega_n\mapsto\rho\bm\omega_n$. \emph{Derived here; verified bit-exact in 20/20 cells
+(Table~\ref{tab:audit}).}
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{78}{85}{frozen baseline: $\rho=3$, $\zeta=.95$, backstepping, \code{left-neg}, no model feedforward}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{138}{141}{backstepping gains $k_1=\omega^2$, $k_2=2\zeta\omega$ at $\omega=\rho\omega_n$}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{217}{245}{\code{AdvancedBaseline.torque}: all six families behind one interface}
+
+\subsection{Other control families (Sec.~VI-B, portability)}
+The same \code{torque} method implements LQR (per-axis double integrator, $K=[\omega^2,\sqrt2\,\omega]$), sliding mode
+($s=\bm\omega_e+\lambda\bm e$ with a boundary layer), unconstrained finite-horizon MPC (first-move gain), and NMPC (grid
+receding horizon around the backstepping law); PID+ff adds conditional-integration anti-windup at rotor level
+(\code{run_controllers_gated.py}). The residual only replaces $\bm u_0$ in \Peq{27}; Proposition~1 holds for any
+$\bm u_{0,k}\in\mathcal U$, and every family's output is in $\mathcal U$: LQR, backstepping, SMC and MPC are saturated in line 241
+above, NMPC clips every candidate torque inside \code{_nmpc}, and the PID path clips at line 353 of \code{run_controllers_gated.py}.
+
+% =============================================================================
+\section{The CMG unit: \Peq{16}--\Peq{22}}\label{sec:cmg}
+% =============================================================================
+\subsection{Paired-current encoding \Peq{16}}
+$\bar{\bm u}=\bm u_0\oslash\bm\ell\in[-1,1]^m$ because $\bm u_0$ is already saturated, and
+$\bm I^\pm=I_b\bm1+I_g\max(\pm\bar{\bm u},0)\in[I_b,I_b+I_g]^m$. In each pair at most one current exceeds $I_b$: one sign carries
+the request, the other rests.
+\listing{experiments/nengo_nef_replication_2026-08-29/nengo_cmg.py}{318}{334}{normalized request, paired currents, clipped PES target}
+
+\subsection{Continuous dynamics \Peq{17}--\Peq{19} and the membrane step \Peq{22}}
+The unit is conductance-based in the Hodgkin--Huxley sense \cite{hodgkin1952quantitative}: a gate $r_j$ relaxes to a
+logistic target set by the membrane, and a gate-dependent shunt pulls the membrane toward a reversal level. It emits no
+spikes and has no reset. The membrane equation is affine in $v$,
+\[
+\dot v=-\underbrace{\big(\tfrac1\tau+c\big)}_{\lambda}v+\underbrace{\tfrac{v_{\rm rest}+I}{\tau}+c\,v_{\rm reset}}_{d},
+\]
+so with $\lambda,d$ frozen over $[t_k,t_k+h]$ the integrating factor gives
+$v(t_k+h)=e^{-\lambda h}v_k+(1-e^{-\lambda h})\,d/\lambda$, which is \Peq{22}, an exponential integrator
+\cite{hochbruck2010exponential}. Since $0<e^{-\lambda h}<1$, the step is a convex combination of $v_k$ and the frozen
+equilibrium $d/\lambda$. \emph{Derived here.}
+
+\subsection{Gate step \Peq{20}--\Peq{21}}
+The implemented step is forward Euler with a clip: $r^+=\clip_{[0,1]}\big[(1-\tfrac h{\tau_r})r+\tfrac h{\tau_r}b\big]$. For
+$0<h\le\tau_r$ the weights are nonnegative and sum to one, so with $r,b\in[0,1]$ the clip is inactive. The exponential-Euler
+alternative $r^+=e^{-h/\tau_r}r+(1-e^{-h/\tau_r})b$ is convex for every $h$; at $h/\tau_r=0.1$ its weights are $0.905/0.095$
+against $0.9/0.1$, and all results use the implemented step. The code updates $r$ first and uses the updated $r^+$ in
+$c_j$, as the paper states. The logistic argument is written $\alpha_h(v-(v_{\rm th}-\gamma r))$, identical to \Peq{20}.
+\listing{experiments/nengo_nef_replication_2026-08-29/nengo_cmg.py}{71}{89}{Nengo \code{NeuronType.step}: gate (Euler + clip), membrane \Peq{22}, activity $\clip(Gr)$}
+\listing{src/gra_control/gate.py}{41}{55}{the direct NumPy bank: the same update, line for line}
+
+\subsection{Bounded states (Proposition~1(i))}
+\emph{Gate:} as above. \emph{Membrane:} $I_j\in[I_b,I_b+I_g]$ and $c_j\ge0$ give
+$d/\lambda=\frac{1/\tau}{1/\tau+c}(v_{\rm rest}+I)+\frac{c}{1/\tau+c}v_{\rm reset}$, a convex combination of
+$v_{\rm rest}+I$ and $v_{\rm reset}$; the step is a convex combination of $v_k$ and $d/\lambda$; induction closes the bound.
+
+\subsection{\texorpdfstring{Rest point, resting activity, latching, and $\chi$ (Sec.~VI-C)}{Rest point, resting activity, latching, and chi (Sec. VI-C)}}
+\textbf{Rest.} With $\bar u=0$, $I=I_b=0.75$ and $r\approx0$: $v^\star=v_{\rm rest}+I_b=0.75$ and
+$b=\sigma(\alpha_h(v^\star-v_{\rm th}))=\sigma(-12.5)=3.7267\times10^{-6}\approx r^\star$ (the $\gamma r$ term changes the argument by
+$O(10^{-4})$). Resting activity $a^\star=\min(1,Gr^\star)=0.3727$.
+
+\textbf{Latch.} If $r_k\ge\frac12$ and $v_k\ge0$ (Prop.~1(i) gives $v\ge0$ since $v_{\rm reset}=v_{\rm rest}=0$), then
+$\alpha_h(v-v_{\rm th}+\gamma r)\ge\alpha_h(0-1+1)=0$, so $b_k\ge\frac12$ and the convex step keeps $r_{k+1}\ge\frac12$:
+an opened gate cannot close.
+
+\textbf{Why $\chi$ is inert.} At rest $c_j=g_0r_j^2=120\,(3.73\times10^{-6})^2=1.7\times10^{-9}$\,s$^{-1}$, against a leak
+$\tau^{-1}=20$\,s$^{-1}$. After latching ($r=1$, $I=I_b$): $c=120$ ($\chi=0$) gives $v^\star=15/140=0.107$, and $c=142.5$
+($\chi=1$) gives $v^\star=15/162.5=0.092$, below $v_{\rm th}$ in both cases, while the latched activity stays at $a=1$.
+The readout never sees the difference. \emph{Derived here; these are the paper's numbers in Sec.~VI-C.}
+
+% =============================================================================
+\section{Readout, PES, residual, and the gate: \Peq{23}--\Peq{28}}
+% =============================================================================
+\subsection{Readout \Peq{23}}
+$\bm a=\clip_{[0,1]}(G\bm r^+)$ saturates once $r\ge1/G=10^{-5}$. $W_0=[I_m,-I_m]$ gives $\bm s=\clip(\bm a^+-\bm a^-)$: pair
+subtraction recovers a signed quantity from nonnegative features.
+\listing{experiments/nengo_nef_replication_2026-08-29/nengo_cmg.py}{143}{150}{$W_0=[I,-I]$ and the Nengo learning rate}
+
+\subsection{PES update \Peq{24}--\Peq{26}}
+PES \cite{macneil2011pes,voelker2015pes} is the local gradient step on $E=\frac12\|\bm y^*-W\bm a\|^2$:
+$-\partial E/\partial W=\bm\varepsilon\bm a\T$. The code uses the clipped readout inside $\bm\varepsilon$. The leak $-\lambda_WW$ is the
+$\sigma$-modification of robust adaptive control \cite{ioannou1984sigma,ioannou1996robust}; $\Pi_{\mathcal W}$ clips each weight
+to $[-6,6]$. The residual uses $W_k$ \emph{before} the update. \emph{Standard.}
+
+\textbf{Nengo conversion.} Nengo~4.1.0's \code{SimPES} applies $\Delta W=-(\kappa\,h/n)\,\bm e\,\bm a\T$ with $n$ presynaptic
+units and error $\bm e=\bm s-\bm y^*=-\bm\varepsilon$ \cite{bekolay2014nengo}. Hence $\Delta W=(\kappa h/n)\bm\varepsilon\bm a\T$, and
+matching $\eta\bm\varepsilon\bm a\T$ needs $\kappa=\eta n/h=8\times10^{-4}\cdot6/(5\times10^{-4})=9.6$. The leak is applied to the
+pre-step weights and the projection after the simulator step. The teaching graph adds a one-step latency; the resulting
+difference from the direct controller is the $2.013\times10^{-6}$ of Table~\ref{tab:audit}.
+\listing{experiments/nengo_nef_replication_2026-08-29/nengo_cmg.py}{191}{214}{PES connection; error $=$ clipped decoded $-$ target}
+\listing{experiments/nengo_nef_replication_2026-08-29/nengo_cmg.py}{335}{352}{leak on pre-step weights, projection to $[-6,6]$, residual \Peq{27}}
+\listing{src/gra_control/gate.py}{110}{134}{the direct controller: \Peq{16}, \Peq{23}, \Peq{26}, \Peq{27}}
+
+\subsection{Bounded residual \Peq{27} and the saturation-aware gate \Peq{28}}
+At $|u_{0,i}|=\ell_i$ a residual component of the same sign is clipped away, and an opposing one removes up to $\beta\ell_i$ of
+authority exactly when the loop needs all of it. The gate zeroes such opposing components and leaves PES untouched.
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{370}{378}{requested residual $\beta\bm\ell\odot\bm s$ and its consistency check}
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{380}{395}{gate \Peq{28}, $\bm u_k=\sat_{\bm\ell}(\bm u_0+\beta\bm\ell\odot\tilde{\bm s})$, realized residual}
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{309}{312}{load threshold}
+
+\implnote{The code tests ``loaded'' as $|u_{0,i}|\ge\ell_i-10^{-12}$\,N\,m (threshold factor 1.0, absolute tolerance
+$10^{-12}$), a floating-point guard for ``$|u_{0,i}|\ge\ell_i$'' in \Peq{28}, since the saturated baseline equals $\ell_i$ only to
+rounding. The gate masks the \emph{output} only; the Nengo augmentor's PES update never sees the mask. The mode
+\code{torque-saturation-opposition-freeze-pes} (decoder rows frozen on gated axes) was part of the exploratory
+twelve-configuration screen of Sec.~VI-F only.}
+
+\subsection{Proposition~1, full proof}
+\emph{(i)} Sec.~\ref{sec:cmg}. \emph{(ii)} $\Pi_{\mathcal W}$ maps into $\mathcal W$. \emph{(iii)} $\bm u_0\in\mathcal U$, and the outer
+saturation gives $\bm u\in\mathcal U$. Componentwise $\sat_{\ell_i}$ is 1-Lipschitz and fixes $u_{0,i}$, so
+$|\delta_i|=|\sat_{\ell_i}(u_{0,i}+\beta\ell_i\tilde s_i)-\sat_{\ell_i}(u_{0,i})|\le\beta\ell_i|\tilde s_i|\le\beta\ell_i|s_i|\le\beta\ell_i$,
+using $|\tilde s_i|\le|s_i|\le1$ from \Peq{28}. With $\beta=0$, $\bm u=\sat(\bm u_0)=\bm u_0$, and the common allocator returns the same
+rotor forces at the same state and collective. \qed
+\begin{status}Verified: exact recovery at $\beta=0$ holds with relative difference $0$ for four new baseline families
+(Table~\ref{tab:audit}).\end{status}
+
+% =============================================================================
+\section{Proposition~2 and the latched regime: \Peq{29}--\Peq{30}}\label{sec:latched}
+% =============================================================================
+\subsection{Proposition~2, proof, and the clip lemma}
+Fix $\bm a\ne0$ and $\bm y^*$, take $\lambda_W=0$ with clip and projection inactive, and let $\bm z_k=W_k\bm a$. Then
+$\bm z_{k+1}=\bm z_k+\eta\|\bm a\|^2\bm\varepsilon_k$ and $\bm\varepsilon_{k+1}=(1-\eta\|\bm a\|^2)\bm\varepsilon_k$, which is \Peq{29}.
+\qed
+\begin{lemma}[The clip never enlarges the PES error]
+If $\bm y^*\in[-1,1]^m$ then $\|\clip(\bm z)-\bm y^*\|\le\|\bm z-\bm y^*\|$ for all $\bm z$.
+\end{lemma}
+\begin{proof}Projection onto a closed convex set is nonexpansive and $\bm y^*$ is a fixed point of it \cite{bauschke2017convex}.\end{proof}
+
+\subsection{Constant-basis recursion \Peq{30}}
+With $\bm a_k=\bar{\bm a}$ and projection inactive, $\bm z_k=W_k\bar{\bm a}$ satisfies
+$\bm z_{k+1}=(1-\lambda_W)\bm z_k+\eta\|\bar{\bm a}\|^2[\bm y_k^*-\clip(\bm z_k)]$. \emph{Derived here.} When all six gates latch,
+$\bar{\bm a}=\bm1$ and $\|\bar{\bm a}\|^2=2m=6$.
+
+\subsection{Pole, corner frequency, DC gain}
+With the clip inactive the recursion is linear with pole $p=1-\lambda_W-\eta\|\bar{\bm a}\|^2=1-10^{-6}-4.8\times10^{-3}=0.99520$, so
+\[
+\tau_f=\frac{h}{1-p}=0.1041\ \text{s},\qquad \omega_c=\frac1{\tau_f}=9.60\ \text{rad/s},\qquad
+\text{DC gain}=\frac{\eta\|\bar{\bm a}\|^2}{\eta\|\bar{\bm a}\|^2+\lambda_W}=0.99979 .
+\]
+The residual therefore converges to $\beta\ell_iy_i^*=-\beta\ell_ik_e e_{q,i}$: lagged \emph{proportional} action, not integral action
+(an integrator has its pole at $1$ and infinite DC gain). At the $\rho=3$ baseline bandwidth ($3\times4=12$\,rad/s) the loop runs
+above this corner, which is the Hardstep lag of Sec.~VI-F.
+\listing{experiments/theory_certificate_2026-09-12/compute_local_certificate.py}{148}{161}{pole, time constant, corner, DC gain, lag, stiffness ratio}
+
+\textbf{Added stiffness.} While $|k_ee_{q,i}|<1$, the latched residual adds $\beta k_e\ell_i=\beta k_ej_i\nu_i$ to the PD stiffness
+$2j_i(\rho\omega_{n,i})^2$, a vehicle-independent ratio $\beta k_e\nu_i/(2\rho^2\omega_{n,i}^2)$: $1.50$ (roll, pitch) and $1.63$ (yaw) on
+the fixed PD with $\beta=.5$; $0.167$ and $0.181$ on X2 at $\rho=3$; $0.067$ and $0.073$ on CF2 at $\rho=3$ ($\beta=.2$). The residual is
+a large correction on the weak baseline and a small one on the tuned baseline, consistent with Table~II. \emph{Derived here.}
+
+\textbf{Reference content.} Roll, Full3 and Hard45 are sums of constant-amplitude, constant-frequency components whose
+instantaneous frequencies are the component frequencies \cite{sandoval2018instantaneous}; the highest is $2.1$\,rad/s
+(Hard45), where the filter gain is $0.977$ and the lag $12.3^\circ$. Yaw360's rate peaks at $2\pi\cdot1.5/45=0.21$\,rad/s.
+
+\textbf{$\sigma$-modification fixed point.} At a fixed point with constant $\bar{\bm a}$, $\eta\|\bar{\bm a}\|^2\bm\varepsilon=\lambda_W\bm s$, so
+$\|\bm\varepsilon\|=\frac{\lambda_W}{\eta\|\bar{\bm a}\|^2}\|\bm s\|=2.1\times10^{-4}\|\bm s\|$ when latched: an equality for the PES mismatch,
+not a bound on $\theta_q$.
+
+% =============================================================================
+\section{Neuron-basis comparison (Sec.~VI-D)}
+% =============================================================================
+\subsection{Equal learning rates across neuron families}
+For a conventional family (LIF, ALIF, LIFRate, Izhikevich \cite{izhikevich2003}) the learned connection's presynaptic signal is
+the filtered native output $\bm p=S\bm a$, with $S$ the calibrated feature scale, and the class reports $W=S\Theta$ for the
+Nengo weights $\Theta$. With \code{SimPES}, $\Delta\Theta=(\kappa h/n)\bm\varepsilon\bm p\T$, hence
+\[
+\Delta W=S\,\Delta\Theta=\frac{\kappa hS^2}{n}\bm\varepsilon\bm a\T\quad\Longrightarrow\quad \kappa=\frac{\eta\,n}{h\,S^2}
+\]
+for the same normalized update $\eta\bm\varepsilon\bm a\T$ as CMG ($S=1$ recovers $\kappa=9.6$). The archived family class used
+$\eta n/(hS)$, an effective rate $S\eta$ ($\approx43\times$ for Izhikevich, $S=42.6$). The corrected runs divide the requested rate by
+$S$ before construction; the archived file is not edited. \emph{Derived here from Nengo's source}; certified in
+\code{experiments/final_robustness_gating_2026-09-20/REPORT_NEURON_BASIS_CORRECTION_2026-09-24.md}.
+
+\implnote{Every Izhikevich row of Table II and every number in the Sec.~VI-D paragraphs (Izhikevich, LIFRate, static paired,
+constant basis, occupancy $3.2$--$4.4\%$) uses the corrected rate. Two statements still rest on the archived fixed-PD
+neuron-family campaign, which ran LIF/ALIF/LIFRate with the uncorrected rate: the Table II footnote ``LIF/ALIF/LIFRate stay within
+$0.1\%$ of fixed PD outside Hardstep'' and the qualitative ``full matrix'' remarks opening Sec.~VI-D. No corrected-rate fixed-PD
+runs exist for those three families, so these statements are not re-verified here.}
+\listing{experiments/nengo_nef_replication_2026-08-29/nengo_neuron_family.py}{88}{93}{archived rate $\eta n/(hS)$}
+\listing{experiments/final_robustness_gating_2026-09-20/izh_adapter_corrected.py}{32}{40}{corrected: requested rate divided by $S$}
+
+\subsection{Metrics used in Sec.~VI-D}
+\textbf{Effort} (Table~II): $\sqrt{\operatorname{mean}_{k,i}(\delta_{k,i}/\ell_i)^2}$ of the \emph{realized} residual (after the torque box),
+arithmetic mean over missions. \textbf{Rail fraction}: share of samples, $t\ge2$\,s, all three axes, with
+$|\delta_{k,i}|\ge0.98\,\beta\ell_i$ (corrected Izhikevich: $0$--$1.7\%$). \textbf{Activity occupancy}: share of unit-samples with
+$a_j>10^{-6}$, mission mean per family and platform (LIF, ALIF, LIFRate: $3.2$--$4.4\%$; CMG, Izhikevich: $\ge99.9\%$).
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{628}{629}{normalized RMS used for every effort value}
+
+% =============================================================================
+\section{Protocol and metrics (Sec.~VI-A, VI-E)}
+% =============================================================================
+\subsection{Error metric and reductions}
+$\bar\theta_q=\frac1N\sum_k\theta_{q,k}$ over all $N=90{,}000$ control steps (45\,s at $h=5\times10^{-4}$\,s), computed from the
+\emph{true} attitude even when the controller sees noisy feedback. Reduction $=100(\bar\theta_{q,\rm PD}-\bar\theta_{q,\rm CMG})/\bar\theta_{q,\rm PD}$.
+The five-mission summary is the reduction of geometric means, $100\,(1-\operatorname{gm}(\bar\theta_{\rm CMG})/\operatorname{gm}(\bar\theta_{\rm PD}))$,
+computed from unrounded values.
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{440}{441}{per-step true and fed-back error}
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{725}{731}{summary metrics}
+
+\subsection{Measurement noise}
+Independent zero-mean Gaussian Euler angles form a small quaternion left-multiplied into $q$; Gaussian samples are added to each
+rate component (moderate $0.010$\,rad, $0.025$\,rad/s, 5 seeds; realistic $0.020$\,rad, $0.050$\,rad/s, 10 seeds). Both arms of a
+pair use the same seed (PCG64), hence the same noise stream (listing in Sec.~\ref{sec:quat}, lines 328--334).
+
+\subsection{Repeated disturbances}
+$\bm\tau_{\rm d}=d_b\varrho(t)[\sin(1.31t+.2),\,.8\sin(1.73t+1.1),\,.6\sin(2.17t+2)]\T$ in body axes, applied as the world-frame torque
+$R\bm\tau_{\rm d}$. $\varrho$ is zero for a 5-s warm-up, then alternates 5-s on/off with raised-cosine edges
+$\frac12(1-\cos(\pi\xi/0.25))$.
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{110}{129}{envelope $\varrho(t)$}
+\listing{experiments/final_robustness_gating_2026-09-20/run_final_robustness.py}{424}{438}{body-frame multi-sine, applied through \code{xfrc_applied}}
+
+% =============================================================================
+\section{Changes relative to the September 12 companion}
+% =============================================================================
+\begin{enumerate}[leftmargin=1.5em]
+\item Equation numbering follows the current manuscript (30 equations, Propositions~1--2). The local-stability theorem and its
+  $\beta_{\max}$ certificate are no longer in the paper and are removed here.
+\item Added: the desired-rate feedforward \Peq{15} with the derivation of $\bm\omega_d$ and the transport bound
+  (Sec.~\ref{sec:rate}); the $\rho=3$ baseline and its backstepping identity; the saturation-aware gate \Peq{28} with its code and
+  implementation tolerance; the equal-rate PES normalization for neuron families; the effort, rail and occupancy definitions.
+\item Code references move from the archived \code{run_mujoco_nef.py} to the runner that produced the current numbers,
+  \code{run_final_robustness.py}; the archived runner is cited only for the fixed-PD and $\rho=1$ rows.
+\item The occupancy table of the old Sec.~5.4 (archived campaign, $\le0.1\%$) is replaced by the corrected-protocol values.
+\item The stiffness ratio is given for all three baselines, not only the fixed PD.
+\end{enumerate}
+
+\appendix
+\section{Source files and hashes}\label{app:hashes}
+Hashes of the files quoted in this document, compared with the \code{source_sha256} and \code{model_sha256} fields of the
+manifests of the published primary runs (X2 Hard45 and CF2 $\beta=.2$ Hard45, gated). ``Not recorded'' means the primary runs do
+not import that file; it is still quoted at the hash shown.
+{\small\input{code_hashes.tex}}
+
+\section{Recomputed paper numbers}\label{app:claims}
+Output of \code{reproduce/verify_acc2027_claims.py}: each number the verifier reads from the manuscript, recomputed from the raw
+run outputs listed in \code{REPRODUCE_ACC2027.md}.
+\input{claims_table.tex}
+
+\bibliographystyle{IEEEtran}
+\bibliography{../v15_2026-09-29_corrected/references_ACC2027}
+\end{document}

@@ -1,0 +1,743 @@
+\documentclass{beamer}
+\mode<presentation> {
+\usetheme{Warsaw}
+\definecolor{myred}{RGB}{200,0,0} % Definir un nuevo color personalizado
+\definecolor{moradoUPMH}{rgb}{0.46, 0.04, 0.49}
+
+  % Cambiar el color de la estructura y de los elementos relacionados
+  \setbeamercolor{structure}{fg=moradoUPMH}
+  \setbeamercolor{palette primary}{fg=moradoUPMH, bg=white}
+  \setbeamercolor{palette quaternary}{fg=white, bg=moradoUPMH}
+
+  
+
+  % Resto del código del tema
+
+  %\colorlet{structure}{red} 
+  %\usestructuretemplate{\color{structure}}{red}
+  \beamertemplateshadingbackground{white!85}{moradoUPMH!15}
+  \setbeamercovered{transparent}
+}
+\definecolor{darkblue}{rgb}{0.55,0,0}%{0,0,0.55}
+\definecolor{springgreen4}{rgb}{0,0.55,0.27}
+\definecolor{red4}{rgb}{0.55,0,0}
+\definecolor{darkgreen}{rgb}{0,0.39,0}
+\definecolor{darkred}{rgb}{0.55,0,0}
+\definecolor{royalblue}{rgb}{0.55,0,0}%{0.23,0.37,0.8}
+\definecolor{auburn}{rgb}{0.43, 0.21, 0.1}
+
+\definecolor{verde}{rgb}{0,0.39,0}%{.5,.80,.5}
+\definecolor{morado}{rgb}{.88,.50,.90}
+\definecolor{azul}{rgb}{.5,.5,.98}
+\definecolor{grisOscuro}{rgb}{.1,.1,.1}
+
+\usepackage{subcaption}
+\usepackage{tcolorbox}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{array, multirow, multicol, tabularx}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{caption}
+%\usepackage[spanish]{babel}
+%%%%%%%%%%%%%\usepackage[spanish,es-tabla]{babel}
+\usepackage{verbatim} % comentarios
+\usepackage{multimedia}
+\usepackage{media9}
+\usepackage{ragged2e}
+\usepackage{bm}
+
+
+
+
+\usefonttheme[onlymath]{serif}
+\usepackage{amsthm}
+\usepackage{ae}
+\usepackage{textcomp}
+%\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[]{graphicx}
+\newcommand{\bld}[1]{\mbox{$\mathbf{#1}$}}
+%\newcommand{\e}{\bld{e}}
+\newcommand{\cc}{\bld{c}}
+\newcommand{\x}{\bld{x}}
+\newcommand{\dx}{\dot{\bld{x}}}
+\newcommand{\uu}{\bld{u}}
+\newcommand{\nuu}{\bld{\nu}}
+\newcommand{\vv}{\bld{v}}
+\newcommand{\y}{\bld{y}}
+\newcommand{\z}{\bld{z}}
+\newcommand{\A}{\bld{A}}
+\newcommand{\B}{\bld{B}}
+\newcommand{\C}{\bld{C}}
+\newcommand{\D}{\bld{D}}
+\newcommand{\E}{\bld{E}}
+\newcommand{\e}{\bld{e}}
+\usepackage[outline]{contour}
+%\spanishdecimal{.}
+\setbeamertemplate{caption}[numbered] %%%%%%%Colocar para que ponga el numero de figura y tabla
+
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+\oldmacro\hfill%
+\insertframenumber\,/\,\inserttotalframenumber}
+
+\title[{August 25 - 27, 2025, San Diego, USA}]{Output Feedback Self-tuning PID Using Wavelet Neural Network Identification for Real-time UASs Trajectory Tracking}
+\author[{9th IEEE CCTA 2025}]
+{
+    \texorpdfstring{
+    %\vspace{-0.8cm}
+     % \begin{columns}
+     %            \column{6cm}
+     %                \begin{flushleft}
+     %                \includegraphics[scale = .07]{CongresoParis/Logo_IFAC_Paris.png}
+     %                %\hspace{0.5cm}
+     %                %\includegraphics[scale = .2]{LOGOS/cinve.png}
+     %        \end{flushleft}
+     %            \column{6cm}
+     %              \begin{flushright}
+     %                %\includegraphics[scale = .2]{LOGOS/UPMH-logo.png}
+     %                %\includegraphics[scale = .5]{LOGOS/cinve.png}
+     %         \end{flushright}
+     %            \end{columns}
+   %\vspace{-1.5cm}%Tenia -1.5
+    %\\ Dr. Luis Rodolfo Garcia Carrillo \\
+    % \vspace{0.5cm}
+    % \begin{center}
+    %     \includegraphics[scale = .07]{CongresoParis/Logo_IFAC_Paris_2.png}
+    % \end{center}
+    % MSc. Anel Olivares Cruz\\
+    % Dr. Luis Enrique Ramos Velasco\\
+    % Dr. Eduardo Steed Espinoza Quesada\\
+    % MSc Omar Alejandro García Alcántara\\
+    % Dr Luis Rodolfo Garcia Carrillo\\
+    % Dr. Ignacio Rubio Scola
+   Authors: \\
+   \vspace{0.5cm}
+       \begin{columns}
+           \column{.5\linewidth}
+           \centering
+           MSc. Anel Olivares Cruz\\
+           \\
+           Dr. Eduardo S. Espinoza\\
+           \column{.5\linewidth}
+           \centering
+           Dr. Luis E. Ramos Velasco\\
+           \\
+           \textbf{Dr. Luis R. Garcia Carrillo}\\
+           \\
+           %Dr. Ignacio Rubio Scola\\
+			% \column{.23\linewidth}            
+   %        \centering
+   %         Omar Alejandro García Alcántara\\
+       \end{columns}
+   }
+   { }
+}
+\date[July 2025]
+
+\begin{document}
+\contourlength{0.01cm} % Ajusta el grosor del contorno
+
+
+	\begin{frame}
+        \titlepage
+	\end{frame}
+
+
+    \begin{frame}
+        \frametitle{Content}
+
+        \tableofcontents[hideallsubsections]
+        % \column{6cm}
+        % \begin{block}{Next...}
+        % \begin{center}
+        %     \includegraphics [width=6cm,height=5cm]{Imagenes//Proyectar.jpg}
+        % \end{center}
+        % \end{block}
+
+    \end{frame}
+
+ 
+\section{Motivation}
+\subsection{Motivation}
+\begin{frame}{Motivation}
+\begin{columns}
+    
+\column{5.5cm}
+%Assumption:
+\begin{table}[h]
+    \centering
+    \begin{tcolorbox}[
+        tabularx = {l | l },
+        title = Assumption:,
+        colback = morado!10,   % Color de fondo 
+        colframe = morado!80   % Color del borde
+    ]
+        $\star$ & Unknown mathematical \\
+                 & model\\
+        $\star$ & System identification and \\
+        & control only with:\\
+        &  input-output data\\
+        % $\star$ & Investigación\\
+    \end{tcolorbox}
+\end{table}
+
+\column{6cm}
+\begin{block}{Unmanned Aerial Systems }
+    \centering
+    \includegraphics[width=\linewidth]{CongresoParis/frames_T(2).png}
+\end{block}
+    \end{columns}
+\end{frame}
+\subsection*{Experimental platform}
+
+
+\begin{frame}{Experimental platform}
+
+     \begin{figure}
+         \centering
+         \includegraphics[width=1.05\linewidth]{Imagenes San Diego/frames Neural-2.pdf}
+     \caption{The schematic of the experimental flight testbed. The OptiTrack Motion Capture System (MCS) provides $\y[kT]$.}
+         \label{fig:placeholder}
+     \end{figure}
+
+    %Fig. 1 
+\end{frame}
+
+
+
+  
+\section{WaveNet-IIR Identification and Self-Tuning PID Controller}
+\subsection{Diagram control block}
+\begin{frame}{Control Scheme}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.08\textwidth]{Imagenes San Diego/Control-Scheme-3.pdf}
+    \raggedright
+    \caption{Self-tuning PID WaveNet-IIR scheme}
+    \label{fig:imagen_raggedright}
+\end{figure}
+
+\end{frame}
+
+
+
+\subsection{(i) UAS: discrete input-output dynamics}
+
+\begin{frame}{(i) UAS: discrete input-output dynamics}
+%     State space representation of multiple-input multiple-output (MIMO) non-linear systems given by
+% \begin{eqnarray}
+% \label{xpc} \dx(t) & = & f(\x(t)) + g(\x(t))\uu(t)\\
+% \label{ycon} \y(t) & =& h(\x(t)) \triangleq  \cc \x(t)
+% \end{eqnarray}
+% where $f(\x(t))$ is a vector field and $g(\x(t))$ is the input matrix.
+
+The input and output of the discrete-time system  at the $(k+1)$ instant:
+%
+\begin{eqnarray}
+\x[(k+1)T] = & \x[kT] + f(\x[kT])T + g(\x[kT])T\uu[kT]  \\
+\y[(k+1)T]  = & \underbrace{\cc\left(\x[kT] + f(\x[kT])T\right)}_{\textcolor{blue}{\Phi[\x[kT],T]}}
++\underbrace{\cc(g(\x[kT])T)}_{\textcolor{blue}{\Gamma[\x[kT],T]}}\uu[kT]  \nonumber \label{out}
+%&\triangleq &  \Phi[\x[kT],T] + \Gamma[\x[kT],T]\uu[kT]  \label{out}
+\end{eqnarray}
+
+ The strategy uses the control input $\uu[kT]$ and the UAS translational positions $\y[kT]$ to approximate the input-output mappings 
+\begin{align}
+    \hat \Gamma[kT] &= \Gamma[\x[kT],T]+e_\Gamma \nonumber\\ % and
+    \hat \Phi[kT]       &= \Phi[\x[kT],T] +e_\Phi \\
+    \hat{\y}[kT] &= \textcolor{blue}{\hat{\Phi}[kT] + \hat{\Gamma}[kT]}(u_1+u_2+u_3) \nonumber \label{estimacion}
+\end{align}
+
+%where $\epsilon_\Gamma$, and $\epsilon_\Phi$ are the finite approximation errors. From this procedure, the WaveNet-IIR filter yields
+\end{frame}
+
+
+
+
+
+\subsection{(ii) Identification (\textit{WaveNet-IIR})} 
+
+% \begin{frame}{WaveNet-IIR identification}
+%     The strategy uses the control input $\uu[kT]$ and the system output $\y[kT]$ (the UAS position translate) available to approximate the input-output mappings 
+% \begin{align}
+%     \hat \Gamma[\x[kT],T] &= \Gamma[\x[kT],T]+\epsilon_\Gamma \\ % and
+%     \hat \Phi[\x[kT],T]       &= \Phi[\x[kT],T]] +\epsilon_\Phi
+% \end{align}
+% where $\epsilon_\Gamma$, and $\epsilon_\Phi$
+% are the finite approximation errors. From this procedure, the WaveNet-IIR filter yields
+
+% \end{frame}
+
+
+
+\begin{frame}{(ii) Identification (\textit{WaveNet-IIR})}
+    
+
+    \begin{figure}
+        \centering
+            \includegraphics[width=0.9\columnwidth]{Imagenes San Diego/WaveNet-IIR scheme.pdf}\label{fig:Wavelet_neural_scheme}
+        \caption{WaveNet-IIR filter has four layers: \textcolor{blue}{input}, \textcolor{darkgreen}{hidden}, \textcolor{red}{output}, and \textcolor{morado}{filtering} for the identification of the input-output UAS dynamics.} %Output $\textbf{z}$ is calculated by $\textbf{z}[kT]= \bm {f_n} [kT]W[kT]$.}
+    \end{figure}
+
+    % The synaptic weight matrices $W \in \mathbb{R}^{P\times J}$
+
+\end{frame}
+
+% \begin{frame}
+% \justifying
+%     The function $f_n (\tau)$ is called the "mother wavelet".The mother function is Morlet: \textcolor{blue}{$f_{n}(\tau)= \cos(\omega_0\tau)e^{-0.5\tau^{2}}$} \footnotemark
+% \begin{align}
+% \textcolor{blue}{f_{n,J} (\tau_J )=\frac{1}{\sqrt{(s_J )}} f_n (\tau_J ), \tau_J (k,q,s)=\frac{k-q_J}{s_J}}
+% \end{align}
+% Where $q$ and $s$ shift and scale the signal, with respect to $k$ indicating the moment of the operation and $\tau$ being a discrete variable in time.\\
+
+% \begin{tcolorbox}[
+%         tabularx = {l | c},
+%         %title = Tabla,
+%         colback = morado!10,   % Color de fondo 
+%         colframe = morado!80   % Color del borde
+%     ]
+%         Parameters  & Matrix form \\
+%         \hline \hline
+%        Translation  &$\bm{q}=[q_1,q_2,\ldots,q_J]^T$\\
+%        Dilation & $\bm {s}=[s_1,s_2,\ldots,s_J ]^T$\\
+%        "Daughter" wavelets & $\bm {f_n} =[f_{n,1},f_{n,2},\ldots,f_{n,J} ]^T$
+%     \end{tcolorbox}
+
+% \vspace{0.1cm}%Tenia -1.5
+
+%     \tiny{\footnotemark[1]Domínguez Mayorga, C., Espejel Rivera, M., Ramos Velasco, L., Ramos Fernández, J. y Escamilla Hernández, E. (2012) "Wavenet Algorithms with Applications in Approxima-tion Signals: A Comparative Study.", Revista Iberoamericana de Automática e Informática industrial, 9(4), pp. 347–358. doi: 10.1016/j.riai.2012.09.001.
+%     }
+% \end{frame}
+
+
+
+
+\begin{frame}{(ii) Identification (\textit{WaveNet-IIR}): IIR Filter}
+
+\begin{figure}
+        \centering
+            \includegraphics[width=1.1 \linewidth]{Imagenes San Diego/Escructura del filtroIIR.pdf}
+        \caption{IIR filter with $\bm{A}$ and $\bm{B}$ representing the number of feedforward and feedback coefficients, respectively.}
+    \end{figure}
+\end{frame}
+
+
+
+% \begin{frame}{WaveNet-IIR Neural-network}
+% \justifying
+% With the help of IIR filters, the estimated positions $\hat{\textbf{y}}$ can be calculated, that is, the system output-input is described by:
+% \begin{align}
+% \textcolor{blue}{\hat{\textbf{y}}[k]} &= \textcolor{blue}{\hat{\Phi}[k] + \hat{\Gamma}[k] U}
+% \label{estimacion}
+% \end{align}
+
+%     \begin{tcolorbox}[
+%         tabularx = {l  },
+%         %title = Tabla,
+%         colback = morado!10,   % Color de fondo 
+%         colframe = morado!80   % Color del borde
+%     ]
+%         here:  \\
+%         \hline \hline
+%         $
+% \hat{\Phi}[k] =
+% \begin{bmatrix}
+% B \cdot Y^\top
+% \end{bmatrix} s_p[k]$\hspace{4.5cm}$B\in \mathbb{R}^{P\times R}$\\
+
+% $\hat{\Gamma}[k] =
+% \begin{bmatrix}
+% A \cdot Z^\top
+% \end{bmatrix}$ \hspace{5.2cm} $A \in \mathbb{R}^{P \times Q}$\\
+
+% $
+% Z =
+% \begin{bmatrix}
+% \textbf{z}[k],
+% \textbf{z}[k - 1],
+% \dotsb,
+% \textbf{z}[k - Q]
+% \end{bmatrix}$\\
+
+% $Y[k] =
+% \begin{bmatrix}
+% \hat{\textbf{y}}[k - 1],
+% \hat{\textbf{y}}[k - 2],
+% \dotsb,
+% \hat{\textbf{y}}[k - R]
+% \end{bmatrix}
+% $\\ 
+
+% $U = u_1[k] + u_2[k] + u_3[k] $
+%     \end{tcolorbox}
+
+
+% \end{frame}
+
+
+
+% \begin{frame}{Estimation cost function}
+%     %The estimation cost function is given by
+% \begin{align}
+% E[kT] = \frac{1}{2} \sum_{i} e_i^2[kT]
+% \end{align}
+% with the estimation error given by $ e_i[kT] = \textbf{y}_i[kT] - \hat{\textbf{y}}_i[kT]$. Here, \( \textbf{y}_i \) represents each output of the system and \( \hat{\textbf{y}}_i \) is the estimated output of the WaveNet-IIR, for $ i = (x, y, z)$.
+% \end{frame}
+
+
+
+
+\begin{frame}{(ii) Identification (\textit{WaveNet-IIR}): Gradient descent}
+
+The estimation cost function $E[kT] = \frac{1}{2} \sum_{i} e_i^2[kT]$ can be minimized making use of the gradient descent method: %, which uses the set of partial derivatives given by
+\begin{align}
+\frac{\partial E}{\partial \bm {W}[kT]} &=  \textcolor{blue}{UI_e(\bm {A}f_a)^\top} \\
+\frac{\partial E}{\partial \bm {q}[kT]} &=  \textcolor{blue}{Ue(\bm {A}f_b)^\top} \\
+\frac{\partial E}{\partial \bm {s}[kT]} &=  \textcolor{blue}{\frac{\partial E}{\partial \bm {q}[kT]} \odot  \tau} \\
+\frac{\partial E}{\partial \bm {A}[kT]} &=  \textcolor{blue}{UI_eZ^\top} \\
+\frac{\partial E}{\partial \bm {B}[kT]} &= \textcolor{blue}{s_pI_e(\hat{Y}f_a)^\top}
+\end{align}
+\end{frame}
+
+% \begin{frame}{Gradient descent method}
+%     where
+% \begin{align}
+% I_e     &= \text{diag}( e_x[kT], e_y[kT], e_z[kT]) \\
+% e[kT]   &= [e_x[kT] e_y[kT] e_z[kT] ] \\
+% f_a[kT] &=[ \bm {f_n}[kT], \bm {f_n}[k-1], \ldots, \bm {f_n}[k-Q] ]^\top \\
+% f_b[kT] &= \frac{\partial f_a[kT]}{\partial \tau}
+% \end{align}
+% \end{frame}
+
+\section{Design of the self-tuning PID control strategy.}
+%\subsection{Classic discrete PID control law}
+% \begin{frame}{Discrete PID control law}
+
+% \begin{align}
+%     \label{eq:control law}
+%     \textcolor{verde}{\mathbf{u}[k+1]} &= \textcolor{verde}{\mathbf{u}[k] + \bm{K}_p[k][\boldsymbol{\epsilon}[k] - \boldsymbol{\epsilon}[k-1]] + \bm{K}_i[k][\boldsymbol{\epsilon}[k]]} \nonumber \\ 
+%     & \textcolor{verde}{+ \bm{K}_d[k][\boldsymbol{\epsilon}[k] - 2\boldsymbol{\epsilon}[k-1] + \boldsymbol{\epsilon}[k-2]] }
+% \end{align}
+   
+
+% \begin{table}[h]
+%     \centering
+%     \begin{tcolorbox}[
+%         tabularx = {l | l },
+%         %title = Tabla,
+%         colback = morado!10,   % Color de fondo 
+%         colframe = morado!80   % Color del borde
+%     ]
+%         where: & \\
+%         \hline \hline
+%         $\bm{K}_p$ & proportional gain, $\bm{K}_p= \text{diag}\{K_{p_x},K_{p_y},K_{p_z}\}$\\
+%         $\bm{K}_i$ & integral gain, $\bm{K}_i=\text{diag}\{K_{i_x},K_{i_y},K_{i_z}\}$\\
+%         $\bm{K}_d$ & derivative gain, $\bm{K}_d=\text{diag}\{K_{d_x},K_{d_y},K_{d_z}\}$\\
+%         $\epsilon$ & tracking error $\epsilon=\boldsymbol{\xi}-\boldsymbol{\xi}_{ref}$\\
+%         $\boldsymbol{\xi}$ & represents the UAS's position $\boldsymbol{\xi}=(x, y,z)^\top$\\
+%         $\boldsymbol{\xi}_{ref}$ & desired references $\boldsymbol{\xi}_{\text{ref}}=(x_{\text{ref}}, y_{\text{ref}},z_{\text{ref}})^\top$\\
+%     \end{tcolorbox}
+
+% \end{table}
+
+%\end{frame}
+
+\subsection{(iii) PID controller and (iv) Auto-tuning gains}
+ 
+\begin{frame}{(iii) PID controller and (iv) Auto-tuning gains}
+\vspace{-0.5cm}
+\begin{align}
+    \label{eq:control law}
+    \textcolor{verde}{\mathbf{u}[(k+1)T]} &= \textcolor{verde}{\mathbf{u}[kT] + \bm{K}_p[kT][\boldsymbol{\epsilon}[kT] - \boldsymbol{\epsilon}[(k-1)T]] + \bm{K}_i[kT][\boldsymbol{\epsilon}[kT]]} \nonumber \\ 
+    & \textcolor{verde}{+ \bm{K}_d[kT][\boldsymbol{\epsilon}[kT] - 2\boldsymbol{\epsilon}[(k-1)T] + \boldsymbol{\epsilon}[(k-2)T]] }
+\end{align}
+   These gains can be dynamically tuned following the cost function for the tracking error $\mathcal{E}[kT] = \frac{1}{2} \sum_i \epsilon_i^2[kT]$.
+% \begin{equation}
+% \mathcal{E}[kT] = \frac{1}{2} \sum_i \epsilon_i^2[kT]
+% \end{equation}
+Applying the partial derivative for each gain:
+\begin{align*}
+        \nabla \bm{K}_p[kT] &=  \textcolor{auburn}{e[kT] \hat{\Gamma}[kT](\epsilon[kT]-\epsilon[(k-1)T])}\\
+        \nabla \bm{K}_i [kT] &=  \textcolor{auburn}{e[kT] \hat{\Gamma}[kT](\epsilon[kT])}\\
+        \nabla \bm{K}_d [kT] &=  \textcolor{auburn}{e[kT] \hat{\Gamma}[kT](\epsilon[kT]-2 \epsilon[(k-1)T]  + \epsilon[(k-2)T])}
+\end{align*} 
+The parameter update rule:
+\begin{align}
+\bm{K}_{*} [(k+1)T] &= \bm{K}_{*} [kT] + \mu_{K_{*}} \nabla \bm{K}_{*} [kT]
+\end{align}
+
+\end{frame}
+
+% \begin{frame}{Gradient descent}
+% Applying the partial derivative for each gain we obtain
+% \begin{align}
+%         \nabla \bm{K}_p &=  \textcolor{auburn}{e[kT] \hat{\Gamma}[kT](\epsilon[kT]-\epsilon[k-1])}\label{autotunning3}\\
+%         \nabla \bm{K}_i &=  \textcolor{auburn}{e[kT] \hat{\Gamma}[kT](\epsilon[kT])} \label{autotunning2} \\
+%         \nabla \bm{K}_d &=  \textcolor{auburn}{e[kT] \hat{\Gamma}[kT](\epsilon[kT]-2 \epsilon[k-1]  + \epsilon[k-2])}
+%         \label{autotunning}
+% \end{align} 
+% where the input matrix \textcolor{blue}{$\hat{\Gamma}$} is obtained from the \textit{WaveNet}-IIR.%the identification process performed by
+
+% Finally, the parameter update rule is expressed as
+% \begin{align}
+% K_{*} [k+1] &= \textcolor{auburn}{K_{*} [kT] + \mu_{K_{*}} \frac{\partial \mathcal{E}[KT]}{\partial K_{*}[KT]}}
+% \end{align}
+% where $\mu_{K_{*}}$ is the learning rate.
+% \end{frame}
+
+
+
+
+
+\section{Experimental results}
+
+\subsection{Training of the WaveNet-IIR}
+
+
+\begin{frame}{Parameter configuration of the \textit{WaveNet}-IIR}
+%The parameter configuration of the \textit{WaveNet}-IIR, designed to identify the translational dynamics of the quad rotorcraft using the mother wavelet is presented in Table~\ref{tab:init config morlet}.
+\small{
+\begin{table}[h!]
+        \centering
+        \caption{Configuration of the \textit{WaveNet}-IIR.}
+        \label{tab:init config morlet}
+        \begin{tabular}{cc}
+            \hline
+            \textbf{Parameter} & \textbf{Value}  \\ \hline   \hline 
+           Number of neurons, $J$ & 5 \\
+             Number of inputs, $I$ & 3\\
+             Number of outputs, $P$  & 3\\\
+             Lead coefficients, $R$ & 3\\
+             Lag coefficient, $Q$  & 4 \\\
+             Sampling frequency, $1/T$  & 100 Hz\\
+             Sampling period, $T$&  $10ms$\\
+             Persistent signal, $s_p$     & $[5, 17, 17]$\\
+             \hline   \hline
+        \end{tabular}
+    \end{table}}
+   
+\end{frame}
+
+\begin{frame}{Initial values}
+    % From trained tests, the initial operational parameters presented in Table~\ref{tab:init values morlet} were determined.
+\small{
+\begin{table}[H]
+        \centering
+        \caption{Initial values for the \textit{WaveNet}-IIR.}
+        \label{tab:init values morlet}
+        \begin{tabular}{cc}
+            \hline
+            \textbf{Parameter} & \textbf{Value} \\ \hline   \hline
+            $\bm{W}[kT]$ &  $
+                    \begin{bmatrix}
+                    -0.009 & -0.014 & -0.004 & -0.009 & -0.013 \\
+                    0.016 & 0.023 & 0.024 & 0.028 & 0.017 \\
+                    -0.050 & -0.038 & -0.036 & -0.041 & -0.041
+                    \end{bmatrix}
+                    $ \\ \vspace{.1 cm}
+            $\bm{A}[kT]$ &   $
+                    \begin{bmatrix}
+                    -0.030 & -0.030 & 0.012 & 0.030 & 0.013 \\
+                    0.006 & 0.005 & 0.005 & 0.006 & 0.007 \\
+                    -0.018 & -0.012 & 0.003 & 0.006 & 0.001
+                    \end{bmatrix}
+                    $ \\ \vspace{.1 cm}
+            $\bm{B}[kT]$ &  $
+                    \begin{bmatrix}
+                    0.025 & 0.083 & 0.092 \\
+                    0.006 & 0.022 & 0.030 \\
+                    0.011 & 0.026 & 0.028
+                    \end{bmatrix}
+                    $ \\ \vspace{.1 cm}
+            $\bm{s}[kT]$ &   $\begin{bmatrix} 4, & 4, & 4, &  4, & 4\end{bmatrix} $ \\ \vspace{.1 cm}
+            $\bm{q}[kT]$ &   $\begin{bmatrix}  1, &  2, &  3, & 4, & 5\end{bmatrix} $ \\
+            \hline   \hline
+        \end{tabular}
+    \end{table}
+}
+\end{frame}
+
+
+% \subsection{Rhodonea Curve Trajectory}
+% \begin{frame}{Rhodonea Curve Trajectory}
+%     The UAS starts tracking the Rhodonea curve, which resembles a four-petal rose shape on the \(x_{I}-y_{I}\) plane. %The parameters describing this particular rose shape are given by:
+%     \begin{align}
+%         x_{\text{ref}} (nT_{\text{neu}} ) = r_c \cos{\left(l  \omega n T_{\text{neu}}  \right)} \cos{\left(\omega n T_{\text{neu}} \right)}\\
+%          y_{\text{ref}}\left( n T_{\text{neu}}  \right) = r_c \cos{\left(l \omega n T_{\text{neu}} \right)} \sin{\left(\omega n T_{\text{neu}} \right)}
+%     \end{align}
+    
+%     \begin{table}[h]
+%     \centering
+%     \begin{tcolorbox}[
+%         tabularx = {l | l },
+%         %title = Tabla,
+%         colback = morado!10,   % Color de fondo 
+%         colframe = morado!80   % Color del borde
+%     ]
+%         where: &\\
+%         \hline \hline
+%         $n$ & is the n-th sample\\
+%         \(r_c = 1\) & specify the length of petals\\
+%         \(l = 2\) & specify the number of petals\\
+%        \(\omega = \pi/25\) & is the angular frequency\\
+
+%     \end{tcolorbox}
+%     \end{table}
+
+% \end{frame}
+
+
+
+
+
+
+
+
+\begin{frame}{Initial values}
+
+\begin{table}[H]
+        \centering
+        \caption{Initial values: learning rate and self-tuning PID.}
+        \label{tab: init Param PIDs}
+        \begin{tabular}{cccc}
+            \hline
+            \textbf{Learning rate} & \textbf{Value} & \textbf{Ganis} & \textbf{Value}  
+            
+            \\ \hline   \hline 
+            $\mu_\mathbf{W}$ & $2.5\times10^{-2}$&  $\bm{K}_i[kT]$ & $\text{diag}\{ 0.2, \, 0.2, \, 1 \} $ \\
+            $\mu_\mathbf{q}$ & $1$&  $\bm{K}_d[kT]$ & $\text{diag}\{ 9, \, 9, \, 15 \} $ \\
+             $\mu_\mathbf{s}$ & $1$&$\bm{K}_p [kT]$ & $\text{diag}\{ 50, \, 50, \, 100 \} $\\
+             $\mu_\mathbf{B}$ & $1.6\times10^{-3}$&  & \\
+             $\mu_\mathbf{A}$ & $7\times10^{-3}$&  & \\
+             $\bm{\mu}_{\bm{K}_{d}} $ & $ [ 8, \,8,\, 3] $&  & \\
+            $\bm{\mu}_{\bm{K}_{i}}$ & $[ 0.3, \, 0.3,\, 0.1 ] $& & \\  
+            $\bm{\mu}_{\bm{K}_{p}}$&$ [ 30, \, 30, \, 30 ] $& &\\ 
+            %   & &
+            \hline \hline
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\subsection{Self-tuning PID control: trajectory tracking results}
+
+\begin{frame}{Experimental results of trajectory tracking}
+\begin{figure}
+        \centering
+            \includegraphics[width=0.72 \linewidth]{Imagenes San Diego/MovimientoUAV-1.pdf}
+        \caption{The real-time tracking of the\href{https://youtu.be/vWSzDwxYs_8}{ Rhodonea curve} in a 3D space .}
+    \end{figure}
+     
+
+\end{frame}
+
+\begin{frame}{Experimental results of trajectory tracking}
+
+\begin{figure}
+        \centering
+             \includegraphics[width=0.85 \linewidth]{Imagenes San Diego/Graficas_xyz_sinEst-1.pdf}
+        \caption{Tracking performance using PID \textit{WaveNet}-IIR.}
+    \end{figure}
+
+\end{frame}
+
+
+\subsection{Self-tuning PID control: model identification results}
+
+\begin{frame}{Experimental results of trajectory identification }
+
+\begin{columns}
+    \column{7cm}
+    \begin{figure}
+        \centering
+             \includegraphics[width=0.9 \linewidth]{Imagenes San Diego/GraficaXYZEstimacion.pdf}
+        \caption{Output identification using the \textit{WaveNet}-IIR.}
+    \end{figure}
+
+    \column{6 cm}
+    \vspace{-1cm}
+    \small{
+    \begin{table}[h!]
+        \centering
+        \caption{Evaluation parameters of the \textit{WaveNet}-IIR}
+        \label{tab:estimation error}
+        \begin{tabular}{ccc}
+            \hline
+            \textbf{Output} & \textbf{RMSE} & \textbf{Correlation}\\ \hline   \hline
+            $z$ &  0.057 & 0.995 \\ %\vspace{.1 cm}
+            $x$ &   0.110 & 0.971\\ %\vspace{.1 cm}
+            $y$ &  0.165 & 0.901\\
+            \hline   \hline
+        \end{tabular}
+    \end{table}}
+\end{columns}
+
+\end{frame}
+
+% \begin{frame}{Frame Title}
+%     The small RMSE values and correlations exceeding 0.9, detailed in Table~\ref{tab:estimation error}, demonstrate the \textit{WaveNet}-IIR's high estimation accuracy.
+
+% \begin{table}[h!]
+%         \centering
+%         \caption{Root Mean Square Error (RMSE) and correlation of the \textit{WaveNet}-IIR}
+%         \label{tab:estimation error}
+%         \begin{tabular}{ccc}
+%             \hline
+%             \textbf{Output} & \textbf{RMSE} & \textbf{Correlation}\\ \hline   \hline
+%             $z$ &  0.057 & 0.995 \\ %\vspace{.1 cm}
+%             $x$ &   0.110 & 0.971\\ %\vspace{.1 cm}
+%             $y$ &  0.165 & 0.901\\
+%             \hline   \hline
+%         \end{tabular}
+%     \end{table}
+% \end{frame}
+
+
+
+
+\section{Conclusions}
+
+\begin{frame}{Conclusions}
+    
+    
+
+    % \begin{columns}
+    %             \column{8.5cm}
+                \begin{itemize}
+                \item The WaveNet-IIR proved effectiveness in the identification of the UAS dynamics.
+                \item The WaveNet-IIR capability for real-time trajectory tracking, with self-tuning gains, was successfully demonstrated.
+                 \end{itemize}
+    %             \column{3.5cm}
+    %             \begin{block}
+    %             \begin{center}
+    %             \includegraphics [width=3.5cm,height=5cm]{Imagenes//goldfigure.jpg}
+    %             \end{center}
+    %             \end{block}
+    %         \end{columns}
+\end{frame}
+
+
+        \begin{frame}
+            %\frametitle{Aclaraciones, Dudas y Comentarios}
+             
+       
+                \begin{center}
+                \textbf{\Huge Thank you for your attention}\\
+                luisillo@nmsu.edu \\
+                \end{center}
+
+        \end{frame}
+	
+	
+	
+\end{document}

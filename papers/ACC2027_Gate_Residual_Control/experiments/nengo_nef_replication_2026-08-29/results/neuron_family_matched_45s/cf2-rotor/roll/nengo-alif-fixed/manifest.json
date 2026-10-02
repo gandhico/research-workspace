@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "created_utc": "2026-08-31T08:55:10.471264+00:00",
+  "platform": "cf2-rotor",
+  "controller": "nengo-alif-fixed",
+  "model": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\models\\cf2_rotor_design\\scene.xml",
+  "model_sha256": "410e0975d066abb1ad726415250c78948c0f25b2f99f3b73746c161603dfdaf6",
+  "git_commit": "67e7e03f1dba9ee394b84324096222e8ff5344c5",
+  "python": "3.13.11",
+  "mujoco": "3.12.0",
+  "numpy": "2.5.2",
+  "arguments": {
+    "platform": "cf2-rotor",
+    "controller": "nengo-alif-fixed",
+    "mission": "roll",
+    "duration": 45.0,
+    "dt": 0.0005,
+    "beta": 0.5,
+    "learning_rate": 0.0008,
+    "k_error": 8.0,
+    "k_rate": 0.0,
+    "torque_policy": "model",
+    "actuator_scale": 1.5,
+    "initial_angle_deg": 0.0,
+    "disturbance_torque": 0.0,
+    "attitude_noise_std": 0.0,
+    "rate_noise_std": 0.0,
+    "seed": 1,
+    "log_every": 10,
+    "save_neural_archive": true,
+    "output": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\neuron_family_matched_45s\\cf2-rotor\\roll\\nengo-alif-fixed"
+  },
+  "derived": {
+    "body_inertia_kgm2": [
+      2.3951e-05,
+      2.3951e-05,
+      3.2347e-05
+    ],
+    "torque_limits_Nm": [
+      0.000287412,
+      0.000287412,
+      0.00032347
+    ],
+    "kq_Nm": [
+      0.000766432,
+      0.000766432,
+      0.0007925015
+    ],
+    "kw_Nm_s": [
+      0.0001820276,
+      0.0001820276,
+      0.00021510755
+    ]
+  }
+}

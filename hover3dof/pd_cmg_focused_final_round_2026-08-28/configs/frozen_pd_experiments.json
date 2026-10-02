@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "baseline": {
+    "controller": "pd",
+    "pd_profile": "mujoco",
+    "rate_hz": 200.0,
+    "mujoCo_reference_dt_s": 0.0005,
+    "wn_xyz_roll_pitch_yaw": [4.0, 4.0, 3.5],
+    "gain_law": "kq=2*J*wn^2; kw=2*0.95*wn*J",
+    "torque_policy": "inertia/model: J_xyz*[12,12,10]",
+    "error": "shortest-path quaternion vector",
+    "note": "Default reproduces canonical drone.py after declared xyz<->ypr and torque-sign coordinate transforms. LQR-equivalent remains a separate bridge profile only."
+  },
+  "shared_pd_cmg": {
+    "controller": "pd-cmg",
+    "pd_profile": "mujoco",
+    "beta": 0.5,
+    "learning_rate": 0.0008,
+    "k_error": 8.0,
+    "actual_per_motor_residual_cap_volts": 1.2,
+    "k_rate": 0.0,
+    "residual_slew_v_per_s": 4.0,
+    "neural_substeps": 10,
+    "neural_dt_s": 0.0005,
+    "declared_hover_only_changes": [
+      "Euler encoders converted to quaternion and body-rate estimates",
+      "2 V bias and positive-only four-motor allocation",
+      "1.2 V per-motor residual safety projection",
+      "4 V/s applied motor-residual slew",
+      "zero-order-held measurements during ten neural substeps"
+    ]
+  },
+  "missions": {
+    "hard45": {"duration": 25.0},
+    "full3": {"duration": 25.0},
+    "yaw360": {"duration": 30.0}
+  },
+  "frozen_lqr_reference_runs": {
+    "hard45_classical": "C:\\Research\\hover3dof\\results\\hardware\\classical_armed_20260828_123415",
+    "hard45_cmg": "C:\\Research\\hover3dof\\results\\hardware\\online-pes-adaptive_armed_20260828_123442",
+    "full3_classical_representative": "C:\\Research\\hover3dof\\results\\hardware\\classical_armed_20260827_232303",
+    "full3_cmg": "C:\\Research\\hover3dof\\results\\hardware\\online-pes-adaptive_armed_20260827_234905",
+    "yaw360_classical": "C:\\Research\\hover3dof\\results\\hardware\\classical_armed_20260828_123653",
+    "yaw360_cmg": "C:\\Research\\hover3dof\\results\\hardware\\online-pes-adaptive_armed_20260828_123726"
+  }
+}

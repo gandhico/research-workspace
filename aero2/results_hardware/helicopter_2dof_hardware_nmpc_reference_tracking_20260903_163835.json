@@ -1,0 +1,33 @@
+{
+  "config": {
+    "execution_mode": "hardware",
+    "model_variant": "helicopter_2dof",
+    "controller": "nmpc",
+    "application": "reference_tracking",
+    "duration_s": 15.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 15.0,
+    "out": "results_hardware",
+    "controller_kwargs": {}
+  },
+  "metrics": {
+    "n": 3000,
+    "duration_s": 14.995072400000936,
+    "realized_hz": 199.99903467131352,
+    "pitch_rms": 0.18480765705886795,
+    "yaw_rms": 0.7725099371489125,
+    "tail_pitch_mae": 0.1084227620159744,
+    "tail_yaw_mae": 0.7806796384939122,
+    "pitch_sat_frac": 0.0,
+    "yaw_sat_frac": 0.0,
+    "theta_range": [
+      -0.34470252726888007,
+      0.47342055960346185
+    ],
+    "psi_range": [
+      -0.02914563496982718,
+      0.0046019423636569235
+    ]
+  }
+}

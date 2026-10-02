@@ -1,0 +1,76 @@
+{
+  "connected": true,
+  "properties": {
+    "VENDOR_ID": "n/a (One or more of the specified properties were not recognized by the board-specific driver.)",
+    "PRODUCT_ID": "n/a (One or more of the specified properties were not recognized by the board-specific driver.)",
+    "FIRMWARE_MAJOR_VERSION": "n/a (One or more of the specified properties were not recognized by the board-specific driver.)",
+    "FIRMWARE_MINOR_VERSION": "n/a (One or more of the specified properties were not recognized by the board-specific driver.)",
+    "MANUFACTURER": "n/a (The hil_get_string_property function and HIL Get Property block are not supported by this particular card.)",
+    "PRODUCT_NAME": "n/a (The hil_get_string_property function and HIL Get Property block are not supported by this particular card.)",
+    "MODEL_NAME": "n/a (The hil_get_string_property function and HIL Get Property block are not supported by this particular card.)",
+    "SERIAL_NUMBER": "n/a (The hil_get_string_property function and HIL Get Property block are not supported by this particular card.)",
+    "FIRMWARE_VERSION": "n/a (The hil_get_string_property function and HIL Get Property block are not supported by this particular card.)"
+  },
+  "timing": {
+    "samples": 100,
+    "dt_max_ms": 21.185999998124316,
+    "jitter_pct": 0.8463887290964203
+  },
+  "consistency": {
+    "position_samples_deviating_frac": 0.0,
+    "consistent": true,
+    "note": "if not consistent: set COMx Latency Timer to 2 ms and replug USB; do NOT command motion"
+  },
+  "joints": {
+    "yaw": {
+      "raw_rad": 1.7456701366138596,
+      "raw_std": 0.000300597616444175,
+      "pal_joint_rad": -0.21792251697593357,
+      "pal_joint_deg": -12.48604048358903,
+      "within_pal_limits": true,
+      "vel_absmax": 0.0,
+      "temp_C": 31.0,
+      "load_pct": 0.0
+    },
+    "shoulder": {
+      "raw_rad": 5.089748254204557,
+      "raw_std": 0.0007094557495864191,
+      "pal_joint_rad": 3.3355519274096608,
+      "pal_joint_deg": 191.1130477873007,
+      "within_pal_limits": true,
+      "vel_absmax": 0.0,
+      "temp_C": 29.0,
+      "current_A": 0.0
+    },
+    "elbow": {
+      "raw_rad": 1.9604274469178493,
+      "raw_std": 0.000726660154216575,
+      "pal_joint_rad": -2.6385615334668406,
+      "pal_joint_deg": -151.17843985321647,
+      "within_pal_limits": false,
+      "vel_absmax": 0.0,
+      "temp_C": 29.0,
+      "current_A": 0.0
+    },
+    "wrist": {
+      "raw_rad": 1.94968958140265,
+      "raw_std": 0.0007094557495864191,
+      "pal_joint_rad": 0.37889325460775325,
+      "pal_joint_deg": 21.708984374999993,
+      "within_pal_limits": true,
+      "vel_absmax": 0.0,
+      "temp_C": 28.0,
+      "current_A": 0.0
+    }
+  },
+  "gripper": {
+    "raw_rad": 1.6659031356438063,
+    "temp_C": 31.0,
+    "load_pct": 0.0,
+    "pct_if_write_gripper_position_map": 0.31982750996999265,
+    "pct_if_read_write_std_map": -0.3426723321107064
+  },
+  "error_flags_set": [],
+  "all_finite": true,
+  "analog_all_nan": false
+}

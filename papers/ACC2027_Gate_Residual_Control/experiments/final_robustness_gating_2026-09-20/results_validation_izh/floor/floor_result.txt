@@ -1,0 +1,7 @@
+Single-run floor of the Izhikevich cells: 45-s mean error over the A3 run + 6 perturbed initial attitudes (k * 1e-12 deg)
+
+cell                     A3 run     mean      sd  sd/mean     min     max  sd in pp of PD+ff   [mrad]
+x2 full3                  9.509    9.522   0.130    1.36%   9.395   9.753              1.29
+x2 hard45                 9.503    9.644   0.098    1.02%   9.503   9.774              0.93
+cf2-rotor full3           6.613    6.660   0.051    0.76%   6.597   6.740              0.72
+cf2-rotor hard45          8.073    8.038   0.016    0.20%   8.030   8.073              0.19

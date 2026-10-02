@@ -1,0 +1,20 @@
+{
+  "kind": "eval",
+  "arm": "baseline",
+  "mode": "mlp",
+  "vehicle": "x2",
+  "scenario": "nominal",
+  "seed": 1,
+  "samples": 600,
+  "episodes": 1,
+  "return_sum": 127.90594516390087,
+  "gates": 4,
+  "collisions": 0,
+  "termination_reason": "time_limit",
+  "mean_position_error_m": 0.0331336771446418,
+  "max_position_error_m": 0.18129962410356673,
+  "mean_saturation": 0.10450000000000001,
+  "action_rms": 0.0,
+  "gain_min": 1.0,
+  "gain_max": 1.0
+}

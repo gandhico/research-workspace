@@ -1,0 +1,89 @@
+{
+  "status": "underpowered",
+  "method": "paired moving-block residual bootstrap using common local-background index; deterministic seed 20260811",
+  "source_files": {
+    "lqr": "logs/rich_R3_roll_matched_lqr_20260712_203707.csv",
+    "deepc": "logs/rich_R3_roll_deepc_pilot_20260810_144136.csv"
+  },
+  "virtual_experiments_per_count": 300,
+  "bootstrap_resamples_each": 300,
+  "required_power": 0.8,
+  "curve": [
+    {
+      "paired_pulses_each_controller": 4,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 32,
+      "median_ratio": 0.7011733772347221,
+      "ratio_5_95_percentiles": [
+        0.2886188572071258,
+        1.34912089260648
+      ],
+      "median_upper_95_bound": 1.055680477415307,
+      "power_upper_bound_below_one": 0.44666666666666666
+    },
+    {
+      "paired_pulses_each_controller": 6,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 44,
+      "median_ratio": 0.6829451171086947,
+      "ratio_5_95_percentiles": [
+        0.3477644010138703,
+        1.1397487485280327
+      ],
+      "median_upper_95_bound": 1.0850061014492782,
+      "power_upper_bound_below_one": 0.38333333333333336
+    },
+    {
+      "paired_pulses_each_controller": 8,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 56,
+      "median_ratio": 0.6428870370183992,
+      "ratio_5_95_percentiles": [
+        0.39247596235860366,
+        1.1273569156933152
+      ],
+      "median_upper_95_bound": 1.0259070521286469,
+      "power_upper_bound_below_one": 0.44
+    },
+    {
+      "paired_pulses_each_controller": 12,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 80,
+      "median_ratio": 0.6761255733988714,
+      "ratio_5_95_percentiles": [
+        0.38419963279613883,
+        1.0552143349839695
+      ],
+      "median_upper_95_bound": 1.0505308058900966,
+      "power_upper_bound_below_one": 0.4166666666666667
+    },
+    {
+      "paired_pulses_each_controller": 16,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 104,
+      "median_ratio": 0.66231910399786,
+      "ratio_5_95_percentiles": [
+        0.4058695085158368,
+        1.0825851801926063
+      ],
+      "median_upper_95_bound": 0.9869366524628573,
+      "power_upper_bound_below_one": 0.52
+    },
+    {
+      "paired_pulses_each_controller": 24,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 152,
+      "median_ratio": 0.6525582316306026,
+      "ratio_5_95_percentiles": [
+        0.47518251807015893,
+        0.9380391415944237
+      ],
+      "median_upper_95_bound": 0.9330441466738001,
+      "power_upper_bound_below_one": 0.6233333333333333
+    }
+  ],
+  "minimum_qualified_count": null,
+  "required_protocol_properties": [
+    "same-flight close-spaced LQR/DeePC pulse pairs",
+    "order balanced across pairs",
+    "controller-specific histories valid before each pulse",
+    "predeclared washout and contamination checks",
+    "single permanent backstepping fallback"
+  ],
+  "flight_authorized": false,
+  "claim_boundary": "Prospective paired-power assumption only; implementation and cumulative safety not yet audited."
+}

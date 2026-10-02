@@ -1,0 +1,54 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+\title{Adaptive and Learned Gate Residuals for Neuromorphic Quadrotor Control}
+
+\author{\IEEEauthorblockN{Gandhi Alexis Sinhue Contreras Torres, Steven Sandoval, and Luis Rodolfo Garcia Carrillo}
+\IEEEauthorblockA{New Mexico State University}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This short-paper proposal is conditional. The goal is to test whether learned or adaptive HyperLIF gate mechanisms provide a control advantage beyond fixed gate-state residuals. The current evidence is promising but not yet sufficient for a standalone journal manuscript. A conference paper is appropriate if the learned gate transfers across at least two missions and both MuJoCo quadrotors, and if ablations prove that the adaptive mechanism is active rather than merely present.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Adaptive HyperLIF, learned gates, neuromorphic control, quadrotor control, residual learning.
+\end{IEEEkeywords}
+
+\section{Problem}
+The gate-state residual paper shows that the continuous HyperLIF gate can be useful as a residual signal. This paper asks a stricter question: can the gate or residual blend be learned or adapted online so that the controller improves beyond a tuned fixed gate?
+
+\section{Method}
+Candidate mechanisms:
+\begin{itemize}
+  \item adaptive residual blend $\beta_r(t)$ driven by gate activity;
+  \item learned gate gain $G_{\mathrm{gate}}$;
+  \item voltage/event-mode residual that activates the Adaptive HyperLIF conductance pathway;
+  \item PES-style or eligibility-style local rule using $r(t)$ as the post-synaptic factor.
+\end{itemize}
+
+\section{Required Validation}
+Minimum bar for a separate conference paper:
+\begin{itemize}
+  \item fixed gate vs learned gate on Crazyflie 2 and Skydio X2;
+  \item at least two missions per quadrotor;
+  \item repeated seeds/trials;
+  \item timing-shuffled, frozen-gate, and energy-matched ablations;
+  \item proof that Adaptive HyperLIF differs from plain HyperLIF in the selected readout pathway.
+\end{itemize}
+
+\section{Decision Rule}
+Promote this to a manuscript only if the learned/adaptive mechanism shows a robust improvement that cannot be explained by fixed gate saturation, residual gain tuning, or simulator artifacts. Otherwise, fold it into the future-work section of the gate-state residual control paper.
+
+\section{Current Readiness}
+Approximately 50 percent. The idea is important, but the manuscript should wait for independent validation.
+
+\end{document}
+

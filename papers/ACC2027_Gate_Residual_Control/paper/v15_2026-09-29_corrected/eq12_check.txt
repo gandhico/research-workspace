@@ -1,0 +1,17 @@
+page 2:
+verse-allocation and
+clipping model is
+freq = B−1[T, uT]T,
+fact = clip[0,fmax](freq),
+[Tact, τ T
+act]T = Bfact.
+(11)
+Here u
+=
+u0 for PD; the CMG path in Section III
+modifies that requested torque before the same allocation
+and clipping. Each fi is a commanded force in newtons, not
+a rotor-speed command. Exact wrench realization requires
+B−1[T, uT]T
+∈[0, fmax]; for four rotors B is square
+and inver

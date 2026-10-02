@@ -1,0 +1,31 @@
+% Extra styles for the controller-family figures; the base styles (blk, clas, neuro, plant, sig, ...) are the
+% manuscript's own architectures/tikz/arch_style.tex, so every figure matches the paper's Fig. 1.
+\tikzset{
+  law/.style    ={blk,fill=blue!7,draw=blue!45!black,thick},
+  offl/.style   ={blk,dashed,fill=black!2},
+  fam/.style    ={draw=blue!45!black,dashed,rounded corners=3pt,inner sep=7pt},
+  famlbl/.style ={font=\scriptsize\itshape,text=blue!45!black,inner sep=1pt},
+  off/.style    ={-{Latex[length=2mm]},thick,dotted,gray},
+  every node/.append style={font=\footnotesize},
+}
+% Common left half: reference generator and attitude error (identical for every family).
+\newcommand{\commonleft}{%
+  \node[clas] (ref) at (0,0) {\textbf{Mission reference}\\$q_d(t)$\\[1pt]
+        $\bm\omega_d$: central difference};
+  \node[clas,right=7mm of ref] (err) {\textbf{Attitude error}\\$q_e=q_d\otimes q^{-1}$\\
+        $\bm e=2\,\sgnp(q_{e,0})\,\bm q_{e,v}$\\$\bm\omega_e=\bm\omega-\bm\omega_d$};
+  \draw[sig] (ref) -- node[lbl,above]{$q_d,\bm\omega_d$} (err);
+}
+% Common right half and feedback of every family figure. Needs nodes (err) and (law-out) placed by the figure,
+% and the coordinate (satx) giving the x position of the torque box.
+\newcommand{\commonloop}[2]{% #1: label on u0 arrow source node, #2: text inside the torque-box node
+  \node[clas] (sat) at (satx) {#2};
+  \node[neuro,below=13mm of sat] (res) {\textbf{Gated CMG--PES residual}\\(Fig.~\ref{fig:interface})\\
+        $\bm u=\sat_{\bm\ell}(\bm u_0+\beta\bm\ell\odot\tilde{\bm s})$};
+  \node[plant,anchor=east] (plant) at ($(res.west)+(-12mm,0)$) {\textbf{Allocation and MuJoCo plant}\\
+        $\bm f=\clip_{[\bm0,\bm f_{\max}]}(B^{-1}[T,\bm u\T]\T)$\\X2 / CF2 rigid body};
+  \draw[sig] (#1) -- (sat);
+  \draw[sig] (sat) -- node[lbl,right]{$\bm u_0\in\mathcal U$} (res);
+  \draw[sig] (res) -- node[lbl,above]{$\bm u$} (plant);
+  \draw[sig] (plant.west) -- ++(-4mm,0) coordinate (fb1) -| node[lbl,pos=.75,left]{measured $q,\ \bm\omega$} (err.south);
+}

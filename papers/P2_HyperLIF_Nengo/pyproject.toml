@@ -1,0 +1,16 @@
+[project]
+name = "adaptive-hyperlif-nengo-paper"
+version = "1.0.0"
+description = "Mathematically consistent, Nengo-compatible reference implementation and validation of HyperLIF / Adaptive HyperLIF neurons, with the paper sources."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+    "nengo>=4.0,<5",
+]
+
+[tool.setuptools]
+# Source lives under src/ but is used via sys.path insertion in the
+# experiment/figure/table scripts; no install step is required to reproduce.
+packages = []

@@ -1,0 +1,28 @@
+{
+ "platform": "cf2-rotor",
+ "controller": "pd",
+ "gains": "j_tune",
+ "limits": "j_tune",
+ "rho": 1.0,
+ "torque_limits_Nm": [
+  0.000287412,
+  0.000287412,
+  0.00032347
+ ],
+ "accel_envelope_rad_s2": [
+  12.0,
+  12.0,
+  10.0
+ ],
+ "qerr_mean_rad": 0.42618235490000983,
+ "qerr_mean_deg": 24.418450238717163,
+ "settled_deg": 0.6718921200114505,
+ "t_settle_5deg_s": 1.183428571424377,
+ "saturation_fraction": 0.0013666666666666666,
+ "z_min_m": 0.7742589842003578,
+ "tau_at_limit_frac": [
+  0.023677777777777777,
+  0.010033333333333333,
+  0.0003333333333333333
+ ]
+}

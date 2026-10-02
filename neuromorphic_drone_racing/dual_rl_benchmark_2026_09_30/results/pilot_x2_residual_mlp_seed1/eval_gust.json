@@ -1,0 +1,20 @@
+{
+  "kind": "eval",
+  "arm": "residual",
+  "mode": "mlp",
+  "vehicle": "x2",
+  "scenario": "gust",
+  "seed": 1,
+  "samples": 600,
+  "episodes": 1,
+  "return_sum": 114.00220201755603,
+  "gates": 4,
+  "collisions": 0,
+  "termination_reason": "time_limit",
+  "mean_position_error_m": 0.20063213252205334,
+  "max_position_error_m": 0.36097390986287897,
+  "mean_saturation": 0.06,
+  "action_rms": 0.12027475904634778,
+  "gain_min": 1.0,
+  "gain_max": 1.0
+}

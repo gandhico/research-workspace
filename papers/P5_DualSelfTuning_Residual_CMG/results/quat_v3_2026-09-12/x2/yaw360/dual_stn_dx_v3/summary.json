@@ -1,0 +1,129 @@
+{
+ "platform": "x2",
+ "mission": "yaw360",
+ "controller": "dual_stn_dx_v3",
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "z_min_m": 0.9999999945282736,
+ "allocation": "apa",
+ "alpha_mean": 1.0,
+ "alpha_min": 1.0,
+ "torque_scaled_fraction": 0.0,
+ "s_hat_mean": [
+  1.1865919993489042,
+  2.774689664429672,
+  0.4326186925631959
+ ],
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "ki_factor": 0.05,
+ "tuner": null,
+ "stn": {
+  "bounded": true,
+  "mu_p": 5e-05,
+  "mu_i": 5e-05,
+  "mu_d": 5e-05,
+  "e_ref": 0.1,
+  "w_ref": 1.0,
+  "xi_ref": 0.1,
+  "tau_syn": 0.05,
+  "kappa_s": 1.0,
+  "sens_learning_rate": 0.0008,
+  "sens_leak": 1e-06,
+  "du_deadband": 0.001,
+  "m_min": 0.5,
+  "m_max": 1.5,
+  "leak_m": 5e-05,
+  "w_max": 6.0,
+  "known_sign": false,
+  "v2_gating": true,
+  "e_gate": 0.25,
+  "retreat_tau": 1.0,
+  "dither_id": true,
+  "dither_amp": 0.02,
+  "dither_freq": [
+   9.0,
+   11.0,
+   13.0
+  ],
+  "tau_demod": 0.5
+ },
+ "qerr_mean_rad": 0.022630953145360507,
+ "qerr_rmse_rad": 0.024476065500739268,
+ "qerr_max_rad": 0.03340219267647277,
+ "saturation_fraction": 0.0,
+ "residual_rms_Nm": 0.031156722989665254,
+ "torque_limits_Nm": [
+  0.7285355381134109,
+  0.43762083924507955,
+  0.2541169811320755
+ ],
+ "multiplier_mean": [
+  1.0000000215284168,
+  1.0000001145635304,
+  0.9999250719948124,
+  0.9999998417006767,
+  0.9999999618611001,
+  0.9888714218633562,
+  1.000000005686745,
+  1.000000001198933,
+  1.0000132757762317
+ ],
+ "multiplier_min": [
+  0.9999991099279011,
+  1.0,
+  0.9992259484897656,
+  0.9999997238964597,
+  0.9999995149684351,
+  0.9196224525193191,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_max": [
+  1.000000651680479,
+  1.0000001444290971,
+  1.0006813849305958,
+  1.000000006258898,
+  1.0000000989608786,
+  1.002705064203762,
+  1.000000033318505,
+  1.000000008903233,
+  1.0001815457790613
+ ],
+ "integral_frozen_fraction": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "WS_final_fro": null,
+ "WR_final_fro": 2.0370668165945154,
+ "yhat_mean": [
+  0.4602060254336599,
+  0.9917909539782453,
+  0.14760948106267144
+ ],
+ "yhat_negative_fraction": 0.20508148148148148,
+ "stn_valid_fraction": [
+  1.0,
+  1.0,
+  1.0
+ ],
+ "stn_blocked_fraction": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "wall_s": 44.309625300000334,
+ "hashes": {
+  "run_dual.py": "85d402bed03eeb0b",
+  "dual_controller.py": "6899a3ba06bfbce0",
+  "gra_control/gate.py": "ea6d7853fff724d2",
+  "gra_control/platforms/drone.py": "50af6d1f6de51788",
+  "gra_control/math3d.py": "31620612f184a22f",
+  "model": "d932ffbe9f0d1fa4"
+ }
+}

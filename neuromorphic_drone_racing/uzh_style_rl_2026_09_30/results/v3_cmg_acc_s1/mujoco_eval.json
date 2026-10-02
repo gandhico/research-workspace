@@ -1,0 +1,16 @@
+{
+ "run": "results\\v3_cmg_acc_s1",
+ "arm": "cmg_acc",
+ "gates_in_order": 3,
+ "collisions": 0,
+ "termination": "time_limit",
+ "lap_completed": false,
+ "lap_time_s": null,
+ "gate_times_s": [
+  1.18,
+  2.52,
+  7.04
+ ],
+ "mean_rotor_saturation": 0.0509,
+ "note": "full MuJoCo race world, frozen policy, perfect state, no learning during the flight"
+}

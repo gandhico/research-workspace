@@ -1,0 +1,434 @@
+[
+  {
+    "method": "fixed_mixer",
+    "scenario": "nominal",
+    "metric": "angle_rmse_deg",
+    "mean": 5.004644637275383,
+    "median": 4.844569136847147,
+    "p95": 8.55190528657058,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "nominal",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.4147429118324452,
+    "median": 0.3972889895113131,
+    "p95": 0.9009639267465175,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "nominal",
+    "metric": "total_variation",
+    "mean": 7.708808854189369,
+    "median": 7.082202323035762,
+    "p95": 15.105983558774605,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "nominal",
+    "metric": "saturation_fraction",
+    "mean": 0.0,
+    "median": 0.0,
+    "p95": 0.0,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "outer_elevon_jam",
+    "metric": "angle_rmse_deg",
+    "mean": 4.979034574972366,
+    "median": 4.827159168858622,
+    "p95": 8.479227010949296,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "outer_elevon_jam",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.5913424754912422,
+    "median": 0.572592736921507,
+    "p95": 1.2677561769729548,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "outer_elevon_jam",
+    "metric": "total_variation",
+    "mean": 8.136431631092158,
+    "median": 7.62371354337758,
+    "p95": 16.33788131986643,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "outer_elevon_jam",
+    "metric": "saturation_fraction",
+    "mean": 0.09997142857142857,
+    "median": 0.09971428571428571,
+    "p95": 0.10101428571428571,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "left_rudder_failed",
+    "metric": "angle_rmse_deg",
+    "mean": 5.013214858728546,
+    "median": 4.856936050032918,
+    "p95": 8.552391232032058,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "left_rudder_failed",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.4448312354130743,
+    "median": 0.4301706910757128,
+    "p95": 0.9026683992206604,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "left_rudder_failed",
+    "metric": "total_variation",
+    "mean": 7.74292489914005,
+    "median": 7.029513488033947,
+    "p95": 14.998370650082132,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "left_rudder_failed",
+    "metric": "saturation_fraction",
+    "mean": 0.09971428571428573,
+    "median": 0.09971428571428571,
+    "p95": 0.09971428571428571,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "degraded_outboard_pair",
+    "metric": "angle_rmse_deg",
+    "mean": 4.984367358946445,
+    "median": 4.830689841518788,
+    "p95": 8.48979320608026,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "degraded_outboard_pair",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.5109904896124682,
+    "median": 0.4888112528942721,
+    "p95": 1.0603531915140243,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "degraded_outboard_pair",
+    "metric": "total_variation",
+    "mean": 9.193148484708159,
+    "median": 8.954082010755522,
+    "p95": 19.073635729661635,
+    "n": 10
+  },
+  {
+    "method": "fixed_mixer",
+    "scenario": "degraded_outboard_pair",
+    "metric": "saturation_fraction",
+    "mean": 0.0,
+    "median": 0.0,
+    "p95": 0.0,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "nominal",
+    "metric": "angle_rmse_deg",
+    "mean": 5.004675768906154,
+    "median": 4.844612195338254,
+    "p95": 8.551925950106002,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "nominal",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.4147654320719293,
+    "median": 0.3974079280772138,
+    "p95": 0.900907480506055,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "nominal",
+    "metric": "total_variation",
+    "mean": 7.708813579468464,
+    "median": 7.082162735694066,
+    "p95": 15.105932079254236,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "nominal",
+    "metric": "saturation_fraction",
+    "mean": 0.0,
+    "median": 0.0,
+    "p95": 0.0,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "outer_elevon_jam",
+    "metric": "angle_rmse_deg",
+    "mean": 4.978806533102109,
+    "median": 4.82719775436928,
+    "p95": 8.477886961004785,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "outer_elevon_jam",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.5915408332623565,
+    "median": 0.5725983269561262,
+    "p95": 1.268711214624052,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "outer_elevon_jam",
+    "metric": "total_variation",
+    "mean": 8.13849026483136,
+    "median": 7.6236686695722025,
+    "p95": 16.348771099262287,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "outer_elevon_jam",
+    "metric": "saturation_fraction",
+    "mean": 0.09991428571428572,
+    "median": 0.09971428571428571,
+    "p95": 0.10072857142857143,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "left_rudder_failed",
+    "metric": "angle_rmse_deg",
+    "mean": 5.0135932528730915,
+    "median": 4.8575076859063095,
+    "p95": 8.55243429406813,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "left_rudder_failed",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.44511193319097053,
+    "median": 0.4305966065513497,
+    "p95": 0.9026144163391807,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "left_rudder_failed",
+    "metric": "total_variation",
+    "mean": 7.74444027522086,
+    "median": 7.029045037018019,
+    "p95": 14.999139510053238,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "left_rudder_failed",
+    "metric": "saturation_fraction",
+    "mean": 0.09971428571428573,
+    "median": 0.09971428571428571,
+    "p95": 0.09971428571428571,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "degraded_outboard_pair",
+    "metric": "angle_rmse_deg",
+    "mean": 4.98439556219376,
+    "median": 4.830725852346724,
+    "p95": 8.489823296268618,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "degraded_outboard_pair",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.5109878985140328,
+    "median": 0.488766442962993,
+    "p95": 1.060261716925931,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "degraded_outboard_pair",
+    "metric": "total_variation",
+    "mean": 9.193098838186813,
+    "median": 8.954025901060916,
+    "p95": 19.073492223666506,
+    "n": 10
+  },
+  {
+    "method": "constrained_qp",
+    "scenario": "degraded_outboard_pair",
+    "metric": "saturation_fraction",
+    "mean": 0.0,
+    "median": 0.0,
+    "p95": 0.0,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "nominal",
+    "metric": "angle_rmse_deg",
+    "mean": 5.012354392116606,
+    "median": 4.856584417687875,
+    "p95": 8.555904055971986,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "nominal",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.4375238073624623,
+    "median": 0.4338565844420048,
+    "p95": 0.8305460760851655,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "nominal",
+    "metric": "total_variation",
+    "mean": 8.611233330243014,
+    "median": 8.287606091780585,
+    "p95": 17.780633034508167,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "nominal",
+    "metric": "saturation_fraction",
+    "mean": 0.0,
+    "median": 0.0,
+    "p95": 0.0,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "outer_elevon_jam",
+    "metric": "angle_rmse_deg",
+    "mean": 4.99915088363569,
+    "median": 4.8481800967831195,
+    "p95": 8.516973876387532,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "outer_elevon_jam",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.5323227978654511,
+    "median": 0.5186105792906778,
+    "p95": 1.0665808830594754,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "outer_elevon_jam",
+    "metric": "total_variation",
+    "mean": 9.039234538395881,
+    "median": 8.846539200189655,
+    "p95": 19.00450309710962,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "outer_elevon_jam",
+    "metric": "saturation_fraction",
+    "mean": 0.09971428571428573,
+    "median": 0.09971428571428571,
+    "p95": 0.09971428571428571,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "left_rudder_failed",
+    "metric": "angle_rmse_deg",
+    "mean": 5.024756564723213,
+    "median": 4.872291930044328,
+    "p95": 8.555773430069172,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "left_rudder_failed",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.4806961865332484,
+    "median": 0.4762784714473508,
+    "p95": 0.8313872809803806,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "left_rudder_failed",
+    "metric": "total_variation",
+    "mean": 8.557763481553563,
+    "median": 8.094291124355642,
+    "p95": 17.340391884744704,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "left_rudder_failed",
+    "metric": "saturation_fraction",
+    "mean": 0.09971428571428573,
+    "median": 0.09971428571428571,
+    "p95": 0.09971428571428571,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "degraded_outboard_pair",
+    "metric": "angle_rmse_deg",
+    "mean": 5.011055022705293,
+    "median": 4.855783257885935,
+    "p95": 8.551382361676115,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "degraded_outboard_pair",
+    "metric": "allocation_rmse_deg_s2",
+    "mean": 0.4395562037970698,
+    "median": 0.43511088819044585,
+    "p95": 0.8356578893089286,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "degraded_outboard_pair",
+    "metric": "total_variation",
+    "mean": 9.608216702569074,
+    "median": 9.538390163030403,
+    "p95": 20.354580335846457,
+    "n": 10
+  },
+  {
+    "method": "covariance_aware_qp",
+    "scenario": "degraded_outboard_pair",
+    "metric": "saturation_fraction",
+    "mean": 0.0,
+    "median": 0.0,
+    "p95": 0.0,
+    "n": 10
+  }
+]

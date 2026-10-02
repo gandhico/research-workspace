@@ -1,0 +1,12 @@
+dataset,config,neuron,readout,seed,accuracy,macro_f1,events_per_sample,active_frac,outside_op_frac,stable,wall_s
+shd_smoke,LIF,lif,voltage,0,0.26666666666666666,0.2589869281045752,6.0224609375,0.6669921875,0.0771484375,True,0.41
+shd_smoke,ALIF,alif,voltage,0,0.4222222222222222,0.37946859903381647,1.8125,0.720703125,0.0,True,0.22
+shd_smoke,HyperLIF.voltage,hyperlif,voltage,0,0.4222222222222222,0.38924218335983046,0.8818359375,0.75,0.2431640625,True,0.44
+shd_smoke,HyperLIF.hybridG,hyperlif,hybrid_vr_conductance,0,0.37777777777777777,0.3085901027077498,0.91796875,0.73046875,0.1630859375,True,0.41
+shd_smoke,AdHyperLIF.voltage,adaptive_hyperlif,voltage,0,0.4222222222222222,0.33907221425155426,1.1630859375,0.5830078125,0.0,True,0.4
+shd_smoke,AdHyperLIF.hybridG,adaptive_hyperlif,hybrid_vr_conductance,0,0.3333333333333333,0.16666666666666666,1.3828125,0.6572265625,0.0,True,0.42
+shd_smoke,AdHyperLIF.event.t1.00,adaptive_hyperlif,hybrid_vr_conductance_event,0,0.4222222222222222,0.39099198673666763,1.4267578125,0.6953125,0.0,True,0.52
+shd_smoke,AdHyperLIF.event.t0.95,adaptive_hyperlif,hybrid_vr_conductance_event,0,0.5333333333333333,0.4846656611362494,1.5908203125,0.716796875,0.0,True,0.45
+shd_smoke,AdHyperLIF.event.tadapt,adaptive_hyperlif,hybrid_vr_conductance_event,0,0.3111111111111111,0.19892014776925263,1.6962890625,0.73046875,0.0,True,0.53
+shd_smoke,AdHyperLIF.origin.static,adaptive_hyperlif,hybrid_vr_conductance,0,0.35555555555555557,0.2116294793779581,1.583984375,0.626953125,0.0,True,0.41
+shd_smoke,AdHyperLIF.origin.gated,adaptive_hyperlif,hybrid_vr_conductance,0,0.4888888888888889,0.4473182957393484,1.50390625,0.623046875,0.0,True,0.44

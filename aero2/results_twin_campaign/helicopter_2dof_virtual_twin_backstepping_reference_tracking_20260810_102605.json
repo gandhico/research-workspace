@@ -1,0 +1,34 @@
+{
+  "config": {
+    "execution_mode": "virtual_twin",
+    "model_variant": "helicopter_2dof",
+    "controller": "backstepping",
+    "application": "reference_tracking",
+    "duration_s": 18.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "out": "results_twin_campaign",
+    "controller_kwargs": {
+      "yawboost": false
+    }
+  },
+  "metrics": {
+    "n": 3601,
+    "duration_s": 17.999137599999813,
+    "realized_hz": 200.00958002009705,
+    "pitch_rms": 0.1778125528531584,
+    "yaw_rms": 0.843782530854747,
+    "tail_pitch_mae": 0.030148138759796484,
+    "tail_yaw_mae": 1.0302521767597543,
+    "pitch_sat_frac": 0.010830324909747292,
+    "yaw_sat_frac": 0.0019439044709802832,
+    "theta_range": [
+      -0.34470252726888007,
+      0.33815754257390135
+    ],
+    "psi_range": [
+      -1.3146215352179944,
+      0.6350680461846554
+    ]
+  }
+}

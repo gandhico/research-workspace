@@ -1,0 +1,29 @@
+{
+  "args": {
+    "vehicle": "x2",
+    "mode": "mlp",
+    "seed": 1,
+    "episode_s": 12.0,
+    "policy_dt": 0.02,
+    "bc_epochs": 20,
+    "dagger_rounds": 0,
+    "dagger_epochs": 30,
+    "ppo_rollouts": 2,
+    "ppo_samples": 600,
+    "ppo_epochs": 4,
+    "sim_python": "C:\\Users\\gandhico\\AppData\\Local\\miniconda3\\envs\\hyperlif\\python.exe",
+    "out": "C:\\Research\\neuromorphic_drone_racing\\rl_cmg_2026_09_30\\results\\matched_x2_mlp_seed1"
+  },
+  "source_hashes": {
+    "cmg_cells.py": "15d0e61fa25440a0914ed3969482e356ac825715a45a11fda34668673d0ff27f",
+    "policy_basis.py": "0c75545c10a1499d5506b8127891ec9dd98e4a4b68de207784931162d8a45c03",
+    "racing_env.py": "369baf96be38304befad8f6a069754046a2d181ccc5359fa65eb2253b8bf8607",
+    "rollout_worker.py": "e3bec4c8506f731f12f693651bc378676e26eb90ab9f7f2aa70709705cf2f9a7",
+    "train_split.py": "2f776b2baa3af901b0b2932db64b06b6bb8c1386264b52aac1125881ea5e2b53"
+  },
+  "vehicle_xml_hash": "f74ec4fedaf3b4893afa8e3f8d53749ff219fab9732cdd5d6506993d3e2e1971",
+  "torch_version": "2.5.1+cu121",
+  "numpy_version": "2.4.6",
+  "policy_parameter_count": 8265,
+  "separation": "MuJoCo/SciPy worker and PyTorch trainer are distinct processes"
+}

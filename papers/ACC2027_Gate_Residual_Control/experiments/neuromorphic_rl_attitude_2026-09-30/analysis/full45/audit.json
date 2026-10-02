@@ -1,0 +1,187 @@
+{
+  "status": "pass",
+  "runs": 10,
+  "errors": [],
+  "results": [
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "samples": 90000,
+      "status": "pass",
+      "checks": {
+        "samples": true,
+        "time_start": true,
+        "time_end": true,
+        "mean_error": true,
+        "finite": true,
+        "activity_bound": true,
+        "residual_bound": true,
+        "gate_identity": true,
+        "torque_box": true,
+        "source_model": true
+      }
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "samples": 90000,
+      "status": "pass",
+      "checks": {
+        "samples": true,
+        "time_start": true,
+        "time_end": true,
+        "mean_error": true,
+        "finite": true,
+        "activity_bound": true,
+        "residual_bound": true,
+        "gate_identity": true,
+        "torque_box": true,
+        "source_model": true
+      }
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "samples": 90000,
+      "status": "pass",
+      "checks": {
+        "samples": true,
+        "time_start": true,
+        "time_end": true,
+        "mean_error": true,
+        "finite": true,
+        "activity_bound": true,
+        "residual_bound": true,
+        "gate_identity": true,
+        "torque_box": true,
+        "source_model": true
+      }
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "samples": 90000,
+      "status": "pass",
+      "checks": {
+        "samples": true,
+        "time_start": true,
+        "time_end": true,
+        "mean_error": true,
+        "finite": true,
+        "activity_bound": true,
+        "residual_bound": true,
+        "gate_identity": true,
+        "torque_box": true,
+        "source_model": true
+      }
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "samples": 90000,
+      "status": "pass",
+      "checks": {
+        "samples": true,
+        "time_start": true,
+        "time_end": true,
+        "mean_error": true,
+        "finite": true,
+        "activity_bound": true,
+        "residual_bound": true,
+        "gate_identity": true,
+        "torque_box": true,
+        "source_model": true
+      }
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "samples": 90000,
+      "status": "pass",
+      "checks": {
+        "samples": true,
+        "time_start": true,
+        "time_end": true,
+        "mean_error": true,
+        "finite": true,
+        "activity_bound": true,
+        "residual_bound": true,
+        "gate_identity": true,
+        "torque_box": true,
+        "source_model": true
+      }
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "samples": 90000,
+      "status": "pass",
+      "checks": {
+        "samples": true,
+        "time_start": true,
+        "time_end": true,
+        "mean_error": true,
+        "finite": true,
+        "activity_bound": true,
+        "residual_bound": true,
+        "gate_identity": true,
+        "torque_box": true,
+        "source_model": true
+      }
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "samples": 90000,
+      "status": "pass",
+      "checks": {
+        "samples": true,
+        "time_start": true,
+        "time_end": true,
+        "mean_error": true,
+        "finite": true,
+        "activity_bound": true,
+        "residual_bound": true,
+        "gate_identity": true,
+        "torque_box": true,
+        "source_model": true
+      }
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "samples": 90000,
+      "status": "pass",
+      "checks": {
+        "samples": true,
+        "time_start": true,
+        "time_end": true,
+        "mean_error": true,
+        "finite": true,
+        "activity_bound": true,
+        "residual_bound": true,
+        "gate_identity": true,
+        "torque_box": true,
+        "source_model": true
+      }
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "samples": 90000,
+      "status": "pass",
+      "checks": {
+        "samples": true,
+        "time_start": true,
+        "time_end": true,
+        "mean_error": true,
+        "finite": true,
+        "activity_bound": true,
+        "residual_bound": true,
+        "gate_identity": true,
+        "torque_box": true,
+        "source_model": true
+      }
+    }
+  ]
+}

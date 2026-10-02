@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "summaries": 10,
+  "pairs": [
+    {
+      "mission": "roll",
+      "common_compared_steps": 5000,
+      "pd_completed": true,
+      "cmg_completed": true,
+      "pd_abort_reason": "",
+      "cmg_abort_reason": "",
+      "emulation_realtime": false
+    },
+    {
+      "mission": "full3",
+      "common_compared_steps": 5000,
+      "pd_completed": true,
+      "cmg_completed": true,
+      "pd_abort_reason": "",
+      "cmg_abort_reason": "",
+      "emulation_realtime": false
+    },
+    {
+      "mission": "hard45",
+      "common_compared_steps": 2094,
+      "pd_completed": false,
+      "cmg_completed": false,
+      "pd_abort_reason": "roll safety limit exceeded: 55.022 deg",
+      "cmg_abort_reason": "roll safety limit exceeded: 55.005 deg",
+      "emulation_realtime": false
+    },
+    {
+      "mission": "hardstep",
+      "common_compared_steps": 5000,
+      "pd_completed": true,
+      "cmg_completed": true,
+      "pd_abort_reason": "",
+      "cmg_abort_reason": "",
+      "emulation_realtime": false
+    },
+    {
+      "mission": "yaw360",
+      "common_compared_steps": 2876,
+      "pd_completed": false,
+      "cmg_completed": false,
+      "pd_abort_reason": "pitch safety limit exceeded: 55.009 deg",
+      "cmg_abort_reason": "pitch safety limit exceeded: 55.277 deg",
+      "emulation_realtime": false
+    }
+  ],
+  "failures": [],
+  "timing_note": "emulation_realtime=false; deadline_miss_fraction is not hardware timing evidence"
+}

@@ -1,0 +1,21 @@
+{
+  "runtime": "lqr/discrete_cascade_roll_lqr.py",
+  "replays": [
+    {
+      "file": "rich_R3_roll_dualrate_pilot_20260712_193416.csv",
+      "rows": 1050,
+      "peak_abs_command": 4.4783816683777396e-05,
+      "maximum_slew": 3.0412839670793866e-05,
+      "magnitude_limited_samples": 0,
+      "slew_limited_samples": 0
+    },
+    {
+      "file": "rich_R3_roll_dualrate_confirmation_20260712_194543.csv",
+      "rows": 1050,
+      "peak_abs_command": 0.00013052416900371708,
+      "maximum_slew": 5e-05,
+      "magnitude_limited_samples": 0,
+      "slew_limited_samples": 2
+    }
+  ]
+}

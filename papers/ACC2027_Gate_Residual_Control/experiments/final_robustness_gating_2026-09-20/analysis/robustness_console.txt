@@ -1,0 +1,194 @@
+
+######## NOISE, metric = qerr_true_mean_rad
+
+  level=moderate  arm=cmg_pes_table  seeds=5
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  x2        roll               0.773           -1.44   0.26   -1.69   0/5
+  x2        full3             10.129           11.94   0.06   11.85   5/5
+  x2        hard45            10.555           11.16   0.05   11.08   5/5
+  x2        hardstep         265.521          -17.34   0.36  -17.76   0/5
+  x2        yaw360             0.713           -3.93   0.55   -4.84   0/5
+  x2        geo (5)                             0.65   0.16    0.38   5/5
+  cf2-rotor roll               0.903            0.74   0.08    0.66   5/5
+  cf2-rotor full3              7.092            1.13   0.01    1.12   5/5
+  cf2-rotor hard45             8.688            1.10   0.01    1.10   5/5
+  cf2-rotor hardstep         262.903           -1.30   0.01   -1.31   0/5
+  cf2-rotor yaw360             0.685           -0.49   0.03   -0.55   0/5
+  cf2-rotor geo (5)                             0.24   0.02    0.21   5/5
+
+  level=moderate  arm=cmg_pes_gated_b05  seeds=5
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  cf2-rotor roll               0.903            3.08   0.78    2.11   5/5
+  cf2-rotor full3              7.092            9.48   0.05    9.41   5/5
+  cf2-rotor hard45             8.688            9.64   0.05    9.58   5/5
+  cf2-rotor hardstep         262.903         -649.45  68.71 -685.11   0/5
+  cf2-rotor yaw360             0.685           -5.18   0.27   -5.63   0/5
+  cf2-rotor geo (5)                           -44.18   2.72  -45.99   0/5
+
+  level=moderate  arm=cmg_pes_gated  seeds=5
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  x2        roll               0.773           -1.44   0.26   -1.69   0/5
+  x2        full3             10.129           11.93   0.06   11.84   5/5
+  x2        hard45            10.555           11.15   0.05   11.07   5/5
+  x2        hardstep         265.521           -2.37   0.33   -2.73   0/5
+  x2        yaw360             0.713           -3.93   0.55   -4.84   0/5
+  x2        geo (5)                             3.32   0.16    3.05   5/5
+  cf2-rotor roll               0.903            2.20   0.38    1.73   5/5
+  cf2-rotor full3              7.092            4.25   0.03    4.21   5/5
+  cf2-rotor hard45             8.688            4.22   0.03    4.18   5/5
+  cf2-rotor hardstep         262.903           -0.23   0.01   -0.24   0/5
+  cf2-rotor yaw360             0.685           -2.01   0.13   -2.23   0/5
+  cf2-rotor geo (5)                             1.72   0.09    1.59   5/5
+
+  level=realistic  arm=cmg_pes_table  seeds=10
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  x2        roll               1.393           -4.24   0.64   -5.23   0/10
+  x2        full3             10.259           11.36   0.12   11.22  10/10
+  x2        hard45            10.656           10.80   0.11   10.69  10/10
+  x2        hardstep         266.141          -17.39   0.38  -17.86   0/10
+  x2        yaw360             1.358           -5.26   0.48   -6.15   0/10
+  x2        geo (5)                            -0.36   0.25   -0.78   1/10
+  cf2-rotor roll               1.474           -0.05   0.05   -0.14   1/10
+  cf2-rotor full3              7.241            1.05   0.01    1.03  10/10
+  cf2-rotor hard45             8.797            1.06   0.02    1.04  10/10
+  cf2-rotor hardstep         263.342           -1.54   0.05   -1.61   0/10
+  cf2-rotor yaw360             1.347           -0.53   0.05   -0.60   0/10
+  cf2-rotor geo (5)                             0.00   0.02   -0.04   7/10
+
+  level=realistic  arm=cmg_pes_gated_b05  seeds=10
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  cf2-rotor roll               1.474           -2.06   0.68   -3.01   0/10
+  cf2-rotor full3              7.241            8.65   0.10    8.48  10/10
+  cf2-rotor hard45             8.797            9.26   0.13    9.07  10/10
+  cf2-rotor hardstep         263.342         -673.32  40.53 -697.43   0/10
+  cf2-rotor yaw360             1.347           -5.47   0.43   -6.06   0/10
+  cf2-rotor geo (5)                           -47.12   1.48  -48.14   0/10
+
+  level=realistic  arm=cmg_pes_gated  seeds=10
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  x2        roll               1.393           -4.24   0.64   -5.23   0/10
+  x2        full3             10.259           11.29   0.12   11.14  10/10
+  x2        hard45            10.656           10.76   0.11   10.65  10/10
+  x2        hardstep         266.141           -2.60   0.35   -3.03   0/10
+  x2        yaw360             1.358           -5.26   0.48   -6.15   0/10
+  x2        geo (5)                             2.28   0.23    1.90  10/10
+  cf2-rotor roll               1.474           -0.43   0.25   -0.84   0/10
+  cf2-rotor full3              7.241            3.90   0.05    3.82  10/10
+  cf2-rotor hard45             8.797            4.05   0.06    3.96  10/10
+  cf2-rotor hardstep         263.342           -0.32   0.02   -0.35   0/10
+  cf2-rotor yaw360             1.347           -2.15   0.19   -2.42   0/10
+  cf2-rotor geo (5)                             1.04   0.08    0.91  10/10
+
+######## NOISE, metric = qerr_feedback_mean_rad
+
+  level=moderate  arm=cmg_pes_table  seeds=5
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  x2        roll              15.958           -0.00   0.00   -0.01   0/5
+  x2        full3             20.231            3.01   0.02    2.99   5/5
+  x2        hard45            20.110            3.00   0.01    2.98   5/5
+  x2        hardstep         271.976          -16.08   0.33  -16.45   0/5
+  x2        yaw360            15.955           -0.01   0.00   -0.01   0/5
+  x2        geo (5)                            -1.78   0.06   -1.85   0/5
+  cf2-rotor roll              15.965            0.00   0.00    0.00   5/5
+  cf2-rotor full3             18.915            0.15   0.00    0.15   5/5
+  cf2-rotor hard45            19.245            0.20   0.00    0.20   5/5
+  cf2-rotor hardstep         271.438           -1.19   0.01   -1.20   0/5
+  cf2-rotor yaw360            15.953           -0.00   0.00   -0.00   0/5
+  cf2-rotor geo (5)                            -0.17   0.00   -0.17   0/5
+
+  level=moderate  arm=cmg_pes_gated_b05  seeds=5
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  cf2-rotor roll              15.965            0.01   0.00    0.01   5/5
+  cf2-rotor full3             18.915            1.18   0.01    1.17   5/5
+  cf2-rotor hard45            19.245            1.67   0.00    1.67   5/5
+  cf2-rotor hardstep         271.438         -626.66  66.35 -661.00   0/5
+  cf2-rotor yaw360            15.953           -0.01   0.00   -0.01   0/5
+  cf2-rotor geo (5)                           -47.75   2.85  -49.20   0/5
+
+  level=moderate  arm=cmg_pes_gated  seeds=5
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  x2        roll              15.958           -0.00   0.00   -0.01   0/5
+  x2        full3             20.231            3.01   0.02    2.99   5/5
+  x2        hard45            20.110            3.00   0.01    2.98   5/5
+  x2        hardstep         271.976           -1.98   0.32   -2.33   0/5
+  x2        yaw360            15.955           -0.01   0.00   -0.01   0/5
+  x2        geo (5)                             0.82   0.07    0.75   5/5
+  cf2-rotor roll              15.965            0.01   0.00    0.01   5/5
+  cf2-rotor full3             18.915            0.56   0.00    0.55   5/5
+  cf2-rotor hard45            19.245            0.76   0.00    0.76   5/5
+  cf2-rotor hardstep         271.438           -0.22   0.01   -0.23   0/5
+  cf2-rotor yaw360            15.953           -0.00   0.00   -0.00   0/5
+  cf2-rotor geo (5)                             0.22   0.00    0.22   5/5
+
+  level=realistic  arm=cmg_pes_table  seeds=10
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  x2        roll              31.948           -0.01   0.00   -0.01   0/10
+  x2        full3             35.103            1.01   0.01    0.99  10/10
+  x2        hard45            34.886            1.02   0.01    1.00  10/10
+  x2        hardstep         281.150          -14.79   0.33  -15.21   0/10
+  x2        yaw360            31.947           -0.01   0.00   -0.01   0/10
+  x2        geo (5)                            -2.38   0.06   -2.46   0/10
+  cf2-rotor roll              31.951            0.00   0.00   -0.00   5/10
+  cf2-rotor full3             34.437            0.05   0.00    0.05  10/10
+  cf2-rotor hard45            34.524            0.07   0.00    0.07  10/10
+  cf2-rotor hardstep         281.596           -1.26   0.04   -1.31   0/10
+  cf2-rotor yaw360            31.945           -0.00   0.00   -0.00   0/10
+  cf2-rotor geo (5)                            -0.23   0.01   -0.24   0/10
+
+  level=realistic  arm=cmg_pes_gated_b05  seeds=10
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  cf2-rotor roll              31.951           -0.00   0.00   -0.01   0/10
+  cf2-rotor full3             34.437            0.38   0.00    0.38  10/10
+  cf2-rotor hard45            34.524            0.54   0.01    0.53  10/10
+  cf2-rotor hardstep         281.596         -624.53  37.57 -646.30   0/10
+  cf2-rotor yaw360            31.945           -0.01   0.00   -0.01   0/10
+  cf2-rotor geo (5)                           -48.30   1.62  -49.21   0/10
+
+  level=realistic  arm=cmg_pes_gated  seeds=10
+  platform  mission     PD+ff [mrad]  reduction mean     sd     min  #pos
+  x2        roll              31.948           -0.01   0.00   -0.01   0/10
+  x2        full3             35.103            0.99   0.01    0.98  10/10
+  x2        hard45            34.886            1.01   0.01    0.99  10/10
+  x2        hardstep         281.150           -1.90   0.31   -2.28   0/10
+  x2        yaw360            31.947           -0.01   0.00   -0.01   0/10
+  x2        geo (5)                             0.02   0.06   -0.05   5/10
+  cf2-rotor roll              31.951           -0.00   0.00   -0.00   1/10
+  cf2-rotor full3             34.437            0.18   0.00    0.18  10/10
+  cf2-rotor hard45            34.524            0.25   0.00    0.24  10/10
+  cf2-rotor hardstep         281.596           -0.27   0.01   -0.29   0/10
+  cf2-rotor yaw360            31.945           -0.00   0.00   -0.00   0/10
+  cf2-rotor geo (5)                             0.03   0.00    0.03  10/10
+
+######## DISTURBANCE (Hover, intermittent bursts)
+
+  x2  amplitude x0.5   PD+ff: whole    6.238  burst   0.806 deg  quiet   0.021 deg
+    cmg_pes_table          whole    4.914 ( +21.2%)  burst   0.613 deg ( +24.0%)  quiet   0.036 deg ( -74.3%)  effort 0.032  rotorSat 0.000
+    cmg_pes_gated          whole    4.914 ( +21.2%)  burst   0.613 deg ( +24.0%)  quiet   0.036 deg ( -74.3%)  effort 0.032  rotorSat 0.000
+
+  x2  amplitude x1   PD+ff: whole   12.477  burst   1.613 deg  quiet   0.041 deg
+    cmg_pes_table          whole   10.688 ( +14.3%)  burst   1.380 deg ( +14.4%)  quiet   0.035 deg ( +14.7%)  effort 0.024  rotorSat 0.000
+    cmg_pes_gated          whole   10.688 ( +14.3%)  burst   1.380 deg ( +14.4%)  quiet   0.035 deg ( +14.7%)  effort 0.024  rotorSat 0.000
+
+  x2  amplitude x2   PD+ff: whole   24.956  burst   3.226 deg  quiet   0.083 deg
+    cmg_pes_table          whole   21.643 ( +13.3%)  burst   2.797 deg ( +13.3%)  quiet   0.071 deg ( +14.7%)  effort 0.041  rotorSat 0.000
+    cmg_pes_gated          whole   21.643 ( +13.3%)  burst   2.797 deg ( +13.3%)  quiet   0.071 deg ( +14.7%)  effort 0.041  rotorSat 0.000
+
+  cf2-rotor  amplitude x0.5   PD+ff: whole    8.711  burst   1.136 deg  quiet   0.018 deg
+    cmg_pes_table          whole    8.559 (  +1.7%)  burst   1.117 deg (  +1.7%)  quiet   0.017 deg (  +6.1%)  effort 0.002  rotorSat 0.000
+    cmg_pes_b05_ungated    whole    7.239 ( +16.9%)  burst   0.941 deg ( +17.2%)  quiet   0.018 deg (  -0.6%)  effort 0.023  rotorSat 0.000
+    cmg_pes_gated_b05      whole    7.239 ( +16.9%)  burst   0.941 deg ( +17.2%)  quiet   0.018 deg (  -0.6%)  effort 0.023  rotorSat 0.000
+    cmg_pes_gated          whole    8.125 (  +6.7%)  burst   1.063 deg (  +6.5%)  quiet   0.014 deg ( +19.8%)  effort 0.009  rotorSat 0.000
+
+  cf2-rotor  amplitude x1   PD+ff: whole   17.422  burst   2.273 deg  quiet   0.035 deg
+    cmg_pes_table          whole   17.144 (  +1.6%)  burst   2.239 deg (  +1.5%)  quiet   0.033 deg (  +6.1%)  effort 0.004  rotorSat 0.000
+    cmg_pes_b05_ungated    whole   14.969 ( +14.1%)  burst   1.962 deg ( +13.7%)  quiet   0.023 deg ( +35.3%)  effort 0.031  rotorSat 0.000
+    cmg_pes_gated_b05      whole   14.969 ( +14.1%)  burst   1.962 deg ( +13.7%)  quiet   0.023 deg ( +35.3%)  effort 0.031  rotorSat 0.000
+    cmg_pes_gated          whole   16.361 (  +6.1%)  burst   2.140 deg (  +5.9%)  quiet   0.028 deg ( +19.8%)  effort 0.013  rotorSat 0.000
+
+  cf2-rotor  amplitude x2   PD+ff: whole   43.863  burst   5.725 deg  quiet   0.086 deg
+    cmg_pes_table          whole   43.287 (  +1.3%)  burst   5.655 deg (  +1.2%)  quiet   0.081 deg (  +6.1%)  effort 0.006  rotorSat 0.000
+    cmg_pes_b05_ungated    whole   38.893 ( +11.3%)  burst   5.102 deg ( +10.9%)  quiet   0.056 deg ( +34.9%)  effort 0.054  rotorSat 0.000
+    cmg_pes_gated_b05      whole   38.893 ( +11.3%)  burst   5.102 deg ( +10.9%)  quiet   0.056 deg ( +34.9%)  effort 0.054  rotorSat 0.000
+    cmg_pes_gated          whole   41.677 (  +5.0%)  burst   5.455 deg (  +4.7%)  quiet   0.069 deg ( +19.8%)  effort 0.023  rotorSat 0.000
+
+wrote C:\Research\papers\ACC2027_Gate_Residual_Control\experiments\final_robustness_gating_2026-09-20\analysis

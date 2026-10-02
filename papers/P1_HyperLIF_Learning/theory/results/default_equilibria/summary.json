@@ -1,0 +1,42 @@
+{
+  "parameter_contract": {
+    "tau": 0.02,
+    "tau_r": 0.002,
+    "alpha": 100.0,
+    "gamma": 0.2,
+    "v_rest": 0.0,
+    "v_reset": 0.0,
+    "theta": 1.0,
+    "event_threshold": 1.0,
+    "fixed_gain": 100.0,
+    "base_gain": 20.0,
+    "adaptive_gain": 80.0
+  },
+  "analytical_open_gate_db_current_fixed": 2.4000000000000004,
+  "adaptive_positive_drive_open_gate_voltage_limit": 0.625,
+  "adaptive_open_gate_bound_condition_beta_gt": 62.5,
+  "alpha_times_gamma": 20.0,
+  "simple_gate_self_feedback_bound_alpha_gamma_lt_4": false,
+  "warning": "Open-gate formulas analyze the r=1 branch. The true coupled equilibria satisfy an implicit gate equation; equilibrium stability does not by itself establish or exclude a limit cycle.",
+  "HyperLIF": {
+    "equilibrium_rows": 601,
+    "sampled_multi_equilibrium_current_range": null,
+    "sampled_stable_above_event_current_range": [
+      3.0,
+      6.0
+    ],
+    "sampled_unstable_equilibrium_current_range": [
+      0.97,
+      2.29
+    ]
+  },
+  "AdaptiveHyperLIF": {
+    "equilibrium_rows": 601,
+    "sampled_multi_equilibrium_current_range": null,
+    "sampled_stable_above_event_current_range": null,
+    "sampled_unstable_equilibrium_current_range": [
+      0.97,
+      6.0
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+"""
+    gui_exp02_yaw_nef.py - NEF LIF-spiking yaw controller.
+
+    Launch from the project root with:
+
+        python -m nengo_gui src/gui/gui_exp02_yaw_nef.py
+
+    This Nengo-GUI model is self-contained so re-execution on edit is robust.
+    Its equations, gains, references, and neuron type mirror Exp02 and subsystem_pd.py/subsystem_nef.py; the
+    benchmark remains the source of truth.
+    """
+
+import numpy as np
+import nengo
+
+KP, KD = 7.0, 3.7
+TARGET, T_STEP = 0.5, 1.0
+DT, TAU = 0.001, 0.01
+AXIS_SYMBOL = "psi"
+
+class _AttitudePlant:
+    """Inertia-normalized RK4 plant: tau -> [angle, angular_rate]."""
+    def __init__(self, dt):
+        self.dt = dt
+        self.state = np.zeros(2)
+
+    @staticmethod
+    def _f(state, torque):
+        return np.array([state[1], torque])
+
+    def __call__(self, t, value):
+        torque, h, state = float(value[0]), self.dt, self.state
+        k1 = self._f(state, torque)
+        k2 = self._f(state + 0.5*h*k1, torque)
+        k3 = self._f(state + 0.5*h*k2, torque)
+        k4 = self._f(state + h*k3, torque)
+        self.state = state + h*(k1 + 2*k2 + 2*k3 + k4)/6.0
+        return self.state
+
+
+def _reference(t):
+    return TARGET if t >= T_STEP else 0.0
+
+model = nengo.Network(label="Exp02 - NEF LIF yaw", seed=1)
+with model:
+    reference = nengo.Node(_reference, label="reference psi_ref [rad]")
+    plant = nengo.Node(_AttitudePlant(DT), size_in=1, size_out=2,
+                       label="plant state [psi, dpsi]")
+    error = nengo.Ensemble(200, 1, radius=0.7, neuron_type=nengo.LIF(),
+                           label="controller error e_psi")
+    rate_feedback = nengo.Ensemble(200, 1, radius=1.5, neuron_type=nengo.LIF(),
+                                   label="rate feedback -dpsi")
+    controller_feedback = nengo.Ensemble(400, 1, radius=8.0, neuron_type=nengo.LIF(),
+                                         label="neural PD torque")
+    final_command = nengo.Node(size_in=1, label="final command tau_psi")
+    tracking = nengo.Node(size_in=2, label="tracking [psi, psi_ref]")
+
+    nengo.Connection(reference, error, synapse=TAU)
+    nengo.Connection(plant[0], error, transform=-1.0, synapse=TAU)
+    nengo.Connection(plant[1], rate_feedback, transform=-1.0, synapse=TAU)
+    nengo.Connection(error, controller_feedback, transform=KP, synapse=TAU)
+    nengo.Connection(rate_feedback, controller_feedback, transform=KD, synapse=TAU)
+    nengo.Connection(controller_feedback, final_command, synapse=TAU)
+    nengo.Connection(final_command, plant, synapse=TAU)
+    nengo.Connection(plant[0], tracking[0], synapse=TAU)
+    nengo.Connection(reference, tracking[1], synapse=TAU)

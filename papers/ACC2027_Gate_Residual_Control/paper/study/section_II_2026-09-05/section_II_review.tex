@@ -1,0 +1,20 @@
+\documentclass[letterpaper,10pt,conference]{IEEEtran}
+\usepackage{amsmath,amssymb,bm,booktabs,array,cite,graphicx,tikz}
+\usepackage[hidelinks]{hyperref}
+\newcommand{\T}{^{\mathsf T}}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\clip}{\operatorname{clip}}
+\newcommand{\sgnp}{\operatorname{sgn}_{+}}
+\begin{document}
+\title{Section II Study Revision: Models, Baseline, and Interface}
+\author{Working proposal --- September 5, 2026}
+\maketitle
+\noindent This standalone review preserves the evaluated controller and
+models. It proposes a more explicit Section II and an editable replacement
+for Figure 1; it is not the final ACC submission layout.
+\setcounter{section}{1}
+\input{section_II_revised.tex}
+\refstepcounter{section}\label{sec:architecture}
+\bibliographystyle{IEEEtran}
+\bibliography{source/references,model_references}
+\end{document}

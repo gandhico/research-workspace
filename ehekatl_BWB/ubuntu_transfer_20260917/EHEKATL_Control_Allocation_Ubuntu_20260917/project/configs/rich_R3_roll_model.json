@@ -1,0 +1,2056 @@
+{
+  "status": "frozen_training_only_predictor",
+  "training_file": "rich_R3_roll_training_01_20260712_184050.csv",
+  "validation_files_opened": [],
+  "fit_window_s": [
+    10.0,
+    50.0
+  ],
+  "candidate_count": 25,
+  "selection_rule": "minimum bidirectional mean recursive 0.1/0.5/1.0/2.0-s rate NRMSE with scaled condition < 1e4",
+  "claim_boundary": "pdot/short-horizon predictor; full expanded state dynamics still required before LQR synthesis",
+  "selected": {
+    "name": "surface_aerodynamic",
+    "fields": [
+      "roll_deg",
+      "p_deg_s",
+      "beta_deg",
+      "tas_m_s",
+      "distributed_ail1_wing2l_deg"
+    ],
+    "delay_samples": 0,
+    "temporal_folds": [
+      {
+        "qdot_label": "pdot",
+        "rmse": 0.022295705656569183,
+        "nrmse": 0.6752340758867365,
+        "condition_scaled": 59.19434128934764,
+        "multistep": {
+          "1": {
+            "rate_rmse_deg_s": 0.0022329954328196722,
+            "rate_nrmse": 0.39869236484641934
+          },
+          "5": {
+            "rate_rmse_deg_s": 0.0060047377279959365,
+            "rate_nrmse": 1.072121800999021
+          },
+          "10": {
+            "rate_rmse_deg_s": 0.00706513132636992,
+            "rate_nrmse": 1.2614508185106608
+          },
+          "20": {
+            "rate_rmse_deg_s": 0.005808915965856516,
+            "rate_nrmse": 1.0371586119623224
+          }
+        },
+        "multistep_mean_nrmse": 0.9423558990796059
+      },
+      {
+        "qdot_label": "pdot",
+        "rmse": 0.022179571945750605,
+        "nrmse": 0.6499642636230686,
+        "condition_scaled": 133.39469130976147,
+        "multistep": {
+          "1": {
+            "rate_rmse_deg_s": 0.002224045745694589,
+            "rate_nrmse": 0.36941954664665333
+          },
+          "5": {
+            "rate_rmse_deg_s": 0.0027199490674703836,
+            "rate_nrmse": 0.4517903255146795
+          },
+          "10": {
+            "rate_rmse_deg_s": 0.003108771358771934,
+            "rate_nrmse": 0.5163746780878197
+          },
+          "20": {
+            "rate_rmse_deg_s": 0.003619280099004892,
+            "rate_nrmse": 0.6011714533974546
+          }
+        },
+        "multistep_mean_nrmse": 0.4846890009116518
+      }
+    ],
+    "temporal_mean_nrmse": 0.6625991697549025,
+    "temporal_multistep_mean_nrmse": 0.7135224499956289,
+    "beta": [
+      -6.7143888441736275,
+      -3.8674184972715913,
+      73.70172585281617,
+      0.47134332165937487,
+      7.900878478647502
+    ],
+    "training_pdot_rmse": 0.020871592898425488,
+    "training_pdot_nrmse": 0.6216109211738063,
+    "condition_scaled": 47.48796328939916,
+    "residual_lag1": 0.7748530162219475,
+    "sample_count": 400
+  },
+  "candidates": [
+    {
+      "name": "local",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 0,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.024466197038683583,
+          "nrmse": 0.7409682475338367,
+          "condition_scaled": 13.639540832142414,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0024524708148891054,
+              "rate_nrmse": 0.4378788127077752
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.02895348895896127,
+              "rate_nrmse": 5.169529150817198
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.1966920215355751,
+              "rate_nrmse": 35.1185703561509
+            },
+            "20": {
+              "rate_rmse_deg_s": 4.513300486801452,
+              "rate_nrmse": 805.8316725140746
+            }
+          },
+          "multistep_mean_nrmse": 211.63941270843762
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.02405337963703969,
+          "nrmse": 0.704875514354997,
+          "condition_scaled": 11.190235632572225,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.002397093843435661,
+              "rate_nrmse": 0.3981632673814116
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.01527302113657721,
+              "rate_nrmse": 2.536886912115656
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.03097131053296989,
+              "rate_nrmse": 5.144411943095713
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.2477426022699245,
+              "rate_nrmse": 41.15066427603307
+            }
+          },
+          "multistep_mean_nrmse": 12.307531599656462
+        }
+      ],
+      "temporal_mean_nrmse": 0.7229218809444169,
+      "temporal_multistep_mean_nrmse": 111.97347215404704,
+      "beta": [
+        -11.436078808147562,
+        4.820008127940006,
+        -771.7197535804794
+      ],
+      "training_pdot_rmse": 0.024103554816343284,
+      "training_pdot_nrmse": 0.7178672459676413,
+      "condition_scaled": 12.274677628803786,
+      "residual_lag1": 0.7219156317941886,
+      "sample_count": 400
+    },
+    {
+      "name": "local",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 1,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.016826186449861787,
+          "nrmse": 0.5095875696054848,
+          "condition_scaled": 4.082714048189473,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0016849100440471587,
+              "rate_nrmse": 0.300833920276493
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.011899461039504946,
+              "rate_nrmse": 2.1246009698494457
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.03719691109396735,
+              "rate_nrmse": 6.641359060152397
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.0864480192337807,
+              "rate_nrmse": 15.434946582529856
+            }
+          },
+          "multistep_mean_nrmse": 6.125435133202048
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.016134242692345653,
+          "nrmse": 0.472808095498681,
+          "condition_scaled": 3.7553808939134607,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0016065609732470005,
+              "rate_nrmse": 0.26685378551499145
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.01032710299819751,
+              "rate_nrmse": 1.715357570838072
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.0264505535805803,
+              "rate_nrmse": 4.393502935453024
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.07291100146736931,
+              "rate_nrmse": 12.110699233489502
+            }
+          },
+          "multistep_mean_nrmse": 4.621603381323897
+        }
+      ],
+      "temporal_mean_nrmse": 0.49119783255208294,
+      "temporal_multistep_mean_nrmse": 5.373519257262973,
+      "beta": [
+        -6.475752550915707,
+        3.0360507782256345,
+        -621.8941798300027
+      ],
+      "training_pdot_rmse": 0.01643003172403102,
+      "training_pdot_nrmse": 0.48932954971827947,
+      "condition_scaled": 3.9179878649457147,
+      "residual_lag1": 0.5917461785465165,
+      "sample_count": 400
+    },
+    {
+      "name": "local",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 2,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.018199527588303652,
+          "nrmse": 0.551179737567202,
+          "condition_scaled": 2.2190226979461185,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0018231371930630266,
+              "rate_nrmse": 0.32551382249085875
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.006379957074276883,
+              "rate_nrmse": 1.1391157080649108
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.00817968735209047,
+              "rate_nrmse": 1.4604503198608445
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.010085334960619289,
+              "rate_nrmse": 1.8006960455983563
+            }
+          },
+          "multistep_mean_nrmse": 1.1814439740037426
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.018328884654143885,
+          "nrmse": 0.5371212774710575,
+          "condition_scaled": 2.05026937838364,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0018172611747758682,
+              "rate_nrmse": 0.3018516146189264
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.006335675732005565,
+              "rate_nrmse": 1.0523715445820263
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.008314700656235149,
+              "rate_nrmse": 1.3810925215343213
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.009575273941654666,
+              "rate_nrmse": 1.5904768889719272
+            }
+          },
+          "multistep_mean_nrmse": 1.0814481424268003
+        }
+      ],
+      "temporal_mean_nrmse": 0.5441505075191297,
+      "temporal_multistep_mean_nrmse": 1.1314460582152714,
+      "beta": [
+        -6.688624896607668,
+        -0.3104691764100381,
+        -357.0080191441464
+      ],
+      "training_pdot_rmse": 0.018233457236668835,
+      "training_pdot_nrmse": 0.5430403038344017,
+      "condition_scaled": 2.1350229606797297,
+      "residual_lag1": 0.7017905921654449,
+      "sample_count": 400
+    },
+    {
+      "name": "local",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 3,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.021345997988528962,
+          "nrmse": 0.6464718115534368,
+          "condition_scaled": 1.6029116489928175,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.002138606715655809,
+              "rate_nrmse": 0.38183963854533537
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005418163458137995,
+              "rate_nrmse": 0.9673913213166604
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.00678975238677492,
+              "rate_nrmse": 1.2122830150112185
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.005864904997162042,
+              "rate_nrmse": 1.0471552286004824
+            }
+          },
+          "multistep_mean_nrmse": 0.9021673008684241
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.021819417063509094,
+          "nrmse": 0.6394100562019824,
+          "condition_scaled": 1.5225991113862896,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0021562809945118487,
+              "rate_nrmse": 0.3581636524236984
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005515438566444998,
+              "rate_nrmse": 0.9161281051515628
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.007010624936238794,
+              "rate_nrmse": 1.164482291188764
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.0063473663050836945,
+              "rate_nrmse": 1.0543133779345653
+            }
+          },
+          "multistep_mean_nrmse": 0.8732718566746476
+        }
+      ],
+      "temporal_mean_nrmse": 0.6429409338777097,
+      "temporal_multistep_mean_nrmse": 0.8877195787715358,
+      "beta": [
+        -8.107836979384487,
+        -1.967869833387947,
+        -228.7627860464796
+      ],
+      "training_pdot_rmse": 0.02154859966224728,
+      "training_pdot_nrmse": 0.6417739628806953,
+      "condition_scaled": 1.5625460107118125,
+      "residual_lag1": 0.7608532018639946,
+      "sample_count": 400
+    },
+    {
+      "name": "local",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 4,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.024346601845176882,
+          "nrmse": 0.7373462608063522,
+          "condition_scaled": 1.4889109527269673,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.002440473820813807,
+              "rate_nrmse": 0.4357367976061637
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005381303736230542,
+              "rate_nrmse": 0.9608101660313103
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.007304535036721016,
+              "rate_nrmse": 1.3041953893369254
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.005772949756084293,
+              "rate_nrmse": 1.030736989679583
+            }
+          },
+          "multistep_mean_nrmse": 0.9328698356634957
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.024751882998068027,
+          "nrmse": 0.7253449005000259,
+          "condition_scaled": 1.4792918988251638,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0024491164044652914,
+              "rate_nrmse": 0.4068043445481773
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0054637896869975545,
+              "rate_nrmse": 0.9075490974278152
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.007507551857154155,
+              "rate_nrmse": 1.2470230924274266
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.006306027641067621,
+              "rate_nrmse": 1.0474469227146765
+            }
+          },
+          "multistep_mean_nrmse": 0.902205864279524
+        }
+      ],
+      "temporal_mean_nrmse": 0.731345580653189,
+      "temporal_multistep_mean_nrmse": 0.9175378499715099,
+      "beta": [
+        -9.627180804635469,
+        -2.589172888771662,
+        -110.19669590307235
+      ],
+      "training_pdot_rmse": 0.024527925557105416,
+      "training_pdot_nrmse": 0.7305061225674363,
+      "condition_scaled": 1.4768586827355725,
+      "residual_lag1": 0.7771732274080835,
+      "sample_count": 400
+    },
+    {
+      "name": "aerodynamic",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 0,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.022295705753643796,
+          "nrmse": 0.6752340788266786,
+          "condition_scaled": 59.1943520454686,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0022329954429183272,
+              "rate_nrmse": 0.39869236664949365
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.00600473895643297,
+              "rate_nrmse": 1.0721220203315187
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.007065133177050427,
+              "rate_nrmse": 1.2614511489422313
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.00580891740634078,
+              "rate_nrmse": 1.0371588691550013
+            }
+          },
+          "multistep_mean_nrmse": 0.9423561012695612
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.02217957118554059,
+          "nrmse": 0.6499642413453914,
+          "condition_scaled": 133.39470249530797,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0022240456686938447,
+              "rate_nrmse": 0.3694195338566376
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.002719950414217958,
+              "rate_nrmse": 0.45179054921281137
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.003108773439233588,
+              "rate_nrmse": 0.5163750236576905
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.003619282211852441,
+              "rate_nrmse": 0.6011718043467034
+            }
+          },
+          "multistep_mean_nrmse": 0.4846892277684607
+        }
+      ],
+      "temporal_mean_nrmse": 0.662599160086035,
+      "temporal_multistep_mean_nrmse": 0.7135226645190109,
+      "beta": [
+        -6.714389671637666,
+        -3.8674142801236524,
+        73.70171602395413,
+        0.47134334109769244,
+        237.02588193616396
+      ],
+      "training_pdot_rmse": 0.02087159315147891,
+      "training_pdot_nrmse": 0.6216109287104027,
+      "condition_scaled": 47.4879680859723,
+      "residual_lag1": 0.7748529822452128,
+      "sample_count": 400
+    },
+    {
+      "name": "aerodynamic",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 1,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.017779990387254013,
+          "nrmse": 0.5384738910416673,
+          "condition_scaled": 24.987594245117528,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0017817410716654807,
+              "rate_nrmse": 0.3181227112987429
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.021328948334535913,
+              "rate_nrmse": 3.8081980492209744
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.19240630493772443,
+              "rate_nrmse": 34.35337287283091
+            },
+            "20": {
+              "rate_rmse_deg_s": 13.23858555429926,
+              "rate_nrmse": 2363.696272858189
+            }
+          },
+          "multistep_mean_nrmse": 600.5439916228848
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.01528938929309362,
+          "nrmse": 0.44804997487951814,
+          "condition_scaled": 61.689412773862294,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0015334200038714023,
+              "rate_nrmse": 0.2547048880382483
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.018464906369454047,
+              "rate_nrmse": 3.067067012034981
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.16353999683913786,
+              "rate_nrmse": 27.164401455259334
+            },
+            "20": {
+              "rate_rmse_deg_s": 10.164270732783397,
+              "rate_nrmse": 1688.310725338074
+            }
+          },
+          "multistep_mean_nrmse": 429.69922467335164
+        }
+      ],
+      "temporal_mean_nrmse": 0.49326193296059273,
+      "temporal_multistep_mean_nrmse": 515.1216081481182,
+      "beta": [
+        -3.679416588775375,
+        5.13029687848771,
+        -27.937059166041507,
+        0.1398791445649554,
+        -941.0293370563365
+      ],
+      "training_pdot_rmse": 0.01453408835986142,
+      "training_pdot_nrmse": 0.4328633706954155,
+      "condition_scaled": 19.621255052575318,
+      "residual_lag1": 0.49635867603717726,
+      "sample_count": 400
+    },
+    {
+      "name": "aerodynamic",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 2,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.020300159717789375,
+          "nrmse": 0.614798194707775,
+          "condition_scaled": 17.437972439251638,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.00203579155454641,
+              "rate_nrmse": 0.36348240452582353
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.008412795960494896,
+              "rate_nrmse": 1.5020709255212252
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.010902093734279411,
+              "rate_nrmse": 1.9465250438101553
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.01528163092972016,
+              "rate_nrmse": 2.728473817963396
+            }
+          },
+          "multistep_mean_nrmse": 1.63513804795515
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.018483616527021553,
+          "nrmse": 0.5416556385516021,
+          "condition_scaled": 43.3003975289822,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0018459869193827398,
+              "rate_nrmse": 0.3066230324597244
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0080640434779622,
+              "rate_nrmse": 1.3394577389132454
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.012830079922176545,
+              "rate_nrmse": 2.131108282042348
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.014533497964134504,
+              "rate_nrmse": 2.414050268297811
+            }
+          },
+          "multistep_mean_nrmse": 1.5478098304282821
+        }
+      ],
+      "temporal_mean_nrmse": 0.5782269166296885,
+      "temporal_multistep_mean_nrmse": 1.591473939191716,
+      "beta": [
+        -3.4118331685170546,
+        0.12172894826024333,
+        -16.52580834923762,
+        0.24089651922138938,
+        -534.9168777827688
+      ],
+      "training_pdot_rmse": 0.01670508688212725,
+      "training_pdot_nrmse": 0.4975214156208912,
+      "condition_scaled": 13.045793612926358,
+      "residual_lag1": 0.6878161367682886,
+      "sample_count": 400
+    },
+    {
+      "name": "aerodynamic",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 3,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.020172476352863865,
+          "nrmse": 0.6109312545781549,
+          "condition_scaled": 14.362765623339454,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0020241568596548673,
+              "rate_nrmse": 0.36140507648815784
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0049012876460800105,
+              "rate_nrmse": 0.8751052213038651
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.0059282391873969565,
+              "rate_nrmse": 1.0584632938608336
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.006548275770151108,
+              "rate_nrmse": 1.1691683350965845
+            }
+          },
+          "multistep_mean_nrmse": 0.8660354816873603
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.020407916451854392,
+          "nrmse": 0.5980465457653696,
+          "condition_scaled": 35.99732487861052,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.002042032258516445,
+              "rate_nrmse": 0.3391866523606021
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.004856518270183895,
+              "rate_nrmse": 0.8066798001460229
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.006135369649302571,
+              "rate_nrmse": 1.0191002045450896
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.006957572102187635,
+              "rate_nrmse": 1.1556700831029187
+            }
+          },
+          "multistep_mean_nrmse": 0.8301591850386583
+        }
+      ],
+      "temporal_mean_nrmse": 0.6044889001717623,
+      "temporal_multistep_mean_nrmse": 0.8480973333630093,
+      "beta": [
+        -5.45936534307834,
+        -1.919977128724901,
+        38.23664280766569,
+        0.4667598537172366,
+        -190.90987443111658
+      ],
+      "training_pdot_rmse": 0.020197671333466515,
+      "training_pdot_nrmse": 0.6015397648019971,
+      "condition_scaled": 10.513118149421548,
+      "residual_lag1": 0.7494554505291319,
+      "sample_count": 400
+    },
+    {
+      "name": "aerodynamic",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 4,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.024524860385398195,
+          "nrmse": 0.7427448896961175,
+          "condition_scaled": 10.940750396575035,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.002454298118254112,
+              "rate_nrmse": 0.4382050703835315
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.008356078906191949,
+              "rate_nrmse": 1.4919443233012597
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.00922152990780302,
+              "rate_nrmse": 1.646467123222671
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.00789415275929013,
+              "rate_nrmse": 1.4094692652756693
+            }
+          },
+          "multistep_mean_nrmse": 1.246521445545783
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.022154293191912873,
+          "nrmse": 0.6492234789648418,
+          "condition_scaled": 27.079101269878443,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.002226320791611299,
+              "rate_nrmse": 0.36979743744893484
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005371692280185391,
+              "rate_nrmse": 0.8922514884025763
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.008579536991658804,
+              "rate_nrmse": 1.4250824975306164
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.008272609626338329,
+              "rate_nrmse": 1.3741010964647267
+            }
+          },
+          "multistep_mean_nrmse": 1.0153081299617135
+        }
+      ],
+      "temporal_mean_nrmse": 0.6959841843304797,
+      "temporal_multistep_mean_nrmse": 1.1309147877537482,
+      "beta": [
+        -7.7138162284837914,
+        -1.4715932996229346,
+        74.38231149075122,
+        0.424273230293601,
+        66.76131870432097
+      ],
+      "training_pdot_rmse": 0.02080069599648395,
+      "training_pdot_nrmse": 0.6194994250010549,
+      "condition_scaled": 8.316985967539674,
+      "residual_lag1": 0.7585011459464228,
+      "sample_count": 400
+    },
+    {
+      "name": "coupled",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "q_deg_s",
+        "r_deg_s",
+        "alpha_deg",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 0,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.01749698018541454,
+          "nrmse": 0.5299028175332005,
+          "condition_scaled": 204.03039911982918,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.001757501233078038,
+              "rate_nrmse": 0.3137947854875738
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.007443891671767106,
+              "rate_nrmse": 1.329076956744973
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.01517508455296655,
+              "rate_nrmse": 2.7094503903784704
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.037834162081633545,
+              "rate_nrmse": 6.755137664236926
+            }
+          },
+          "multistep_mean_nrmse": 2.776864949211986
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.01858706638462999,
+          "nrmse": 0.5446871988849954,
+          "condition_scaled": 345.5811135051241,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0018663080505204569,
+              "rate_nrmse": 0.3099984230364583
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0037010638438916385,
+              "rate_nrmse": 0.6147559374475755
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.006593499971382808,
+              "rate_nrmse": 1.095196793932063
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.0060447110916809965,
+              "rate_nrmse": 1.0040415919598786
+            }
+          },
+          "multistep_mean_nrmse": 0.7559981865939938
+        }
+      ],
+      "temporal_mean_nrmse": 0.5372950082090979,
+      "temporal_multistep_mean_nrmse": 1.7664315679029898,
+      "beta": [
+        -12.632972811450912,
+        -1.7666955318039552,
+        67.53579635832912,
+        -22.633766586340652,
+        9.00765854653127,
+        12.572426050753746,
+        -125.94977393798307,
+        177.1745992574803
+      ],
+      "training_pdot_rmse": 0.0172578353846605,
+      "training_pdot_nrmse": 0.5139837195528089,
+      "condition_scaled": 211.29802776848123,
+      "residual_lag1": 0.776135509500439,
+      "sample_count": 400
+    },
+    {
+      "name": "coupled",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "q_deg_s",
+        "r_deg_s",
+        "alpha_deg",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 1,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.011289804888459232,
+          "nrmse": 0.34191611103164254,
+          "condition_scaled": 156.0498309323866,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.001129593207142996,
+              "rate_nrmse": 0.20168432969054872
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.014823238558685354,
+              "rate_nrmse": 2.646629701424093
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.16376485205269745,
+              "rate_nrmse": 29.23955650960198
+            },
+            "20": {
+              "rate_rmse_deg_s": 15.919679252389637,
+              "rate_nrmse": 2842.3947830099587
+            }
+          },
+          "multistep_mean_nrmse": 718.6206633876689
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.010453244723057899,
+          "nrmse": 0.3063285227285807,
+          "condition_scaled": 276.8848305851345,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0010498432055809587,
+              "rate_nrmse": 0.17438157547189456
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.011841120346053153,
+              "rate_nrmse": 1.9668396293086468
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.09936829022220905,
+              "rate_nrmse": 16.505320898189137
+            },
+            "20": {
+              "rate_rmse_deg_s": 5.148888947558966,
+              "rate_nrmse": 855.2432990298743
+            }
+          },
+          "multistep_mean_nrmse": 218.47246028321098
+        }
+      ],
+      "temporal_mean_nrmse": 0.3241223168801116,
+      "temporal_multistep_mean_nrmse": 468.5465618354399,
+      "beta": [
+        -7.425368719255309,
+        6.675539033854114,
+        -48.05713146865179,
+        -25.595852044368822,
+        11.688138935015623,
+        8.409714686450915,
+        -148.45379726728018,
+        -1029.395920142709
+      ],
+      "training_pdot_rmse": 0.01063481645234809,
+      "training_pdot_nrmse": 0.3167327996301205,
+      "condition_scaled": 186.95555847202064,
+      "residual_lag1": 0.39105037586661157,
+      "sample_count": 400
+    },
+    {
+      "name": "coupled",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "q_deg_s",
+        "r_deg_s",
+        "alpha_deg",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 2,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.013614736559340925,
+          "nrmse": 0.4123275666038083,
+          "condition_scaled": 158.9575823729495,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0013675825886947724,
+              "rate_nrmse": 0.24417637779088938
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005767221318984415,
+              "rate_nrmse": 1.0297142002458668
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.007769090810595593,
+              "rate_nrmse": 1.387139956695595
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.03531769724297807,
+              "rate_nrmse": 6.305832975642234
+            }
+          },
+          "multistep_mean_nrmse": 2.2417158775936463
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.01234273165100291,
+          "nrmse": 0.3616992477701199,
+          "condition_scaled": 277.92845186935415,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0012329893125085738,
+              "rate_nrmse": 0.20480260072385897
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.006859864953263327,
+              "rate_nrmse": 1.1394406819183303
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.014933143983994321,
+              "rate_nrmse": 2.4804324691862396
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.034605027184790284,
+              "rate_nrmse": 5.74798134393043
+            }
+          },
+          "multistep_mean_nrmse": 2.393164273939715
+        }
+      ],
+      "temporal_mean_nrmse": 0.3870134071869641,
+      "temporal_multistep_mean_nrmse": 2.3174400757666804,
+      "beta": [
+        -8.189892187506853,
+        1.7647151211279208,
+        -47.230539222379456,
+        -33.19702196604189,
+        14.275444689769522,
+        11.567256069234737,
+        -192.1909119679408,
+        -648.1765654058013
+      ],
+      "training_pdot_rmse": 0.011559182852264208,
+      "training_pdot_nrmse": 0.3442628617653071,
+      "condition_scaled": 193.86166731927054,
+      "residual_lag1": 0.5757419393618157,
+      "sample_count": 400
+    },
+    {
+      "name": "coupled",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "q_deg_s",
+        "r_deg_s",
+        "alpha_deg",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 3,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.01768612771305685,
+          "nrmse": 0.5356312236218495,
+          "condition_scaled": 173.52009860744656,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0017745336466666584,
+              "rate_nrmse": 0.316835854516593
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0046335343948277295,
+              "rate_nrmse": 0.8272989538265101
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.009777120039701112,
+              "rate_nrmse": 1.7456655095319875
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.013788030055849299,
+              "rate_nrmse": 2.461797381555144
+            }
+          },
+          "multistep_mean_nrmse": 1.3378994248575586
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.01569984433475822,
+          "nrmse": 0.46007821012041605,
+          "condition_scaled": 295.010007269468,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.001565234093678627,
+              "rate_nrmse": 0.259989287721264
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005920605388038702,
+              "rate_nrmse": 0.9834273249806345
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.009456523358812087,
+              "rate_nrmse": 1.5707521209168391
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.011720647627122008,
+              "rate_nrmse": 1.946828810153066
+            }
+          },
+          "multistep_mean_nrmse": 1.190249385942951
+        }
+      ],
+      "temporal_mean_nrmse": 0.49785471687113275,
+      "temporal_multistep_mean_nrmse": 1.2640744054002548,
+      "beta": [
+        -11.21707410056591,
+        -0.2891904657460551,
+        -11.500862582654982,
+        -40.62904269606884,
+        16.97895446583911,
+        16.234034415741597,
+        -233.48924165459374,
+        -419.40085525946256
+      ],
+      "training_pdot_rmse": 0.01437513010957254,
+      "training_pdot_nrmse": 0.4281291759997293,
+      "condition_scaled": 223.51095622025983,
+      "residual_lag1": 0.6913987359599224,
+      "sample_count": 400
+    },
+    {
+      "name": "coupled",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "q_deg_s",
+        "r_deg_s",
+        "alpha_deg",
+        "total_roll_ratio"
+      ],
+      "delay_samples": 4,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.01803313118045235,
+          "nrmse": 0.5461403579477799,
+          "condition_scaled": 197.1881705269955,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.001810338129705038,
+              "rate_nrmse": 0.32322860114064217
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005044458042489846,
+              "rate_nrmse": 0.9006677204839726
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.011552039193380584,
+              "rate_nrmse": 2.0625701947771815
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.01632083331130951,
+              "rate_nrmse": 2.914019228840798
+            }
+          },
+          "multistep_mean_nrmse": 1.5501214363106486
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.017252074890994274,
+          "nrmse": 0.5055657602374727,
+          "condition_scaled": 332.9540398535162,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0017253193907445228,
+              "rate_nrmse": 0.2865798549258107
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005487870394366726,
+              "rate_nrmse": 0.9115489629955406
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.010587035578457124,
+              "rate_nrmse": 1.7585330208683105
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.013102439547240476,
+              "rate_nrmse": 2.1763478952161077
+            }
+          },
+          "multistep_mean_nrmse": 1.2832524335014424
+        }
+      ],
+      "temporal_mean_nrmse": 0.5258530590926263,
+      "temporal_multistep_mean_nrmse": 1.4166869349060454,
+      "beta": [
+        -13.196894244071187,
+        -0.5521130672554908,
+        39.93884684201408,
+        -36.93486541042776,
+        15.220545945220277,
+        17.011339905252637,
+        -210.11841491731528,
+        -198.382527744797
+      ],
+      "training_pdot_rmse": 0.016579889189259855,
+      "training_pdot_nrmse": 0.49379269910314,
+      "condition_scaled": 264.99496303844654,
+      "residual_lag1": 0.7488791328316053,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_aerodynamic",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "distributed_ail1_wing2l_deg"
+      ],
+      "delay_samples": 0,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.022295705656569183,
+          "nrmse": 0.6752340758867365,
+          "condition_scaled": 59.19434128934764,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0022329954328196722,
+              "rate_nrmse": 0.39869236484641934
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0060047377279959365,
+              "rate_nrmse": 1.072121800999021
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.00706513132636992,
+              "rate_nrmse": 1.2614508185106608
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.005808915965856516,
+              "rate_nrmse": 1.0371586119623224
+            }
+          },
+          "multistep_mean_nrmse": 0.9423558990796059
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.022179571945750605,
+          "nrmse": 0.6499642636230686,
+          "condition_scaled": 133.39469130976147,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.002224045745694589,
+              "rate_nrmse": 0.36941954664665333
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0027199490674703836,
+              "rate_nrmse": 0.4517903255146795
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.003108771358771934,
+              "rate_nrmse": 0.5163746780878197
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.003619280099004892,
+              "rate_nrmse": 0.6011714533974546
+            }
+          },
+          "multistep_mean_nrmse": 0.4846890009116518
+        }
+      ],
+      "temporal_mean_nrmse": 0.6625991697549025,
+      "temporal_multistep_mean_nrmse": 0.7135224499956289,
+      "beta": [
+        -6.7143888441736275,
+        -3.8674184972715913,
+        73.70172585281617,
+        0.47134332165937487,
+        7.900878478647502
+      ],
+      "training_pdot_rmse": 0.020871592898425488,
+      "training_pdot_nrmse": 0.6216109211738063,
+      "condition_scaled": 47.48796328939916,
+      "residual_lag1": 0.7748530162219475,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_aerodynamic",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "distributed_ail1_wing2l_deg"
+      ],
+      "delay_samples": 1,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.017779987409180485,
+          "nrmse": 0.5384738008495579,
+          "condition_scaled": 24.987593637150237,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.001781740777496134,
+              "rate_nrmse": 0.3181226587759877
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.021328941777374974,
+              "rate_nrmse": 3.808196878466228
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.19240620223223326,
+              "rate_nrmse": 34.35335453517802
+            },
+            "20": {
+              "rate_rmse_deg_s": 13.23857251119254,
+              "rate_nrmse": 2363.6939440638766
+            }
+          },
+          "multistep_mean_nrmse": 600.5434045340742
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.01528938977262438,
+          "nrmse": 0.44804998893199216,
+          "condition_scaled": 61.6894197077507,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.001533420048558731,
+              "rate_nrmse": 0.2547048954609251
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.018464910417199748,
+              "rate_nrmse": 3.0670676843756404
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.1635400923172481,
+              "rate_nrmse": 27.16441731441163
+            },
+            "20": {
+              "rate_rmse_deg_s": 10.164284991775757,
+              "rate_nrmse": 1688.3130937922767
+            }
+          },
+          "multistep_mean_nrmse": 429.6998209216312
+        }
+      ],
+      "temporal_mean_nrmse": 0.493261894890775,
+      "temporal_multistep_mean_nrmse": 515.1216127278527,
+      "beta": [
+        -3.679416756705017,
+        5.130297369922774,
+        -27.937062669752162,
+        0.13987913930565618,
+        -31.367646287371386
+      ],
+      "training_pdot_rmse": 0.014534088484689242,
+      "training_pdot_nrmse": 0.43286337441311623,
+      "condition_scaled": 19.62125630645006,
+      "residual_lag1": 0.4963586977513709,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_aerodynamic",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "distributed_ail1_wing2l_deg"
+      ],
+      "delay_samples": 2,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.02030015846519737,
+          "nrmse": 0.6147981567725412,
+          "condition_scaled": 17.437972395104985,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.002035791431026323,
+              "rate_nrmse": 0.3634823824718082
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.008412795349415579,
+              "rate_nrmse": 1.5020708164154677
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.01090209233208331,
+              "rate_nrmse": 1.9465247934536738
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.015281633704046251,
+              "rate_nrmse": 2.7284743133081752
+            }
+          },
+          "multistep_mean_nrmse": 1.6351380764122811
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.018483616225145605,
+          "nrmse": 0.5416556297052376,
+          "condition_scaled": 43.30039960913954,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0018459868905449867,
+              "rate_nrmse": 0.3066230276697017
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.008064043855362957,
+              "rate_nrmse": 1.3394578016004528
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.01283008142560455,
+              "rate_nrmse": 2.13110853176549
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.01453350033977488,
+              "rate_nrmse": 2.4140506628976035
+            }
+          },
+          "multistep_mean_nrmse": 1.5478100059833122
+        }
+      ],
+      "temporal_mean_nrmse": 0.5782268932388894,
+      "temporal_multistep_mean_nrmse": 1.5914740411977966,
+      "beta": [
+        -3.4118331480044435,
+        0.12172915562579939,
+        -16.525812848240804,
+        0.24089650171819976,
+        -17.830563484860967
+      ],
+      "training_pdot_rmse": 0.016705086774468025,
+      "training_pdot_nrmse": 0.49752141241451636,
+      "condition_scaled": 13.045794151004651,
+      "residual_lag1": 0.6878161379797453,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_aerodynamic",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "distributed_ail1_wing2l_deg"
+      ],
+      "delay_samples": 3,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.020172476365794955,
+          "nrmse": 0.610931254969778,
+          "condition_scaled": 14.36276554037516,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.002024156860003135,
+              "rate_nrmse": 0.3614050765503397
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.004901287683833327,
+              "rate_nrmse": 0.8751052280445681
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.005928239248265321,
+              "rate_nrmse": 1.0584633047286356
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.006548275801645155,
+              "rate_nrmse": 1.16916834071972
+            }
+          },
+          "multistep_mean_nrmse": 0.8660354875108158
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.020407916389319502,
+          "nrmse": 0.5980465439328075,
+          "condition_scaled": 35.99732574965328,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0020420322543757345,
+              "rate_nrmse": 0.3391866516728198
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.004856518301357489,
+              "rate_nrmse": 0.8066798053240346
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.006135369684631157,
+              "rate_nrmse": 1.019100210413256
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.006957572214603807,
+              "rate_nrmse": 1.1556701017755255
+            }
+          },
+          "multistep_mean_nrmse": 0.830159192296409
+        }
+      ],
+      "temporal_mean_nrmse": 0.6044888994512927,
+      "temporal_multistep_mean_nrmse": 0.8480973399036125,
+      "beta": [
+        -5.459365330948532,
+        -1.9199770927722888,
+        38.23664111843006,
+        0.4667598466327718,
+        -6.363662691535256
+      ],
+      "training_pdot_rmse": 0.020197671320257658,
+      "training_pdot_nrmse": 0.6015397644086026,
+      "condition_scaled": 10.513118436219672,
+      "residual_lag1": 0.7494554505967045,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_aerodynamic",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "distributed_ail1_wing2l_deg"
+      ],
+      "delay_samples": 4,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.024524860399075473,
+          "nrmse": 0.7427448901103392,
+          "condition_scaled": 10.940750314428849,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0024542981208696057,
+              "rate_nrmse": 0.4382050708505174
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.008356078909971225,
+              "rate_nrmse": 1.4919443239760342
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.009221529954613726,
+              "rate_nrmse": 1.6464671315805348
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.007894152861876162,
+              "rate_nrmse": 1.4094692835919933
+            }
+          },
+          "multistep_mean_nrmse": 1.2465214524997699
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.022154292983661904,
+          "nrmse": 0.6492234728621231,
+          "condition_scaled": 27.079101425429837,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0022263207700207177,
+              "rate_nrmse": 0.36979743386268543
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005371692181889053,
+              "rate_nrmse": 0.8922514720753093
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.008579536820778609,
+              "rate_nrmse": 1.4250824691469897
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.008272609408951867,
+              "rate_nrmse": 1.374101060356293
+            }
+          },
+          "multistep_mean_nrmse": 1.0153081088603193
+        }
+      ],
+      "temporal_mean_nrmse": 0.6959841814862311,
+      "temporal_multistep_mean_nrmse": 1.1309147806800446,
+      "beta": [
+        -7.713816239771129,
+        -1.4715933015601574,
+        74.38231207752474,
+        0.424273231941088,
+        2.2253773565084294
+      ],
+      "training_pdot_rmse": 0.02080069599135767,
+      "training_pdot_nrmse": 0.6194994248483809,
+      "condition_scaled": 8.316986072236402,
+      "residual_lag1": 0.7585011471495938,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_coupled",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "q_deg_s",
+        "r_deg_s",
+        "alpha_deg",
+        "distributed_ail1_wing2l_deg"
+      ],
+      "delay_samples": 0,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.017496980149041576,
+          "nrmse": 0.5299028164316312,
+          "condition_scaled": 204.03038014913105,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0017575012296788275,
+              "rate_nrmse": 0.3137947848806584
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.007443884348693538,
+              "rate_nrmse": 1.3290756492396032
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.015175067757802934,
+              "rate_nrmse": 2.709447391669471
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.03783404073962435,
+              "rate_nrmse": 6.755115999108601
+            }
+          },
+          "multistep_mean_nrmse": 2.7768584562245833
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.018587065803604887,
+          "nrmse": 0.5446871818582667,
+          "condition_scaled": 345.58106272289587,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.001866307988184108,
+              "rate_nrmse": 0.30999841268223527
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0037010594611341504,
+              "rate_nrmse": 0.6147552094606231
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.0065934835683343785,
+              "rate_nrmse": 1.0951940693447986
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.006044696889609772,
+              "rate_nrmse": 1.0040392329604186
+            }
+          },
+          "multistep_mean_nrmse": 0.7559967311120189
+        }
+      ],
+      "temporal_mean_nrmse": 0.5372949991449489,
+      "temporal_multistep_mean_nrmse": 1.7664275936683012,
+      "beta": [
+        -12.632970750374593,
+        -1.76670364768873,
+        67.53581949959178,
+        -22.63376129418707,
+        9.007655378780694,
+        12.572424883766029,
+        -125.9497426156257,
+        5.905849820736131
+      ],
+      "training_pdot_rmse": 0.01725783514784286,
+      "training_pdot_nrmse": 0.5139837124997567,
+      "condition_scaled": 211.29800500106373,
+      "residual_lag1": 0.776135540664307,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_coupled",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "q_deg_s",
+        "r_deg_s",
+        "alpha_deg",
+        "distributed_ail1_wing2l_deg"
+      ],
+      "delay_samples": 1,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.011289805070280207,
+          "nrmse": 0.3419161165381611,
+          "condition_scaled": 156.0498308029789,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0011295932147325522,
+              "rate_nrmse": 0.2016843310456335
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.014823240592340968,
+              "rate_nrmse": 2.6466300645251337
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.16376484874691546,
+              "rate_nrmse": 29.239555919367884
+            },
+            "20": {
+              "rate_rmse_deg_s": 15.919670211417403,
+              "rate_nrmse": 2842.393168780683
+            }
+          },
+          "multistep_mean_nrmse": 718.6202597739054
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.010453246098720314,
+          "nrmse": 0.3063285630418659,
+          "condition_scaled": 276.8848308831676,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.00104984334158312,
+              "rate_nrmse": 0.17438159806219286
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.011841123820867619,
+              "rate_nrmse": 1.9668402064839983
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.09936834898970891,
+              "rate_nrmse": 16.505330659617467
+            },
+            "20": {
+              "rate_rmse_deg_s": 5.148896214988182,
+              "rate_nrmse": 855.244506167997
+            }
+          },
+          "multistep_mean_nrmse": 218.47276465804015
+        }
+      ],
+      "temporal_mean_nrmse": 0.3241223397900135,
+      "temporal_multistep_mean_nrmse": 468.5465122159728,
+      "beta": [
+        -7.42536880735957,
+        6.67553918994041,
+        -48.05712936077769,
+        -25.595849559720495,
+        11.688137879971492,
+        8.409714166240985,
+        -148.45378247779817,
+        -34.31319765588611
+      ],
+      "training_pdot_rmse": 0.01063481736132542,
+      "training_pdot_nrmse": 0.3167328267018557,
+      "condition_scaled": 186.95555777176398,
+      "residual_lag1": 0.39105049967965605,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_coupled",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "q_deg_s",
+        "r_deg_s",
+        "alpha_deg",
+        "distributed_ail1_wing2l_deg"
+      ],
+      "delay_samples": 2,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.013614734739312526,
+          "nrmse": 0.41232751148354374,
+          "condition_scaled": 158.95758215722455,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0013675824074478018,
+              "rate_nrmse": 0.24417634542997085
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005767220518216367,
+              "rate_nrmse": 1.0297140572719485
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.007769092778258759,
+              "rate_nrmse": 1.3871403080139495
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.035317690460814635,
+              "rate_nrmse": 6.3058317647141955
+            }
+          },
+          "multistep_mean_nrmse": 2.241715618857516
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.012342731857065409,
+          "nrmse": 0.36169925380870627,
+          "condition_scaled": 277.9284512465354,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0012329893343731274,
+              "rate_nrmse": 0.20480260435561587
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.006859865284428982,
+              "rate_nrmse": 1.1394407369257717
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.01493314490390908,
+              "rate_nrmse": 2.4804326219863757
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.034605032931588856,
+              "rate_nrmse": 5.74798229848801
+            }
+          },
+          "multistep_mean_nrmse": 2.3931645654389433
+        }
+      ],
+      "temporal_mean_nrmse": 0.387013382646125,
+      "temporal_multistep_mean_nrmse": 2.31744009214823,
+      "beta": [
+        -8.18989216122794,
+        1.7647152396384085,
+        -47.23053950841423,
+        -33.19702041721599,
+        14.275444000405564,
+        11.56725568039735,
+        -192.1909027660114,
+        -21.605885660650014
+      ],
+      "training_pdot_rmse": 0.011559183163438869,
+      "training_pdot_nrmse": 0.3442628710329068,
+      "condition_scaled": 193.8616653910161,
+      "residual_lag1": 0.5757419709219094,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_coupled",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "q_deg_s",
+        "r_deg_s",
+        "alpha_deg",
+        "distributed_ail1_wing2l_deg"
+      ],
+      "delay_samples": 3,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.01768612624810835,
+          "nrmse": 0.5356311792553171,
+          "condition_scaled": 173.5200990235474,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0017745335013963125,
+              "rate_nrmse": 0.3168358285791563
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.004633534106315376,
+              "rate_nrmse": 0.8272989023137883
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.009777120035800814,
+              "rate_nrmse": 1.7456655088356048
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.013788030580834049,
+              "rate_nrmse": 2.461797475289062
+            }
+          },
+          "multistep_mean_nrmse": 1.3378994287544028
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.01569984414422159,
+          "nrmse": 0.46007820453680964,
+          "condition_scaled": 295.010005333924,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.001565234080751896,
+              "rate_nrmse": 0.2599892855741017
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005920605440546455,
+              "rate_nrmse": 0.9834273337023033
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.009456523730401125,
+              "rate_nrmse": 1.5707521826387052
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.011720648665173881,
+              "rate_nrmse": 1.9468289825760718
+            }
+          },
+          "multistep_mean_nrmse": 1.1902494461227955
+        }
+      ],
+      "temporal_mean_nrmse": 0.49785469189606335,
+      "temporal_multistep_mean_nrmse": 1.264074437438599,
+      "beta": [
+        -11.217074103525555,
+        -0.28919039004984626,
+        -11.500863526266048,
+        -40.62904187987548,
+        16.97895406628221,
+        16.23403422604602,
+        -233.4892367310986,
+        -13.980028479790757
+      ],
+      "training_pdot_rmse": 0.014375130197174388,
+      "training_pdot_nrmse": 0.42812917860874267,
+      "condition_scaled": 223.51095391089234,
+      "residual_lag1": 0.6913987458291314,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_coupled",
+      "fields": [
+        "roll_deg",
+        "p_deg_s",
+        "beta_deg",
+        "tas_m_s",
+        "q_deg_s",
+        "r_deg_s",
+        "alpha_deg",
+        "distributed_ail1_wing2l_deg"
+      ],
+      "delay_samples": 4,
+      "temporal_folds": [
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.018033130544810903,
+          "nrmse": 0.5461403386971326,
+          "condition_scaled": 197.18817285044713,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0018103380670924357,
+              "rate_nrmse": 0.3232285899614135
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0050444581096611785,
+              "rate_nrmse": 0.9006677324771443
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.011552039116417914,
+              "rate_nrmse": 2.062570181035806
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.016320833535886075,
+              "rate_nrmse": 2.9140192689380418
+            }
+          },
+          "multistep_mean_nrmse": 1.5501214431031012
+        },
+        {
+          "qdot_label": "pdot",
+          "rmse": 0.017252074991059928,
+          "nrmse": 0.5055657631698601,
+          "condition_scaled": 332.9540352536045,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.0017253194044633238,
+              "rate_nrmse": 0.28657985720453777
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.005487870474436301,
+              "rate_nrmse": 0.9115489762952967
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.010587035629873372,
+              "rate_nrmse": 1.7585330294086776
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.013102439709677808,
+              "rate_nrmse": 2.1763479221973543
+            }
+          },
+          "multistep_mean_nrmse": 1.2832524462764665
+        }
+      ],
+      "temporal_mean_nrmse": 0.5258530509334964,
+      "temporal_multistep_mean_nrmse": 1.4166869446897838,
+      "beta": [
+        -13.196894248654294,
+        -0.5521130405283244,
+        39.938845730202665,
+        -36.93486524343965,
+        15.2205458330037,
+        17.011339880823044,
+        -210.11841385980577,
+        -6.61275093914613
+      ],
+      "training_pdot_rmse": 0.01657988919395605,
+      "training_pdot_nrmse": 0.493792699243005,
+      "condition_scaled": 264.99496178325177,
+      "residual_lag1": 0.7488791284690922,
+      "sample_count": 400
+    }
+  ]
+}

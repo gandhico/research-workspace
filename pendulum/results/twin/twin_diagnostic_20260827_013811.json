@@ -1,0 +1,14 @@
+{
+  "card_valid": true,
+  "board_options": "deadband_compensation=0.3;pwm_en=0;enc0_velocity=3.0;enc1_velocity=3.0;min_diode_compensation=0.3;max_diode_compensation=1.5",
+  "led_sequence_ok": true,
+  "realized_hz": 500.09122744924804,
+  "alpha_raw_rest": 0.0,
+  "alpha_wrapped_rest": 0.0,
+  "verdict": "ENCODER ZERO = RESTING (HANGING) position.  alpha_upright = wrap(raw - pi).  The Julia convention is correct; the Python balance law needs the -pi shift.",
+  "motor_counts": 0.0,
+  "pend_counts": 0.0,
+  "amp_fault": 0.0,
+  "stall": 0.0,
+  "rad_per_count": 0.0030679615757712823
+}

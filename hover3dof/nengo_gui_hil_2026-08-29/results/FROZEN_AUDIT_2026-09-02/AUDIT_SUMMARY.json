@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "saved_summary_count": 228,
+  "inventory_classification_counts": {
+    "emulated": 158,
+    "exclude-invalid-instrumentation: impossible 1923.75-deg encoder step": 1,
+    "exclude-unplanned-repeat: GUI restarted worker after nominal completion": 1,
+    "physical-completed": 28,
+    "physical-safety-abort": 20,
+    "q8-shadow-zero-output": 20
+  },
+  "canonical_physical_pairs": 6,
+  "canonical_physical_completed_runs": 12,
+  "canonical_physical_deep_checks_passed": 144,
+  "canonical_physical_deep_checks_total": 144,
+  "full_scale_yaw360_aborts_preserved": 2,
+  "upstream_manifests": {
+    "passed": 3,
+    "total": 3,
+    "files_checked": 1485,
+    "bytes_checked": 6327420429,
+    "failures": 0
+  },
+  "known_exclusions": {
+    "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hardware\\pd_hover_none_armed_20260901_182831": "exclude-invalid-instrumentation: impossible 1923.75-deg encoder step",
+    "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hardware\\pd_hover_none_armed_20260901_182846": "exclude-unplanned-repeat: GUI restarted worker after nominal completion"
+  },
+  "hardware_state_at_freeze": {
+    "python_control_processes": 0,
+    "last_controlled_shutdown_reported_all_four_outputs_zero": true,
+    "final_q8_reopen_zero_check": "unavailable: HILError -108; cleanup call HILError -88"
+  }
+}

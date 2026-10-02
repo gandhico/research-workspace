@@ -1,0 +1,122 @@
+{
+ "platform": "x2",
+ "mission": "roll",
+ "controller": "idgc_v4",
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "z_min_m": 0.9916134506325273,
+ "allocation": "apa",
+ "alpha_mean": 1.0,
+ "alpha_min": 1.0,
+ "torque_scaled_fraction": 0.0,
+ "s_hat_mean": [
+  1.612393280565406,
+  1.4094346938603501,
+  0.41569155806054625
+ ],
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "ki_factor": 0.05,
+ "tuner": null,
+ "stn": null,
+ "gain_inertia": [
+  0.060711294842784244,
+  0.0364684032704233,
+  0.025411698113207547
+ ],
+ "idgc": {
+  "dither_amp": 0.02,
+  "dither_freq": [
+   9.0,
+   11.0,
+   13.0
+  ],
+  "tau_demod": 0.5,
+  "warmup_s": 3.0,
+  "tau_id": 5.0,
+  "m_lo": 0.33,
+  "m_hi": 3.0
+ },
+ "multiplier_final": [
+  0.6616316049883653,
+  0.6985938244556915,
+  2.3576125895483306,
+  0.6616316049883653,
+  0.6985938244556915,
+  2.3576125895483306,
+  0.6616316049883653,
+  0.6985938244556915,
+  2.3576125895483306
+ ],
+ "idgc_held_fraction": [
+  0.14757777777777778,
+  0.0,
+  0.0
+ ],
+ "qerr_mean_rad": 0.05200995183013389,
+ "qerr_rmse_rad": 0.0578240602028887,
+ "qerr_max_rad": 0.08310450542764876,
+ "saturation_fraction": 0.0,
+ "residual_rms_Nm": 0.0,
+ "torque_limits_Nm": [
+  0.7285355381134109,
+  0.43762083924507955,
+  0.2541169811320755
+ ],
+ "multiplier_mean": [
+  0.734417325588032,
+  0.7538950502451455,
+  1.9848039031827125,
+  0.734417325588032,
+  0.7538950502451455,
+  1.9848039031827125,
+  0.734417325588032,
+  0.7538950502451455,
+  1.9848039031827125
+ ],
+ "multiplier_min": [
+  0.6479755602615377,
+  0.6985734966428597,
+  1.0,
+  0.6479755602615377,
+  0.6985734966428597,
+  1.0,
+  0.6479755602615377,
+  0.6985734966428597,
+  1.0
+ ],
+ "multiplier_max": [
+  1.0,
+  1.0,
+  2.3576125895483306,
+  1.0,
+  1.0,
+  2.3576125895483306,
+  1.0,
+  1.0,
+  2.3576125895483306
+ ],
+ "integral_frozen_fraction": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "WS_final_fro": null,
+ "WR_final_fro": null,
+ "yhat_mean": null,
+ "yhat_negative_fraction": null,
+ "stn_valid_fraction": null,
+ "stn_blocked_fraction": null,
+ "wall_s": 12.371157300003688,
+ "hashes": {
+  "run_dual.py": "024712601f975101",
+  "dual_controller.py": "4786d16cc2f51140",
+  "gra_control/gate.py": "ea6d7853fff724d2",
+  "gra_control/platforms/drone.py": "50af6d1f6de51788",
+  "gra_control/math3d.py": "31620612f184a22f",
+  "model": "d932ffbe9f0d1fa4"
+ }
+}

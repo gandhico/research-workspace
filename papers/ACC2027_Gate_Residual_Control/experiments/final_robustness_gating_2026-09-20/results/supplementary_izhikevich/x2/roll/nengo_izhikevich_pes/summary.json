@@ -1,0 +1,85 @@
+{
+  "experiment": "nengo_nef_replication_2026-08-29",
+  "platform": "x2",
+  "model_interface": "rotor4",
+  "controller": "nengo-izhikevich-pes",
+  "controller_backend": "nengo-4.1.0-built-in-PES",
+  "mission": "roll",
+  "duration": 45.0,
+  "dt": 0.0005,
+  "beta": 0.5,
+  "learning_rate_direct_equivalent": 0.0008,
+  "nengo_pes_learning_rate": 0.22534113645761325,
+  "neuron_family_metadata": {
+    "neuron_family": "izhikevich",
+    "decoder_mode": "pes",
+    "family": "izhikevich",
+    "feature_scale": 42.60207501796177,
+    "native_current_scale": 10.0,
+    "observable": "5-ms low-pass spike trace",
+    "canonical_J_calibration": 2.0,
+    "native_J_calibration": 20.0,
+    "tail_mean": 42.60207501796177,
+    "tail_max": 192.07211301950142
+  },
+  "decoder_leak_per_step": 1e-06,
+  "decoder_weight_bound": 6.0,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "actuator_scale": 1.0,
+  "initial_angle_deg": 0.0,
+  "disturbance_torque_Nm": 0.0,
+  "attitude_noise_std_rad": 0.0,
+  "rate_noise_std_rad_s": 0.0,
+  "seed": 1,
+  "ki_factor": 0.0,
+  "ki": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "antiwindup": "torque",
+  "rate_ff": "left-neg",
+  "baseline_family": "backstepping",
+  "baseline_stats": {
+    "bw_scale": 3.0,
+    "wn": [
+      12.0,
+      12.0,
+      10.5
+    ],
+    "update_every_steps": 1
+  },
+  "baseline": "PD+ff",
+  "integral_final": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "integral_frozen_fraction": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "torque_policy": "model",
+  "torque_limits_Nm": [
+    0.7285355381134109,
+    0.43762083924507955,
+    0.2541169811320755
+  ],
+  "qerr_mean_rad": 0.0031204177122497174,
+  "qerr_max_rad": 0.009439951113877066,
+  "qerr_rmse_rad": 0.0034803708275720525,
+  "tau_mean_Nm": 0.2649800286860895,
+  "residual_mean_Nm": 0.28706605376791583,
+  "saturation_fraction": 0.0008333333333333334,
+  "z_std_m": 0.0016444858796108156,
+  "n_steps": 90000,
+  "logged_steps": 9000,
+  "log_every": 10,
+  "logged_dt": 0.005,
+  "nengo_version": "4.1.0",
+  "trace": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_robustness_gating_2026-09-20\\results\\supplementary_izhikevich\\x2\\roll\\nengo_izhikevich_pes\\trace.csv",
+  "neural_trace_full_rate": null,
+  "neural_trace_schema": null
+}

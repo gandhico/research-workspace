@@ -1,0 +1,80 @@
+{
+  "artifacts": {
+    "baseline_csv": "C:\\Research\\aero2\\results\\cross_platform_offline\\aero2_20260821_003718\\csv\\aero2_baseline.csv",
+    "figure": null,
+    "residual_csv": "C:\\Research\\aero2\\results\\cross_platform_offline\\aero2_20260821_003718\\csv\\aero2_hyperlif_residual.csv"
+  },
+  "baseline": {
+    "dt_s": 0.01,
+    "duration_s": 2.0,
+    "final_error_norm": 0.08095663692243142,
+    "max_abs_command": 0.19880000000000003,
+    "max_abs_residual": 0.0,
+    "max_error_norm": 0.24413111231467408,
+    "max_gate": 0.0,
+    "mean_abs_command": 0.06496747622055986,
+    "mean_abs_residual": 0.0,
+    "mean_error_norm": 0.10620338951616527,
+    "mean_gate": 0.0,
+    "mode": "baseline",
+    "platform": "aero2",
+    "rms_error_norm": 0.1281852706930944,
+    "samples": 201,
+    "saturation_fraction": 0.0
+  },
+  "baseline_controller": "2-axis PD baseline",
+  "comparison": {
+    "baseline_mean_abs_command": 0.06496747622055986,
+    "baseline_mode": "baseline",
+    "baseline_rms_error_norm": 0.1281852706930944,
+    "control_effort_delta_percent": 63.93421407573004,
+    "mean_error_delta_percent": -2.367776409918291,
+    "platform": "aero2",
+    "residual_mean_abs_command": 0.1065039215470116,
+    "residual_mode": "residual",
+    "residual_rms_error_norm": 0.11972391476013615,
+    "rms_error_delta_percent": -6.6008800287333536
+  },
+  "control_labels": [
+    "pitch_voltage",
+    "yaw_voltage"
+  ],
+  "description": "Pitch/yaw error abstraction with cross-axis coupling.",
+  "hyperlif_residual": {
+    "dt_s": 0.01,
+    "duration_s": 2.0,
+    "final_error_norm": 0.08783254541116157,
+    "max_abs_command": 3.330247352824232,
+    "max_abs_residual": 3.1848649900407824,
+    "max_error_norm": 0.24413111231467408,
+    "max_gate": 1.0,
+    "mean_abs_command": 0.1065039215470116,
+    "mean_abs_residual": 0.03826730085336574,
+    "mean_error_norm": 0.10368873071266788,
+    "mean_gate": 0.9355255083493801,
+    "mode": "residual",
+    "platform": "aero2",
+    "rms_error_norm": 0.11972391476013615,
+    "samples": 201,
+    "saturation_fraction": 0.0
+  },
+  "interpretation_note": "Offline simulation is a reproducibility and controller-wiring check. It should not be reported as hardware evidence until repeated on the physical platform.",
+  "label": "Aero2 two-DOF helicopter",
+  "platform": "aero2",
+  "residual_controller": "baseline plus bounded Adaptive HyperLIF gate-state residual",
+  "safety_limits": {
+    "max_pitch_rad": 0.65,
+    "max_voltage": 10.0,
+    "max_yaw_rate_rad_s": 2.0
+  },
+  "state_labels": [
+    "pitch_error",
+    "pitch_rate",
+    "yaw_error",
+    "yaw_rate"
+  ],
+  "target_state_indices": [
+    0,
+    2
+  ]
+}

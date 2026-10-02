@@ -1,0 +1,7 @@
+seed,architecture,model,use_nsa,epoch,train_batches,test_batches,train_loss,train_accuracy,test_loss,test_accuracy,correct_test,seen_test
+1,delay,delay_hyperlif_nsa,true,1,31,12,3.3981993,0.0625,3.31885,0.102864586,79,768
+1,delay,delay_hyperlif_nsa,true,2,31,12,3.1263669,0.07258064,3.0002096,0.0703125,54,768
+1,delay,delay_hyperlif_nsa,true,3,31,12,2.947953,0.08266129,2.9234622,0.076822914,59,768
+1,recurrent,recurrent_hyperlif_nsa,true,1,31,12,3.214506,0.06602822,3.2234714,0.0859375,66,768
+1,recurrent,recurrent_hyperlif_nsa,true,2,31,12,3.2170918,0.08114919,3.1018605,0.069010414,53,768
+1,recurrent,recurrent_hyperlif_nsa,true,3,31,12,3.0215182,0.08467742,2.908951,0.118489586,91,768

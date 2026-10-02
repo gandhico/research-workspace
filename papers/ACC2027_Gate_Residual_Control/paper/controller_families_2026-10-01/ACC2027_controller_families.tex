@@ -1,0 +1,631 @@
+% =============================================================================
+% ACC 2027 CMG--PES paper: the six nominal controller families of Sec. VI-B
+% equations, derivations, code, and architecture of each family
+% =============================================================================
+% Build from this folder (no Perl needed):
+%   ..\..\.venv\Scripts\python.exe tools\build_family_tables.py     (from the repository root, see the script)
+%   pdflatex ACC2027_controller_families
+%   bibtex   ACC2027_controller_families
+%   pdflatex ACC2027_controller_families   (x2)
+% Paper numbers "P-(n)" refer to the manuscript PDF of 2026-09-30 (equations 1-30).
+% Every listing is read from the repository file at the quoted lines (\lstinputlisting); every number in the
+% generated/ tables is computed by tools/build_family_tables.py from the code or the A5 run outputs.
+% =============================================================================
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=0.85in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm,mathtools}
+\usepackage{booktabs,array,longtable}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{needspace}
+\usepackage{caption}
+\captionsetup{font=small}
+\captionsetup[table]{position=top,skip=5pt}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
+\usepackage[obeyspaces,spaces]{url}
+\urlstyle{tt}
+\makeatletter\g@addto@macro\UrlBreaks{\do\_\do\.\do\-}\makeatother
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=green!35!black,urlcolor=blue!50!black]{hyperref}
+
+\newcommand{\srcroot}{../..}
+\newcommand{\T}{^{\mathsf T}}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\clip}{\operatorname{clip}}
+\newcommand{\sgnp}{\operatorname{sgn}_{+}}
+\newcommand{\vecpart}{\operatorname{vec}}
+\newcommand{\Peq}[1]{P-(#1)}
+\newcommand{\code}[1]{\path{#1}}
+\newcommand{\ccode}[1]{\texttt{\detokenize{#1}}}% for captions (moving arguments)
+\makeatletter\newcommand{\tabinput}[1]{\@@input #1 }\makeatother
+
+\theoremstyle{remark}
+\newtheorem*{status}{Status}
+
+\definecolor{codebg}{gray}{0.97}
+\definecolor{notebg}{RGB}{255,248,225}
+\lstdefinestyle{py}{language=Python,basicstyle=\ttfamily\scriptsize,
+  numbers=left,numberstyle=\tiny\color{gray},numbersep=6pt,frame=single,
+  backgroundcolor=\color{codebg},rulecolor=\color{gray!60},breaklines=true,
+  columns=fullflexible,keepspaces=true,showstringspaces=false,
+  keywordstyle=\color{blue!60!black},commentstyle=\color{green!40!black},
+  stringstyle=\color{red!50!black},captionpos=t,xleftmargin=1.5em,framexleftmargin=1.5em}
+\newcommand{\listing}[4]{% file, first, last, title
+  \Needspace{8\baselineskip}%
+  \lstinputlisting[style=py,firstline=#2,lastline=#3,firstnumber=#2,
+    title={\scriptsize\texttt{\detokenize{#1}}\,:\,#2--#3\quad #4}]{\srcroot/#1}}
+\newcommand{\implnote}[1]{\par\smallskip\noindent\colorbox{notebg}{\parbox{\dimexpr\linewidth-2\fboxsep}{\small\textbf{Implementation note.} #1}}\par\smallskip}
+
+% Release switch: the recursive-backstepping extension (Sec. bstrue) is kept out of the shared release until reviewed.
+%   full version:     pdflatex ACC2027_controller_families
+%   release version:  pdflatex -jobname=ACC2027_controller_families_release "\def\releasebuild{}\input{ACC2027_controller_families}"
+\newif\ifwithbs \withbstrue
+\ifdefined\releasebuild \withbsfalse \fi
+% the manuscript's own figure style, plus the family extensions
+\input{../v15_2026-09-29_corrected/architectures/tikz/arch_style.tex}
+\input{figures/family_style.tex}
+\input{generated/facts.tex}
+
+\newcommand{\BL}{\code{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}}
+\newcommand{\RG}{\code{experiments/final_robustness_gating_2026-09-20/run_controllers_gated.py}}
+\newcommand{\archfig}[3]{% file, caption, label
+  \begin{figure}[H]\centering\resizebox{\textwidth}{!}{\input{figures/#1}}\caption{#2}\label{#3}\end{figure}}
+
+\title{Online PES Decoder Learning in Neuromorphic Residual UAV Attitude Control\\[4pt]
+\large The nominal controller families of Sec.~VI-B\ifwithbs{} and a recursive backstepping design\fi:\\ equations, derivations, code, and architectures\\
+\normalsize companion to the ACC~2027 manuscript (version of September 30, 2026)}
+\author{Gandhi Contreras, Steven Sandoval, and Luis Rodolfo Garcia Carrillo}
+\date{October 1, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Section~VI-B of the manuscript attaches the same gated CMG--PES residual to six nominal attitude controllers: PD with
+desired-rate feedforward in backstepping form (the primary baseline), PID with rate feedforward, LQR, sliding-mode control
+(SMC), finite-horizon model predictive control (MPC), and grid-search nonlinear MPC (NMPC). This document gives, for each
+family, its architecture, its control law, the derivation of its gains, the exact lines of code that implement it, and the
+settings used in the portability study (Amendment A5). All six families share one torque interface and are analyzed in one
+coordinate, the rotation-vector error $\bm e=2\bm e_q$, so their small-error behavior can be compared directly
+(Table~\ref{tab:gains}): every family reduces near the reference to a second-order loop at the same bandwidth scale, with
+damping ratios from $0.71$ (LQR, MPC) to $1$ (SMC). Each gain is read from the class the runs used, and each closed-form
+derivation is checked numerically.\ifwithbs{} The family the code calls ``backstepping'' is computed torque; Section~\ref{sec:bstrue}
+therefore adds a recursive Lyapunov backstepping design (plain and adaptive) in the style of the EHEKATL BWB controllers,
+with its stability derivation, numerical verification, and a 40-run campaign with and without the residual. This new
+family is not part of the manuscript.\fi{} The source files cited here are byte-identical to the ones recorded by every A5 run
+(\fhashMatch/\fhashChecked{} hashes).
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% =============================================================================
+\section{How to read this document}
+% =============================================================================
+\begin{itemize}[leftmargin=1.2em]
+\item \textbf{Paper references.} ``\Peq{15}'' is equation (15) of the manuscript; Sec.~VI-B and Proposition~1 refer to the
+  manuscript. The equation-to-code companion of September 30 (\code{paper/companion_2026-09-30}) covers the quaternion
+  conventions, the residual and the gate in detail; this document does not repeat them.
+\item \textbf{Code.} Every listing is read from the repository file at the quoted lines, with the file's own line numbers.
+  Four files carry all six families: \BL{} (class \code{AdvancedBaseline}: backstepping, LQR, SMC, MPC, NMPC), \RG{}
+  (the A5 plant loop and the PID path), and the campaign drivers \code{run_campaign_a5.py} and
+  \code{run_campaign_a5_nmpc_corrected.py}. Appendix~\ref{app:hashes} gives their hashes.
+\item \textbf{Status tags.} \emph{Standard}: textbook result, cited. \emph{Derived here}: the steps are written out.
+  \emph{Verified}: recomputed by \code{tools/build_family_tables.py} from the code itself. \emph{Implementation note}: a
+  detail of the code that the paper leaves implicit, with its effect on reported numbers.
+\item \textbf{Figures.} Every architecture uses the manuscript's figure style. The left part (reference and attitude error)
+  and the right part (torque box, gated residual, allocation, plant) are identical in all six figures; the dashed blue group is
+  the only part that changes from family to family.
+\end{itemize}
+
+% =============================================================================
+\section{What all six families share}\label{sec:common}
+% =============================================================================
+\subsection{The residual attaches to any nominal torque}
+The residual reads only the nominal request $\bm u_0$ and adds a bounded, gated correction to it (Fig.~\ref{fig:interface}).
+Proposition~1 assumes only $\bm u_{0,k}\in\mathcal U=\{\bm u:|u_i|\le\ell_i\}$, so it holds for every family whose output
+is saturated to the torque box. All six are: LQR, backstepping, SMC and MPC through the shared clip (line~241 of \BL),
+NMPC by clipping every candidate (lines 265 and 273), and PID at line~353 of \RG. Exact recovery at $\beta=0$ was certified
+by running the augmentor with $\beta=0$ against the classical run: relative difference $0$ in all five cases (LQR, SMC, MPC
+and two NMPC missions; \code{certify_beta0_recovery.py}). Backstepping is covered by the 20/20 bit-exact match with the
+sealed primary runs; PID has no separate $\beta=0$ run, and for it the recovery rests on Proposition~1 alone.
+
+\begin{figure}[H]\centering
+\resizebox{\textwidth}{!}{\input{figures/fig_interface.tex}}
+\caption{One residual, six nominal controllers. The nominal torque comes from one family per run; the residual path is the
+manuscript's Fig.~1 unchanged ($\beta=.5$ on X2, $.2$ on CF2; $\eta=8\times10^{-4}$; $k_e=8$). The gate and the outer saturation
+see only $\bm u_0$, so nothing in the residual depends on how $\bm u_0$ was computed.}
+\label{fig:interface}
+\end{figure}
+
+\subsection{Error coordinates and the design model}\label{sec:design}
+All families act on the shortest-path error $\bm e_q=\sgnp(q_{e,0})\bm q_{e,v}$ (\Peq{4}--\Peq{6}) and the rate error
+$\bm\omega_e=\bm\omega-\bm\omega_d$, with $\bm\omega_d$ the central-difference reference rate of the companion, Sec.~2.5.
+\code{AdvancedBaseline} works in the rotation-vector coordinate
+\begin{equation}
+\bm e=2\bm e_q,\qquad \|\bm e\|=2\sin\tfrac{\theta_q}{2}=\theta_q+O(\theta_q^3),
+\label{eq:e}
+\end{equation}
+and designs every law for the per-axis double integrator obtained near the reference. From the error kinematics
+\Peq{7}--\Peq{8}, $\dot{\bm e}=q_{e,0}\bm\omega_e+\bm e_q\times\bm\omega_e\approx\bm\omega_e$; from Euler's equation \Peq{2} with
+the principal moments $\bm J=\bm j_{\rm tune}$ (Table~I of the paper),
+\begin{equation}
+\dot e_i\approx\omega_{e,i},\qquad \dot\omega_{e,i}=a_i-\dot\omega_{d,i}-\big[(\bm\omega\times\bm J\bm\omega)\oslash\bm J\big]_i,\qquad
+a_i=\tau_i/J_i .
+\label{eq:design}
+\end{equation}
+Every family outputs a desired angular acceleration $\bm a$; the torque is $\bm\tau=\bm J\odot\bm a$ plus, optionally, the
+gyroscopic term, saturated to the box:
+\begin{equation}
+\bm u_0=\sat_{\bm\ell}\big(\bm J\odot\bm a+\chi_{\rm ff}\,\bm\omega\times(\bm J\odot\bm\omega)\big),\qquad
+\bm a=\chi_{\rm ff}\dot{\bm\omega}_d+\bm a_{\rm fam}(\bm e,\bm\omega_e).
+\label{eq:interface}
+\end{equation}
+\emph{Derived here.} In every run of the paper $\chi_{\rm ff}=0$ (\code{--no-model-ff}): the acceleration feedforward and the
+gyroscopic term are off, so each family is a feedback law on $(\bm e,\bm\omega_e)$ scaled by inertia, and the residual is the
+only adaptive element. The rate feedforward $\bm\omega_d$ stays on (\code{--rate-ff left-neg}) for all families.
+
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{189}{199}{$\bm\omega_d$ and $\dot{\bm\omega}_d$ (the latter is zero when model feedforward is off)}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{216}{245}{\code{AdvancedBaseline.torque}: one interface, five families, shared clip at line 241}
+
+\subsection{Torque box and platform constants}
+$\ell_i=J_i\nu_i$ with $\bm\nu=(12,12,10)$\,rad/s$^2$, the same for both platforms, so the box limits every family to the
+same angular acceleration $|a_i|\le\nu_i$:
+
+\begin{table}[H]\centering\small
+\caption{Constants read from the A5 run manifests (\ccode{derived} field).}\label{tab:platform}
+\begin{tabular}{@{}lll@{}}\toprule
+& X2 & CF2 (1.5$\times$ rotor design)\\\midrule
+$\bm J$ (kg\,m$^2$) & \fJXtwo & \fJCFtwo\\
+$\bm\ell$ (N\,m) & \fellXtwo & \fellCFtwo\\
+$\bm\ell\oslash\bm J$ (rad/s$^2$) & \fnuXtwo & \fnuCFtwo\\
+$\rho\bm\omega_n$ (rad/s) & 12, 12, 10.5 & 12, 12, 10.5\\\bottomrule
+\end{tabular}\end{table}
+
+Because the box is defined as an acceleration, every gain in this document is the same for X2 and CF2 (the script asserts
+it), and the torque differs only by the inertia factor.
+
+\subsection{The A5 settings}
+All six families ran with the same plant, missions, residual, gate, $\rho=3$ bandwidth scale and seed; only the family flags
+differ:
+\listing{experiments/final_robustness_gating_2026-09-20/run_campaign_a5.py}{27}{40}{per-family flags}
+\listing{experiments/final_robustness_gating_2026-09-20/run_campaign_a5.py}{49}{56}{common flags: $\rho=3$, rate feedforward on, model feedforward off, gate on in the CMG arm}
+
+\implnote{The NMPC row of the paper comes from \code{run_campaign_a5_nmpc_corrected.py}, which drops the
+\code{--baseline-rate-hz 100} hold of the first A5 run so that NMPC, like every other family, updates at every $0.5$-ms step
+(Sec.~\ref{sec:nmpc}). The held run is kept on disk and not used.}
+
+\subsection{Small-error equivalence of the six families}\label{sec:equiv}
+Near the reference, inside the SMC boundary layer and away from the box, every family reduces to
+$a_i=-k_{1,i}e_i-k_{2,i}\omega_{e,i}\,(-k_{I,i}\!\int\! e_i)$, i.e.\ the characteristic polynomial $s^2+k_2s+k_1$ (or
+$s^3+k_2s^2+k_1s+k_I$ for PID). Table~\ref{tab:gains} lists the gains each family actually uses; Table~\ref{tab:poles} gives
+the resulting poles of the linearized design model \eqref{eq:design}.
+
+\begin{table}[H]\centering\small
+\caption{Equivalent small-error gains, read from \ccode{AdvancedBaseline} with the A5 settings (roll\,/\,yaw; pitch equals roll).
+$\omega_{\rm eq}=\sqrt{k_1}$, $\zeta_{\rm eq}=k_2/(2\sqrt{k_1})$. ``Box at'' is the rotation angle at which the
+proportional term alone reaches the torque box, $\nu_i/k_{1,i}$. \emph{Verified.}}\label{tab:gains}
+\begin{tabular}{@{}lllllll@{}}\toprule
+Family & $k_1$ (s$^{-2}$) & $k_2$ (s$^{-1}$) & $\omega_{\rm eq}$ (rad/s) & $\zeta_{\rm eq}$ & box at ($^\circ$) & $k_I$ (s$^{-3}$)\\\midrule
+\tabinput{generated/family_gains.tex}
+\bottomrule\end{tabular}\end{table}
+
+\begin{table}[H]\centering\small
+\caption{Closed-loop poles of the linearized design model \eqref{eq:design} with each family's gains. \emph{Verified.}}\label{tab:poles}
+\begin{tabular}{@{}lll@{}}\toprule
+Family & axis & poles (s$^{-1}$)\\\midrule
+\tabinput{generated/family_poles.tex}
+\bottomrule\end{tabular}\end{table}
+
+The families therefore differ in damping and in what happens away from the origin: how each one behaves at the box (SMC
+uses a bounded reaching term, PID freezes its integrator, NMPC searches around the nominal law), not in bandwidth. The
+proportional term of every linear law reaches the box at a rotation error of $5$--$6^\circ$, so Hardstep's steps of tens of
+degrees saturate every family, which is where the gate matters.
+
+% =============================================================================
+\section{PD with desired-rate feedforward in computed-torque form (primary baseline)}\label{sec:pdff}
+In the code this family is called \code{backstepping} (\code{--baseline backstepping}); it is the computed-torque form.\ifwithbs{}
+It is not a recursive backstepping design; the recursive design is Sec.~\ref{sec:bstrue}.\fi
+% =============================================================================
+\archfig{fig_pdff.tex}{PD+ff in computed-torque (backstepping) form, the paper's $\rho=3$ primary baseline. The model
+feedforward path (dotted) exists in the code and is switched off in every run, which makes this law identical to \Peq{15}.}{fig:pdff}
+
+\paragraph{Law.} Computed-torque backstepping \cite{krstic1995nonlinear,slotine1991applied}: choose the error dynamics
+$\dot{\bm\omega}_e=-k_1\bm e-k_2\bm\omega_e$ and invert \eqref{eq:design},
+\begin{equation}
+\bm u_0=\sat_{\bm\ell}\Big(\bm J\odot\big(\dot{\bm\omega}_d-k_1\bm e-k_2\bm\omega_e\big)+\bm\omega\times(\bm J\odot\bm\omega)\Big),\qquad
+k_1=(\rho\omega_n)^2,\quad k_2=2\zeta\rho\omega_n,\ \zeta=0.95 .
+\label{eq:bs}
+\end{equation}
+With the feedforward on, no saturation and a diagonal inertia, the gyroscopic term and $\dot{\bm\omega}_d$ cancel and the
+rate error obeys $\dot{\bm\omega}_e=-k_1\bm e-k_2\bm\omega_e$ exactly; with $\dot{\bm e}\approx\bm\omega_e$ this is
+$\ddot e_i+k_2\dot e_i+k_1e_i\approx0$ near the reference, the textbook reason for this form. \emph{Standard.}
+
+\paragraph{Reduction to the paper's PD+ff.} With $\chi_{\rm ff}=0$ and $\bm e=2\bm e_q$,
+$\bm u_0=\sat_{\bm\ell}(-2\bm J(\rho\bm\omega_n)^2\odot\bm e_q-2\zeta\bm J\rho\bm\omega_n\odot\bm\omega_e)$, which is \Peq{13}--\Peq{15}
+with $\bm\omega_n\mapsto\rho\bm\omega_n$. \emph{Derived here; verified bit-exact in 20/20 cells}
+(\code{run_campaign_a5_backstepping.py}, relative deviation $0$ against the sealed primary runs).
+
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{138}{141}{gains $k_1=\omega^2$, $k_2=2\zeta\omega$, $\omega=\rho\omega_n$}
+\listing{experiments/final_robustness_gating_2026-09-20/run_controllers_gated.py}{79}{86}{the frozen paper baseline: backstepping, $\rho=3$, $\zeta=.95$, \code{left-neg}, no model feedforward}
+
+\ifwithbs
+% =============================================================================
+\section{Recursive Lyapunov backstepping (new family)}\label{sec:bstrue}
+% =============================================================================
+The family of Sec.~\ref{sec:pdff} is computed torque: it chooses linear error dynamics and inverts the model, and with
+model feedforward off it is exactly PD+ff. This section adds a backstepping controller in the strict sense: a recursive
+design with a virtual control on the kinematic subsystem, a cross-coupling term that cancels the interconnection in the
+Lyapunov derivative, and a final Lyapunov function that certifies the closed loop
+\cite{krstic1995nonlinear,khalil2002nonlinear}. It follows step by step the design used for the longitudinal and adaptive
+controllers of the EHEKATL BWB (strict-feedback form, errors $z_1,z_2$, virtual control with the term $-g_1\T z_1$,
+$V=\sum\frac12z_i\T z_i$, La Salle--Yoshizawa, adaptive estimates with $\frac12\tilde f\T\Gamma\tilde f$). The plain and the
+adaptive versions are implemented in \code{experiments/backstepping_true_2026-10-01/true_backstepping.py} and run through the
+unchanged A5 runner. \textbf{They are not part of the manuscript.}
+
+\archfig{fig_bstrue.tex}{Recursive backstepping. Step~1 stabilizes the quaternion kinematics with a virtual rate; step~2 drives
+the rate to it with a torque that cancels the gyroscopic term, feeds forward the transported desired-rate derivative, and
+contains the coupling term $-c\,z_1$. The adaptive variant adds a projected estimate of an unknown body torque.}{fig:bstrue}
+
+\subsection{Strict-feedback form}
+With the passive convention of the paper, $q_e=q_d\otimes q^{-1}$ and its body-frame rate
+$\bm\omega_e=\bm\omega-\bar{\bm\omega}_d$, $\bar{\bm\omega}_d=R(q_e)\T\bm\omega_d$ (\Peq{7}--\Peq{8}, with the transport
+$R(q_e)\T$ kept), the attitude system is in strict-feedback form:
+\begin{equation}
+\dot z_1=\tfrac12T(q_e)\,(\bm\omega-\bar{\bm\omega}_d),\qquad
+\bm J\dot{\bm\omega}=-\bm\omega\times\bm J\bm\omega+\bm\tau+\bm d,\qquad
+z_1=\bm e_q=\sgnp(q_{e,0})\bm q_{e,v},\quad T(q_e)=|q_{e,0}|I+[z_1]_\times ,
+\label{eq:sf}
+\end{equation}
+i.e.\ $x_1=z_1$, $x_2=\bm\omega$, $f_1=-\frac12T\bar{\bm\omega}_d$, $g_1=\frac12T$, $f_2=-\bm J^{-1}(\bm\omega\times\bm J\bm\omega)$,
+$g_2=\bm J^{-1}$ in the thesis notation, with $\bm d$ an unknown body torque (zero in the plain design). There is no actuator
+state: the rotor forces of the MuJoCo models act without lag, so the thesis's $z_3$ step is not needed. The first identity
+follows from \Peq{8}: $\frac{d}{dt}(\sgnp(q_{e,0})\bm q_{e,v})=\frac12(|q_{e,0}|\bm\omega_e+z_1\times\bm\omega_e)$.
+
+\subsection{Step 1: kinematic subsystem}
+Take $V_1=2(1-|q_{e,0}|)\ge0$, zero exactly at $q_e=\pm1$. With $\dot q_{e,0}=-\frac12\bm q_{e,v}\T\bm\omega_e$ (\Peq{8}),
+\[
+\dot V_1=-2\,\sgnp(q_{e,0})\,\dot q_{e,0}=z_1\T\bm\omega_e .
+\]
+Treat $\bm\omega_e$ as the control of this subsystem and choose the virtual rate $\bm\omega_e^d=-K_1z_1$, $K_1=\operatorname{diag}(k_{1,i})>0$:
+if $\bm\omega_e=\bm\omega_e^d$, then $\dot V_1=-z_1\T K_1z_1$.
+
+\subsection{Step 2: rate subsystem}
+Define the second error $z_2=\bm\omega_e-\bm\omega_e^d=\bm\omega_e+K_1z_1$ and $V=c\,V_1+\frac12z_2\T\bm Jz_2$, $c>0$. Using
+$\bm\omega_e=z_2-K_1z_1$ and $\dot{\bm\omega}_e=\dot{\bm\omega}-\dot{\bar{\bm\omega}}_d$,
+\[
+\dot V=c\,z_1\T z_2-c\,z_1\T K_1z_1+z_2\T\big(-\bm\omega\times\bm J\bm\omega+\bm\tau+\bm d-\bm J\dot{\bar{\bm\omega}}_d+\bm JK_1\dot z_1\big).
+\]
+The control
+\begin{equation}
+\boxed{\ \bm\tau=\bm\omega\times\bm J\bm\omega+\bm J\big(\dot{\bar{\bm\omega}}_d-K_1\dot z_1\big)-c\,z_1-K_2z_2-\hat{\bm d}\ },\qquad
+\bm u_0=\sat_{\bm\ell}(\bm\tau),
+\label{eq:bstrue}
+\end{equation}
+with $K_2=\operatorname{diag}(k_{2,i})>0$ and $\dot z_1=\frac12T(q_e)\bm\omega_e$ computed from measured signals, gives
+\begin{equation}
+\dot V=-c\,z_1\T K_1z_1-z_2\T K_2z_2+z_2\T\tilde{\bm d},\qquad \tilde{\bm d}=\bm d-\hat{\bm d}.
+\label{eq:vdot}
+\end{equation}
+The term $-c\,z_1$ is the backstepping coupling term: it cancels $c\,z_1\T z_2$, the interconnection between the two
+subsystems ($-g_1\T z_1$ in the thesis). Without it the design is computed torque.
+
+\paragraph{Plain law} ($\bm d=\hat{\bm d}=\bm0$). $\dot V=-c\,z_1\T K_1z_1-z_2\T K_2z_2<0$ for $(z_1,z_2)\ne0$; by La Salle--Yoshizawa
+$z_1,z_2\to0$, hence $q_e\to\pm1$ and $\bm\omega\to\bar{\bm\omega}_d$, and $z_1,z_2\in\mathcal L_2$. Because
+$c\,V_1\ge c\|z_1\|^2/2$ near the origin, the convergence is exponential there.
+
+\paragraph{Adaptive law.} For a constant unknown $\bm d$, add $\frac12\tilde{\bm d}\T\Gamma^{-1}\tilde{\bm d}$ to $V$. Since
+$\dot{\tilde{\bm d}}=-\dot{\hat{\bm d}}$, the update
+\begin{equation}
+\dot{\hat{\bm d}}=\operatorname{Proj}_{|\hat d_i|\le D_i}\big(\Gamma z_2\big)
+\label{eq:adapt}
+\end{equation}
+cancels $z_2\T\tilde{\bm d}$ in \eqref{eq:vdot} and leaves $\dot V_a\le-c\,z_1\T K_1z_1-z_2\T K_2z_2$; the projection keeps
+$\hat{\bm d}$ bounded without increasing $\dot V_a$ when $|d_i|\le D_i$ \cite{ioannou1996robust,krstic1995nonlinear}. This is the
+thesis's $\dot{\tilde f}=-\Gamma^{-1}z$ law with a bound added. Here $\Gamma_i=0.3\cdot2J_i\omega_i^2/k_{1,i}$, which makes the
+integral action on $z_1$ ($\Gamma k_1\!\int\!z_1$) equal to the PID family's, and $D_i=0.25\,\ell_i$.
+
+\paragraph{Rate transport.} $\bar{\bm\omega}_d=R(q_e)\T\bm\omega_d$ and, since $q_e$ rotates with body rate $\bm\omega_e$
+($\dot R_e=R_e[\bm\omega_e]_\times$),
+\[
+\dot{\bar{\bm\omega}}_d=R(q_e)\T\dot{\bm\omega}_d-\bm\omega_e\times\bar{\bm\omega}_d ,
+\]
+with $\bm\omega_d$, $\dot{\bm\omega}_d$ the same central differences as Sec.~\ref{sec:design}. Unlike the A5 families, this law
+uses the transport, the gyroscopic term and $\dot{\bm\omega}_d$ by construction; the \code{--no-model-ff} flag does not apply.
+
+\subsection{Gain design: same linearization as PD+ff}
+About $z=0$, \eqref{eq:sf}--\eqref{eq:bstrue} give, per axis, $\ddot z_{1,i}+(k_{1,i}/2+k_{2,i}/J_i)\dot z_{1,i}+(c+k_{1,i}k_{2,i})/(2J_i)\,z_{1,i}=0$.
+Writing $k_{1,i}=2\lambda_{1,i}$, $k_{2,i}=J_i\lambda_{2,i}$ and imposing
+\[
+\lambda_{1,i}+\lambda_{2,i}=2\zeta\omega_i,\qquad \lambda_{1,i}\lambda_{2,i}+\frac{c}{2J_i}=\omega_i^2,\qquad \omega_i=\rho\omega_{n,i},\ \zeta=0.95,
+\]
+makes the small-error poles exactly those of the paper's PD+ff ($-11.40\pm3.75j$ on roll). Any difference between the two
+families is then due to the backstepping structure, not to bandwidth or damping. $V_1$ is a scalar, so one $c$ serves all
+axes; real $\lambda$'s need $c\ge2J_i\omega_i^2(1-\zeta^2)$ on every axis, and the smallest such value is used
+($\lambda_1\le\lambda_2$: the outer kinematic loop is the slower one). For X2: $c=\fbsC$\,N\,m,
+$\bm k_1=(\fbsKone)$\,s$^{-1}$, $\bm k_2=(\fbsKtwo)$\,N\,m\,s.
+
+\subsection{Verification}
+\code{verify_true_backstepping.py} checks the derivation on the rigid-body model (\code{results/verification.json}). \emph{Verified}:
+\begin{itemize}[leftmargin=1.2em]
+\item $\dot z_1$ and $\dot{\bar{\bm\omega}}_d$ in closed form against central finite differences along rigid-body trajectories on Full3,
+  Hard45 and Yaw360: worst absolute error \fbsKinErr{} (signals of order $0.1$--$1$);
+\item closed loop, plain law, no torque limit, Full3 and Hard45 from a $\approx20^\circ$ initial error: $V$ decreases monotonically to
+  $10^{-12}$, and the finite-difference $\dot V$ equals $-c\,z_1\T K_1z_1-z_2\T K_2z_2$ within \fbsVdotErr{} (relative, step-size limited);
+\item adaptive law with a constant unknown torque of $20\%$ of the box: $\hat{\bm d}$ reaches $\bm d$ within \fbsAdaptErr{} after $20$\,s;
+\item linearized poles equal the PD+ff poles to \fbsPoleErr.
+\end{itemize}
+
+\listing{experiments/backstepping_true_2026-10-01/true_backstepping.py}{44}{55}{gain design: smallest common $c$, $\lambda_1\le\lambda_2$}
+\listing{experiments/backstepping_true_2026-10-01/true_backstepping.py}{84}{114}{$z_1$, $z_2$, $\dot z_1$, transport, law \eqref{eq:bstrue}, projected adaptation \eqref{eq:adapt}}
+\listing{experiments/backstepping_true_2026-10-01/run_true_backstepping.py}{30}{42}{the family enters the unchanged A5 runner}
+
+\implnote{The Lyapunov certificate holds for the model \eqref{eq:sf} without saturation. In the plant the torque box, rotor
+clipping, the non-diagonal X2 inertia (the law uses the principal moments, as every family does) and the residual add terms
+that the certificate does not cover; the sign selection makes $V_1$ non-smooth at $q_{e,0}=0$, the same local scope as the
+paper. The output is saturated to the box, so Proposition~1 applies unchanged.}
+
+\input{generated/bs_results_section.tex}
+
+\paragraph{What the two tables show.}
+\begin{itemize}[leftmargin=1.2em]
+\item \textbf{The recursive law is a much better nominal controller} (Table~\ref{tab:bsvsct}): with the same linearization it
+  reduces the computed-torque PD+ff error on four of five missions on both platforms, most strongly on CF2. Its law contains
+  $\bm J\dot{\bar{\bm\omega}}_d$ and $\bm\omega\times\bm J\bm\omega$, which every A5 family ran without (\code{--no-model-ff}). The
+  computed-torque law \emph{with} model feedforward was not run, so this campaign does not separate the share of the gain due to the
+  acceleration feedforward from the share due to the recursive structure (cross term and rate transport). That run is the
+  natural next control.
+\item \textbf{The unchanged residual does not help it} (Table~\ref{tab:bsres}). It still reduces the error on X2 Full3, Hard45
+  and Yaw360, but where the recursive law's error is already very small (Roll; CF2 Roll and Yaw360, a few hundredths of a mrad) it
+  raises the error to tenths of a mrad, worse in absolute terms than the residual on the paper's baseline. The residual's
+  $\beta$, $\eta$ and $k_e$ were set for a lagging PD+ff; on a nominal law that already cancels the dominant error, the residual's
+  own correction becomes the error. Retuning ($\beta$ in particular) was not tested. This is a limit of the unchanged residual,
+  not of Proposition~1, which still holds: the output stays in the box and $\beta=0$ recovers the law.
+\item \textbf{The adaptive variant fails on CF2 Hardstep} under persistent rotor saturation (79\% of samples): the projected estimate
+  keeps integrating $z_2$ while the torque it requests cannot be delivered, a windup through the adaptation law that the
+  Lyapunov argument (which assumes no saturation) does not exclude. Freezing the adaptation when the box or a rotor saturates, the
+  rule the PID family uses, is the standard fix and was not run. On the other missions the adaptive and plain laws are close.
+\end{itemize}
+\fi % withbs
+
+% =============================================================================
+\section{PID with rate feedforward and rotor-level anti-windup}\label{sec:pid}
+% =============================================================================
+\archfig{fig_pid.tex}{PID+ff. The integrator runs on $\bm e_q$ and is frozen per axis whenever the torque box clipped that axis,
+and on all axes whenever any rotor saturated at the previous step (dashed paths).}{fig:pid}
+
+\paragraph{Law.} The PID path bypasses \code{AdvancedBaseline} (\code{--baseline pd}) and adds an integral term to \Peq{15}:
+\begin{equation}
+\bm u_0=\sat_{\bm\ell}\big(-\bm k_q\odot\bm e_q-\bm k_\omega\odot\bm\omega_e-\bm k_i\odot\bm z\big),\qquad
+\bm k_q=2\bm J\odot(\rho\bm\omega_n)^2,\ \bm k_\omega=2\zeta\bm J\odot\rho\bm\omega_n,\ \bm k_i=0.3\,\bm k_q .
+\label{eq:pid}
+\end{equation}
+\paragraph{Conditional integration.} With $h=5\times10^{-4}$\,s and the clip test of line 357,
+\begin{equation}
+z_{i,k+1}=z_{i,k}+h\,e_{q,i,k}\,m_{i,k},\qquad
+m_{i,k}=\mathbf 1\big[u_{0,i,k}=\tau_{{\rm u},i,k}\big]\cdot\mathbf 1\big[\text{no rotor saturated at }k-1\big].
+\label{eq:aw}
+\end{equation}
+This is conditional integration (integrator clamping) \cite{astrom2006advancedpid}, applied at the rotor level as well as at the
+torque box: a rotor at its force limit means the realized torque differs from the command even if the box is inactive.
+\emph{Standard; the rotor-level rule is this study's choice.}
+
+\paragraph{Loop.} In the coordinate $\bm e$ the gains per unit inertia are $k_1=(\rho\omega_n)^2$, $k_2=2\zeta\rho\omega_n$ and
+$k_I=0.3(\rho\omega_n)^2$ (Table~\ref{tab:gains}). The Routh condition for $s^3+k_2s^2+k_1s+k_I$ is $k_2k_1>k_I$, met with
+a ratio of at least \fpidRouthMargin. The integral adds a slow real pole at $-0.32$\,s$^{-1}$ (time constant $\approx3$\,s,
+Table~\ref{tab:poles}): the integrator is weak, which the A5 report discloses as ``undertuned''. \emph{Derived here; verified.}
+
+\listing{experiments/final_robustness_gating_2026-09-20/run_controllers_gated.py}{253}{260}{gains; PID uses the plain PD path}
+\listing{experiments/final_robustness_gating_2026-09-20/run_controllers_gated.py}{347}{361}{\eqref{eq:pid} and the conditional integrator \eqref{eq:aw}}
+\listing{experiments/final_robustness_gating_2026-09-20/run_controllers_gated.py}{475}{475}{rotor-saturation flag for the next step}
+
+\implnote{The integrator acts on $\bm e_q$ (not $\bm e=2\bm e_q$), so $\bm k_i=0.3\bm k_q$ means
+$k_I=0.3(\rho\omega_n)^2$ in Table~\ref{tab:gains}'s coordinate. With \code{--ki-factor 0} this path is \Peq{15} exactly.}
+
+% =============================================================================
+\section{LQR}\label{sec:lqr}
+% =============================================================================
+\archfig{fig_lqr.tex}{LQR. The gain is computed once from the closed-form solution of the continuous algebraic Riccati
+equation (CARE) for the per-axis double integrator; online it is a fixed state feedback.}{fig:lqr}
+
+\paragraph{Design problem.} For each axis, $\bm x=[e,\omega_e]\T$, $\dot{\bm x}=A\bm x+Ba$ with
+$A=\left[\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right]$, $B=[0,1]\T$, minimize
+$\int_0^\infty(q_e e^2+ra^2)\,dt$ \cite{andersonmoore1990optimal}.
+
+\paragraph{Closed-form CARE.} With $P=\left[\begin{smallmatrix}p_1&p_2\\p_2&p_3\end{smallmatrix}\right]$, the CARE
+$A\T P+PA-PBr^{-1}B\T P+Q=0$ reads, entry by entry,
+\[
+(1,1):\ q_e-\frac{p_2^2}{r}=0,\qquad (1,2):\ p_1-\frac{p_2p_3}{r}=0,\qquad (2,2):\ 2p_2-\frac{p_3^2}{r}=0 .
+\]
+The positive-definite solution has $p_2=\sqrt{q_er}$, $p_3=\sqrt{2p_2r}$, $p_1=p_2p_3/r$, so
+\begin{equation}
+K=r^{-1}B\T P=\Big[\sqrt{q_e/r},\ \sqrt{2\sqrt{q_e/r}}\Big]\quad\xrightarrow{\ q_e/r=\omega^4\ }\quad K=[\omega^2,\ \sqrt2\,\omega],
+\label{eq:lqr}
+\end{equation}
+a closed loop $s^2+\sqrt2\omega s+\omega^2$ with $\zeta=1/\sqrt2$ at the same $\omega=\rho\omega_n$ as the other families.
+\emph{Derived here. Verified}: $P$ from these formulas leaves a CARE residual of \flqrCareRelErr{} (relative), its smallest
+eigenvalue is \flqrPminEig{} $>0$, and $B\T P$ equals the code's gain.
+
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{132}{137}{$K=[\omega^2,\sqrt2\omega]$}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{232}{233}{the law: $\bm a=\dot{\bm\omega}_d-k_1\bm e-k_2\bm\omega_e$}
+
+% =============================================================================
+\section{Sliding-mode control}\label{sec:smc}
+% =============================================================================
+\archfig{fig_smc.tex}{SMC. A linear sliding variable and a boundary-layer reaching law; inside the layer the law is a critically
+damped PD, outside it the reaching term has a fixed magnitude of half the torque box.}{fig:smc}
+
+\paragraph{Law.} Sliding variable and reaching law \cite{utkin1992sliding,slotine1991applied}, per axis:
+\begin{equation}
+\sigma_i=\omega_{e,i}+\lambda_ie_i,\qquad
+a_i=\dot\omega_{d,i}-\lambda_i\omega_{e,i}-\eta_i\,\sat\!\big(\sigma_i/\phi_i\big),\qquad
+\lambda_i=\rho\omega_{n,i},\ \ \eta_i=0.5\,\ell_i/J_i,\ \ \phi_i=\eta_i/\lambda_i .
+\label{eq:smc}
+\end{equation}
+With the A5 setting, $\bm\eta=(\fsmcEtaXtwo)$\,rad/s$^2$ and $\bm\phi=(\fsmcPhiXtwo)$\,rad/s on both platforms.
+
+\paragraph{Inside the boundary layer} ($|\sigma_i|<\phi_i$): $a_i=-\lambda_i\omega_{e,i}-(\eta_i/\phi_i)(\omega_{e,i}+\lambda_ie_i)$, and
+$\eta_i/\phi_i=\lambda_i$, so
+\[
+a_i=-\lambda_i^2e_i-2\lambda_i\omega_{e,i}:\qquad k_1=\lambda^2,\quad k_2=2\lambda,\quad \zeta=1,
+\]
+a double pole at $-\rho\omega_n$ (Table~\ref{tab:poles}). \emph{Derived here; verified from the code's
+\code{lam}, \code{eta}, \code{phi}.}
+
+\paragraph{Outside the layer.} On the design model \eqref{eq:design} with model feedforward off,
+$\dot\sigma_i=\dot\omega_{e,i}+\lambda_i\dot e_i=a_i-\dot\omega_{d,i}+\lambda_i\omega_{e,i}=-\eta_i\operatorname{sgn}(\sigma_i)-\dot\omega_{d,i}$,
+hence
+\[
+\sigma_i\dot\sigma_i\le-(\eta_i-|\dot\omega_{d,i}|)\,|\sigma_i| ,
+\]
+the reaching condition, whenever the reference acceleration stays below $\eta_i$ ($6$\,rad/s$^2$ on roll and pitch). The layer
+is then reached in finite time and the error decays inside it; the boundary layer trades exact sliding for a continuous,
+chattering-free command. Because $J_i\eta_i=\ell_i/2$, the reaching term alone uses half the torque box, leaving the
+other half for $-\lambda\bm\omega_e$. \emph{Standard argument, specialized here.}
+
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{142}{149}{$\lambda=\omega$, $\eta=0.5\,\bm\ell\oslash\bm J$, $\phi=\eta/\omega$}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{234}{236}{\eqref{eq:smc}}
+
+% =============================================================================
+\section{Model predictive control (unconstrained, finite horizon)}\label{sec:mpc}
+% =============================================================================
+\archfig{fig_mpc.tex}{MPC. The finite-horizon quadratic program has no constraints, so its solution is linear in the state; the
+first move of the optimal sequence is a fixed gain $K_0$, computed once and applied at every plant step.}{fig:mpc}
+
+\paragraph{Prediction model.} Per axis, the exact zero-order-hold discretization of the double integrator with sample time
+$T=20$\,ms,
+\[
+\bm x_{k+1}=A_d\bm x_k+B_da_k,\qquad A_d=\begin{bmatrix}1&T\\0&1\end{bmatrix},\quad B_d=\begin{bmatrix}T^2/2\\T\end{bmatrix}.
+\]
+\paragraph{Condensed problem.} Stacking $N=120$ predictions, $X=S_x\bm x_0+S_uU$ with
+$S_x=[A_d;A_d^2;\dots;A_d^N]$ and the block-Toeplitz $S_u$ with blocks $A_d^{k-j}B_d$ ($j\le k$). The cost
+$\sum_{k=1}^{N}\bm x_k\T Q\bm x_k+\sum_{k=0}^{N-1}Ra_k^2$ with $Q=\operatorname{diag}(\omega^4,q_\omega\omega^2)$, $q_\omega=0$, $R=1$ becomes
+\[
+U\T HU+2\bm x_0\T F\T U+\text{const},\qquad H=S_u\T\bar QS_u+\bar R,\quad F=S_u\T\bar QS_x,
+\]
+with $\bar Q=I_N\otimes Q$, $\bar R=I_N\otimes R$. Without constraints the minimizer is $U^\star=-H^{-1}F\bm x_0$, and the
+receding-horizon law applies its first element, $a_0=-K_0\bm x_0$ with $K_0=[H^{-1}F]_{1,:}$
+\cite{borrelli2017predictive,rawlings2017mpc}. \emph{Standard.}
+
+\paragraph{What the horizon does.} Table~\ref{tab:mpc} recomputes $K_0$ with the code's own function for growing $N$. From
+$N\approx30$ ($0.6$\,s, several closed-loop time constants) the first-move gain no longer changes: at the A5 horizon it equals
+the infinite-horizon discrete LQR gain obtained by iterating the Riccati recursion to its fixed point to a relative
+\fmpcVsDare{} ($K_0=[\fmpcKone,\ \fmpcKtwo]$ on roll; DARE residual \fdareResidual). The MPC row is therefore a discrete LQR
+designed at $T=20$\,ms. That sample time, not the horizon, is why its proportional gain is $16\%$ below the continuous LQR
+of Sec.~\ref{sec:lqr} ($121.5$ vs.\ $144$\,s$^{-2}$). \emph{Verified.}
+
+\begin{table}[H]\centering\small
+\caption{First-move MPC gain on the roll axis ($\omega=12$\,rad/s) versus horizon, from \ccode{AdvancedBaseline._mpc_first_gain};
+the last two columns divide by the continuous LQR gain $[\omega^2,\sqrt2\omega]$. A5 uses $N=120$.}\label{tab:mpc}
+\begin{tabular}{@{}rrrrrr@{}}\toprule
+$N$ & $NT$ (s) & $K_{0,1}$ & $K_{0,2}$ & $K_{0,1}/\omega^2$ & $K_{0,2}/(\sqrt2\omega)$\\\midrule
+\tabinput{generated/mpc_horizon.tex}
+\bottomrule\end{tabular}\end{table}
+
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{167}{187}{condensed matrices $S_x,S_u,H,F$ and the first-move gain}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{237}{238}{the online law $\bm a=\dot{\bm\omega}_d-K_0[\bm e;\bm\omega_e]$}
+
+\implnote{The gain is designed for a 20-ms move but applied as a continuous-time state feedback at every 0.5-ms step (A5 ran
+every family at full rate). This is a common simplification; it is the reason the MPC row behaves like a softer LQR
+($\zeta_{\rm eq}=0.71$, $\omega_{\rm eq}=11.0$\,rad/s) and not like a sampled controller. ``MPC'' here means an unconstrained
+receding-horizon gain; the torque box is enforced by the shared clip, not inside the optimization.}
+
+% =============================================================================
+\section{Nonlinear MPC (grid search around the backstepping law)}\label{sec:nmpc}
+% =============================================================================
+\archfig{fig_nmpc.tex}{NMPC. At every plant step, 27 candidate offsets are added to the nominal backstepping torque; each
+candidate is scored by an RK4 rollout of the closed loop on the rigid-body model over $0.3$\,s, and the first torque of the
+cheapest candidate is applied.}{fig:nmpc}
+
+\paragraph{Candidates.} The nominal law is \eqref{eq:bs} ($\zeta=0.95$). A grid of $3^3=\fnmpcCandidates$ constant offsets
+$\bm d_c\in\{-1,0,1\}^3\odot0.1\bm\ell$ is added to it; $\bm d_c=\bm0$ is one of them (\fnmpcHasZero), so the nominal law is always
+a candidate.
+
+\paragraph{Prediction (``policy'' mode).} From the measured state, each candidate is rolled out for $N=5$ steps of
+$\Delta=60$\,ms with the rigid-body model $\dot Q=\frac12Q\otimes\tilde{\bm\omega}$,
+$\dot{\bm\omega}=(\bm\tau-\bm\omega\times\bm J\bm\omega)\oslash\bm J$, integrated by classical RK4 \cite{hairer1993ode}. At
+$k=0$ the candidate's first torque $\bm\tau^{(c)}_0=\sat_{\bm\ell}(\bm\tau_{\rm nom}+\bm d_c)$ is used; at $k\ge1$ the nominal law is
+re-evaluated on the predicted state and the same offset added,
+$\bm\tau^{(c)}_k=\sat_{\bm\ell}(\bm J\odot\bm a(\hat q_k,\hat{\bm\omega}_k,t+k\Delta)+\bm d_c)$. The prediction thus models the
+closed loop that will actually run, not a constant torque.
+
+\paragraph{Cost and selection.} With $\bm e_k,\bm\omega_{e,k}$ the predicted errors against the reference at $t+(k+1)\Delta$,
+\begin{equation}
+J_c=\sum_{k=0}^{N-1}\Big[w_k\big(\textstyle\sum_i\omega_i^4e_{k,i}^2+2\sum_i\omega_i^2\omega_{e,k,i}^2\big)+\big\|\bm\tau^{(c)}_k\oslash\bm J\big\|^2\Big],
+\qquad w_k=\begin{cases}1.5,&k=N-1\\1,&\text{otherwise}\end{cases}
+\label{eq:nmpc}
+\end{equation}
+and $\bm u_0=\bm\tau^{(c^\star)}_0$, $c^\star=\arg\min_cJ_c$. The angle weight $\omega^4$ is the LQR weight $q_e/r$ of
+Sec.~\ref{sec:lqr}; the effort term is the squared commanded acceleration. This is a sampling-based (grid) receding-horizon
+controller in the sense of \cite{rawlings2017mpc}, not a gradient-based NMPC solver. \emph{Derived here from the code.}
+
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{152}{159}{candidate grid and cost weights}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{201}{214}{rigid-body model and RK4 step (MuJoCo's body-to-world convention)}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_baselines.py}{247}{289}{\code{_nmpc}: rollout, cost \eqref{eq:nmpc}, selection, one-period self-check}
+\listing{experiments/final_robustness_gating_2026-09-20/run_campaign_a5_nmpc_corrected.py}{25}{26}{corrected A5 settings: no update hold}
+
+\implnote{(i) The rollout predicts the nominal family only; it does not know the residual that will be added. (ii) The first A5
+NMPC run updated at 100\,Hz and held the torque between updates, a leftover from an earlier exploratory setting. The audit
+(\code{AUDIT_NMPC_HOLD_RATE_2026-09-25.md}) showed that the hold, not the predictive machinery, caused that row's anomaly:
+removing it restored NMPC, and imposing the same hold on MPC broke MPC identically. The paper's NMPC row is the full-rate re-run.
+(iii) The class logs a one-period-ahead self-check of its own prediction (\code{nmpc_pred_err_mean_deg}); it was used to
+diagnose (ii), not as a tuning signal.}
+
+% =============================================================================
+\section{Results across families (Sec.~VI-B)}\label{sec:results}
+% =============================================================================
+\begin{table}[H]\centering\small
+\caption{Reduction of mean quaternion-angle error by the gated CMG--PES residual on each nominal family, noise-free, $\rho=3$,
+45-s missions (\% , positive is better; ``5-mission'' is the reduction of geometric means). Read from
+\ccode{results/a5_numbers.json}, which \ccode{analyze_a5.py} computes from the run summaries; NMPC from the corrected
+full-rate run. Last column: baseline geometric mean (mrad).}\label{tab:results}
+\begin{tabular}{@{}llrrrrrrr@{}}\toprule
+Family & Platform & Roll & Full3 & Hard45 & Hardstep & Yaw360 & 5-mission & base (mrad)\\\midrule
+\tabinput{generated/family_results.tex}
+\bottomrule\end{tabular}\end{table}
+
+These are the numbers the manuscript reports (X2/CF2: backstepping $37.3/22.4$, PID+ff $36.7/22.4$, LQR $31.1/22.4$, SMC
+$43.8/26.6$, MPC $33.4/22.7$, NMPC $31.9/21.7$), and the claim verifier checks them (\code{reproduce/verify_acc2027_claims.py}).
+What the table shows, without further interpretation:
+\begin{itemize}[leftmargin=1.2em]
+\item The five-mission reduction stays within $31$--$44\%$ on X2 and $22$--$27\%$ on CF2 across families whose baseline errors
+  differ by up to $1.7\times$ (X2 geometric means $3.7$--$6.3$\,mrad), with the residual unchanged.
+\item The reduction is largest on Roll and Yaw360 and smallest on Hardstep, whose step changes of tens of degrees drive every
+  linear family far past the $5$--$6^\circ$ at which its proportional term reaches the box (Table~\ref{tab:gains}).
+\item SMC is the only family with a clearly positive Hardstep result ($+34.2\%$ X2, $+12.2\%$ CF2). SMC is also the only
+  family whose law is itself bounded below the box away from the origin (Sec.~\ref{sec:smc}); A5 did not isolate whether that
+  is the cause, so it is recorded here as an open observation.
+\end{itemize}
+
+% =============================================================================
+\section{Scope of the family comparison}
+% =============================================================================
+\begin{itemize}[leftmargin=1.2em]
+\item The families are \emph{attachment tests}, not tuned competitors: all use the same bandwidth scale $\rho=3$, model
+  feedforward off, and the A5 settings above. No family was retuned per mission or per platform, and the residual
+  ($\beta$, $\eta$, $k_e$) is the same for all.
+\item MPC is unconstrained and realized as its first-move gain; NMPC is a 27-point grid search around backstepping. Neither is a
+  constrained optimal controller; the torque box acts through the shared saturation.
+\item PID's integrator is weak (slow pole at $-0.32$\,s$^{-1}$) and is disclosed as undertuned in the A5 report.
+\item All gains are designed on the per-axis double integrator \eqref{eq:design} with principal moments; the X2 inertia tensor is
+  not diagonal, so the poles of Table~\ref{tab:poles} are design values, not measured closed-loop poles.
+\end{itemize}
+
+\appendix
+\section{Source files and hashes}\label{app:hashes}
+SHA-256 (first 16 hex digits) of each cited file, compared with the \code{source_sha256} field of one A5 run per family and
+platform (Roll, classical arm; NMPC from the corrected run): \fhashMatch/\fhashChecked{} recorded hashes are identical.
+\begin{table}[H]\centering\small
+\begin{tabular}{@{}p{0.55\linewidth}ll@{}}\toprule
+File & SHA-256 & vs.\ A5 manifests\\\midrule
+\tabinput{generated/family_hashes.tex}
+\bottomrule\end{tabular}\end{table}
+
+\bibliographystyle{IEEEtran}
+\bibliography{../v15_2026-09-29_corrected/references_ACC2027,family_refs}
+\end{document}

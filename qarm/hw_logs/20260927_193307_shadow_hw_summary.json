@@ -1,0 +1,29 @@
+{
+  "mode": "hw",
+  "abort_reason": null,
+  "amplitude_rad": 0.3,
+  "freq_hz": 0.25,
+  "rate_hz": 100.0,
+  "actuated": "baseline only",
+  "estimator_bandwidth_hz": 2.069460738508006,
+  "samples": 3000,
+  "duration_s": 29.990000000000002,
+  "all_finite": true,
+  "u_lisic_abs_p50": 50000.0,
+  "u_lisic_abs_p95": 50000.0,
+  "u_lisic_abs_max": 50000.0,
+  "u_lisic_abs_p95_after_2s": 50000.0,
+  "lisic_saturated_frac": 0.7353333333333333,
+  "shadow_bound_hit_frac": 0.9573333333333334,
+  "s_abs_max": 17.988706725165997,
+  "h_hat_range": [
+    1.2255880274143958,
+    266.9056716926987
+  ],
+  "f_hat_abs_max": 0.27212348890277416,
+  "w_norm_max": 26.093185672032302,
+  "meas_minus_baseline_abs_max": 0.015434078581258837,
+  "ref_model_minus_baseline_abs_max_after_2s": 0.06220272636251309,
+  "estimator_minus_meas_abs_max": 0.003462943537815566,
+  "log": "C:\\Research\\qarm\\hw_logs\\20260927_193307_shadow_hw.csv"
+}

@@ -1,0 +1,70 @@
+{
+  "regime": "R3",
+  "axis": "pitch",
+  "status": "frozen_replacement",
+  "source_rejected_training_log": "rich_R3_pitch_training_01_20260712_180253.csv",
+  "baseline_logs": [
+    "rich_R3_baseline_01_20260712_174514.csv",
+    "rich_R3_baseline_02_20260712_174845.csv"
+  ],
+  "amplitude": 0.001,
+  "frequencies_hz": [
+    0.35,
+    0.55,
+    0.8,
+    1.1
+  ],
+  "phases_rad": [
+    2.513274,
+    3.769911,
+    5.026548,
+    0.628319
+  ],
+  "window": {
+    "start_s": 10.0,
+    "duration_s": 40.0,
+    "ramp_s": 2.0
+  },
+  "baseline_spectral_amplitude": [
+    2.4452644596780228e-05,
+    1.0754185996810666e-05,
+    1.4017412248273577e-05,
+    1.45372400664544e-05
+  ],
+  "observed_old_total_input_amplitude": [
+    6.235673473589217e-05,
+    0.00013600695043480658,
+    0.00020207334538867834,
+    0.00023014764538324673
+  ],
+  "observed_closed_loop_retention": [
+    0.37414040841535307,
+    0.8160417026088395,
+    1.21244007233207,
+    1.3808858722994803
+  ],
+  "projected_revised_total_input_amplitude": [
+    9.353510210383827e-05,
+    0.00020401042565220987,
+    0.00030311001808301755,
+    0.0003452214680748701
+  ],
+  "projected_input_spectral_snr": [
+    3.825152806423007,
+    18.970327062663095,
+    21.62382133837502,
+    23.747387158549472
+  ],
+  "minimum_projected_input_spectral_snr": 3.825152806423007,
+  "selection_gate": 2.0,
+  "uncertainty_delay_cases": 81,
+  "uncertainty_rate_rms_range_deg_s": [
+    0.0793952108633415,
+    0.3123531477435727
+  ],
+  "uncertainty_peak_rate_range_deg_s": [
+    0.15506029475588073,
+    0.6700159095580902
+  ],
+  "peak_command": 0.0009193325984767148
+}

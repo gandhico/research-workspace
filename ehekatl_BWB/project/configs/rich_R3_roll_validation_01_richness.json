@@ -1,0 +1,84 @@
+{
+  "file": "rich_R3_roll_validation_01_20260712_185227.csv",
+  "frequencies_hz": [
+    0.1,
+    0.2,
+    0.35,
+    0.55,
+    0.8,
+    1.1
+  ],
+  "realized_input_amplitude": [
+    6.315623966979523e-06,
+    1.0844797146812633e-05,
+    1.7785636357410038e-05,
+    2.8870805524392248e-05,
+    4.0416263728492855e-05,
+    4.9041601970154096e-05
+  ],
+  "realized_input_snr": [
+    3.3362666160882917,
+    12.600625868478614,
+    15.227162156917005,
+    33.678231949887376,
+    40.310467856613435,
+    52.70148271866884
+  ],
+  "rate_response_amplitude_deg_s": [
+    0.0006347461785830324,
+    0.0009809566115519138,
+    0.001958335750700905,
+    0.0029009176378006598,
+    0.004039813942504034,
+    0.005667238103223468
+  ],
+  "rate_response_snr": [
+    9.8509762872487,
+    19.667977359577247,
+    18.322621606688134,
+    31.88256516447746,
+    24.20554533895447,
+    34.43890995341658
+  ],
+  "surfaces": {
+    "distributed_ail1_wing2l_deg": {
+      "range_deg": [
+        0.01057724840939045,
+        0.019053583964705467
+      ],
+      "peak_to_peak_deg": 0.008476335555315018,
+      "correlation_with_total_roll": 0.9999999999999768
+    },
+    "distributed_ail1_wing2r_deg": {
+      "range_deg": [
+        -0.019053583964705467,
+        -0.01057724840939045
+      ],
+      "peak_to_peak_deg": 0.008476335555315018,
+      "correlation_with_total_roll": -0.9999999999999768
+    },
+    "left_aileron_1_def_deg": {
+      "range_deg": [
+        -0.019053583964705467,
+        -0.01057724840939045
+      ],
+      "peak_to_peak_deg": 0.008476335555315018,
+      "correlation_with_total_roll": -0.9999999999999768
+    },
+    "right_aileron_1_def_deg": {
+      "range_deg": [
+        0.01057724840939045,
+        0.019053583964705467
+      ],
+      "peak_to_peak_deg": 0.008476335555315018,
+      "correlation_with_total_roll": 0.9999999999999768
+    }
+  },
+  "checks": {
+    "minimum_input_spectral_snr": true,
+    "minimum_rate_spectral_snr": true,
+    "surface_motion": true,
+    "surface_correlation": true
+  },
+  "pass": true
+}

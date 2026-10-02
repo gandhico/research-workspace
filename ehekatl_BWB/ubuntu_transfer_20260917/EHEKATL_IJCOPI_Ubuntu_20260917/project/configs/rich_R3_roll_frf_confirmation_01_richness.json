@@ -1,0 +1,84 @@
+{
+  "file": "rich_R3_roll_frf_confirmation_01_20260712_190405.csv",
+  "frequencies_hz": [
+    0.1,
+    0.2,
+    0.35,
+    0.55,
+    0.8,
+    1.1
+  ],
+  "realized_input_amplitude": [
+    4.321457232787343e-06,
+    1.0452896286292146e-05,
+    1.7732633348841402e-05,
+    2.862628672726404e-05,
+    3.918753459207039e-05,
+    4.8324519294147193e-05
+  ],
+  "realized_input_snr": [
+    2.2828359595159613,
+    12.145274232657114,
+    15.181783662155258,
+    33.39299706931455,
+    39.08495511028493,
+    51.93088553710789
+  ],
+  "rate_response_amplitude_deg_s": [
+    0.0006044604461930018,
+    0.001130337979277356,
+    0.001864434676539301,
+    0.0029887998803576976,
+    0.003943315904936313,
+    0.005663536838129451
+  ],
+  "rate_response_snr": [
+    9.38095529038007,
+    22.663042914738345,
+    17.444062427186434,
+    32.848435856087114,
+    23.62735345766753,
+    34.41641795061647
+  ],
+  "surfaces": {
+    "distributed_ail1_wing2l_deg": {
+      "range_deg": [
+        0.010369348339736462,
+        0.018422359600663185
+      ],
+      "peak_to_peak_deg": 0.008053011260926723,
+      "correlation_with_total_roll": 0.9999999999999802
+    },
+    "distributed_ail1_wing2r_deg": {
+      "range_deg": [
+        -0.018422359600663185,
+        -0.010369348339736462
+      ],
+      "peak_to_peak_deg": 0.008053011260926723,
+      "correlation_with_total_roll": -0.9999999999999802
+    },
+    "left_aileron_1_def_deg": {
+      "range_deg": [
+        -0.018422359600663185,
+        -0.010369348339736462
+      ],
+      "peak_to_peak_deg": 0.008053011260926723,
+      "correlation_with_total_roll": -0.9999999999999802
+    },
+    "right_aileron_1_def_deg": {
+      "range_deg": [
+        0.010369348339736462,
+        0.018422359600663185
+      ],
+      "peak_to_peak_deg": 0.008053011260926723,
+      "correlation_with_total_roll": 0.9999999999999802
+    }
+  },
+  "checks": {
+    "minimum_input_spectral_snr": true,
+    "minimum_rate_spectral_snr": true,
+    "surface_motion": true,
+    "surface_correlation": true
+  },
+  "pass": true
+}

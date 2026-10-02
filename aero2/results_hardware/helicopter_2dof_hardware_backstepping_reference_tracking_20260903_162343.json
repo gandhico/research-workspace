@@ -1,0 +1,33 @@
+{
+  "config": {
+    "execution_mode": "hardware",
+    "model_variant": "helicopter_2dof",
+    "controller": "backstepping",
+    "application": "reference_tracking",
+    "duration_s": 15.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 15.0,
+    "out": "results_hardware",
+    "controller_kwargs": {}
+  },
+  "metrics": {
+    "n": 3000,
+    "duration_s": 14.995059000000765,
+    "realized_hz": 199.99921333641737,
+    "pitch_rms": 0.18107306899430362,
+    "yaw_rms": 0.751285637528114,
+    "tail_pitch_mae": 0.094492125702973,
+    "tail_yaw_mae": 0.7751879872732815,
+    "pitch_sat_frac": 0.006333333333333333,
+    "yaw_sat_frac": 0.0,
+    "theta_range": [
+      -0.37742745074377376,
+      0.4341506514335895
+    ],
+    "psi_range": [
+      -0.04908738521234052,
+      0.009203884727313847
+    ]
+  }
+}

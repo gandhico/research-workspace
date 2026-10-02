@@ -1,0 +1,68 @@
+{
+  "platform": "hover3dof_hardware_pd_track",
+  "hardware": true,
+  "controller": "pd",
+  "pd_profile": "mujoco",
+  "armed": true,
+  "mission": "yaw360",
+  "duration": 45.0,
+  "rate_hz": 200.0,
+  "beta": 0.0,
+  "actual_motor_residual_cap_volts": 0.0,
+  "mujoco_kq_ypr_Nm": [
+    2.7059005185625002,
+    1.767118706,
+    1.767118706
+  ],
+  "mujoco_kw_ypr_Nm_s": [
+    0.7344587121812499,
+    0.419690692675,
+    0.419690692675
+  ],
+  "cmg_torque_limits_ypr_Nm": [
+    1.10444919125,
+    0.66266951475,
+    0.66266951475
+  ],
+  "learning_rate": 0.0008,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "residual_slew_v_per_s": 4.0,
+  "neural_substeps": 10,
+  "neural_dt_s": 0.0005,
+  "raw_home_ypr_deg": [
+    5170.517578125,
+    0.0,
+    -1.494140625
+  ],
+  "expected_raw_home_yaw_deg": 5170.517578125,
+  "raw_home_yaw_tolerance_deg": 5.0,
+  "run_completed": false,
+  "angle_err_mean_deg": 7.691903966236132,
+  "angle_err_max_deg": 55.97154863645763,
+  "axis_error_mae_deg": {
+    "yaw": 6.049313549701763,
+    "pitch": 0.2652958036080887,
+    "roll": 2.5217897136753233
+  },
+  "axis_error_rmse_deg": {
+    "yaw": 6.571339155215596,
+    "pitch": 0.8026553522106702,
+    "roll": 8.47125832165506
+  },
+  "qerr_mean_rad": 0.1339863438209931,
+  "qerr_max_rad": 0.9674646434925986,
+  "neuron_columns": {
+    "membrane": "neuron_v_0..5",
+    "gate": "neuron_r_0..5",
+    "decoder_activity": "neuron_activity_0..5",
+    "input_current": "neuron_current_0..5",
+    "decoder_weights": "decoder_w_0..17"
+  },
+  "lower_saturation_fraction": 0.35998768220078015,
+  "upper_saturation_fraction": 0.0,
+  "deadline_miss_fraction": 0.00020529665366454526,
+  "abort_reason": "roll safety limit exceeded: -55.151 deg",
+  "n_steps_logged": 4871,
+  "trace": "C:\\Research\\hover3dof\\pd_cmg_focused_final_round_2026-08-28\\results\\hardware\\pd_armed_20260828_134427\\trace.csv"
+}

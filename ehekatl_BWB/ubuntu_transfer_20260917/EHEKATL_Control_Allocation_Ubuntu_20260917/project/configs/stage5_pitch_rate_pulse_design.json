@@ -1,0 +1,1234 @@
+{
+  "summary": {
+    "pulse": {
+      "start_s": 10.0,
+      "duration_s": 0.5,
+      "amplitude": 0.0002
+    },
+    "cases": 81,
+    "min_peak_abs_q_deg_s": 0.009222242324137327,
+    "max_peak_abs_q_deg_s": 0.011289792592948572,
+    "max_final_5s_abs_q_deg_s": 0.0018951607617901985,
+    "max_final_5s_abs_pitch_deg": 0.0007246827662365328,
+    "max_peak_command": 0.00018502376822750565,
+    "max_slew": 0.00012414599177357793,
+    "max_saturation_fraction": 0.0
+  },
+  "cases": [
+    {
+      "sigma_offsets": [
+        -2.0,
+        -2.0,
+        -2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004412115205228868,
+      "peak_abs_q_deg_s": 0.010239154968236998,
+      "final_5s_max_abs_q_deg_s": 4.262117813709803e-05,
+      "final_5s_max_abs_pitch_deg": 1.4687546094692165e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012383747215341482,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        -2.0,
+        -2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.00452405407189568,
+      "peak_abs_q_deg_s": 0.010348364487107176,
+      "final_5s_max_abs_q_deg_s": 6.808413449739913e-05,
+      "final_5s_max_abs_pitch_deg": 2.1772035307771434e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012158460307961765,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        -2.0,
+        -2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.00461314945991094,
+      "peak_abs_q_deg_s": 0.010348364487107176,
+      "final_5s_max_abs_q_deg_s": 0.00012446485326394357,
+      "final_5s_max_abs_pitch_deg": 4.3937452458346265e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        -2.0,
+        0.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004204418666226217,
+      "peak_abs_q_deg_s": 0.009730973192155585,
+      "final_5s_max_abs_q_deg_s": 4.672477634737822e-05,
+      "final_5s_max_abs_pitch_deg": 1.731260588097943e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012347100090691235,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        -2.0,
+        0.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004305480663606012,
+      "peak_abs_q_deg_s": 0.009829505903996569,
+      "final_5s_max_abs_q_deg_s": 7.256110562402848e-05,
+      "final_5s_max_abs_pitch_deg": 2.355965160387099e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012133108885709904,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        -2.0,
+        0.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.00438586569125277,
+      "peak_abs_q_deg_s": 0.009829505903996569,
+      "final_5s_max_abs_q_deg_s": 0.00013431525672044693,
+      "final_5s_max_abs_pitch_deg": 4.561585082788631e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        -2.0,
+        2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.003995301123890819,
+      "peak_abs_q_deg_s": 0.009222242324137327,
+      "final_5s_max_abs_q_deg_s": 5.150178646099663e-05,
+      "final_5s_max_abs_pitch_deg": 2.0177394012520968e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012310452966040987,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        -2.0,
+        2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004086035340610162,
+      "peak_abs_q_deg_s": 0.009310647320885972,
+      "final_5s_max_abs_q_deg_s": 7.7887462928845e-05,
+      "final_5s_max_abs_pitch_deg": 2.5445331988496784e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012107757463458044,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        -2.0,
+        2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004158157968466179,
+      "peak_abs_q_deg_s": 0.009310647320885972,
+      "final_5s_max_abs_q_deg_s": 0.00014102813397152267,
+      "final_5s_max_abs_pitch_deg": 4.6988629307628514e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        0.0,
+        -2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.0046298098683875905,
+      "peak_abs_q_deg_s": 0.01058184504920076,
+      "final_5s_max_abs_q_deg_s": 0.00015894860550847892,
+      "final_5s_max_abs_pitch_deg": 5.469108618013807e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.0001239729467572872,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        0.0,
+        -2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004748457880956296,
+      "peak_abs_q_deg_s": 0.01069280437789511,
+      "final_5s_max_abs_q_deg_s": 0.00025620578567276146,
+      "final_5s_max_abs_pitch_deg": 8.840584163514571e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012162494867611005,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        0.0,
+        -2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004841425959100048,
+      "peak_abs_q_deg_s": 0.01069280437789511,
+      "final_5s_max_abs_q_deg_s": 0.00046997606171907477,
+      "final_5s_max_abs_pitch_deg": 0.00017524157821603042,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        0.0,
+        0.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004411810453647779,
+      "peak_abs_q_deg_s": 0.010056564406164085,
+      "final_5s_max_abs_q_deg_s": 0.00017445044447878888,
+      "final_5s_max_abs_pitch_deg": 6.030307686026389e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012359968292427503,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        0.0,
+        0.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004518927666805455,
+      "peak_abs_q_deg_s": 0.010156675858658497,
+      "final_5s_max_abs_q_deg_s": 0.0002725275206768347,
+      "final_5s_max_abs_pitch_deg": 9.467620974594877e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012136941155818061,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        0.0,
+        0.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004602806773214097,
+      "peak_abs_q_deg_s": 0.010156675858658497,
+      "final_5s_max_abs_q_deg_s": 0.0005012118244158368,
+      "final_5s_max_abs_pitch_deg": 0.00018130617723869695,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        0.0,
+        2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004192325607647496,
+      "peak_abs_q_deg_s": 0.00953072587336346,
+      "final_5s_max_abs_q_deg_s": 0.00018961632085335122,
+      "final_5s_max_abs_pitch_deg": 6.675919296643508e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012322641909126282,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        0.0,
+        2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004288494434565303,
+      "peak_abs_q_deg_s": 0.009620547339421895,
+      "final_5s_max_abs_q_deg_s": 0.00028998238510418833,
+      "final_5s_max_abs_pitch_deg": 0.00010211533641490787,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012111387444025117,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        0.0,
+        2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.00436375200122299,
+      "peak_abs_q_deg_s": 0.009620547339421895,
+      "final_5s_max_abs_q_deg_s": 0.0005208894345957064,
+      "final_5s_max_abs_pitch_deg": 0.0001859605912955369,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        2.0,
+        -2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004863448892514172,
+      "peak_abs_q_deg_s": 0.010939114599326345,
+      "final_5s_max_abs_q_deg_s": 0.0005825629512673849,
+      "final_5s_max_abs_pitch_deg": 0.00021504108266808688,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012411154250127954,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        2.0,
+        -2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004989234914381337,
+      "peak_abs_q_deg_s": 0.01105185658281458,
+      "final_5s_max_abs_q_deg_s": 0.000949851688161446,
+      "final_5s_max_abs_pitch_deg": 0.00035094292675229413,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012166572576602556,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        2.0,
+        -2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.005086266050704795,
+      "peak_abs_q_deg_s": 0.011289792592948572,
+      "final_5s_max_abs_q_deg_s": 0.0017667099173879818,
+      "final_5s_max_abs_pitch_deg": 0.0006868119207211691,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        2.0,
+        0.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004634380296181313,
+      "peak_abs_q_deg_s": 0.010396005650852268,
+      "final_5s_max_abs_q_deg_s": 0.0006384074618886954,
+      "final_5s_max_abs_pitch_deg": 0.00023737055164013547,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012373132959032923,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        2.0,
+        0.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.0047479397279505614,
+      "peak_abs_q_deg_s": 0.010497725477899879,
+      "final_5s_max_abs_q_deg_s": 0.0010034527891647498,
+      "final_5s_max_abs_pitch_deg": 0.0003748992796876935,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012140814411795578,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        2.0,
+        0.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004835484669947127,
+      "peak_abs_q_deg_s": 0.010733765124894957,
+      "final_5s_max_abs_q_deg_s": 0.0018520412923519285,
+      "final_5s_max_abs_pitch_deg": 0.0007062131131989078,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        2.0,
+        2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004403758349621709,
+      "peak_abs_q_deg_s": 0.009852329849646685,
+      "final_5s_max_abs_q_deg_s": 0.0006925522583235194,
+      "final_5s_max_abs_pitch_deg": 0.0002593744100499755,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.0001233511166793789,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        2.0,
+        2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.00450570907150243,
+      "peak_abs_q_deg_s": 0.00994359437298518,
+      "final_5s_max_abs_q_deg_s": 0.0010654165139171363,
+      "final_5s_max_abs_pitch_deg": 0.00040130793267914913,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.000121150562469886,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        -2.0,
+        2.0,
+        2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004584255679709631,
+      "peak_abs_q_deg_s": 0.010176027822048204,
+      "final_5s_max_abs_q_deg_s": 0.0018951607617901985,
+      "final_5s_max_abs_pitch_deg": 0.0007246827662365328,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        -2.0,
+        -2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004508753602641224,
+      "peak_abs_q_deg_s": 0.010319012209699876,
+      "final_5s_max_abs_q_deg_s": 3.511746985262679e-05,
+      "final_5s_max_abs_pitch_deg": 1.971011024401718e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012385413098681998,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        -2.0,
+        -2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004622235134171152,
+      "peak_abs_q_deg_s": 0.010428320692086917,
+      "final_5s_max_abs_q_deg_s": 5.5424679451558815e-05,
+      "final_5s_max_abs_pitch_deg": 2.6571632894396105e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.0001215868934795255,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        -2.0,
+        -2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.00471200298025431,
+      "peak_abs_q_deg_s": 0.010428320692086917,
+      "final_5s_max_abs_q_deg_s": 0.00010838387372809424,
+      "final_5s_max_abs_pitch_deg": 3.617383782127129e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        -2.0,
+        0.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004296329839159765,
+      "peak_abs_q_deg_s": 0.009806831169610272,
+      "final_5s_max_abs_q_deg_s": 3.903586003405994e-05,
+      "final_5s_max_abs_pitch_deg": 2.167563636706587e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012348682447995267,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        -2.0,
+        0.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.00439878384428385,
+      "peak_abs_q_deg_s": 0.009905453169855697,
+      "final_5s_max_abs_q_deg_s": 5.9516190710797114e-05,
+      "final_5s_max_abs_pitch_deg": 3.007093039798464e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.0001213332644182174,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        -2.0,
+        0.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004479775587514693,
+      "peak_abs_q_deg_s": 0.009905453169855697,
+      "final_5s_max_abs_q_deg_s": 0.00011207193649166348,
+      "final_5s_max_abs_pitch_deg": 4.3306541145254504e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        -2.0,
+        2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004082472615519187,
+      "peak_abs_q_deg_s": 0.009294100540007517,
+      "final_5s_max_abs_q_deg_s": 4.318926634944558e-05,
+      "final_5s_max_abs_pitch_deg": 2.396950338013789e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012311951797308536,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        -2.0,
+        2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004174455906168691,
+      "peak_abs_q_deg_s": 0.009382585647624491,
+      "final_5s_max_abs_q_deg_s": 6.430565286577387e-05,
+      "final_5s_max_abs_pitch_deg": 3.346148309758125e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012107963535690931,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        -2.0,
+        2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.0042471228881608755,
+      "peak_abs_q_deg_s": 0.009382585647624491,
+      "final_5s_max_abs_q_deg_s": 0.00011503545022415054,
+      "final_5s_max_abs_pitch_deg": 4.9892188334611106e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004731520824479095,
+      "peak_abs_q_deg_s": 0.010664161142743331,
+      "final_5s_max_abs_q_deg_s": 0.0001371112321830672,
+      "final_5s_max_abs_pitch_deg": 7.266362670166038e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012398988087715553,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004851787285694948,
+      "peak_abs_q_deg_s": 0.010775221022120486,
+      "final_5s_max_abs_q_deg_s": 0.0002176479971469034,
+      "final_5s_max_abs_pitch_deg": 9.53270372767506e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.0001216272573870259,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.0049454541242319495,
+      "peak_abs_q_deg_s": 0.010775221022120486,
+      "final_5s_max_abs_q_deg_s": 0.00041857488147655674,
+      "final_5s_max_abs_pitch_deg": 0.00014946852084317841,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004508545071521676,
+      "peak_abs_q_deg_s": 0.010134758026443187,
+      "final_5s_max_abs_q_deg_s": 0.00015071510868550178,
+      "final_5s_max_abs_pitch_deg": 8.013776559706138e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012361576798113904,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004617122672023774,
+      "peak_abs_q_deg_s": 0.0102349601993396,
+      "final_5s_max_abs_q_deg_s": 0.00023243673147876385,
+      "final_5s_max_abs_pitch_deg": 0.0001083351964461877,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.0001213716045122079,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004701632224909852,
+      "peak_abs_q_deg_s": 0.0102349601993396,
+      "final_5s_max_abs_q_deg_s": 0.000432404468885139,
+      "final_5s_max_abs_pitch_deg": 0.0001578475197137377,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        0.0,
+        2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004284070879846624,
+      "peak_abs_q_deg_s": 0.0096047965148227,
+      "final_5s_max_abs_q_deg_s": 0.00016559479719477208,
+      "final_5s_max_abs_pitch_deg": 8.762939705843567e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012324165508512255,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        0.0,
+        2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004381550136160708,
+      "peak_abs_q_deg_s": 0.009694699376558716,
+      "final_5s_max_abs_q_deg_s": 0.0002496688043385454,
+      "final_5s_max_abs_pitch_deg": 0.00012092973276361333,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.0001211159516373899,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        0.0,
+        2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004457373348660737,
+      "peak_abs_q_deg_s": 0.009694699376558716,
+      "final_5s_max_abs_q_deg_s": 0.0004430680396117134,
+      "final_5s_max_abs_pitch_deg": 0.00018117493940784032,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        2.0,
+        -2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004970568200179421,
+      "peak_abs_q_deg_s": 0.01102398193293492,
+      "final_5s_max_abs_q_deg_s": 0.0005231747794100274,
+      "final_5s_max_abs_pitch_deg": 0.0002609344557004352,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.0001241287573082964,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        2.0,
+        -2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.005098052639549239,
+      "peak_abs_q_deg_s": 0.011136826083210063,
+      "final_5s_max_abs_q_deg_s": 0.0008395163834306538,
+      "final_5s_max_abs_pitch_deg": 0.0003432477176921855,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012166805296406078,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        2.0,
+        -2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.005219682971026853,
+      "peak_abs_q_deg_s": 0.01123859203067948,
+      "final_5s_max_abs_q_deg_s": 0.0016006651872689645,
+      "final_5s_max_abs_pitch_deg": 0.0006139879051752084,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        2.0,
+        0.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004736257582170668,
+      "peak_abs_q_deg_s": 0.01047662267106175,
+      "final_5s_max_abs_q_deg_s": 0.0005742569390368934,
+      "final_5s_max_abs_pitch_deg": 0.0002880445688195863,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012374768126091634,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        2.0,
+        0.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004851349556962234,
+      "peak_abs_q_deg_s": 0.010578434676617957,
+      "final_5s_max_abs_q_deg_s": 0.0008907707184681563,
+      "final_5s_max_abs_pitch_deg": 0.0003898755228437789,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012141035463217331,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        2.0,
+        0.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004966881442493885,
+      "peak_abs_q_deg_s": 0.010678163218199435,
+      "final_5s_max_abs_q_deg_s": 0.0016340563081906176,
+      "final_5s_max_abs_pitch_deg": 0.0006329913071009414,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        2.0,
+        2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.0045003800277108865,
+      "peak_abs_q_deg_s": 0.009928696042775118,
+      "final_5s_max_abs_q_deg_s": 0.0006247876001885321,
+      "final_5s_max_abs_pitch_deg": 0.0003151267949327596,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012336660521353627,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        2.0,
+        2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004608851189602699,
+      "peak_abs_q_deg_s": 0.010020043270025852,
+      "final_5s_max_abs_q_deg_s": 0.0009536034304255138,
+      "final_5s_max_abs_pitch_deg": 0.00043462811173074656,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012115265630028585,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        0.0,
+        2.0,
+        2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.00471313936213339,
+      "peak_abs_q_deg_s": 0.010116749252627837,
+      "final_5s_max_abs_q_deg_s": 0.0016797692545077517,
+      "final_5s_max_abs_pitch_deg": 0.0006649409227158515,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        -2.0,
+        -2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004606626012383721,
+      "peak_abs_q_deg_s": 0.010399197085333784,
+      "final_5s_max_abs_q_deg_s": 3.830135264420776e-05,
+      "final_5s_max_abs_pitch_deg": 1.66133589933536e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012387080885764733,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        -2.0,
+        -2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.0047216611688228214,
+      "peak_abs_q_deg_s": 0.010508604602919715,
+      "final_5s_max_abs_q_deg_s": 4.4105000817000356e-05,
+      "final_5s_max_abs_pitch_deg": 2.473100938539135e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012158918450072388,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        -2.0,
+        -2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004812104505412434,
+      "peak_abs_q_deg_s": 0.010508604602919715,
+      "final_5s_max_abs_q_deg_s": 8.509507274590088e-05,
+      "final_5s_max_abs_pitch_deg": 4.566264539870847e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        -2.0,
+        0.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004389413848872801,
+      "peak_abs_q_deg_s": 0.009883000357338884,
+      "final_5s_max_abs_q_deg_s": 4.424201026443588e-05,
+      "final_5s_max_abs_pitch_deg": 1.8521780906108804e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012350266613589433,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        -2.0,
+        0.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004493269750589449,
+      "peak_abs_q_deg_s": 0.009981711710662826,
+      "final_5s_max_abs_q_deg_s": 4.8163764923624264e-05,
+      "final_5s_max_abs_pitch_deg": 2.6880539253245475e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.0001213354405694753,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        -2.0,
+        0.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.0045748709453782965,
+      "peak_abs_q_deg_s": 0.009981711710662826,
+      "final_5s_max_abs_q_deg_s": 8.880392384026828e-05,
+      "final_5s_max_abs_pitch_deg": 4.774703071575865e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        -2.0,
+        2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004170755694841965,
+      "peak_abs_q_deg_s": 0.009366253541894087,
+      "final_5s_max_abs_q_deg_s": 5.062985865122669e-05,
+      "final_5s_max_abs_pitch_deg": 2.0484359991222384e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.0001231345234141413,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        -2.0,
+        2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004263996932115198,
+      "peak_abs_q_deg_s": 0.00945481881840592,
+      "final_5s_max_abs_q_deg_s": 5.2065481949680147e-05,
+      "final_5s_max_abs_pitch_deg": 2.9085570928849194e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012108169663822671,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        -2.0,
+        2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004337912872820536,
+      "peak_abs_q_deg_s": 0.00945481881840592,
+      "final_5s_max_abs_q_deg_s": 9.249124540647824e-05,
+      "final_5s_max_abs_pitch_deg": 4.954070277772513e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        0.0,
+        -2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004834533554583332,
+      "peak_abs_q_deg_s": 0.010746815102838779,
+      "final_5s_max_abs_q_deg_s": 0.00012556299639558333,
+      "final_5s_max_abs_pitch_deg": 6.426221708725593e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012400683434202878,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        0.0,
+        -2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004956521614089475,
+      "peak_abs_q_deg_s": 0.010857975605731261,
+      "final_5s_max_abs_q_deg_s": 0.00018163273050764668,
+      "final_5s_max_abs_pitch_deg": 9.679268022236677e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012162956672420334,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        0.0,
+        -2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.005079702335418993,
+      "peak_abs_q_deg_s": 0.010857975605731261,
+      "final_5s_max_abs_q_deg_s": 0.00034664499515561943,
+      "final_5s_max_abs_pitch_deg": 0.00017653661412464014,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        0.0,
+        0.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004606516921360338,
+      "peak_abs_q_deg_s": 0.010213272576389529,
+      "final_5s_max_abs_q_deg_s": 0.00014630779692326613,
+      "final_5s_max_abs_pitch_deg": 7.080232558689077e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012363187141306516,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        0.0,
+        0.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004722507865395862,
+      "peak_abs_q_deg_s": 0.010313565535400034,
+      "final_5s_max_abs_q_deg_s": 0.00019681001383433343,
+      "final_5s_max_abs_pitch_deg": 0.00010403907502339952,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012137379806109656,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        0.0,
+        0.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004833656880837482,
+      "peak_abs_q_deg_s": 0.010313565535400034,
+      "final_5s_max_abs_q_deg_s": 0.0003585040722659125,
+      "final_5s_max_abs_pitch_deg": 0.00018353752272462533,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.0043797248510564196,
+      "peak_abs_q_deg_s": 0.009679171148697359,
+      "final_5s_max_abs_q_deg_s": 0.00016859784726162388,
+      "final_5s_max_abs_pitch_deg": 7.80772017485061e-05,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012325690848410156,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.004486964192609626,
+      "peak_abs_q_deg_s": 0.009769155465068805,
+      "final_5s_max_abs_q_deg_s": 0.0002110226918052908,
+      "final_5s_max_abs_pitch_deg": 0.00011232420900805396,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012111802939798975,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.0045866985807925574,
+      "peak_abs_q_deg_s": 0.009769155465068805,
+      "final_5s_max_abs_q_deg_s": 0.00037230255930023777,
+      "final_5s_max_abs_pitch_deg": 0.00018922605657981383,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        2.0,
+        -2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.005105842424761448,
+      "peak_abs_q_deg_s": 0.011109197735837536,
+      "final_5s_max_abs_q_deg_s": 0.00046271126455880133,
+      "final_5s_max_abs_pitch_deg": 0.00024211737463405116,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012414599177357793,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        2.0,
+        -2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.005248568469048649,
+      "peak_abs_q_deg_s": 0.011222144126903094,
+      "final_5s_max_abs_q_deg_s": 0.0007315302196793088,
+      "final_5s_max_abs_pitch_deg": 0.00036916291916171487,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.0001216703807933742,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        2.0,
+        -2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.005379088061142244,
+      "peak_abs_q_deg_s": 0.011222144126903094,
+      "final_5s_max_abs_q_deg_s": 0.0013850092389656892,
+      "final_5s_max_abs_pitch_deg": 0.0006652449749393213,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        2.0,
+        0.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.004871569138644648,
+      "peak_abs_q_deg_s": 0.010557570692122577,
+      "final_5s_max_abs_q_deg_s": 0.0005117963428180292,
+      "final_5s_max_abs_pitch_deg": 0.0002669758045301229,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012376405160411869,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        2.0,
+        0.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.005000571773752336,
+      "peak_abs_q_deg_s": 0.01065947494295598,
+      "final_5s_max_abs_q_deg_s": 0.0007888656263081681,
+      "final_5s_max_abs_pitch_deg": 0.0003960510740398196,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012141256574601728,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        2.0,
+        0.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.005118342415353074,
+      "peak_abs_q_deg_s": 0.01065947494295598,
+      "final_5s_max_abs_q_deg_s": 0.0014271249971183732,
+      "final_5s_max_abs_pitch_deg": 0.0006910399381021807,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "delay_samples": 2,
+      "peak_abs_pitch_deg": 0.0046350259674156425,
+      "peak_abs_q_deg_s": 0.010005375767940122,
+      "final_5s_max_abs_q_deg_s": 0.0005698984730248215,
+      "final_5s_max_abs_pitch_deg": 0.00029176418472384876,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012338211143465944,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "delay_samples": 3,
+      "peak_abs_pitch_deg": 0.0047509754958870816,
+      "peak_abs_q_deg_s": 0.010096805759008863,
+      "final_5s_max_abs_q_deg_s": 0.0008407621806972666,
+      "final_5s_max_abs_pitch_deg": 0.0004237959095838167,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00012115475069866035,
+      "saturation_fraction": 0.0
+    },
+    {
+      "sigma_offsets": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "delay_samples": 4,
+      "peak_abs_pitch_deg": 0.004856651116051751,
+      "peak_abs_q_deg_s": 0.010096805759008863,
+      "final_5s_max_abs_q_deg_s": 0.0014676419515718636,
+      "final_5s_max_abs_pitch_deg": 0.0007113992470509489,
+      "peak_command": 0.00018502376822750565,
+      "max_slew": 0.00011755705045849605,
+      "saturation_fraction": 0.0
+    }
+  ]
+}

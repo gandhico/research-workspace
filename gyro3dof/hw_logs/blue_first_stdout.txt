@@ -1,0 +1,51 @@
+pulse +0.15 A -> blue moved +0.00 deg
+pulse +0.25 A -> blue moved +0.00 deg
+pulse +0.35 A -> blue moved +0.00 deg
+pulse +0.45 A -> blue moved +0.00 deg
+pulse +0.60 A -> blue moved +0.00 deg
+FAULT: no blue motion up to 0.6 A: check amp power/enable/cabling - outputs zeroed and amplifiers disabled
+{
+  "fault": "no blue motion up to 0.6 A: check amp power/enable/cabling",
+  "events": [
+    {
+      "stage": "start",
+      "enc_rad": [
+        -1.7263,
+        0.0016,
+        -0.0016,
+        1.5708
+      ]
+    },
+    {
+      "stage": "enable_zero",
+      "blue_deg": 0.0
+    },
+    {
+      "stage": "pulse",
+      "amps": 0.15,
+      "blue_moved_deg": 0.0
+    },
+    {
+      "stage": "pulse",
+      "amps": 0.25,
+      "blue_moved_deg": 0.0
+    },
+    {
+      "stage": "pulse",
+      "amps": 0.35,
+      "blue_moved_deg": 0.0
+    },
+    {
+      "stage": "pulse",
+      "amps": 0.45,
+      "blue_moved_deg": 0.0
+    },
+    {
+      "stage": "pulse",
+      "amps": 0.6,
+      "blue_moved_deg": 0.0
+    }
+  ],
+  "samples": 158,
+  "log": "C:\\Research\\gyro3dof\\hw_logs\\20260927_211403_blue_first_motion.csv"
+}

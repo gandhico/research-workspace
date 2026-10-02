@@ -1,0 +1,7 @@
+seed,model,use_nsa,epochs,train_batches,test_batches,train_loss,train_accuracy,test_loss,test_accuracy,correct_test,seen_test
+1,dense_lif_control,false,1,31,12,3.4073052,0.054939516,3.43526,0.044270832,34,768
+1,dense_hyperlif_nsa,true,1,31,12,3.3411999,0.06955645,3.3280857,0.083333336,64,768
+2,dense_lif_control,false,1,31,12,3.2569435,0.07560484,3.0624855,0.09765625,75,768
+2,dense_hyperlif_nsa,true,1,31,12,3.2875645,0.070564516,3.0774872,0.0703125,54,768
+3,dense_lif_control,false,1,31,12,3.0060468,0.07258064,2.80228,0.067708336,52,768
+3,dense_hyperlif_nsa,true,1,31,12,3.0250487,0.06552419,2.8688674,0.075520836,58,768

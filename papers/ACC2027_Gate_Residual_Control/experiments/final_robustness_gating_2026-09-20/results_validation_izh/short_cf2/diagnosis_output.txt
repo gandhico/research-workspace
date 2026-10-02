@@ -1,0 +1,45 @@
+
+=== classical   rows archived/new: 2001/2001
+column          first exact diff (row)    t [s]  #rows differing   max |diff|
+qerr                                -1      nan                0    0.000e+00
+tau0_x                              -1      nan                0    0.000e+00
+tau0_y                              -1      nan                0    0.000e+00
+tau0_z                              -1      nan                0    0.000e+00
+omega_x                             -1      nan                0    0.000e+00
+omega_y                             -1      nan                0    0.000e+00
+omega_z                             -1      nan                0    0.000e+00
+residual_x                          -1      nan                0    0.000e+00
+residual_y                          -1      nan                0    0.000e+00
+z                                   -1      nan                0    0.000e+00
+activity_0                          -1      nan                0    0.000e+00
+decoder_w_0                         -1      nan                0    0.000e+00
+
+=== nengo-nef-pes   rows archived/new: 2001/2001
+column          first exact diff (row)    t [s]  #rows differing   max |diff|
+qerr                               992   0.4960              671    3.001e-16
+tau0_x                             978   0.4890             1007    2.697e-18
+tau0_y                             978   0.4890             1017    3.043e-18
+tau0_z                             978   0.4890             1002    2.052e-18
+omega_x                            983   0.4915              992    4.000e-15
+omega_y                            739   0.3695             1078    4.108e-15
+omega_z                            999   0.4995              749    3.220e-15
+residual_x                         152   0.0760              969    3.388e-20
+residual_y                         330   0.1650              746    5.421e-20
+z                                   -1      nan                0    0.000e+00
+activity_0                          -1      nan                0    0.000e+00
+decoder_w_0                         -1      nan                0    0.000e+00
+
+=== nengo-izhikevich-pes   rows archived/new: 2001/2001
+column          first exact diff (row)    t [s]  #rows differing   max |diff|
+qerr                               167   0.0835             1155    4.007e-16
+tau0_x                             237   0.1185             1742    3.564e-18
+tau0_y                             777   0.3885             1066    9.999e-17
+tau0_z                             164   0.0820             1646    5.483e-18
+omega_x                            237   0.1185             1673    6.301e-15
+omega_y                            112   0.0560             1565    8.715e-15
+omega_z                            241   0.1205             1433    7.883e-15
+residual_x                         161   0.0805              970    3.944e-18
+residual_y                         361   0.1805              829    3.284e-17
+z                                   -1      nan                0    0.000e+00
+activity_0                          -1      nan                0    0.000e+00
+decoder_w_0                        296   0.1480             1696    8.882e-15

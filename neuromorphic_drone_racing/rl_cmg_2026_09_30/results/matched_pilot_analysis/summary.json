@@ -1,0 +1,71 @@
+{
+  "rows": [
+    {
+      "mode": "mlp",
+      "bc_samples": 600,
+      "ppo_rollouts": 2,
+      "ppo_simulator_steps": 12000,
+      "eval_duration_s": 6.62,
+      "gates": 0,
+      "collisions": 0,
+      "return_sum": -32.78,
+      "mean_position_error_m": 2.6471,
+      "mean_event_rate_hz": 0.0,
+      "active_event_units": 0,
+      "total_units": 32
+    },
+    {
+      "mode": "graded",
+      "bc_samples": 600,
+      "ppo_rollouts": 2,
+      "ppo_simulator_steps": 12000,
+      "eval_duration_s": 4.34,
+      "gates": 0,
+      "collisions": 0,
+      "return_sum": -40.268,
+      "mean_position_error_m": 6.0737,
+      "mean_event_rate_hz": 0.202,
+      "active_event_units": 0,
+      "total_units": 32
+    },
+    {
+      "mode": "crossing",
+      "bc_samples": 600,
+      "ppo_rollouts": 2,
+      "ppo_simulator_steps": 12000,
+      "eval_duration_s": 3.5,
+      "gates": 0,
+      "collisions": 1,
+      "return_sum": -12.8844,
+      "mean_position_error_m": 0.3974,
+      "mean_event_rate_hz": 0.161,
+      "active_event_units": 0,
+      "total_units": 32
+    },
+    {
+      "mode": "reset_spike",
+      "bc_samples": 600,
+      "ppo_rollouts": 2,
+      "ppo_simulator_steps": 12000,
+      "eval_duration_s": 3.36,
+      "gates": 0,
+      "collisions": 0,
+      "return_sum": -2.9887,
+      "mean_position_error_m": 1.896,
+      "mean_event_rate_hz": 17.253,
+      "active_event_units": 17,
+      "total_units": 32
+    }
+  ],
+  "teacher": {
+    "duration_s": 12.0,
+    "gates": 4,
+    "collisions": 0
+  },
+  "oracle": {
+    "duration_s": 12.0,
+    "gates": 4,
+    "collisions": 0
+  },
+  "warning": "Single seed, short BC+PPO budget, variable survival times; no family ranking justified"
+}

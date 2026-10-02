@@ -1,0 +1,232 @@
+{
+  "format": "NumPy compressed archive",
+  "sample_rate_hz": 2000.0,
+  "axis_order": [
+    "yaw",
+    "pitch",
+    "roll"
+  ],
+  "unit_order": [
+    "+yaw",
+    "+pitch",
+    "+roll",
+    "-yaw",
+    "-pitch",
+    "-roll"
+  ],
+  "weight_shape": [
+    3,
+    6
+  ],
+  "controller": "nengo-pes",
+  "neuron_family": "cmg",
+  "decoder_mode": "pes",
+  "signals": {
+    "t": {
+      "shape": [
+        970
+      ],
+      "dtype": "float64"
+    },
+    "hardware_step": {
+      "shape": [
+        970
+      ],
+      "dtype": "int64"
+    },
+    "substep": {
+      "shape": [
+        970
+      ],
+      "dtype": "int64"
+    },
+    "baseline_tau_ypr": {
+      "shape": [
+        970,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "target_ypr": {
+      "shape": [
+        970,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "current": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "voltage": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "activity": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "raw_output": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "native_voltage": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "native_refractory_time": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "native_adaptation": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "native_recovery": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "effective_threshold": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate_argument": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate_target": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "conductance_gain": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "conductance": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "membrane_lambda": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "membrane_drive": {
+      "shape": [
+        970,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "decoded_raw": {
+      "shape": [
+        970,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "decoded_clipped": {
+      "shape": [
+        970,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "pes_error": {
+      "shape": [
+        970,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "weights": {
+      "shape": [
+        970,
+        3,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "weight_delta": {
+      "shape": [
+        970,
+        3,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "residual_torque_ypr": {
+      "shape": [
+        970,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "disturbance_torque_ypr": {
+      "shape": [
+        970,
+        3
+      ],
+      "dtype": "float64"
+    }
+  },
+  "semantics": {
+    "decoded_raw": "unbounded W@a",
+    "decoded_clipped": "clip(W@a,-1,1), used by PES and residual",
+    "weight_delta": "per-0.5-ms Nengo step change after PES and leak",
+    "activity": "CMG gate-derived activity, filtered spikes, or filtered rate according to neuron_family",
+    "raw_output": "native Nengo neuron output before feature normalization/filtering",
+    "native_voltage/refractory_time/adaptation/recovery": "family-native states; absent states are zero-filled and declared by neuron_family",
+    "gate": "CMG gate for CMG; auxiliary native state in the 200-Hz compatibility trace for conventional families",
+    "gate_target": "CMG sigmoid(alpha*(v-effective_threshold)); zero for non-CMG families",
+    "conductance": "CMG conductance_gain*r^2; zero for non-CMG families"
+  }
+}

@@ -1,0 +1,22 @@
+layer,role,path,imports_or_depends_on,outputs_or_consumers,status
+core,CMG dynamics and direct PES,"C:\Research\papers\ACC2027_Gate_Residual_Control\src\gra_control\gate.py","numpy","CMGResidualAugmentor; Pendulum runner; drone runner; aliases",canonical
+core,quaternion math and mission references,"C:\Research\papers\ACC2027_Gate_Residual_Control\src\gra_control\math3d.py","numpy","drone.py; Hover engines; Nengo MuJoCo",canonical
+platform,MuJoCo UAV plant and actuator bridge,"C:\Research\papers\ACC2027_Gate_Residual_Control\src\gra_control\platforms\drone.py","gate.py; math3d.py; MuJoCo XML; provenance.py","trace.csv; summary.json; manifest.json",canonical
+launcher,direct shared CLI,"C:\Research\papers\ACC2027_Gate_Residual_Control\src\gra_control\cli.py","platforms/drone.py; platforms/surrogate.py","single-run result directory",canonical
+model,Skydio X2 Menagerie scene,"C:\Research\papers\ACC2027_Gate_Residual_Control\third_party\mujoco_menagerie\skydio_x2\scene.xml","MuJoCo","X2 rotor model",canonical
+model,stock CF2 Menagerie scene,"C:\Research\papers\ACC2027_Gate_Residual_Control\third_party\mujoco_menagerie\bitcraze_crazyflie_2\scene.xml","MuJoCo","authority-boundary model",boundary-only
+model,CF2 four-rotor design scene,"C:\Research\papers\ACC2027_Gate_Residual_Control\models\cf2_rotor_design\scene.xml","MuJoCo","CF2 1.5x design study",conditional
+nengo,custom continuous CMG neuron and Nengo PES,"C:\Research\papers\ACC2027_Gate_Residual_Control\experiments\nengo_nef_replication_2026-08-29\nengo_cmg.py","Nengo 4.1.0; numpy","run_mujoco_nef.py; Hover Nengo engine",canonical
+nengo,neuron-family comparators,"C:\Research\papers\ACC2027_Gate_Residual_Control\experiments\nengo_nef_replication_2026-08-29\nengo_neuron_family.py","Nengo; calibrated features","family matrices; Hover shadow",supplementary
+runner,Nengo MuJoCo experiment,"C:\Research\papers\ACC2027_Gate_Residual_Control\experiments\nengo_nef_replication_2026-08-29\run_mujoco_nef.py","drone.py; nengo_cmg.py; nengo_neuron_family.py","trace; full-rate NPZ; schema; summary; manifest",canonical
+launcher,Nengo MuJoCo GUI,"C:\Research\papers\ACC2027_Gate_Residual_Control\experiments\nengo_nef_replication_2026-08-29\launch_gui.py","gui_cmg_pes_mujoco.py; nengo_gui; custom backend","browser GUI and passive MuJoCo viewer",canonical
+hover,Hover plant PD mixer allocation,"C:\Research\hover3dof\pd_cmg_focused_final_round_2026-08-28\src\pd_baseline.py","numpy; vendor parameters","Hover NumPy and Nengo engines",canonical
+hover,Hover Nengo Q8 engine,"C:\Research\hover3dof\nengo_gui_hil_2026-08-29\hover_nengo_hil_gui.py","pd_baseline.py; nengo_cmg.py; math3d.py; Quanser HIL","200 Hz CSV; 2 kHz NPZ; schema; summary; manifest",canonical
+hover,direct-Nengo physical launcher,"C:\Research\hover3dof\nengo_gui_hil_2026-08-29\run_hover_direct_nengo.py","hover_nengo_hil_gui.py","canonical no-GUI physical results",canonical
+hover,live Hover Nengo GUI launcher,"C:\Research\hover3dof\nengo_gui_hil_2026-08-29\launch_hover_nengo_gui.py","hover_nengo_hil_gui.py; nengo_gui backend","live GUI; same worker outputs",canonical-with-hardware-gates
+hover,historical vendor-LQR CMG runner,"C:\Research\hover3dof\runners\hover3dof_hil_cmg_control.py","gate.py; SafeGateBridge; math3d.py; Quanser HIL","older LQR hardware dataset",historical-valid
+pendulum,QUBE QLabs canonical runner,"C:\Research\pendulum\runners\twin_acc2027_gate_residual.py","gate.py; Quanser PAL QubeServo3 hardware=0","trace; summary; matched closure",supporting
+qcar,QCar offline benchmark launcher,"C:\Research\qcar\runners\run_offline_benchmark.py","quanser_residual_campaign package","offline synthetic lane-error results",exploratory
+paper,LaTeX manuscript,"C:\Research\papers\ACC2027_Gate_Residual_Control\paper\acc2027_neuromorphic_gate_residual_draft.tex","result plots and tables","working PDF",needs-reconciliation
+audit,physical/Hover freeze audit,"C:\Research\hover3dof\nengo_gui_hil_2026-08-29\results\FROZEN_AUDIT_2026-09-02\CONSOLIDATED_RESEARCH_AUDIT_2026-09-02.md","canonical physical and upstream manifests","verified physical evidence record",canonical
+archive,historical P3 research root,"C:\Research\papers\P3_Gate_Residual","mixed old code and models","provenance and mechanism history",preserve-do-not-run-as-primary

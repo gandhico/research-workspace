@@ -1,0 +1,21 @@
+{
+  "platform": "x2",
+  "mission": "full3",
+  "family": "cmg",
+  "train": false,
+  "seed": 10001,
+  "duration_s": 45.0,
+  "dt_s": 0.0005,
+  "policy_dt_s": 0.02,
+  "beta": 0.5,
+  "error_envelope_rad": 0.03,
+  "action_penalty": 0.3,
+  "disturbance_frac_limits": 0.0,
+  "qerr_true_mean_rad": 0.010165237894046157,
+  "qerr_true_mean_deg": 0.5824252290752979,
+  "qerr_true_max_deg": 28.64788975654116,
+  "rotor_saturation_fraction": 0.0026333333333333334,
+  "output_gate_fraction": 0.0024,
+  "realized_residual_normalized_rms": 0.013752515951389868,
+  "model_sha256": "d932ffbe9f0d1fa4bcfe5746d4cfc0c5652960f00223fdaf2ffd6aff6b217c97"
+}

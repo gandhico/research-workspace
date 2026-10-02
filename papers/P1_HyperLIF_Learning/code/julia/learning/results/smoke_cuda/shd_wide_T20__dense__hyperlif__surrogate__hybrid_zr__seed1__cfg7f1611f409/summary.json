@@ -1,0 +1,88 @@
+{
+  "checkpoint": "C:\\Research\\papers\\P1_HyperLIF_Learning\\code\\julia\\learning\\results\\smoke_cuda\\shd_wide_T20__dense__hyperlif__surrogate__hybrid_zr__seed1__cfg7f1611f409\\checkpoint.jls",
+  "command_line": [
+    "--cache=C:\\Research\\papers\\P1_HyperLIF_Learning\\code\\hpc\\upload_data\\shd_wide_T20.h5",
+    "--architecture=dense",
+    "--delay-mode=causal",
+    "--cell=hyperlif",
+    "--learning-mode=surrogate",
+    "--readout=hybrid_zr",
+    "--seed=1",
+    "--epochs=1",
+    "--hidden=24",
+    "--batch-size=16",
+    "--max-train=96",
+    "--max-test=64",
+    "--patience=1",
+    "--device=cuda",
+    "--results-root=C:\\Research\\papers\\P1_HyperLIF_Learning\\code\\julia\\learning\\results\\smoke_cuda",
+    "--skip-existing"
+  ],
+  "compute": {
+    "device": "cuda",
+    "energy_claim": "not measured; event and occupancy statistics are activity proxies only",
+    "hardware_energy": null,
+    "julia_version": "1.12.7"
+  },
+  "dataset": {
+    "classes": 20,
+    "input_features": 700,
+    "layout_in_memory": "features x time x samples",
+    "path": "C:\\Research\\papers\\P1_HyperLIF_Learning\\code\\hpc\\upload_data\\shd_wide_T20.h5",
+    "sha256": "6e5eb592c7530184daf83ecdff54ef4db34a42a45551195898a1e1a557c74738",
+    "test_used": 64,
+    "time_steps": 20,
+    "train_used": 86,
+    "validation_used": 10
+  },
+  "experiment_id": "shd_wide_T20__dense__hyperlif__surrogate__hybrid_zr__seed1__cfg7f1611f409",
+  "finished_at_utc": "2026-09-09T20:13:23.006",
+  "model": {
+    "architecture": "dense",
+    "cell": "hyperlif",
+    "delay_mode": "causal",
+    "event_semantics": "upward threshold crossing",
+    "gradient_semantics": "hard upward crossings in forward pass; declared fast-sigmoid pseudo-derivative in backward pass",
+    "hidden": 24,
+    "learning_mode": "surrogate",
+    "parameter_count": 18620,
+    "readout": "hybrid_zr"
+  },
+  "optimization": {
+    "best_epoch_by_validation_accuracy": 1,
+    "best_validation_accuracy": 0.10000000149011612,
+    "epochs_completed": 1,
+    "epochs_requested": 1,
+    "learning_rate": 0.001,
+    "optimizer": "AdamW",
+    "seed": 1,
+    "stopped_early": false,
+    "weight_decay": 0.0001
+  },
+  "schema_version": 1,
+  "started_at_utc": "2026-09-09T20:13:20.089",
+  "status": "complete",
+  "test": {
+    "accuracy": 0.046875,
+    "event_definition": "upward threshold crossing",
+    "gate_mean": 0.22973468527197838,
+    "grazing_among_event_neurons": 0.0,
+    "loss": 3.6410945653915405,
+    "minimum_crossing_speed": 37.874637603759766,
+    "no_event_neuron_fraction": 0.580078125,
+    "occupancy_definition": "neuron-time states at or above threshold",
+    "occupancy_per_sample": 121.890625,
+    "upcrossings_per_sample": 11.890625,
+    "voltage_mean": -2.0051271319389343
+  },
+  "trace": [
+    {
+      "epoch": 1,
+      "seconds": 2.489000082015991,
+      "train_loss": 4.108603000640869,
+      "validation_accuracy": 0.10000000149011612,
+      "validation_loss": 3.712801456451416
+    }
+  ],
+  "wall_seconds": 2.9170000553131104
+}

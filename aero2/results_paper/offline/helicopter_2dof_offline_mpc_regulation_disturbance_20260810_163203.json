@@ -1,0 +1,33 @@
+{
+  "config": {
+    "execution_mode": "offline",
+    "model_variant": "helicopter_2dof",
+    "controller": "mpc",
+    "controller_kwargs": {},
+    "application": "regulation_disturbance",
+    "duration_s": 18.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 15.0,
+    "out": "results_paper\\offline"
+  },
+  "metrics": {
+    "n": 3600,
+    "duration_s": 17.995000000000704,
+    "realized_hz": 199.99999999999218,
+    "pitch_rms": 0.033336915302476205,
+    "yaw_rms": 0.0734560115758876,
+    "tail_pitch_mae": 0.026004097661830917,
+    "tail_yaw_mae": 0.061319170140712746,
+    "pitch_sat_frac": 0.0,
+    "yaw_sat_frac": 0.0,
+    "theta_range": [
+      -0.07022931779101085,
+      0.06543667461183186
+    ],
+    "psi_range": [
+      -0.19955016169216902,
+      0.19954652013245275
+    ]
+  }
+}

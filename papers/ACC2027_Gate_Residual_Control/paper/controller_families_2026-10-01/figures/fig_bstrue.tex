@@ -1,0 +1,26 @@
+% Recursive (Lyapunov) backstepping: step 1 on the quaternion kinematics, step 2 on the rate dynamics,
+% optional adaptive disturbance estimate (true_backstepping.py).
+\begin{tikzpicture}
+  \commonleft
+  \node[law,right=14mm of err,yshift=13mm] (s1) {\textbf{Step 1: kinematic subsystem}\\
+        $z_1=\bm e_q$,\quad $\bm\omega_e=\bm\omega-R(q_e)\T\bm\omega_d$\\
+        $\dot z_1=\tfrac12\big(|q_{e,0}|I+[z_1]_\times\big)\bm\omega_e$\\
+        $V_1=2(1-|q_{e,0}|)$,\quad $\dot V_1=z_1\T\bm\omega_e$\\
+        virtual rate\ \ $\bm\omega_e^{d}=-K_1z_1$};
+  \node[law,below=9mm of s1.south west,anchor=north west] (s2) {\textbf{Step 2: rate subsystem}\\
+        $z_2=\bm\omega_e+K_1z_1$,\quad $V=c\,V_1+\tfrac12z_2\T\bm Jz_2$\\
+        $\dot{\bar{\bm\omega}}_d=R(q_e)\T\dot{\bm\omega}_d-\bm\omega_e\times R(q_e)\T\bm\omega_d$\\
+        $\bm\tau=\bm\omega\times\bm J\bm\omega+\bm J(\dot{\bar{\bm\omega}}_d-K_1\dot z_1)-c\,z_1-K_2z_2\,[-\hat{\bm d}]$\\
+        $\dot V=-c\,z_1\T K_1z_1-z_2\T K_2z_2\le0$};
+  \node[offl,right=10mm of s1] (ad) {\textbf{Adaptive law} (variant)\\
+        $\dot{\hat{\bm d}}=\operatorname{Proj}_{|\hat d_i|\le D_i}(\Gamma z_2)$\\
+        $V_a=V+\tfrac12\tilde{\bm d}\T\Gamma^{-1}\tilde{\bm d}$};
+  \draw[sig] (err.east) -- ++(5mm,0) |- node[lbl,pos=.75,above]{$q_e,\ \bm\omega$} (s1.west);
+  \draw[sig] ($(s1.south west)+(12mm,0)$) -- node[lbl,right]{$z_1,\ \dot z_1,\ \bm\omega_e^{d}$\ \ (cross term $-c\,z_1$)} ($(s1.south west)+(12mm,-9mm)$);
+  \draw[sigd] ($(ad.south)+(4mm,0)$) |- node[lbl,pos=.3,right]{$\hat{\bm d}$} ($(s2.north east)!0.5!(s2.east)$);
+  \draw[sigd] ($(s2.north east)+(-8mm,0)$) |- node[lbl,pos=.25,left]{$z_2$} ($(ad.south west)+(4mm,-4mm)$) -- ($(ad.south west)+(4mm,0)$);
+  \coordinate (satx) at ($(s2.east-|ad.east)+(22mm,0)$);
+  \commonloop{s2}{\textbf{Torque box}\\$\bm u_0=\sat_{\bm\ell}(\bm\tau)$};
+  \node[fam,fit=(s1)(s2)(ad)] (g) {};
+  \node[famlbl,anchor=north west] at (g.south west) {family: recursive backstepping (\code{--baseline bs-true} / \code{bs-adaptive}); new, not in the manuscript};
+\end{tikzpicture}

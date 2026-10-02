@@ -1,0 +1,21 @@
+{
+  "platform": "cf2-rotor",
+  "mission": "full3",
+  "family": "cmg",
+  "train": false,
+  "seed": 10001,
+  "duration_s": 15.0,
+  "dt_s": 0.0005,
+  "policy_dt_s": 0.02,
+  "beta": 0.2,
+  "error_envelope_rad": 0.03,
+  "action_penalty": 0.3,
+  "disturbance_frac_limits": 0.0,
+  "qerr_true_mean_rad": 0.012065529582062143,
+  "qerr_true_mean_deg": 0.6913039226424049,
+  "qerr_true_max_deg": 28.64788975654116,
+  "rotor_saturation_fraction": 0.0,
+  "output_gate_fraction": 0.0021,
+  "realized_residual_normalized_rms": 0.005529682593259294,
+  "model_sha256": "410e0975d066abb1ad726415250c78948c0f25b2f99f3b73746c161603dfdaf6"
+}

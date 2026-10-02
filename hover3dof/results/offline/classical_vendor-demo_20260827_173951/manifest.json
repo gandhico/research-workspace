@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "created_utc": "2026-08-27T23:39:52.292743+00:00",
+  "platform": "hover3dof_offline_surrogate",
+  "controller": "classical",
+  "model": "C:\\Research\\hover3dof\\runners\\offline_acc2027_cmg_residual.py",
+  "model_sha256": "4d04453e7d57d74ea9f0c0691b16e9d4c0d37941db716f9d86ae4f2916ceb05b",
+  "git_commit": null,
+  "python": "3.13.11",
+  "mujoco": "3.12.0",
+  "numpy": "2.5.2",
+  "arguments": {
+    "controller": "classical",
+    "mission": "vendor-demo",
+    "duration": 10.0,
+    "dt": 0.001,
+    "beta": 0.5,
+    "learning_rate": 0.0008,
+    "k_error": 8.0,
+    "k_rate": 0.0,
+    "seed": 0
+  }
+}

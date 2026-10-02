@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "steps": 2000,
+  "dt_s": 0.0005,
+  "behavioral_tolerance": 2e-06,
+  "weight_temporal_skew_bound": 0.00081,
+  "maximum_absolute_differences": {
+    "residual": 1.6872361396913504e-08,
+    "activity": 0.0,
+    "gate": 0.0,
+    "voltage": 0.0,
+    "weights": 0.0007197509252694191
+  },
+  "interpretation": {
+    "behavior": "Residual, CMG activity, gate, and membrane states must agree within the strict behavioral tolerance.",
+    "weights": "Built-in Nengo PES exposes its transform with a one-neural-step scheduling skew; the bound is one direct learning increment and is not treated as a behavioral mismatch."
+  }
+}

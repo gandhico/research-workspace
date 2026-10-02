@@ -1,0 +1,14 @@
+{
+  "platform": "x2-6dof-cascade",
+  "controller": "classical",
+  "mission": "circle_xy",
+  "duration": 15.0,
+  "dt": 0.0005,
+  "pos_err_mean_m": 0.01507427304573961,
+  "pos_err_max_m": 0.0951576840516524,
+  "qerr_mean_rad": 0.0039675306401398686,
+  "qerr_max_rad": 0.07705742866212816,
+  "pos_ff": "fd",
+  "actuator_scale": 1.0,
+  "authority_scale": 1.0
+}

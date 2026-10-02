@@ -1,0 +1,20 @@
+{
+  "kind": "eval",
+  "arm": "baseline",
+  "mode": "mlp",
+  "vehicle": "x2",
+  "scenario": "gust",
+  "seed": 1,
+  "samples": 600,
+  "episodes": 1,
+  "return_sum": 115.21610022887691,
+  "gates": 4,
+  "collisions": 0,
+  "termination_reason": "time_limit",
+  "mean_position_error_m": 0.19371967921645927,
+  "max_position_error_m": 0.33490084999996134,
+  "mean_saturation": 0.06933333333333333,
+  "action_rms": 0.0,
+  "gain_min": 1.0,
+  "gain_max": 1.0
+}

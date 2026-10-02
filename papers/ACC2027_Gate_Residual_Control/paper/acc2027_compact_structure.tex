@@ -1,0 +1,412 @@
+% ACC 2027 compact paper structure.
+%
+% IMPORTANT:
+% 1. Obtain the current ieeeconf.cls and sample file from the ACC 2027
+%    PaperPlaza Support/Author Kit and place ieeeconf.cls on the TeX path.
+% 2. ACC 2027 requires the standard two-column format. Initial submissions are
+%    limited to 8 pages; accepted papers are 6 pages at no charge and may use
+%    up to 2 paid extra pages.
+% 3. Replace all TODO fields and reconcile every result with
+%    docs/FULL_PROJECT_AUDIT_2026-09-02.md before submission.
+% 4. ACC 2027 requires transparent disclosure and citation of LLM use.
+
+\documentclass[letterpaper,10pt,conference]{ieeeconf}
+
+\IEEEoverridecommandlockouts
+\overrideIEEEmargins
+
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs,multirow,array}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{cite}
+\usepackage[hidelinks]{hyperref}
+
+\graphicspath{{../results/reports/}{../results/plots/}{../presentation/figures/}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{^{\mathsf T}}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\clip}{\operatorname{clip}}
+\newcommand{\sgn}{\operatorname{sgn}}
+
+\title{\LARGE \bf
+Online PES-Adapted Neuromorphic Membrane--Gate Residual Control\\
+for Actuator-Constrained UAV Quaternion Attitude Tracking
+}
+
+\author{Gandhi A. Contreras Torres%
+\thanks{Author affiliation, address, funding, and correspondence information
+must be completed before submission.}%
+}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+\begin{abstract}
+% TODO: Keep the abstract to one compact paragraph.
+% Recommended order:
+% (1) actuator-constrained quaternion-attitude problem;
+% (2) classical PD plus bounded additive CMG residual;
+% (3) paired membrane--gate dynamics and online PES decoder;
+% (4) primary X2 and explicitly labeled CF2 1.5x design results;
+% (5) repeated physical Hover Roll result and mission-dependent hardware matrix;
+% (6) principal limitation: no completed full-scale physical yaw360.
+This paper develops a baseline-preserving neuromorphic residual controller for
+actuator-constrained quaternion attitude tracking. A classical proportional--
+derivative controller supplies the stabilizing body-torque command, while
+paired continuous coupled membrane--gate units and an online PES-adapted
+decoder generate a bounded additive correction. The method is implemented
+both directly and as a custom non-spiking Nengo neuron type, with explicit
+rotor allocation and complete neural-state telemetry. Matched MuJoCo and
+Quanser 3DOF Hover experiments characterize tracking improvement, residual
+authority, actuator feasibility, and the limits of simulation-to-hardware
+transfer.
+\end{abstract}
+
+% ACC does not require a separate keyword block in the standard sample.
+
+\section{Introduction}
+\label{sec:introduction}
+
+% Compact narrative:
+% - Why actuator constraints make direct neural replacement problematic.
+% - Why the baseline must be preserved.
+% - Why a continuous neuromorphic dynamical state is useful.
+% - Gap: online local adaptation plus explicit rotor allocation and hardware.
+% - End with a numbered contribution list.
+
+\subsection{Motivation and Research Gap}
+
+% Introduce learning-enabled attitude control, transparency, actuator
+% feasibility, and simulation-to-hardware transfer.
+
+\subsection{Contributions and Claim Boundaries}
+
+% Recommended contributions:
+% 1. Continuous CMG dynamics with paired directional encoding.
+% 2. Online Nengo/PES decoder in a bounded additive residual architecture.
+% 3. Explicit rotor/voltage allocation and stock-CF2 authority audit.
+% 4. Direct-versus-Nengo equivalence plus MuJoCo mission matrix.
+% 5. Physical 3DOF Hover validation with repeated Roll evidence.
+% State explicitly: no universal superiority over all neuron models and no
+% completed full-scale physical yaw360.
+
+\section{Problem Formulation}
+\label{sec:problem}
+
+\subsection{Rigid-Body Attitude Dynamics}
+
+Let $q\in\mathbb{S}^{3}$ be the body attitude quaternion,
+$\bm\omega\in\R^3$ the body angular velocity, $\bm J$ the inertia tensor,
+and $\bm\tau$ the applied body torque. The rotational dynamics are
+\begin{align}
+    \dot q &= \frac{1}{2}q\otimes[0,\bm\omega\T]\T, \\
+    \bm J\dot{\bm\omega}
+    &= \bm\tau-\bm\omega\times(\bm J\bm\omega).
+\end{align}
+
+\subsection{Quaternion Error and Tracking Objective}
+
+For desired attitude $q_d$, define
+\begin{align}
+    q_e &= q_d\otimes q^{-1}, \\
+    \bm e_q &= \sgn(q_{e,0})\operatorname{vec}(q_e), \\
+    \theta_q &= 2\cos^{-1}\!\left(\clip(|q_{e,0}|,0,1)\right).
+\end{align}
+
+% Explain shortest-path sign selection and distinguish quaternion-angle error
+% from the wrapped Euler-component norm used in physical Hover summaries.
+
+\subsection{Actuator-Constrained Control Objective}
+
+% Define bounded control channels u0, limits ell, nonnegative rotor commands,
+% and the tracking/authority/saturation objectives.
+
+\section{Baseline Quaternion Attitude Control}
+\label{sec:baseline}
+
+\subsection{Quaternion PD Law}
+
+With natural frequencies $\bm\omega_n$ and damping ratio $\zeta$,
+\begin{align}
+    \bm K_q &= 2\operatorname{diag}(\bm J)
+        \odot\bm\omega_n^2, \\
+    \bm K_{\omega} &= 2\zeta\operatorname{diag}(\bm J)
+        \odot\bm\omega_n, \\
+    \bm\tau_0 &= \sat_{\bm\tau_{\max}}
+        \left(-\bm K_q\odot\bm e_q
+        -\bm K_{\omega}\odot\bm\omega\right).
+\end{align}
+
+\subsection{Collective Thrust and Rotor Allocation}
+
+For four rotor thrusts $\bm f\in\R_{geq0}^{4}$,
+\begin{equation}
+    \begin{bmatrix}T&\tau_x&\tau_y&\tau_z\end{bmatrix}\T
+    =\bm B\bm f,
+    \qquad
+    \bm f=\bm B^{-1}
+    \begin{bmatrix}T&\bm\tau\T\end{bmatrix}\T.
+\end{equation}
+
+% Define B from rotor positions and reaction-torque coefficients. State that
+% collective thrust remains classical and CMG augments only body torque.
+
+\section{Online PES-Adapted Membrane--Gate Residual Control in Nengo}
+\label{sec:cmg_nengo}
+
+\subsection{Paired Directional Current Encoding}
+
+For $m$ bounded baseline channels $\bm u_0$ with symmetric limits
+$\bm\ell>0$, define
+\begin{align}
+    \bar{\bm u} &= \bm u_0\oslash\bm\ell, \\
+    \bm I^+ &= I_b\bm 1+I_g\max(\bar{\bm u},\bm 0), \\
+    \bm I^- &= I_b\bm 1+I_g\max(-\bar{\bm u},\bm 0).
+\end{align}
+
+% UAV attitude: m=3 and 2m=6 units. Explain positive/negative channel order.
+
+\subsection{Coupled Membrane--Gate Dynamics}
+
+For unit $j$,
+\begin{align}
+    \dot r_j &= \frac{\sigma\!\left(
+        \alpha_h[v_j-(v_{\mathrm{th}}-\gamma r_j)]\right)-r_j}
+        {\tau_r}, \\
+    \dot v_j &= -\frac{v_j-v_{\mathrm{rest}}}{\tau}
+        +\frac{I_j}{\tau}
+        -c_j(v_j-v_{\mathrm{reset}}), \\
+    c_j &= \left(g_0+\mathbf{1}_{\mathrm{adapt}}g_1|I_j|\right)r_j^2.
+\end{align}
+
+% Make the conceptual distinction explicit:
+% - v and r are mutually coupled internal states;
+% - the decoder reads gate-derived activity, not v independently;
+% - this implementation is continuous and non-spiking.
+
+\subsection{Continuous Activity and Fixed Decoder}
+
+\begin{align}
+    \bm a_k &= \clip_{[0,1]}(G\bm r_k), \\
+    \bm W_0 &= \begin{bmatrix}\bm I_m&-\bm I_m\end{bmatrix}, \\
+    \bm s_k &= \clip_{[-1,1]}(\bm W_k\bm a_k).
+\end{align}
+
+\subsection{Online PES Decoder Adaptation}
+
+\begin{align}
+    \bm y_k^* &= \clip_{[-1,1]}
+        (-k_e\bm e_{q,k}-k_\omega^*\bm\omega_k), \\
+    \bm\varepsilon_k &= \bm y_k^*-\bm s_k, \\
+    \bm W_{k+1} &= \Pi_{[-W_{\max},W_{\max}]}
+    \left(\bm W_k+\eta\bm\varepsilon_k\bm a_k\T
+    -\lambda_W\bm W_k\right).
+\end{align}
+
+% Explain causality: s_k is decoded with W_k; W_{k+1} affects the next sample.
+
+\subsection{Bounded Additive Residual}
+
+\begin{align}
+    \bm u_k^{\mathrm{neural}} &= \bm s_k\odot\bm\ell, \\
+    \bm u_k &= \sat_{\bm\ell}
+        \left(\bm u_{0,k}+\beta\bm u_k^{\mathrm{neural}}\right), \\
+    \bm\delta_k &= \bm u_k-\bm u_{0,k}.
+\end{align}
+
+% Contrast with the historical noncanonical blend
+% (1-beta)u0 + beta*u_neural.
+
+\subsection{Adaptive Conductance Versus Adaptive Decoder}
+
+% State the audited result: fixed/adaptive conductance CMG variants are
+% numerically indistinguishable in the amplified-gate regime. The large gain
+% comes from online W adaptation, not from g1|I|.
+
+\subsection{Nengo Realization and Numerical Equivalence}
+
+% Describe CoupledMembraneGate as a custom nengo.neurons.NeuronType, direct
+% current injection, Nengo built-in PES, learning-rate conversion, weight
+% projection/leak, and the approximately 1.05e-7 isolated relative command
+% error versus the direct NumPy implementation.
+
+\subsection{Timing and Neural Telemetry}
+
+% MuJoCo: 2 kHz plant/neural step. Hover: 200 Hz Q8, ten 0.5-ms Nengo steps,
+% 2 kHz neural archive, optional 50 Hz GUI. List v, r, activity, current,
+% conductance, threshold, decoder output, PES error, W, and Delta W.
+
+\section{Platform Realization and Experimental Methodology}
+\label{sec:platform_method}
+
+\subsection{Skydio X2 Rotor-Actuated MuJoCo Model}
+
+% Identify the Menagerie model, four named rotor actuators, mixer, bounds,
+% vertical loop, and saturation measurement.
+
+\subsection{Crazyflie Rotor-Authority Design and Stock Boundary}
+
+% Separate two cases:
+% (1) stock Menagerie CF2 abstract moment interface: feasibility boundary;
+% (2) explicit four-rotor design with 1.5x nominal rotor authority: design study.
+% Never call the second case stock CF2 hardware.
+
+\subsection{Quanser 3DOF Hover Hardware Interface}
+
+% Q8 encoder and actuator ordering, startup tare, quaternion reconstruction,
+% filtered body rates, torque-to-F/B/L/R allocation, 0--24 V command,
+% amplifier gain 3, residual cap/slew, and unconditional zero-output cleanup.
+
+\subsection{Reference Missions}
+
+% Define Hover, Roll, Full3, Hard45, Hardstep, and Yaw360 mathematically or in
+% a compact table. Record scale and duration independently.
+
+\subsection{Matched Controller Protocol}
+
+% Same reference, duration, scale, allocator, initial-condition convention,
+% safety limits, and logging for baseline/CMG pairs. State n for every table.
+
+\subsection{Parameters and Evaluation Metrics}
+
+% Include one compact parameter table. Distinguish:
+% - MuJoCo quaternion-angle mean/max [rad];
+% - Hover wrapped Euler-vector mean/max [deg];
+% - normalized residual RMS/peak;
+% - decoder drift/update;
+% - actuator saturation and mission completion.
+
+\subsection{Hardware Timing and Safety Protocol}
+
+% Explicit arm and confirmation gates; qualified controllers only; encoder
+% step, pitch/roll, deadline, voltage, residual, and cleanup guards.
+
+\section{MuJoCo UAV Results}
+\label{sec:mujoco_results}
+
+\subsection{Five-Mission Quaternion-Attitude Results}
+
+% Primary table: X2 and CF2 1.5x design, Roll/Full3/Hard45/Hardstep/Yaw360.
+% Report PD, fixed CMG, CMG--PES, improvement, residual authority, saturation.
+
+\subsection{Decoder Adaptation and Conductance Ablation}
+
+% Show fixed decoder versus PES-adapted decoder and fixed versus adaptive
+% conductance. Attribute the large improvement only to decoder adaptation.
+
+\subsection{Actuator Utilization and Feasibility}
+
+% Include X2 zero-saturation evidence, stock-CF2 failure boundary, and
+% explicit labeling of the 1.5x design case.
+
+\subsection{Six-DOF Extension}
+
+% Use one compact table for X2 waypoint, circle, and full6-stress position and
+% attitude metrics. Keep ideal-wrench and real-rotor results separate.
+
+\section{Neuromorphic Model Benchmark}
+\label{sec:neuron_benchmark}
+
+\subsection{Comparator Models and Matched Decoder Conditions}
+
+% CMG, LIF, ALIF, Izhikevich, and LIFRate; fixed and PES decoders. Explain
+% feature calibration and why sparse activity is an operating-point result.
+
+\subsection{Tracking Performance and Residual Authority}
+
+% Report that Izhikevich--PES can win individual cells, while CMG--PES uses
+% lower normalized residual RMS and decoder movement. Avoid universal claims.
+
+\subsection{Interpretation and Benchmark Limitations}
+
+% Discuss seed count, matched current encoding, neuron-specific state/readout,
+% absence of armed non-CMG hardware trials, and need for frozen-weight tests.
+
+\section{Physical 3DOF Hover Results}
+\label{sec:hover_results}
+
+\subsection{Direct-Nengo Execution and Data Integrity}
+
+% 200 Hz Q8 worker, 2 kHz Nengo, full telemetry, 12 canonical completed runs,
+% 144/144 deep checks. Mention why the GUI was removed from the hard loop.
+
+\subsection{Repeated Roll Experiment}
+
+% Primary physical result: n=3 matched pairs, PD 5.4405+/-0.0648 deg,
+% CMG 5.2960+/-0.0428 deg, paired mean improvement 2.6508+/-1.0765%.
+
+\subsection{Complete Matched Mission Matrix}
+
+% Report all valid rows, including negative results:
+% Hover +60.38% near zero; Roll +5.57%; Full3 -3.21%; Hard45 +0.55%;
+% Hardstep +0.95%; reduced-range Yaw -8.38%.
+% Include maximum-error changes, which are negative in several cells.
+
+\subsection{Yaw Feasibility Boundary}
+
+% The completed scale-0.3 profile ends near 108 deg and is not yaw360.
+% Two full-scale PD attempts aborted at approximately +/-20.127 deg roll.
+% Present mechanical/orientation/cable wind-up only as a hypothesis.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Why Online PES Produces the Main Improvement}
+
+% Link W adaptation, tracking target, phase-lag correction, and mission demand.
+
+\subsection{Roles of Membrane State and Gate State}
+
+% The decoder reads gate-derived activity, but v and r are coupled and both
+% participate in the internal dynamics. Do not state that r acts alone.
+
+\subsection{Performance--Authority and Actuator Tradeoffs}
+
+% Compare simulation beta/authority with the deliberately conservative Hover
+% residual cap and slew. Discuss mean versus maximum-error tradeoffs.
+
+\subsection{Simulation-to-Hardware Transfer and Limitations}
+
+% Single-run mission cells, hardware variation, reduced reference scales,
+% model uncertainty, absent full yaw360, online-on-evaluation adaptation,
+% lack of frozen-weight generalization, and non-CMG hardware limitation.
+
+% If page space permits, mention the QUBE QLabs result in one paragraph:
+% stable 500-Hz transfer and practical equivalence to LQR, not improvement.
+% Keep QCar and QDrone as future work, not completed evidence.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+% Summarize only audited claims. End with repeated physical trials,
+% disturbance/held-out/frozen-weight evaluation, and neuromorphic perception
+% integration as future work.
+
+\section*{Acknowledgment}
+
+% TODO: Add advisor, laboratory, funding, equipment, and contributor credits.
+% TODO: Add the ACC 2027-required transparent LLM-use disclosure and cite the
+% tools in the reference list. Describe exactly which research, coding,
+% analysis, visualization, and writing tasks used each tool. The human authors
+% retain responsibility for validation and all claims.
+
+\begin{thebibliography}{99}
+
+% TODO: Replace placeholders with complete references used in the manuscript.
+% Use \bibitem entries or the ACC-approved BibTeX workflow from the author kit.
+
+\bibitem{bekolay2013pes}
+A.~Bekolay et al., ``Nengo: A Python tool for building large-scale functional
+brain models,'' \emph{Frontiers in Neuroinformatics}, vol.~7, 2014.
+
+% TODO: Insert verified quaternion attitude-control, PES, multirotor,
+% actuator-allocation, and neuromorphic-control references.
+
+\end{thebibliography}
+
+\end{document}

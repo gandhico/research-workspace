@@ -1,0 +1,143 @@
+% Paper-ready source for inclusion in the ACC manuscript.
+% Requires: \usepackage{amsmath,amssymb}
+% Bibliography: ACC2027_SOTA_REFERENCES.bib
+
+\section{Related Work and Positioning}
+\label{sec:related_work}
+
+\subsection{Adaptive and Learned Augmentation for Aerial Vehicles}
+
+Adaptive augmentation of a trusted flight controller is an established control
+strategy.  In particular, L1Quad augments a geometric $SE(3)$ controller with an
+$\mathcal{L}_{1}$ state predictor, piecewise-constant uncertainty adaptation, and
+low-pass filtering, and provides transient and ultimate tracking-error bounds
+across a broad set of physical quadrotor uncertainty tests
+\cite{wu2025l1quad}.  Geometric neural adaptive control has likewise used
+online neural weights to compensate wind-induced uncertainty with boundedness
+results \cite{bisheban2021geometric}, while Neural-Fly combines an offline learned
+representation with low-dimensional online adaptation and stability guarantees
+for flight in strong winds \cite{oconnell2022neuralfly}.  DATT combines learned
+feedforward--feedback tracking with an online $\mathcal{L}_{1}$ disturbance
+estimate on a Crazyflie platform \cite{huang2023datt}.  These works establish
+that adaptive augmentation, online uncertainty estimation, and learned flight
+compensation are not by themselves new contributions.
+
+Residual learning is also well established.  Residual reinforcement learning
+adds a learned action to a conventional controller to retain useful prior
+structure \cite{johannink2019residual}.  For quadrotor attitude tracking,
+HPA--PPO uses
+\begin{equation}
+  u = u_{\mathrm{PID}} + \Delta u_{\mathrm{RL}},
+\end{equation}
+where a history--preview, attention-enhanced PPO policy produces the residual
+\cite{li2027hpappo}.  Its results include numerical, software-in-the-loop, and
+Pixhawk/Gazebo hardware-in-the-loop tests; the vehicle dynamics remain simulated
+in the latter.  Our work therefore does not claim the first learned residual
+over a classical attitude controller.  It instead studies a locally adapted,
+low-dimensional neural-state residual whose learning variables and actuator
+authority remain directly inspectable.
+
+\subsection{Neuromorphic Control, NEF, and PES}
+
+The Neural Engineering Framework (NEF) and Nengo support dynamical-system
+realizations, probing, and local online learning in neural populations
+\cite{bekolay2014nengo}.  The prescribed error sensitivity (PES) rule updates a
+decoder using a locally available activity and an externally supplied error.
+PES-based adaptive residual compensation has previously been demonstrated on a
+robotic arm, including CPU, GPU, and Loihi realizations
+\cite{dewolf2016adaptive,dewolf2020nengo}.  Most importantly for the present
+paper, Olivares et al. implemented a Nengo spiking PID controller in which PES
+supports online gain self-tuning, and validated it on a free-flying DJI Tello
+\cite{olivares2026selftuning}.  Consequently, this paper does not claim the first
+PES, Nengo, or online neuromorphic UAV controller.
+
+Our question is narrower: can paired, continuous membrane--gate dynamics provide
+a useful stateful basis for a bounded residual around a fixed quaternion
+controller, and what part of the improvement is caused by those intrinsic
+dynamics versus online decoder adaptation?  This distinction is important
+because the present ablations show that fixed and conductance-adaptive
+membrane--gate variants are numerically indistinguishable in the amplified-gate
+regime, whereas enabling PES produces the large improvement.  Thus, the current
+evidence supports the membrane--gate state as the decoder basis and PES as the
+principal learning mechanism; it does not support attributing the improvement to
+conductance adaptation alone.
+
+\subsection{Quaternion Attitude Control and Actuator Constraints}
+
+Geometric and quaternion attitude control are mature foundations
+\cite{lee2010geometric,fresk2013quaternion}.  We use the shortest-path quaternion
+error rather than claim a new attitude representation.  With
+$q_e=q_d\otimes q^{-1}$, the vector error is
+\begin{equation}
+ e_q=\operatorname{sgn}(q_{e,0})\operatorname{vec}(q_e),
+ \qquad
+ u_0=\operatorname{sat}(-K_qe_q-K_\omega\omega).
+ \label{eq:baseline}
+\end{equation}
+The neural command is strictly an additive correction,
+\begin{equation}
+ u=\operatorname{sat}\!\left(u_0+\beta(s\odot\ell)\right),
+ \label{eq:bounded_residual}
+\end{equation}
+where $\ell$ is the per-axis residual limit and $\beta$ is the authority factor.
+This construction preserves the classical command when $\beta=0$ and permits
+explicit auditing of saturation and rotor feasibility.  Control allocation under
+quadrotor actuator constraints is itself an established topic
+\cite{monteiro2016allocation}; our contribution is to expose the residual through
+that interface rather than treating the learned output as an unconstrained torque.
+
+For normalized axis command $\bar u_j$, paired directional currents are
+\begin{equation}
+ I_j^+=I_b+I_g\max(\bar u_j,0),\qquad
+ I_j^-=I_b+I_g\max(-\bar u_j,0).
+ \label{eq:paired_currents}
+\end{equation}
+Each channel carries coupled membrane and gate states,
+\begin{align}
+ \tau_v\dot v_i & =-(v_i-v_{\mathrm{rest}})+I_i
+       -c_i(v_i-v_{\mathrm{reset}}),\\
+ \tau_r\dot r_i & =\sigma\!\left(\alpha[v_i-(v_{\mathrm{th}}-\gamma r_i)]\right)-r_i,\\
+ c_i & =\left(g_0+\mathbb{1}_{\mathrm{adapt}}g_1|I_i|\right)r_i^2,\qquad
+ a_i=\operatorname{clip}(G r_i,0,1).
+ \label{eq:cmg}
+\end{align}
+The six directional activities are decoded as
+\begin{equation}
+ s=\operatorname{clip}(Wa,-1,1),
+ \quad y^*=\operatorname{clip}(-k_e e_q-k_\omega^*\omega,-1,1),
+ \label{eq:decoder_target}
+\end{equation}
+and the online rule is
+\begin{equation}
+ W_{k+1}=\Pi_{\mathcal W}\!\left[
+ W_k+\eta(y_k^*-s_k)a_k^\top-\lambda W_k\right].
+ \label{eq:pes_update}
+\end{equation}
+Equations~\eqref{eq:paired_currents}--\eqref{eq:pes_update} make the roles
+unambiguous: $(v,r)$ generate the neural state, $a$ is the decoder regressor, PES
+adapts $W$, and $\beta\ell$ bounds the residual authority.
+
+\subsection{Position of the Present Work}
+
+The contribution is the joint architecture and its controlled audit: (i) a fixed
+quaternion-PD backbone; (ii) paired continuous membrane--gate state dynamics;
+(iii) online PES adaptation restricted to a low-dimensional decoder; (iv) bounded
+additive residual authority propagated through actuator allocation and saturation;
+(v) comparisons with LIF, ALIF, Izhikevich, and rate alternatives; and (vi) matched
+direct and Nengo implementations.  MuJoCo supplies numerical rigid-body,
+constraint, contact, and actuator dynamics \cite{todorov2012mujoco}, but the
+fidelity of each airframe still depends on the identified inertial, propulsion,
+sensor, delay, and saturation parameters.  Likewise, execution in Nengo is an
+implementation result and is not, without deployment measurements, a claim of
+neuromorphic-hardware energy efficiency.
+
+The evidence should therefore be reported in descending order of strength:
+cross-mission MuJoCo results on X2 and the explicitly labeled enhanced-propulsion
+CF2 design study; mechanism ablations separating conductance from PES adaptation;
+neuron-family and direct-versus-Nengo equivalence tests; then physical 3-DOF Hover
+results, including the negative full3 and reduced-yaw outcomes.  This ordering
+supports a precise claim: the method is a transparent, reproducible neuromorphic
+residual mechanism with strong simulated gains and limited but real hardware
+evidence, not yet a proof-backed replacement for robust adaptive control or a
+free-flight validation.
+

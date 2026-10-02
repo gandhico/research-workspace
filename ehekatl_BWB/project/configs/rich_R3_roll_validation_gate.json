@@ -1,0 +1,10 @@
+{
+  "frozen_before_validation": true,
+  "required_validation_runs": 1,
+  "maximum_validation_to_training_pdot_nrmse_ratio": 1.25,
+  "maximum_validation_to_training_recursive_mean_nrmse_ratio": 1.25,
+  "maximum_absolute_residual_lag1": 0.90,
+  "require_execution_gate_pass": true,
+  "require_richness_gate_pass": true,
+  "no_refit_or_reselection": true
+}

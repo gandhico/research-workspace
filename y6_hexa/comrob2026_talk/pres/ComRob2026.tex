@@ -1,0 +1,598 @@
+\documentclass{beamer}
+
+
+
+\mode<presentation> {
+\usetheme{Warsaw}
+\usecolortheme{seahorse}
+
+}
+
+
+
+
+
+\usepackage{subcaption}
+\usepackage{tcolorbox}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{array, multirow, multicol, tabularx}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{caption}
+%\usepackage[spanish]{babel}
+%%%%%%%%%%%%%\usepackage[spanish,es-tabla]{babel}
+\usepackage{verbatim} % comentarios
+\usepackage{multimedia}
+\usepackage{media9}
+\usepackage{ragged2e}
+\usepackage{bm}
+
+
+
+
+\usefonttheme[onlymath]{serif}
+\usepackage{amsthm}
+\usepackage{ae}
+\usepackage{textcomp}
+%\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[]{graphicx}
+%\usepackage[spanish]{babel}
+%%%%%\decimalpoint
+%\usepackage[spanish,es-nodecimaldot]{babel}
+%\usepackage{amsmath}
+%\usepackage{array}
+%\usepackage[T1]{fontenc}
+\usepackage[outline]{contour}
+%\spanishdecimal{.}
+\setbeamertemplate{caption}[numbered] %%%%%%%Colocar para que ponga el numero de figura y tabla
+
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+\oldmacro\hfill%
+\insertframenumber\,/\,\inserttotalframenumber}
+
+\title[{October 26-28, 2026 CDMX, México}]{Neuromorphic Modeling and Control for a Coaxial Hexarotor UAV using Spiking Neural Networks}
+\author[{XXVIII Congreso Mexicano de Robótica}]
+{
+    \texorpdfstring{
+    %\vspace{-0.8cm}
+     % \begin{columns}
+     %            \column{6cm}
+     %                \begin{flushleft}
+     %                \includegraphics[scale = .07]{CongresoParis/Logo_IFAC_Paris.png}
+     %                %\hspace{0.5cm}
+     %                %\includegraphics[scale = .2]{LOGOS/cinve.png}
+     %        \end{flushleft}
+     %            \column{6cm}
+     %              \begin{flushright}
+     %                %\includegraphics[scale = .2]{LOGOS/UPMH-logo.png}
+     %                %\includegraphics[scale = .5]{LOGOS/cinve.png}
+     %         \end{flushright}
+     %            \end{columns}
+   %\vspace{-1.5cm}%Tenia -1.5
+    \\ \textbf{Anel Olivares}, Gandhi Contreras, Victor J. Silva\\ Eduardo S. Espinoza, Juan M. Bustamante, and Patricio Ordaz \\
+    \vspace{0.15cm}
+    \begin{center}
+        \includegraphics[scale = .2]{images_comrob/Comrob_logo.png}
+    \end{center}
+    % Dr. Luis Enrique Ramos Velasco\\
+    % Dr. Eduardo Steed Espinoza Quesada\\
+    % Omar Alejandro García Alcántara\\
+    % Dr Luis Rodolfo Garcia Carrillo\\
+    % Dr. Ignacio Rubio Scola
+   % AUTORS: \\
+   % \vspace{0.5cm}
+   %     \begin{columns}
+   %         \column{.33\linewidth}
+   %         \centering
+   %         MSc. Anel Olivares Cruz\\
+   %         \\
+   %         Dr. Eduardo Steed Espinoza Quesada\\
+   %         \column{.34\linewidth}
+   %         \centering
+   %         Dr. Luis Enrique Ramos Velasco\\
+   %         \\
+   %         MSc. Omar Alejandro García Alcántara\\
+   %         \column{.33\linewidth}
+   %         \centering
+   %         Dr Luis Rodolfo Garcia Carrillo\\
+   %         \\
+   %         Dr. Ignacio Rubio Scola\\
+			% % \column{.23\linewidth}            
+   % %        \centering
+   % %         Omar Alejandro García Alcántara\\
+   %     \end{columns}
+   }
+   { }
+}
+\date[July 2025]
+
+\begin{document}
+\contourlength{0.01cm} % Ajusta el grosor del contorno
+
+
+	\begin{frame}
+        \titlepage
+	\end{frame}
+
+
+    \begin{frame}
+        \frametitle{Content}
+        %\begin{columns}
+        %\column{6cm}
+        \tableofcontents[hideallsubsections]
+        %\column{6cm}
+        
+        %\end{columns} 
+    \end{frame}
+
+ 
+\section{Neuromorphic PID controller design}
+
+\subsection*{Background}
+
+% \begin{frame}{Background}
+% \begin{columns}
+%     \column{6cm}
+
+%     Artificial Neural Networks (ANNs) using system data in a manner that resembles the learning process occurring in the brain. %An interesting type of ANN is the Spiking Neural Network (SNN), which aims at replicating biological neuronal connections. (are appealing when dealing with nonlinear systems because of their ability to learn nonlinear functions)
+    
+%     \column{6cm}
+%     \begin{block}{}
+%         \begin{center}
+%             \includegraphics [width=6cm,height=5cm]{CongresoParis/AI_imagine.png}
+%         \end{center}
+%     \end{block}
+% \end{columns}
+% \end{frame}
+\begin{frame}{Background}
+\begin{columns}
+    
+\column{5cm}
+%Assumption:
+\begin{table}[h]
+    \centering
+    \begin{tcolorbox}[
+        tabularx = {l | l },
+        title = Assumption:,
+        colback = morado!10,   % Color de fondo 
+        colframe = morado!80   % Color del borde
+    ]
+        $\star$ & Unknown mathematical \\
+                 & model\\
+        % $\star$ & Desarrollo tecnológico\\
+        % $\star$ & Investigación\\
+    \end{tcolorbox}
+\end{table}
+% \begin{itemize}
+%     \item Unknown mathematical model
+% \end{itemize}
+\column{6cm}
+\begin{block}{DJI Tello UAS }
+    \centering
+    \includegraphics[width=\linewidth]{CongresoParis/frames_T(2).png}
+\end{block}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Neural Engineering Framework, NEF\footnotemark}
+\justifying
+  %The NEF framework is capable of simulating large-scale neural network models with somas, synapses, and excitatory or inhibitory connections.~\cite{nengo}.\\%teóricos que simulan la actividad funcional del cerebro
+  %\begin{tcolorbox} 
+  It proposes three quantitatively specified principles that enable the construction of large-scale Spike Neural Network, SNN  %\end{tcolorbox}
+\begin{columns}
+ \column{3.8cm}   
+
+    \begin{itemize}
+        \item Representation: encoding and decoding %Information is encoded by populations of neurons.
+        
+        \item Transformation %Linear and non-linear are used to analytically compute the connections between populations of neurons.
+        \item Dynamics %The equations governing dynamics in such a system can be designed and analyzed.
+    \end{itemize}
+    \column{7cm}
+        \begin{block}{Nengo Brain Maker}
+         \centering               
+         \includegraphics[width= \linewidth]{CongresoParis/Nengo.pdf}
+        
+\end{block}
+    \end{columns} 
+
+     % la dinámica entrada-salida
+    \vspace{1.4cm}
+     \tiny{\footnotemark[1]A. B. Research, “Nengo.” https://www.nengo.ai/, 2025.}
+     %y llevando a nuestro sistema a una representación entrada-salida
+\end{frame}
+  
+
+\begin{frame}{Block diagram}
+
+    \begin{block}{Self-Tuning Neuromorphic PID controller scheme}
+        \begin{center}
+        \centering
+            \includegraphics[width=1\linewidth]{CongresoParis/Control-Scheme-STN-PID.pdf}
+        \end{center}
+    \end{block}
+
+\end{frame}
+
+
+\subsection{PID control law}
+\begin{frame}{Classical PID control law, CN-PID}
+
+
+
+    \begin{equation}
+    \bm{u} = \underbrace{\bm{K}_p \epsilon}_P +  \underbrace{\bm{K}_i \int \epsilon dt}_I +\underbrace{\bm{K}_d \frac{d\epsilon }{dt}}_D\label{eq:classic_PID}
+\end{equation}
+
+\begin{table}[h]
+    \centering
+    \begin{tcolorbox}[
+        tabularx = {l | l },
+        %title = Tabla,
+        colback = morado!10,   % Color de fondo 
+        colframe = morado!80   % Color del borde
+    ]
+        where: & \\
+        \hline \hline
+        $\bm{K}_p$ & proportional gain, $\bm{K}_p= \text{diag}\{K_{p_x},K_{p_y},K_{p_z}\}$\\
+        $\bm{K}_i$ & integral gain, $\bm{K}_i=\text{diag}\{K_{i_x},K_{i_y},K_{i_z}\}$\\
+        $\bm{K}_d$ & derivative gain, $\bm{K}_d=\text{diag}\{K_{d_x},K_{d_y},K_{d_z}\}$\\
+        $\epsilon$ & tracking error $\epsilon=\boldsymbol{\xi}_{ref}-\boldsymbol{\xi}$\\
+        $\boldsymbol{\xi}$ & represents the UAS's position $\boldsymbol{\xi}=(x, y,z)^\top$\\
+        $\boldsymbol{\xi}_{ref}$ & desired references $\boldsymbol{\xi}_{\text{ref}}=(x_{\text{ref}}, y_{\text{ref}},z_{\text{ref}})^\top$\\
+    \end{tcolorbox}
+
+\end{table}
+
+\end{frame}
+\subsection{Neuromorphic PID controller}
+
+
+
+\begin{frame}{Classic Neuromorphic PID Controller}
+    \begin{block}{Scheme of the CN-PID controller on Nengo}
+        \centering
+    \includegraphics[width=0.7\linewidth]{CongresoParis/1_Control_diagram_plus-2.pdf}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Derivative term}
+    To compute the derivative of the error signal~\textcolor{morado}{$\boldsymbol{\epsilon}$} in Nengo, the Euler approximation is used\footnotemark:
+\begin{equation}
+\frac{d \epsilon}{dt}  \approx \textcolor{darkgreen}{\Delta \epsilon} = \frac{\epsilon(\tau)-\epsilon(2\tau)}{\tau}\label{rateError}
+\end{equation}
+%The error's rate of change \textcolor{darkgreen}{$\Delta \epsilon$} is computed by using two connections from the population that generates the error signal~\textcolor{morado}{$\boldsymbol{\epsilon}$} to the population where the rate of change is calculated. 
+One connection provides the excitatory feedforward signal $\epsilon(\tau)$, while the inhibitory postsynaptic dynamics  $\epsilon(2\tau)$ have a longer time constant.\\
+
+%, a delayed feedforward inhibitory representation of the error signal~\cite{OmarCCE}.% In this notation, the variable $\tau$ represents the synapse value of the connection, while $2\tau$ denotes the delayed synaptic connection. 
+\vspace{1.4cm}
+     \tiny{\footnotemark[2]O. A. Garcia Alcántara, D. Chavez Arana, E. S. Espinoza, L. R. Garcia Carrillo, A. Cordero, and A. Sornborger, “Spiking neural network-based control applied to an underactuated system,” in 2023 20th International Conference on Electrical Engineering, Computing Science and Automatic Control (CCE), pp. 1–6, IEEE, Oct. 2023.}
+\end{frame}
+
+\begin{frame}{Integral term}
+    To implement in Nengo the integral of the tracking error, it is consider its state-space representation: continuous and discrete cases\footnotemark
+\begin{align}
+    \dot{\mathbf{p}}(t) &= \textbf{A} \mathbf{p}(t) + \textbf{B} \epsilon(t) \label{DynamicIntegrator}\\
+    \mathbf{p}[(n+1)T] &= \textbf{A}_{\text{neu}} \mathbf{p}[nT]  + \textbf{B}_{\text{neu}} \epsilon[nT]
+\end{align}
+
+    \begin{tcolorbox}[
+        tabularx = {l  },
+        %title = Tabla,
+        colback = morado!10,   % Color de fondo 
+        colframe = morado!80   % Color del borde
+    ]
+        here:  \\
+        \hline \hline
+        $\textbf{A} = [0] \in \mathbb{R}^{3 \times 3}$, \(\textbf{B} = I \in \mathbb{R}^{3 \times 3}\)\\
+
+         \(\Rightarrow  \dot{\mathbf{p}}(t) =  \epsilon(t) \, \,\, \text{or} \, \,\, \mathbf{p}(t) = \int \epsilon(t) \, dt \in \mathbb{R}^{3}\)  \\
+         $\textbf{A}_{\text{neu}} = \tau \textbf{A} + I, \,    \textbf{B}_{\text{neu}} = \tau \textbf{B}$\\
+         $\Rightarrow \mathbf{p}[(n+1)T] = \mathbf{p}[nT] + \tau \epsilon [nT]$\label{ItegraltermNeu}
+         %\(\Rightarrow \textbf{A}_{\text{neu}}\)
+
+    \end{tcolorbox}
+
+%\vspace{1.4cm}
+     \tiny{\footnotemark[3]K. J. Åström and B. Wittenmark, Computer-Controlled Systems: Theory and Design, 3rd ed. Upper Saddle River, NJ: Prentice Hall, 1997.}
+% where  is a square matrix with all elements equal to zero,  \(\textbf{B} = I^{3\times 3}\), \(\mathbf{x}(t) = \int \epsilon(t) \, dt \in \mathbb{R}^{3\times 1}\), $u(t) = \epsilon(t) \in \mathbb{R}^{3\times 1}$ and \(I\) is the identity matrix.
+
+
+\end{frame}
+
+% \begin{frame}{Integral term with biological performance }
+% SNN dynamics can be seen as a transformation:
+% \begin{align}
+%     \textbf{A}_{\text{neu}} &= \tau \textbf{A} + I, \\
+%     \textbf{B}_{\text{neu}} &= \tau \textbf{B}
+% \end{align}
+
+
+% %For the standard state-space representation of the integrator, 
+% But \textbf{A} = [0] and \(\textbf{B} = I\). Then, the neural matrices result
+% \begin{align}
+%     \textbf{A}_{\text{neu}} = I, \, \textbf{B}_{\text{neu}} = \tau I\\
+% \end{align}
+
+% The neuronal state-space for the integral term is given by
+% \begin{align}
+%     \dot{\mathbf{p}}(t) &= \textbf{A} \mathbf{p}(t) + \textbf{B} \epsilon(t) \label{DynamicIntegrator}\\
+%     \dot{\mathbf{p}}(t) &= \textbf{A}_{\text{neu}} \mathbf{p}(t) + \textbf{B}_{\text{neu}} \epsilon(t)\\
+%     &= \mathbf{p}(t) + \tau \epsilon (t)\label{ItegraltermNeu}
+% \end{align}
+% One disadvantage of  \eqref{ItegraltermNeu}
+% %The implementation of a pure neural integrator with SNNs demonstrates poor performance when the values to be integrated are close to zero. To address this issue, we modified the integral component $\textbf{K}_i \int \epsilon \, dt$ of equation~\eqref{eq:classic_PID}. 
+
+% %Rather than computing the error integral first and then multiplying by the integral gain \(\textbf{K}_i\), we first multiply the error signal by the integral gain \(\textbf{K}_i\) and then integrate the resulting value. 
+% %By introducing the gain \(\textbf{K}_i\) into the integral and updating the definition of \(\textbf{x}(t)\) in equation~\eqref{DynamicIntegrator} to \(\mathbf{x}(t) = \int \textbf{K}_i \epsilon(t) \, dt\), the resulting expression for \(\textbf{B}_{\text{neu}}\) is
+% By introducing the gain \(\textbf{K}_i\) into the integral, the resulting expression for \(\textbf{B}_{\text{neu}}\) is
+% \begin{align}
+%     \textbf{B}_{\text{neu}} &= \textbf{K}_i \tau.
+% \end{align}
+% \end{frame}
+
+\subsection{Self-tuning neuromorphic}
+
+\begin{frame}{Self-Tuning Neuromorphic, STN-PID Controller}
+\begin{block}{Scheme of the STN-PID Controller on Nengo}
+    \centering
+    \includegraphics[width=0.7\linewidth]{Imagenes_Tesis/9_DiagramaPID-AT-4.pdf}
+    
+\end{block}
+
+
+\end{frame}
+
+
+\begin{frame}{Self-Tuning Neuromorphic (STN) PID Controller}
+Given that the gains of the CN-PID controller are fixed, we propose a self-tuning strategy to enhance its performance. Towards this goal, we employ a cost function based on the tracking error as:\\
+%Para este propósito
+\vspace{-0.2cm}
+\begin{equation}
+\mathcal{I}(t) = \frac{1}{2} \int^{\tau}_0 \epsilon^2 \, dt
+\end{equation}
+as well as a gradient descent algorithm for optimizing each control parameter, having the form:
+\begin{align}
+\nabla \mathbf{K}_* = \frac{\partial \mathcal{I}}{\partial \mathbf{K}_*} &= \frac{\partial \mathcal{I}}{\partial \boldsymbol{\xi}} \cdot \frac{\partial \boldsymbol{\xi}}{\partial \mathbf{u}} \cdot \frac{\partial \mathbf{u}}{\partial \mathbf{K}_*}
+\end{align}
+where $\mathbf{K}_*$ can represent the gains $\mathbf{K}_p$, $\mathbf{K}_i$, or $\mathbf{K}_d$.\\ 
+
+\end{frame}
+
+
+
+\begin{frame}{Self-Tuning Neuromorphic (STN) PID Controller}
+Applying the gradient descent to each gain results in
+\begin{align}
+        \nabla \mathbf{K}_p &=  -\epsilon^2 \cdot \frac{\partial \boldsymbol{\xi}}{\partial \mathbf{u}} \label{eq:partial_Kp} \\
+        \nabla \mathbf{K}_i &=  -\epsilon \cdot \frac{\partial \boldsymbol{\xi}}{\partial \mathbf{u}} \cdot \int \epsilon \, dt \label{eq:partial_Ki} \\
+        \nabla \mathbf{K}_d &=  -\epsilon \cdot \frac{\partial \boldsymbol{\xi}}{\partial \mathbf{u}} \cdot \frac{d \epsilon}{dt}  \label{eq:partial_Kd}
+\end{align} 
+These gradients are used to tune the controllers gains through an update rule defined as:
+\begin{align}
+\mathbf{K}_{*}(t)  &= \mathbf{K}_{*}(t-1)  + \mu_{\mathbf{K}_{*}} \cdot \nabla \mathbf{K}_{*}
+\end{align}
+where the term $\mu_{\mathbf{K}_{*}}$ is the learning rate.
+
+\end{frame}
+
+\begin{frame}{Self-Tuning Neuromorphic (STN) PID Controller}
+
+From equations~\eqref{eq:partial_Kp}-\eqref{eq:partial_Kd}, the solution for the partial derivatives is not feasible because the dynamic model of the system is not available. To overcome this challenge, the following approximation is used\footnotemark.%~\cite{DesigningPID-8023513}
+\begin{align}
+    \frac{\partial \boldsymbol{\xi}}{\partial \textbf{u}} \approx 
+    \frac{\Delta \boldsymbol{\xi}}{\Delta \textbf{u}} = 
+    \frac{\left( \boldsymbol{\xi}(\tau) - \boldsymbol{\xi}(2\tau) \right) / \tau}{\left( \textbf{u}(\tau) - \textbf{u}(2\tau) \right) / \tau}
+    \label{eq:derivative_approx}
+\end{align}
+where $\Delta \boldsymbol{\xi}$ and $\Delta \textbf{u}$ are calculated analogously to $\Delta \epsilon$ in \eqref{rateError}.\\
+
+\vspace{1.4cm}
+
+\tiny{\footnotemark[3]V. M. Babu, K. Das, and S. Kumar, “Designing of self-tuning PID
+controller for a drone quadrotor,” in Proceedings of the 18th International  conference on Advanced Robotics (ICAR), pp. 167–172, 2017.}
+
+\end{frame}
+ 
+
+\section{Experimental platform}
+
+% \subsection{DJI Tello vehicle}
+% \begin{frame}{DJI Tello vehicle}
+    
+% \end{frame}
+
+\subsection{Experimental platform}
+
+\begin{frame}{Experimental platform}
+
+\begin{block}{A block diagram describing the software and hardware architecture of the USL testbed adopted for the DJI Tello experiments}
+    \centering
+    \includegraphics[width=\linewidth]{Imagenes_Tesis/Arquitecture.pdf}
+\end{block}
+\vspace{-.5cm}
+
+
+
+\end{frame}
+
+
+\subsection{Rhodonea Curve Trajectory}
+\begin{frame}{Rhodonea Curve Trajectory}
+    The UAS starts tracking the Rhodonea curve, which resembles a four-petal rose shape on the \(x_{I}-y_{I}\) plane. %The parameters describing this particular rose shape are given by:
+    \begin{align}
+        x_{\text{ref}} (nT_{\text{neu}} ) = r_c \cos{\left(l  \omega n T_{\text{neu}}  \right)} \cos{\left(\omega n T_{\text{neu}} \right)}\\
+         y_{\text{ref}}\left( n T_{\text{neu}}  \right) = r_c \cos{\left(l \omega n T_{\text{neu}} \right)} \sin{\left(\omega n T_{\text{neu}} \right)}
+    \end{align}
+    
+    \begin{table}[h]
+    \centering
+    \begin{tcolorbox}[
+        tabularx = {l | l },
+        %title = Tabla,
+        colback = morado!10,   % Color de fondo 
+        colframe = morado!80   % Color del borde
+    ]
+        where: &\\
+        \hline \hline
+        $n$ & is the n-th sample\\
+        \(r_c = 1\) & specify the length of petals\\
+        \(l = 2\) & specify the number of petals\\
+       \(\omega = \pi/25\) & is the angular frequency\\
+
+    \end{tcolorbox}
+    \end{table}
+    %Here, $n$ is the n-th sample, \(r_c = 1\) m and \(l = 2\) specify the length and number of petals, respectively. Since \(l\) is even, the number of petals is \(2l\). Finally, \(\omega = \pi/25\) rad/s is the angular frequency that determines the rate with which the sine and cosine functions oscillate or complete a cycle.
+\end{frame}
+
+\section{Experimental results}
+
+
+
+
+
+\subsection{Experiments with CN-PID}
+
+\begin{frame}{Experiments with the Neuromorphic PID Controllers}
+    These values, presented in Table~\ref{tab:init Param PID-classic}, are used consistently across the implementation of the two controllers.
+
+
+\begin{table}[htb!]
+        \centering
+        \caption{Configuration of the PID Controllers.}
+        \label{tab:init Param PID-classic}
+        \begin{tabular}{cc}\hline
+            \textbf{Parameter} & \textbf{Value} \\ \hline   \hline 
+           Number of neurons, $J$ & 200 \\
+             Number of inputs, $\Gamma$ & 3 \\
+             Number of outputs, $\beta$  & 3 \\
+             Sampling frequency, $1/T_{\text{neu}}$  & 200 Hz \\
+             Time constant of postsynaptic, $\tau$ & 0.05 s\\
+             Proportional gains, $\mathbf{K}_p$     & $\text{diag}\{60, 60, 160\}$ \\
+             Derivative gains, $\mathbf{K}_d$     & $\text{diag}\{13, 13, 20\}$\\
+             Integral gains, $\mathbf{K}_i$     & $\text{diag}\{200, 200, 200\}$\\
+             \hline   \hline
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Experimental results of trajectory tracking}
+    \begin{block}{The real-time tracking of the Rhodonea curve in a 3D space using the CN-PID controller.}
+    \centering
+    \includegraphics[width=0.6 \linewidth]{CongresoParis/3a_MovimientoUAV-PID_classic.pdf}
+\end{block}
+\end{frame}
+
+\subsection{Experiments with STN-PID}
+\begin{frame}{Experiment for the Self-Tuning Neuromorphic PID Controller}
+    %The gains $\mathbf{K}_{\text p}$, $\mathbf{K}_{\text i}$, and $\mathbf{K}_{\text d}$ obtained for the CN-PID control strategy are used as initial values for the self-tuning process. 
+    The values of the obtained learning rates and self-tuned gains are summarized in Table~\ref{tab: init Param PIDs-AT}.
+\begin{table}[h!]
+        \centering
+        \caption{STN-PID control: initial values of the controller gains and learning rates}
+        \label{tab: init Param PIDs-AT}
+        \begin{tabular}{ccc}
+            \hline
+            \textbf{Gain} & \textbf{Value} & \textbf{Learning rate}  \\ \hline   \hline 
+            $\mathbf{K}_p $ & $\text{diag}\{ 60, \, 60, \, 160 \} $ & $\bm{\mu}_{\mathbf{K}_{p}}= [ 0.01, \, 0.01, \, 0.01 ] $ 
+            \\ 
+            $\mathbf{K}_i$ & $\text{diag}\{200, 200, 200\}$ & $\bm{\mu}_{\mathbf{K}_{i}} = [ 9 , \, 9 ,\, 9  ] \times10^{-4} $ 
+            \\  
+            $\mathbf{K}_d$ & $\text{diag}\{13, 13, 20\} $ & $\bm{\mu}_{\mathbf{K}_{d}} = [ 0.03, \, 0.03,\, 0.03] $\\ \hline \hline
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Experimental results of trajectory tracking}
+    \begin{block}{The real-time tracking of the Rhodonea curve in a 3D space using the STN-PID controller.}
+    \centering
+    \includegraphics[width=0.6\linewidth]{CongresoParis/3b_MovimientoUAV-PID_AT+.pdf}
+\end{block}
+\end{frame}
+%===================================================================
+\subsection{Experiments with the Neuromorphic PID Controllers}
+\begin{frame}{Experimental results for the two neuromorphic controllers.}
+    \begin{block}{Trajectory tracking along the $x$--axis.}
+    \centering
+    \includegraphics[width=0.6\linewidth]{CongresoParis/4a_GraficaX-Controller-2.pdf}
+\end{block}
+\end{frame}
+
+\begin{frame}{Experimental results for the two neuromorphic controllers.}
+    \begin{block}{Trajectory tracking along the $y$--axis.}
+    \centering
+    \includegraphics[width=0.6\linewidth]{CongresoParis/4b_GraficaY-Controllers-2.pdf}
+\end{block}
+\end{frame}
+
+\begin{frame}{Experimental results for the two neuromorphic controllers.}
+    \begin{block}{Trajectory tracking along the $z$--axis.}
+    \centering
+    \includegraphics[width=0.6\linewidth]{CongresoParis/4c_GraficaZ-Controlller-2.pdf}
+\end{block}
+\end{frame}
+
+\section{Conclusions}
+
+\begin{frame}{Conclusions}
+    
+    
+
+    % \begin{columns}
+    %             \column{8.5cm}
+                \begin{itemize}
+                \item Two neuromorphic control strategies -- CN-PID and STN-PID -- were designed, implemented, and evaluated using SNNs integrated with control systems engineering techniques through the NEF.
+
+                \item The proposed neuromorphic controllers utilize SNNs to carry out mathematical operations through neuron populations. Still, incorporating the plasticity and learning abilities of biological neurons could enhance the effectiveness of neural PID controllers.
+                 \end{itemize}
+    %             \column{3.5cm}
+    %             \begin{block}
+    %             \begin{center}
+    %             \includegraphics [width=3.5cm,height=5cm]{Imagenes//goldfigure.jpg}
+    %             \end{center}
+    %             \end{block}
+    %         \end{columns}
+\end{frame}
+
+%     \subsection[Referencias]{Referencias}
+%         \begin{frame}[allowframebreaks]
+
+% \vspace{-0.2cm}
+%   \small {\frametitle{Referencias}
+%  \renewcommand{\bibname}{Referencias}
+ 
+%   \bibliographystyle{ieeetr}
+  
+%     \bibliography{referencias}}
+% %\bibliography{}
+    
+% \end{frame}
+
+
+        \begin{frame}
+            %\frametitle{Aclaraciones, Dudas y Comentarios}
+              %\begin{columns}
+               % \column{8cm}
+                \begin{center}
+                \textbf{\Huge Thank you for your attention}\\
+               
+                \end{center}
+                %\column{4cm}
+                
+                %\end{columns}
+        \end{frame}
+	
+	
+	
+\end{document}

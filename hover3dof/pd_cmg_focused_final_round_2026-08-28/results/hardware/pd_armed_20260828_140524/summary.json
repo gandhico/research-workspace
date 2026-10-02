@@ -1,0 +1,76 @@
+{
+  "platform": "hover3dof_hardware_pd_track",
+  "hardware": true,
+  "controller": "pd",
+  "pd_profile": "mujoco",
+  "armed": true,
+  "mission": "hardstep",
+  "duration": 25.0,
+  "planned_run_duration_s": 3.0,
+  "rate_hz": 200.0,
+  "beta": 0.0,
+  "actual_motor_residual_cap_volts": 0.0,
+  "mujoco_kq_ypr_Nm": [
+    2.7059005185625002,
+    1.767118706,
+    1.767118706
+  ],
+  "mujoco_kw_ypr_Nm_s": [
+    0.7344587121812499,
+    0.419690692675,
+    0.419690692675
+  ],
+  "cmg_torque_limits_ypr_Nm": [
+    1.10444919125,
+    0.66266951475,
+    0.66266951475
+  ],
+  "learning_rate": 0.0008,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "residual_slew_v_per_s": 4.0,
+  "allocation_policy": "stability-priority",
+  "motor_floor_volts": 2.0,
+  "neural_substeps": 10,
+  "neural_dt_s": 0.0005,
+  "raw_home_ypr_deg": [
+    5445.087890625,
+    -0.791015625,
+    -0.263671875
+  ],
+  "expected_raw_home_yaw_deg": null,
+  "raw_home_yaw_tolerance_deg": 5.0,
+  "run_completed": true,
+  "full_mission_completed": false,
+  "angle_err_mean_deg": 19.087148285650226,
+  "angle_err_max_deg": 59.36811928595543,
+  "axis_error_mae_deg": {
+    "yaw": 9.72101911495062,
+    "pitch": 10.553357877362306,
+    "roll": 11.350795029978688
+  },
+  "axis_error_rmse_deg": {
+    "yaw": 15.26129325520721,
+    "pitch": 13.721739539917348,
+    "roll": 18.124642793641996
+  },
+  "qerr_mean_rad": 0.35625745917721424,
+  "qerr_max_rad": 1.109613673715227,
+  "neuron_columns": {
+    "membrane": "neuron_v_0..5",
+    "gate": "neuron_r_0..5",
+    "decoder_activity": "neuron_activity_0..5",
+    "input_current": "neuron_current_0..5",
+    "decoder_weights": "decoder_w_0..17"
+  },
+  "lower_saturation_fraction": 0.2891666666666667,
+  "upper_saturation_fraction": 0.09291666666666666,
+  "deadline_miss_fraction": 0.0,
+  "allocator_yaw_scale_min": 0.062189650515600714,
+  "allocator_yaw_scale_mean": 0.8277681527044874,
+  "allocator_pitch_roll_scale_min": 0.7763857376087331,
+  "allocator_pitch_roll_scale_mean": 0.9836792567505749,
+  "abort_reason": "",
+  "n_steps_logged": 600,
+  "trace": "C:\\Research\\hover3dof\\pd_cmg_focused_final_round_2026-08-28\\results\\hardware\\pd_armed_20260828_140524\\trace.csv"
+}

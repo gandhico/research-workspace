@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aero2-snns"
+version = "0.1.0"
+description = "Quanser Aero2 modelling, identification, and control — restructured, math-traceable, and scaffolded for Adaptive HyperLIF (neuromorphic) research."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Gandhi Contreras" },
+    { name = "Mario Guerra" },
+    { name = "Keane Garcia" },
+]
+dependencies = [
+    "numpy>=1.23",
+    "scipy>=1.9",
+    "pyyaml>=6.0",
+    "matplotlib>=3.6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+# Hardware / virtual-twin extras (Phase 6); not required for offline use.
+hardware = ["quanser-api; platform_system=='Windows'"]
+julia = ["juliacall>=0.9"]
+
+[tool.setuptools.packages.find]
+include = ["aero2*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

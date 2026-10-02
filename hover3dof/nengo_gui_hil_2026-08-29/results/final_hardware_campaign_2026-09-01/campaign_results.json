@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "date": "2026-09-01",
+  "platform": "Quanser 3DOF Hover",
+  "comparison": "MuJoCo-matched PD baseline vs Nengo CMG-PES residual controller",
+  "coordinate_policy": "Each run tares current raw yaw/pitch/roll as its local zero; raw pose is retained in summary.json.",
+  "cmg_configuration": {
+    "beta": 0.2,
+    "motor_residual_cap_V": 0.2,
+    "learning_rate": 0.0002,
+    "k_error": 2.0,
+    "k_rate": 0.0,
+    "residual_slew_V_per_s": 1.0
+  },
+  "interpretation": {
+    "positive_improvement_percent": "CMG-PES reduced error relative to PD",
+    "yaw360": "No CMG performance comparison is permitted because the PD reference run safety-aborted."
+  },
+  "results": [
+    {
+      "mission": "full3",
+      "status": "completed matched pair",
+      "reference_scale": 0.5,
+      "duration_s": 12.0,
+      "pd_mean_error_deg": 11.438577704029992,
+      "cmg_mean_error_deg": 11.414732070270997,
+      "mean_error_improvement_percent": 0.20846677249562226,
+      "pd_max_error_deg": 16.90474903325515,
+      "cmg_max_error_deg": 16.459816660305048,
+      "max_error_improvement_percent": 2.6319963228961765,
+      "pd_raw_home_yaw_deg": -0.0,
+      "cmg_raw_home_yaw_deg": -136.0986328125,
+      "pd_run": "pd_full3_none_armed_20260901_151111",
+      "cmg_run": "nengo-pes_full3_none_armed_20260901_152413"
+    },
+    {
+      "mission": "hard45",
+      "status": "completed matched pair",
+      "reference_scale": 0.4,
+      "duration_s": 12.0,
+      "pd_mean_error_deg": 9.977232439858884,
+      "cmg_mean_error_deg": 10.036416108333258,
+      "mean_error_improvement_percent": -0.5931872273310563,
+      "pd_max_error_deg": 16.010246150064837,
+      "cmg_max_error_deg": 16.185766669091525,
+      "max_error_improvement_percent": -1.0963011897601354,
+      "pd_raw_home_yaw_deg": -126.0791015625,
+      "cmg_raw_home_yaw_deg": -127.44140625,
+      "pd_run": "pd_hard45_none_armed_20260901_152529",
+      "cmg_run": "nengo-pes_hard45_none_armed_20260901_152621"
+    },
+    {
+      "mission": "hardstep",
+      "status": "completed matched pair",
+      "reference_scale": 0.35,
+      "duration_s": 12.0,
+      "pd_mean_error_deg": 13.315036306735335,
+      "cmg_mean_error_deg": 13.431292553073815,
+      "mean_error_improvement_percent": -0.8731200100421254,
+      "pd_max_error_deg": 34.77911637857138,
+      "cmg_max_error_deg": 34.98126436959678,
+      "max_error_improvement_percent": -0.5812338324672017,
+      "pd_raw_home_yaw_deg": -129.1552734375,
+      "cmg_raw_home_yaw_deg": -139.130859375,
+      "pd_run": "pd_hardstep_none_armed_20260901_152724",
+      "cmg_run": "nengo-pes_hardstep_none_armed_20260901_152815"
+    },
+    {
+      "mission": "yaw360",
+      "status": "PD safety abort; CMG not run: roll safety limit exceeded: -20.083 deg",
+      "reference_scale": 1.0,
+      "duration_s": 30.0,
+      "pd_mean_error_deg": 7.95337191030808,
+      "cmg_mean_error_deg": "",
+      "mean_error_improvement_percent": "",
+      "pd_max_error_deg": 27.522144097066366,
+      "cmg_max_error_deg": "",
+      "max_error_improvement_percent": "",
+      "pd_raw_home_yaw_deg": -149.9853515625,
+      "cmg_raw_home_yaw_deg": "",
+      "pd_run": "pd_yaw360_none_armed_20260901_152926",
+      "cmg_run": "not run for safety"
+    }
+  ]
+}

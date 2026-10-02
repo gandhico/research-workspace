@@ -1,0 +1,4372 @@
+{
+  "schema": 1,
+  "label": "ACC2027 matched Nengo neuron-family 45-second full-telemetry campaign, 110 cells, frozen 2026-08-31",
+  "frozen_utc": "2026-09-01T00:09:50.050566+00:00",
+  "root": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\neuron_family_matched_45s",
+  "files": 871,
+  "total_bytes": 4065552904,
+  "counts": {
+    "summaries": 110,
+    "neural_npz": 100,
+    "schemas": 100,
+    "png": 170,
+    "pdf": 170
+  },
+  "entries": [
+    {
+      "path": "campaign_manifest.json",
+      "bytes": 16066,
+      "sha256": "DFB0DB3E1A1A7901B0CEFF9AB1E13C17853E3EE21B4296F205210B28C9632ED6"
+    },
+    {
+      "path": "cf2-rotor/full3/classical/manifest.json",
+      "bytes": 1507,
+      "sha256": "1411ABFD0F908FC7E78EFCF50B558FF63F684A591DA7168A8D35C92B5601F9BC"
+    },
+    {
+      "path": "cf2-rotor/full3/classical/summary.json",
+      "bytes": 1370,
+      "sha256": "1A3B42B2ECB093D8B2AE34D9D81E0C56C221D2370E1D431E2F2BDC2C7B070B31"
+    },
+    {
+      "path": "cf2-rotor/full3/classical/trace.csv",
+      "bytes": 6952134,
+      "sha256": "E82CE5FF235BBB4AB88067253A81C1A4E2EE111862AF5C591E3CA86424FB331B"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 57453,
+      "sha256": "7AC6FBFA635D2F7CFAD0F8B692A40B8F84E44CB213DC580A5123CA584C705359"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-fixed/analysis/family_diagnostics.png",
+      "bytes": 769813,
+      "sha256": "41FC377FD755A47C11AE23678535D31A86C79EA696B91CABF6BF7D618F7BEA0B"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 28749,
+      "sha256": "4C83FDB34528A01945BC8C6848469431545F7549262FD9FD1C77936392C4F7F6"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 241433,
+      "sha256": "440A44670B3CB1D5051C9E0BD887945901250FFEB4083BA50BB11C4285E76026"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-fixed/manifest.json",
+      "bytes": 1528,
+      "sha256": "3F07B44717CDA501666BDFA109D1B2379D73D48C892868BFCF73277DA4659E38"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-fixed/neural_trace_full_rate.npz",
+      "bytes": 13608139,
+      "sha256": "1F2F82C321F31BCAE4F0BBF8E223C4CA935D1C2B1869EF6A4A27E44A21C260A8"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-fixed/neural_trace_schema.json",
+      "bytes": 2825,
+      "sha256": "628D5430AAC1BCE24B2F42417880210CE26FBC420B9A812C949DE529D982EEB0"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-fixed/summary.json",
+      "bytes": 2167,
+      "sha256": "27965D9936E00AE9B9B1F31028A42D25A4E31361F7C67BDECA5777B382BC3933"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-fixed/trace.csv",
+      "bytes": 12532440,
+      "sha256": "0913EA2C987D43EAED4DFBCFE7186DA00E5D2AB029952FA72C7144AFC0AF5350"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 58883,
+      "sha256": "2E9C57D533278C6729D2217580DA0FD025A2822363220CFBBAADFBB7FB983934"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-pes/analysis/family_diagnostics.png",
+      "bytes": 785452,
+      "sha256": "E553EAEBB800F24F52326C37FC3BB1764AB221FE5C816FEF8EE2C9F4F4F33E5B"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 28967,
+      "sha256": "12F68A4DDF8B0289E599448C9D573C0C6099E90E353F10580BD7DC6B49F68A90"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 242085,
+      "sha256": "9193DF2B51341A5B7A203151AC681BA41A0661670F62BAE022AE891A3F72923E"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-pes/manifest.json",
+      "bytes": 1522,
+      "sha256": "155BAE29BEE93CD185E563A57C6946516D54F6542E9DDF09FD45C227A107237B"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-pes/neural_trace_full_rate.npz",
+      "bytes": 19678739,
+      "sha256": "1E2D0541DF39537254916017A88494A1A6A7B7BD47132DA165739F0BEB5813B5"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-pes/neural_trace_schema.json",
+      "bytes": 2821,
+      "sha256": "040AF3BC41C7EE9A34C262AA274C07A40378B2D8D2899DBD12553674E5AA2721"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-pes/summary.json",
+      "bytes": 2174,
+      "sha256": "617CCC98E273F8B1DE1BA78FC6C901DE3ADE014439040436D258B185B55905A9"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-alif-pes/trace.csv",
+      "bytes": 14299215,
+      "sha256": "787073074ADFF469A23AE7B6FA8264778CF0529EBCB765E513C123C8CA83427C"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-cmg-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 82516,
+      "sha256": "857DCF8D064033CCC352EA3D5F72E6E4121BE746241E8C65B79772E8F60C7358"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-cmg-fixed/analysis/family_diagnostics.png",
+      "bytes": 933250,
+      "sha256": "538A7BE221B6EDB10A79A8BF9FFA65F1F0EA9F0A5342E365FDB7F69D908DFBCE"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-cmg-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 18716,
+      "sha256": "5F6D6272604A7A39AC0F8082DE7693218218864BFABBB53AF808FCB12A9CEDCF"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-cmg-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 96010,
+      "sha256": "43B54AEA8F4B645DF9E9397D7C5412E279A4F189D51163A5C924E66A9A1D706F"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-cmg-fixed/manifest.json",
+      "bytes": 1525,
+      "sha256": "B12DA8826C8C78CD9749B5BAC0F0344A4A635DEC6D36F97DC40B7845B29B59FA"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-cmg-fixed/neural_trace_full_rate.npz",
+      "bytes": 35852081,
+      "sha256": "F31F7A5EEE5F705FB88AC94F47714F2B03CE54EDD21DEC5345E240E14E5644AC"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-cmg-fixed/neural_trace_schema.json",
+      "bytes": 3786,
+      "sha256": "FA0EC00CC76AEF2309D080FA45BFA09C08006055C60110A4104BD2EB770DDB53"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-cmg-fixed/summary.json",
+      "bytes": 1975,
+      "sha256": "2D9F80C3C0F6AAB73325750D8DAE9E7B2DA7FB03D0FE3C720F2C668F4431B8AC"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-cmg-fixed/trace.csv",
+      "bytes": 13996527,
+      "sha256": "A879AFD82556F857AB8A83DD81C6379ACAF3AD44C2883283A5452CFBF1E99ED6"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 865051,
+      "sha256": "4188469A2E0DD2047982CA9544E50D33A7256454FA5423C70C3369927C3C8D8A"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-fixed/analysis/family_diagnostics.png",
+      "bytes": 706586,
+      "sha256": "5BB615A63CA397FAB85BFDB8A3B160F90D83B9CE1BAD0C54FBC8294C1589C7E5"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 489419,
+      "sha256": "7D33328D06A13A2699579710B62CDFDED5F3543C82ADD6B90F27B65A152B1BC6"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 336926,
+      "sha256": "21D0557530C9C590B6EA085DD70CE00460E2BFAA5AC877CBD7D56A1B06B0047C"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-fixed/manifest.json",
+      "bytes": 1546,
+      "sha256": "DEC8BF6923EDC16844CE23E80D93303BC37EF4A91C3F51F44B9A20F5FA598760"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-fixed/neural_trace_full_rate.npz",
+      "bytes": 24617944,
+      "sha256": "592F73187148941063F4109726B7FCF84FAFD355C5D9F4A5C96B4F1AF7AE3976"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-fixed/neural_trace_schema.json",
+      "bytes": 2689,
+      "sha256": "3160C4FB6CC2EF28C6E83D4930E7531234AF9C76A8CBB0ECED14A40190998B68"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-fixed/summary.json",
+      "bytes": 2205,
+      "sha256": "C4215DD74406EA1BBE384CF2450B52BFE2BCA7465466EEFBAE16427E6B907C7A"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-fixed/trace.csv",
+      "bytes": 14768252,
+      "sha256": "BFC9F9FB6F7325343D233713E04F45FA0A2CFD77073E5C7BA90160AD9D5A5A97"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-pes/analysis/family_diagnostics.pdf",
+      "bytes": 1291745,
+      "sha256": "55E5BDDA7598C2B06A7AED38125C4423816B418DBA98585EE19014233259769D"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-pes/analysis/family_diagnostics.png",
+      "bytes": 1253773,
+      "sha256": "4A7D797EF69C7C2C5C26935C7135BE2618D069BB46A690516BCF00E1C710C790"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 494140,
+      "sha256": "2AFE5933DA4FDFC80118346A87091B8C50BBDE4F45044F0BBA23EB2BC6919E44"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 387643,
+      "sha256": "C275814B424AEB73D049AA8791547E29D3C1A166C7731605A07A298FFBBA750B"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-pes/manifest.json",
+      "bytes": 1540,
+      "sha256": "4317203987F9F0F1FD3E1F87548B12CA9D7D62A73CA462B5D2733E06626568C6"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-pes/neural_trace_full_rate.npz",
+      "bytes": 49415119,
+      "sha256": "A5FF73EA1FB2AACF14C1DF192BEE288C2DF1351196F12524BC2DF622C63678EE"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-pes/neural_trace_schema.json",
+      "bytes": 2685,
+      "sha256": "D13C3A0575DA21B771AFF6F12B85D21B3AA4D1F0F8753478D6EF039BC45DAEB8"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-pes/summary.json",
+      "bytes": 2208,
+      "sha256": "1AC589E6B26EFD14B1231952EA023A423CCC3C1FA7C4C4865DDF817E470DF0A9"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-izhikevich-pes/trace.csv",
+      "bytes": 17563095,
+      "sha256": "CE65BD8085748F5F4892725A6D5689627B2F8539A0C4F38EDEE525AA7F80686F"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 57431,
+      "sha256": "EDE1AB669C7F899BA5696BC064955A8FEC137CCE34CECF9658AC860E29373E36"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-fixed/analysis/family_diagnostics.png",
+      "bytes": 765555,
+      "sha256": "705FFE1331D94D3CC40D8F23B3A1F59E634466C7D1AD9572EDD0DA15F91732DA"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 26032,
+      "sha256": "BB80DA4D000A0AA60887BAB44B9512A9253B5820BAE948952CBE65997071051F"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 195324,
+      "sha256": "4405151A902C45817AB0CE46B890D995B950CDD5C4609602CDDAF10457361FC8"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-fixed/manifest.json",
+      "bytes": 1525,
+      "sha256": "641BEEAFFF5D58B46B91D1471F00B457110DF6A8F88B7EF77E287D0EE4A81F79"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-fixed/neural_trace_full_rate.npz",
+      "bytes": 12850677,
+      "sha256": "02B3D13514F299F8DF0B4E341E1D8263BFC01E3A89A7212C2EB613B84E2F40E5"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-fixed/neural_trace_schema.json",
+      "bytes": 2688,
+      "sha256": "894920C81691AD9C9C09680C334AB95B465A603347B91AAEFFF498005412C3FE"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-fixed/summary.json",
+      "bytes": 2160,
+      "sha256": "FED7E634D966CD3923D06EDCF6493C88A656BDA854C2F7E50A789DC4CB6135E5"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-fixed/trace.csv",
+      "bytes": 12812421,
+      "sha256": "5C986889C6F80B803CA69A31DA12E334C889D1E00573C7419C20448164A08A64"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 58105,
+      "sha256": "0B485A76502D29758CC8F0F069B09277E7546806F461E796E57AFD33C4F8163A"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-pes/analysis/family_diagnostics.png",
+      "bytes": 772856,
+      "sha256": "2F264A8C7FFF3DD3D518F24DEDE2D0991D2191C61815EFD8F7D2C00A83EFC677"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 25940,
+      "sha256": "4107F5B6FCB4C9FB84CA92F5529EC29BB7ABFDE80002A866F880259AF2F90E8D"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 194183,
+      "sha256": "452C627BC104F44AD637682A1F62667564B9F872F32CAEDA664CA0022A990037"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-pes/manifest.json",
+      "bytes": 1519,
+      "sha256": "9B17DE8B6F1F1E0382CBC1DFDBCF4500EFE7000834F8F7B3D594B697B3546221"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-pes/neural_trace_full_rate.npz",
+      "bytes": 18927574,
+      "sha256": "3A33F538073D76FAC35CA7E5748589BAF88FBF5CCAD307372517EC6B21E74788"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-pes/neural_trace_schema.json",
+      "bytes": 2684,
+      "sha256": "DF69C5704315BCDEE3DD636AC2B0CC3F5DD4EE532D2911A7146D41B8A248FD57"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-pes/summary.json",
+      "bytes": 2169,
+      "sha256": "7E4C2A2C20983AE5B342CD1DAFD7CA49917D97EA20E139A781E5E0D95EA694D0"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lif-pes/trace.csv",
+      "bytes": 14578786,
+      "sha256": "5069A4147902D7CF1B5EC286F25D88B33403DAF4669B4505305145B43F8C7A56"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 56946,
+      "sha256": "06C0A32D10C8A20398F0E37B054E14D04C19550FB7407D6D639D2F84F4D7CD05"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-fixed/analysis/family_diagnostics.png",
+      "bytes": 768982,
+      "sha256": "4D8F2675F5242FC8EC18A3CC46626FBA91C2F8044560B6A99536F7988FF5F538"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-fixed/manifest.json",
+      "bytes": 1537,
+      "sha256": "74533827D3A5F5F256856C45743C45C4E93199CA73D5CFBBE6EE162B893CC4AC"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-fixed/neural_trace_full_rate.npz",
+      "bytes": 9911331,
+      "sha256": "D65EC2C82F6C1A6750A87DCC7418F42AC2D637EA99D744D1B11F295673888033"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-fixed/neural_trace_schema.json",
+      "bytes": 2420,
+      "sha256": "802C204C85B0D7E8D2D9C5FF3DFDEE4DE53AFCA5553739AF1F1846AAC54DA81A"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-fixed/summary.json",
+      "bytes": 2187,
+      "sha256": "1657C1FCAA89919E14F102FED65E1B1F6C12D748B3AB9B664BC43CC1D3D4F4B7"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-fixed/trace.csv",
+      "bytes": 9136344,
+      "sha256": "25C81FE36AEAB348FCF3702D8C4B35365AB093DE80F486CF853B1492A65D7E12"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-pes/analysis/family_diagnostics.pdf",
+      "bytes": 57453,
+      "sha256": "BFF459B06DF9E94F496CBC0A3A8C0A90186D7BC2F612ABA00AE07F5DC308B501"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-pes/analysis/family_diagnostics.png",
+      "bytes": 797914,
+      "sha256": "9381E4B5982BF7383F6C564224EF0530700D0A583A811740BAA8AAC678739E7B"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-pes/manifest.json",
+      "bytes": 1531,
+      "sha256": "4C729678DED12643B63F81BF32C986285515693FBD0C521D484C4D8BBAF66DC4"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-pes/neural_trace_full_rate.npz",
+      "bytes": 15986022,
+      "sha256": "AC4A9DC8634CA87D7B1CAD6E4C23BEA0F4B1ADFF69B0225931AE2D9DA569B821"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-pes/neural_trace_schema.json",
+      "bytes": 2416,
+      "sha256": "585315E7C769EBB2C8956B2DC16AEDEA2A1BE0F2E465CBA55075F2E67FEDC5C9"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-pes/summary.json",
+      "bytes": 2194,
+      "sha256": "0C234B3C476C67FC66061EA8CFD4DC7CDEE04488AD4EACB357B9CB454305DC20"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-lifrate-pes/trace.csv",
+      "bytes": 10901759,
+      "sha256": "BEC1631C44E80EE2007772B2ACB417E5934134DA693356B7CF9325965D652734"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-nef-pes/analysis/family_diagnostics.pdf",
+      "bytes": 102148,
+      "sha256": "4E8A08F23EC334ECB0C9AB1D22D6C6C994234747A1FA3B219B2A0FF9D57F2964"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-nef-pes/analysis/family_diagnostics.png",
+      "bytes": 1041641,
+      "sha256": "D8FB6083B6C2313B1988BAF33556624221596E1F2E79CBC7EA7314F6D9EA6797"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-nef-pes/manifest.json",
+      "bytes": 1519,
+      "sha256": "D88227D0E55E4AC0B3F888749ED116BEE36A93F8A56E4F03F9D710820E6BE13D"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-nef-pes/neural_trace_full_rate.npz",
+      "bytes": 46952498,
+      "sha256": "AD1FA65501C39BD802E1BE499CD1F97FD835D05377EC9910BEFCADA30BE299BF"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-nef-pes/neural_trace_schema.json",
+      "bytes": 3098,
+      "sha256": "57D8025BD5C9037EA5E9561F7CCD525FC1E4308816FB812360DF0860B15E1FF6"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-nef-pes/summary.json",
+      "bytes": 1818,
+      "sha256": "FEE42698CD1A90470F790BB724D06F0BC525FBE97B5E878E5E317FB7DF826EB5"
+    },
+    {
+      "path": "cf2-rotor/full3/nengo-nef-pes/trace.csv",
+      "bytes": 19544315,
+      "sha256": "76EB2171B29D2C56A19DCAEDFDF1D5DB8BEF9CFA8A35254938C7EB2A57542037"
+    },
+    {
+      "path": "cf2-rotor/hard45/classical/manifest.json",
+      "bytes": 1509,
+      "sha256": "ED39F67559718ECAB82F7E9DDAF5BB4BAF3FB2850227EA377FE6695BF94B4481"
+    },
+    {
+      "path": "cf2-rotor/hard45/classical/summary.json",
+      "bytes": 1389,
+      "sha256": "4C0D9044E059E7531BC5A47203402E4CBF8E7FFD78940BE8F81EBE0F18F46951"
+    },
+    {
+      "path": "cf2-rotor/hard45/classical/trace.csv",
+      "bytes": 6925764,
+      "sha256": "3B379B970E5603B847320EA23EF200FDAB906811770328361E680CD7DC9E875E"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 82649,
+      "sha256": "FD70745D77005F265188D6DFC26B2DE360E43CF81C4DE3DBDD66A33A9F5AE51E"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-fixed/analysis/family_diagnostics.png",
+      "bytes": 908394,
+      "sha256": "525DF579CB5EB11A251487DBC8D19F6ED81691E27B4FB6EEBF43857E1B4D6DF9"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 35967,
+      "sha256": "D48406E267FDDE40796C1977E0972D1131B5B9B59BBDC55AE147C458BFD6FD76"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 290006,
+      "sha256": "50EA4FA07EE1E29B065D2B74A3A438AF2F0977EDC5A15B2DF948964EEE5A15DB"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-fixed/manifest.json",
+      "bytes": 1530,
+      "sha256": "1A3CF73F3E7B3209931FF4CCA26D29CA6C686D3480BD0F558971A9A53B08CD6D"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-fixed/neural_trace_full_rate.npz",
+      "bytes": 13773405,
+      "sha256": "8E02AA5EEDC8D935BE304467B54D3268271C7C858ABA2EEF655637DEB58BA3A8"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-fixed/neural_trace_schema.json",
+      "bytes": 2825,
+      "sha256": "628D5430AAC1BCE24B2F42417880210CE26FBC420B9A812C949DE529D982EEB0"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-fixed/summary.json",
+      "bytes": 2183,
+      "sha256": "8972FE6FDEDD2F3105CA985B2AEC585E882BB3C9B9EA80D637F1EB2D1CA71050"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-fixed/trace.csv",
+      "bytes": 12478063,
+      "sha256": "429DE39A41ECD208CA84FA09B5C00D6A4B6C94A86A4330E74127D64D890E9CDD"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 83496,
+      "sha256": "8BA617E254ACD3E23445A1D9264B154514A677BAAE5B1E6615CAAC50C7F3FDA3"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-pes/analysis/family_diagnostics.png",
+      "bytes": 942267,
+      "sha256": "31B0E34D57FF2410D70C2064E49FEC7B55938C62CC3764DA6722EF1AA0CC7061"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 35965,
+      "sha256": "04ED1B427E15F0D2AB1CBAE51FFDB23E9E1E583E3A1236192475DEFD949DB0A7"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 291169,
+      "sha256": "1294B41AF543F724A261CC79EED0805874F7BC0EA4D0B913EC96B146F34BB3E2"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-pes/manifest.json",
+      "bytes": 1524,
+      "sha256": "444E266A156761E63DA2A2C68DAB1C12C2626BEC4F4506E71A82086893762868"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-pes/neural_trace_full_rate.npz",
+      "bytes": 19834018,
+      "sha256": "12295DB499A44684BDA70E769653E44AFA5D9C1C494F36BFD18E694BCF3772DE"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-pes/neural_trace_schema.json",
+      "bytes": 2821,
+      "sha256": "040AF3BC41C7EE9A34C262AA274C07A40378B2D8D2899DBD12553674E5AA2721"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-pes/summary.json",
+      "bytes": 2191,
+      "sha256": "64CC19DEFE86ED0384E3F6BFC7BDD841CC0D87B49F5C054D2A9ADB80B8F3D93B"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-alif-pes/trace.csv",
+      "bytes": 14268739,
+      "sha256": "C031A5C74CE9AA311B38420B9CA085E8A41FE27F0E7E83472A3AC396027CDD92"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-cmg-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 155029,
+      "sha256": "6966C26652EF75853E06B229F97F92CAE938D9925098276A1E2D22F462744397"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-cmg-fixed/analysis/family_diagnostics.png",
+      "bytes": 1165839,
+      "sha256": "11D741675F042F453D428DD6530AFAA43AA6EA1730C3DD7545A0CDBB58967B4A"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-cmg-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 24026,
+      "sha256": "AAC4D572B6ED8BBFE5793C7E0F37E2FDE9DE7803BD45D854D9ED6BFF1DBFF322"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-cmg-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 117343,
+      "sha256": "CF68AA190A6856254DE6DAC0DC208E71AD4954215E4B6AA0FF775A548CF28F41"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-cmg-fixed/manifest.json",
+      "bytes": 1527,
+      "sha256": "0B9EEB89D499FC62DC66BE30E5054AD4BC6B91FBA6F57B0C569BACC24A1A2892"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-cmg-fixed/neural_trace_full_rate.npz",
+      "bytes": 43049268,
+      "sha256": "D3713FBF2CF7D228CD14A8C39BF1F7E2DB5DCC742B0662FBEF74837F3F0053F9"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-cmg-fixed/neural_trace_schema.json",
+      "bytes": 3786,
+      "sha256": "FA0EC00CC76AEF2309D080FA45BFA09C08006055C60110A4104BD2EB770DDB53"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-cmg-fixed/summary.json",
+      "bytes": 1992,
+      "sha256": "D7A363BCC389F0F4F431F000E8E01E5C99E740F398E80BA70A3C4FF17F55ED44"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-cmg-fixed/trace.csv",
+      "bytes": 14466285,
+      "sha256": "B6EB552F83B063B2457E25472101066153325EE42B5B6DCB89B0DB11380E0A95"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 859797,
+      "sha256": "927EC96B368A2E912D9521AB7C3F6332C99FC38DFE9BD13EB8D6997C09DEF3C2"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-fixed/analysis/family_diagnostics.png",
+      "bytes": 756909,
+      "sha256": "398AA458A39D3FA90A94374FFAB8A031AD4ABAFEDFBEA696943E67A4473DF4B5"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 490393,
+      "sha256": "A74EFA7213DD0AFD52A0D862EECE437C7891C41268CFFD083F53254E4E74E4AC"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 343278,
+      "sha256": "8D0D514AD99FAF29736CE8E2851C37E7208A28BE5D829670605CD8FDD4A043DB"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-fixed/manifest.json",
+      "bytes": 1548,
+      "sha256": "749D1E7CDDA1349E955AF35750F73E2540FC73053803F269C9CB0766BAFE9060"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-fixed/neural_trace_full_rate.npz",
+      "bytes": 25396354,
+      "sha256": "FCB2C91058E5AF67F41090FD0CF5C405D5E7F06CC23E7D676C1C50442A1D5BEE"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-fixed/neural_trace_schema.json",
+      "bytes": 2689,
+      "sha256": "3160C4FB6CC2EF28C6E83D4930E7531234AF9C76A8CBB0ECED14A40190998B68"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-fixed/summary.json",
+      "bytes": 2222,
+      "sha256": "977B391CFD49A531388E1A35A1B98D95ABFA7AA1A3A4898D3CACDF5C968EF6BE"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-fixed/trace.csv",
+      "bytes": 14738996,
+      "sha256": "666F89075D5710E5D6C328A271480B96EE45795966816722AD18FF59F3AA92DB"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-pes/analysis/family_diagnostics.pdf",
+      "bytes": 1303442,
+      "sha256": "AD4B5791DA9436315B07CB2F3B61ED1FDE853AB5C07D79617B1175E4AB933A76"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-pes/analysis/family_diagnostics.png",
+      "bytes": 1254823,
+      "sha256": "2E8134775409A0D0DAE6CB577A3A432745FBEDF2F146AEAA83B1D0655556E3F0"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 497866,
+      "sha256": "2EF6BD87889254618D60FA280A3EC25055C310AF1E6F0C1D80AC1A178EC32824"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 398511,
+      "sha256": "F6FD83D0CF8B2C46D59F21606DF62BBE5174B0DF8419ACD738E9EC134CF4CC33"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-pes/manifest.json",
+      "bytes": 1542,
+      "sha256": "F4A0805E9D0C90F1DD85F70E54020D25E519A3A5FBDF18DA0789B8A8E0DA58B9"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-pes/neural_trace_full_rate.npz",
+      "bytes": 49494230,
+      "sha256": "378C16B470268FEFEE0872A0FEC7A9523E0A8DC88C27B3F7540150A99BD0F682"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-pes/neural_trace_schema.json",
+      "bytes": 2685,
+      "sha256": "D13C3A0575DA21B771AFF6F12B85D21B3AA4D1F0F8753478D6EF039BC45DAEB8"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-pes/summary.json",
+      "bytes": 2229,
+      "sha256": "4E0A43FA33D31EED5AEAE6B031A7E48A25377F7C7AF9AE21A5E87C111652EF8F"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-izhikevich-pes/trace.csv",
+      "bytes": 17561310,
+      "sha256": "0472D36ECB9D9AD00A87CB7509CDCFDB815FB86E19B5D79F21AA4D8580C90B03"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 82612,
+      "sha256": "BB775894CBC6052178766403F4D887B7386CC5070ACCD17133C7D8DA0EF051CA"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-fixed/analysis/family_diagnostics.png",
+      "bytes": 905545,
+      "sha256": "6F75E21AB4429D8CEC3D15DB0E9FDBE453910A9B701C60383FA7A3D2E161E126"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 33071,
+      "sha256": "D8AABEA656D38CF9454CEBD29F4AEE45A49E12037F8102910B8413F672876C43"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 238625,
+      "sha256": "985C51F4D5B2BCDFF9FC4B13D21841AA660238C5E8B0586C4C613BEFF20FC2A1"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-fixed/manifest.json",
+      "bytes": 1527,
+      "sha256": "B636A421513EE3324340E0D1EF3824873422EDB3E31243A29F66D508D2108FAF"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-fixed/neural_trace_full_rate.npz",
+      "bytes": 13005247,
+      "sha256": "F98FA822E10A184C578BC27183B39C2C4FF651AF6CAD3B1B428D135DE30404F1"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-fixed/neural_trace_schema.json",
+      "bytes": 2688,
+      "sha256": "894920C81691AD9C9C09680C334AB95B465A603347B91AAEFFF498005412C3FE"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-fixed/summary.json",
+      "bytes": 2177,
+      "sha256": "F3C32016859FFC553A77DABF4D327C09F13AF49FC582632415B74D04F41AC262"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-fixed/trace.csv",
+      "bytes": 12757770,
+      "sha256": "92DFFF218C811A959CBD1CFE0A24093DE4E6B7B4BD7BC53B6F69E7914BF274A6"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 83542,
+      "sha256": "1C442446BDF755F296A8DFB9189992489C2EFA454ACCA4F2E64D5D6BE2480CE6"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-pes/analysis/family_diagnostics.png",
+      "bytes": 932963,
+      "sha256": "E04AA11D6684280EACEC8AA15F193E16C97A35A4B54FAB37F29440AD449E0809"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 32932,
+      "sha256": "EA7450875E1A75A39B42BC142BC2E4361736A9BC1C8725FE51A3D4330A9EC53C"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 239218,
+      "sha256": "DF12962F032676417FB3099E2776B3E377EF577F86942EB8F1AFF42FCD82FA4B"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-pes/manifest.json",
+      "bytes": 1521,
+      "sha256": "9D36B9E23D3518BAD14A2370BC66BEB93440BD564C3130E15423F45E99142BB5"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-pes/neural_trace_full_rate.npz",
+      "bytes": 19062867,
+      "sha256": "0485D48BDE47D19FA6229B0E7BE72DD5E379205E199EE1844A2BB49339D35104"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-pes/neural_trace_schema.json",
+      "bytes": 2684,
+      "sha256": "DF69C5704315BCDEE3DD636AC2B0CC3F5DD4EE532D2911A7146D41B8A248FD57"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-pes/summary.json",
+      "bytes": 2186,
+      "sha256": "94DBAB6E2A8FD1208904DBF6A21143E168E762C6EE6B335ED4FDB6CDE26429F0"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lif-pes/trace.csv",
+      "bytes": 14544171,
+      "sha256": "A3374B5F49D9FF4F29544A1F003825D3129995D0AD58823BD6BF1F2D11F8AF6D"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 82462,
+      "sha256": "009A7354959C4F182C2F6910C13E9B2412FF3A79B1318F5F247FDACF83CB63EE"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-fixed/analysis/family_diagnostics.png",
+      "bytes": 903210,
+      "sha256": "58A9A80731E4187019121A9DB1C7A9428014A0A7AC909F524235FCB7F7347EFD"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-fixed/manifest.json",
+      "bytes": 1539,
+      "sha256": "1D2708D28E5F0D9B6EF26D750E3C0889C7B33F71D327242756F5B54EC7A03153"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-fixed/neural_trace_full_rate.npz",
+      "bytes": 9830892,
+      "sha256": "E430556B5744D5F523414773F3FE41ED8CC86764055C377F0E5FB26C84778E7F"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-fixed/neural_trace_schema.json",
+      "bytes": 2420,
+      "sha256": "802C204C85B0D7E8D2D9C5FF3DFDEE4DE53AFCA5553739AF1F1846AAC54DA81A"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-fixed/summary.json",
+      "bytes": 2206,
+      "sha256": "8AF7F8BE777B1B8F85A97EAAED672F85810C76542BB48CCB3073B36DBC6B31C5"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-fixed/trace.csv",
+      "bytes": 9083589,
+      "sha256": "BECAB99002D87CAE98AE326AB7A983F8A1AF02E005020F131B827602CCCD2F6D"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-pes/analysis/family_diagnostics.pdf",
+      "bytes": 83154,
+      "sha256": "64DF18188392664BAC6CF1012A4AD7AA1570971583D6959635690FF5E4627DE8"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-pes/analysis/family_diagnostics.png",
+      "bytes": 937746,
+      "sha256": "BF45C1C316832CA6C8C1ED2BBA9664B959516F420812E9C1C866C5C69F547CDB"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-pes/manifest.json",
+      "bytes": 1533,
+      "sha256": "42A5281DB73D54F4E2CCFE12207068CED93F40FE067F1382AF6EDB34148A532B"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-pes/neural_trace_full_rate.npz",
+      "bytes": 15904970,
+      "sha256": "750082DCA6A2DA369B3A452617FD7B869B9F4618F53EDD2582BF7B5EB759155D"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-pes/neural_trace_schema.json",
+      "bytes": 2416,
+      "sha256": "585315E7C769EBB2C8956B2DC16AEDEA2A1BE0F2E465CBA55075F2E67FEDC5C9"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-pes/summary.json",
+      "bytes": 2212,
+      "sha256": "789B4A67057D11CD4B71E801DB440C006C6D6B8FFDD1C76DC47C23D07D599D26"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-lifrate-pes/trace.csv",
+      "bytes": 10868367,
+      "sha256": "955C25D450266BE6EC0B98168DCC1E2216FB3528DF376568BABE61EC072C999B"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-nef-pes/analysis/family_diagnostics.pdf",
+      "bytes": 137064,
+      "sha256": "83ABA4CDAF9B6555D415057D705773C600EC710AFB19806F55F0E824BD7CCA95"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-nef-pes/analysis/family_diagnostics.png",
+      "bytes": 1393355,
+      "sha256": "96316646C7C99F56FCE5FFC8050A914147C558447EBFD9E08DB6CC500459DDB7"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-nef-pes/manifest.json",
+      "bytes": 1521,
+      "sha256": "8A3253D423C3FAA6E9CF44B21A32CB5F76638261C4D0DE2A41F32719D6951B92"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-nef-pes/neural_trace_full_rate.npz",
+      "bytes": 47716504,
+      "sha256": "FEF213FED9A352E0278E0517ECF24F46C5562D90EAC9796D8D8424693AC56614"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-nef-pes/neural_trace_schema.json",
+      "bytes": 3098,
+      "sha256": "57D8025BD5C9037EA5E9561F7CCD525FC1E4308816FB812360DF0860B15E1FF6"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-nef-pes/summary.json",
+      "bytes": 1833,
+      "sha256": "CB6F99BCFBF7A929FE1C133B949F3393874E799BC88569E5B5455ECD8F310D5A"
+    },
+    {
+      "path": "cf2-rotor/hard45/nengo-nef-pes/trace.csv",
+      "bytes": 19552064,
+      "sha256": "DF6772D8D85B3676B9BB5A4D7E58B73804FC035BDDC4F8EF3595B494A890357D"
+    },
+    {
+      "path": "cf2-rotor/hardstep/classical/manifest.json",
+      "bytes": 1513,
+      "sha256": "2BD2A19A33C17BFC474D8DB488DE44925AF88D9E602D805A516A7390DCFF4939"
+    },
+    {
+      "path": "cf2-rotor/hardstep/classical/summary.json",
+      "bytes": 1408,
+      "sha256": "FC6C59956C48C137082FEFDC06437BDB8C17DDD09BD4D2CC3B7911A1B6AA932B"
+    },
+    {
+      "path": "cf2-rotor/hardstep/classical/trace.csv",
+      "bytes": 6397085,
+      "sha256": "F7E63A18254FF7F58D09910B63B5C8581769D79A9884693505641C3BB2F2B7EE"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 135180,
+      "sha256": "77212C3B6F1AB9EC862A2F27E745B6EBD4B4962D9A65AAC8338A413FBCBE0226"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-fixed/analysis/family_diagnostics.png",
+      "bytes": 999477,
+      "sha256": "0F514DEDE0A5426C446CF9DE07BBD6508F92F917876D379801044B8F6BB729C3"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 97251,
+      "sha256": "1B4A5D5A3D31B1C33E7EA27B4F19F56816975AC8BE10206D224CE7C95D4DA173"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 995679,
+      "sha256": "7FD253915F0656950F40A94FBD84FABD10CBC7F81C92CE84974E1663157715FD"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-fixed/manifest.json",
+      "bytes": 1534,
+      "sha256": "4CEB5C46D5CCD1F58AC231955A674932F88AA9122203CB942711395ACD263720"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-fixed/neural_trace_full_rate.npz",
+      "bytes": 26984066,
+      "sha256": "AE770B638DC69592FB5985BA5412DAEB365CD4ABCE61B632679C0F80482AB8E2"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-fixed/neural_trace_schema.json",
+      "bytes": 2825,
+      "sha256": "628D5430AAC1BCE24B2F42417880210CE26FBC420B9A812C949DE529D982EEB0"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-fixed/summary.json",
+      "bytes": 2194,
+      "sha256": "82DFCF71AE46F8C0C9FF91307887EDB20929C44F5B1BDED08D0D45C641E4BF12"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-fixed/trace.csv",
+      "bytes": 15080575,
+      "sha256": "C9B1286172787523C4F96764066EC86BF129355091FC1397C94D2B02F6D84ED3"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 312613,
+      "sha256": "26E2608E347F60F17D26DC8018254B46074F4BB27C194819732CFA1C0C581730"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-pes/analysis/family_diagnostics.png",
+      "bytes": 1301330,
+      "sha256": "C736F8A2269E87920D70CA0B8DF1F6F9485D0989A93B739A3BDB44548FD0038D"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 130486,
+      "sha256": "75425CF71107FA8E17EB3821D9E0D3DFBB0E695A09240BD98F58AFA1E9D62801"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 1133373,
+      "sha256": "A69B8722A8353BAFFAE8EBB076214C6A981FD13D75F345DD5F4CE2F5ED77DA5E"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-pes/manifest.json",
+      "bytes": 1528,
+      "sha256": "3CA12B776083C506185D40973E17E8A72BFDF78094B14A3B9BC26BEA01F85F70"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-pes/neural_trace_full_rate.npz",
+      "bytes": 44821653,
+      "sha256": "6765A30295F3549B595647DCF5B6DAE940EE05FADE9BD339A82BE7A732120B11"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-pes/neural_trace_schema.json",
+      "bytes": 2821,
+      "sha256": "040AF3BC41C7EE9A34C262AA274C07A40378B2D8D2899DBD12553674E5AA2721"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-pes/summary.json",
+      "bytes": 2216,
+      "sha256": "9F663BFFD45D8F671A447E05B65F07F0EE76CDAD8AFD091E11DF6FC021213607"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-alif-pes/trace.csv",
+      "bytes": 17999503,
+      "sha256": "4B6EAA020C6AED9AADC7767664D19F12E87E05C09933E5EC36AB291256C0DBC4"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-cmg-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 88544,
+      "sha256": "64939CDC13296C59A3A9FBA71101F2821A35DB9B682DF2311B094032ED59F900"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-cmg-fixed/analysis/family_diagnostics.png",
+      "bytes": 955655,
+      "sha256": "99037791F8E38DFB183E925D1BEC99578E673D23703A8CC639CBEA09CFEE90EF"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-cmg-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 30395,
+      "sha256": "445FCDE028C6A5DD00BFA9FDA3B4D5EBF846AE77AE29D19B9DD86E7DA9A4E512"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-cmg-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 162242,
+      "sha256": "9DA214C6D07B5C1A11B289AEDE75F32B283EF52F26F42D708F594CE6BFAC6100"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-cmg-fixed/manifest.json",
+      "bytes": 1531,
+      "sha256": "34FF625907BE25BF9718DE06AAE803EA1F75C6D4AEF694BEAD31E867591F8E75"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-cmg-fixed/neural_trace_full_rate.npz",
+      "bytes": 22602797,
+      "sha256": "54DAABB64F70E5145C2F4064792C9E8739B7F4A105569A7BC6E17E1E46CB7135"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-cmg-fixed/neural_trace_schema.json",
+      "bytes": 3786,
+      "sha256": "FA0EC00CC76AEF2309D080FA45BFA09C08006055C60110A4104BD2EB770DDB53"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-cmg-fixed/summary.json",
+      "bytes": 2019,
+      "sha256": "CBEFC51D8043D33473390A19A236C71E4524886D0C1BDC2AE316D1D888F7EB7C"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-cmg-fixed/trace.csv",
+      "bytes": 11269541,
+      "sha256": "4A22BE204CF189AE88B0EC491B6D2CDD7E57406533C15C438A1248F3C11B8433"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 839346,
+      "sha256": "ACBF8C8C9258E84824F5CA66520B5DE6B10E2A4C8A7A88D57FB88A4E8619E90A"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-fixed/analysis/family_diagnostics.png",
+      "bytes": 862816,
+      "sha256": "87B8B790E3BBC8C74A23DACF1CFF02E827F24D3CD0A8FE2223AD63E1B38B8B07"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 502168,
+      "sha256": "F2174D9DC4AFE94AF888CF79D078C34651E3FDF102FE9744BC249F4A3238A926"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 387673,
+      "sha256": "C1AF887B7D6EEA3F2AAAEF334F9BD56567AB6671690B0758409B0677C7D2B3B9"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-fixed/manifest.json",
+      "bytes": 1552,
+      "sha256": "DEF819BC6EDF00AFE237F9E9B21352BB2140123A29AF6060950696DA54277695"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-fixed/neural_trace_full_rate.npz",
+      "bytes": 24604610,
+      "sha256": "B9177A06C93709149DAAD9B49A269D5D1B567D8665DDBBB1026C5704D47CF496"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-fixed/neural_trace_schema.json",
+      "bytes": 2689,
+      "sha256": "3160C4FB6CC2EF28C6E83D4930E7531234AF9C76A8CBB0ECED14A40190998B68"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-fixed/summary.json",
+      "bytes": 2248,
+      "sha256": "276018FE748E6E5A33FC5670533C9B83EADCB7FCD8D2C4A1D72BB531F77B697B"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-fixed/trace.csv",
+      "bytes": 14105305,
+      "sha256": "3F0EE5BE7D0559F3B8D996A771E7B0144B853C68E764600E43F036ADCEDB656C"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-pes/analysis/family_diagnostics.pdf",
+      "bytes": 1149994,
+      "sha256": "80CAB1260D8361EC51ABFC715A8F0EFCEA83F37E47D6BFD175808C919057F61E"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-pes/analysis/family_diagnostics.png",
+      "bytes": 1405914,
+      "sha256": "7E8F07805150E25266177B50E100A3E95A6B423AA5238C351201C3428329CCAD"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 518409,
+      "sha256": "06BBCE003CBA2F5BEC740978B94A390280B0989177FD76253778A8AEB572508B"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 442946,
+      "sha256": "4438EFFFAA9FDBE92CEDF209AED8714D69929BD663AA2E579DA6B18B708C347E"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-pes/manifest.json",
+      "bytes": 1546,
+      "sha256": "96D3D9A1FC08EF8CB2867482C479A066CBB229DE7FAFAAA10EDF18E099420DA5"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-pes/neural_trace_full_rate.npz",
+      "bytes": 46388023,
+      "sha256": "D8E4FF572EEC8D45CC012218067EF44A8F91776218E58D835A1294770570B383"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-pes/neural_trace_schema.json",
+      "bytes": 2685,
+      "sha256": "D13C3A0575DA21B771AFF6F12B85D21B3AA4D1F0F8753478D6EF039BC45DAEB8"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-pes/summary.json",
+      "bytes": 2253,
+      "sha256": "BBC0F956906340EC786991377DEA9C68063B4D0F3F4178143D758BBFD29BD201"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-izhikevich-pes/trace.csv",
+      "bytes": 16725878,
+      "sha256": "F4A16EA1556B6DAB3E119C4089AA685FC1F958AAD40A6457B153CB3A99156137"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 141013,
+      "sha256": "47D2B86BE271AEA155055A2831D6D55DD982DDD6D45D1689F45DE27BF2AF092D"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-fixed/analysis/family_diagnostics.png",
+      "bytes": 1011969,
+      "sha256": "69973CD37C167A7C8ECF2A32F53425165EC1F603382BD36A27DB54BBA1F71088"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 66115,
+      "sha256": "2918338AAFD7260FA8CB03E0E4A42E57D12B68272C83A67516507C3687DCA47F"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 570336,
+      "sha256": "FA88D3310F208436815DDA75294F265212F3A5D55AC536CBACBAAE9C3B0829F6"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-fixed/manifest.json",
+      "bytes": 1531,
+      "sha256": "796B28E2CE685A52814114231D3021B3134DA566212CDD653D269EFF1C2563AD"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-fixed/neural_trace_full_rate.npz",
+      "bytes": 22100119,
+      "sha256": "04E5950E38EFD56604D580FADBD3641E5DD9A2A1B89F5FED72A80E9377A5F999"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-fixed/neural_trace_schema.json",
+      "bytes": 2688,
+      "sha256": "894920C81691AD9C9C09680C334AB95B465A603347B91AAEFFF498005412C3FE"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-fixed/summary.json",
+      "bytes": 2205,
+      "sha256": "EA24BC2CE7C51C44E562245DF7AC19F320F806600F78B6A695B107FBE12ED00A"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-fixed/trace.csv",
+      "bytes": 14013357,
+      "sha256": "64383EC6F399F3DC25A8C1D8F0122AC91DB35DA6BC3EEE72321CAEF00B8E6546"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 383880,
+      "sha256": "D716311B8D6492A1B5FB4B74FAF39FD6B34D92266554417A00D99E9E46A20492"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-pes/analysis/family_diagnostics.png",
+      "bytes": 1338417,
+      "sha256": "6767F1E7756E740655E91D06C0DDC710581A7C02A4F9AF3110F55DA430233E0E"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 101685,
+      "sha256": "539BA46EA29A476D8B0EF932143445DE0DB10C70E2D47FBC0A23B6EAE8574B43"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 636437,
+      "sha256": "009EF79840E87A753BF3F876173F43183F84998C8882FEBD9FE9D27557AC745E"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-pes/manifest.json",
+      "bytes": 1525,
+      "sha256": "EDD713ACFAF2CFDF408D349B1BB2BC15C3A16EBF7E21DDF5C57BD5BB77F139AC"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-pes/neural_trace_full_rate.npz",
+      "bytes": 40397799,
+      "sha256": "481C063026CF67125013CA5EE0D053CDCA5D729EF7A199A36815817142E34190"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-pes/neural_trace_schema.json",
+      "bytes": 2684,
+      "sha256": "DF69C5704315BCDEE3DD636AC2B0CC3F5DD4EE532D2911A7146D41B8A248FD57"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-pes/summary.json",
+      "bytes": 2210,
+      "sha256": "3A2DC6E6C55CE75BD0AE8351E0EBAAF35D598491CF944A142E376E370D9BBA07"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lif-pes/trace.csv",
+      "bytes": 16966542,
+      "sha256": "9CDAA95711FCF5C783A2D6CB01EECE1326B94EF84C60AE4B28E0ABE4717A18C0"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 125763,
+      "sha256": "44F6409F7B1363412888BF00DF3870AEC21A1CBA61EF61B58ECE5A28E3243266"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-fixed/analysis/family_diagnostics.png",
+      "bytes": 1239785,
+      "sha256": "7794F429B98D3AE2FD6E4615B1AF95DA7E7B1A953C650F9A3D6EE19144C41BCA"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-fixed/manifest.json",
+      "bytes": 1543,
+      "sha256": "BBE4423A0CBBB5ECB2EAA7226A629A613FD305A8592C96CB1BAEDA64B2F22C03"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-fixed/neural_trace_full_rate.npz",
+      "bytes": 17545825,
+      "sha256": "9B4AC0CECC988AC21F8445B1866241C4A583814BD8CB299CA44CC25279EBBDD2"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-fixed/neural_trace_schema.json",
+      "bytes": 2420,
+      "sha256": "802C204C85B0D7E8D2D9C5FF3DFDEE4DE53AFCA5553739AF1F1846AAC54DA81A"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-fixed/summary.json",
+      "bytes": 2216,
+      "sha256": "89DC6E298D4B4021D94FB825BE827FA384FC0935682DFB5EDC22011426CA81A1"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-fixed/trace.csv",
+      "bytes": 10385464,
+      "sha256": "8F55631D65FDF0420EB111EE65B9DAA9B99A107EA27B471DE36BF94666EB1A2E"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-pes/analysis/family_diagnostics.pdf",
+      "bytes": 252678,
+      "sha256": "39B254A01F0833A4996A9F0EC040198E0FB1D2F8241CFDC94B01A1B38FFCEE02"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-pes/analysis/family_diagnostics.png",
+      "bytes": 1804554,
+      "sha256": "7223462FFDBE3A8D439C07569302514B8435F3A16E445F8456F983A25856427C"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-pes/manifest.json",
+      "bytes": 1537,
+      "sha256": "3A13A18BC4B0C9899480B307740B1FD988149B426D658884932BA322BBEED42E"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-pes/neural_trace_full_rate.npz",
+      "bytes": 36036152,
+      "sha256": "D92DC67FE44149D05191C532FE09D8DB46CEC7D8A2EDF615C980521E85CF5F2F"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-pes/neural_trace_schema.json",
+      "bytes": 2416,
+      "sha256": "585315E7C769EBB2C8956B2DC16AEDEA2A1BE0F2E465CBA55075F2E67FEDC5C9"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-pes/summary.json",
+      "bytes": 2233,
+      "sha256": "A242D0ED786C26671249D4AA8D5269E779C4227152720677228F4C17DD3EB5A3"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-lifrate-pes/trace.csv",
+      "bytes": 13359295,
+      "sha256": "B5D7DFA2404398484BDF70991067528FE91F630EDFA8A6C876A1658D60DB9279"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-nef-pes/analysis/family_diagnostics.pdf",
+      "bytes": 190374,
+      "sha256": "2A67F5ACA64C6AC9D478999A9AB50A34D0B68E54D99366F66E1E731D52FD0F9D"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-nef-pes/analysis/family_diagnostics.png",
+      "bytes": 1736148,
+      "sha256": "8507381CF8AE4339EA26BEEA2F424A0A98F14EA868CA5A424D209A5CC1F0A65B"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-nef-pes/manifest.json",
+      "bytes": 1525,
+      "sha256": "DBCBC652EC8AB558C8E0C497CF7902E3D6E20EB47CA9E80E9F7F6BBE6C7135C8"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-nef-pes/neural_trace_full_rate.npz",
+      "bytes": 47457041,
+      "sha256": "7C9164CF3F0F8D839AB55D402F41BB91F2CE10EF90E63497F71C32C4372EC0DE"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-nef-pes/neural_trace_schema.json",
+      "bytes": 3098,
+      "sha256": "57D8025BD5C9037EA5E9561F7CCD525FC1E4308816FB812360DF0860B15E1FF6"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-nef-pes/summary.json",
+      "bytes": 1859,
+      "sha256": "C13BAA73B89A9AE0F753EBDF79FF51A256E6728D2B35097788CC8252775331DF"
+    },
+    {
+      "path": "cf2-rotor/hardstep/nengo-nef-pes/trace.csv",
+      "bytes": 18897159,
+      "sha256": "F4C53C9D26325E5350A88450ADA25ABB578F99F79EF2394315248DFBF646A637"
+    },
+    {
+      "path": "cf2-rotor/roll/classical/manifest.json",
+      "bytes": 1505,
+      "sha256": "608C972867CA467EE99B796994E503CB20E9454DE9788FC445AD775EFB84AB6F"
+    },
+    {
+      "path": "cf2-rotor/roll/classical/summary.json",
+      "bytes": 1350,
+      "sha256": "A1B1BD4A7198C21BAEC1A7B9AC3E1E04D3DF58FC401920E789178EE5EBE6F299"
+    },
+    {
+      "path": "cf2-rotor/roll/classical/trace.csv",
+      "bytes": 6729313,
+      "sha256": "55B0D3DBD32B573B56A177FFFC1BA21BFE61A5E20B9CF351B09825D1DC6A8D2B"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 35990,
+      "sha256": "D83A9DE1AEADB642AADABF019E41E5C9AC53207CEA96E5F5A69BC3E77E58CCE5"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-fixed/analysis/family_diagnostics.png",
+      "bytes": 494303,
+      "sha256": "9CCC3FD454D15CD63434760638EF895718A32ECFA9E2D68885C050CFE3AC0733"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 19139,
+      "sha256": "57C8046D5A22D932F9F21D131CBB0F35C6C82F3AE606B1C157BA2E6A7432EFEF"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 159448,
+      "sha256": "B30E564DCEFBCF7AF83FFE008B11A68D94EC98ACD56487B421DC6BD0A558B06F"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-fixed/manifest.json",
+      "bytes": 1526,
+      "sha256": "780BF0FF719E9977DC08E36EA488B6581FFBA94D51AAD1A1CBAF8DADE211806D"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-fixed/neural_trace_full_rate.npz",
+      "bytes": 8695795,
+      "sha256": "4F4F8ED1F8B6519378DECF6EB2C1AE473A8D4115500C4254FCE17DEE7242BCED"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-fixed/neural_trace_schema.json",
+      "bytes": 2825,
+      "sha256": "628D5430AAC1BCE24B2F42417880210CE26FBC420B9A812C949DE529D982EEB0"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-fixed/summary.json",
+      "bytes": 2160,
+      "sha256": "67002CE1149B87D29D5EDFDBC3A8BEEEBF889A4A1CFEA15C0AE585B86038C398"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-fixed/trace.csv",
+      "bytes": 11766558,
+      "sha256": "C99981E03F958F5910B1A337226F12ECB31EB9CAF11D8328ECE682407EDA0A20"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 36045,
+      "sha256": "AECE1577AFD5ECF75D11DE8F5EFAF1934C98304D8658657B6F557A56B13C9108"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-pes/analysis/family_diagnostics.png",
+      "bytes": 567602,
+      "sha256": "8AA7B459E5F65C5155E71C3CE834E6C693908A6038E4F7CC081F686000DE176B"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 17980,
+      "sha256": "3B4D1B6AC3AA1AFE422C0146AD6A6DF31C50E2193D22D118D46A1FD744B99DBF"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 152921,
+      "sha256": "23CBFA78C5309ED20F7085B3C6DDD92431A46D6D3C1BDE3B55BAAD46317F7A6D"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-pes/manifest.json",
+      "bytes": 1520,
+      "sha256": "0EFF3693CE983CA86E051241F23D8499B3662ED7577C4D898C9959E9249A1F59"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-pes/neural_trace_full_rate.npz",
+      "bytes": 10575270,
+      "sha256": "53EC551BB6AE6839C7E7F8E212D10C50C0D3CB106CBAFCCAE7ED2351E43980E1"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-pes/neural_trace_schema.json",
+      "bytes": 2821,
+      "sha256": "040AF3BC41C7EE9A34C262AA274C07A40378B2D8D2899DBD12553674E5AA2721"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-pes/summary.json",
+      "bytes": 2166,
+      "sha256": "2197BCED2844226A56D4E7528903CC479BDF72370A4D9663A2B55E4F2BDA5BAE"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-alif-pes/trace.csv",
+      "bytes": 13004114,
+      "sha256": "BBF5D29293BDAA5EA6BBE61EA14A05CDE2A61D748E89F67F69BC7ACBD50D1A9F"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-cmg-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 44653,
+      "sha256": "2F77A0423C080DA5E51D4EA66689E11E5F89391F5606FF292B3B25AD02517E0F"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-cmg-fixed/analysis/family_diagnostics.png",
+      "bytes": 558645,
+      "sha256": "FA98F5176BA850731905513C33C800D164A39D09725A89C2A3B412823B48145B"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-cmg-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 18140,
+      "sha256": "332DB6F875484231BD933AA814EC4677911DB3252816833CD4248E8199C94A7B"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-cmg-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 101800,
+      "sha256": "9BF211916B0B5562C5F7FC26B562E97A88625E88389C89152C72C5324F3DC1EA"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-cmg-fixed/manifest.json",
+      "bytes": 1523,
+      "sha256": "2F763926876AF3257D594E6B40CCB7CF33975CFE97A7FB1D037C4EDC43BB4D19"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-cmg-fixed/neural_trace_full_rate.npz",
+      "bytes": 17609909,
+      "sha256": "7898C9214603F20825E90867445CDE330BE3FF1B02E5330EF15355E2EB8EB6E8"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-cmg-fixed/neural_trace_schema.json",
+      "bytes": 3786,
+      "sha256": "FA0EC00CC76AEF2309D080FA45BFA09C08006055C60110A4104BD2EB770DDB53"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-cmg-fixed/summary.json",
+      "bytes": 1990,
+      "sha256": "64DD6F1A340D63982A20039EBF76C6ED251036DC856554D2F77238F8B8A9D2B3"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-cmg-fixed/trace.csv",
+      "bytes": 13859106,
+      "sha256": "B551E4BCA5F4ACAC7251C5D9C493A158A64548765320B1BD9E918DE771BFCAB3"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 444484,
+      "sha256": "0E3FA3EB4ED4E86FA9FE88C3641DF4B1CD5E3B456161E1219F2E13AD95F90687"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-fixed/analysis/family_diagnostics.png",
+      "bytes": 440113,
+      "sha256": "DB4E8FE136AE8410BDFD0E8246AF76B045CD2C502D462256E3274157BDE08DBE"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 462109,
+      "sha256": "0ED4E20A530378BF5B913C5C073F407E1D9D7729A8B5F686F4E0B2AD2303EBE5"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 261734,
+      "sha256": "F73298AE806C27810D61977FD82CDD3397466FCFD1CDDA1EE6E901296CCB9BDB"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-fixed/manifest.json",
+      "bytes": 1544,
+      "sha256": "407AAC37F5558C0EB5484511C6CF8F18BD0102CE034A856EF9B9A34E41F6A70A"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-fixed/neural_trace_full_rate.npz",
+      "bytes": 14700785,
+      "sha256": "F6968BEAB9D943E3DBD215E21F2015FAD4F25BA43F9E29C56D7AA31F6B809A6A"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-fixed/neural_trace_schema.json",
+      "bytes": 2689,
+      "sha256": "3160C4FB6CC2EF28C6E83D4930E7531234AF9C76A8CBB0ECED14A40190998B68"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-fixed/summary.json",
+      "bytes": 2218,
+      "sha256": "83476560762EFD9984B3B761D8E4A2A50D67C3911B300D8EDA1B44B160E71F6D"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-fixed/trace.csv",
+      "bytes": 13628044,
+      "sha256": "907655C9A59B21805E851F519F4652A0ADC73BCDC98543EC1E7232643D23DF74"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-pes/analysis/family_diagnostics.pdf",
+      "bytes": 1254532,
+      "sha256": "CB6F0012C8895A7085FE6063D758657ABF6CB03C2F240A0B6ECC8857BF50A034"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-pes/analysis/family_diagnostics.png",
+      "bytes": 981842,
+      "sha256": "B295B76B5EF530E3DCC39598DC1DE9694971D37B15362A7B9A5A215DFD6586D9"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 486218,
+      "sha256": "096DFF09742FFC233861674E200CB3C399FEE4846A8B86569F44CAEF76D54109"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 371978,
+      "sha256": "D7B692DD9158B613753757EFE6BA42BF7CD90A25C26567F6F653B689B6BE4B49"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-pes/manifest.json",
+      "bytes": 1538,
+      "sha256": "111EBCC308BC61742BE830343E707421DBDA8E9505A1A28EBF6CB51609FCD9A3"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-pes/neural_trace_full_rate.npz",
+      "bytes": 49021191,
+      "sha256": "D377849A78976B89EC2363AB910E4CE736B51605B8F1494D805FFB93C7ECB8F0"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-pes/neural_trace_schema.json",
+      "bytes": 2685,
+      "sha256": "D13C3A0575DA21B771AFF6F12B85D21B3AA4D1F0F8753478D6EF039BC45DAEB8"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-pes/summary.json",
+      "bytes": 2225,
+      "sha256": "046322E1957F0B9CE835464A4332CEAF6C2503F87696E2DBEE45D4924081F2B7"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-izhikevich-pes/trace.csv",
+      "bytes": 17327503,
+      "sha256": "B71D2B1A29B0F902F84CDEAB9B5E5E9124E2E6C57B4E141F7454CEFB19758902"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 35990,
+      "sha256": "8D38AEA3D053651DEA71BE75EB264C7D2C19071DB11B05621543FC008EDE7135"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-fixed/analysis/family_diagnostics.png",
+      "bytes": 494112,
+      "sha256": "014608B51DA70A67CA7F32BA248E5EF24BD834889F6DA9BB0440A6FE8AAF6489"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 17756,
+      "sha256": "A4F5557903BE1DEDED42680160D0946E06C4C797FC4EFE8D8CA55F78B491253C"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 131695,
+      "sha256": "259ECFC9F9CAB4223F978AC6E6A575D9DE4849EB8ACAA5F9FAEC46D21432BEE5"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-fixed/manifest.json",
+      "bytes": 1523,
+      "sha256": "142B30DF316BAAE90C2659ADAE55DD2105DD3403224160887086A03C1382E09C"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-fixed/neural_trace_full_rate.npz",
+      "bytes": 8691361,
+      "sha256": "C4210FAF4843CF4CC70188FAC46F93C1C4F608F5AB922BBCE6787B6AE4B72456"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-fixed/neural_trace_schema.json",
+      "bytes": 2688,
+      "sha256": "894920C81691AD9C9C09680C334AB95B465A603347B91AAEFFF498005412C3FE"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-fixed/summary.json",
+      "bytes": 2154,
+      "sha256": "23042CC662F2E6BFF77AA0798F0F8EE3D0500D762097E0D5FAC51D104F9039A7"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-fixed/trace.csv",
+      "bytes": 12375294,
+      "sha256": "61858B0AFEEC60FBBA08A0903E4E45815AD5B5E0F3254676AE66931D9B87DA4C"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 36046,
+      "sha256": "D0ADFB407FB16FB89B8DBBA28E3833E20C4F561846DFC7E76CF7F2326BCD2ABF"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-pes/analysis/family_diagnostics.png",
+      "bytes": 567492,
+      "sha256": "869DF240A21D7F26E084D4CF7A891309D137F22C94C1D2489A56CBEAB436ECF7"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 16547,
+      "sha256": "B54C88A2EAF60843863B51AA15B3542B5FBCA5301BBCC2DA3C6BCE95C7A05C19"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 124787,
+      "sha256": "395D02A07D6FA3A8637C96FDF61FA277EABFBF1FD0901C0CC83513E5CD6317D3"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-pes/manifest.json",
+      "bytes": 1517,
+      "sha256": "1F3A3B4190C956AF5E5FD542C2B113ECF54A0209EFB9734EC76BE94A92DECD99"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-pes/neural_trace_full_rate.npz",
+      "bytes": 10570821,
+      "sha256": "7B2D729970C2C99AD0616A7DFCF88ADE5DCFE2CB3E40943A3A7EBDE91C460AA0"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-pes/neural_trace_schema.json",
+      "bytes": 2684,
+      "sha256": "DF69C5704315BCDEE3DD636AC2B0CC3F5DD4EE532D2911A7146D41B8A248FD57"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-pes/summary.json",
+      "bytes": 2160,
+      "sha256": "B8741B5EE163E5427429898C22D4A58A318E25228C831E3646D891092F057F6F"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lif-pes/trace.csv",
+      "bytes": 13613174,
+      "sha256": "F05DC1F1431E0DF80C256708202E5B40C8EE15D0A0ED422A2FC4A1BA778083FB"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 36030,
+      "sha256": "14FFBAAD8D6D1C54BA9D9EF16425ED56E646670AF12813D18335EB0584E43E17"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-fixed/analysis/family_diagnostics.png",
+      "bytes": 497596,
+      "sha256": "ECFF4BB04304ED1B086F70D9AB357A65B9C4A28DBED60C8FC646056D2D17F9E6"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-fixed/manifest.json",
+      "bytes": 1535,
+      "sha256": "C10BD584CD62E752F6A041917521A7AB5170A484FDA5892C38D395D3C6B136E4"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-fixed/neural_trace_full_rate.npz",
+      "bytes": 7618184,
+      "sha256": "18E794161C4E7980E523B7C12A26659CD922B252A83CB59CF889CD4483FCEA5C"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-fixed/neural_trace_schema.json",
+      "bytes": 2420,
+      "sha256": "802C204C85B0D7E8D2D9C5FF3DFDEE4DE53AFCA5553739AF1F1846AAC54DA81A"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-fixed/summary.json",
+      "bytes": 2180,
+      "sha256": "FD9C23E4A4F58D36E0B33BFEC2E75D76EB757956A435AF1DE984AB59390F4EB7"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-fixed/trace.csv",
+      "bytes": 8694804,
+      "sha256": "21959468B6DC1C0D211395E34A93DB27A4EEF9E07CE1E9AB6AE8182883B672C8"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-pes/analysis/family_diagnostics.pdf",
+      "bytes": 36082,
+      "sha256": "83EA32AB9819ACDF553E735F4DDBA78812CF25E29B5B9BE10A73DA432CFAB93B"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-pes/analysis/family_diagnostics.png",
+      "bytes": 570742,
+      "sha256": "9AA8AB0A0604EB41D41C18B1C8769368787921C4FB509445F597F16E9BB3E778"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-pes/manifest.json",
+      "bytes": 1529,
+      "sha256": "D1CD329E71AF861BCAC3EC2D119B307D0A82AE8F559D8E6DE90290A978140714"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-pes/neural_trace_full_rate.npz",
+      "bytes": 9495017,
+      "sha256": "F51714C72EF63BEE0F08BEE46A02B4996D6C9FE2EB6938AAF00114585C717AE0"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-pes/neural_trace_schema.json",
+      "bytes": 2416,
+      "sha256": "585315E7C769EBB2C8956B2DC16AEDEA2A1BE0F2E465CBA55075F2E67FEDC5C9"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-pes/summary.json",
+      "bytes": 2186,
+      "sha256": "7075B10E9F41553EA5CCBE6B970E574FB8C916EA976CB0DB5C507CE32D951A56"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-lifrate-pes/trace.csv",
+      "bytes": 9933036,
+      "sha256": "55612A77D0C39F5113D5C1FD034AF779857D1B76E0FD66873715D6F6165E5724"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-nef-pes/analysis/family_diagnostics.pdf",
+      "bytes": 76814,
+      "sha256": "A088AA3CA04D27D9F47FA51DE241F5C2F749CCCC0F67C2C8FFD88AF7D22F8637"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-nef-pes/analysis/family_diagnostics.png",
+      "bytes": 853265,
+      "sha256": "9DCBE3C5E5F7000AECD50728F043222BC1C0B86B23C6C9FE36D4563A7873EA52"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-nef-pes/manifest.json",
+      "bytes": 1517,
+      "sha256": "80E505E32B5F039ABADA4B62CA3F94B2B7DCE811333D7A539FADC3EFA93011CF"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-nef-pes/neural_trace_full_rate.npz",
+      "bytes": 30433198,
+      "sha256": "5D43BB257C66E4A09CD43EEB12BE5B8A4F227EA1997772DE45B5776A80C7CFE0"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-nef-pes/neural_trace_schema.json",
+      "bytes": 3098,
+      "sha256": "57D8025BD5C9037EA5E9561F7CCD525FC1E4308816FB812360DF0860B15E1FF6"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-nef-pes/summary.json",
+      "bytes": 1827,
+      "sha256": "43C6DF55FDA91915A703AA2C2AC2D621B9BF2E85B6F2C2969B371F7D4BA1A60D"
+    },
+    {
+      "path": "cf2-rotor/roll/nengo-nef-pes/trace.csv",
+      "bytes": 21336464,
+      "sha256": "819962A3E29A85A53489EF9ADDAD2EC092A5642144F85F0B2EC28FB9643B025E"
+    },
+    {
+      "path": "cf2-rotor/yaw360/classical/manifest.json",
+      "bytes": 1509,
+      "sha256": "363F5C457CC11FB37B9E57558062522750FBA8F81A761BBD1708C22152440776"
+    },
+    {
+      "path": "cf2-rotor/yaw360/classical/summary.json",
+      "bytes": 1373,
+      "sha256": "EDFA6E006878F0754F7EEA3421F43FDFB5D89F77421A6AF72CC682A33F49297B"
+    },
+    {
+      "path": "cf2-rotor/yaw360/classical/trace.csv",
+      "bytes": 6579604,
+      "sha256": "E38DAC15773C89E92B34EEF61286967115D068CB38ABA58B1E3F2084F2B833CA"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 28066,
+      "sha256": "382A41EE22691AB07B3FC945617B3765BBC81FFE440C43D3CA7E08BFD67C28C1"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-fixed/analysis/family_diagnostics.png",
+      "bytes": 358447,
+      "sha256": "B25A0285E2D3699C0BC8ABD8D5068E30788A699A523C50EE86FFCD2959E50615"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 17833,
+      "sha256": "9329AD1A0D621D8F4A42E43E069F679AFEAAADFBB99CD648C6F31597C39094D1"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 149111,
+      "sha256": "CC2F6824CBB6B1C0D89AFBF2C3CED4B49E1B022F87E00DB2DBC0918D30BA17F7"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-fixed/manifest.json",
+      "bytes": 1530,
+      "sha256": "71099DD448E7E21EE6479F9C86C5B19949FB252560C3CB21D98CDD9A1DEFFFE2"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-fixed/neural_trace_full_rate.npz",
+      "bytes": 8086478,
+      "sha256": "9BCF2575265C1C0C20EC3D118E4B13D94BCAAF92CDC2F6B5A53B2EE0D0F72C04"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-fixed/neural_trace_schema.json",
+      "bytes": 2825,
+      "sha256": "628D5430AAC1BCE24B2F42417880210CE26FBC420B9A812C949DE529D982EEB0"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-fixed/summary.json",
+      "bytes": 2152,
+      "sha256": "B972387CDCB0C7558F51895AACBC5B13695112A648B9A6DFAB1EC17C52F41DBF"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-fixed/trace.csv",
+      "bytes": 11608683,
+      "sha256": "BCDE83710BB7B97512F57342CBAB658BA7B175DED117EDBBAB3A994F6B79CDAB"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 28150,
+      "sha256": "E45E05C2201925A8648215D3CF2ABBC258D16EA2FC437CA85190E29E96E2EEFF"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-pes/analysis/family_diagnostics.png",
+      "bytes": 431282,
+      "sha256": "7BF847B46244F69BF6EAAB64BB0FD65101A28F82FA39D450F46AC23E8C77EF72"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 16772,
+      "sha256": "087AEC25D491011CDC3AEB2E808420E3C27E289FD04718BE0D87EF02D687B8DD"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 143839,
+      "sha256": "D3CC178C2F54C84AA7C9A76F28EDFF9FC6F923F172AC3312992D12EA03485E28"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-pes/manifest.json",
+      "bytes": 1524,
+      "sha256": "30F7FE711614C2682F061A75FBC20EFC5F2A1ED00A8C2249B88E4124B1172BDB"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-pes/neural_trace_full_rate.npz",
+      "bytes": 9964411,
+      "sha256": "A47CD1D7A77048EE21A9D5E5B7C72D642DE1B04BF4D0E5FCB607E0A72100AE82"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-pes/neural_trace_schema.json",
+      "bytes": 2821,
+      "sha256": "040AF3BC41C7EE9A34C262AA274C07A40378B2D8D2899DBD12553674E5AA2721"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-pes/summary.json",
+      "bytes": 2158,
+      "sha256": "82C19DFEAADA1FADF7FED5FAEA5E17B9FE08469B80076A55A3B0D248E9F770B0"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-alif-pes/trace.csv",
+      "bytes": 12846287,
+      "sha256": "2372432D7274501BAC11CE38EF56A4EE6CB05680930660D90094EC46A0CDDA4E"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-cmg-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 30394,
+      "sha256": "F6B4B18E700CE0A5DC70DD4E61B0AE66C423469AB10CC299DA097C4B7FE964AB"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-cmg-fixed/analysis/family_diagnostics.png",
+      "bytes": 425267,
+      "sha256": "3973DC656E097325EA545B86D73CD410B2FF23428A03A09DC9934B1F8FE13934"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-cmg-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 15395,
+      "sha256": "0AC0857F7FD19E7D2F3F501E63A5822000F3688F908F2F0525D7AD3E9E0998A1"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-cmg-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 90069,
+      "sha256": "F9543FA8AA4C2AEE484F118824E7948BC7585DBF5E236B9D048033411D607A21"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-cmg-fixed/manifest.json",
+      "bytes": 1527,
+      "sha256": "A5BC895F6D999E5393506F824807E4CF31CB9B688497166A66CE25F290707E0E"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-cmg-fixed/neural_trace_full_rate.npz",
+      "bytes": 15098764,
+      "sha256": "1142709D9FFC376FE13560FB35901FC8EA20E7BB5E0CE6B166DB2012A9C37D50"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-cmg-fixed/neural_trace_schema.json",
+      "bytes": 3786,
+      "sha256": "FA0EC00CC76AEF2309D080FA45BFA09C08006055C60110A4104BD2EB770DDB53"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-cmg-fixed/summary.json",
+      "bytes": 1979,
+      "sha256": "DA1AE14526C769BC568E8950438DCA96F9B7883207EEB526BD48268CE49004AC"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-cmg-fixed/trace.csv",
+      "bytes": 13748318,
+      "sha256": "A0290E7A20CDA03C9C2A7D2757808BEDC461866174C5BDC5228A6132A04BCCEA"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 392091,
+      "sha256": "6D31E085B0699B279DD8308F9E874527FE8E73EE106763273CBB1C178D7F59D9"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-fixed/analysis/family_diagnostics.png",
+      "bytes": 395465,
+      "sha256": "0B8AF9324D557CF0B870D63E462059DA4EC62D37DE720293E4453A81D8CCFE43"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 454523,
+      "sha256": "24A9F2E0604DD3CDDC5E159C195274B3A838DD4389873AA074021681834CEA63"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 248065,
+      "sha256": "599C0DE388F0000ADE04B928EA7A8E0C82F78DAFE553A5DB7F9BFA972DC6AA02"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-fixed/manifest.json",
+      "bytes": 1548,
+      "sha256": "6C12A4319EA6A50E8A79903B921C8236782549AB728E183B6A0D8F0B4B581CFD"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-fixed/neural_trace_full_rate.npz",
+      "bytes": 13410029,
+      "sha256": "422BD57B80BA7E8822E610E0294C2FDF76484BC3478D2D9E0EDC52AADCBDB407"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-fixed/neural_trace_schema.json",
+      "bytes": 2689,
+      "sha256": "3160C4FB6CC2EF28C6E83D4930E7531234AF9C76A8CBB0ECED14A40190998B68"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-fixed/summary.json",
+      "bytes": 2207,
+      "sha256": "541E432DC0209231C5A9B98C27103512921AF0958F5AA30B54072AFA3124DB9C"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-fixed/trace.csv",
+      "bytes": 13488095,
+      "sha256": "B3A15A3742BD66075B2F2BEB3B1055079C83989E46654480F6F96C15C9A9CB76"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-pes/analysis/family_diagnostics.pdf",
+      "bytes": 1250065,
+      "sha256": "1374CD2110A7F9784FF4460D82BE2F579045BB28552F87D2ABA665C815BF2DAF"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-pes/analysis/family_diagnostics.png",
+      "bytes": 968590,
+      "sha256": "473E851BF2D8A13675D82B842D484C0954E426C115DD03DDD11BDE5F6A2039BE"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 488268,
+      "sha256": "0A63D69489538DB239DA3FA32B168B29A0E23FC3AAD2E58B832293D493324A0C"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 358773,
+      "sha256": "1A121D70B53D52C3CB8C88EC6FE94752CB1E8230DA0D0203CEBCC3CCB4AA2476"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-pes/manifest.json",
+      "bytes": 1542,
+      "sha256": "A2E6AA366D2C54D5E41481A6F7F8344D6FA283DF8856A7F49C12F0EBF39DBD5B"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-pes/neural_trace_full_rate.npz",
+      "bytes": 49142661,
+      "sha256": "DA01577D09E8C6F19D762C5F851E1E511BFE0E6D5E33C3043E1065FC724ED4FE"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-pes/neural_trace_schema.json",
+      "bytes": 2685,
+      "sha256": "D13C3A0575DA21B771AFF6F12B85D21B3AA4D1F0F8753478D6EF039BC45DAEB8"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-pes/summary.json",
+      "bytes": 2236,
+      "sha256": "B62D81968844C51059630A2894104F06B19D3F74CE80AA82DC659656460FA9F3"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-izhikevich-pes/trace.csv",
+      "bytes": 17313320,
+      "sha256": "1E1598A8CE230B6C0C214A6E264C168A50DF8827E7CF75F446FDD9E850CA5995"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 28066,
+      "sha256": "AEF4DDD0DCA2BD9996F347CC48E58072CED7ED32893B19D97D5293A3C2F1A375"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-fixed/analysis/family_diagnostics.png",
+      "bytes": 358262,
+      "sha256": "56D3D58149C7C5137AF2D1B1A9C4B5436426B64126909D1ED910EA79C4791962"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 16460,
+      "sha256": "590E139F60AB831D3CFA3532C1A341450D81EF8597C630D1C7C1837E3EC27C57"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 121832,
+      "sha256": "C99AC7B2813E71955DF92C8563F5B441CF058C44A1CCBC58ADF2438131D77659"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-fixed/manifest.json",
+      "bytes": 1527,
+      "sha256": "1078DACBA6EB76DEDF0B6544D7C6953E994C9D050039F53B55F94AE61A56C407"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-fixed/neural_trace_full_rate.npz",
+      "bytes": 8082044,
+      "sha256": "60BDAB33062DB662C74FFA5488C856BD3C2D0A3BEE0F834A7E950EF3311AC6D4"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-fixed/neural_trace_schema.json",
+      "bytes": 2688,
+      "sha256": "894920C81691AD9C9C09680C334AB95B465A603347B91AAEFFF498005412C3FE"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-fixed/summary.json",
+      "bytes": 2146,
+      "sha256": "FCC9C1C002C89659D4A41AC704BD438E6A4100CC46E841D0400755AE77D7B7E9"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-fixed/trace.csv",
+      "bytes": 12217419,
+      "sha256": "9DC43E5FACC3313CA204EB3AD5E9E54BC573F72AC604C82836F5B74C410B4CE4"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 28149,
+      "sha256": "3566A34991F7AC0E10540517635A70D7AD92EC7EC746097BE7F6AA6829F69E07"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-pes/analysis/family_diagnostics.png",
+      "bytes": 431209,
+      "sha256": "A211F6727F8F98E3932BBAC1B9A9E575B4914E67C1ED51A615EA11019772BCF4"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 15414,
+      "sha256": "8F7BF9E2529D106C4D41B78DBAABB1DBD3991DFBD776F53FC643E03FA59F5919"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 116212,
+      "sha256": "9040F28FC0341F7A4E9B81CB39B7C3307C2369D80B445109038A17B3CB27A727"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-pes/manifest.json",
+      "bytes": 1521,
+      "sha256": "595C93FEF7DEC3A2899B7B06D7F73F40C5674E340CAF2BC56A4EB1B8EE4F2107"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-pes/neural_trace_full_rate.npz",
+      "bytes": 9959962,
+      "sha256": "F9F364AB3CCC0B606F95B75B118D8C9F06C32827241613C00135C094B2472CDE"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-pes/neural_trace_schema.json",
+      "bytes": 2684,
+      "sha256": "DF69C5704315BCDEE3DD636AC2B0CC3F5DD4EE532D2911A7146D41B8A248FD57"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-pes/summary.json",
+      "bytes": 2152,
+      "sha256": "FD47C22734950A6A82D0B83E5DCAB797AA3F247B8DC4F0478C7AD1B61104A3CF"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lif-pes/trace.csv",
+      "bytes": 13455347,
+      "sha256": "C82836029B431F193B524427468181A73439CDCAFC810BBC4B35EF0D7E6C1210"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 28143,
+      "sha256": "EF4CAFF2A27866C1F74E515C2B1D008777D20C381CCB8B9EB11C172FE06A47C2"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-fixed/analysis/family_diagnostics.png",
+      "bytes": 363790,
+      "sha256": "659895940520E08F907D906FF7688CAD4483DAE50980353F1C791946CD379F2B"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-fixed/manifest.json",
+      "bytes": 1539,
+      "sha256": "B58B76F121A266BF088A6473F8D98D455F5B8091C9982BE29326281FA5493E4F"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-fixed/neural_trace_full_rate.npz",
+      "bytes": 7132359,
+      "sha256": "CBB9A8C32ED124BA80F6FD084B3EA4142EB6B2E1478FD34FC417FE145D5E2DFE"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-fixed/neural_trace_schema.json",
+      "bytes": 2420,
+      "sha256": "802C204C85B0D7E8D2D9C5FF3DFDEE4DE53AFCA5553739AF1F1846AAC54DA81A"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-fixed/summary.json",
+      "bytes": 2172,
+      "sha256": "65FACC2D6A0A415B007D8F7670B810FCFC8B4262C9D0FB251123BE3E32BAD39D"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-fixed/trace.csv",
+      "bytes": 8538101,
+      "sha256": "B5ACEA64C3E79ADC1514E7984AB5DD97DCEBD87182CFAD7CBE597D5CBFD869DD"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-pes/analysis/family_diagnostics.pdf",
+      "bytes": 28234,
+      "sha256": "B43F02D394E4BC45023BF068E63A3346FEDBD73D9B5EE68BF055075C4FD81C34"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-pes/analysis/family_diagnostics.png",
+      "bytes": 436368,
+      "sha256": "B5AFCEF1249556179736A8B7379CF55C0958F8C29F7DD06FE83256AC1DC81015"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-pes/manifest.json",
+      "bytes": 1533,
+      "sha256": "5AAB1BE0E6EB4F76CE4CF0F827A4FE035FF6CCC76261D652FD1409A856927A24"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-pes/neural_trace_full_rate.npz",
+      "bytes": 9009192,
+      "sha256": "65C7C78A13C22FB4D56E0A24A1A230529D82F50D0CE753987DC625B6DBF8C454"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-pes/neural_trace_schema.json",
+      "bytes": 2416,
+      "sha256": "585315E7C769EBB2C8956B2DC16AEDEA2A1BE0F2E465CBA55075F2E67FEDC5C9"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-pes/summary.json",
+      "bytes": 2178,
+      "sha256": "98916EDDEEABDE224FCC2DCC0A5326C28794785411425E1F1D3E03C7610BDC22"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-lifrate-pes/trace.csv",
+      "bytes": 9776333,
+      "sha256": "E05908F573623DE9DB1B16C1232B4DDBDF9DFCB6E754ABDC2C8547D162EB5143"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-nef-pes/analysis/family_diagnostics.pdf",
+      "bytes": 35700,
+      "sha256": "8E438839750AC990E104B37DFD81EEA627019E07126776405B0B5544FCF19429"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-nef-pes/analysis/family_diagnostics.png",
+      "bytes": 513854,
+      "sha256": "42CAE23F127C13E482D81B08F1381E02614E119CC0B1C33B5FD10056678FF65B"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-nef-pes/manifest.json",
+      "bytes": 1521,
+      "sha256": "133F4DEFF9DF78BAC7DCA603D16F0EE3131BD0D7D934B60FCD2948F7F621A0B2"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-nef-pes/neural_trace_full_rate.npz",
+      "bytes": 29484705,
+      "sha256": "DDA49F9333C54D887D7C9C32CE02678BD08BD115794FF14CCC01AD927BDE2588"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-nef-pes/neural_trace_schema.json",
+      "bytes": 3098,
+      "sha256": "57D8025BD5C9037EA5E9561F7CCD525FC1E4308816FB812360DF0860B15E1FF6"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-nef-pes/summary.json",
+      "bytes": 1823,
+      "sha256": "5CFE82774F60A82AF7D4AE7DDAF41E5328F54AFB46147394058334FC931856B8"
+    },
+    {
+      "path": "cf2-rotor/yaw360/nengo-nef-pes/trace.csv",
+      "bytes": 21397276,
+      "sha256": "6D097714CA5DB6D516BDBA0C26193C255509DD385091A95C2F384F3163EC851D"
+    },
+    {
+      "path": "x2/full3/classical/manifest.json",
+      "bytes": 1591,
+      "sha256": "6AC2006E443ABAA357554F8890EAE8CF1569F382AED2E7753CE4DB1DE1F9B3A3"
+    },
+    {
+      "path": "x2/full3/classical/summary.json",
+      "bytes": 1378,
+      "sha256": "78A1D8AAD79208601992293C5AE083C7AA126EE34E93D991DA8EECE7399382AC"
+    },
+    {
+      "path": "x2/full3/classical/trace.csv",
+      "bytes": 6820624,
+      "sha256": "4973976831483847EAC911C426D30F2E091F9CA796852554D42DCB53F93FA1F4"
+    },
+    {
+      "path": "x2/full3/nengo-alif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 57715,
+      "sha256": "AE9E12323BA260F882767D67D8D7EB2B0B88F76A4DBAF58B0E1796A1C86AC26D"
+    },
+    {
+      "path": "x2/full3/nengo-alif-fixed/analysis/family_diagnostics.png",
+      "bytes": 789521,
+      "sha256": "1BC9B673CD69B9C4FA47D88C9A5EBAD277B439098689D8D6F2BAC9A409B6101A"
+    },
+    {
+      "path": "x2/full3/nengo-alif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 30133,
+      "sha256": "4F2358DD2DD5289915A835FDFD926AE03852428EAC933D28AD8B602566972E98"
+    },
+    {
+      "path": "x2/full3/nengo-alif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 270840,
+      "sha256": "45151836DD7DA236A6A304E80D2C74F17EFB06AAECF13127151B85474C85ED19"
+    },
+    {
+      "path": "x2/full3/nengo-alif-fixed/manifest.json",
+      "bytes": 1612,
+      "sha256": "06C8EB5CA8E00927B654C3C9DE2C4846D2A7B40946149622CEEEEDD3464B21CA"
+    },
+    {
+      "path": "x2/full3/nengo-alif-fixed/neural_trace_full_rate.npz",
+      "bytes": 13722522,
+      "sha256": "140F91B373602481F3B9DE4AFC55CAFE871C9A655620CD4761BA464DD1F7E01D"
+    },
+    {
+      "path": "x2/full3/nengo-alif-fixed/neural_trace_schema.json",
+      "bytes": 2825,
+      "sha256": "628D5430AAC1BCE24B2F42417880210CE26FBC420B9A812C949DE529D982EEB0"
+    },
+    {
+      "path": "x2/full3/nengo-alif-fixed/summary.json",
+      "bytes": 2161,
+      "sha256": "AA54530AEDF9A976BDD001FD7FFEBA6DB039C84FED0A325A5A98D6468FBE2544"
+    },
+    {
+      "path": "x2/full3/nengo-alif-fixed/trace.csv",
+      "bytes": 12396343,
+      "sha256": "3EBF2E4C0D81AE9011BF337A8163F667A2F0E6494838318ACD43B808B60BA737"
+    },
+    {
+      "path": "x2/full3/nengo-alif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 58548,
+      "sha256": "AF19A7B686D7260B6CCCE459E237F1E0277961CD7DD071A2AC1C8312115682DD"
+    },
+    {
+      "path": "x2/full3/nengo-alif-pes/analysis/family_diagnostics.png",
+      "bytes": 821063,
+      "sha256": "CE24BA0569616BB90BA49ADFC95B53ADEE6E0C51AEEC288589510E98F6469545"
+    },
+    {
+      "path": "x2/full3/nengo-alif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 30235,
+      "sha256": "8DC0B38C53A321351B5498444C6F6CED14B318D0169AD13AD81F27A85F6B77A4"
+    },
+    {
+      "path": "x2/full3/nengo-alif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 272776,
+      "sha256": "AD0DA059DF3E56A6B463C5A8BA436E5BDD9144B909C0D9C9EA2258E214D52CE8"
+    },
+    {
+      "path": "x2/full3/nengo-alif-pes/manifest.json",
+      "bytes": 1606,
+      "sha256": "9D416946D17040FA10A7FCD262899E42ED8994FBD94FDFD5635B29E3D77AA843"
+    },
+    {
+      "path": "x2/full3/nengo-alif-pes/neural_trace_full_rate.npz",
+      "bytes": 19791685,
+      "sha256": "E6CF3F7489A0742B995ACC7420D66E84336323DC297A975191DFEF2DBD4F903A"
+    },
+    {
+      "path": "x2/full3/nengo-alif-pes/neural_trace_schema.json",
+      "bytes": 2821,
+      "sha256": "040AF3BC41C7EE9A34C262AA274C07A40378B2D8D2899DBD12553674E5AA2721"
+    },
+    {
+      "path": "x2/full3/nengo-alif-pes/summary.json",
+      "bytes": 2168,
+      "sha256": "009328CEE8FE99A23B57883DA52674DE59FAEFFC66D941F9F2ABB00733EE42D1"
+    },
+    {
+      "path": "x2/full3/nengo-alif-pes/trace.csv",
+      "bytes": 14166343,
+      "sha256": "BD60FD3C37B1D69260C934BFE74FE794E5704402775BD230FC8B68DA7D2E58B6"
+    },
+    {
+      "path": "x2/full3/nengo-cmg-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 85890,
+      "sha256": "56058ABD8212676D8A6705CDC58055DAAD05636B1364C29A65571B79FC4B82BE"
+    },
+    {
+      "path": "x2/full3/nengo-cmg-fixed/analysis/family_diagnostics.png",
+      "bytes": 996640,
+      "sha256": "705DAF0827D53151B943A92859AE6DE46C7B5452F27A6C00B5D1895691FAC59D"
+    },
+    {
+      "path": "x2/full3/nengo-cmg-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 18737,
+      "sha256": "945925B7A618586B10F40B0DF3E33468E664A5498A842784C58892330F0519D3"
+    },
+    {
+      "path": "x2/full3/nengo-cmg-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 99559,
+      "sha256": "C7ED1E83687CA904A6356C9505CBEBFB57FA98B8494EC3FB8C0015A1E35C7395"
+    },
+    {
+      "path": "x2/full3/nengo-cmg-fixed/manifest.json",
+      "bytes": 1609,
+      "sha256": "62214EC3768A49B7D0B695C1A44FDE1CCBFB15320869AE1E11CAAD4640C977B7"
+    },
+    {
+      "path": "x2/full3/nengo-cmg-fixed/neural_trace_full_rate.npz",
+      "bytes": 36092174,
+      "sha256": "5436051339230011A2638EA5CCD8A5555B6BFC61B938541E2EFF50F68AD4792B"
+    },
+    {
+      "path": "x2/full3/nengo-cmg-fixed/neural_trace_schema.json",
+      "bytes": 3786,
+      "sha256": "FA0EC00CC76AEF2309D080FA45BFA09C08006055C60110A4104BD2EB770DDB53"
+    },
+    {
+      "path": "x2/full3/nengo-cmg-fixed/summary.json",
+      "bytes": 1967,
+      "sha256": "8067BA392308155FE821211453E5A84482CCEE88BDDBD8501F3ED587B9BE9CBF"
+    },
+    {
+      "path": "x2/full3/nengo-cmg-fixed/trace.csv",
+      "bytes": 13860504,
+      "sha256": "E63F0B04145961FFB6BE03CA9BF8AF2C883BF830E48687611A7EA929E8FC00BF"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 899386,
+      "sha256": "30D5D98EA92DE5C6C62F649E40DC1C7AC83B62225091D8D0C0426AFFCFF833D8"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-fixed/analysis/family_diagnostics.png",
+      "bytes": 740502,
+      "sha256": "FE1092E10B4D0621B90BA6AC7994F03C5F26C1E88475F6668983D2B426F6496A"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 493771,
+      "sha256": "A463480BDA6F33EB48183E5581C07EC181529C5BC21365FD8BFEDF3A7E96B7D3"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 340314,
+      "sha256": "53EDA662EFCE721BDE1E4BF627B216AD09ADFB52FDFB8C2D1A6747C13E94BC84"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-fixed/manifest.json",
+      "bytes": 1630,
+      "sha256": "9D4CFF2D0CD47FEED5E738116988E2F2F75F2DCDD44711F3039AB024232A2752"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-fixed/neural_trace_full_rate.npz",
+      "bytes": 24929493,
+      "sha256": "33F6E09D3290CF08B86238470E6253A5948266CA8F766E220AB0F791570323E7"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-fixed/neural_trace_schema.json",
+      "bytes": 2689,
+      "sha256": "3160C4FB6CC2EF28C6E83D4930E7531234AF9C76A8CBB0ECED14A40190998B68"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-fixed/summary.json",
+      "bytes": 2190,
+      "sha256": "7FD6FEA5DE6CDB0E41ED08C1A5445BA782A6C529C78C718CDAD56E17C65B52AE"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-fixed/trace.csv",
+      "bytes": 14614843,
+      "sha256": "9DC7CAD34649878CCEDB8372FFA78ED07210BB97600999D9A10AE2C009EB89C9"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-pes/analysis/family_diagnostics.pdf",
+      "bytes": 1317361,
+      "sha256": "5A79CD2C4527F7D66B277737FA3FB8C9E38F46868E71EA87ABA79E4181A34737"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-pes/analysis/family_diagnostics.png",
+      "bytes": 1344319,
+      "sha256": "04BC9265B284007BE1E3611D481353B818BFC22C44EFEA6444986ADC8A7938CF"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 501205,
+      "sha256": "E33CF2FEDF9D118C612047CCD87D38E1BE39C1E12D9E0CB60C441BB7996DE251"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 394762,
+      "sha256": "A98474452ADB484B8D11E3E0C3831DB61BA21A916424B82A5FE3021F5B675FE4"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-pes/manifest.json",
+      "bytes": 1624,
+      "sha256": "9A049103B45E4EF087019B72A9F79BBDA3B68464CF739DCF25B6705CA21A5F23"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-pes/neural_trace_full_rate.npz",
+      "bytes": 49542650,
+      "sha256": "DF77118BCB4D4E56239F8AC591556DC55D39A94B12B1D22B7886D4D7F38E3C8D"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-pes/neural_trace_schema.json",
+      "bytes": 2685,
+      "sha256": "D13C3A0575DA21B771AFF6F12B85D21B3AA4D1F0F8753478D6EF039BC45DAEB8"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-pes/summary.json",
+      "bytes": 2200,
+      "sha256": "704C8A671FC2FA153BA8A2310C4333B9946C5E00E4B61765CEA8AAA47E267F73"
+    },
+    {
+      "path": "x2/full3/nengo-izhikevich-pes/trace.csv",
+      "bytes": 17440482,
+      "sha256": "551576CE2F08178E73167820BC8D9708190CFAC9CB3441B2D1B0712B720B9C7C"
+    },
+    {
+      "path": "x2/full3/nengo-lif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 57670,
+      "sha256": "A48691E009C2AC83A28697363C2E8B64612EE358140ACD95EE6BB022936362B2"
+    },
+    {
+      "path": "x2/full3/nengo-lif-fixed/analysis/family_diagnostics.png",
+      "bytes": 790462,
+      "sha256": "270C1402AEFE32B884396020A30C0885C9C8402E95AA2D141988A22D8B145F21"
+    },
+    {
+      "path": "x2/full3/nengo-lif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 27130,
+      "sha256": "2CBE8E39A5DF2CB5AF3E15F104047A9DBBB1ADA3C53B81EBF10C99100F31316D"
+    },
+    {
+      "path": "x2/full3/nengo-lif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 223268,
+      "sha256": "0BCA6F9B7CE712E5FEDCF0730039F87B69829B758A69CF256D9ED0B03225A8C7"
+    },
+    {
+      "path": "x2/full3/nengo-lif-fixed/manifest.json",
+      "bytes": 1609,
+      "sha256": "E19A4E5FC1BBAFF8659F1F8E9BE4CFEED1BA18ED2A4C30B413BB08756851FE6B"
+    },
+    {
+      "path": "x2/full3/nengo-lif-fixed/neural_trace_full_rate.npz",
+      "bytes": 12968988,
+      "sha256": "FDC6A92CC8882042DBE1D19651AB9CD183E13EA0DBD96A6BF7CEEA2624DA0A6F"
+    },
+    {
+      "path": "x2/full3/nengo-lif-fixed/neural_trace_schema.json",
+      "bytes": 2688,
+      "sha256": "894920C81691AD9C9C09680C334AB95B465A603347B91AAEFFF498005412C3FE"
+    },
+    {
+      "path": "x2/full3/nengo-lif-fixed/summary.json",
+      "bytes": 2155,
+      "sha256": "98B0F600C1449D71E33EC570B752531072132A7B27140CF6A59BF4AA839D51FC"
+    },
+    {
+      "path": "x2/full3/nengo-lif-fixed/trace.csv",
+      "bytes": 12676066,
+      "sha256": "01D59E42275C6A632964C087F0EC3975B47A63ACC4B68A75C417D43886189D8F"
+    },
+    {
+      "path": "x2/full3/nengo-lif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 58556,
+      "sha256": "F6B350AAA64F95E97CA9009B692E1A21772D3650C6ED8B788F182567C36F57A8"
+    },
+    {
+      "path": "x2/full3/nengo-lif-pes/analysis/family_diagnostics.png",
+      "bytes": 816491,
+      "sha256": "58F512EEF7CF00DA7E3A6DF560061706F40A1328A7B38948D43AF03EF8AB2A94"
+    },
+    {
+      "path": "x2/full3/nengo-lif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 27226,
+      "sha256": "3AED31D24081495D260E5F2DF51CB82BDB584F31C350CB2530D98D6F72408D56"
+    },
+    {
+      "path": "x2/full3/nengo-lif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 224795,
+      "sha256": "B3CA29BF59C945998EB9AAD4F134A11E1B5643BF29824FFBC95F6658CBB94A3D"
+    },
+    {
+      "path": "x2/full3/nengo-lif-pes/manifest.json",
+      "bytes": 1603,
+      "sha256": "47552040E80F9F86B467E7227375D75890EA0F80787BEF597ACE0D41083B97C4"
+    },
+    {
+      "path": "x2/full3/nengo-lif-pes/neural_trace_full_rate.npz",
+      "bytes": 19025387,
+      "sha256": "EB2638F26769C1C1B2FD56D00439EA281F297101C94D5FAB63E93CDDB609A83A"
+    },
+    {
+      "path": "x2/full3/nengo-lif-pes/neural_trace_schema.json",
+      "bytes": 2684,
+      "sha256": "DF69C5704315BCDEE3DD636AC2B0CC3F5DD4EE532D2911A7146D41B8A248FD57"
+    },
+    {
+      "path": "x2/full3/nengo-lif-pes/summary.json",
+      "bytes": 2159,
+      "sha256": "51E88F0EDCDA17303556D0397864BE6CF4353B9D0C73D25CFA1DDF8AB460173A"
+    },
+    {
+      "path": "x2/full3/nengo-lif-pes/trace.csv",
+      "bytes": 14445668,
+      "sha256": "EC3B4ABFBE8D6F0294A8034260E34B1235513BE91130C68A2D748E48517022BA"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 57374,
+      "sha256": "6BD351780C46AA4F10D1E3F08BDF954DC34387BFD7710DC8BFB52D7A89AD4150"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-fixed/analysis/family_diagnostics.png",
+      "bytes": 802980,
+      "sha256": "B622758367F631578669BEA3F5AEDB03C06D3CA8E0252AE0019703C7A62A41FC"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-fixed/manifest.json",
+      "bytes": 1621,
+      "sha256": "B26107F642962364631B1471B2881EB0F4FF07AF054017C492A11BDE734FF7D0"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-fixed/neural_trace_full_rate.npz",
+      "bytes": 9946737,
+      "sha256": "054CD8473051787B3493F09E593C3B8AEB9BD89CD9E9026E43B4C3C30008B779"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-fixed/neural_trace_schema.json",
+      "bytes": 2420,
+      "sha256": "802C204C85B0D7E8D2D9C5FF3DFDEE4DE53AFCA5553739AF1F1846AAC54DA81A"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-fixed/summary.json",
+      "bytes": 2179,
+      "sha256": "10E8BB38FDD6576A0AAC0AA56912AC0460F20E24672013251B25DC086DA52D9F"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-fixed/trace.csv",
+      "bytes": 9001493,
+      "sha256": "5F62C00D68623CC53A2A9A2EBB242D7B97D79637F2AF848AB48C429ED554054C"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-pes/analysis/family_diagnostics.pdf",
+      "bytes": 57837,
+      "sha256": "F84D8F93587DEEF5B099D14921EB761B948AC8B49451570B93AE95404CA4364B"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-pes/analysis/family_diagnostics.png",
+      "bytes": 836332,
+      "sha256": "F9F7FD0B243DFE1EF786825DCABE38D999746CF90A104BAA11AD55A1E7EEAD85"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-pes/manifest.json",
+      "bytes": 1615,
+      "sha256": "BEB8A6AFCDD51FF4DA9CB33F8D998876C5C23289F61CA98D9599C2A711C496F1"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-pes/neural_trace_full_rate.npz",
+      "bytes": 16035779,
+      "sha256": "8F9151E3BD64E17F1A2887972D089DF05C7F6068ABF23AE7B9676C738D628E44"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-pes/neural_trace_schema.json",
+      "bytes": 2416,
+      "sha256": "585315E7C769EBB2C8956B2DC16AEDEA2A1BE0F2E465CBA55075F2E67FEDC5C9"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-pes/summary.json",
+      "bytes": 2187,
+      "sha256": "189E0A8372E77ECA00C99CCAAD83DD2DEA750CBF983AAB9864CAD88931742820"
+    },
+    {
+      "path": "x2/full3/nengo-lifrate-pes/trace.csv",
+      "bytes": 10767875,
+      "sha256": "F4D77034743EEBDFDD011CB59FDF82B8D18E6F50A20AA9448FE3CF132F706E00"
+    },
+    {
+      "path": "x2/full3/nengo-nef-pes/analysis/family_diagnostics.pdf",
+      "bytes": 104866,
+      "sha256": "6A6290CF4018FDD29747875FE34F4AF7DDB437F7E14738B98096E44AF7DF69D1"
+    },
+    {
+      "path": "x2/full3/nengo-nef-pes/analysis/family_diagnostics.png",
+      "bytes": 1079934,
+      "sha256": "18C305601F5FFE103B4E70A9612A5C25C56A3EDA961A787EAD8DA606F74AAD3B"
+    },
+    {
+      "path": "x2/full3/nengo-nef-pes/manifest.json",
+      "bytes": 1603,
+      "sha256": "EB14A9CDE2430EDB445B1E761911C5850A29010D4FE97B8619FD979A4B7F9603"
+    },
+    {
+      "path": "x2/full3/nengo-nef-pes/neural_trace_full_rate.npz",
+      "bytes": 47013119,
+      "sha256": "A0668D7C3B674401B984439C65F336582AEDAABD4F87DAFC0C473D0927387174"
+    },
+    {
+      "path": "x2/full3/nengo-nef-pes/neural_trace_schema.json",
+      "bytes": 3098,
+      "sha256": "57D8025BD5C9037EA5E9561F7CCD525FC1E4308816FB812360DF0860B15E1FF6"
+    },
+    {
+      "path": "x2/full3/nengo-nef-pes/summary.json",
+      "bytes": 1807,
+      "sha256": "8165D4DDFB8CE1EDB9A4D4D301DA2E0A4335B15E376DA07776380C1A63F1885D"
+    },
+    {
+      "path": "x2/full3/nengo-nef-pes/trace.csv",
+      "bytes": 19331486,
+      "sha256": "DCED09DA7327F7228EC55BDEF131D2F604AE46B2CF8A60130D0AD40E5268CD88"
+    },
+    {
+      "path": "x2/hard45/classical/manifest.json",
+      "bytes": 1593,
+      "sha256": "ACE5AD404D10F46325784542AF4E757CE83583C53E8859AD62ECEF7303768920"
+    },
+    {
+      "path": "x2/hard45/classical/summary.json",
+      "bytes": 1359,
+      "sha256": "AB3C5C26DAB629593CDAB1050977CA6E7D90ED4744003265001877D2AB7B00D3"
+    },
+    {
+      "path": "x2/hard45/classical/trace.csv",
+      "bytes": 6784840,
+      "sha256": "1A96BA25A0ABC408D229379164CE8E4A6DFC8670CE51364CE89F1D98A62DC2E9"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 81689,
+      "sha256": "19D4D3408195AFF9AE4D866B832029435788322861313FA075C51E6FCE7A97CA"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-fixed/analysis/family_diagnostics.png",
+      "bytes": 910453,
+      "sha256": "372966E6689714039FF1264BDA1AB3E53663FF007F060E60153BCC4949749A8C"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 35492,
+      "sha256": "4CF384BB8665BEDB697B82B853BA4305B0313A788F4C4B75911652796F0BAE94"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 301375,
+      "sha256": "E6F653FDAE44C5614CF7709978F62347E4DCEC183983CD1384006B0D3367BFCF"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-fixed/manifest.json",
+      "bytes": 1614,
+      "sha256": "EFB4EE54EA1CBFE07C895513795B00B2E230F590FC14098A6FA38A9505808E0B"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-fixed/neural_trace_full_rate.npz",
+      "bytes": 13747133,
+      "sha256": "AAF2E38C7810D8537EAAF2A1F0B77245E81CADD6B5AFF7D488895F30E41CFC18"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-fixed/neural_trace_schema.json",
+      "bytes": 2825,
+      "sha256": "628D5430AAC1BCE24B2F42417880210CE26FBC420B9A812C949DE529D982EEB0"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-fixed/summary.json",
+      "bytes": 2180,
+      "sha256": "5A5A93E91C22BC6DBE906F58257079AB1EDD1490C985E7447C4BBC3A5AE3AC66"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-fixed/trace.csv",
+      "bytes": 12332392,
+      "sha256": "A77023CEA84255A6FC5BF97A5CE2477C6E774D84DE4D3570EB5F70B040579B41"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 82817,
+      "sha256": "B68AF2B580DA0FF07C37156B06588A44496F3227E87370EE2B2339731E9BFFCA"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-pes/analysis/family_diagnostics.png",
+      "bytes": 949904,
+      "sha256": "E7691C99B6809A992F8DC310CBD113AFC41777F79F2BF26F67FA7B47E885FEF7"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 35466,
+      "sha256": "1CB6935904EDA8905167C143448A86163978D592CE439A1B4DD1C57E39CE096A"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 302036,
+      "sha256": "BF19686F188AC7C59764F7736CA51765562533C6462214AAC3559527F6516A31"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-pes/manifest.json",
+      "bytes": 1608,
+      "sha256": "6A7457D78BE3D710EBA738C371CFDF7745E5DFF6EBA824B9A639410A373811C2"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-pes/neural_trace_full_rate.npz",
+      "bytes": 19822198,
+      "sha256": "36EE5093B9856121EFF2B878B5F86EC5881964071CF6DE2C07B7725471E73A76"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-pes/neural_trace_schema.json",
+      "bytes": 2821,
+      "sha256": "040AF3BC41C7EE9A34C262AA274C07A40378B2D8D2899DBD12553674E5AA2721"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-pes/summary.json",
+      "bytes": 2183,
+      "sha256": "D4A4DA4236017EAE70C1B417D1299F325E197D22F8404F4739D0B05ABE19DCC2"
+    },
+    {
+      "path": "x2/hard45/nengo-alif-pes/trace.csv",
+      "bytes": 14120196,
+      "sha256": "A2B1372A08116BE511FBBD98A32AC8291FB0080BF031A8261AE4AF3E4B6DFB7C"
+    },
+    {
+      "path": "x2/hard45/nengo-cmg-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 127015,
+      "sha256": "590762EE8E75F2A069E35D24B833B83A1E156B5E3B810057DEFD23FDBA43032E"
+    },
+    {
+      "path": "x2/hard45/nengo-cmg-fixed/analysis/family_diagnostics.png",
+      "bytes": 1140475,
+      "sha256": "CEADAD09CEBB5928CE0CC2A4515E9F99EC8380FEE31DADCC548D2CDD76BC5926"
+    },
+    {
+      "path": "x2/hard45/nengo-cmg-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 22716,
+      "sha256": "B4967CD196073D589497DADA4E0EC54DB8A4A8D29EA1FA32BD0CFF4C922A8672"
+    },
+    {
+      "path": "x2/hard45/nengo-cmg-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 108222,
+      "sha256": "ADD04CDE80D82B1DBE2E85333D30368B9CF2D2B274E9FA263972CE2D678187AE"
+    },
+    {
+      "path": "x2/hard45/nengo-cmg-fixed/manifest.json",
+      "bytes": 1611,
+      "sha256": "15B995285150A238E33C9C3AD858CB247CEED5B6F7BD86C0CA79711AAA07B882"
+    },
+    {
+      "path": "x2/hard45/nengo-cmg-fixed/neural_trace_full_rate.npz",
+      "bytes": 46564720,
+      "sha256": "A64F304CC4872EE3D8D2F111768F4F3E5D0090D2EB5C94C6D6F5B17BF1F1F8D2"
+    },
+    {
+      "path": "x2/hard45/nengo-cmg-fixed/neural_trace_schema.json",
+      "bytes": 3786,
+      "sha256": "FA0EC00CC76AEF2309D080FA45BFA09C08006055C60110A4104BD2EB770DDB53"
+    },
+    {
+      "path": "x2/hard45/nengo-cmg-fixed/summary.json",
+      "bytes": 1985,
+      "sha256": "D17147843ED94826EFB236705B92EA9C8D61D3A33FDEE88A23D06230FAEDCF20"
+    },
+    {
+      "path": "x2/hard45/nengo-cmg-fixed/trace.csv",
+      "bytes": 14894170,
+      "sha256": "18589F7A18877C8199E5B4FFB7C8336FA7D3D7102564B37167E557BC8B2ACB44"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 888012,
+      "sha256": "E247F3A2AB599AD3BE3D680D4DE2482DA814D7A235805B0965EB024FB7A1DAB2"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-fixed/analysis/family_diagnostics.png",
+      "bytes": 781652,
+      "sha256": "0F0FDDDD949CA8F9C8F46BE98DF60257063F63A5BE596D9CA26925CA38BE366A"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 494876,
+      "sha256": "756EF853B1B0BD9EE1504171F6776AC5C540988AB0F1511F7E8479A98A18BD08"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 350893,
+      "sha256": "FE21663A8EAF6CE14B477CC5EC484ED9A2FEE886EAFE6CE4824CE6BE80AFF2A8"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-fixed/manifest.json",
+      "bytes": 1632,
+      "sha256": "CDEDFF18B0D3254327C60888EF71DC17C7B3E25B1437F1B6744697AA3A0D6A63"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-fixed/neural_trace_full_rate.npz",
+      "bytes": 25395287,
+      "sha256": "A1DFFE5C665A8BE218DDA3E44C7BCF8EEC9D81DDC429B27DA6435874CE8F9E9F"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-fixed/neural_trace_schema.json",
+      "bytes": 2689,
+      "sha256": "3160C4FB6CC2EF28C6E83D4930E7531234AF9C76A8CBB0ECED14A40190998B68"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-fixed/summary.json",
+      "bytes": 2213,
+      "sha256": "A72B39CB8C268AABEFCDF3E63DB96891039C1072968976C6C6A9375BFDB0262C"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-fixed/trace.csv",
+      "bytes": 14595309,
+      "sha256": "D3E72BC28090C7C721C3744452DE46D5A63544203DB9CD03A819252C7EF61CD0"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-pes/analysis/family_diagnostics.pdf",
+      "bytes": 1308798,
+      "sha256": "9FBC419A33EB35D76125840C5205BBDB5B9733048ED8FEAEDC08D475BDAD1A3F"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-pes/analysis/family_diagnostics.png",
+      "bytes": 1383245,
+      "sha256": "104BD57346D193B8EC32C2DDAE73F5D01B6182FE15CB64C8B84CE10166B35DEE"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 503942,
+      "sha256": "5758FA9487D02A4CD57184DA31A736EFD97D72941E187718DA145AA67ECDEF98"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 395992,
+      "sha256": "4BF2BB5BF8E202D7827EEE0008BE8CEA7A458CBDAC51AB04F68EC55011950D52"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-pes/manifest.json",
+      "bytes": 1626,
+      "sha256": "3E92302FD6BEE614849E9546009B549731B5EB3E73C8C628FAFE46CDD34DB31F"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-pes/neural_trace_full_rate.npz",
+      "bytes": 49617705,
+      "sha256": "189F68978CF0CDAFEB5283EB86D856A79C5BD2FB17E52E693639FC2E0F2B25F6"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-pes/neural_trace_schema.json",
+      "bytes": 2685,
+      "sha256": "D13C3A0575DA21B771AFF6F12B85D21B3AA4D1F0F8753478D6EF039BC45DAEB8"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-pes/summary.json",
+      "bytes": 2235,
+      "sha256": "C1CABE35058691EB1C71C9F780A97671A3133702E339412D876B1980B3BA510E"
+    },
+    {
+      "path": "x2/hard45/nengo-izhikevich-pes/trace.csv",
+      "bytes": 17437835,
+      "sha256": "FD361798AB6C1656E6A2BE25B0B8B7A76002740C5A173972CD9B5DA9C3B3C49A"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 81728,
+      "sha256": "BF0780F12A037E166E380A06F17DC331A6F2F42BC36CD4E3C215D002F74069E2"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-fixed/analysis/family_diagnostics.png",
+      "bytes": 907587,
+      "sha256": "E890F5462B83DC682DE2E61C612558EBABD8B44D90567EA51D85FE8DA6D1EE7B"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 32419,
+      "sha256": "36878E5A91077A9F339FCD99BD2BA6E7B30E82DF1643D7A6982C88362BD699C0"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 249830,
+      "sha256": "0DDB0B9A8B85F2E067737FEB1C4664B20073B6279037F57A92F47F35875EBAA8"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-fixed/manifest.json",
+      "bytes": 1611,
+      "sha256": "BD33425E37FED4A1AD7691FFEC3F3F6D9D1E2C8C1F66A3CA975D2E0EF2399331"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-fixed/neural_trace_full_rate.npz",
+      "bytes": 12975817,
+      "sha256": "9656754BEE42A89B55B04710EA9D429530BC275FC140E24D2167F68D11C48038"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-fixed/neural_trace_schema.json",
+      "bytes": 2688,
+      "sha256": "894920C81691AD9C9C09680C334AB95B465A603347B91AAEFFF498005412C3FE"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-fixed/summary.json",
+      "bytes": 2171,
+      "sha256": "A797C2260B5C5EDC70DC437C159D0100523AD5C562C7299C00A2D4A90C128375"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-fixed/trace.csv",
+      "bytes": 12611775,
+      "sha256": "7FD68C9D081486BE163B98539F9040E7F6C701BCD5FA8AC2F1B5ADACDE12348C"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 82626,
+      "sha256": "AF226280ECC3F9C8613CBAA0F23E01E637A7E93BE3D3D8595FF875892D46EBB4"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-pes/analysis/family_diagnostics.png",
+      "bytes": 946992,
+      "sha256": "B1E183338026F2E4C5EC7EF3D79C8C95658941EBE2A8E639B98F6C2A441F4439"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 32295,
+      "sha256": "DBFD2446F9F3324ED56CAFA3278009F3BF11EBBAFA866C9DA4BA301E2B5AC680"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 250514,
+      "sha256": "B9EA1F5A3978DE4DB49120892B690FA811625920FEDF3D9C2CB42F94A421CB31"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-pes/manifest.json",
+      "bytes": 1605,
+      "sha256": "3B962130E86FC77DB9740D7E3CE2DF558DF3E8FF4788806669EFBD8E24212DEB"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-pes/neural_trace_full_rate.npz",
+      "bytes": 19028919,
+      "sha256": "C13D1F03C1D63C081E430AF188250809FFDBCE2F290021D9031B0B822DD74B39"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-pes/neural_trace_schema.json",
+      "bytes": 2684,
+      "sha256": "DF69C5704315BCDEE3DD636AC2B0CC3F5DD4EE532D2911A7146D41B8A248FD57"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-pes/summary.json",
+      "bytes": 2178,
+      "sha256": "5C1370088E80AE8C3E983DDD32A3C7F0B5F37DEA69399D562ED196930B86955D"
+    },
+    {
+      "path": "x2/hard45/nengo-lif-pes/trace.csv",
+      "bytes": 14399080,
+      "sha256": "ABA3C50F1E53C1ECA5B89902769A34BCD755EAC91D0D2E4E80B544DD2E561B2F"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 81520,
+      "sha256": "B03B850C464D26EFC063DAC40FE3BD2929427D9C98446184F38B7CC9EBB7482E"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-fixed/analysis/family_diagnostics.png",
+      "bytes": 921917,
+      "sha256": "20EBAA45068B6CB3D6D9DC16CEB001C1229DC1BFCFCB7E6BD6FC72D45E1A6000"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-fixed/manifest.json",
+      "bytes": 1623,
+      "sha256": "704D87FB6B11CD7BCD36497CD1A0ADF97E2CB8766CB6C00A5D123DF3399FF02A"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-fixed/neural_trace_full_rate.npz",
+      "bytes": 9805489,
+      "sha256": "AFE79979F0ADD7F079F48903E0B3622CE18CF885459F8441AE9EC1C7BA04BA19"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-fixed/neural_trace_schema.json",
+      "bytes": 2420,
+      "sha256": "802C204C85B0D7E8D2D9C5FF3DFDEE4DE53AFCA5553739AF1F1846AAC54DA81A"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-fixed/summary.json",
+      "bytes": 2201,
+      "sha256": "2FEF65DF61EB25684DADCAA0BE479DABBE5B57CC003D73467D4001DD017DE8B5"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-fixed/trace.csv",
+      "bytes": 8936391,
+      "sha256": "8A4A856622D3A87D226A7ACCBB6FF9EACD09646D249AB314D4D6AF9ACDE00A87"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-pes/analysis/family_diagnostics.pdf",
+      "bytes": 82166,
+      "sha256": "837182F0FFEE516F893D1A3F703814C4B7323FEE136C147A58329D8969DEAAB9"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-pes/analysis/family_diagnostics.png",
+      "bytes": 950292,
+      "sha256": "2E22C6CEE84676755C158A6CCB1262F8FC2117BDDFC50877383F06F689EFE440"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-pes/manifest.json",
+      "bytes": 1617,
+      "sha256": "483B22D96FC8996111BAEF2142217904AE0CB6543567E1723904C19D50B6049A"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-pes/neural_trace_full_rate.npz",
+      "bytes": 15878736,
+      "sha256": "4BB36362DE31054588B6760749F7AF2F3C6D1A012C847AE9C030D9C44C6C2D20"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-pes/neural_trace_schema.json",
+      "bytes": 2416,
+      "sha256": "585315E7C769EBB2C8956B2DC16AEDEA2A1BE0F2E465CBA55075F2E67FEDC5C9"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-pes/summary.json",
+      "bytes": 2203,
+      "sha256": "41FF7A3B674A7005FFDE6A6D427DC56685C9CF0743B59567882426423D4DA3B5"
+    },
+    {
+      "path": "x2/hard45/nengo-lifrate-pes/trace.csv",
+      "bytes": 10724841,
+      "sha256": "9035333F8A507BA492D0A58556AFC8D459E9419B1D55CACD01AB98F9172BC26D"
+    },
+    {
+      "path": "x2/hard45/nengo-nef-pes/analysis/family_diagnostics.pdf",
+      "bytes": 142848,
+      "sha256": "D9D20D8E355534DBBC75AD31EAADFD9BDEDDB51DFFD8753C1813082F9955960E"
+    },
+    {
+      "path": "x2/hard45/nengo-nef-pes/analysis/family_diagnostics.png",
+      "bytes": 1383204,
+      "sha256": "D5CC7D0A4F37A8A8AC0281AC6CAE7C61CACDA40E3FBD056C5646B3E456719351"
+    },
+    {
+      "path": "x2/hard45/nengo-nef-pes/manifest.json",
+      "bytes": 1605,
+      "sha256": "901AB8F1BE41ECC18D28B0EB11D98B5E34A3FBED711C0E3CF78F15B81B82E2DB"
+    },
+    {
+      "path": "x2/hard45/nengo-nef-pes/neural_trace_full_rate.npz",
+      "bytes": 47864181,
+      "sha256": "AAC71C66D32DB98449834552A72AEA1971749A8CBDE475D22181E70B7C1D85E7"
+    },
+    {
+      "path": "x2/hard45/nengo-nef-pes/neural_trace_schema.json",
+      "bytes": 3098,
+      "sha256": "57D8025BD5C9037EA5E9561F7CCD525FC1E4308816FB812360DF0860B15E1FF6"
+    },
+    {
+      "path": "x2/hard45/nengo-nef-pes/summary.json",
+      "bytes": 1828,
+      "sha256": "30583113E516208039FB935CDD23EEE7D01B5A0498DA0E52180778FDC3A741C4"
+    },
+    {
+      "path": "x2/hard45/nengo-nef-pes/trace.csv",
+      "bytes": 19344639,
+      "sha256": "0A83AB4B145E3B3A62074FFCB78A770296DC7C33B466427B08D0C44B28857851"
+    },
+    {
+      "path": "x2/hardstep/classical/manifest.json",
+      "bytes": 1597,
+      "sha256": "9A65ADE0710671907D24F66B1C3D475DE83F6C2A74BA6B9315E6F920A32DEBFC"
+    },
+    {
+      "path": "x2/hardstep/classical/summary.json",
+      "bytes": 1415,
+      "sha256": "65EA65BF788991918E2ACC4F5B870175105C7A5A495EB73F41350901A6C08602"
+    },
+    {
+      "path": "x2/hardstep/classical/trace.csv",
+      "bytes": 6299449,
+      "sha256": "53B201E5ED678B28D992139F3F112DF96A45ACC1BDDA580737E42D45A8040E99"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 138338,
+      "sha256": "3EF408CC740197A6C5BA27F9DAA6F9276C97DC61448D1598486A09E727BB3119"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-fixed/analysis/family_diagnostics.png",
+      "bytes": 1042934,
+      "sha256": "60E56B7F08DF9F7A029256F64D2857FE4AD5040B00CB621C926871C59585D80C"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 97557,
+      "sha256": "20F0425E8C2AA1F4E01286EEB91A8FECDEBF877B50657D4F9FF1524B1ACE7FA3"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 1000827,
+      "sha256": "075D9906F32D8873F4DB14916E10C5C5F73C568A1B401B1167E82FADE99FC47C"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-fixed/manifest.json",
+      "bytes": 1618,
+      "sha256": "002DAD6A8F0564BEDEEE439953F860968FCF6C9B9E880CE56975AF1B032A7757"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-fixed/neural_trace_full_rate.npz",
+      "bytes": 27048845,
+      "sha256": "250663A2A07F9D048C058C02B3D331C81BCBF7EE01C82F291BD1C97F5688B616"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-fixed/neural_trace_schema.json",
+      "bytes": 2825,
+      "sha256": "628D5430AAC1BCE24B2F42417880210CE26FBC420B9A812C949DE529D982EEB0"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-fixed/summary.json",
+      "bytes": 2199,
+      "sha256": "4C438AD3C27C50D57AC35026F2100DE1F98B02985F5D2B39521E92A7D8AC777F"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-fixed/trace.csv",
+      "bytes": 14962224,
+      "sha256": "078B7A1BE5FA633AADB2E5D755F6EA9DC86ADEC0C294555E48A51B4E057DE219"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 373912,
+      "sha256": "5E292834FFB698482C0D0C7EEB5055DF66D987E6C0738EF1483EBF144C5F0C7C"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-pes/analysis/family_diagnostics.png",
+      "bytes": 1385499,
+      "sha256": "F17E8794A2C068FB2ADA7879B0B1B49C3AA20869ECD924075810BF13D89EB577"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 139794,
+      "sha256": "64D8DF258B8460639B8BABACFDC107ED32A3FD8C33BD11EDFF790DEC62F94A2E"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 1060051,
+      "sha256": "9CDAAE4042F381979C66768AA24B107A17D93BD4B966D36C9AD534C779F28570"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-pes/manifest.json",
+      "bytes": 1612,
+      "sha256": "7763DF0DECDCF411523AFD130EDF8145528BA3C25CE180DE56DD3BAD97F958BB"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-pes/neural_trace_full_rate.npz",
+      "bytes": 44944703,
+      "sha256": "8F4AEBA403653C7C10C14A85EE337C5ED47957B859556842064A88D4F5EBDFD4"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-pes/neural_trace_schema.json",
+      "bytes": 2821,
+      "sha256": "040AF3BC41C7EE9A34C262AA274C07A40378B2D8D2899DBD12553674E5AA2721"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-pes/summary.json",
+      "bytes": 2204,
+      "sha256": "C2214FC66FB57BBC2E618B92B8DBE90EE209A0B5F032A571A8EB53C64AC6188E"
+    },
+    {
+      "path": "x2/hardstep/nengo-alif-pes/trace.csv",
+      "bytes": 17883650,
+      "sha256": "FAE1D44AD19AA877E161EFCEB57A68791AC55A46E8CA8729227C959E45D4A9B8"
+    },
+    {
+      "path": "x2/hardstep/nengo-cmg-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 102788,
+      "sha256": "F76740B5DF3DF9975A1F4ED98632B9DA8289B5C6B6121BA9D9B34E6D463B9BA7"
+    },
+    {
+      "path": "x2/hardstep/nengo-cmg-fixed/analysis/family_diagnostics.png",
+      "bytes": 1038516,
+      "sha256": "06084C35D446FE8C527B6E921153AD20C0B155AF6A444A89F021E02AD8988CD7"
+    },
+    {
+      "path": "x2/hardstep/nengo-cmg-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 31711,
+      "sha256": "73F7D1E0FCC242F1048D3617530C2B99E26EC58DD3F1628D0D8B32CA133AC087"
+    },
+    {
+      "path": "x2/hardstep/nengo-cmg-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 179787,
+      "sha256": "C7232BB9096C374BF4279E3995F113DD18540A398538DCA624C14753B028A290"
+    },
+    {
+      "path": "x2/hardstep/nengo-cmg-fixed/manifest.json",
+      "bytes": 1615,
+      "sha256": "B32DC701C33FC813791F50A61039788F0B25B6D2C21F5A4F0EB2396BC6A2D53E"
+    },
+    {
+      "path": "x2/hardstep/nengo-cmg-fixed/neural_trace_full_rate.npz",
+      "bytes": 23359000,
+      "sha256": "A12E09AB1BF426FD3699D32B998377D466DCF411EA86DAB2D7B3BF0EEF5261DA"
+    },
+    {
+      "path": "x2/hardstep/nengo-cmg-fixed/neural_trace_schema.json",
+      "bytes": 3786,
+      "sha256": "FA0EC00CC76AEF2309D080FA45BFA09C08006055C60110A4104BD2EB770DDB53"
+    },
+    {
+      "path": "x2/hardstep/nengo-cmg-fixed/summary.json",
+      "bytes": 2008,
+      "sha256": "0EF85C036F1142F73D15A10CCBDE9D5F685159979D34B34B0792D5D92210581B"
+    },
+    {
+      "path": "x2/hardstep/nengo-cmg-fixed/trace.csv",
+      "bytes": 11229256,
+      "sha256": "1CCE294DC53DA37A603205F3B5F103AB942C4F7E3D85DD15B5A847165FB06523"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 854090,
+      "sha256": "7CE08D6394754EE32354679FA4833D02EC973E6295922E021AA82579E97F56E8"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-fixed/analysis/family_diagnostics.png",
+      "bytes": 926632,
+      "sha256": "6744D64380DE14517EBC4FEC9D84492BE8260C05F53545668F922F851C94C23A"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 504647,
+      "sha256": "838794ED2915819AD16DF694D71ECB69797DAD7957C27860357BF505E2C799EE"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 386749,
+      "sha256": "BFD2BA6A855C0C94AC7E9D605232BA86B83AB1A4742750A0648C1A9403B5C634"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-fixed/manifest.json",
+      "bytes": 1636,
+      "sha256": "5F5DA65CE700FAB416D0A52AF4C6518219DB6D20489D1F07830B6BFE2D56E0C6"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-fixed/neural_trace_full_rate.npz",
+      "bytes": 24854679,
+      "sha256": "905560306B1B8D328FD9A15CAF3A1347A280AFAEFA44E2246DFF13F18ECBB569"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-fixed/neural_trace_schema.json",
+      "bytes": 2689,
+      "sha256": "3160C4FB6CC2EF28C6E83D4930E7531234AF9C76A8CBB0ECED14A40190998B68"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-fixed/summary.json",
+      "bytes": 2233,
+      "sha256": "AF8D4EE1FAF7ED94CEB06F3860BB67A6444820849D069252E204FE136251CCD7"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-fixed/trace.csv",
+      "bytes": 14034363,
+      "sha256": "E092F1C37E94CD06B4D29D0DB0338776B4AA296B298A4B3E3CF484706CD1DDBF"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-pes/analysis/family_diagnostics.pdf",
+      "bytes": 1182344,
+      "sha256": "0A75978083FA1EA35D22E0FFB75B649945F74F5E4C6B38D274B482EF0CE83DBA"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-pes/analysis/family_diagnostics.png",
+      "bytes": 1562523,
+      "sha256": "30E9DA106B88EA8365047B0662424DD127A05DFAC6D6242F3A7976477257BCFC"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 524856,
+      "sha256": "CB8737418C644F5091E02E1EE4CD6C24E868947FACF08151C119FE999401EF5B"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 433638,
+      "sha256": "DAC391F4B9386B455B164058E70DE0B7594E5256678557A2416BB7244DC26009"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-pes/manifest.json",
+      "bytes": 1630,
+      "sha256": "DE015AA0AEDC883D43D47967CF13493AC649153C4C1C4FC7670D4A4983F398CE"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-pes/neural_trace_full_rate.npz",
+      "bytes": 47222871,
+      "sha256": "0FF0863B0F50F1AFFED9DB92A15EBF5D9842ABACCE66B4F835FD1698E9578294"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-pes/neural_trace_schema.json",
+      "bytes": 2685,
+      "sha256": "D13C3A0575DA21B771AFF6F12B85D21B3AA4D1F0F8753478D6EF039BC45DAEB8"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-pes/summary.json",
+      "bytes": 2243,
+      "sha256": "CF5D1194CE415BCB36F2903AE262ED16C28225A6D992123167A3363375DDA0F1"
+    },
+    {
+      "path": "x2/hardstep/nengo-izhikevich-pes/trace.csv",
+      "bytes": 16789264,
+      "sha256": "E632E435DEDEEA425E5DE1B6F508AE989E3CEE434D7676C442A8FB178403EC8B"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 145834,
+      "sha256": "A9E9DD72E34EEBD468884F4FF77903CC3D0F86C63D81300B8FCF04AD70E721C7"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-fixed/analysis/family_diagnostics.png",
+      "bytes": 1031662,
+      "sha256": "C2F81988BD91E0387D8662BD3DA4EE2567E746E1785F54D917EBCA8E8450525F"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 68135,
+      "sha256": "AE86F8A24DB60426E6BC11E5EF55FD63D72294E187F5F64F67FC5F1BFFA79210"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 568388,
+      "sha256": "C0918D1709C05F6F2E97FE33E26A4A8904E435827DB9B62AA6E9233464B53E6A"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-fixed/manifest.json",
+      "bytes": 1615,
+      "sha256": "019BC7EA7BAE04BFD57BEA12B22F6E7BB5CF8FBBF35BFB1CF6A906E7ABEE93EC"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-fixed/neural_trace_full_rate.npz",
+      "bytes": 22163246,
+      "sha256": "29981AF7E2DF612B6CE3172FC5424C770C62634B3AAD3911418777DB5E34763A"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-fixed/neural_trace_schema.json",
+      "bytes": 2688,
+      "sha256": "894920C81691AD9C9C09680C334AB95B465A603347B91AAEFFF498005412C3FE"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-fixed/summary.json",
+      "bytes": 2179,
+      "sha256": "97692B46F8F3B77E7D34CE9E30A07740CBFFC975E18FCCCA5F8CA20AB3EC0915"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-fixed/trace.csv",
+      "bytes": 13884350,
+      "sha256": "FBC57928381402BBE96482FAA3B9770A1EF38CA9DAA6C1F028B98BAF0A87ABF7"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 491752,
+      "sha256": "9960D3523717EEA413954E32FB9FD894B650CF8FE651C98D796FCF8B180F6D38"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-pes/analysis/family_diagnostics.png",
+      "bytes": 1433172,
+      "sha256": "718B51854D3DE453C1C0BA21D7A62AFF235E68FC877767D6D88079788E720988"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 122371,
+      "sha256": "CEDB85D33A9332BA1674203B0D48EA1D53D4239611DAE6C621DA4BFE109B3F5A"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 677507,
+      "sha256": "1B12D42A980A54AF0DA0D14CB721566B6C049507815642E2685B9E481EC10E6F"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-pes/manifest.json",
+      "bytes": 1609,
+      "sha256": "CB3079B667B85CC3B8B09749E7DF9EC4F27DB107CE633351BB93C1EC2EFA4675"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-pes/neural_trace_full_rate.npz",
+      "bytes": 41269319,
+      "sha256": "A1A544F76EB892CE00B6AAE159B99F8BE0A9D99751D05184767A9B0E86CAB65C"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-pes/neural_trace_schema.json",
+      "bytes": 2684,
+      "sha256": "DF69C5704315BCDEE3DD636AC2B0CC3F5DD4EE532D2911A7146D41B8A248FD57"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-pes/summary.json",
+      "bytes": 2200,
+      "sha256": "355A3BC2D71C9FB04FF46CE93C11EA3660147224A8E6A72B5066FBCBF41A2F17"
+    },
+    {
+      "path": "x2/hardstep/nengo-lif-pes/trace.csv",
+      "bytes": 16950781,
+      "sha256": "82072F4BEDF19952C77AC2E5861CB81E89641321F0ABC9D629D1864196021A19"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 122855,
+      "sha256": "4016985B472C676CF63B532AA06DE8DF121587E39A40C4C6FD50730C41685B4B"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-fixed/analysis/family_diagnostics.png",
+      "bytes": 1295322,
+      "sha256": "0B287B1477A75017D71A611D5CA9018FB4C8B60079D3ED1A9E76AB3B1AB6F55F"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-fixed/manifest.json",
+      "bytes": 1627,
+      "sha256": "BE753F7D9BE870AAC2B6CAF9DCD50510887625340D81D0EEDA5594E9874DFDC1"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-fixed/neural_trace_full_rate.npz",
+      "bytes": 17713530,
+      "sha256": "51B7F283508A2E1397B99D791414812120F174D945835C7B9221A4E2DE38F41E"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-fixed/neural_trace_schema.json",
+      "bytes": 2420,
+      "sha256": "802C204C85B0D7E8D2D9C5FF3DFDEE4DE53AFCA5553739AF1F1846AAC54DA81A"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-fixed/summary.json",
+      "bytes": 2221,
+      "sha256": "76F0EC140CFB9DBF2A34D61A5CE3C297FA8D2122EAA83ECA368B93D2D032081D"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-fixed/trace.csv",
+      "bytes": 10291484,
+      "sha256": "496890B643908C410F356E6316B53C2177B76C37F3D5808ACAB7451726C93690"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-pes/analysis/family_diagnostics.pdf",
+      "bytes": 243779,
+      "sha256": "2CB8E253426DB4237512540B64B6B43EAA6A088A9DD4F2C49A4CD3A43258BF40"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-pes/analysis/family_diagnostics.png",
+      "bytes": 1954789,
+      "sha256": "EADCAC2EF20F579E5D3F5CAF0F608778CFAAC7D6F638DBFBBF15B8C6B7FCE80B"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-pes/manifest.json",
+      "bytes": 1621,
+      "sha256": "60211E8A4DDED5B20AD977C0A9BD70ECBE27351D909A026703A2F2186E70F86D"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-pes/neural_trace_full_rate.npz",
+      "bytes": 36898456,
+      "sha256": "994F330604D3EC53F3BFB1BFE4356466B2847F4CB526A28C69BEF0497BF14B26"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-pes/neural_trace_schema.json",
+      "bytes": 2416,
+      "sha256": "585315E7C769EBB2C8956B2DC16AEDEA2A1BE0F2E465CBA55075F2E67FEDC5C9"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-pes/summary.json",
+      "bytes": 2224,
+      "sha256": "F097B3A800BE4D466421BCB8D5B39F99BE8B5AD47CFBD715479C2426CCE82A34"
+    },
+    {
+      "path": "x2/hardstep/nengo-lifrate-pes/trace.csv",
+      "bytes": 13389325,
+      "sha256": "AFC5429D47B07396FAE5A5B288B8F98FF05E4475E857DB47241F4B5959ADD6A9"
+    },
+    {
+      "path": "x2/hardstep/nengo-nef-pes/analysis/family_diagnostics.pdf",
+      "bytes": 186523,
+      "sha256": "B138ACFF5741B4F791AB683EE15EA8DC9B5ED70AB9DE765173DD18DA7DAF3575"
+    },
+    {
+      "path": "x2/hardstep/nengo-nef-pes/analysis/family_diagnostics.png",
+      "bytes": 1788214,
+      "sha256": "7E5A8DE030F6DB9FA02D66D96F517C08BBB101E44103874251557E2D7912BA6C"
+    },
+    {
+      "path": "x2/hardstep/nengo-nef-pes/manifest.json",
+      "bytes": 1609,
+      "sha256": "A26195B8260C445C1F99AF57E3A66C79AA6087C8419193585B45A8ED62EA4A6A"
+    },
+    {
+      "path": "x2/hardstep/nengo-nef-pes/neural_trace_full_rate.npz",
+      "bytes": 47921908,
+      "sha256": "BE6921583C9ED86E1AA92AF1A298A55C961B4D55AB18DBDDBD9FE60F3FB694DF"
+    },
+    {
+      "path": "x2/hardstep/nengo-nef-pes/neural_trace_schema.json",
+      "bytes": 3098,
+      "sha256": "57D8025BD5C9037EA5E9561F7CCD525FC1E4308816FB812360DF0860B15E1FF6"
+    },
+    {
+      "path": "x2/hardstep/nengo-nef-pes/summary.json",
+      "bytes": 1847,
+      "sha256": "0962017D5E139CA99FA7BCF5F6BB795421D07C32C9962C0CE196734FA0798B1C"
+    },
+    {
+      "path": "x2/hardstep/nengo-nef-pes/trace.csv",
+      "bytes": 18830112,
+      "sha256": "B10631C77610E2538BF5ED50A0E44F178D0FA5003D7BF4B86BF5B9EAFBA50014"
+    },
+    {
+      "path": "x2/roll/classical/manifest.json",
+      "bytes": 1589,
+      "sha256": "C69491C8E0517451754F74E3D1933330EBD02285D8968DF0BBC2DD672BF0895A"
+    },
+    {
+      "path": "x2/roll/classical/summary.json",
+      "bytes": 1361,
+      "sha256": "E6C0B38F87E8671D79086473BDE332B0E67B07143CE19229B05974DF2AD9E7D3"
+    },
+    {
+      "path": "x2/roll/classical/trace.csv",
+      "bytes": 6790479,
+      "sha256": "62297D67395B220F215A84871BEA8B410D71382792A1C4E93963A6111AB1EC8B"
+    },
+    {
+      "path": "x2/roll/nengo-alif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 39978,
+      "sha256": "8989CB392964341CDCCDA1451DD0D6E00DE7F6EF8CABC9641BE575B3BA68C851"
+    },
+    {
+      "path": "x2/roll/nengo-alif-fixed/analysis/family_diagnostics.png",
+      "bytes": 553980,
+      "sha256": "3BB48986888BD0D644B97AA2AC177125F3EF91D980C104806FF2E1F8E86A2CC7"
+    },
+    {
+      "path": "x2/roll/nengo-alif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 19354,
+      "sha256": "B69187D36B90CA929D11899599128CC57692EB5EADE758D68DE02A7675183C2B"
+    },
+    {
+      "path": "x2/roll/nengo-alif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 159152,
+      "sha256": "1AB35EF40A48F946D5CBA7FEDFAABA364AE3C19D9AAB599D4892472525EEEA75"
+    },
+    {
+      "path": "x2/roll/nengo-alif-fixed/manifest.json",
+      "bytes": 1610,
+      "sha256": "AF4F2DC2AD6A1CB9C36DACFBE82AFD0F03214F2DD3B163217AA310F7244DA84D"
+    },
+    {
+      "path": "x2/roll/nengo-alif-fixed/neural_trace_full_rate.npz",
+      "bytes": 11930106,
+      "sha256": "828CF9A7ED77FA1FBA1E0E2FDF1EC6EA6FEA66391D4755C8E65BE1F01DF40527"
+    },
+    {
+      "path": "x2/roll/nengo-alif-fixed/neural_trace_schema.json",
+      "bytes": 2825,
+      "sha256": "628D5430AAC1BCE24B2F42417880210CE26FBC420B9A812C949DE529D982EEB0"
+    },
+    {
+      "path": "x2/roll/nengo-alif-fixed/summary.json",
+      "bytes": 1770,
+      "sha256": "894AF0AD909F3810B27B061A952AAE307D242FE3EC7CF9A92F0F7EAB09478D5C"
+    },
+    {
+      "path": "x2/roll/nengo-alif-fixed/trace.csv",
+      "bytes": 11947812,
+      "sha256": "A9E1B85DE4BAF52DA6E37C205CC61E8C49C3E9144DD892CEEEFAED88CA854A7D"
+    },
+    {
+      "path": "x2/roll/nengo-alif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 40032,
+      "sha256": "F058B6923E2AE7A120231B19DB8E81BB18AFD5237741E6F2134184413099F653"
+    },
+    {
+      "path": "x2/roll/nengo-alif-pes/analysis/family_diagnostics.png",
+      "bytes": 627877,
+      "sha256": "4D019E913BF09C621ABFB95B93DCA5B8777AA3C1FDAE932C4118DD0569378D6E"
+    },
+    {
+      "path": "x2/roll/nengo-alif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 18190,
+      "sha256": "6211E23BB1F60A94B3162718F21D2D4D060C00CAD58C4B8266B120175780D654"
+    },
+    {
+      "path": "x2/roll/nengo-alif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 152659,
+      "sha256": "87ACB85F95E58BA35E31C359869F1F704F308B15F3B48B97245812577DAFB13F"
+    },
+    {
+      "path": "x2/roll/nengo-alif-pes/manifest.json",
+      "bytes": 1604,
+      "sha256": "5089D7628D4087521EA5A34A1498F3895CF19F9AF4E697750E485F495BC94ADE"
+    },
+    {
+      "path": "x2/roll/nengo-alif-pes/neural_trace_full_rate.npz",
+      "bytes": 13809254,
+      "sha256": "251A0A04BDBF76F6B890492F6FF81F81851034169BB19E3D451B8ED7A6DCB32D"
+    },
+    {
+      "path": "x2/roll/nengo-alif-pes/neural_trace_schema.json",
+      "bytes": 2821,
+      "sha256": "040AF3BC41C7EE9A34C262AA274C07A40378B2D8D2899DBD12553674E5AA2721"
+    },
+    {
+      "path": "x2/roll/nengo-alif-pes/summary.json",
+      "bytes": 1776,
+      "sha256": "ABC8C39E4E40AB1AE6F7063A429AAC446189CF31A35420EC412C7D2B914FB98B"
+    },
+    {
+      "path": "x2/roll/nengo-alif-pes/trace.csv",
+      "bytes": 13185400,
+      "sha256": "7B4DB64D351EB2052300039EA88DEC721C3FEBB19B8F8B5E5E9A91E5584FB564"
+    },
+    {
+      "path": "x2/roll/nengo-cmg-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 49298,
+      "sha256": "6BA8FDC18EDE632C5EF5695211E52492B30C062428480D06F2596F4D97A91F31"
+    },
+    {
+      "path": "x2/roll/nengo-cmg-fixed/analysis/family_diagnostics.png",
+      "bytes": 565285,
+      "sha256": "3351DEB6B3EDB1B0E30CBDAB92FC054AF6F4C5503AB281199C22710D94CE2227"
+    },
+    {
+      "path": "x2/roll/nengo-cmg-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 19091,
+      "sha256": "60E6F25CA79D472398CC55B2B129B40DECF51AE8E6BCC750B5FF20EB07C96FF0"
+    },
+    {
+      "path": "x2/roll/nengo-cmg-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 99670,
+      "sha256": "209C330BF9CFD16D19EA0B6A8D09C5C82A8F8D42266A3D96EA5DDD98E51D4CD8"
+    },
+    {
+      "path": "x2/roll/nengo-cmg-fixed/manifest.json",
+      "bytes": 1607,
+      "sha256": "FD23E16C7EEC06B947CFDDB883BA19C06226E4FD2EBF2ECE228AFF1A527A27BA"
+    },
+    {
+      "path": "x2/roll/nengo-cmg-fixed/neural_trace_full_rate.npz",
+      "bytes": 36676760,
+      "sha256": "B15FAFF90C4771D335BB1147B2CFE63AA915FD44DA17314DD25244D6D765F2C8"
+    },
+    {
+      "path": "x2/roll/nengo-cmg-fixed/neural_trace_schema.json",
+      "bytes": 3786,
+      "sha256": "FA0EC00CC76AEF2309D080FA45BFA09C08006055C60110A4104BD2EB770DDB53"
+    },
+    {
+      "path": "x2/roll/nengo-cmg-fixed/summary.json",
+      "bytes": 1981,
+      "sha256": "47F5042E7F6B53FC6FEFAC9EF5C658AA999DEC6705E77A932834557489CBB92E"
+    },
+    {
+      "path": "x2/roll/nengo-cmg-fixed/trace.csv",
+      "bytes": 15043033,
+      "sha256": "3F7C3B8B09908EF0BD5CEB65B2C3B83BEA3323471EF7972BAF4355526CBE879B"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 725718,
+      "sha256": "67921B222A12C3D9D52FF4FA0827E2552AD744F0B65FE5F1AA666B94C2C817E1"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-fixed/analysis/family_diagnostics.png",
+      "bytes": 477492,
+      "sha256": "9EE1D243FB31BF4B981D8A111D22219A674876B2A8941886B408EBE8B5ADE974"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 461902,
+      "sha256": "34CD8EA31CB5E36E0CE80C89D15EE41B087E2EFEC7A9561DDE1DFF1C13C7C639"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 299547,
+      "sha256": "6B870CB84A2887C00F3EF4369602B615D95BD3D14F03C6D32DF66ED27BA76290"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-fixed/manifest.json",
+      "bytes": 1628,
+      "sha256": "802026F4E22C8CF51E76D59102F54FC3D9D4FCEF12C01082A12CB4EF4AAB436D"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-fixed/neural_trace_full_rate.npz",
+      "bytes": 21264630,
+      "sha256": "2BF88D8BD8C246067A66108E38B276B316DFE4EEA5CC1C031C6B7E48B20257BB"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-fixed/neural_trace_schema.json",
+      "bytes": 2689,
+      "sha256": "3160C4FB6CC2EF28C6E83D4930E7531234AF9C76A8CBB0ECED14A40190998B68"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-fixed/summary.json",
+      "bytes": 2210,
+      "sha256": "93EA56B4192FB048E0FD4BE5C3A4BBF37A89607F51817EAD831D6BFAC974D6BA"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-fixed/trace.csv",
+      "bytes": 14218125,
+      "sha256": "2A911219BC67B16B1E4A24C15BD8F13D6441F034AAF52DD688F8D1AABB98E2B3"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-pes/analysis/family_diagnostics.pdf",
+      "bytes": 1311192,
+      "sha256": "1C401E896C93204550F7FD1F5CF7CDEB0FC8E67CB04D6D91980B54F503BE0BA5"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-pes/analysis/family_diagnostics.png",
+      "bytes": 1102683,
+      "sha256": "5558517CD633B56521D976893D0BDCBBE3C14F0A23494576690578C902029C67"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 492693,
+      "sha256": "4B92DCA8FCCBD02D9685D3A1CA805116869A78987675BBFAFDB60BE30E5A9B47"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 377387,
+      "sha256": "7C1A6320CEBD0D5B67A429084A2FBA5C9FD72AD5CF25A188B238858AE81A310D"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-pes/manifest.json",
+      "bytes": 1622,
+      "sha256": "9334C7D59B49C1F8F9938A24113CABE82BA554A92AD4CE7765248F4F09A2EA02"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-pes/neural_trace_full_rate.npz",
+      "bytes": 49476652,
+      "sha256": "E1C38D954422B98B40F2FB9A3DA757E60ED42C07AB49131D3234014DCF1A0847"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-pes/neural_trace_schema.json",
+      "bytes": 2685,
+      "sha256": "D13C3A0575DA21B771AFF6F12B85D21B3AA4D1F0F8753478D6EF039BC45DAEB8"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-pes/summary.json",
+      "bytes": 2214,
+      "sha256": "4CF25B8DBD40805779D6F460EED696F75940971F2C3AE272A6416676588CC220"
+    },
+    {
+      "path": "x2/roll/nengo-izhikevich-pes/trace.csv",
+      "bytes": 17205196,
+      "sha256": "D1F191EE7A5F122CC9012A69F0FA8DAB366F3FB9CB6FCECD8170717E10FAD3A7"
+    },
+    {
+      "path": "x2/roll/nengo-lif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 39978,
+      "sha256": "7867ACCDC3E2CCDA53D692597B3BFDDD4FE81362524760C31235B6D970462A95"
+    },
+    {
+      "path": "x2/roll/nengo-lif-fixed/analysis/family_diagnostics.png",
+      "bytes": 553798,
+      "sha256": "F216D67C94799664E506E0E035C948853A08EB796DC6A507C7D3B01E3841FDDA"
+    },
+    {
+      "path": "x2/roll/nengo-lif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 17833,
+      "sha256": "C930C9E01B3EC2B28F484A9CB9C40B741DFD2F1BD765AAE905064AD6EEAE6AF2"
+    },
+    {
+      "path": "x2/roll/nengo-lif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 132113,
+      "sha256": "DBED4BBF9A1FBADD8E15B2723DDE22B7665A45DF0F25396D04FA823716362370"
+    },
+    {
+      "path": "x2/roll/nengo-lif-fixed/manifest.json",
+      "bytes": 1607,
+      "sha256": "320EDE47BBC8CE951027FB4AB0ED92EEC45B935E5E67D41F23BA432B685F9E0E"
+    },
+    {
+      "path": "x2/roll/nengo-lif-fixed/neural_trace_full_rate.npz",
+      "bytes": 11925672,
+      "sha256": "98BD6B75B8D9EBA921BE92B4F7F635E8FFE7DAAFB45C276CBA09C4B068C826D6"
+    },
+    {
+      "path": "x2/roll/nengo-lif-fixed/neural_trace_schema.json",
+      "bytes": 2688,
+      "sha256": "894920C81691AD9C9C09680C334AB95B465A603347B91AAEFFF498005412C3FE"
+    },
+    {
+      "path": "x2/roll/nengo-lif-fixed/summary.json",
+      "bytes": 1766,
+      "sha256": "A9EAA1E0B9F74F4A2F6114083F40AA13325FF37F35FB03597A8211567FB3C375"
+    },
+    {
+      "path": "x2/roll/nengo-lif-fixed/trace.csv",
+      "bytes": 12556548,
+      "sha256": "5D850517709E20EFB72C7F2A084E69CF67502D847CA563C30A0D047E85ABCFDE"
+    },
+    {
+      "path": "x2/roll/nengo-lif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 40034,
+      "sha256": "D8A998E2593293A5D8F5AD5433D69C1A315DFC0D07F7F93CA5573B88E596442D"
+    },
+    {
+      "path": "x2/roll/nengo-lif-pes/analysis/family_diagnostics.png",
+      "bytes": 627813,
+      "sha256": "2E778117121E99705AEDD4B43F61AAE066B2D1C997C6A6230CC00DE916C56720"
+    },
+    {
+      "path": "x2/roll/nengo-lif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 16782,
+      "sha256": "A2FF8D489A0230B1F5066F76FB027AFA9EF5E7EFD186C97F82ECB470F96F59E3"
+    },
+    {
+      "path": "x2/roll/nengo-lif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 124374,
+      "sha256": "6F5FB8A1E914FCD51154A1BD68B3EFE952AF221CC64651A11F8B6A79F718A3B7"
+    },
+    {
+      "path": "x2/roll/nengo-lif-pes/manifest.json",
+      "bytes": 1601,
+      "sha256": "4C499A818E0EEFD2DC0DEEB8F01741B87BD75E23CC30F220B851E5BA92E155A4"
+    },
+    {
+      "path": "x2/roll/nengo-lif-pes/neural_trace_full_rate.npz",
+      "bytes": 13804805,
+      "sha256": "AC09AF010E0F7AB5C087A7CB1C46E1D3E23C8365ED765758ED14F10FA68CC63A"
+    },
+    {
+      "path": "x2/roll/nengo-lif-pes/neural_trace_schema.json",
+      "bytes": 2684,
+      "sha256": "DF69C5704315BCDEE3DD636AC2B0CC3F5DD4EE532D2911A7146D41B8A248FD57"
+    },
+    {
+      "path": "x2/roll/nengo-lif-pes/summary.json",
+      "bytes": 1772,
+      "sha256": "70822B7B8C45A0627DCBE1875DD92794116B30094A962E8D0F8E81F5AA70C6FD"
+    },
+    {
+      "path": "x2/roll/nengo-lif-pes/trace.csv",
+      "bytes": 13794460,
+      "sha256": "444D374176BA1424C128F81B8E2CF778CAACABBA0F32B5FEFD2715DD52A83085"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 40063,
+      "sha256": "0E13624B0015C81FE79CD1F036516ACB44342A12ADCB96347232758C5AAB4DAD"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-fixed/analysis/family_diagnostics.png",
+      "bytes": 556975,
+      "sha256": "A9641DDCDDE66C2EF008B3FA086825F2AE085B87612CD3340A16A78B0ADF3175"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-fixed/manifest.json",
+      "bytes": 1619,
+      "sha256": "14D227C50D81E08ACB8C27ABD0539169BA748753BCB35D0079B0E209B6995A06"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-fixed/neural_trace_full_rate.npz",
+      "bytes": 9732530,
+      "sha256": "951BB16414BCF4E359977304853D27B5E1393485ECADCDFDAFC8C495BA88AA29"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-fixed/neural_trace_schema.json",
+      "bytes": 2420,
+      "sha256": "802C204C85B0D7E8D2D9C5FF3DFDEE4DE53AFCA5553739AF1F1846AAC54DA81A"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-fixed/summary.json",
+      "bytes": 2177,
+      "sha256": "A9859A78B4DCD521011A35D3662BB1A0A4DA69674CCB70BD62713C7EF38BF1F3"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-fixed/trace.csv",
+      "bytes": 8880042,
+      "sha256": "1635877C113D5015417BE3AE82CF5939158CE87A4B57720A197D010408E12F94"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-pes/analysis/family_diagnostics.pdf",
+      "bytes": 40118,
+      "sha256": "B6C693CEAB5C57CAE74385F12469C861FA7BA1D97F90DE25C3099A3F59623CFB"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-pes/analysis/family_diagnostics.png",
+      "bytes": 630427,
+      "sha256": "96D863FC5B27249FC3E7B114EA947040A66B1C8D083A312CFE8366719BB5A496"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-pes/manifest.json",
+      "bytes": 1613,
+      "sha256": "BF642902D0FE819D10366EBDB156619D142CEC43AA3E588242C72C140A2FC0F6"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-pes/neural_trace_full_rate.npz",
+      "bytes": 11609363,
+      "sha256": "B04D79B619593F3DF80E17764FE956B6665372E3B066A338BF83ADE2986219FB"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-pes/neural_trace_schema.json",
+      "bytes": 2416,
+      "sha256": "585315E7C769EBB2C8956B2DC16AEDEA2A1BE0F2E465CBA55075F2E67FEDC5C9"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-pes/summary.json",
+      "bytes": 2183,
+      "sha256": "32D94524F2522F8AD386E4BCB28B450BBAB007B4CBB4D64AE21079D3E1A74F27"
+    },
+    {
+      "path": "x2/roll/nengo-lifrate-pes/trace.csv",
+      "bytes": 10118274,
+      "sha256": "BD60BE35DC529D2FCA7CC52B91F5D1466D172FA54D991623D665A4ED3EB0349A"
+    },
+    {
+      "path": "x2/roll/nengo-nef-pes/analysis/family_diagnostics.pdf",
+      "bytes": 102118,
+      "sha256": "D5A4632D98B9660F3FF48804BD1130A63D56987BD30864237F3D87A1CBFF749B"
+    },
+    {
+      "path": "x2/roll/nengo-nef-pes/analysis/family_diagnostics.png",
+      "bytes": 917011,
+      "sha256": "B21659013F8F0193C6DA9103E8A389010412EF711F8021F4873FBFC6E8633663"
+    },
+    {
+      "path": "x2/roll/nengo-nef-pes/manifest.json",
+      "bytes": 1601,
+      "sha256": "AE008F04E7CCFA93884DC0E94C998E621BEB854285B6CEE81A9A64F36833968C"
+    },
+    {
+      "path": "x2/roll/nengo-nef-pes/neural_trace_full_rate.npz",
+      "bytes": 52625603,
+      "sha256": "A826753E74220D51D59AA0A372A2A7CAE657F9DAEAAA1DCA986E10AF2D757DEB"
+    },
+    {
+      "path": "x2/roll/nengo-nef-pes/neural_trace_schema.json",
+      "bytes": 3098,
+      "sha256": "57D8025BD5C9037EA5E9561F7CCD525FC1E4308816FB812360DF0860B15E1FF6"
+    },
+    {
+      "path": "x2/roll/nengo-nef-pes/summary.json",
+      "bytes": 1786,
+      "sha256": "AEA413A01CBAC0E6DC226B7E4A68906F211E13EC82DE9513A225268830A61C70"
+    },
+    {
+      "path": "x2/roll/nengo-nef-pes/trace.csv",
+      "bytes": 21766504,
+      "sha256": "8DB0E8C1B807FA55E64361E68CB1CA098B4BE17FB3278AAEE142CB59D1AB84A1"
+    },
+    {
+      "path": "x2/yaw360/classical/manifest.json",
+      "bytes": 1593,
+      "sha256": "1003BE1064B178A372953B6F01B4EA63190AE236EADD3D535441D86E13B98EB6"
+    },
+    {
+      "path": "x2/yaw360/classical/summary.json",
+      "bytes": 1400,
+      "sha256": "B37CB3A405E8E43BEC69A707080AF1EE1CB7A596F9D16D59737B6735C23CEB36"
+    },
+    {
+      "path": "x2/yaw360/classical/trace.csv",
+      "bytes": 6799396,
+      "sha256": "2BCFD5630FC644C0626995B4AAA1E4E0FA681802CC5C292D7BF3481DF210FF59"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 28656,
+      "sha256": "E6574BED3DD77C9FB6BEC80C19A884E5DE1A2E751E3664B184B3AAA8AFBF317A"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-fixed/analysis/family_diagnostics.png",
+      "bytes": 386550,
+      "sha256": "28A966111F87898C67C5CEEDF75B52ED3EE705A2C30D80FB104890E48D7C5F33"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 17880,
+      "sha256": "34572F7964377DF2022DBD5FED9F44611E3B33C6D896A7882A8B2A6DA26A249D"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 150491,
+      "sha256": "268EA3F7117D52A9B880ACCF1358E8B9F70870D2949D2274EC0DC1DBCCA827EA"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-fixed/manifest.json",
+      "bytes": 1614,
+      "sha256": "EE4E506F03D8F0FEEC780BE53E6843B9CDB94BA43A82C696BA7A4F9E2440DD08"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-fixed/neural_trace_full_rate.npz",
+      "bytes": 10738974,
+      "sha256": "4F3197FCBC25003FFC8899236ADA6CF6358796693C5318B8B1668204AD982F38"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-fixed/neural_trace_schema.json",
+      "bytes": 2825,
+      "sha256": "628D5430AAC1BCE24B2F42417880210CE26FBC420B9A812C949DE529D982EEB0"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-fixed/summary.json",
+      "bytes": 2165,
+      "sha256": "A9741EF9B8F624CF228BE50B582220263BD77BCC6A52DB844E0E136B371D792A"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-fixed/trace.csv",
+      "bytes": 11952237,
+      "sha256": "E621F7D5650E8723C1E438DFECE928A2C760AE4C18B291445CAC62C26BEEDEA5"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 28737,
+      "sha256": "DE5A06B2914BF3B6A3EF12B2B800124AC7570AC14B3C246115EAC6F3EBA938FC"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-pes/analysis/family_diagnostics.png",
+      "bytes": 459838,
+      "sha256": "A86DCD2D628959062F83130442BF0924E76D612901C563EB99D9E8DC41BCC080"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 16816,
+      "sha256": "14DA8A02FBB195EE80E2DEBF3C6EB6B7B9782E18548152E190CB96D42FCA3343"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 145252,
+      "sha256": "3889CFBE71F31DDADD6AA5BA43BE60E708357BED709831FAF1BDCEC1FC818A46"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-pes/manifest.json",
+      "bytes": 1608,
+      "sha256": "A996B7B560B5F516FCA3186F0DBB1D00C969E30F2496A78E784A37503695A8ED"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-pes/neural_trace_full_rate.npz",
+      "bytes": 12616883,
+      "sha256": "2A6DB609CFBB24A852F7C60F10018EA784975224599110DB293680023B667861"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-pes/neural_trace_schema.json",
+      "bytes": 2821,
+      "sha256": "040AF3BC41C7EE9A34C262AA274C07A40378B2D8D2899DBD12553674E5AA2721"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-pes/summary.json",
+      "bytes": 2171,
+      "sha256": "23659122911C7153780ED2C2D1A8C62626BBD7A748B244B9339501ADDDE8CF80"
+    },
+    {
+      "path": "x2/yaw360/nengo-alif-pes/trace.csv",
+      "bytes": 13189803,
+      "sha256": "C2B98475A15C2E54D46F7D2264F8D5BEE2C6F8D07820B0F3CAF7679CACDFEFD4"
+    },
+    {
+      "path": "x2/yaw360/nengo-cmg-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 31653,
+      "sha256": "C8E6B8C730497169F22638A93DA9CF75CC07B437034FD0B869CF55489BFFBC9E"
+    },
+    {
+      "path": "x2/yaw360/nengo-cmg-fixed/analysis/family_diagnostics.png",
+      "bytes": 486271,
+      "sha256": "08B8424C23D69E9F671F91C67C2A29BA7F5E2D48768A8F56E51E2E6CBF86A8F9"
+    },
+    {
+      "path": "x2/yaw360/nengo-cmg-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 15614,
+      "sha256": "433559A38D50F0FC567F74FF0978108717B36800E2BAB8794D2B6B898BC905D2"
+    },
+    {
+      "path": "x2/yaw360/nengo-cmg-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 92590,
+      "sha256": "8906C631A6B30F15390798B88CD0E233B85B31ECBC746EF69529F9122B1E4A38"
+    },
+    {
+      "path": "x2/yaw360/nengo-cmg-fixed/manifest.json",
+      "bytes": 1611,
+      "sha256": "14320BFA12F70AC3473509A478D07B8EEB8AA0951E4FA31B754DF8444051B6DE"
+    },
+    {
+      "path": "x2/yaw360/nengo-cmg-fixed/neural_trace_full_rate.npz",
+      "bytes": 30543530,
+      "sha256": "A58A03E6A2BD8ADB3A39FF88CFFAF9A03038463646BED24B6835DCCF9661F6CE"
+    },
+    {
+      "path": "x2/yaw360/nengo-cmg-fixed/neural_trace_schema.json",
+      "bytes": 3786,
+      "sha256": "FA0EC00CC76AEF2309D080FA45BFA09C08006055C60110A4104BD2EB770DDB53"
+    },
+    {
+      "path": "x2/yaw360/nengo-cmg-fixed/summary.json",
+      "bytes": 1990,
+      "sha256": "FC8C2B9623E07DB497D452247BCF963887DF3FB1A04FCAE1EE16A2A93B884982"
+    },
+    {
+      "path": "x2/yaw360/nengo-cmg-fixed/trace.csv",
+      "bytes": 15067287,
+      "sha256": "A1534DD3526933E7FE122531E960263DE7FB67FE2D1A75AFF75006AF8C05B4D4"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 700235,
+      "sha256": "16827D341841FABE4D76AD0B53B1248ED960B5F32F789DF0ED848DCDD1236356"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-fixed/analysis/family_diagnostics.png",
+      "bytes": 449281,
+      "sha256": "A8047E559852410A1A209805AE1C2D15471C25F8B05AF00FC38B41FD7D72DA16"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 470034,
+      "sha256": "04DAEEF025CE48EF3337B7AA1D92C2EFB60CBA0B84D1F6EA55616EAF4E5F2BC9"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 288753,
+      "sha256": "83CD09CCF1B718DEBA5EFC6BF923463D61B58E42427111441028F369FDBC9852"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-fixed/manifest.json",
+      "bytes": 1632,
+      "sha256": "062A0427C685D29133D1809FD1F207D023970C4C8B1FBF22C5C6268B329E9D84"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-fixed/neural_trace_full_rate.npz",
+      "bytes": 20249126,
+      "sha256": "789C76D2CD95367B6A313DC9E2043CADFD09979522DF32E53C706F84A2F23F17"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-fixed/neural_trace_schema.json",
+      "bytes": 2689,
+      "sha256": "3160C4FB6CC2EF28C6E83D4930E7531234AF9C76A8CBB0ECED14A40190998B68"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-fixed/summary.json",
+      "bytes": 2215,
+      "sha256": "B8CE4AA484F8DC366382D8A39D39B74D088E3796AD16E041093516E9D5E8C917"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-fixed/trace.csv",
+      "bytes": 14192377,
+      "sha256": "27B156025E771FC70D30C56E6FF684D316C3E660E969ED9771F87CA190E581F6"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-pes/analysis/family_diagnostics.pdf",
+      "bytes": 1244538,
+      "sha256": "9281FABFB68523B5FBB0D3A57E8B977956ED7D172E72527B2CDA34603A130BED"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-pes/analysis/family_diagnostics.png",
+      "bytes": 1025605,
+      "sha256": "13B2D3625C78B5C9BCB71FB0DFC46D044AFC5D07372F0AD04D00D732F08F1D4C"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 495486,
+      "sha256": "2542002BBC4BE1B5A5A67D22E7A363C778438BC82A068F1667117B3C03AFCCC7"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 361356,
+      "sha256": "236DF3DEC8D7F0ED9A3C4E409136E397EC84F397365A8C7EEB244749BECB0E20"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-pes/manifest.json",
+      "bytes": 1626,
+      "sha256": "4876939910CF01DFFC5CBB95F7127CA8138FB7553EAC60E87F69BE0D7152796C"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-pes/neural_trace_full_rate.npz",
+      "bytes": 49120494,
+      "sha256": "FBFCC65A2D870A757EE776BB5697D5E915C1F85CB7BABE27E36C9009049B57B2"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-pes/neural_trace_schema.json",
+      "bytes": 2685,
+      "sha256": "D13C3A0575DA21B771AFF6F12B85D21B3AA4D1F0F8753478D6EF039BC45DAEB8"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-pes/summary.json",
+      "bytes": 2223,
+      "sha256": "F65E56FA3E0AAF93C45F757E6A05AB7F8D74CAA60D330C2434F673D1CE27D095"
+    },
+    {
+      "path": "x2/yaw360/nengo-izhikevich-pes/trace.csv",
+      "bytes": 17181493,
+      "sha256": "F50D1FBC4417E967E43341DB5BDFB2AE6A41EABEA897F355E606ECE53F60265C"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 28661,
+      "sha256": "CCD94292119502B13FF4B41844C227428720438DB0B08B4CA51386F06E295EC1"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-fixed/analysis/family_diagnostics.png",
+      "bytes": 386367,
+      "sha256": "AA5062613E6C63B5A2FC300628B0435DAD20180DD385FD1FD4FF8162E2536989"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-fixed/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 16513,
+      "sha256": "E8715BF0290D0A9BDF73774D09DFFAB9476EC966FF35DA7F21049C2533D0FC50"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-fixed/analysis/family_diagnostics_native_states.png",
+      "bytes": 123295,
+      "sha256": "72973795F631B2ED7A4C8F86CD59E723FD54F69E457D81CB51732010295ED4DC"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-fixed/manifest.json",
+      "bytes": 1611,
+      "sha256": "FFD2FBB8B937FB74CFF12A03E69C660B2ECF4DF1712320EE8D271AA71D03C2DC"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-fixed/neural_trace_full_rate.npz",
+      "bytes": 10734540,
+      "sha256": "A6BED7BFBCBF6B7E0B85532AC598870C34BCB8531091B4A9942DCE99C19F41AB"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-fixed/neural_trace_schema.json",
+      "bytes": 2688,
+      "sha256": "894920C81691AD9C9C09680C334AB95B465A603347B91AAEFFF498005412C3FE"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-fixed/summary.json",
+      "bytes": 2159,
+      "sha256": "F4057ED7EA026C85D066F71B239B67DD3FFEEDB373B8F626788DDD97E9DE159D"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-fixed/trace.csv",
+      "bytes": 12560973,
+      "sha256": "8E4701BDE0E969395022A2ACC5D98C1252767DBCD495085B9810CF524F65163B"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-pes/analysis/family_diagnostics.pdf",
+      "bytes": 28736,
+      "sha256": "C62BEAAA1F6FF1D592D94AF98414F17E75DE624017B4F52393D26ED7BB85BF95"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-pes/analysis/family_diagnostics.png",
+      "bytes": 459737,
+      "sha256": "287DE75CB9B73D4298E592E72E7421E44C2BAFD6F5C5E1A909FF8A5F6AE6A5DE"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-pes/analysis/family_diagnostics_native_states.pdf",
+      "bytes": 15449,
+      "sha256": "4C83D6B1B623529CFE11CEDAB7AC38EF45BEF9884077EF4C2706C03BEA6EB180"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-pes/analysis/family_diagnostics_native_states.png",
+      "bytes": 117225,
+      "sha256": "A87B232B9BC821B3B6D339E106ADDEC6A4C5B2A5758F437A86F3341D13D861D5"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-pes/manifest.json",
+      "bytes": 1605,
+      "sha256": "44A09B518D98779B6787C3A4EFA94E93EBB7D028CA9E9CE4A43515506322D5C9"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-pes/neural_trace_full_rate.npz",
+      "bytes": 12612434,
+      "sha256": "8284A77694311494C11A9D33F3512BB8E8E5EF2E8F1EA4EA7DB35717D52A36EC"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-pes/neural_trace_schema.json",
+      "bytes": 2684,
+      "sha256": "DF69C5704315BCDEE3DD636AC2B0CC3F5DD4EE532D2911A7146D41B8A248FD57"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-pes/summary.json",
+      "bytes": 2165,
+      "sha256": "37BD518DE00EA8153BDFF939A0D9CF4DE6FDA225B6F756B802B87D4321747697"
+    },
+    {
+      "path": "x2/yaw360/nengo-lif-pes/trace.csv",
+      "bytes": 13798863,
+      "sha256": "E769E8178E71215D73560F471406AF5FB143609C5A697CFA31B5FC5FF1AF2999"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-fixed/analysis/family_diagnostics.pdf",
+      "bytes": 28707,
+      "sha256": "CA2C92AE0A045B0BF6A94543185F0E69EC29103A2E9565CA48716E31F3F9B95D"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-fixed/analysis/family_diagnostics.png",
+      "bytes": 391043,
+      "sha256": "6BFBFEA31304B2B5F4D419817CFB598256346B6B81DADF72A28A4FDFAB051B41"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-fixed/manifest.json",
+      "bytes": 1623,
+      "sha256": "EAD8CA6474E0A36843AA0B85C1995BED93D5140CAF03F005042E6C982F71ED82"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-fixed/neural_trace_full_rate.npz",
+      "bytes": 8835355,
+      "sha256": "58F180774FBA7D848948135442675CD5B997157EA989B687B4E037E209F706B1"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-fixed/neural_trace_schema.json",
+      "bytes": 2420,
+      "sha256": "802C204C85B0D7E8D2D9C5FF3DFDEE4DE53AFCA5553739AF1F1846AAC54DA81A"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-fixed/summary.json",
+      "bytes": 2185,
+      "sha256": "5CA1262245A31438D6F9E57DA185AF04C0252AF7EB2BE9B142EE826E4A3F69A5"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-fixed/trace.csv",
+      "bytes": 8883727,
+      "sha256": "42D94279C7B32115D863391B7249153DD3FD0DDB8D5F12CB02094305BE9E44AD"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-pes/analysis/family_diagnostics.pdf",
+      "bytes": 28792,
+      "sha256": "9F80011742E7CA46B9B5C0DA54F45009A40FBE67042289D99892DD18451FA85C"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-pes/analysis/family_diagnostics.png",
+      "bytes": 464083,
+      "sha256": "A19C1A838FC7CCF0AD1CF31A66A1887292372EB0ABE91808F151688F308F776B"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-pes/manifest.json",
+      "bytes": 1617,
+      "sha256": "76AFFB9FC30303CE8F084B6DD2FDC8871C9016A2755AEAF172801CB428A276DD"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-pes/neural_trace_full_rate.npz",
+      "bytes": 10712188,
+      "sha256": "E4EFAB970533AC4A6EE3BC3D5F88FE8C308769E9EB638F2CE39B02C4EB17E862"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-pes/neural_trace_schema.json",
+      "bytes": 2416,
+      "sha256": "585315E7C769EBB2C8956B2DC16AEDEA2A1BE0F2E465CBA55075F2E67FEDC5C9"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-pes/summary.json",
+      "bytes": 2191,
+      "sha256": "52D518DE50ED7D493A08A3D8E6B71C7E29EB1A8470BF6326E9490F4F37BBA403"
+    },
+    {
+      "path": "x2/yaw360/nengo-lifrate-pes/trace.csv",
+      "bytes": 10121959,
+      "sha256": "F2371A9E3893574B847287A668384525567651E1EA5613672B7672C9F4499DB5"
+    },
+    {
+      "path": "x2/yaw360/nengo-nef-pes/analysis/family_diagnostics.pdf",
+      "bytes": 38878,
+      "sha256": "2D687D14D40DA658F320A4C2252CB8939B455C87120EF91E4074B8AFA0DB3E2B"
+    },
+    {
+      "path": "x2/yaw360/nengo-nef-pes/analysis/family_diagnostics.png",
+      "bytes": 538718,
+      "sha256": "6CD8AC3DC87DD3A82FCFB094E91516B72802A627BA83CF34EE8EA45EE165AB4D"
+    },
+    {
+      "path": "x2/yaw360/nengo-nef-pes/manifest.json",
+      "bytes": 1605,
+      "sha256": "AF300C06BA4E32F16BDA9CE63E3C5F4D475282FC6FADB95B9F69777353313288"
+    },
+    {
+      "path": "x2/yaw360/nengo-nef-pes/neural_trace_full_rate.npz",
+      "bytes": 45437387,
+      "sha256": "5A4260D66D1F3797CAE00FD4860B4EEFB2B640223558F4663AB1415B58689D58"
+    },
+    {
+      "path": "x2/yaw360/nengo-nef-pes/neural_trace_schema.json",
+      "bytes": 3098,
+      "sha256": "57D8025BD5C9037EA5E9561F7CCD525FC1E4308816FB812360DF0860B15E1FF6"
+    },
+    {
+      "path": "x2/yaw360/nengo-nef-pes/summary.json",
+      "bytes": 1832,
+      "sha256": "DE3EBA24846D76B5848E132A00B0F67AD2963013985DE11F5F79423AD80A6D8A"
+    },
+    {
+      "path": "x2/yaw360/nengo-nef-pes/trace.csv",
+      "bytes": 21729494,
+      "sha256": "B8F001D99663581D8882437E54413D8056934EBCF50ABFE299026AA166A6D4B6"
+    }
+  ]
+}

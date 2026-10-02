@@ -1,0 +1,26 @@
+{
+  "case": "Yaw-rate SISO",
+  "output": "gyro_z_corr",
+  "inputs": [
+    "u_diff"
+  ],
+  "na": 2,
+  "nb": 2,
+  "nk": 2,
+  "sample_time_s": 0.005623523719685972,
+  "downsample": 1,
+  "constant_c": -1.1224865563311256e-05,
+  "denominator_z_minus_1": [
+    1.0,
+    -0.7156076104814414,
+    -0.28151839052841404
+  ],
+  "numerators_z_minus_1": {
+    "u_diff": [
+      0.00016699079188475796,
+      -0.00015619919245135616
+    ]
+  },
+  "cond_ztz": 2334877.300094839,
+  "rank": 5
+}

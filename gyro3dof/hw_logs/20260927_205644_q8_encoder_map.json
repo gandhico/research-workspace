@@ -1,0 +1,51 @@
+{
+  "duration_s": 89.98001050000312,
+  "channels": {
+    "enc0": {
+      "moved": true,
+      "active_from_s": 0.0,
+      "active_to_s": 29.0,
+      "min": -29995,
+      "max": -13713,
+      "span_counts": 16282,
+      "span_deg": 1431.0,
+      "final_counts": -29995,
+      "final_deg": -2636.3,
+      "first_direction": -1
+    },
+    "enc1": {
+      "moved": false
+    },
+    "enc2": {
+      "moved": false
+    },
+    "enc3": {
+      "moved": false
+    },
+    "enc4": {
+      "moved": false
+    },
+    "enc5": {
+      "moved": false
+    },
+    "enc6": {
+      "moved": false
+    },
+    "enc7": {
+      "moved": false
+    }
+  },
+  "order_moved": [
+    "enc0"
+  ],
+  "bursts_in_time_order": [
+    {
+      "enc": 0,
+      "from_s": 0.0,
+      "to_s": 29.0,
+      "span_counts": 16282,
+      "span_deg": 1431.0
+    }
+  ],
+  "log": "C:\\Research\\gyro3dof\\hw_logs\\20260927_205644_q8_encoder_map.csv"
+}

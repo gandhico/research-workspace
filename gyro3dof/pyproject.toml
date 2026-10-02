@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gyro3dof"
+version = "0.1.0"
+description = "Quanser 3 DOF Gyroscope: reference model, MuJoCo twin, Basilisk and neuromorphic studies"
+requires-python = ">=3.11"
+dependencies = ["numpy", "scipy", "mujoco==3.11.0"]
+
+[project.optional-dependencies]
+dev = ["pytest", "matplotlib", "imageio[ffmpeg]"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

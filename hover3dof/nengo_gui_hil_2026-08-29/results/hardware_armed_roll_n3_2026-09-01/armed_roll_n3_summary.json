@@ -1,0 +1,109 @@
+{
+  "aggregate": {
+    "schema": 1,
+    "platform": "Quanser 3DOF Hover",
+    "mission": "roll",
+    "n_per_controller": 3,
+    "cmg_configuration": {
+      "beta": 0.2,
+      "per_motor_residual_cap_V": 0.2,
+      "learning_rate": 0.0002,
+      "k_error": 2.0,
+      "k_rate": 0.0,
+      "residual_slew_V_per_s": 1.0
+    },
+    "pd_mean_error_deg": {
+      "mean": 5.440526976020819,
+      "sample_sd": 0.0647834054873954
+    },
+    "cmg_mean_error_deg": {
+      "mean": 5.295958423170877,
+      "sample_sd": 0.04284701860456412
+    },
+    "pd_max_error_deg": {
+      "mean": 8.243931169130235,
+      "sample_sd": 0.0676111970963241
+    },
+    "cmg_max_error_deg": {
+      "mean": 7.962239266959277,
+      "sample_sd": 0.14034655906837226
+    },
+    "paired_mean_improvement_percent": {
+      "mean": 2.650768738258034,
+      "sample_sd": 1.0765223741290586
+    },
+    "paired_max_improvement_percent": {
+      "mean": 3.4059584673763905,
+      "sample_sd": 2.338319017662566
+    },
+    "aggregate_improvement_from_group_means_percent": 2.657252753035317,
+    "cmg_gate_mean_across_trials": [
+      5.395609573897983e-06,
+      3.7649997122797036e-06,
+      0.9013299603120917,
+      5.729796215591781e-06,
+      4.476304908633422e-06,
+      0.25384611068472773
+    ],
+    "cmg_gate_between_trial_sample_sd": [
+      4.937521652174834e-07,
+      2.1033753979997415e-08,
+      0.0024197989203922003,
+      3.724262318168433e-07,
+      1.1203050803771333e-07,
+      0.004791458405864934
+    ],
+    "all_runs_completed": true,
+    "all_abort_reasons_empty": true
+  },
+  "paired_trials": [
+    {
+      "pair": 1,
+      "pd_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hardware\\pd_roll_none_armed_20260831_184229",
+      "cmg_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hardware\\nengo-pes_roll_none_armed_20260831_184512",
+      "pd_mean_error_deg": 5.46302502230238,
+      "cmg_mean_error_deg": 5.344904376891968,
+      "paired_mean_improvement_percent": 2.1621838620213887,
+      "pd_max_error_deg": 8.19420110458067,
+      "cmg_max_error_deg": 8.12325975490999,
+      "paired_max_improvement_percent": 0.8657506542159922,
+      "cmg_deadline_miss_fraction": 0.020625,
+      "cmg_max_consecutive_misses": 3,
+      "cmg_residual_rms_V": 0.15357207615531662,
+      "cmg_residual_cap_fraction": 0.26125,
+      "cmg_decoder_frobenius_change": 0.18401075976142983
+    },
+    {
+      "pair": 2,
+      "pd_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hardware\\pd_roll_none_armed_20260831_185316",
+      "cmg_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hardware\\nengo-pes_roll_none_armed_20260831_185408",
+      "pd_mean_error_deg": 5.491061996626613,
+      "cmg_mean_error_deg": 5.277737423121663,
+      "paired_mean_improvement_percent": 3.8849419954829205,
+      "pd_max_error_deg": 8.320915914400391,
+      "cmg_max_error_deg": 7.865871580333293,
+      "paired_max_improvement_percent": 5.468680836920693,
+      "cmg_deadline_miss_fraction": 0.0075,
+      "cmg_max_consecutive_misses": 3,
+      "cmg_residual_rms_V": 0.15279894622780602,
+      "cmg_residual_cap_fraction": 0.253125,
+      "cmg_decoder_frobenius_change": 0.19015784378226475
+    },
+    {
+      "pair": 3,
+      "pd_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hardware\\pd_roll_none_armed_20260831_185456",
+      "cmg_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hardware\\nengo-pes_roll_none_armed_20260831_185603",
+      "pd_mean_error_deg": 5.3674939091334615,
+      "cmg_mean_error_deg": 5.265233469498998,
+      "paired_mean_improvement_percent": 1.9051803572697936,
+      "pd_max_error_deg": 8.216676488409645,
+      "cmg_max_error_deg": 7.897586465634549,
+      "paired_max_improvement_percent": 3.8834439109924874,
+      "cmg_deadline_miss_fraction": 0.016875,
+      "cmg_max_consecutive_misses": 5,
+      "cmg_residual_rms_V": 0.1318775192998897,
+      "cmg_residual_cap_fraction": 0.115,
+      "cmg_decoder_frobenius_change": 0.18061000885332765
+    }
+  ]
+}

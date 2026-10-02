@@ -1,0 +1,21 @@
+WARNING: Attach conflict when attaching 'Skydio X2' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+timestep: parent has 0.002 (default), child has 0.01, keeping parent value
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+
+C:\Research\neuromorphic_drone_racing\build_scene.py:137: UserWarning: Attach conflict when attaching 'Skydio X2' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+timestep: parent has 0.002 (default), child has 0.01, keeping parent value
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+  model = spec.compile()
+C:\Research\neuromorphic_drone_racing\build_scene.py:138: UserWarning: Attach conflict when attaching 'Skydio X2' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+timestep: parent has 0.002 (default), child has 0.01, keeping parent value
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+  out.write_text(spec.to_xml())
+{'auth': 100.0, 'margin': 0.35, 'kR': 140.0, 'kR_yaw': 4.0, 'race_s': 24.9, 'rmse_cm': 4.0, 'max_cm': 15.9, 'sat': 9.0}
+{'auth': 100.0, 'margin': 0.35, 'kR': 140.0, 'kR_yaw': 25.0, 'race_s': 24.9, 'rmse_cm': 4.1, 'max_cm': 15.9, 'sat': 10.5}
+{'auth': 100.0, 'margin': 0.45, 'kR': 140.0, 'kR_yaw': 4.0, 'race_s': 18.3, 'rmse_cm': 920.4, 'max_cm': 2417.8, 'sat': 49.2}
+{'auth': 100.0, 'margin': 0.45, 'kR': 140.0, 'kR_yaw': 25.0, 'race_s': 18.3, 'rmse_cm': 15.9, 'max_cm': 42.3, 'sat': 27.9}
+{'auth': 100.0, 'margin': 0.6, 'kR': 140.0, 'kR_yaw': 4.0, 'race_s': 14.9, 'rmse_cm': 1126.8, 'max_cm': 2801.5, 'sat': 59.7}
+{'auth': 100.0, 'margin': 0.6, 'kR': 140.0, 'kR_yaw': 25.0, 'race_s': 14.9, 'rmse_cm': 1477.3, 'max_cm': 3397.1, 'sat': 64.1}

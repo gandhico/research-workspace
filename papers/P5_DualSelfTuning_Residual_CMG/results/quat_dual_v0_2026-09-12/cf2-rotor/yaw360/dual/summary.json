@@ -1,0 +1,83 @@
+{
+ "platform": "cf2-rotor",
+ "mission": "yaw360",
+ "controller": "dual",
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "ki_factor": 0.05,
+ "tuner": {
+  "beta_p": 0.5,
+  "beta_i": 0.5,
+  "beta_d": 0.5,
+  "e_ref": 0.1,
+  "w_ref": 1.0,
+  "kappa_d": 1.0,
+  "tau_lp": 1.0,
+  "learning_rate": 0.0001,
+  "leak": 1e-06,
+  "w_max": 6.0
+ },
+ "qerr_mean_rad": 0.021752270271653402,
+ "qerr_rmse_rad": 0.023443745643866403,
+ "qerr_max_rad": 0.03131483463456934,
+ "saturation_fraction": 0.0,
+ "residual_rms_Nm": 1.3876043687190778e-05,
+ "torque_limits_Nm": [
+  0.000287412,
+  0.000287412,
+  0.00032347
+ ],
+ "multiplier_mean": [
+  1.0,
+  1.0,
+  1.0528164082874736,
+  1.0,
+  1.0,
+  1.051349044792394,
+  1.0,
+  1.0,
+  0.9920494458029057
+ ],
+ "multiplier_min": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  0.983985965701865
+ ],
+ "multiplier_max": [
+  1.0,
+  1.0000000000000022,
+  1.0773168558832371,
+  1.0,
+  1.000000000000002,
+  1.0771287227006245,
+  1.0,
+  1.0,
+  1.0022262119596979
+ ],
+ "integral_frozen_fraction": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "WS_final_fro": 0.06669440306958005,
+ "WR_final_fro": 2.241227568190103,
+ "wall_s": 32.94860949999929,
+ "hashes": {
+  "run_dual.py": "cd7c56868fa536d6",
+  "dual_controller.py": "daaec9c7242be225",
+  "gra_control/gate.py": "ea6d7853fff724d2",
+  "gra_control/platforms/drone.py": "50af6d1f6de51788",
+  "gra_control/math3d.py": "31620612f184a22f",
+  "model": "410e0975d066abb1"
+ }
+}

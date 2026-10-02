@@ -1,0 +1,64 @@
+{
+  "status": "offline_diagnosis_only",
+  "files": {
+    "baseline": "logs/rich_R3_roll_matched_baseline_20260712_203402.csv",
+    "lqr": "logs/rich_R3_roll_matched_lqr_20260712_203707.csv"
+  },
+  "runs": {
+    "baseline": {
+      "pre_p_mean_deg_s": 0.003475634228172047,
+      "pre_p_std_deg_s": 0.0004822561919090255,
+      "active_p_std_deg_s": 0.0010087400569308664,
+      "pulse_nonzero_samples": 14,
+      "realized_pulse_peak": 4.880552628776275e-05,
+      "peak_sent_command": 0.00019999999999999998,
+      "sent_limit_samples": 25,
+      "sent_to_yoke_one_sample_correlation": 0.9999999999999665,
+      "sent_to_yoke_one_sample_rmse": 8.749431436131984e-12,
+      "cascade_one_step_p_rmse_deg_s": 0.0006091426039182995,
+      "cascade_one_step_p_nrmse": 0.060538057490472585,
+      "cumulative_integral_abs_p_deg": {
+        "12": 0.0017030444966822775,
+        "14": 0.003503737051419206,
+        "16": 0.004408507388189976,
+        "18": 0.00498162005636231
+      }
+    },
+    "lqr": {
+      "pre_p_mean_deg_s": 0.0018813120982875782,
+      "pre_p_std_deg_s": 0.0005534471955435672,
+      "active_p_std_deg_s": 0.0008831489967932182,
+      "pulse_nonzero_samples": 14,
+      "realized_pulse_peak": 4.9969082967814885e-05,
+      "peak_sent_command": 4.817526784969129e-05,
+      "sent_limit_samples": 0,
+      "sent_to_yoke_one_sample_correlation": 0.9999999999977514,
+      "sent_to_yoke_one_sample_rmse": 8.335746121446721e-12,
+      "cascade_one_step_p_rmse_deg_s": 0.0005142427024901616,
+      "cascade_one_step_p_nrmse": 0.05554918071049557,
+      "cumulative_integral_abs_p_deg": {
+        "12": 0.001199190115803745,
+        "14": 0.0027588101166246765,
+        "16": 0.003626007913171298,
+        "18": 0.004427701027164582
+      }
+    }
+  },
+  "cumulative_lqr_to_baseline_integral_ratios": {
+    "12": 0.7041449111517065,
+    "14": 0.7873907419813958,
+    "16": 0.8225024013535899,
+    "18": 0.8888074516059719
+  },
+  "frozen_score_retained": {
+    "integral_ratio": 0.8888074516059719,
+    "gate_max": 0.7,
+    "pass": false
+  },
+  "findings": [
+    "Both command paths were realized at the yoke with essentially exact one-sample tracking.",
+    "The ratio degrades as the post-pulse quiet tail is accumulated, indicating reload-specific background motion dominates the long integration window.",
+    "The baseline reached the fixed command bound while the LQR did not, so the offline zero-state baseline trajectory did not reproduce flight operating history."
+  ],
+  "decision": "performance failure retained; no metric relaxation, refit, or new flight authorized"
+}

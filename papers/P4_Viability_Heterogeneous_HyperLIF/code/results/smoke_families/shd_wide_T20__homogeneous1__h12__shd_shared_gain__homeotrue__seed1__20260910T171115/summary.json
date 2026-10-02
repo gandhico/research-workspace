@@ -1,0 +1,97 @@
+{
+  "checkpoint": "C:\\Research\\papers\\P4_Viability_Heterogeneous_HyperLIF\\code\\results\\smoke_families\\shd_wide_T20__homogeneous1__h12__shd_shared_gain__homeotrue__seed1__20260910T171115\\checkpoint.jls",
+  "claim_boundary": "single run; a claim requires the matched heterogeneous/ensemble/homogeneous triple over paired seeds",
+  "command_line": [
+    "--cache=C:/Research/papers/P1_HyperLIF_Learning/code/hpc/upload_data/shd_wide_T20.h5",
+    "--smoke",
+    "--model=homogeneous",
+    "--results-root=results/smoke_families"
+  ],
+  "dataset": {
+    "classes": 20,
+    "input_features": 700,
+    "path": "C:\\Research\\papers\\P1_HyperLIF_Learning\\code\\hpc\\upload_data\\shd_wide_T20.h5",
+    "sha256": "6e5eb592c7530184daf83ecdff54ef4db34a42a45551195898a1e1a557c74738",
+    "split_rule": "P1 class-stratified seeded cap and validation split",
+    "test_used": 40,
+    "time_steps": 20,
+    "train_used": 28,
+    "validation_used": 20
+  },
+  "finished_at_utc": "2026-09-10T17:11:16.652",
+  "model": {
+    "effective_parameter_count": 8913,
+    "event_definition": "upward threshold crossing",
+    "family": "homogeneous",
+    "final_threshold_offsets": [
+      -0.008404762
+    ],
+    "hidden_per_population": 12,
+    "homeostasis": true,
+    "homeostasis_effective": false,
+    "homeostasis_interval_batches": 0,
+    "homeostasis_rule": "slow population-specific threshold offsets from training upcrossing bands",
+    "input_scales": [
+      1.4
+    ],
+    "learning_mode": "continuous",
+    "parameter_count": 9177,
+    "populations": 1,
+    "readout": "hybrid_vr logit ensemble",
+    "readout_uses_events": false,
+    "regime_calibration": "single shared input gain in the unsaturated window; intrinsic parameters set the regime. See results/shared_gain_sweep.csv.",
+    "regime_profile": "shd_shared_gain",
+    "regimes": [
+      "homogeneous_mean"
+    ],
+    "target_rate_bands": [
+      [
+        0.007125,
+        0.017125
+      ]
+    ],
+    "total_hidden": 12
+  },
+  "optimization": {
+    "best_epoch": 1,
+    "best_validation_accuracy": 0.05,
+    "epochs_completed": 1,
+    "epochs_requested": 1,
+    "seed": 1
+  },
+  "schema_version": 1,
+  "started_at_utc": "2026-09-10T17:10:14.613",
+  "status": "exploratory_complete",
+  "test": {
+    "accuracy": 0.05,
+    "loss": 3.2324450492858885,
+    "mix_weights": [
+      1.0
+    ],
+    "populations": [
+      {
+        "event_rate": 0.008229167014360429,
+        "gate_mean": 0.06179334297776222,
+        "no_event_fraction": 0.8354166507720947,
+        "occupancy_rate": 0.05614583343267441,
+        "standalone_accuracy": 0.05
+      }
+    ]
+  },
+  "trace": [
+    {
+      "epoch": 1,
+      "rate_band_penalty": 0.0,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 3.569441931588309,
+      "training_event_rates": [
+        0.007440476
+      ],
+      "validation_accuracy": 0.05,
+      "validation_loss": 3.3026556015014648
+    }
+  ],
+  "wall_seconds": 62.039000034332275
+}

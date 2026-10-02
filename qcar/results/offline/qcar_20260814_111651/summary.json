@@ -1,0 +1,75 @@
+{
+  "artifacts": {
+    "baseline_csv": "D:\\NMSU_backups\\Backup\\00_Research_\\Neuromorphic_Embodied_AI\\05_Qcar_SNNs\\results\\offline\\qcar_20260814_111651\\csv\\qcar_baseline.csv",
+    "figure": null,
+    "residual_csv": "D:\\NMSU_backups\\Backup\\00_Research_\\Neuromorphic_Embodied_AI\\05_Qcar_SNNs\\results\\offline\\qcar_20260814_111651\\csv\\qcar_hyperlif_residual.csv"
+  },
+  "baseline": {
+    "dt_s": 0.01,
+    "duration_s": 0.2,
+    "final_error_norm": 0.16193354433239493,
+    "max_abs_command": 0.1822,
+    "max_abs_residual": 0.0,
+    "max_error_norm": 0.18,
+    "max_gate": 0.0,
+    "mean_abs_command": 0.15401178137403568,
+    "mean_abs_residual": 0.0,
+    "mean_error_norm": 0.17172961968808126,
+    "mean_gate": 0.0,
+    "mode": "baseline",
+    "platform": "qcar",
+    "rms_error_norm": 0.17181808333443627,
+    "samples": 21,
+    "saturation_fraction": 0.0
+  },
+  "baseline_controller": "image-space PID/SMC-style steering baseline",
+  "comparison": {
+    "baseline_mean_abs_command": 0.15401178137403568,
+    "baseline_mode": "baseline",
+    "baseline_rms_error_norm": 0.17181808333443627,
+    "control_effort_delta_percent": 35.00114167207673,
+    "mean_error_delta_percent": -0.48375191067632883,
+    "platform": "qcar",
+    "residual_mean_abs_command": 0.20791766316445098,
+    "residual_mode": "residual",
+    "residual_rms_error_norm": 0.1710173662049565,
+    "rms_error_delta_percent": -0.4660261096739196
+  },
+  "control_labels": [
+    "steering"
+  ],
+  "description": "Image-lane error and heading-error abstraction for QCar lane keeping.",
+  "hyperlif_residual": {
+    "dt_s": 0.01,
+    "duration_s": 0.2,
+    "final_error_norm": 0.1593152254441482,
+    "max_abs_command": 0.28932370628337417,
+    "max_abs_residual": 0.12249482309708098,
+    "max_error_norm": 0.18,
+    "max_gate": 0.9999999999999998,
+    "mean_abs_command": 0.20791766316445098,
+    "mean_abs_residual": 0.06372700503069442,
+    "mean_error_norm": 0.17089887437164297,
+    "mean_gate": 0.5906725626038077,
+    "mode": "residual",
+    "platform": "qcar",
+    "rms_error_norm": 0.1710173662049565,
+    "samples": 21,
+    "saturation_fraction": 0.0
+  },
+  "interpretation_note": "Offline simulation is a reproducibility and controller-wiring check. It should not be reported as hardware evidence until repeated on the physical platform.",
+  "label": "QCar/QCar2 lane following",
+  "platform": "qcar",
+  "residual_controller": "baseline plus bounded Adaptive HyperLIF gate-state residual",
+  "safety_limits": {
+    "max_steering_rad": 0.35,
+    "max_throttle": 0.04
+  },
+  "state_labels": [
+    "lane_error",
+    "heading_error"
+  ],
+  "target_state_indices": [
+    0
+  ]
+}

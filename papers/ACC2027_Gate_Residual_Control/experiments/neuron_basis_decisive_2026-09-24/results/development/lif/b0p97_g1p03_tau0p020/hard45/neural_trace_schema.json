@@ -1,0 +1,317 @@
+{
+  "schema": 2,
+  "sample_rate_hz": 2000.0,
+  "sample_period_s": 0.0005,
+  "axis_order": [
+    "x",
+    "y",
+    "z"
+  ],
+  "unit_order": [
+    "+x",
+    "+y",
+    "+z",
+    "-x",
+    "-y",
+    "-z"
+  ],
+  "weight_shape_per_sample": [
+    3,
+    6
+  ],
+  "signals": {
+    "t": {
+      "shape": [
+        30000
+      ],
+      "dtype": "float64"
+    },
+    "plant_step": {
+      "shape": [
+        30000
+      ],
+      "dtype": "int64"
+    },
+    "q_ref": {
+      "shape": [
+        30000,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "q_true": {
+      "shape": [
+        30000,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "q_feedback": {
+      "shape": [
+        30000,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "qerr_true_rad": {
+      "shape": [
+        30000
+      ],
+      "dtype": "float64"
+    },
+    "qerr_feedback_rad": {
+      "shape": [
+        30000
+      ],
+      "dtype": "float64"
+    },
+    "omega_true": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "omega_feedback": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "baseline_tau": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "target": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "current": {
+      "shape": [
+        30000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "voltage": {
+      "shape": [
+        30000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate": {
+      "shape": [
+        30000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "activity": {
+      "shape": [
+        30000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "effective_threshold": {
+      "shape": [
+        30000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate_argument": {
+      "shape": [
+        30000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate_target": {
+      "shape": [
+        30000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "conductance_gain": {
+      "shape": [
+        30000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "conductance": {
+      "shape": [
+        30000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "membrane_lambda": {
+      "shape": [
+        30000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "membrane_drive": {
+      "shape": [
+        30000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "decoded_raw": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "decoded_clipped": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "pes_error": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "weights": {
+      "shape": [
+        30000,
+        3,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "weight_delta": {
+      "shape": [
+        30000,
+        3,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "raw_residual_torque": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "output_gate_mask": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "gated_residual_torque": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "realized_residual_torque": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "tau_requested": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "tau_command": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "tau_realized": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "baseline_loaded_mask": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "bool"
+    },
+    "torque_box_saturation_mask": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "bool"
+    },
+    "actuator_requested": {
+      "shape": [
+        30000,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "actuator_command": {
+      "shape": [
+        30000,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "rotor_saturation_mask": {
+      "shape": [
+        30000,
+        4
+      ],
+      "dtype": "bool"
+    },
+    "disturbance_gain": {
+      "shape": [
+        30000
+      ],
+      "dtype": "float64"
+    },
+    "disturbance_body": {
+      "shape": [
+        30000,
+        3
+      ],
+      "dtype": "float64"
+    }
+  },
+  "semantics": {
+    "decoded_clipped": "clip(W @ activity,-1,1); PES input and raw residual source",
+    "raw_residual_torque": "beta * torque_limit * decoded_clipped before outer gating/clipping",
+    "output_gate_mask": "application-side mask; it does not mask PES updates (except in freeze-pes mode)",
+    "gated_residual_torque": "output_gate_mask * raw_residual_torque",
+    "realized_residual_torque": "tau_command - baseline_tau after torque-box clipping",
+    "tau_realized": "torque reconstructed after rotor-force clipping/allocation",
+    "weight_delta": "post-PES/leak decoder weights minus pre-step weights"
+  }
+}

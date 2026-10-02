@@ -1,0 +1,76 @@
+{
+ "platform": "x2",
+ "mission": "hard45",
+ "family": "backstepping",
+ "arm": "st",
+ "controller": "backstepping_st",
+ "allocation": "apa",
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "z_min_m": 0.7161875379461232,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "tuner": {
+  "beta_p": 0.5,
+  "beta_i": 0.5,
+  "beta_d": 0.5,
+  "e_ref": 0.1,
+  "w_ref": 1.0,
+  "kappa_d": 1.0,
+  "tau_lp": 1.0,
+  "learning_rate": 0.0001,
+  "leak": 1e-06,
+  "w_max": 6.0,
+  "freeze_on_sat": false,
+  "v2_gating": true,
+  "e_gate": 0.25
+ },
+ "qerr_mean_rad": 0.010432616795215514,
+ "qerr_rmse_rad": 0.025955923982347955,
+ "qerr_max_rad": 0.4086623323526669,
+ "saturation_fraction": 0.0,
+ "residual_rms_Nm": 0.0,
+ "torque_limits_Nm": [
+  0.7285355381134109,
+  0.43762083924507955,
+  0.2541169811320755
+ ],
+ "multiplier_mean": [
+  1.0032698980609223,
+  1.0038988607114991,
+  1.009466422725936,
+  1.0003054711770467,
+  1.0003098298458826,
+  1.0008999688801559
+ ],
+ "multiplier_min": [
+  1.0,
+  0.9988397423820194,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_max": [
+  1.0152061631426832,
+  1.0493351547469567,
+  1.0265552818217822,
+  1.0021941048636342,
+  1.002227965832592,
+  1.0042326890134874
+ ],
+ "WS_final_fro": 0.020951539885248383,
+ "WR_final_fro": null,
+ "wall_s": 148.6368538999959,
+ "hashes": {
+  "run_dual_v5.py": "79e7849d5b778c5b",
+  "dual_controller_v5.py": "1af5cd0c0a625f5b",
+  "dual_controller.py": "4786d16cc2f51140",
+  "run_dual.py": "024712601f975101",
+  "run_mujoco_nef_baselines.py": "3c12f663e4034fd9",
+  "model": "d932ffbe9f0d1fa4"
+ }
+}

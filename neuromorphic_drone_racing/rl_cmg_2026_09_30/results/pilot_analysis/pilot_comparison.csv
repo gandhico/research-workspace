@@ -1,0 +1,5 @@
+mode,bc_samples,ppo_rollouts,ppo_simulator_steps,eval_duration_s,gates,collisions,return_sum,mean_position_error_m,mean_event_rate_hz,active_event_units,total_units
+mlp,600,2,4390,6.64,0,0,-33.0881,2.4301,0.0,0,32
+graded,600,2,4320,5.78,0,0,-60.1589,5.3676,0.319,0,32
+crossing,600,2,4510,3.36,0,1,-12.8694,0.3888,0.186,0,32
+reset_spike,600,2,3740,3.26,0,0,-11.7694,2.7171,17.398,18,32

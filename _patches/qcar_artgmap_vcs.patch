@@ -1,0 +1,268 @@
+diff --git a/assets/fonts/NotoSansMath-Regular.ttf b/assets/fonts/NotoSansMath-Regular.ttf
+old mode 100755
+new mode 100644
+diff --git a/assets/forms/DragWindow.txt b/assets/forms/DragWindow.txt
+old mode 100755
+new mode 100644
+diff --git a/assets/forms/Right_Click_Menu.txt b/assets/forms/Right_Click_Menu.txt
+old mode 100755
+new mode 100644
+diff --git a/assets/forms/createRobot.txt b/assets/forms/createRobot.txt
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/AStar.hpp b/include/artgmap_vcs/AStar.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/DragWindow.hpp b/include/artgmap_vcs/DragWindow.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/FileManager.hpp b/include/artgmap_vcs/FileManager.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/GridMap.hpp b/include/artgmap_vcs/GridMap.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/Map.hpp b/include/artgmap_vcs/Map.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/MapRosConection.hpp b/include/artgmap_vcs/MapRosConection.hpp
+old mode 100755
+new mode 100644
+index cf1e7f5..1942d6b
+--- a/include/artgmap_vcs/MapRosConection.hpp
++++ b/include/artgmap_vcs/MapRosConection.hpp
+@@ -120,8 +120,6 @@ private:
+     void qcarPoseReceiver(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
+     void joint_sateCallback(const sensor_msgs::msg::JointState::SharedPtr joint);
+ 
+-    long getMemoryUsageKB();
+-    void publishMemoryUsage();
+     float t_update = 0.0f;
+     float d = 0.0f;
+     size_t pathSize = 0; 
+diff --git a/include/artgmap_vcs/MapViewer.hpp b/include/artgmap_vcs/MapViewer.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/MenuBar.hpp b/include/artgmap_vcs/MenuBar.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/Node.hpp b/include/artgmap_vcs/Node.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/RightClickMapMenu.hpp b/include/artgmap_vcs/RightClickMapMenu.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/RobotCreator.hpp b/include/artgmap_vcs/RobotCreator.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/UnicicleWmr.hpp b/include/artgmap_vcs/UnicicleWmr.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/ViewController.hpp b/include/artgmap_vcs/ViewController.hpp
+old mode 100755
+new mode 100644
+diff --git a/include/artgmap_vcs/tinyfiledialogs.h b/include/artgmap_vcs/tinyfiledialogs.h
+old mode 100755
+new mode 100644
+diff --git a/src/Astar.cpp b/src/Astar.cpp
+old mode 100755
+new mode 100644
+index 3921893..60154ad
+--- a/src/Astar.cpp
++++ b/src/Astar.cpp
+@@ -491,7 +491,7 @@ std::vector<sf::Vector2f> AStar::path2meters(const std::vector<sf::Vector2i>& pa
+         float x_m = x_center_in_map + halfRes;
+         float y_m = -(y_center_in_map + halfRes);  // Invertir Y para el robot
+ 
+-        pathInMeters.emplace_back(x_m, y_m);
++        pathInMeters.emplace_back(x_m, -y_m);
+ 
+         std::cout << "Point " << i
+                   << " (celda " << path[i].x << "," << path[i].y << ")"
+diff --git a/src/DragWindow.cpp b/src/DragWindow.cpp
+old mode 100755
+new mode 100644
+diff --git a/src/FileManager.cpp b/src/FileManager.cpp
+old mode 100755
+new mode 100644
+diff --git a/src/GridMap.cpp b/src/GridMap.cpp
+old mode 100755
+new mode 100644
+diff --git a/src/Map.cpp b/src/Map.cpp
+old mode 100755
+new mode 100644
+diff --git a/src/MapRosConection.cpp b/src/MapRosConection.cpp
+old mode 100755
+new mode 100644
+index a840e86..f26ad5e
+--- a/src/MapRosConection.cpp
++++ b/src/MapRosConection.cpp
+@@ -9,7 +9,7 @@ MapRosConection::MapRosConection(AStar& astarRef)
+ : rclcpp::Node("map_ros_connection"), astar(astarRef)
+ {
+     vel_pub = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
+-    target_position_pub = this->create_publisher<geometry_msgs::msg::Pose2D>("target_a_star_desired_position", 10);
++    target_position_pub = this->create_publisher<geometry_msgs::msg::Pose2D>("/a_star_waypoint", 10);
+     ram_pub = this->create_publisher<std_msgs::msg::Int32>("ram_usage_kb", 10);
+     time_pub = this->create_publisher<builtin_interfaces::msg::Time>("time_topic", 10);
+ 
+@@ -42,9 +42,7 @@ MapRosConection::MapRosConection(AStar& astarRef)
+ 
+     last_joy_time = this->get_clock()->now();
+ 
+-    ram_timer = this->create_wall_timer(
+-        std::chrono::seconds(1), 
+-        std::bind(&MapRosConection::publishMemoryUsage, this));
++
+ }
+ 
+ const std::vector<geometry_msgs::msg::Point32>& MapRosConection::getSonarPoints() const
+@@ -104,41 +102,51 @@ void MapRosConection::qcarPoseReceiver(
+     }
+ 
+     // -------------------------------
+-    // Path execution logic
++    // Path execution logic (Look-Ahead)
+     // -------------------------------
+-    const float waypointThreshold = 0.25f;
+-
+     size_t pathSize = currentPath.size();
+-
+     if (pathSize == 0) return;
+ 
+     if (index >= pathSize)
+         index = pathSize - 1;
+ 
+-    sf::Vector2f desiredPosition = currentPath[index];
++    // Distancia de anticipación para mantener al robot acelerando de forma fluida
++    const float lookAheadDistance = 0.60f; 
++    const float finalGoalThreshold = 0.25f; // Umbral estricto para el punto final
++
++    // Avanzar el índice si los puntos intermedios quedan demasiado cerca
++    while (index < pathSize - 1) {
++        sf::Vector2f checkPosition = currentPath[index];
++        float checkDx = checkPosition.x - currentPose.x;
++        float checkDy = checkPosition.y - currentPose.y;
++        float distToWaypoint = std::sqrt(checkDx * checkDx + checkDy * checkDy);
+ 
++        if (distToWaypoint < lookAheadDistance) {
++            index++; // El punto actual está muy cerca; apuntamos al siguiente
++        } else {
++            break; // Encontramos un punto a una distancia óptima para perseguir
++        }
++    }
++
++    // Obtener la posición deseada actual tras el filtrado del bucle
++    sf::Vector2f desiredPosition = currentPath[index];
+     float dx = desiredPosition.x - currentPose.x;
+     float dy = desiredPosition.y - currentPose.y;
+-
+     float error = std::sqrt(dx * dx + dy * dy);
+ 
+-    // Publish current waypoint target
++    // Publish current waypoint target (el QCar intentará ir hacia aquí)
+     targetMsg.x = desiredPosition.x;
+     targetMsg.y = desiredPosition.y;
+     target_position_pub->publish(targetMsg);
+ 
+-    // Advance waypoint if close enough
+-    if (error < waypointThreshold) {
+-        if (index < pathSize - 1) {
+-            index++;
+-        } else {
+-            RCLCPP_INFO_THROTTLE(
+-                this->get_logger(),
+-                *this->get_clock(),
+-                1000,
+-                "[NAVIGATION] Final goal reached."
+-            );
+-        }
++    // Lógica para el punto final de la ruta
++    if (index == pathSize - 1 && error < finalGoalThreshold) {
++        RCLCPP_INFO_THROTTLE(
++            this->get_logger(),
++            *this->get_clock(),
++            2000,
++            "[NAVIGATION] Final goal reached or very close."
++        );
+     }
+ 
+     // -------------------------------
+@@ -149,25 +157,6 @@ void MapRosConection::qcarPoseReceiver(
+     time_pub->publish(timeMsg);
+ }
+ 
+-inline long MapRosConection::getMemoryUsageKB() {
+-    std::ifstream status("/proc/self/status");
+-    std::string line;
+-    while (std::getline(status, line)) {
+-        if (line.rfind("VmRSS:", 0) == 0) {
+-            long kb;
+-            sscanf(line.c_str(), "VmRSS: %ld kB", &kb);
+-            return kb;
+-        }
+-    }
+-    return -1;
+-}
+-
+-inline void MapRosConection::publishMemoryUsage() {
+-    std_msgs::msg::Int32 msg;
+-    msg.data = static_cast<int>(getMemoryUsageKB());
+-    ram_pub->publish(msg);
+-}
+-
+ void MapRosConection::pointCallback(const geometry_msgs::msg::Point32::SharedPtr msg)
+ {
+     kinnectPoints.push_back(*msg);
+diff --git a/src/MapViewer.cpp b/src/MapViewer.cpp
+old mode 100755
+new mode 100644
+index 07a1e70..666f4de
+--- a/src/MapViewer.cpp
++++ b/src/MapViewer.cpp
+@@ -116,6 +116,7 @@ MapViewer::MapViewer(sf::RenderWindow& win)
+ 
+         /// Execute navigation: publish target pose and send full path
+         [this]() {
++            std::cout<<"Path executed button press"<<std::endl;
+             const auto& pathCells = aStarsim.getOptimizePath();
+ 
+             if (pathCells.empty())
+@@ -250,7 +251,7 @@ void MapViewer::update()
+     // Unified clean conversion function
+     sf::Vector2i gridPose = livemap.getCellIndices(x, y);
+     wmr.setPose(x, y, theta);
+-
++    map.setStartOnflyFromReal(x, -y);
+     // ----------------------------------------------------------------------
+     /// @brief Live Mode: Handles real-time sensor updates and live mapping.
+     // ----------------------------------------------------------------------
+@@ -262,7 +263,6 @@ void MapViewer::update()
+     // Clonamos la pose actual y volteamos su componente Y para que coincida con xy2Grid
+     sf::Vector2i invertedGridPose = gridPose;
+     invertedGridPose.y = (livemap.getMapSize() - 1) - gridPose.y; // Ajusta getGridSize() según tu API
+-
+     // Usar la pose invertida para actualizar el estado en camino y el mapeo
+     livemap.setStartOnfly(invertedGridPose);
+ 
+diff --git a/src/MenuBar.cpp b/src/MenuBar.cpp
+old mode 100755
+new mode 100644
+diff --git a/src/RightClickMapMenu.cpp b/src/RightClickMapMenu.cpp
+old mode 100755
+new mode 100644
+diff --git a/src/RobotCreator.cpp b/src/RobotCreator.cpp
+old mode 100755
+new mode 100644
+diff --git a/src/UnicicleWmr.cpp b/src/UnicicleWmr.cpp
+old mode 100755
+new mode 100644
+diff --git a/src/ViewController.cpp b/src/ViewController.cpp
+old mode 100755
+new mode 100644
+diff --git a/src/main.cpp b/src/main.cpp
+old mode 100755
+new mode 100644
+diff --git a/src/tinyfiledialogs.c b/src/tinyfiledialogs.c
+old mode 100755
+new mode 100644

@@ -1,0 +1,44 @@
+{
+  "audit_cutoff_local": "2026-08-28 after hardware run 20260828_112637 (107 result folders); progress note concurrently updated at 11:28:33",
+  "statement": "These existing files were read but not edited by this audit.",
+  "files": [
+    {
+      "path": "C:\\Research\\hover3dof\\runners\\hover3dof_hil_cmg_control.py",
+      "sha256": "a20dbb24a6da87ae3a4332cde5e8c9b5e2cb4ada022c0a3f1875f55de93a6446"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\runners\\summarize_hardware_results.py",
+      "sha256": "f7c07fa73236ebb0c59caa9ff3566c8cba9807f4bc15fc003603afc966659fb5"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\docs\\PROGRESS_2026-08-27.md",
+      "sha256_when_first_read": "4ead2db55226522e1aa876f17286081faecec075f8c6c152d0d357be6fd1d516",
+      "sha256_at_audit_completion": "8b1969766b70fc8b7fa95a71fc77792d6168e834e29f3fb68ef0b82befc21d18",
+      "note": "Changed by the concurrent hardware-session workflow; not edited by this audit."
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\docs\\SAFETY_CHECKLIST.md",
+      "sha256": "c31f69fa09d11c13d510b1ae95c638fba0883ef364b473632b6fe604cc680506"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\3DOF_Hover\\3DOF_Hover\\Courseware Resources\\Courseware Resources\\Advanced Applications\\Software\\setup_lab_hover.m",
+      "sha256": "68991ef1072ac3e0a6025ad2b94fea71f0b69acb406906ae223edbe221462bda"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\3DOF_Hover\\3DOF_Hover\\Courseware Resources\\Courseware Resources\\Advanced Applications\\Software\\HOVER_ABCD_eqns.m",
+      "sha256": "c11bebac2d818dd2fa7a705939128243b931959800a4dc6884e2691ce3314083"
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\src\\gra_control\\gate.py",
+      "sha256": "ea6d7853fff724d2a6c6fd15afb9a18cf7f9cdae19ce6f04bcf4a5e2300a5e53"
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\src\\gra_control\\hardware_bridges.py",
+      "sha256": "60b397e3d623dbbfc8ba4f131224685525d9b0265b6938bd6c60b74e5981e669"
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\src\\gra_control\\platforms\\drone.py",
+      "sha256": "50af6d1f6de51788f727074c57b90ff85a3dc2a8688b91cdc49ee50623a123d9"
+    }
+  ]
+}

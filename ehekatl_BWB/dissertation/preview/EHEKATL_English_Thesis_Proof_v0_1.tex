@@ -1,0 +1,52 @@
+\documentclass[11pt]{article}
+\usepackage{xcolor}
+\definecolor{ehekatlnavy}{RGB}{18,43,66}
+\definecolor{ehekatlteal}{RGB}{0,111,119}
+\setlength{\textwidth}{6.45in}
+\setlength{\textheight}{8.75in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-0.35in}
+\setlength{\parskip}{0.65em}
+\setlength{\parindent}{0pt}
+\begin{document}
+
+\begin{titlepage}
+\thispagestyle{empty}
+\centering
+\vspace*{1.1in}
+{\color{ehekatlteal}\rule{0.78\textwidth}{2pt}}\\[0.45in]
+{\Huge\bfseries\color{ehekatlnavy}
+Design and Control of the EHEKATL\\[0.18in]
+Blended-Wing-Body Aircraft\par}
+\vspace{0.4in}
+{\color{ehekatlteal}\rule{0.78\textwidth}{2pt}}\\[0.65in]
+{\Large Gandhi Alexis Sinhue Contreras Torres\par}
+\vspace{0.3in}
+{\large Master's Thesis in Aerospace Engineering\par}
+\vfill
+{\large Original Spanish edition: 2023\par}
+\vspace{0.12in}
+{\large Revised English edition in preparation: 2026\par}
+\vspace{0.55in}
+{\small This proof contains the approved English title and the first technically revised translation of the abstract. It is not the complete dissertation.\par}
+\end{titlepage}
+
+\section*{Abstract}
+\begin{center}
+\small EHEKATL BWB - Revised English Edition \hfill Translation Proof v0.1
+\end{center}
+\vspace{0.15in}
+
+This thesis presents the design and control of EHEKATL, a blended-wing-body (BWB) aircraft research platform. The work addresses the aerodynamic and geometric design of the vehicle, nonlinear dynamic modelling, nonlinear controller design, numerical simulation, and controller-in-the-loop evaluation in the X-Plane flight-simulation environment.
+
+The EHEKATL configuration was developed using XFLR5 to estimate aerodynamic characteristics relevant to stability and control. The selected aerofoils were then implemented in Airfoil Maker, and a complete aircraft model was constructed in Plane Maker, including its geometry, aerodynamic properties, mass and balance, onboard systems, and performance characteristics. A six-degree-of-freedom nonlinear dynamic model was subsequently derived from Newtonian mechanics and separated into longitudinal and lateral-directional subsystems for control design and analysis.
+
+Backstepping and adaptive-backstepping control laws were developed to address the nonlinear aircraft dynamics and uncertainty in parameters that may be unknown or vary with the operating condition. Their behaviour was first evaluated through numerical simulations. Controller-in-the-loop simulations were then conducted in X-Plane for representative flight tasks.
+
+The reported simulations indicate that the backstepping controller can stabilise the EHEKATL model in both the longitudinal and lateral-directional axes under the evaluated conditions. These results establish a basis for reproducible validation over a wider flight envelope, independent actuation of distributed control surfaces, optimal control allocation, and subsequent physical testing of the EHEKATL research platform.
+
+\vfill
+\noindent\textbf{Keywords:} blended-wing-body aircraft; nonlinear flight control; backstepping; adaptive control; X-Plane; control allocation.
+
+\end{document}

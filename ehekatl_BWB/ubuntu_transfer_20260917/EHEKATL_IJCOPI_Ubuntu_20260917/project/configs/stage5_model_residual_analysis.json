@@ -1,0 +1,107 @@
+[
+  {
+    "file": "stage5_pitch_rate_zero_excitation_baseline_20260712_161705.csv",
+    "stats": {
+      "pre": {
+        "count": 97,
+        "residual_rms": 0.046165823106095225,
+        "residual_mean": 0.001948033946486557,
+        "measured_qdot_rms": 0.01862405068762601
+      },
+      "pulse": {
+        "count": 20,
+        "residual_rms": 0.01677504131324487,
+        "residual_mean": -0.0034707728533259095,
+        "measured_qdot_rms": 0.018675508247196587
+      },
+      "post": {
+        "count": 80,
+        "residual_rms": 0.09413000122652772,
+        "residual_mean": 0.08290585674860151,
+        "measured_qdot_rms": 0.022196722624460954
+      },
+      "final": {
+        "count": 49,
+        "residual_rms": 0.09573043423526727,
+        "residual_mean": 0.09264980463404472,
+        "measured_qdot_rms": 0.021716565481952967
+      }
+    },
+    "beta": [
+      -4.699647272930291,
+      -0.20278590341646208,
+      -210.6428947529312
+    ],
+    "sample_delay": 3
+  },
+  {
+    "file": "stage5_pitch_rate_paired_pulse_01_20260712_162306.csv",
+    "stats": {
+      "pre": {
+        "count": 97,
+        "residual_rms": 0.08617979875506582,
+        "residual_mean": 0.0029546568229974124,
+        "measured_qdot_rms": 0.026726450488515494
+      },
+      "pulse": {
+        "count": 20,
+        "residual_rms": 0.06473778770058888,
+        "residual_mean": -0.04394428144940717,
+        "measured_qdot_rms": 0.04738200775800845
+      },
+      "post": {
+        "count": 80,
+        "residual_rms": 0.08510567011503857,
+        "residual_mean": 0.03569764434335361,
+        "measured_qdot_rms": 0.02347284606131556
+      },
+      "final": {
+        "count": 49,
+        "residual_rms": 0.10456465588370129,
+        "residual_mean": 0.008868945373984222,
+        "measured_qdot_rms": 0.020419705994275783
+      }
+    },
+    "beta": [
+      -4.699647272930291,
+      -0.20278590341646208,
+      -210.6428947529312
+    ],
+    "sample_delay": 3
+  },
+  {
+    "file": "stage5_pitch_rate_confirmation_01_revised_20260712_160741.csv",
+    "stats": {
+      "pre": {
+        "count": 97,
+        "residual_rms": 0.03307974919833751,
+        "residual_mean": 0.0013181173685658841,
+        "measured_qdot_rms": 0.023010098751650145
+      },
+      "pulse": {
+        "count": 20,
+        "residual_rms": 0.10932013800723708,
+        "residual_mean": 0.101252041220486,
+        "measured_qdot_rms": 0.047925638343207316
+      },
+      "post": {
+        "count": 80,
+        "residual_rms": 0.03925316264643128,
+        "residual_mean": 0.018365325382265502,
+        "measured_qdot_rms": 0.023338475626344068
+      },
+      "final": {
+        "count": 49,
+        "residual_rms": 0.09526108627849976,
+        "residual_mean": 0.08217395928731376,
+        "measured_qdot_rms": 0.020951206055199914
+      }
+    },
+    "beta": [
+      -4.699647272930291,
+      -0.20278590341646208,
+      -210.6428947529312
+    ],
+    "sample_delay": 3
+  }
+]

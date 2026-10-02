@@ -1,0 +1,232 @@
+{
+  "status": "passed",
+  "scope": "connected Q8 sensor/telemetry shadow; never a motor-driving experiment",
+  "expected_controllers": [
+    "nengo-alif-fixed",
+    "nengo-alif-pes",
+    "nengo-cmg-fixed",
+    "nengo-izhikevich-fixed",
+    "nengo-izhikevich-pes",
+    "nengo-lif-fixed",
+    "nengo-lif-pes",
+    "nengo-lifrate-fixed",
+    "nengo-lifrate-pes",
+    "nengo-nef-pes",
+    "pd"
+  ],
+  "found_controllers": [
+    "nengo-alif-fixed",
+    "nengo-alif-pes",
+    "nengo-cmg-fixed",
+    "nengo-izhikevich-fixed",
+    "nengo-izhikevich-pes",
+    "nengo-lif-fixed",
+    "nengo-lif-pes",
+    "nengo-lifrate-fixed",
+    "nengo-lifrate-pes",
+    "nengo-nef-pes",
+    "pd"
+  ],
+  "all_four_dac_channels_zero_every_sample": true,
+  "failures": [],
+  "runs": [
+    {
+      "controller": "nengo-alif-fixed",
+      "checks": {
+        "hardware_q8": true,
+        "armed_false": true,
+        "completed": true,
+        "zero_written_output": true
+      },
+      "max_abs_written_or_dac_output": 0.0,
+      "hardware_samples": 600,
+      "neural_samples": 6000,
+      "raw_home_ypr_deg": [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\nengo-alif-fixed_hover_none_q8-dryrun_20260901_181143"
+    },
+    {
+      "controller": "nengo-alif-pes",
+      "checks": {
+        "hardware_q8": true,
+        "armed_false": true,
+        "completed": true,
+        "zero_written_output": true
+      },
+      "max_abs_written_or_dac_output": 0.0,
+      "hardware_samples": 600,
+      "neural_samples": 6000,
+      "raw_home_ypr_deg": [
+        -0.0,
+        0.0,
+        0.0439453125
+      ],
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\nengo-alif-pes_hover_none_q8-dryrun_20260901_181147"
+    },
+    {
+      "controller": "nengo-cmg-fixed",
+      "checks": {
+        "hardware_q8": true,
+        "armed_false": true,
+        "completed": true,
+        "zero_written_output": true
+      },
+      "max_abs_written_or_dac_output": 0.0,
+      "hardware_samples": 600,
+      "neural_samples": 6000,
+      "raw_home_ypr_deg": [
+        -0.0,
+        0.0,
+        0.0439453125
+      ],
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\nengo-cmg-fixed_hover_none_q8-dryrun_20260901_181128"
+    },
+    {
+      "controller": "nengo-izhikevich-fixed",
+      "checks": {
+        "hardware_q8": true,
+        "armed_false": true,
+        "completed": true,
+        "zero_written_output": true
+      },
+      "max_abs_written_or_dac_output": 0.0,
+      "hardware_samples": 600,
+      "neural_samples": 6000,
+      "raw_home_ypr_deg": [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\nengo-izhikevich-fixed_hover_none_q8-dryrun_20260901_181151"
+    },
+    {
+      "controller": "nengo-izhikevich-pes",
+      "checks": {
+        "hardware_q8": true,
+        "armed_false": true,
+        "completed": true,
+        "zero_written_output": true
+      },
+      "max_abs_written_or_dac_output": 0.0,
+      "hardware_samples": 600,
+      "neural_samples": 6000,
+      "raw_home_ypr_deg": [
+        -0.0,
+        0.0,
+        0.0439453125
+      ],
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\nengo-izhikevich-pes_hover_none_q8-dryrun_20260901_181155"
+    },
+    {
+      "controller": "nengo-lif-fixed",
+      "checks": {
+        "hardware_q8": true,
+        "armed_false": true,
+        "completed": true,
+        "zero_written_output": true
+      },
+      "max_abs_written_or_dac_output": 0.0,
+      "hardware_samples": 600,
+      "neural_samples": 6000,
+      "raw_home_ypr_deg": [
+        -0.0,
+        0.0,
+        0.0439453125
+      ],
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\nengo-lif-fixed_hover_none_q8-dryrun_20260901_181135"
+    },
+    {
+      "controller": "nengo-lif-pes",
+      "checks": {
+        "hardware_q8": true,
+        "armed_false": true,
+        "completed": true,
+        "zero_written_output": true
+      },
+      "max_abs_written_or_dac_output": 0.0,
+      "hardware_samples": 600,
+      "neural_samples": 6000,
+      "raw_home_ypr_deg": [
+        -0.0,
+        0.0,
+        0.0439453125
+      ],
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\nengo-lif-pes_hover_none_q8-dryrun_20260901_181139"
+    },
+    {
+      "controller": "nengo-lifrate-fixed",
+      "checks": {
+        "hardware_q8": true,
+        "armed_false": true,
+        "completed": true,
+        "zero_written_output": true
+      },
+      "max_abs_written_or_dac_output": 0.0,
+      "hardware_samples": 600,
+      "neural_samples": 6000,
+      "raw_home_ypr_deg": [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\nengo-lifrate-fixed_hover_none_q8-dryrun_20260901_181159"
+    },
+    {
+      "controller": "nengo-lifrate-pes",
+      "checks": {
+        "hardware_q8": true,
+        "armed_false": true,
+        "completed": true,
+        "zero_written_output": true
+      },
+      "max_abs_written_or_dac_output": 0.0,
+      "hardware_samples": 600,
+      "neural_samples": 6000,
+      "raw_home_ypr_deg": [
+        -0.0,
+        0.0,
+        0.0439453125
+      ],
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\nengo-lifrate-pes_hover_none_q8-dryrun_20260901_181203"
+    },
+    {
+      "controller": "nengo-nef-pes",
+      "checks": {
+        "hardware_q8": true,
+        "armed_false": true,
+        "completed": true,
+        "zero_written_output": true
+      },
+      "max_abs_written_or_dac_output": 0.0,
+      "hardware_samples": 600,
+      "neural_samples": 6000,
+      "raw_home_ypr_deg": [
+        -0.0,
+        0.0,
+        0.0439453125
+      ],
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\nengo-nef-pes_hover_none_q8-dryrun_20260901_181132"
+    },
+    {
+      "controller": "pd",
+      "checks": {
+        "hardware_q8": true,
+        "armed_false": true,
+        "completed": true,
+        "zero_written_output": true
+      },
+      "max_abs_written_or_dac_output": 0.0,
+      "hardware_samples": 600,
+      "neural_samples": 0,
+      "raw_home_ypr_deg": [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\pd_hover_none_q8-dryrun_20260901_181124"
+    }
+  ]
+}

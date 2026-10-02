@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "created_utc": "2026-08-28T18:55:34.720415+00:00",
+  "platform": "hover3dof_hardware_pd_track",
+  "controller": "pd-cmg",
+  "model": "C:\\Research\\hover3dof\\pd_cmg_focused_final_round_2026-08-28\\runners\\hover3dof_hil_pd_cmg_control.py",
+  "model_sha256": "c27b0324669fb60a564745f18ffc37d0c14f25b4be84a7a6bc745e47b55064be",
+  "git_commit": "67e7e03f1dba9ee394b84324096222e8ff5344c5",
+  "python": "3.13.11",
+  "mujoco": "3.12.0",
+  "numpy": "2.5.2",
+  "arguments": {
+    "armed": false,
+    "confirm_pd_review": false,
+    "controller": "pd-cmg",
+    "mission": "hover",
+    "duration": 5.0,
+    "rate_hz": 200.0,
+    "beta": 0.1,
+    "max_residual_volts": 1.0,
+    "learning_rate": 0.0002,
+    "k_error": 2.0,
+    "k_rate": 0.0,
+    "residual_slew_v_per_s": 4.0,
+    "neural_substeps": 1,
+    "max_abs_pitch_deg": 55.0,
+    "max_abs_roll_deg": 55.0,
+    "max_consecutive_deadline_misses": 20
+  }
+}

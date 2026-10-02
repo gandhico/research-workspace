@@ -1,0 +1,69 @@
+{
+  "fault": "3 consecutive bad samples, last: servo error: elbow:input_voltage, elbow:overheating, elbow:motor_encoder, elbow:electrical_shock, elbow:overload",
+  "options": "j0_mode=0;j0_profile_velocity=0.6;j0_profile_acceleration=0.6;j1_mode=0;j1_profile_velocity=0.6;j1_profile_acceleration=0.6;j2_mode=0;j2_profile_velocity=0.6;j2_profile_acceleration=0.6;j3_mode=0;j3_profile_velocity=0.6;j3_profile_acceleration=0.6;gripper_mode=0;gripper_profile_velocity=0.6;gripper_profile_acceleration=0.6;",
+  "duration_s": 4.9,
+  "dropped_bad_samples": 3,
+  "dropped_detail": [
+    {
+      "t": 4.848,
+      "segment": "profile check",
+      "why": "servo error: elbow:input_voltage, elbow:overheating, elbow:motor_encoder, elbow:electrical_shock, elbow:overload"
+    },
+    {
+      "t": 4.872,
+      "segment": "profile check",
+      "why": "servo error: elbow:input_voltage, elbow:overheating, elbow:motor_encoder, elbow:electrical_shock, elbow:overload"
+    },
+    {
+      "t": 4.894,
+      "segment": "profile check",
+      "why": "servo error: elbow:input_voltage, elbow:overheating, elbow:motor_encoder, elbow:electrical_shock, elbow:overload"
+    }
+  ],
+  "events": [
+    {
+      "label": "start",
+      "q_deg": [
+        -0.45,
+        36.78,
+        -131.49,
+        83.85
+      ],
+      "gripper": 0.286
+    },
+    {
+      "label": "hold rest",
+      "arrive_s": 0.0,
+      "err": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.0,
+        -0.01,
+        -0.01,
+        0.0
+      ],
+      "max_speed_so_far": 0.0
+    }
+  ],
+  "max_abs_analog": [
+    0.03,
+    0.99,
+    1.75,
+    1.28,
+    0.0
+  ],
+  "max_temp_C": [
+    34.0,
+    32.0,
+    33.0,
+    33.0,
+    34.0
+  ],
+  "log": "C:\\Research\\qarm_mini\\hw_logs\\20260927_203646_mini_hello_demo.csv"
+}

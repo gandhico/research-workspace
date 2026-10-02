@@ -1,0 +1,59 @@
+{
+  "mission": {
+    "name": "hover",
+    "stage": 0,
+    "kind": "hover",
+    "axis": 2,
+    "amplitude": 0.0,
+    "move_s": 4,
+    "hold_s": 2.0,
+    "settle_s": 8.0,
+    "kick_s": null,
+    "radius_m": 0.2
+  },
+  "duration_s": 14.0,
+  "controller": "nengo-cmg-pes",
+  "gates": {
+    "peak_position_error_m": 0.12,
+    "peak_attitude_error_deg": 15.0,
+    "tail_position_error_m": 0.01,
+    "tail_attitude_error_deg": 0.5,
+    "saturation_fraction": 0.02,
+    "max_abs_input_N": 10.00000001,
+    "rotation_endpoint_error_deg": 5.0,
+    "rotation_progress_peak_error_deg": 20.0
+  },
+  "abort": {
+    "minimum_body_origin_z_m": 0.4,
+    "maximum_distance_from_start_m": 2.0,
+    "attitude_error_deg": 100.0,
+    "contact": true,
+    "nonfinite": true
+  },
+  "preflight": {
+    "samples": 401,
+    "quasistatic_wrench_residual": 4.573683873245908e-15,
+    "quasistatic_peak_thrust_N": 5.362484965746217,
+    "reference_rotation_travel_deg": 0.0,
+    "passed": true
+  },
+  "nengo": {
+    "implementation": "Nengo exact PD Node + custom continuous CMG NeuronType + native PES",
+    "nengo_version": "4.1.0",
+    "channels": 6,
+    "paired_units": 12,
+    "wrench_limits": [
+      45.0,
+      40.0,
+      40.0,
+      2.0,
+      2.0,
+      2.0
+    ],
+    "beta": 0.05,
+    "learning_rate": 0.0008,
+    "leak": 1e-06,
+    "allocation": "shared bounded 6x8 allocator",
+    "actuation_path": "Nengo wrench -> bounded allocator -> data.ctrl"
+  }
+}

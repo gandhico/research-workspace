@@ -1,0 +1,492 @@
+{
+ "runs": {
+  "v2pilot_mlp_s1": {
+   "reward": "v2",
+   "arm": "mlp",
+   "line": "control",
+   "env_steps_M": 5.0,
+   "final_train_gates_per_episode": 0.07,
+   "final_train_crash_rate": 0.3,
+   "best_train_gates_per_episode": 0.23,
+   "first_eval_gate_M": null,
+   "first_eval_past_splitS_M": null,
+   "first_eval_lap_M": null,
+   "best_eval_gates": 0,
+   "final_eval_gates": 0,
+   "best_lap_s": null
+  },
+  "v2pilot_cmg_acc_s1": {
+   "reward": "v2",
+   "arm": "cmg_acc",
+   "line": "non-spiking",
+   "env_steps_M": 5.0,
+   "final_train_gates_per_episode": 0.11,
+   "final_train_crash_rate": 0.48,
+   "best_train_gates_per_episode": 0.21,
+   "first_eval_gate_M": null,
+   "first_eval_past_splitS_M": null,
+   "first_eval_lap_M": null,
+   "best_eval_gates": 0,
+   "final_eval_gates": 0,
+   "best_lap_s": null,
+   "feature_mean": 0.847,
+   "feature_saturated": 0.759,
+   "feature_silent": 0.011,
+   "event_rate_hz": 0.11,
+   "active_unit_frac": 0.138
+  },
+  "v3A_mlp_bonus10": {
+   "reward": "v3 (sweep A)",
+   "arm": "mlp",
+   "line": "control",
+   "env_steps_M": 5.0,
+   "final_train_gates_per_episode": 0.36,
+   "final_train_crash_rate": 0.97,
+   "best_train_gates_per_episode": 0.42,
+   "first_eval_gate_M": 3.3,
+   "first_eval_past_splitS_M": null,
+   "first_eval_lap_M": null,
+   "best_eval_gates": 1,
+   "final_eval_gates": 1,
+   "best_lap_s": null
+  },
+  "v3B_mlp_bonus10_crash5_smooth001": {
+   "reward": "sweep B",
+   "arm": "mlp",
+   "line": "control",
+   "env_steps_M": 5.0,
+   "final_train_gates_per_episode": 0.41,
+   "final_train_crash_rate": 0.96,
+   "best_train_gates_per_episode": 0.48,
+   "first_eval_gate_M": null,
+   "first_eval_past_splitS_M": null,
+   "first_eval_lap_M": null,
+   "best_eval_gates": 0,
+   "final_eval_gates": 0,
+   "best_lap_s": null
+  },
+  "v3_mlp_s1": {
+   "reward": "v3",
+   "arm": "mlp",
+   "line": "control",
+   "env_steps_M": 20.0,
+   "final_train_gates_per_episode": 4.12,
+   "final_train_crash_rate": 0.3,
+   "best_train_gates_per_episode": 4.63,
+   "first_eval_gate_M": 6.6,
+   "first_eval_past_splitS_M": 14.4,
+   "first_eval_lap_M": 15.7,
+   "best_eval_gates": 14,
+   "final_eval_gates": 14,
+   "best_lap_s": 14.88,
+   "eval_gap": {
+    "det_official": {
+     "gates_mean": 6.0,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.0
+    },
+    "det_distributed": {
+     "gates_mean": 3.86,
+     "frac_full_lap": 0.027,
+     "crash_rate": 0.266
+    },
+    "stoch_official": {
+     "gates_mean": 5.97,
+     "frac_full_lap": 0.162,
+     "crash_rate": 0.092
+    },
+    "stoch_distributed": {
+     "gates_mean": 3.53,
+     "frac_full_lap": 0.012,
+     "crash_rate": 0.352
+    }
+   },
+   "mujoco_eval": {
+    "run": "results\\v3_mlp_s1",
+    "arm": "mlp",
+    "gates_in_order": 7,
+    "collisions": 0,
+    "termination": "seven_gates",
+    "lap_completed": true,
+    "lap_time_s": 14.98,
+    "gate_times_s": [
+     1.6,
+     3.24,
+     4.38,
+     5.98,
+     11.7,
+     13.12,
+     14.98
+    ],
+    "mean_rotor_saturation": 0.29465954606141526,
+    "note": "full MuJoCo race world, frozen policy, perfect state, no learning during the flight"
+   }
+  },
+  "v3_cmg_acc_s1": {
+   "reward": "v3",
+   "arm": "cmg_acc",
+   "line": "non-spiking",
+   "env_steps_M": 20.0,
+   "final_train_gates_per_episode": 1.32,
+   "final_train_crash_rate": 0.62,
+   "best_train_gates_per_episode": 1.53,
+   "first_eval_gate_M": 5.2,
+   "first_eval_past_splitS_M": null,
+   "first_eval_lap_M": null,
+   "best_eval_gates": 3,
+   "final_eval_gates": 3,
+   "best_lap_s": null,
+   "feature_mean": 0.93,
+   "feature_saturated": 0.895,
+   "feature_silent": 0.012,
+   "event_rate_hz": 0.12,
+   "active_unit_frac": 0.151,
+   "eval_gap": {
+    "det_official": {
+     "gates_mean": 3.0,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.0
+    },
+    "det_distributed": {
+     "gates_mean": 0.84,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.793
+    },
+    "stoch_official": {
+     "gates_mean": 2.97,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.014
+    },
+    "stoch_distributed": {
+     "gates_mean": 0.85,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.734
+    }
+   },
+   "mujoco_eval": {
+    "run": "results\\v3_cmg_acc_s1",
+    "arm": "cmg_acc",
+    "gates_in_order": 3,
+    "collisions": 0,
+    "termination": "time_limit",
+    "lap_completed": false,
+    "lap_time_s": null,
+    "gate_times_s": [
+     1.18,
+     2.52,
+     7.04
+    ],
+    "mean_rotor_saturation": 0.0509,
+    "note": "full MuJoCo race world, frozen policy, perfect state, no learning during the flight"
+   }
+  },
+  "v3_hyperlif_spike_s1": {
+   "reward": "v3",
+   "arm": "hyperlif_spike",
+   "line": "spiking",
+   "env_steps_M": 20.0,
+   "final_train_gates_per_episode": 2.6,
+   "final_train_crash_rate": 0.16,
+   "best_train_gates_per_episode": 2.99,
+   "first_eval_gate_M": 5.9,
+   "first_eval_past_splitS_M": null,
+   "first_eval_lap_M": null,
+   "best_eval_gates": 3,
+   "final_eval_gates": 3,
+   "best_lap_s": null,
+   "feature_mean": 0.668,
+   "feature_saturated": 0.293,
+   "feature_silent": 0.184,
+   "event_rate_hz": 53.39,
+   "active_unit_frac": 0.931,
+   "eval_gap": {
+    "det_official": {
+     "gates_mean": 3.0,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.0
+    },
+    "det_distributed": {
+     "gates_mean": 2.48,
+     "frac_full_lap": 0.014,
+     "crash_rate": 0.215
+    },
+    "stoch_official": {
+     "gates_mean": 2.91,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.047
+    },
+    "stoch_distributed": {
+     "gates_mean": 2.46,
+     "frac_full_lap": 0.014,
+     "crash_rate": 0.225
+    }
+   },
+   "mujoco_eval": {
+    "run": "results\\v3_hyperlif_spike_s1",
+    "arm": "hyperlif_spike",
+    "gates_in_order": 3,
+    "collisions": 0,
+    "termination": "time_limit",
+    "lap_completed": false,
+    "lap_time_s": null,
+    "gate_times_s": [
+     1.12,
+     2.44,
+     3.82
+    ],
+    "mean_rotor_saturation": 0.6955500000000001,
+    "note": "full MuJoCo race world, frozen policy, perfect state, no learning during the flight"
+   }
+  },
+  "v4_mlp_s1": {
+   "reward": "v4",
+   "arm": "mlp",
+   "line": "control",
+   "env_steps_M": 20.0,
+   "final_train_gates_per_episode": 7.47,
+   "final_train_crash_rate": 0.28,
+   "best_train_gates_per_episode": 8.06,
+   "first_eval_gate_M": 5.2,
+   "first_eval_past_splitS_M": 9.8,
+   "first_eval_lap_M": 9.8,
+   "best_eval_gates": 14,
+   "final_eval_gates": 14,
+   "best_lap_s": 9.5,
+   "eval_gap": {
+    "det_official": {
+     "gates_mean": 10.0,
+     "frac_full_lap": 1.0,
+     "crash_rate": 0.0
+    },
+    "det_distributed": {
+     "gates_mean": 7.51,
+     "frac_full_lap": 0.756,
+     "crash_rate": 0.244
+    },
+    "stoch_official": {
+     "gates_mean": 8.78,
+     "frac_full_lap": 0.82,
+     "crash_rate": 0.215
+    },
+    "stoch_distributed": {
+     "gates_mean": 6.88,
+     "frac_full_lap": 0.672,
+     "crash_rate": 0.34
+    }
+   },
+   "mujoco_eval": {
+    "run": "results\\v4_mlp_s1",
+    "arm": "mlp",
+    "gates_in_order": 7,
+    "collisions": 0,
+    "termination": "seven_gates",
+    "lap_completed": true,
+    "lap_time_s": 9.42,
+    "gate_times_s": [
+     1.22,
+     2.7,
+     3.92,
+     5.1,
+     6.4,
+     7.42,
+     9.42
+    ],
+    "mean_rotor_saturation": 0.37664543524416133,
+    "note": "full MuJoCo race world, frozen policy, perfect state, no learning during the flight"
+   }
+  },
+  "v4_cmg_acc_s1": {
+   "reward": "v4",
+   "arm": "cmg_acc",
+   "line": "non-spiking",
+   "env_steps_M": 20.0,
+   "final_train_gates_per_episode": 1.11,
+   "final_train_crash_rate": 1.0,
+   "best_train_gates_per_episode": 1.25,
+   "first_eval_gate_M": 5.2,
+   "first_eval_past_splitS_M": null,
+   "first_eval_lap_M": null,
+   "best_eval_gates": 2,
+   "final_eval_gates": 2,
+   "best_lap_s": null,
+   "feature_mean": 0.875,
+   "feature_saturated": 0.814,
+   "feature_silent": 0.021,
+   "event_rate_hz": 0.21,
+   "active_unit_frac": 0.263,
+   "eval_gap": {
+    "det_official": {
+     "gates_mean": 2.0,
+     "frac_full_lap": 0.0,
+     "crash_rate": 1.0
+    },
+    "det_distributed": {
+     "gates_mean": 0.8,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.979
+    },
+    "stoch_official": {
+     "gates_mean": 1.98,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.953
+    },
+    "stoch_distributed": {
+     "gates_mean": 0.95,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.975
+    }
+   },
+   "mujoco_eval": {
+    "run": "results\\v4_cmg_acc_s1",
+    "arm": "cmg_acc",
+    "gates_in_order": 2,
+    "collisions": 1,
+    "termination": "collision",
+    "lap_completed": false,
+    "lap_time_s": null,
+    "gate_times_s": [
+     1.18,
+     2.4
+    ],
+    "mean_rotor_saturation": 0.1014218009478673,
+    "note": "full MuJoCo race world, frozen policy, perfect state, no learning during the flight"
+   }
+  },
+  "v4_hyperlif_spike_s1": {
+   "reward": "v4",
+   "arm": "hyperlif_spike",
+   "line": "spiking",
+   "env_steps_M": 20.0,
+   "final_train_gates_per_episode": 1.92,
+   "final_train_crash_rate": 0.85,
+   "best_train_gates_per_episode": 2.32,
+   "first_eval_gate_M": 2.6,
+   "first_eval_past_splitS_M": null,
+   "first_eval_lap_M": null,
+   "best_eval_gates": 1,
+   "final_eval_gates": 0,
+   "best_lap_s": null,
+   "feature_mean": 0.657,
+   "feature_saturated": 0.284,
+   "feature_silent": 0.189,
+   "event_rate_hz": 52.55,
+   "active_unit_frac": 0.959,
+   "eval_gap": {
+    "det_official": {
+     "gates_mean": 0.0,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.0
+    },
+    "det_distributed": {
+     "gates_mean": 3.01,
+     "frac_full_lap": 0.016,
+     "crash_rate": 0.574
+    },
+    "stoch_official": {
+     "gates_mean": 0.09,
+     "frac_full_lap": 0.0,
+     "crash_rate": 0.535
+    },
+    "stoch_distributed": {
+     "gates_mean": 2.7,
+     "frac_full_lap": 0.01,
+     "crash_rate": 0.676
+    }
+   },
+   "mujoco_eval": {
+    "run": "results\\v4_hyperlif_spike_s1",
+    "arm": "hyperlif_spike",
+    "gates_in_order": 0,
+    "collisions": 0,
+    "termination": "time_limit",
+    "lap_completed": false,
+    "lap_time_s": null,
+    "gate_times_s": [],
+    "mean_rotor_saturation": 0.73895,
+    "note": "full MuJoCo race world, frozen policy, perfect state, no learning during the flight"
+   }
+  }
+ },
+ "source_sha256": {
+  "check_cmg_acc.py": "dd89cf67a6e39ab939932829c7ddf6739e84ea7c34f1a2efe1a64638436e04e1",
+  "check_cmg_modes.py": "fd9e5527e3def93be347e2c2ee980b854ccb24671b14d9b50a67122e1293066b",
+  "check_hyperlif_spiking.py": "c6182f4b4d8dd73a7f4ce81ed94c13ce492017f1deeaf7fb920b836fd9832de2",
+  "diagnose_crashes.py": "0ed79c7d62e83fd09464dc6e203146c5286d7596b1592e0a5a3b0d06c6c1001a",
+  "diagnose_eval_gap.py": "0df85c91358f4b1a3ee7bb3bd700957d55195ac1e4fd24caf1ef5810f9136f67",
+  "export_policy.py": "f2c5a25060176df63493e4867881cbc0ca6eaf7d0ce1ace9dd11c31001230724",
+  "extract_x2.py": "871a58ca22ffcc8bbdda18b2335eaa906b0d1186546777acc63c9a9eb1cb7dbb",
+  "mujoco_eval.py": "b379bcaa6a9f9d8521d86afceb578747a7422b082ea409927c8007a67846022c",
+  "reward_breakdown.py": "871fe4d2f1eeb25e37d34b00a06862c394d8929278f56a16bb5bf8ff94e8c41d",
+  "summarize_runs.py": "feae53ce1cc9626ce39460459628345b7cd6be5b5a4c3743ffd71cfbd2a413f9",
+  "train_ppo.py": "b7e7ee2323d825b71df3179c0b9e75c1b11e5b1a90ae5e6a31f7e11bab2433d9",
+  "validate_sim.py": "c65ee91ab46becd6a6bdce33cd0d4d072690a8279f3818f45de8cd120cf2c7a1",
+  "vec_race.py": "74a59259a2ac4d7b06d39f01c38bd585a5368c0bc54a7c7c23fbdd56b0cbfea7",
+  "where_stuck.py": "9d499b02fe5a9cd76690c6e433d057fa6779df5c49b8d93ba07a44973d46af39"
+ },
+ "output_sha256": {
+  "v2pilot_mlp_s1\\config.json": "4795678bff86d99723109dee5ead45221a638c984c3a532475d48d358bb3f988",
+  "v2pilot_mlp_s1\\final_eval.json": "7a118f3366404d8ff9d946ad142b02dcbc658ffd4080382d8e3d3b42f7a5b645",
+  "v2pilot_mlp_s1\\metrics.csv": "20c1e3ea4c2a60f5cba2658b0e2639851bc61448fa1c21d786efa5e7e6abcaea",
+  "v2pilot_mlp_s1\\policy.pt": "32f518c66aba06ec0ff649de6cdae96e69955820fc6f0c3dc77628564c31e364",
+  "v2pilot_cmg_acc_s1\\config.json": "f56cdf44874cf14b1806405d73183ab3837b8921eba375ba603275263f8f79cd",
+  "v2pilot_cmg_acc_s1\\final_eval.json": "7a118f3366404d8ff9d946ad142b02dcbc658ffd4080382d8e3d3b42f7a5b645",
+  "v2pilot_cmg_acc_s1\\metrics.csv": "8bd3129e9363b4826348733e9b2e700d72218f66cfd87a61cc88eb5491a36002",
+  "v2pilot_cmg_acc_s1\\policy.pt": "bac550565966626ec49c1df67abe2b0e4db8a6420ac43fca879a6e99a6fc1aae",
+  "v3A_mlp_bonus10\\config.json": "2eafd1af9a8970232312a301586ed6a2f09d0a392dfe0355d0a0877155490abf",
+  "v3A_mlp_bonus10\\final_eval.json": "84426a5cda778d97c285f3c58bef4d825f010efbfba4d802c63926ec2b94dad4",
+  "v3A_mlp_bonus10\\metrics.csv": "83984797fad9ddd97c3e7568eb46875f6ff6ee3ca707ddb1c5732caac768e085",
+  "v3A_mlp_bonus10\\policy.pt": "03886a3337b5ccc05267f4b562cfe6eed847fa44be9d39e648e70c2090ff4e4d",
+  "v3B_mlp_bonus10_crash5_smooth001\\config.json": "91c2ef889bbca224a4191f17f63adce9847ca16c38818492af0baf83c19f0781",
+  "v3B_mlp_bonus10_crash5_smooth001\\final_eval.json": "7b2044eb0ccdb6b57056bc7d6a8232ce3524b6ff8ac7035d959fef31647dc9e0",
+  "v3B_mlp_bonus10_crash5_smooth001\\metrics.csv": "a795aa8e233964b0fb8d7d69159e0071d9c73167010495e6b11882ca52336620",
+  "v3B_mlp_bonus10_crash5_smooth001\\policy.pt": "782f962fae1ea8e94638508103ff1b4ac7f701e31c8c6049ce66f120105e02d9",
+  "v3_mlp_s1\\config.json": "1c20cee12c2882a9ce244eb61d7d0b5130acead6be404f266f0cb09cdc17009f",
+  "v3_mlp_s1\\eval_gap.json": "1549a4148f20c720ad215e5971ebbf8a5575b879eddacdc42ad77722a24251d8",
+  "v3_mlp_s1\\final_eval.json": "d7b22c990fbdb1b39582eb7c8d83f8ebc2bb60fa9558b80669c1691bf407bd0a",
+  "v3_mlp_s1\\metrics.csv": "d205a3a3cac989ff018c35cd9137cc5bf3d85671bf8b4ed005b531bf2b1b94a2",
+  "v3_mlp_s1\\mujoco_eval.json": "f49c4514436adf8cc7db3cc7326fe1afd171a4ad0d0d6420378b2f64b6fb042a",
+  "v3_mlp_s1\\mujoco_flight.npz": "2570ea9f9ec41460bfe2e9d82a154c3dd4902afa39cd15af6f66308a091a93a2",
+  "v3_mlp_s1\\policy.pt": "c9e3e0ec271789dc79644c173aeaf080a0be4d25d8220f22e56566cc24934f97",
+  "v3_mlp_s1\\policy_numpy.npz": "f3280f6286ab01a274cc53d0e62b3ed1c918df5b610991fd2291f21ddb0798f9",
+  "v3_cmg_acc_s1\\config.json": "9df36f3f0dc80a249265a3544d0dbb66d78bd5e7510a6926fdafb044ae0dcf8f",
+  "v3_cmg_acc_s1\\eval_gap.json": "7e7144128496eb06085f1a433d4e2e94791563896ce444eb6eafd63b8957056b",
+  "v3_cmg_acc_s1\\final_eval.json": "6c5083794e704030ef7dee2698c75c4b270ae0cf0b275f5e624d9974bc168b9d",
+  "v3_cmg_acc_s1\\metrics.csv": "9858f4fcb08604d3b8a4d69211ec9fe8fd821a5b7577824b2412d19957576a3a",
+  "v3_cmg_acc_s1\\mujoco_eval.json": "a076b8498f64a0a4a7c3ede5b2e0b0312ce111b0098226c29c239e5dea57d4f6",
+  "v3_cmg_acc_s1\\mujoco_flight.npz": "a7140828b334e59efeec853c1c9e51689027465def16b7e7db7e94aa14dd93c5",
+  "v3_cmg_acc_s1\\policy.pt": "5ad8f5541940d6ccff8534cd66010197b3a2dc279bdb57e59be71e4a79676b53",
+  "v3_cmg_acc_s1\\policy_numpy.npz": "fa07b7dd4628c5b2422db5aa0ec4dc786c6577ac5243e70b60e6bdb6f94a7760",
+  "v3_hyperlif_spike_s1\\config.json": "dbe198329ace54b07db89ef57186b8931d398899d9936e49aaf50bf32bc0f34c",
+  "v3_hyperlif_spike_s1\\eval_gap.json": "c61cc949fd77aec2cef191262ae4b16c0df2e6c267cc3444c212d923e7f38ea4",
+  "v3_hyperlif_spike_s1\\final_eval.json": "26667862ab636871341c9f10e40f0dc8fc74376dcd7ccd0760553f74cac14bad",
+  "v3_hyperlif_spike_s1\\metrics.csv": "0e53223f2b3966db40412a6673d4ea8312952f8bfa58835b24824fc58ee9c0e0",
+  "v3_hyperlif_spike_s1\\mujoco_eval.json": "d9c304e83bc0f3a6a8c8b6b15829d2f3575ba96b5d8f6c33439dbb2df80cd46d",
+  "v3_hyperlif_spike_s1\\mujoco_flight.npz": "2fd5d105ef4dac5c7f52874e04ea993b99f64f0e80d3f2c3ad1490fb81e375ae",
+  "v3_hyperlif_spike_s1\\policy.pt": "11a7f7a0b2f9f3a6d7bf431482b71bf021b2dd7477b724d7a3220753b6952547",
+  "v3_hyperlif_spike_s1\\policy_numpy.npz": "c7bb278c6d28e853b12ce0e43af5ee1da62cb1b5c54ff30fe56595ff70f1216a",
+  "v4_mlp_s1\\config.json": "a2872bb74c71738947134201b2a7d6874c3bc922211afd8304367fe5a06952e7",
+  "v4_mlp_s1\\eval_gap.json": "045ab0c188a313c20889fe9c27c907f282e267f985d2df96ca12825e86a62ac2",
+  "v4_mlp_s1\\final_eval.json": "f4cc2de18c9819846db5d856439b4c18b32aa48d1048785fb04ca7f99c918762",
+  "v4_mlp_s1\\metrics.csv": "44e55ceb300868ed87760ace219fe20c49ec376c9c7dcb09feb94796a768a55f",
+  "v4_mlp_s1\\mujoco_eval.json": "e92a0a5c2aa07d9ac35f2a550ffb96db57996185dee9b6da2e349a0d79fe9b58",
+  "v4_mlp_s1\\mujoco_flight.npz": "cf8061758fce8be0d16e0ada99818299528cffb6c2ae9d901eb8ea63bcbfdd56",
+  "v4_mlp_s1\\policy.pt": "e322e54f69834f84735facf3b15e774763790d6d3716069d434a3e89fabadc6e",
+  "v4_mlp_s1\\policy_numpy.npz": "4928fd72710c3f1953034a537969618c5efc0261fa7ff4396598bdda49393693",
+  "v4_cmg_acc_s1\\config.json": "ae3e5778b14bfd23b4c624aad2213b30dc32b774c035a29a92f8c038c6be7cae",
+  "v4_cmg_acc_s1\\eval_gap.json": "76a856812982c8f81207d99364aeddb5894d2638750da1dc6f3b6a48a121c957",
+  "v4_cmg_acc_s1\\final_eval.json": "69a4e0e87c3201ab8510436ea936ddb930e9cabe1949205f1519b1edab7f925d",
+  "v4_cmg_acc_s1\\metrics.csv": "67e840d1e1d9e756871c12d2c89f92116fa6b84c075681c3012a7c46800ef80a",
+  "v4_cmg_acc_s1\\mujoco_eval.json": "874e4bd0e2c30871c2d8fd83edc5c2ad89026de04d6a5b5c63a515d0082a70ad",
+  "v4_cmg_acc_s1\\mujoco_flight.npz": "f897bd38058a881688110c608c8bce8e71107038be0718071955082d8c27359e",
+  "v4_cmg_acc_s1\\policy.pt": "e8d3c8091af6a95b92e656d519bd11671a921f8c572159aae7c0ecc1de2a8d8f",
+  "v4_cmg_acc_s1\\policy_numpy.npz": "6654e2cc526b50889f28d8c8a3e82798400912aa862ab3d5cc59a19d63c5003d",
+  "v4_hyperlif_spike_s1\\config.json": "a70284fe2cd1b0639224d47b2b7e920f3c90f69c4d74269de635b408373d5809",
+  "v4_hyperlif_spike_s1\\eval_gap.json": "54150eebfe9ddb7e923be9275897a65f27e9ded13d5cd5520a075e7a8e3f0c4b",
+  "v4_hyperlif_spike_s1\\final_eval.json": "7a118f3366404d8ff9d946ad142b02dcbc658ffd4080382d8e3d3b42f7a5b645",
+  "v4_hyperlif_spike_s1\\metrics.csv": "365a4e1e97e82682c127e78becf08451be75a217ea17da204de5e560d44686da",
+  "v4_hyperlif_spike_s1\\mujoco_eval.json": "257858d0168c740ea47891141e50916bd387510a894fcf8c1f2cdd628ec2a4c3",
+  "v4_hyperlif_spike_s1\\mujoco_flight.npz": "05e2cf84ac89b387ba93d00af27fbf123a634f9b841eae088c6847e7af9d1136",
+  "v4_hyperlif_spike_s1\\policy.pt": "8a6b5f5f97b09f9d64bf40d041a4a13702ec3237d86cc870097e805e15f956fa",
+  "v4_hyperlif_spike_s1\\policy_numpy.npz": "d7f6ba8894cd9d0d142af2839c5a909bceb76259b6da995f22d50886a8e024ad"
+ }
+}

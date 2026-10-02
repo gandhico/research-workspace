@@ -1,0 +1,12 @@
+# Offline reference tracking — 2-DOF helicopter, PD baseline (acceptance criterion #1).
+# Switch to virtual-twin / hardware later by changing ONLY execution_mode.
+model_variant: helicopter_2dof
+execution_mode: offline        # offline | virtual_twin | hardware
+controller: pd
+application: reference_tracking
+duration_s: 40.0
+hz: 200.0                       # nominal loop rate (offline dt below)
+dt: 0.005                       # offline integration / loop period [s]
+quantize: false                # inject encoder quantization
+measurement_noise: false       # inject gyro noise
+out: results

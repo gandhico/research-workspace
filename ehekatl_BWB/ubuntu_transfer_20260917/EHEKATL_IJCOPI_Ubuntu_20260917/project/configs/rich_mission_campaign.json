@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "sample_rate_hz": 10.0,
+  "observe_duration_s": 10.0,
+  "timing": {"minimum_completeness": 0.99, "maximum_gap_s": 0.25},
+  "start_envelope": {
+    "altitude_tolerance_m": 100.0,
+    "ias_tolerance_kts": 2.0,
+    "maximum_abs_pitch_deg": 5.0,
+    "maximum_abs_roll_deg": 5.0,
+    "maximum_abs_body_rate_deg_s": 2.0
+  },
+  "required_state": {
+    "artificial_stability_on": 1,
+    "paused": 0,
+    "sim_speed": 1,
+    "replay": 0,
+    "all_overrides_off": true
+  },
+  "baseline": {
+    "duration_s": 30.0,
+    "pitch_setpoint_deg": 1.3,
+    "roll_setpoint_deg": 0.0,
+    "maximum_abs_pitch_deg": 10.0,
+    "maximum_abs_roll_deg": 10.0,
+    "maximum_abs_body_rate_deg_s": 20.0,
+    "required_engagement_fraction": 1.0,
+    "identification_amplitude": 0.0,
+    "recovery_pulse_amplitude": 0.0
+  },
+  "regimes": {
+    "R1": {"altitude_m": 1400.0, "ias_kts": 32.0, "role": "low dynamic pressure"},
+    "R2": {"altitude_m": 1400.0, "ias_kts": 39.0, "role": "low-altitude nominal"},
+    "R3": {"altitude_m": 1700.0, "ias_kts": 39.0, "role": "existing reference condition"},
+    "R4": {"altitude_m": 1700.0, "ias_kts": 48.0, "role": "higher effectiveness"},
+    "R5": {"altitude_m": 2000.0, "ias_kts": 32.0, "role": "altitude sensitivity"},
+    "R6": {"altitude_m": 2000.0, "ias_kts": 48.0, "role": "combined variation"}
+  },
+  "allocation_per_regime": [
+    {"kind": "observe", "replicate": 1, "partition": "gate"},
+    {"kind": "baseline", "replicate": 1, "partition": "training"},
+    {"kind": "baseline", "replicate": 2, "partition": "validation"},
+    {"kind": "pitch", "replicate": 1, "partition": "training"},
+    {"kind": "pitch", "replicate": 2, "partition": "validation"},
+    {"kind": "roll", "replicate": 1, "partition": "training"},
+    {"kind": "roll", "replicate": 2, "partition": "validation"},
+    {"kind": "coupled", "replicate": 1, "partition": "validation", "blocked_until": "pitch_and_roll_pass"},
+    {"kind": "backstepping_recovery", "replicate": 1, "partition": "benchmark", "blocked_until": "single_axis_sets_pass"}
+  ],
+  "frozen_metadata": {
+    "aircraft_config": "EHEKATL_BWB_G33_acf_v1_XP12.4.3-r2_scale_14lb",
+    "payload": "no_payload_stations",
+    "fuel": "0.0lb_intentional_scale_model",
+    "weather": "manual_clear_47F_29.92inHg_no_layers",
+    "failures": "none"
+  }
+}

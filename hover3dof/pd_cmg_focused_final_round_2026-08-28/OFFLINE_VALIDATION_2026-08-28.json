@@ -1,0 +1,90 @@
+{
+  "validation_date": "2026-08-28",
+  "hardware_opened": false,
+  "hardware_armed": false,
+  "hardware_commanded": false,
+  "canonical_mujoco_source": {
+    "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\src\\gra_control\\platforms\\drone.py",
+    "sha256": "50AF6D1F6DE51788F727074C57B90FF85A3DC2A8688B91CDC49EE50623A123D9"
+  },
+  "implementation_hashes": {
+    "runner_sha256": "679180F559D449DBB671A4F9E0B725EB0EDF23CE1F91E64288EDCE2095059359",
+    "pre_shaped_hardstep_runner_sha256": "07ED6C9E43F4AAFEC241D073F8D7DB0705103164CF185225E822BB47051D2CCA",
+    "pre_allocator_guarded_runner_sha256": "E641B3BD2B2C43D206DDA11FF8FFAB9730849B4CDC68662BDF9C23E4F7C474D2",
+    "prior_matched_runner_sha256": "4D4D442CD302F660DE05C0E958EC3398F7218B358B0158DE75080EADE1F2B597",
+    "pd_math_sha256": "B4AA3F0F597DB8D7B65FB027306E7AE78871BCDA493E80CD14052020D84C96D3",
+    "replay_sha256": "C520A5E09C02E40274E3CE9C3F0EC8CCE7EA321AF3C6AAF0D39AB2804871766A",
+    "campaign_compiler_sha256": "C237BD3C91AFD923582B8D5CE2B38054482492A209D4DA2B21CEEA62C486C29A",
+    "stability_allocator_replay_sha256": "35407F178C23744F93BFE3039ACD48E82E4D0AA219C116175817C166AF36787A",
+    "tracking_plotter_sha256": "B4C0E18BE4EB592882E5EA08FC9A0BD97965F8AF6DBE827DABC6E856B54C7BDC",
+    "frozen_original_lqr_runner_sha256": "A20DBB24A6DA87AE3A4332CDE5E8C9B5E2CB4ADA022C0A3F1875F55DE93A6446"
+  },
+  "tests": {
+    "pd_math_tests_passed": 16,
+    "plotter_smoke_tests_passed": 1,
+    "python_compile_passed": true,
+    "help_without_hardware_passed": true,
+    "armed_confirmation_guard_passed": true,
+    "coordinate_transform_identity_tested": true
+  },
+  "post_yaw_safeguards": {
+    "controller_law_changed": false,
+    "raw_home_logged": true,
+    "optional_raw_yaw_home_guard": true,
+    "wrapped_yaw_metrics": true,
+    "yaw360_duration_limit_s": 60.0,
+    "roll_abort_limit_raised": false,
+    "campaign_compiler_excludes_aborted_incomplete_or_neuron-incomplete_pairs": true,
+    "optional_stability_priority_allocator": true,
+    "motor_floor_V": 2.0,
+    "pitch_roll_priority_before_yaw": true,
+    "partial_mission_qualification_supported": true,
+    "cmg_pes_equations_changed": false,
+    "hardstep_reference_scaling_logged": true,
+    "hardstep_cubic_transition_logged": true
+  },
+  "frozen_parameters": {
+    "pd_profile": "mujoco",
+    "body_axis_natural_frequency_xyz_rad_s": [4.0, 4.0, 3.5],
+    "damping_ratio": 0.95,
+    "beta": 0.5,
+    "learning_rate": 0.0008,
+    "k_error": 8.0,
+    "k_rate": 0.0,
+    "hardware_rate_hz": 200.0,
+    "neural_substeps": 10,
+    "neural_dt_s": 0.0005,
+    "motor_residual_cap_V": 1.2,
+    "motor_residual_slew_V_per_s": 4.0
+  },
+  "frozen_trace_replay": [
+    {
+      "mission": "hard45",
+      "source_run": "classical_armed_20260828_123415",
+      "samples": 5000,
+      "requested_residual_torque_rms_Nm": 0.23292045567061748,
+      "realized_residual_torque_rms_Nm": 0.010485215625786535,
+      "mean_gate": 0.96004399849072,
+      "all_bounds_pass": true
+    },
+    {
+      "mission": "full3",
+      "source_run": "classical_armed_20260827_232303",
+      "samples": 5000,
+      "requested_residual_torque_rms_Nm": 0.23142029836803535,
+      "realized_residual_torque_rms_Nm": 0.011247003113826322,
+      "mean_gate": 0.8216988098213542,
+      "all_bounds_pass": true
+    },
+    {
+      "mission": "yaw360",
+      "source_run": "classical_armed_20260828_123653",
+      "samples": 6000,
+      "requested_residual_torque_rms_Nm": 0.14626368900334152,
+      "realized_residual_torque_rms_Nm": 0.008979394110901862,
+      "mean_gate": 0.0991441072699988,
+      "all_bounds_pass": true
+    }
+  ],
+  "interpretation": "The controller/neuron architecture is MuJoCo-matched through requested torque. The 3DOF Hover adds a documented positive-voltage allocation, per-motor residual cap, and slew projection; requested and realized residual torque must both be reported."
+}

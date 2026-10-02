@@ -1,0 +1,33 @@
+{
+  "config": {
+    "execution_mode": "virtual_twin",
+    "model_variant": "helicopter_2dof",
+    "controller": "qpd",
+    "controller_kwargs": {},
+    "application": "yaw_complex_mission",
+    "duration_s": 25.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 15.0,
+    "out": "results_paper\\twin"
+  },
+  "metrics": {
+    "n": 5001,
+    "duration_s": 24.999312299998564,
+    "realized_hz": 200.00550065119316,
+    "pitch_rms": 0.02343650073135698,
+    "yaw_rms": 4.057825333261598,
+    "tail_pitch_mae": 0.02737199865902707,
+    "tail_yaw_mae": 3.8295636747101134,
+    "pitch_sat_frac": 0.0,
+    "yaw_sat_frac": 0.036392721455708855,
+    "theta_range": [
+      -0.05890486225480862,
+      0.06326818538479445
+    ],
+    "psi_range": [
+      -6.033146438754227,
+      0.0
+    ]
+  }
+}

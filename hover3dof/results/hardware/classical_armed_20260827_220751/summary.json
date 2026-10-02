@@ -1,0 +1,16 @@
+{
+  "platform": "hover3dof_hardware",
+  "hardware": true,
+  "controller": "classical",
+  "armed": true,
+  "beta": 0.0,
+  "learning_rate": 0.0005,
+  "max_residual_volts": 0.5,
+  "duration": 10.0,
+  "rate_hz": 200.0,
+  "mission": "yaw360",
+  "angle_err_mean_deg": 16.156954294744615,
+  "angle_err_max_deg": 23.36098476392205,
+  "n_steps_logged": 2000,
+  "trace": "C:\\Research\\hover3dof\\results\\hardware\\classical_armed_20260827_220751\\trace.csv"
+}

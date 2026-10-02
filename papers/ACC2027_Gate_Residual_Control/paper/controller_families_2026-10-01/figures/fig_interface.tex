@@ -1,0 +1,54 @@
+% How every family attaches to the same gated CMG--PES residual (Sec. 2). Row 1: the six u0 sources and the
+% plant path; rows 2-3: the residual path of the manuscript's Fig. 1, unchanged.
+\begin{tikzpicture}
+  % ---- six u0 sources -----------------------------------------------------------------------------------------
+  \foreach \n/\t [count=\i] in {f1/PD+ff (backstepping),f2/PID+ff,f3/LQR,f4/SMC,f5/MPC,f6/NMPC}
+    \node[law,minimum height=6.5mm,minimum width=30mm] (\n) at (0,{1.75-0.9*\i}) {\t};
+  \ifwithbs
+  \node[law,dashed,minimum height=6.5mm,minimum width=30mm,align=center] (f7) at (0,{1.75-0.9*7-0.25}) {Recursive backstepping\\(new, not in paper)};
+  \node[fam,fit=(f1)(f7)] (fams) {};
+  \else
+  \node[fam,fit=(f1)(f6)] (fams) {};
+  \fi
+  \node[famlbl,anchor=south] at (fams.north) {one family per run (A5)};
+  \ifwithbs\def\nfam{7}\else\def\nfam{6}\fi
+  \foreach \i in {1,...,\nfam} \draw[thick] (f\i.east) -- (f\i.east-|fams.east);
+
+  % ---- residual path (manuscript Fig. 1) -----------------------------------------------------------------------
+  \node[neuro] (enc)  at (4.9,-3.0) {\textbf{Paired currents}\\$\bar{\bm u}=\bm u_0\oslash\bm\ell$\\
+        $\bm I^\pm=I_b\bm1+I_g\max(\pm\bar{\bm u},\bm0)$};
+  \node[neuro] (cmg)  [right=7mm of enc] {\textbf{Six CMG units}\\$(v_j,r_j)$, no spikes\\$\bm a=\clip_{[0,1]}(G\bm r^+)$};
+  \node[neuro] (dec)  [right=7mm of cmg] {\textbf{Decoder}\\$\bm s=\clip_{[-1,1]}(W\bm a)$};
+  \node[clas]  (gate) [right=8mm of dec] {\textbf{Saturation-aware gate}\\$\tilde s_i=0$ if $|u_{0,i}|\ge\ell_i$ and $s_iu_{0,i}<0$\\
+        else $\tilde s_i=s_i$};
+  \node[neuro] (pes)  [below=11mm of cmg.south west,anchor=north west] {\textbf{PES} (online, every step)\\
+        $W^+=\Pi_{\mathcal W}\big[(1-\lambda_W)W+\eta\bm\varepsilon\bm a\T\big]$,\ \ $\bm\varepsilon=\bm y^*-\bm s$};
+  \node[neuro] (tgt)  [left=7mm of pes] {\textbf{PES teaching target}\\$\bm y^*=\clip_{[-1,1]}(-k_e\bm e_q)$\\from the measured attitude};
+
+  % ---- plant path ----------------------------------------------------------------------------------------------
+  \node[clas]  (sel)   at (enc|-0,0) {\textbf{Nominal torque}\\$\bm u_0=\pi_{\rm fam}(q,\bm\omega,t)\in\mathcal U$};
+  \node[clas]  (box)   at (gate|-0,0) {\textbf{Bounded torque addition}\\$\bm u=\sat_{\bm\ell}(\bm u_0+\beta\bm\ell\odot\tilde{\bm s})$};
+  \node[plant] (plant) [right=8mm of box] {\textbf{Allocation and plant}\\$\bm f=\clip(B^{-1}[T,\bm u\T]\T)$\\MuJoCo X2 / CF2};
+  \draw[sig] (fams.east|-sel) -- (sel);
+  \draw[sig] (sel) -- node[lbl,above]{$\bm u_0$} (box);
+  \draw[sig] (box) -- node[lbl,above]{$\bm u$} (plant);
+
+  % ---- signals ---------------------------------------------------------------------------------------------------
+  \draw[sig] (sel) -- node[lbl,right]{$\bm u_0$} (enc);
+  \draw[sig] (enc) -- node[lbl,above]{$\bm I$} (cmg);
+  \draw[sig] (cmg) -- node[lbl,above]{$\bm a$} (dec);
+  \draw[sig] (dec) -- node[lbl,above]{$\bm s$} (gate);
+  \draw[sig] (gate) -- node[lbl,right]{$\tilde{\bm s}$} (box);
+  \draw[sig] (cmg.south) -- node[lbl,left]{$\bm a$} (cmg.south|-pes.north);
+  \draw[sig] ($(pes.north-|dec)+(-3mm,0)$) -- node[lbl,left]{$W$} ($(dec.south)+(-3mm,0)$);
+  \draw[sig] ($(dec.south)+(3mm,0)$) -- node[lbl,right]{$\bm s$} ($(pes.north-|dec)+(3mm,0)$);
+  \draw[sig] (tgt) -- node[lbl,above]{$\bm y^*$} (pes);
+  \coordinate (u0tap) at ($(sel.east)+(6mm,0)$);
+  \fill (u0tap) circle (1.1pt);
+  \draw[sigd] (u0tap) -- ++(0,-1.25) -| node[lbl,pos=.25,above]{$\bm u_0$ (load test of the gate)} ($(gate.north)+(-12mm,0)$);
+
+  \begin{scope}[on background layer]
+    \node[fam,draw=black!55,fit=(enc)(cmg)(dec)(gate)(pes)(tgt),inner sep=9pt] (rp) {};
+  \end{scope}
+  \node[note,anchor=north east] at (rp.south east) {CMG--PES residual path of the manuscript, unchanged across families};
+\end{tikzpicture}

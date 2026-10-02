@@ -1,0 +1,28 @@
+% SMC: linear sliding variable, boundary-layer reaching law.
+\begin{tikzpicture}
+  \commonleft
+  \node[law,right=10mm of err] (law) {\textbf{Boundary-layer reaching law}\\
+        $\bm a=\dot{\bm\omega}_d-\lambda\bm\omega_e-\bm\eta\odot\sat(\bm\sigma\oslash\bm\phi)$\\
+        $\bm\eta=0.5\,\bm\ell\oslash\bm J$,\quad $\bm\phi=\bm\eta\oslash\lambda$};
+  \node[law,above=9mm of law.north west,anchor=south west] (s) {\textbf{Sliding variable}\\
+        $\bm\sigma=\bm\omega_e+\lambda\bm e$\\$\lambda=\rho\omega_n$};
+  % inset: the boundary-layer saturation sat(sigma/phi)
+  \begin{scope}[shift={($(s.east)+(14mm,-4mm)$)},x=6.5mm,y=5.5mm]
+    \draw[->,gray] (-2.3,0) -- (2.4,0) node[right,font=\scriptsize,text=black]{$\sigma$};
+    \draw[->,gray] (0,-1.5) -- (0,1.7);
+    \draw[very thick,blue!45!black] (-2.1,-1) -- (-1,-1) -- (1,1) -- (2.1,1);
+    \draw[gray,dashed] (1,0) -- (1,1); \draw[gray,dashed] (-1,0) -- (-1,-1);
+    \node[font=\scriptsize,below] at (1,0) {$\phi$};
+    \node[font=\scriptsize,above] at (-1,0) {$-\phi$};
+    \node[font=\scriptsize,anchor=west] at (0.1,1.45) {$\sat(\sigma/\phi)$};
+    \coordinate (insetL) at (-2.3,0.6);
+  \end{scope}
+  \draw[sig] (err.north) |- node[lbl,pos=.75,above]{$\bm e,\bm\omega_e$} (s.west);
+  \draw[sig] (s.south) -- node[lbl,right]{$\bm\sigma$} (s.south|-law.north);
+  \draw[sig] (err) -- node[lbl,above]{$\bm\omega_e$} (law);
+  \coordinate (satx) at ($(law.east)+(23mm,0)$);
+  \commonloop{law}{\textbf{Torque box}\\$\bm u_0=\sat_{\bm\ell}(\bm J\odot\bm a)$};
+  \coordinate (insetR) at ($(s.east)+(32mm,6mm)$);
+  \node[fam,fit=(law)(s)(insetL)(insetR)] (g) {};
+  \node[famlbl,anchor=south east] at (g.north east) {family: SMC (\code{--baseline smc --smc-eta-frac 0.5})};
+\end{tikzpicture}

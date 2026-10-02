@@ -1,0 +1,50 @@
+{
+  "study": "Omnicopter heterogeneous CMG-PES seeded synthetic-mismatch screen",
+  "model_xml": "C:\\Research\\omnicopter\\mujoco\\Omnidrone\\mujoco model=omnidrone.xml",
+  "model_sha256": "6303b7b90a40c15c9da68f4ea1f0924b4f8f3fd7bb1ad670d77f3c232a136de6",
+  "hover_sha256": "b9f56cca4ec0b61b0723d141c4b720dd294e5e91ce5cbc734c7685e673158301",
+  "missions_sha256": "fcae1c55ce68dbd1dd3985b76bdeb182ce5b6cbecbc06dcbb6c079d5950d080d",
+  "research_controller_sha256": "34dcc951d0e967de1f3246e4fbc2c5880ce769600d8b805cca898eebac9cd324",
+  "cells": [
+    12
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "missions": [
+    {
+      "name": "hover_push",
+      "stage": 6,
+      "kind": "hover",
+      "axis": 2,
+      "amplitude": 0.0,
+      "move_s": 10,
+      "hold_s": 2.0,
+      "settle_s": 8.0,
+      "kick_s": 4,
+      "radius_m": 0.2
+    },
+    {
+      "name": "yaw_360_12s",
+      "stage": 7,
+      "kind": "spin",
+      "axis": 2,
+      "amplitude": 360,
+      "move_s": 12,
+      "hold_s": 2.0,
+      "settle_s": 8.0,
+      "kick_s": null,
+      "radius_m": 0.2
+    }
+  ],
+  "learning_rate_per_s": 64.0,
+  "beta": 0.25,
+  "screening_timestep_s": 0.005,
+  "comparators": [
+    "frozen PD",
+    "current canonical 12-cell CMG-PES"
+  ],
+  "important_scope": "Synthetic stress test, not identified aerodynamics or hardware qualification"
+}

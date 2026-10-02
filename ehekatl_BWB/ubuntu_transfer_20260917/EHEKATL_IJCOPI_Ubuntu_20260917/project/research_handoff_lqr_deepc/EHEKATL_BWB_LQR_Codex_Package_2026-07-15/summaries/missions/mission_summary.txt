@@ -1,0 +1,46 @@
+EHEKATL BWB LQR step/sinusoidal mission validation
+Internal units: SI + radians. Degrees only for reports and plots.
+
+Mission: longitudinal_step_pitch_0p1deg
+  system: longitudinal | kind: step | R=1.0
+  amplitude: 0.1 deg | frequency: 0.0 Hz
+  max equilibrium residual: 0.000000e+00
+  max angle error: 0.3823 deg
+  RMS angle error: 0.1025 deg
+  max raw control: 17.8219 deg
+  max applied control: 17.8219 deg
+  saturation fraction: 0.0000%
+  settling time after step: 4.39 s
+
+Mission: longitudinal_sine_pitch_0p75deg
+  system: longitudinal | kind: sine | R=1.0
+  amplitude: 0.75 deg | frequency: 0.12 Hz
+  max equilibrium residual: 0.000000e+00
+  max angle error: 0.5333 deg
+  RMS angle error: 0.3586 deg
+  max raw control: 1.0387 deg
+  max applied control: 1.0387 deg
+  saturation fraction: 0.0000%
+  settling time after step: None s
+
+Mission: lateral_step_roll_5deg
+  system: lateral | kind: step | R=1.0
+  amplitude: 5.0 deg | frequency: 0.0 Hz
+  max equilibrium residual: 0.000000e+00
+  max angle error: 5.0000 deg
+  RMS angle error: 0.8700 deg
+  max raw control: 13.1591 deg
+  max applied control: 13.1591 deg
+  saturation fraction: 0.0000%
+  settling time after step: 4.46 s
+
+Mission: lateral_sine_roll_5deg
+  system: lateral | kind: sine | R=1.0
+  amplitude: 5.0 deg | frequency: 0.1 Hz
+  max equilibrium residual: 0.000000e+00
+  max angle error: 0.0727 deg
+  RMS angle error: 0.0499 deg
+  max raw control: 9.4141 deg
+  max applied control: 9.4141 deg
+  saturation fraction: 0.0000%
+  settling time after step: None s

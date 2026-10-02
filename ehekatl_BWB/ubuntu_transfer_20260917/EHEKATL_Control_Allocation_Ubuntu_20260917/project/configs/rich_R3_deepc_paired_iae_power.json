@@ -1,0 +1,83 @@
+{
+  "status": "paired_iae_candidate",
+  "primary_estimand": "ratio of mean per-pulse integral absolute detrended P response over 1 second",
+  "method": "paired moving-block residual bootstrap using common local-background index; deterministic seed 20260812",
+  "source_files": {
+    "lqr": "logs/rich_R3_roll_matched_lqr_20260712_203707.csv",
+    "deepc": "logs/rich_R3_roll_deepc_pilot_20260810_144136.csv"
+  },
+  "virtual_experiments_per_count": 300,
+  "bootstrap_resamples_each": 300,
+  "required_power": 0.8,
+  "curve": [
+    {
+      "paired_pulses_each_controller": 4,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 32,
+      "median_ratio": 0.7151547925433175,
+      "ratio_5_95_percentiles": [
+        0.38073230779732226,
+        1.144318758601777
+      ],
+      "median_upper_95_bound": 1.0559797693973738,
+      "power_upper_bound_below_one": 0.44
+    },
+    {
+      "paired_pulses_each_controller": 6,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 44,
+      "median_ratio": 0.6685243036263322,
+      "ratio_5_95_percentiles": [
+        0.41185680171005346,
+        1.05239410846771
+      ],
+      "median_upper_95_bound": 1.0026507481196019,
+      "power_upper_bound_below_one": 0.4866666666666667
+    },
+    {
+      "paired_pulses_each_controller": 8,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 56,
+      "median_ratio": 0.6500993094475084,
+      "ratio_5_95_percentiles": [
+        0.4204780001665331,
+        0.9205059535644576
+      ],
+      "median_upper_95_bound": 0.9271345199002357,
+      "power_upper_bound_below_one": 0.63
+    },
+    {
+      "paired_pulses_each_controller": 12,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 80,
+      "median_ratio": 0.6455125735008957,
+      "ratio_5_95_percentiles": [
+        0.4447466868041891,
+        0.9076860139808468
+      ],
+      "median_upper_95_bound": 0.8899623545306887,
+      "power_upper_bound_below_one": 0.7633333333333333
+    },
+    {
+      "paired_pulses_each_controller": 16,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 104,
+      "median_ratio": 0.659537048381106,
+      "ratio_5_95_percentiles": [
+        0.47643001738481616,
+        0.893051647082618
+      ],
+      "median_upper_95_bound": 0.864615926592051,
+      "power_upper_bound_below_one": 0.7966666666666666
+    },
+    {
+      "paired_pulses_each_controller": 24,
+      "minimum_seconds_at_6s_per_pair_plus_settle": 152,
+      "median_ratio": 0.6624767663399677,
+      "ratio_5_95_percentiles": [
+        0.5202339040836123,
+        0.8422270181899734
+      ],
+      "median_upper_95_bound": 0.829962312538835,
+      "power_upper_bound_below_one": 0.93
+    }
+  ],
+  "minimum_qualified_count": 24,
+  "flight_authorized": false,
+  "claim_boundary": "Prospective paired IAE power only; no flight authorization."
+}

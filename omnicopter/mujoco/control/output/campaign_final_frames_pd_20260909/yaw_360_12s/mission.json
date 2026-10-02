@@ -1,0 +1,39 @@
+{
+  "mission": {
+    "name": "yaw_360_12s",
+    "stage": 7,
+    "kind": "spin",
+    "axis": 2,
+    "amplitude": 360,
+    "move_s": 12,
+    "hold_s": 2.0,
+    "settle_s": 8.0,
+    "kick_s": null,
+    "radius_m": 0.2
+  },
+  "duration_s": 22.0,
+  "gates": {
+    "peak_position_error_m": 0.12,
+    "peak_attitude_error_deg": 15.0,
+    "tail_position_error_m": 0.01,
+    "tail_attitude_error_deg": 0.5,
+    "saturation_fraction": 0.02,
+    "max_abs_input_N": 10.00000001,
+    "rotation_endpoint_error_deg": 5.0,
+    "rotation_progress_peak_error_deg": 20.0
+  },
+  "abort": {
+    "minimum_body_origin_z_m": 0.4,
+    "maximum_distance_from_start_m": 2.0,
+    "attitude_error_deg": 100.0,
+    "contact": true,
+    "nonfinite": true
+  },
+  "preflight": {
+    "samples": 401,
+    "quasistatic_wrench_residual": 5.418184247414949e-15,
+    "quasistatic_peak_thrust_N": 5.3624849657462175,
+    "reference_rotation_travel_deg": 359.99999999999994,
+    "passed": true
+  }
+}

@@ -1,0 +1,26 @@
+# Parity gate config (the one runnable mode in this foundation).
+# `python -m adhyperlif_triage.runner --config configs/parity_smoke.yaml`
+mode: parity
+
+# --- Below: the Phase-1 matrix axes, declared now so configs are stable when the
+#     dataset adapter + trainer land. These keys are read by the (stubbed) train modes. ---
+neuron:
+  model: adaptive_hyperlif   # lif | hyperlif | adaptive_hyperlif
+  tau: 0.02
+  alpha: 100.0
+  gamma: 0.2
+  base_gain: 20.0
+  gain_scaling: 80.0         # beta
+  tau_r: 0.002
+  event_threshold: 1.0       # readout threshold (idea: static/adaptive sweep, thread 4)
+  delta_reset: 0.0           # idea 1 (origin): gate-coupled AHP; 0 == reference
+
+readout: hybrid_vr_conductance   # spike_count | filtered_event | voltage | gate | hybrid_vr | hybrid_vr_drdt | hybrid_vr_conductance
+architecture: feedforward         # feedforward | conv | reservoir | wta  (idea 3, survey)
+input_rep: voxel                  # frames | voxel | time_surface | dog
+
+train:
+  epochs: 5
+  batch_size: 16
+  lr: 0.001
+  seeds: [0, 1, 2]

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "comparison": "X2 Hard45, rho=3 PD+rate-feedforward versus CMG-PES residual",
+  "baseline_run": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\baselines_2026-09-10\\tune\\pdff\\bw3\\x2_hard45_classical",
+  "cmg_run": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\baselines_2026-09-10\\stretch\\pdff\\bw3\\x2_hard45_nengo_nef_pes",
+  "summary_qerr_mean_mrad": {
+    "baseline": 10.53705119125009,
+    "cmg_pes": 9.08033280131453,
+    "reduction_percent": 13.824725376158472
+  },
+  "decimated_trace_qerr_mean_mrad": {
+    "baseline": 10.556677038335826,
+    "cmg_pes": 9.099981910080192
+  },
+  "trace_samples": 9000,
+  "logged_dt_s": 0.00500000000000167,
+  "reference_max_abs_mismatch_rad": 0.0,
+  "full_rate_neural_archive_available": false,
+  "neural_plot_source": "decimated trace.csv neural-state columns",
+  "visible_titles_removed": true,
+  "source_sha256": {
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\baselines_2026-09-10\\tune\\pdff\\bw3\\x2_hard45_classical\\trace.csv": "8888b930628a8a759e972e8bf34e790d3f0327474b0b194e694b051e1798ff73",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\baselines_2026-09-10\\tune\\pdff\\bw3\\x2_hard45_classical\\summary.json": "a729a275d9143787dbaf2b928084bfc101830e81397e7980d907f4b7b5a90127",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\baselines_2026-09-10\\tune\\pdff\\bw3\\x2_hard45_classical\\manifest.json": "ae009c69c44d7e7cbf1e8567ea4ef6fbf44ed99c6fda550a4bc261c7ea6a56e1",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\baselines_2026-09-10\\stretch\\pdff\\bw3\\x2_hard45_nengo_nef_pes\\trace.csv": "c150b1c5f13139186e682b97a827c7e87fcb11e4e57cfad22b6a00aa0587a371",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\baselines_2026-09-10\\stretch\\pdff\\bw3\\x2_hard45_nengo_nef_pes\\summary.json": "d48e3224f7170fd887f12c8b6ff72100f94d76c96435365f2b42cba796f23467",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\baselines_2026-09-10\\stretch\\pdff\\bw3\\x2_hard45_nengo_nef_pes\\manifest.json": "0b685a474bf2da29aea1f722b39a99ab2d310d67a1b587b123d47df5e7d42e34"
+  },
+  "output_sha256": {
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_clean_figures_2026-09-20\\output\\png\\x2_hard45_attitude_detail_clean.png": "f5242fdb2fae4b5e664e2f277b8cfcc97112eec21e64cc88d88c2e0dda4d4ac3",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_clean_figures_2026-09-20\\output\\pdf\\x2_hard45_attitude_detail_clean.pdf": "aab177e4e25bab9916f7c60ebc8853fce6b5f2b57bc3d238927a5d8bfbbbb206",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_clean_figures_2026-09-20\\output\\png\\x2_hard45_neuron_states_clean.png": "b7410c1c6fa75824c4f76a0da333e5bcf16954f3ea48bfecfc47dc72d0adfc7e",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_clean_figures_2026-09-20\\output\\pdf\\x2_hard45_neuron_states_clean.pdf": "755290fe94c43a074c04f329110c6deaa41d0d5b1c7c48e1df75e330adac0a7e"
+  }
+}

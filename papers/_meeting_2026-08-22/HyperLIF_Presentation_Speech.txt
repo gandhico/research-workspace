@@ -1,0 +1,156 @@
+HYPERLIF PRESENTATION SPEECH
+Suggested duration: 12–15 minutes, followed by discussion
+
+SLIDE 1 — Continuous-reset spiking dynamics for learning and flight control
+
+Good morning, and thank you for visiting our laboratory.
+
+Today I want to show a small change to the dynamics of a spiking neuron, and then follow that change all the way into closed-loop flight control.
+
+The neuron is HyperLIF. Instead of treating a spike reset as an instantaneous overwrite, HyperLIF represents reset through a continuous internal gate. That state can support temporal learning, but it can also be decoded as a bounded control signal.
+
+The story has three steps: first, why the neuron is different; second, what that difference contributes on temporal learning tasks; and third, how we use the same gate state as a residual controller for Crazyflie and Skydio vehicles in MuJoCo.
+
+[Transition] Let me begin with the neuron itself.
+
+SLIDE 2 — HyperLIF changes the reset—not the idea of a spike
+
+The standard LIF neuron integrates voltage until a threshold is crossed. At that point, the state is reset almost instantaneously. It is simple, efficient, and extremely useful—but the reset itself does not remain available as a continuous state.
+
+HyperLIF keeps the threshold-and-spike idea, but changes the reset mechanism. A fast variable, r of t, controls a continuous reset conductance. After a spike, this gate opens and then relaxes smoothly. The neuron therefore carries a bounded internal trace of its recent reset dynamics.
+
+Adaptive HyperLIF adds another adaptation mechanism. Izhikevich is included here as a useful comparison because it also produces richer dynamics with a compact model, although it does so with a different state structure.
+
+The claim is not that HyperLIF replaces every neuron model. The useful question is narrower: does exposing a continuous reset state give us a signal that standard LIF does not expose?
+
+SLIDE 3 — The reset gate is a task signal that LIF does not expose
+
+This experiment isolates that question. We keep the wiring and readout conditions comparable and ask the classifier to use only the gate-related state.
+
+For LIF, the gate-only accuracy is 0.131—barely above the chance level of 0.091. For HyperLIF, it reaches 0.776.
+
+The important point is structural. We are not simply showing that one network was larger or that one readout received more information. HyperLIF contains a continuous internal variable that carries temporally useful information, while ordinary LIF is largely blind under this readout.
+
+[Pause] That gives us a mechanism. The next question is whether it matters across actual temporal datasets.
+
+SLIDE 4 — Temporal structure is where HyperLIF earns its gain
+
+Across the temporal benchmarks, HyperLIF gives its largest gains where event timing and temporal structure matter.
+
+On SHD, accuracy rises from 0.484 with LIF to 0.637 with HyperLIF—a gain of 15.3 percentage points. On DVS Gesture at 32-by-32 resolution, it rises from 0.698 to 0.818, a gain of 12 points.
+
+On N-MNIST, the gain is much smaller—about 1.3 points. I regard that as an important control rather than a disappointment. HyperLIF is not universally better merely because it is more complex. Its advantage is strongest when the reset-state memory matches the temporal structure of the task.
+
+[Transition] We then asked whether the same bounded state could be useful outside classification.
+
+SLIDE 5 — A bounded internal state becomes a residual torque
+
+This is the control architecture.
+
+We preserve a conventional quaternion PD controller as the stabilizing backbone. Attitude error and body rate enter the baseline controller and produce a normal PD torque.
+
+The same signals are pair-coded into six HyperLIF channels—positive and negative channels for three axes. Their gate activities remain bounded. A small three-by-six matrix decodes those activities into a torque-like signal.
+
+For the fixed version, that matrix is simply the signed pairing matrix. For the learned version, only this small decode matrix is adapted online using PES or an e-prop-style eligibility rule.
+
+Finally, the decoded signal is blended with the classical torque and sent to the vehicle.
+
+So this is not an end-to-end neural flight controller. It is a classical, interpretable controller with a small neuromorphic residual pathway.
+
+SLIDE 6 — Two very different airframes test the same idea
+
+We evaluate the controller on two MuJoCo vehicles.
+
+The Crazyflie 2 uses a lightweight virtual-wrench interface with approximately 0.35 newtons of total thrust. The Skydio X2 uses four explicit rotor actuators, each with a much larger thrust scale.
+
+That difference matters. A controller improvement on one vehicle may simply be tuned to that vehicle’s mass and actuator scale. Running the same gate-residual concept on both airframes tests whether it is a reusable control mechanism.
+
+The main condition is Hard45: a 45-second attitude-tracking trajectory at a half-millisecond simulation step. The score J combines attitude error with torque, saturation, and altitude variation. Lower is better.
+
+SLIDE 7 — The fixed gate helps—but remains nearly silent
+
+The fixed gate improves the aggregate score by 7.4 percent on Crazyflie and 5.8 percent on Skydio.
+
+But this result needs an honest diagnosis. The measured residual torque is only about 1.75 times 10 to the minus 5 newton-meters. That is extremely small.
+
+Therefore, the fixed result should not be presented as a strong neural correction. Most of its benefit behaves like selective detuning of the PD contribution through the blend. It establishes that the architecture is stable and potentially useful, but it also reveals the ceiling of a hand-fixed decode.
+
+That observation motivates the next experiment: let the decode learn the residual that the task actually needs.
+
+SLIDE 8 — Learning the six-to-three decode unlocks the gate
+
+On Crazyflie Hard45, the classical controller scores 0.287. The fixed gate reaches 0.266.
+
+The hand-tuned STN-PID-PES adaptive controller reaches 0.0479, which is already an 83.3 percent improvement over classical.
+
+The online learned HyperLIF gate reaches 0.0383, or 86.7 percent below classical. The e-prop result is essentially the same.
+
+Two conclusions matter here. First, the improvement is no longer explained by a nearly silent residual: learning increases the useful residual action. Second, a very small online adaptation surface—a three-by-six matrix—can outperform the more hand-structured adaptive teacher on this trajectory.
+
+I would still describe this as a simulation result, not a hardware claim. But it is a strong reason to test the mechanism physically.
+
+SLIDE 9 — The learned gate transfers across airframes
+
+The learned residual also improves the Skydio X2 result.
+
+On Crazyflie, the learned gate lowers J by 86.7 percent relative to classical. On Skydio, it lowers J by 56.8 percent, from about 0.299 to 0.129.
+
+The comparison with STN-PID-PES is particularly interesting. The STN controller is excellent on Crazyflie but remains approximately classical on Skydio—0.298 versus 0.299. The learned gate adapts to the new platform scale instead of relying on the original hand tuning.
+
+This does not prove universal transfer, but it is evidence that the learned decode is less platform-specific than the fixed or hand-tuned alternatives.
+
+SLIDE 10 — Damping trades peak performance for command robustness
+
+The strongest smooth-tracking configuration is also fragile.
+
+With no rate term in the learning target, the learned controller is the Hard45 champion: 0.038 on Crazyflie and 0.129 on Skydio. But on the Crazyflie hard-step command, it diverges with a score of 2.18.
+
+Adding body-rate damping to the learning target changes the tradeoff. A balanced setting, k-rate equal to 0.3 with a small weight leak, is stable across all three tests. A stronger damping setting, k-rate equal to 1, gives the best hard-step result, 0.095, but sacrifices some smooth-trajectory performance.
+
+The important design knob is therefore not merely the learning rate. It is the target being learned: proportional error alone, or proportional error plus damping.
+
+For hardware, I would begin with the balanced target. It gives up the headline optimum in exchange for a safer generalist behavior.
+
+SLIDE 11 — Why this is interesting for neuromorphic hardware
+
+There are three reasons this architecture may be relevant to neuromorphic hardware.
+
+First, the gate is continuous and bounded. It remains available between spike events, so the residual path does not require explicit spike-event detection at every control step.
+
+Second, the online learning surface is tiny. Only eighteen decode weights—six inputs by three outputs—need adaptation. The classical flight backbone remains outside that learned pathway.
+
+Third, the learning results suggest that the neuron can retain useful temporal information while maintaining sparse event behavior. That combination—state-rich neurons, sparse events, and small local learning rules—is the engineering direction we want to explore.
+
+I want to be precise about the limits. The flight results shown here are MuJoCo simulations. Exact Python-to-Nengo parity is established on NengoCore, but OpenCL, Loihi, and NengoDL still require custom-neuron backend work. Aero2 and static-quad experiments remain pending.
+
+SLIDE 12 — The neuron’s hidden state becomes a control signal
+
+The central takeaway is this:
+
+HyperLIF turns reset from an instantaneous bookkeeping operation into a continuous, decodable state. That state improves temporal learning where timing matters. In control, the same state can drive a small residual pathway, and learning only its decode produces large simulated improvements across two very different airframes.
+
+The most useful next step is not to replace the classical controller. It is to move this small, bounded, learned residual pathway toward hardware and determine which components should be implemented neuromorphically first: the six gate-state neurons, the three-by-six online decode, or both.
+
+That is the question I would like to leave for discussion: given the constraints of current neuromorphic platforms, what is the cleanest hardware experiment that would distinguish a real computational advantage from a simulation-only controller effect?
+
+Thank you.
+
+SHORT ANSWERS FOR LIKELY QUESTIONS
+
+Why not use a conventional neural network?
+The contribution is not raw function approximation. It is a compact state variable tied to spike-reset dynamics, combined with a tiny local online learning rule and a classical safety backbone.
+
+Is HyperLIF always better than LIF?
+No. The advantage is strongest on temporally structured tasks. The N-MNIST gain is small, and adaptive LIF remains a serious comparator.
+
+Is the fixed-gate improvement really neural control?
+Only weakly. The residual is nearly silent, and much of the gain is selective PD detuning. The learned-decode result is the stronger evidence for active residual control.
+
+Why do Adaptive HyperLIF and HyperLIF match in gate mode?
+In this operating regime the adaptive term multiplies an extremely small squared gate value, so its contribution is numerically negligible. Changing the adaptation law or operating regime would be required for adaptation to matter.
+
+What result would you run live?
+For a visual live demonstration, use the fixed/adaptive Crazyflie or Skydio launcher with the MuJoCo viewer. For the headline learned result, run the learned benchmark and show its console ranking and JSON output; that runner does not currently expose a live viewer.
+
+What should go to hardware first?
+The balanced learned target is the safest first candidate because it is stable across smooth and step commands. Start with the six gate-state channels and the eighteen-weight decode while retaining the classical quaternion-PD backbone.

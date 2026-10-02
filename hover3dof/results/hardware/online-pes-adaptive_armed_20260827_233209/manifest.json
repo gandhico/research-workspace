@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "created_utc": "2026-08-28T05:32:09.968542+00:00",
+  "platform": "hover3dof_hardware",
+  "controller": "online-pes-adaptive",
+  "model": "C:\\Research\\hover3dof\\runners\\hover3dof_hil_cmg_control.py",
+  "model_sha256": "012bdbb45d92d15e9c1f8766696eb860e9263999a8d00e988c370c8079454088",
+  "git_commit": null,
+  "python": "3.13.11",
+  "mujoco": "3.12.0",
+  "numpy": "2.5.2",
+  "arguments": {
+    "controller": "online-pes-adaptive",
+    "armed": true,
+    "beta": 0.4,
+    "learning_rate": 0.0008,
+    "max_residual_volts": 3.0,
+    "k_error": 8.0,
+    "k_rate": 0.0,
+    "duration": 25.0,
+    "rate_hz": 200.0,
+    "mission": "yaw360"
+  }
+}

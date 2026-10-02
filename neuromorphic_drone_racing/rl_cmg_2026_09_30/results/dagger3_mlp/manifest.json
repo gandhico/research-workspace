@@ -1,0 +1,28 @@
+{
+  "args": {
+    "vehicle": "x2",
+    "mode": "mlp",
+    "seed": 1,
+    "episode_s": 12.0,
+    "policy_dt": 0.02,
+    "bc_epochs": 100,
+    "dagger_rounds": 3,
+    "dagger_epochs": 40,
+    "ppo_rollouts": 0,
+    "ppo_epochs": 4,
+    "sim_python": "C:\\Users\\gandhico\\AppData\\Local\\miniconda3\\envs\\hyperlif\\python.exe",
+    "out": "C:\\Research\\neuromorphic_drone_racing\\rl_cmg_2026_09_30\\results\\dagger3_mlp"
+  },
+  "source_hashes": {
+    "cmg_cells.py": "15d0e61fa25440a0914ed3969482e356ac825715a45a11fda34668673d0ff27f",
+    "policy_basis.py": "0c75545c10a1499d5506b8127891ec9dd98e4a4b68de207784931162d8a45c03",
+    "racing_env.py": "369baf96be38304befad8f6a069754046a2d181ccc5359fa65eb2253b8bf8607",
+    "rollout_worker.py": "1bf3e07d92bf0327bddf4698ba4fef4b8c6c572580ba314aad4e409c503d4bf9",
+    "train_split.py": "36773080055f815c7107ab21eb6c7a8009deffc524d90a0fd3b138ae91583853"
+  },
+  "vehicle_xml_hash": "f74ec4fedaf3b4893afa8e3f8d53749ff219fab9732cdd5d6506993d3e2e1971",
+  "torch_version": "2.5.1+cu121",
+  "numpy_version": "2.4.6",
+  "policy_parameter_count": 8265,
+  "separation": "MuJoCo/SciPy worker and PyTorch trainer are distinct processes"
+}

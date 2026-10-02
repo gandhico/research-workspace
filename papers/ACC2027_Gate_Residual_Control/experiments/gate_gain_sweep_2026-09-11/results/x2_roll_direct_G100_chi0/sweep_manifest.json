@@ -1,0 +1,25 @@
+{
+  "case": {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 100,
+    "chi": 0
+  },
+  "source_sha256": {
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\gate_gain_sweep_2026-09-11\\sweep.py": "492133db9fbc8c6496193f6fe99bfb1c439e2e8249355a347e1e8f4f1311203f",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\gate_gain_sweep_2026-09-11\\PLAN.md": "c8b3884388d56b1399e8c39286b52501dcbe7e37938970134323125428388c3c",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\run_mujoco_nef.py": "10e50c274010aa9769dd73787a0ce5dfe6e9294bc7bc91f70b36dc2012bc73d4",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\nengo_cmg.py": "fbfd069d78d4040e738a8df702acb35a08b5141e34a7cdb70c9d4e954d782562",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\src\\gra_control\\gate.py": "ea6d7853fff724d2a6c6fd15afb9a18cf7f9cdae19ce6f04bcf4a5e2300a5e53",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\src\\gra_control\\math3d.py": "31620612f184a22f15971b1a7d15548ff2997b09a093254ab71ddb289e502c5e",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\src\\gra_control\\platforms\\drone.py": "50af6d1f6de51788f727074c57b90ff85a3dc2a8688b91cdc49ee50623a123d9"
+  },
+  "python": "3.13.11 (tags/v3.13.11:6278944, Dec  5 2025, 16:26:58) [MSC v.1944 64 bit (AMD64)]",
+  "executable": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\.venv\\Scripts\\python.exe",
+  "numpy": "2.5.2",
+  "overrides": "Only _build_augmentor factory and gain parameter at runtime; canonical sources unmodified.",
+  "archive_timing": "post CMG-state integration; exact pre-PES W and its increment; command before rotor allocation",
+  "linear_schema_note": "For linear comparator, voltage and gate archive slots are placeholders, not neuron states; use activity only.",
+  "trace_pes_error_note": "Canonical decimated CSV uses post-update W for direct diagnostic error; full-rate archive retains pre-update decoded output."
+}

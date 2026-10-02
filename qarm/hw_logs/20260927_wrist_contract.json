@@ -1,0 +1,194 @@
+{
+  "contract": "QArm position-servo ARX(2) compatibility screen",
+  "samples": 2750,
+  "median_dt_s": 0.00999999999476131,
+  "max_relative_sample_time_jitter": 0.055420000018713764,
+  "command_standard_deviation": 0.06497551986570159,
+  "best_model": {
+    "delay_samples": 5,
+    "a1": 1.4209416882525634,
+    "a2": -0.42689292969081727,
+    "b": 0.009304068303124819,
+    "c": -0.0002462829817982265,
+    "poles": [
+      [
+        0.9895333651904583,
+        0.0
+      ],
+      [
+        0.4314083230621051,
+        0.0
+      ]
+    ],
+    "max_pole_magnitude": 0.9895333651904583,
+    "dc_gain": 1.5633827663786874,
+    "validation_rmse": 0.0008803190039881561,
+    "validation_nrmse_range": 0.005624888827677732,
+    "validation_r2": 0.9996673075492455,
+    "standardized_design_condition": 112.63762903904082,
+    "train_samples": 1920,
+    "validation_samples": 824
+  },
+  "candidate_models": [
+    {
+      "delay_samples": 0,
+      "a1": 1.45429778006392,
+      "a2": -0.4588424347798554,
+      "b": 0.008046894353058956,
+      "c": -0.00025922426537446086,
+      "poles": [
+        [
+          0.9915407838087098,
+          0.0
+        ],
+        [
+          0.46275699625521033,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9915407838087098,
+      "dc_gain": 1.7706283218488255,
+      "validation_rmse": 0.0008918264420881938,
+      "validation_nrmse_range": 0.00569841678710023,
+      "validation_r2": 0.9996583880449107,
+      "standardized_design_condition": 107.92865663830457,
+      "train_samples": 1923,
+      "validation_samples": 825
+    },
+    {
+      "delay_samples": 1,
+      "a1": 1.4475936883385931,
+      "a2": -0.45240863454768004,
+      "b": 0.00830818464623181,
+      "c": -0.0002583160362881476,
+      "poles": [
+        [
+          0.9911416348081885,
+          0.0
+        ],
+        [
+          0.4564520535304047,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9911416348081885,
+      "dc_gain": 1.7254989537686574,
+      "validation_rmse": 0.0008925442839825664,
+      "validation_nrmse_range": 0.005703003511723239,
+      "validation_r2": 0.9996578378883936,
+      "standardized_design_condition": 108.68397528282497,
+      "train_samples": 1923,
+      "validation_samples": 825
+    },
+    {
+      "delay_samples": 2,
+      "a1": 1.4423614241534455,
+      "a2": -0.4474109107989878,
+      "b": 0.008486600488959948,
+      "c": -0.0002538105639465771,
+      "poles": [
+        [
+          0.9907928569673065,
+          0.0
+        ],
+        [
+          0.45156856718613914,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9907928569673065,
+      "dc_gain": 1.6806857973279095,
+      "validation_rmse": 0.0008855197720644634,
+      "validation_nrmse_range": 0.005658119670264606,
+      "validation_r2": 0.9996632024708839,
+      "standardized_design_condition": 109.72387003698094,
+      "train_samples": 1922,
+      "validation_samples": 825
+    },
+    {
+      "delay_samples": 3,
+      "a1": 1.4358505068553458,
+      "a2": -0.44118437601603255,
+      "b": 0.008749568237741364,
+      "c": -0.00025162604172049297,
+      "poles": [
+        [
+          0.990381292988472,
+          0.0
+        ],
+        [
+          0.4454692138668737,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.990381292988472,
+      "dc_gain": 1.6403792395640187,
+      "validation_rmse": 0.0008880587325047849,
+      "validation_nrmse_range": 0.005674342619161517,
+      "validation_r2": 0.9996614317958864,
+      "standardized_design_condition": 110.55737420922821,
+      "train_samples": 1922,
+      "validation_samples": 824
+    },
+    {
+      "delay_samples": 4,
+      "a1": 1.4290136820720942,
+      "a2": -0.43463599803651315,
+      "b": 0.008999401587440966,
+      "c": -0.00024841925668474263,
+      "poles": [
+        [
+          0.9899773981756403,
+          0.0
+        ],
+        [
+          0.4390362838964539,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9899773981756403,
+      "dc_gain": 1.6006573882353965,
+      "validation_rmse": 0.0008822110211513023,
+      "validation_nrmse_range": 0.005636978065959016,
+      "validation_r2": 0.999665875940353,
+      "standardized_design_condition": 111.60504729859555,
+      "train_samples": 1921,
+      "validation_samples": 824
+    },
+    {
+      "delay_samples": 5,
+      "a1": 1.4209416882525634,
+      "a2": -0.42689292969081727,
+      "b": 0.009304068303124819,
+      "c": -0.0002462829817982265,
+      "poles": [
+        [
+          0.9895333651904583,
+          0.0
+        ],
+        [
+          0.4314083230621051,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9895333651904583,
+      "dc_gain": 1.5633827663786874,
+      "validation_rmse": 0.0008803190039881561,
+      "validation_nrmse_range": 0.005624888827677732,
+      "validation_r2": 0.9996673075492455,
+      "standardized_design_condition": 112.63762903904082,
+      "train_samples": 1920,
+      "validation_samples": 824
+    }
+  ],
+  "checks": {
+    "sample_time_jitter_le_5pct": false,
+    "validation_r2_ge_0_70": true,
+    "discrete_model_stable": true,
+    "finite_nonzero_dc_gain": true,
+    "standardized_condition_le_1e4": true
+  },
+  "shadow_ready": false,
+  "direct_dilisic_actuation_ready": false,
+  "interpretation": "A passing result permits recorded-data replay and shadow-mode work. It does not validate direct DILISIC actuation: identify the actual torque/PWM plant or design a rigorously bounded outer setpoint loop."
+}

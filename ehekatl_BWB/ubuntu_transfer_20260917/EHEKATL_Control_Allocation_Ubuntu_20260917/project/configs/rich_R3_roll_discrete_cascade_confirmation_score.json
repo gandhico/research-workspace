@@ -1,0 +1,56 @@
+{
+  "status": "independent_score_no_refit",
+  "file": "rich_R3_roll_dualrate_confirmation_20260712_194543.csv",
+  "yoke_to_total_recursive": {
+    "1": {
+      "rmse": 3.384279246603477e-05,
+      "nrmse": 0.5152480231935956
+    },
+    "5": {
+      "rmse": 3.375797077361938e-05,
+      "nrmse": 0.5139566342107028
+    },
+    "10": {
+      "rmse": 3.3872290588621874e-05,
+      "nrmse": 0.5156971247080816
+    },
+    "20": {
+      "rmse": 3.4104972397780804e-05,
+      "nrmse": 0.5192396468661621
+    }
+  },
+  "yoke_to_total_mean_nrmse": 0.5160353572446356,
+  "yoke_to_total_training_nrmse": 0.4725892524359095,
+  "yoke_to_total_ratio": 1.091932062747487,
+  "surface_to_p_recursive": {
+    "1": {
+      "rmse": 0.0018322014760351413,
+      "nrmse": 0.2994622965266865
+    },
+    "5": {
+      "rmse": 0.0022438914715850367,
+      "nrmse": 0.3667505468293887
+    },
+    "10": {
+      "rmse": 0.0022530732813296358,
+      "nrmse": 0.3682512583332015
+    },
+    "20": {
+      "rmse": 0.0022678457669829486,
+      "nrmse": 0.370665732143539
+    }
+  },
+  "surface_to_p_mean_nrmse": 0.35128245845820394,
+  "surface_to_p_training_nrmse": 0.31634826496168833,
+  "surface_to_p_ratio": 1.11042954036984,
+  "total_to_surface_relative_rmse": 6.375897590675181e-08,
+  "sent_to_yoke_lag1_correlation": 0.9999999999999982,
+  "checks": {
+    "yoke_to_total_ratio": true,
+    "surface_to_p_ratio": true,
+    "surface_static_map": true,
+    "command_write": true
+  },
+  "pass": true,
+  "no_refit_or_reselection": true
+}

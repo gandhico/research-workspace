@@ -1,0 +1,93 @@
+{
+ "platform": "cf2-rotor",
+ "mission": "hardstep",
+ "controller": "dual_v2",
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "z_min_m": 0.69165215940932,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "ki_factor": 0.05,
+ "tuner": {
+  "beta_p": 0.5,
+  "beta_i": 0.5,
+  "beta_d": 0.5,
+  "e_ref": 0.1,
+  "w_ref": 1.0,
+  "kappa_d": 1.0,
+  "tau_lp": 1.0,
+  "learning_rate": 0.0001,
+  "leak": 1e-06,
+  "w_max": 6.0,
+  "freeze_on_sat": false,
+  "v2_gating": true,
+  "e_gate": 0.25
+ },
+ "stn": null,
+ "qerr_mean_rad": 0.35023157451217357,
+ "qerr_rmse_rad": 0.6233819807556665,
+ "qerr_max_rad": 1.9541476644344749,
+ "saturation_fraction": 0.0051333333333333335,
+ "residual_rms_Nm": 0.00012148345898372565,
+ "torque_limits_Nm": [
+  0.000287412,
+  0.000287412,
+  0.00032347
+ ],
+ "multiplier_mean": [
+  1.055616076841565,
+  1.0467735892928554,
+  1.0714042141054598,
+  1.0935068370121626,
+  1.065204642725212,
+  1.0793321098439654,
+  1.0024378046043527,
+  1.0009662233260366,
+  1.0029968184973428
+ ],
+ "multiplier_min": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_max": [
+  1.2384678483172769,
+  1.2158022566478575,
+  1.2451549539409805,
+  1.1894532702259113,
+  1.213167620514354,
+  1.200994137641908,
+  1.0198560404620778,
+  1.0095650399012976,
+  1.0239455748681108
+ ],
+ "integral_frozen_fraction": [
+  0.025544444444444446,
+  0.00998888888888889,
+  0.001488888888888889
+ ],
+ "WS_final_fro": 0.08377507698514726,
+ "WR_final_fro": 2.306970750943966,
+ "yhat_mean": null,
+ "yhat_negative_fraction": null,
+ "stn_valid_fraction": null,
+ "stn_blocked_fraction": null,
+ "wall_s": 38.19349239999792,
+ "hashes": {
+  "run_dual.py": "1bdc9be5c1a8a5a7",
+  "dual_controller.py": "0db1f5c0e50da177",
+  "gra_control/gate.py": "ea6d7853fff724d2",
+  "gra_control/platforms/drone.py": "50af6d1f6de51788",
+  "gra_control/math3d.py": "31620612f184a22f",
+  "model": "410e0975d066abb1"
+ }
+}

@@ -1,0 +1,36 @@
+% D1 -- NENGO REALIZATION. Shows what is a real neural population
+% (nengo.Ensemble) versus what is scaffolding (nengo.Node).
+\begin{tikzpicture}[node distance=7mm and 16mm]
+  \node[clas,align=left]              (s1) {\textbf{S1} plant $+$ quaternion PD\\
+        \scriptsize\texttt{nengo.Node} $\times$ 3\\
+        \scriptsize MuJoCo twin, error, PD law};
+  \node[neuro,right=of s1,align=left] (s2) {\textbf{S2} CMG population\\
+        \scriptsize\texttt{nengo.Ensemble}(n\_neurons=$2m$)\\
+        \scriptsize\texttt{neuron\_type=CoupledMembraneGate}\\
+        \scriptsize gain $=\bm 1$, bias $=\bm 0$};
+  \node[clas,right=of s2,align=left]  (s3) {\textbf{S3} decoder $+$ PES\\
+        \scriptsize\texttt{nengo.Connection}(\dots\texttt{.neurons})\\
+        \scriptsize\texttt{learning\_rule\_type=nengo.PES}\\
+        \scriptsize\texttt{transform=}$W_0$};
+  \node[clas,below=11mm of s2,align=left] (s4) {\textbf{S4} bounded residual injection\\
+        \scriptsize\texttt{nengo.Node} ($\beta$, $\sat_{\bm\ell}$)};
+
+  \draw[sig] (s1) -- node[lbl,above]{$\bm I$ into \texttt{.neurons}} (s2);
+  \draw[sig] (s2) -- node[lbl,above]{$\bm a_k$} (s3);
+  \draw[sig] (s3.south) -- ++(0,-5mm) -| node[lbl,pos=.25,above]{$\bm s_k$} (s4.east);
+  \draw[sig] (s4.west) -| node[lbl,pos=.25,below]{$\bm u_k$} (s1.south);
+
+  \begin{scope}[on background layer]
+    \node[grp,fit=(s1)(s2)(s3)(s4)] (nb) {};
+  \end{scope}
+  \node[note,anchor=south west] at ([yshift=0.5mm]nb.north west)
+    {built model: 1 Ensemble, 25 Nodes, 35 Connections, 1 PES rule};
+
+  \node[note,anchor=north west,text width=140mm] at ($(nb.south west)+(0,-2mm)$)
+    {The CMG population is the model's \emph{only} \texttt{Ensemble}: in
+     Nengo a custom \texttt{NeuronType} can exist only inside one. Everything
+     else is a \texttt{Node}, i.e.\ non-neural scaffolding. Current is
+     injected at \texttt{.neurons}, bypassing NEF encoders, and the PES
+     learning rate is converted as
+     $\eta_{\rm nengo}=\eta\,(2m)/h$ so the two realizations coincide.};
+\end{tikzpicture}

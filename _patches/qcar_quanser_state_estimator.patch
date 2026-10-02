@@ -1,0 +1,114 @@
+diff --git a/build/qcar_lidar_cpp/CMakeFiles/3.16.3/CMakeDetermineCompilerABI_C.bin b/build/qcar_lidar_cpp/CMakeFiles/3.16.3/CMakeDetermineCompilerABI_C.bin
+old mode 100755
+new mode 100644
+diff --git a/build/qcar_lidar_cpp/CMakeFiles/3.16.3/CMakeDetermineCompilerABI_CXX.bin b/build/qcar_lidar_cpp/CMakeFiles/3.16.3/CMakeDetermineCompilerABI_CXX.bin
+old mode 100755
+new mode 100644
+diff --git a/build/qcar_lidar_cpp/CMakeFiles/3.16.3/CompilerIdC/a.out b/build/qcar_lidar_cpp/CMakeFiles/3.16.3/CompilerIdC/a.out
+old mode 100755
+new mode 100644
+diff --git a/build/qcar_lidar_cpp/CMakeFiles/3.16.3/CompilerIdCXX/a.out b/build/qcar_lidar_cpp/CMakeFiles/3.16.3/CompilerIdCXX/a.out
+old mode 100755
+new mode 100644
+diff --git a/quanser_state_estimator/quanser_state_estimator_node.py b/quanser_state_estimator/quanser_state_estimator_node.py
+index 15db3dc..208469c 100644
+--- a/quanser_state_estimator/quanser_state_estimator_node.py
++++ b/quanser_state_estimator/quanser_state_estimator_node.py
+@@ -15,6 +15,9 @@ from sensor_msgs.msg import Imu, JointState
+ from nav_msgs.msg import Odometry
+ from scipy.spatial.transform import Rotation as R
+ 
++# TODO: Replace 'qcar2_interfaces' with the actual ROS2 package name where MotorCommands is defined
++from qcar2_interfaces.msg import MotorCommands 
++
+ # Import your modular calibration utilities
+ from .calibration import load_calibration, save_calibration
+ 
+@@ -64,6 +67,10 @@ class QCarStateEstimatorNode(Node):
+         self._last_joy_time = None
+         self._joy_timeout = 1.0
+         
++        # Fallback Autonomous Commands (parsed from MotorCommands)
++        self._auto_steering_cmd = 0.0
++        self._auto_throttle_cmd = 0.0
++        
+         # Thread safety lock for data access
+         self._data_lock = Lock()
+ 
+@@ -95,6 +102,14 @@ class QCarStateEstimatorNode(Node):
+         self.create_subscription(Odometry, '/odom_rf2o', self._gps_callback, qos)
+         self.create_subscription(Joy, '/joy', self._joy_callback, 10)
+         
++        # Subscriber for autonomous motor commands fallback
++        self.cmd_sub = self.create_subscription(
++            MotorCommands, 
++            '/qcar2_motor_speed_cmd', 
++            self._motor_commands_callback, 
++            10
++        )
++        
+         # ===== Publishers =====
+         self.pose_pub = self.create_publisher(PoseStamped, 'qcar_pose_ekf', 10)
+         self.pose_dr_pub = self.create_publisher(PoseStamped, 'qcar_pose_dr', 10)
+@@ -106,9 +121,21 @@ class QCarStateEstimatorNode(Node):
+         # Print initial debug info
+         self.get_logger().info("="*60)
+         self.get_logger().info("QCar State Estimator Node Initialized")
+-        self.get_logger().info("Waiting for joystick input on /joy topic...")
++        self.get_logger().info("Subscribed to /qcar2_motor_speed_cmd for fallback commands.")
+         self.get_logger().info("="*60)
+ 
++    def _motor_commands_callback(self, msg):
++        """ Parses the array-based MotorCommands structure securely """
++        with self._data_lock:
++            try:
++                for i, name in enumerate(msg.motor_names):
++                    if name == "steering_angle":
++                        self._auto_steering_cmd = float(msg.values[i])
++                    elif name == "motor_throttle":
++                        self._auto_throttle_cmd = float(msg.values[i])
++            except IndexError:
++                self.get_logger().error("MotorCommands mismatch between 'motor_names' and 'values' array size!")
++
+     def _joy_callback(self, msg):
+         with self._data_lock:
+             throttle_raw = msg.axes[AXIS_THROTTLE]
+@@ -166,7 +193,11 @@ class QCarStateEstimatorNode(Node):
+             now = self.get_clock().now().nanoseconds * 1e-9
+             if self._last_gps_time is None or (now - self._last_gps_time) > self._gps_timeout:
+                 self._gps_ready = False
++            
++            # If joystick timeout has passed, flag it as disconnected
+             if self._last_joy_time is not None and (now - self._last_joy_time) > self._joy_timeout:
++                if self._joystick_connected:
++                    self.get_logger().warn("Joystick timeout! Switching to fallback subscriber control.")
+                 self._joystick_connected = False
+ 
+ class QcarEKF:
+@@ -324,8 +355,16 @@ def controlLoop(node):
+                 th_gyro = node._th_gyro
+                 raw_cps = node._raw_cps
+                 gps_ready = node._gps_ready
+-                throttle_cmd = node._throttle_cmd
+-                steering_cmd = node._steering_cmd
++                joy_connected = node._joystick_connected
++                
++                # Dynamic Command Selection based on input connectivity
++                if joy_connected:
++                    steering_cmd = node._steering_cmd
++                    throttle_cmd = node._throttle_cmd
++                else:
++                    steering_cmd = node._auto_steering_cmd
++                    throttle_cmd = node._auto_throttle_cmd
++
+                 if gps_ready:
+                     x_gps = node._x_gps
+                     y_gps = node._y_gps
+@@ -388,6 +427,7 @@ def controlLoop(node):
+             if debug_counter >= debug_interval:
+                 print(f"\n{'='*60}")
+                 print(f"TIME: {t:.3f} seconds | STATE: {'STATIONARY' if is_stationary else 'MOVING'}")
++                print(f"INPUT MODE: {'JOYSTICK' if joy_connected else 'AUTONOMOUS SUBSCRIBER fallback'}")
+                 print(f"{'='*60}")
+                 if bias_estimated:
+                     print(f"[IMU STATS] Bias: {gyro_bias_estimate:.5f} | Noise Std: {gyro_noise_std:.5f}")

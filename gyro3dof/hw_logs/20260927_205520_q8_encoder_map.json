@@ -1,0 +1,62 @@
+{
+  "duration_s": 39.98000339999271,
+  "channels": {
+    "enc0": {
+      "moved": true,
+      "active_from_s": 28.2,
+      "active_to_s": 39.9,
+      "min": -69,
+      "max": 336,
+      "span_counts": 405,
+      "span_deg": 35.6,
+      "final_counts": 328,
+      "final_deg": 28.8,
+      "first_direction": -1
+    },
+    "enc1": {
+      "moved": true,
+      "active_from_s": 34.7,
+      "active_to_s": 40.0,
+      "min": -25,
+      "max": 1312,
+      "span_counts": 1337,
+      "span_deg": 120.3,
+      "final_counts": 720,
+      "final_deg": 64.8,
+      "first_direction": -1
+    },
+    "enc2": {
+      "moved": true,
+      "active_from_s": 29.7,
+      "active_to_s": 38.8,
+      "min": -64,
+      "max": 18,
+      "span_counts": 82,
+      "span_deg": 7.4,
+      "final_counts": 10,
+      "final_deg": 0.9,
+      "first_direction": 1
+    },
+    "enc3": {
+      "moved": false
+    },
+    "enc4": {
+      "moved": false
+    },
+    "enc5": {
+      "moved": false
+    },
+    "enc6": {
+      "moved": false
+    },
+    "enc7": {
+      "moved": false
+    }
+  },
+  "order_moved": [
+    "enc0",
+    "enc2",
+    "enc1"
+  ],
+  "log": "C:\\Research\\gyro3dof\\hw_logs\\20260927_205520_q8_encoder_map.csv"
+}

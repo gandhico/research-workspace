@@ -1,0 +1,486 @@
+{
+  "schema": 1,
+  "scope": "canonical direct-Nengo physical data plus campaign audit anchors",
+  "files": [
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\audit_and_freeze_all_2026_09_02.py",
+      "bytes": 19298,
+      "sha256": "5F2077B9CC5ACD24A4930472DAE368DADE661AE669C2C446AED1A7554B148A5A"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\docs\\COMMAND_CATALOG_2026-09-01.md",
+      "bytes": 9544,
+      "sha256": "7ED89276DA160282F31CDDCE4616E31EC57838E03EB895557148F420343D1D9E"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\hover_nengo_hil_gui.py",
+      "bytes": 50606,
+      "sha256": "49D8722B640040B00962FB3661F7DEA7696C23A520580C9AC96C50CDDB120C15"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\final_summary_table.json",
+      "bytes": 1191,
+      "sha256": "7FA9721D8AC817DDF360CC97E205C7F4287175BFA64C414AB318B7BEDB31B638"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_full3_none_armed_20260901_192733\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_full3_none_armed_20260901_192733\\neural_trace_2khz.npz",
+      "bytes": 13208920,
+      "sha256": "CD588530208A5BD23D1D80BAACCCE367013031FB1430EB4B55E474291E4205F2"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_full3_none_armed_20260901_192733\\neural_trace_schema.json",
+      "bytes": 4346,
+      "sha256": "63B2780C0A2A19450D46A49C34C18FA4BD8E0F1120570FE5A7E4D5761B234B9A"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_full3_none_armed_20260901_192733\\summary.json",
+      "bytes": 2781,
+      "sha256": "B58AAB57A294007F08109DAD896EC1633BF6797D035ABE034944F077EEC7B867"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_full3_none_armed_20260901_192733\\trace.csv",
+      "bytes": 7941779,
+      "sha256": "ACABDF833A53F049B79CD256BAE981CC7323BE8C5FA8CFBCE870EF3463F6C36D"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hard45_none_armed_20260901_192844\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hard45_none_armed_20260901_192844\\neural_trace_2khz.npz",
+      "bytes": 12524145,
+      "sha256": "6EFCA23BD10DC735151643A107A34DFD783993D47806C040359A9011BBA8D7AB"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hard45_none_armed_20260901_192844\\neural_trace_schema.json",
+      "bytes": 4346,
+      "sha256": "63B2780C0A2A19450D46A49C34C18FA4BD8E0F1120570FE5A7E4D5761B234B9A"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hard45_none_armed_20260901_192844\\summary.json",
+      "bytes": 2803,
+      "sha256": "37251F55F6ED2F8FB432A07F5EB9DFC2B2735A96988601C9CDB2E97359479A42"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hard45_none_armed_20260901_192844\\trace.csv",
+      "bytes": 7908814,
+      "sha256": "6D69B728CE77C1FCE9F53F3B5FEB6A7311CA162F71429D9567EE4A665A8EE0A8"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hardstep_none_armed_20260901_192922\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hardstep_none_armed_20260901_192922\\neural_trace_2khz.npz",
+      "bytes": 11987757,
+      "sha256": "B88533BC178EFA4587E0E37414D711786120D36D8AD0182EEC51A3F9E8B9E5C7"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hardstep_none_armed_20260901_192922\\neural_trace_schema.json",
+      "bytes": 4346,
+      "sha256": "63B2780C0A2A19450D46A49C34C18FA4BD8E0F1120570FE5A7E4D5761B234B9A"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hardstep_none_armed_20260901_192922\\summary.json",
+      "bytes": 2807,
+      "sha256": "147564E9BF70364828568145BFF670EEF65D44FC446FDBFE1B1C5E96FA513CC9"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hardstep_none_armed_20260901_192922\\trace.csv",
+      "bytes": 7784357,
+      "sha256": "5563B0C3BE8C6E0EE7DA6EBC7305561D32DA34CD1073F5D4C45D144526D46095"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hover_none_armed_20260901_192626\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hover_none_armed_20260901_192626\\neural_trace_2khz.npz",
+      "bytes": 10717247,
+      "sha256": "C4BFF7D52F78CD9CC35FF8E1F5019003EC6CA914F31ED535AFC341C16BD48713"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hover_none_armed_20260901_192626\\neural_trace_schema.json",
+      "bytes": 4346,
+      "sha256": "C2DACAA29E2D08CCAE342A9520FA0351E77DB3868B2D84E1165938D0AF8506A0"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hover_none_armed_20260901_192626\\summary.json",
+      "bytes": 2799,
+      "sha256": "42E01FFFC8BAB42EC99559D717820C7BC4A50F82AD2CDE58A6271F90D5DD9F86"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hover_none_armed_20260901_192626\\trace.csv",
+      "bytes": 5161585,
+      "sha256": "05C7AC316E59CCE6B4C28D5D0665B3D7D29C7D641EEA1682382734C4C29474C2"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_roll_none_armed_20260901_192654\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_roll_none_armed_20260901_192654\\neural_trace_2khz.npz",
+      "bytes": 10387118,
+      "sha256": "5992837CAC1E3AA342793F01812C973213DD727581366C4B6338D1170F9FFB63"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_roll_none_armed_20260901_192654\\neural_trace_schema.json",
+      "bytes": 4346,
+      "sha256": "C2DACAA29E2D08CCAE342A9520FA0351E77DB3868B2D84E1165938D0AF8506A0"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_roll_none_armed_20260901_192654\\summary.json",
+      "bytes": 2784,
+      "sha256": "7FABBBD14DC9D9680D5B7C19C6889C30559057638F1509A424EF5E6094061A0D"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_roll_none_armed_20260901_192654\\trace.csv",
+      "bytes": 5426161,
+      "sha256": "70C913143201C00A6458AD4EFEA41173DCBF71353BCB6C4B74681D99A11B5CEC"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_yaw360_none_armed_20260901_193929\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_yaw360_none_armed_20260901_193929\\neural_trace_2khz.npz",
+      "bytes": 40485928,
+      "sha256": "367B3E3038567919D20A54DCEE442D84D8D134E1C86488FE51ABC83A698052B3"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_yaw360_none_armed_20260901_193929\\neural_trace_schema.json",
+      "bytes": 4346,
+      "sha256": "2E71D0E0A2229A421D5CC6A15DF7DF77849D4403096004D850DF2AF56D316B48"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_yaw360_none_armed_20260901_193929\\summary.json",
+      "bytes": 2801,
+      "sha256": "56BF6B5187B0BDDD7430BE276C5F37D8A229DF4299F58393AC9D399DED9278B0"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_yaw360_none_armed_20260901_193929\\trace.csv",
+      "bytes": 20366470,
+      "sha256": "FAA03105039BE0645BCC78325C96C0F38997E090DCDD48BA70F5B890B060F12F"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\neuron_family_emulated_all_missions.json",
+      "bytes": 2505,
+      "sha256": "D5C758DD732FA0BECD51D02E5591281070D855106103584BF1797D37FE144149"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_full3_none_armed_20260901_192715\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_full3_none_armed_20260901_192715\\summary.json",
+      "bytes": 2447,
+      "sha256": "8AC4165C47908F30CF67C2C96562D29E4B0FC8DFAD24A93C8609DB5435941F71"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_full3_none_armed_20260901_192715\\trace.csv",
+      "bytes": 3514063,
+      "sha256": "5E2750C98A54845F7B81FC19D48FB2468B256BBE798C762F7A488212CD49D62A"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hard45_none_armed_20260901_192812\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hard45_none_armed_20260901_192812\\summary.json",
+      "bytes": 2446,
+      "sha256": "5A27AC2670F934B132931290C9B1838CC7439376CD9A4AA91325FA6ACC14CD32"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hard45_none_armed_20260901_192812\\trace.csv",
+      "bytes": 3509856,
+      "sha256": "39CBA10E04DCF31E84B1BA885612960AA31F8FF78020F670341126230E65143F"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hardstep_none_armed_20260901_192904\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hardstep_none_armed_20260901_192904\\summary.json",
+      "bytes": 2448,
+      "sha256": "7C6CB939C2A9706C6F59F278C74CAD46EB2F3CBD72C6D4B2904278BD4335089A"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hardstep_none_armed_20260901_192904\\trace.csv",
+      "bytes": 3467260,
+      "sha256": "064FB5D683DAFA68EF88877B5D251D80D78E44683BCC1B3F5939E1B25D6DE403"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hover_none_armed_20260901_192613\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hover_none_armed_20260901_192613\\summary.json",
+      "bytes": 2460,
+      "sha256": "423131F8EB33521D219B89123B270F330483B7EC5D8B886868F381821359CD51"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hover_none_armed_20260901_192613\\trace.csv",
+      "bytes": 2088455,
+      "sha256": "23F585DE0CEA0F3F2D9CE612922C5AD84AC995E09F173C42E761CD22205D2DB0"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_roll_none_armed_20260901_192641\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_roll_none_armed_20260901_192641\\summary.json",
+      "bytes": 2446,
+      "sha256": "B7D5D693F761AC73D3D59C81FD93971FA4DA2493F704C1812F10AFCEC9633E24"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_roll_none_armed_20260901_192641\\trace.csv",
+      "bytes": 2256320,
+      "sha256": "0FA155466FCD682657FAC31A0AB5F44AC234A2AA1FE5103951B7F813CFF060EE"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_yaw360_none_armed_20260901_193059\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_yaw360_none_armed_20260901_193059\\summary.json",
+      "bytes": 2495,
+      "sha256": "AD16CA8BCC3A0D9EE4476A6DB5EDCFDCBAF14D5197369E18556D3F7B60A0ED19"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_yaw360_none_armed_20260901_193059\\trace.csv",
+      "bytes": 4540737,
+      "sha256": "7697F25C7CE07B137CEB71186A213445563D209D4A5695271EF62579E8E3C0E9"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_yaw360_none_armed_20260901_193741\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_yaw360_none_armed_20260901_193741\\summary.json",
+      "bytes": 2499,
+      "sha256": "958BA250C7190AFCD0CC475A35B5E707AAAD365C59D34A63A9DB6A2890A9DA55"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_yaw360_none_armed_20260901_193741\\trace.csv",
+      "bytes": 7003859,
+      "sha256": "92F2F04EBE7865B40180AB8A71894FCB16B97F63B5D4E05656C1C4F4371CD329"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_yaw360_none_armed_20260901_193849\\manifest.json",
+      "bytes": 1122,
+      "sha256": "C32AE960E09A75BDFA18F7663FE42E33C5326B6F6E9C4A84C3B8B1AA060447BA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_yaw360_none_armed_20260901_193849\\summary.json",
+      "bytes": 2458,
+      "sha256": "2F6A8AFD43A9CB75815541109770E2D2698526B3B7FF2C2E506BAC6A24BDAF71"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_yaw360_none_armed_20260901_193849\\trace.csv",
+      "bytes": 8524751,
+      "sha256": "C8ED5D902F891BE16D7F574EB50DDEEB034EB0E86C80A95D9F7F3B851B08E794"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\full3_hardware_mechanism.png",
+      "bytes": 225361,
+      "sha256": "4D64C23E6B0CD4A565220FBBDF55CCE5866172A8A5BFCC96CD6940FA23ACC775"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\full3_hardware_tracking.png",
+      "bytes": 374106,
+      "sha256": "5A96CFD9EA3E760BE4E2A14C1EA994416D7E567F6C9EE535E5D672A77113BB74"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\hard45_hardware_mechanism.png",
+      "bytes": 205260,
+      "sha256": "0F6642378BB040E9C004F5F862090A5B1EE7B9E12040897C30FD64C97E9C1B0C"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\hard45_hardware_tracking.png",
+      "bytes": 371484,
+      "sha256": "A03A8FFE063AD5E33EC8D0AA8258F78785C4B8A7FCA635993CDCCCDDBC82F4EA"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\hardstep_hardware_mechanism.png",
+      "bytes": 198676,
+      "sha256": "D3870AFE8F3D858B13AAEAA18E1FE8D5EA52BEB746E4CB3CB1BECCC969B6FA6B"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\hardstep_hardware_tracking.png",
+      "bytes": 324358,
+      "sha256": "A9320710FFC53309FB074DD29FCCDEE01797305568DCD03550015032168E5FC2"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\hover_hardware_mechanism.png",
+      "bytes": 364435,
+      "sha256": "3EF09D5AE81B3498D042A1FF4F0AA0ACF8B935281ACF383530BCA9AB152F6546"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\hover_hardware_tracking.png",
+      "bytes": 483281,
+      "sha256": "535FA20D12123BDBBDA72E9305F11CE9074EF76309E9D47B7CCC9F09C0B5D6FB"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\roll_hardware_mechanism.png",
+      "bytes": 296954,
+      "sha256": "3BCC99EB1359B942ECAD3806703FAE4BF20933C5050F7B38E55BD3CAC4F9D7AC"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\roll_hardware_tracking.png",
+      "bytes": 359649,
+      "sha256": "385DA7BD1A0D1FE46613852F7895910A001F831B5A4AF609C0043A013AEBF78B"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\summary_table.json",
+      "bytes": 1552,
+      "sha256": "D39250FE58EBB929C906ECD6D12775F4D502CA1AE43BF6CC4DC1A9E3CFD75E3C"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\yaw360_hardware_mechanism.png",
+      "bytes": 309021,
+      "sha256": "8FDC7146E3C464F2FE8EB4F2DB6D3CC43667CCDC745CB0249E18D09804B86E91"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\plots\\yaw360_hardware_tracking.png",
+      "bytes": 228510,
+      "sha256": "9CE113C1F4D3EAF51114C13A3C9933930BDAF42570A462376B7470B080CE3F43"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\FINAL_ANALYSIS_2026-09-01.md",
+      "bytes": 11368,
+      "sha256": "0C76BF0D833C09B81BA79F72FE7DF67AC52A7315B7502EF916B1D4DED1273936"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\final_hardware_campaign_2026-09-01\\campaign_results.json",
+      "bytes": 3338,
+      "sha256": "1137BECA966E465264B1ECA87C6928FD6A76670FB90D667BAB5A88F5F589B8D5"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\FROZEN_AUDIT_2026-09-02\\all_saved_run_inventory.csv",
+      "bytes": 109255,
+      "sha256": "E713C7ECA46946CE1CDBBF5D8BCF102B5A5B5C1CDCA60F4A539659A8F60BE109"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\FROZEN_AUDIT_2026-09-02\\all_saved_run_inventory.json",
+      "bytes": 192335,
+      "sha256": "B34F1BB5D56B9D6C9D47809010F7FCBC70857FB82963E8A0154BF45F9F7B9EC9"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\FROZEN_AUDIT_2026-09-02\\AUDIT_SUMMARY.json",
+      "bytes": 1397,
+      "sha256": "3ECC2E0BDC3D3BFBCABE2D080EA377AE92B57A01B99F03B579C853E974F736E7"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\FROZEN_AUDIT_2026-09-02\\campaign_registry.json",
+      "bytes": 5140,
+      "sha256": "BA8499332633CD31E9FEDAAEDEDFD9FB773428A099AE78417CC3C39FC92A90A1"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\FROZEN_AUDIT_2026-09-02\\canonical_physical_deep_audit.json",
+      "bytes": 19615,
+      "sha256": "BF07AA5E83DAF7D133AE57FCEF32B204A95278D27527E6C5D8F0BDFFD8710B9E"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\FROZEN_AUDIT_2026-09-02\\canonical_physical_matched_pairs.csv",
+      "bytes": 1461,
+      "sha256": "E919B4595C0953E7F2F2AE0FF12717ACA252F66155A1F8EEB9FD621A1A092864"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\FROZEN_AUDIT_2026-09-02\\canonical_physical_matched_pairs.json",
+      "bytes": 3008,
+      "sha256": "FD4AE6508EDEA33F2E18E470578986AA7BF5FD8F94F873C23BB9FDAA178FE885"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\FROZEN_AUDIT_2026-09-02\\CONSOLIDATED_RESEARCH_AUDIT_2026-09-02.md",
+      "bytes": 12250,
+      "sha256": "F02DC49FF452EBF3AB19AD0726751F3066B3ABB1B8DA97E452EC445EC117A943"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\FROZEN_AUDIT_2026-09-02\\UPSTREAM_MANIFEST_VERIFICATION.json",
+      "bytes": 812,
+      "sha256": "2EDB84A9AB351CD927449F3C2B21E59321CC91F705F8197DB2C308A73EAFD637"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hardware_armed_roll_n3_2026-09-01\\armed_roll_n3_summary.json",
+      "bytes": 4209,
+      "sha256": "99825062AE6FFC797E1620B853EE41185915CF62F537BC440F2EF9AA33DCF1D7"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hover_neuron_family_compiled_2026-09-01\\campaign_integrity_audit.json",
+      "bytes": 375,
+      "sha256": "83780CAE611466707E642BFE819DAC592192C84C03FC249B7738791D8183F80D"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hover_neuron_family_compiled_2026-09-01\\FROZEN_SHA256_MANIFEST.json",
+      "bytes": 196382,
+      "sha256": "2C31D498902E4B9462D6DCD04D01F00FEDF109D6C6A788D1DDE51DD4D2D423C8"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\FROZEN_SHA256_MANIFEST.json",
+      "bytes": 16507,
+      "sha256": "2424ACFBBCE61DDF84F9BD04D21069960EAA3122FC86B331933B23D35A61E874"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\q8_neuron_family_shadow_2026-09-01\\SHADOW_AUDIT.json",
+      "bytes": 7163,
+      "sha256": "6DBBE4B70EF75C9C19095F7AAACD88BCAF282FB57500CF03520D023A020E5C8B"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\run_hover_direct_nengo.py",
+      "bytes": 5662,
+      "sha256": "242713C321CEE93AAA1D1A640C4E16AD71C11F8B5C7EA17D78B23EA8D909852E"
+    },
+    {
+      "path": "C:\\Research\\hover3dof\\pd_cmg_focused_final_round_2026-08-28\\src\\pd_baseline.py",
+      "bytes": 12621,
+      "sha256": "B4AA3F0F597DB8D7B65FB027306E7AE78871BCDA493E80CD14052020D84C96D3"
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\nengo_cmg.py",
+      "bytes": 13672,
+      "sha256": "FBFD069D78D4040E738A8DF702ACB35A08B5141E34A7CDB70C9D4E954D782562"
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\nengo_neuron_family.py",
+      "bytes": 10438,
+      "sha256": "882EA82EE3101A514695EC8CB420945A3D6424409271043323BD569D55D7D5E6"
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\neuron_family_compiled\\campaign_integrity_audit.json",
+      "bytes": 129,
+      "sha256": "7DEAC4A9B9F36CDB3D719BFE20C5D7A68CBAA251FCAB50F71DA68022D267E4F5"
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\neuron_family_matched_45s\\FROZEN_SHA256_MANIFEST.json",
+      "bytes": 171638,
+      "sha256": "9594424A0F44B574248F6F8EB65BFAE75871ABB4C27F6242E774AF6378218EEC"
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\six_dof_expansion_2026-08-31\\PROGRESS_2026-08-31.md",
+      "bytes": 34011,
+      "sha256": "D3D0D86D74500669468DE654D5E18584A486A7EFC2DA4B0A83E9CBFB556E1F3D"
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\paper\\acc2027_neuromorphic_gate_residual_draft.tex",
+      "bytes": 54342,
+      "sha256": "A6DF0E2F0F0CBC6EB0F44845847845302311911447645F9DA4273255A2E4696E"
+    }
+  ]
+}

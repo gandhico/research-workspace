@@ -1,0 +1,112 @@
+{
+ "platform": "cf2-rotor",
+ "mission": "hardstep",
+ "controller": "stn_ks_v2",
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "z_min_m": 0.732850815165883,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "ki_factor": 0.05,
+ "tuner": null,
+ "stn": {
+  "bounded": true,
+  "mu_p": 5e-05,
+  "mu_i": 5e-05,
+  "mu_d": 5e-05,
+  "e_ref": 0.1,
+  "w_ref": 1.0,
+  "xi_ref": 0.1,
+  "tau_syn": 0.05,
+  "kappa_s": 1.0,
+  "sens_learning_rate": 0.0008,
+  "sens_leak": 1e-06,
+  "du_deadband": 0.001,
+  "m_min": 0.5,
+  "m_max": 1.5,
+  "leak_m": 5e-05,
+  "w_max": 6.0,
+  "known_sign": true,
+  "v2_gating": true,
+  "e_gate": 0.25,
+  "retreat_tau": 1.0
+ },
+ "qerr_mean_rad": 0.3945622111388985,
+ "qerr_rmse_rad": 0.6627425785945967,
+ "qerr_max_rad": 1.9693031861707528,
+ "saturation_fraction": 0.002577777777777778,
+ "residual_rms_Nm": 0.0,
+ "torque_limits_Nm": [
+  0.000287412,
+  0.000287412,
+  0.00032347
+ ],
+ "multiplier_mean": [
+  1.117863674199829,
+  1.1389515548891358,
+  1.1872607071970214,
+  0.9088403628169814,
+  0.894792321762542,
+  0.8248487896980291,
+  1.0000037238487196,
+  1.0000105313895882,
+  1.0000109206144812
+ ],
+ "multiplier_min": [
+  1.0,
+  1.0,
+  1.0,
+  0.7739541856053873,
+  0.5685460934479486,
+  0.5,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_max": [
+  1.1745342740352236,
+  1.1937659292604976,
+  1.248573391481977,
+  1.077508446551883,
+  1.0696740868401176,
+  1.0814904591845118,
+  1.0000346731425904,
+  1.000097586085181,
+  1.000121868507382
+ ],
+ "integral_frozen_fraction": [
+  0.03127777777777778,
+  0.014755555555555555,
+  0.006622222222222222
+ ],
+ "WS_final_fro": null,
+ "WR_final_fro": null,
+ "yhat_mean": [
+  1.0,
+  1.0,
+  1.0
+ ],
+ "yhat_negative_fraction": 0.0,
+ "stn_valid_fraction": [
+  0.9772666666666666,
+  0.9705777777777778,
+  0.9769666666666666
+ ],
+ "stn_blocked_fraction": [
+  0.031455555555555556,
+  0.016966666666666668,
+  0.0092
+ ],
+ "wall_s": 33.731273800000054,
+ "hashes": {
+  "run_dual.py": "1bdc9be5c1a8a5a7",
+  "dual_controller.py": "0db1f5c0e50da177",
+  "gra_control/gate.py": "ea6d7853fff724d2",
+  "gra_control/platforms/drone.py": "50af6d1f6de51788",
+  "gra_control/math3d.py": "31620612f184a22f",
+  "model": "410e0975d066abb1"
+ }
+}

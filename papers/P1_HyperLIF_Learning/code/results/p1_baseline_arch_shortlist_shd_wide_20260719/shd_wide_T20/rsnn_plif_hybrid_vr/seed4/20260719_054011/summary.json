@@ -1,0 +1,37 @@
+{
+  "config": {
+    "dataset": null,
+    "data_file": "C:\\00_Research_\\Neural_Networks_and_Learning\\07_AdHyperLIF_Triage\\data\\tonic\\_cache\\shd_wide_T20.pt",
+    "neuron": "plif",
+    "readout": "hybrid_vr",
+    "arch": "rsnn",
+    "seed": 4,
+    "mode": "full",
+    "epochs": 5,
+    "hidden": 128,
+    "T": 20,
+    "batch": 64,
+    "lr": 0.001,
+    "input_scale": 16.0,
+    "clip": 1.0,
+    "results_root": "C:\\00_Research_\\Neural_Networks_and_Learning\\07_AdHyperLIF_Triage\\results\\p1_baseline_arch_shortlist_shd_wide_20260719",
+    "device": "cpu",
+    "skip_existing": true
+  },
+  "meta": {
+    "n_in": 700,
+    "T": 20,
+    "n_classes": 20,
+    "dataset": "shd_wide_T20"
+  },
+  "final_epoch": 4,
+  "final_accuracy": 0.45625,
+  "final_balanced_accuracy": 0.45624999999999993,
+  "final_macro_f1": 0.43341453995406026,
+  "events_per_sample": 1126.3125,
+  "gate_mean": 0.0,
+  "nan_batches": 0,
+  "stable": true,
+  "wall_time_s": 2.7,
+  "device": "cpu"
+}

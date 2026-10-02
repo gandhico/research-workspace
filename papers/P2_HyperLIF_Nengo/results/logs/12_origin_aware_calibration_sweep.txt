@@ -1,0 +1,163 @@
+Origin-aware calibration candidate sweep
+Candidates: 21
+Apps per candidate: 6
+
+T001 | LIF native reference | lif
+  communication_channel    status=ok decoded_rmse=0.15641694556749283 event_rate_hz=32.8125
+  function_square          status=ok function_rmse=0.08683691478104011 event_rate_hz=25.6
+  transform_2d             status=ok transform_rmse=0.1270892128099533 event_rate_hz=20.166666666666668
+  working_memory           status=ok hold_error_to_0.3=0.02300537834602978 event_rate_hz=18.104166666666668
+  oscillator               status=ok oscillator_std=0.4982558672416202 event_rate_hz=24.75
+  pes_learning             status=ok late_error_rmse=0.6366629098188091 event_rate_hz=14.179104477611938
+T002 | hyperlif theta 1.00 | hyperlif
+  communication_channel    status=ok decoded_rmse=0.4117347877430036 event_rate_hz=20.0625
+  function_square          status=ok function_rmse=0.130438776378314 event_rate_hz=21.783333333333335
+  transform_2d             status=ok transform_rmse=0.2457062721900611 event_rate_hz=21.833333333333332
+  working_memory           status=ok hold_error_to_0.3=0.3745439522037754 event_rate_hz=19.15625
+  oscillator               status=ok oscillator_std=0.5337375777934423 event_rate_hz=21.33125
+  pes_learning             status=ok late_error_rmse=0.6769420736703048 event_rate_hz=3.4825870646766166
+T003 | hyperlif theta 0.95 | hyperlif
+  communication_channel    status=ok decoded_rmse=0.3455920454238215 event_rate_hz=25.875
+  function_square          status=ok function_rmse=0.2068922693072844 event_rate_hz=27.966666666666665
+  transform_2d             status=ok transform_rmse=0.27317616345346835 event_rate_hz=27.583333333333332
+  working_memory           status=ok hold_error_to_0.3=0.4277522456051405 event_rate_hz=27.625
+  oscillator               status=ok oscillator_std=0.5737115556117907 event_rate_hz=26.975
+  pes_learning             status=ok late_error_rmse=0.6308271425068435 event_rate_hz=18.345771144278604
+T004 | adaptive theta 1.00 | adaptive
+  communication_channel    status=ok decoded_rmse=0.22865543275443057 event_rate_hz=36.625
+  function_square          status=ok function_rmse=0.22242972161791513 event_rate_hz=27.433333333333334
+  transform_2d             status=ok transform_rmse=0.4220851101131625 event_rate_hz=27.416666666666668
+  working_memory           status=ok hold_error_to_0.3=0.7914920899236382 event_rate_hz=24.75
+  oscillator               status=ok oscillator_std=0.9071532106024403 event_rate_hz=38.93125
+  pes_learning             status=ok late_error_rmse=0.6387298853120111 event_rate_hz=3.5447761194029845
+T005 | adaptive theta 0.95 | adaptive
+  communication_channel    status=ok decoded_rmse=0.23460566332350127 event_rate_hz=38.979166666666664
+  function_square          status=ok function_rmse=0.2701815165077074 event_rate_hz=32.43333333333333
+  transform_2d             status=ok transform_rmse=0.48469362222213724 event_rate_hz=34.416666666666664
+  working_memory           status=ok hold_error_to_0.3=0.8115825137924424 event_rate_hz=36.71875
+  oscillator               status=ok oscillator_std=0.9821618630301031 event_rate_hz=42.68125
+  pes_learning             status=ok late_error_rmse=0.5458321037933207 event_rate_hz=19.340796019900495
+T006 | hyperlif theta 0.95 static origin current baseline | hyperlif
+  communication_channel    status=ok decoded_rmse=0.2168630085243614 event_rate_hz=37.791666666666664
+  function_square          status=ok function_rmse=0.28414548597297223 event_rate_hz=32.8
+  transform_2d             status=ok transform_rmse=0.4678059759051863 event_rate_hz=34.53333333333333
+  working_memory           status=ok hold_error_to_0.3=0.6843066612008653 event_rate_hz=35.145833333333336
+  oscillator               status=ok oscillator_std=0.8201690406164089 event_rate_hz=36.6125
+  pes_learning             status=ok late_error_rmse=0.5491461857736845 event_rate_hz=20.024875621890544
+T007 | adaptive theta 0.95 static origin current baseline | adaptive
+  communication_channel    status=ok decoded_rmse=0.32638332416139826 event_rate_hz=43.833333333333336
+  function_square          status=ok function_rmse=0.34032492663731223 event_rate_hz=36.06666666666667
+  transform_2d             status=ok transform_rmse=0.6472036949560797 event_rate_hz=40.78333333333333
+  working_memory           status=ok hold_error_to_0.3=1.2266235210984096 event_rate_hz=47.322916666666664
+  oscillator               status=ok oscillator_std=1.324622388828483 event_rate_hz=58.1625
+  pes_learning             status=ok late_error_rmse=0.4965668768491131 event_rate_hz=20.398009950248753
+T008 | hyperlif theta 0.95 mild static origin | hyperlif
+  communication_channel    status=ok decoded_rmse=0.20304297578032474 event_rate_hz=35.041666666666664
+  function_square          status=ok function_rmse=0.2511138310930949 event_rate_hz=31.116666666666667
+  transform_2d             status=ok transform_rmse=0.3949095029364003 event_rate_hz=31.866666666666667
+  working_memory           status=ok hold_error_to_0.3=0.5748537351431147 event_rate_hz=32.020833333333336
+  oscillator               status=ok oscillator_std=0.7199479166445587 event_rate_hz=32.36875
+  pes_learning             status=ok late_error_rmse=0.5702551279549687 event_rate_hz=19.278606965174127
+T009 | hyperlif theta 0.95 medium static origin | hyperlif
+  communication_channel    status=ok decoded_rmse=0.2168630085243614 event_rate_hz=37.791666666666664
+  function_square          status=ok function_rmse=0.28414548597297223 event_rate_hz=32.8
+  transform_2d             status=ok transform_rmse=0.4678059759051863 event_rate_hz=34.53333333333333
+  working_memory           status=ok hold_error_to_0.3=0.6843066612008653 event_rate_hz=35.145833333333336
+  oscillator               status=ok oscillator_std=0.8201690406164089 event_rate_hz=36.6125
+  pes_learning             status=ok late_error_rmse=0.5491461857736845 event_rate_hz=20.024875621890544
+T010 | hyperlif theta 0.95 deep static origin | hyperlif
+  communication_channel    status=ok decoded_rmse=0.24323359352172796 event_rate_hz=39.75
+  function_square          status=ok function_rmse=0.30519387001166015 event_rate_hz=33.983333333333334
+  transform_2d             status=ok transform_rmse=0.5218513242942818 event_rate_hz=36.516666666666666
+  working_memory           status=ok hold_error_to_0.3=0.777811912745805 event_rate_hz=37.697916666666664
+  oscillator               status=ok oscillator_std=0.905631481170429 event_rate_hz=40.3125
+  pes_learning             status=ok late_error_rmse=0.5309964865506338 event_rate_hz=20.460199004975124
+T014 | adaptive theta 0.95 mild static origin | adaptive
+  communication_channel    status=ok decoded_rmse=0.2769978867169045 event_rate_hz=41.416666666666664
+  function_square          status=ok function_rmse=0.30889987142237313 event_rate_hz=34.31666666666667
+  transform_2d             status=ok transform_rmse=0.5655645353226545 event_rate_hz=37.7
+  working_memory           status=ok hold_error_to_0.3=0.9578670718331328 event_rate_hz=40.895833333333336
+  oscillator               status=ok oscillator_std=1.17444795783615 event_rate_hz=51.33125
+  pes_learning             status=ok late_error_rmse=0.5129702764305758 event_rate_hz=19.90049751243781
+T015 | adaptive theta 0.95 medium static origin | adaptive
+  communication_channel    status=ok decoded_rmse=0.32638332416139826 event_rate_hz=43.833333333333336
+  function_square          status=ok function_rmse=0.34032492663731223 event_rate_hz=36.06666666666667
+  transform_2d             status=ok transform_rmse=0.6472036949560797 event_rate_hz=40.78333333333333
+  working_memory           status=ok hold_error_to_0.3=1.2266235210984096 event_rate_hz=47.322916666666664
+  oscillator               status=ok oscillator_std=1.324622388828483 event_rate_hz=58.1625
+  pes_learning             status=ok late_error_rmse=0.4965668768491131 event_rate_hz=20.398009950248753
+T016 | adaptive theta 0.95 deep static origin | adaptive
+  communication_channel    status=ok decoded_rmse=0.3257391512263854 event_rate_hz=44.083333333333336
+  function_square          status=ok function_rmse=0.352192066062101 event_rate_hz=36.35
+  transform_2d             status=ok transform_rmse=0.6515611494671403 event_rate_hz=41.3
+  working_memory           status=ok hold_error_to_0.3=1.0682845502988785 event_rate_hz=44.9375
+  oscillator               status=ok oscillator_std=1.343220910404832 event_rate_hz=59.225
+  pes_learning             status=ok late_error_rmse=0.48982449978949566 event_rate_hz=21.144278606965173
+T020 | hyperlif theta 0.95 origin rate_to_current 40 | hyperlif
+  communication_channel    status=ok decoded_rmse=0.385460827308634 event_rate_hz=29.666666666666668
+  function_square          status=ok function_rmse=0.4033912766516937 event_rate_hz=37.25
+  transform_2d             status=ok transform_rmse=0.18518437724688425 event_rate_hz=27.716666666666665
+  working_memory           status=ok hold_error_to_0.3=0.4426866450798668 event_rate_hz=35.8125
+  oscillator               status=ok oscillator_std=0.6082498778257808 event_rate_hz=32.2125
+  pes_learning             status=ok late_error_rmse=0.5396279287690727 event_rate_hz=27.549751243781092
+T021 | hyperlif theta 0.95 origin rate_to_current 60 | hyperlif
+  communication_channel    status=ok decoded_rmse=0.25847509046795675 event_rate_hz=40.583333333333336
+  function_square          status=ok function_rmse=0.35101622876462757 event_rate_hz=36.333333333333336
+  transform_2d             status=ok transform_rmse=0.5160481956412343 event_rate_hz=37.6
+  working_memory           status=ok hold_error_to_0.3=0.7167811357685416 event_rate_hz=38.5
+  oscillator               status=ok oscillator_std=0.7534408949106592 event_rate_hz=35.78125
+  pes_learning             status=ok late_error_rmse=0.5158067606592973 event_rate_hz=22.88557213930348
+T022 | hyperlif theta 0.95 origin rate_to_current 100 | hyperlif
+  communication_channel    status=ok decoded_rmse=0.19086913008934833 event_rate_hz=35.208333333333336
+  function_square          status=ok function_rmse=0.22904239635068616 event_rate_hz=30.05
+  transform_2d             status=ok transform_rmse=0.3859427221515854 event_rate_hz=30.65
+  working_memory           status=ok hold_error_to_0.3=0.6176795542692595 event_rate_hz=31.28125
+  oscillator               status=ok oscillator_std=0.7623078472256578 event_rate_hz=33.575
+  pes_learning             status=ok late_error_rmse=0.5764335300148592 event_rate_hz=17.78606965174129
+T023 | hyperlif theta 0.95 origin rate_to_current 140 | hyperlif
+  communication_channel    status=ok decoded_rmse=0.17354398293975998 event_rate_hz=30.875
+  function_square          status=ok function_rmse=0.1572293131023655 event_rate_hz=26.0
+  transform_2d             status=ok transform_rmse=0.25154376217990765 event_rate_hz=24.433333333333334
+  working_memory           status=ok hold_error_to_0.3=0.43680304893695227 event_rate_hz=24.114583333333332
+  oscillator               status=ok oscillator_std=0.5809037346862425 event_rate_hz=26.18125
+  pes_learning             status=ok late_error_rmse=0.6292428093990315 event_rate_hz=14.738805970149253
+T030 | adaptive theta 0.95 origin rate_to_current 40 | adaptive
+  communication_channel    status=ok decoded_rmse=0.7069730487911893 event_rate_hz=62.020833333333336
+  function_square          status=ok function_rmse=0.6525033924992014 event_rate_hz=51.583333333333336
+  transform_2d             status=ok transform_rmse=1.3320580700294706 event_rate_hz=69.46666666666667
+  working_memory           status=ok hold_error_to_0.3=1.900333552104142 event_rate_hz=77.39583333333333
+  oscillator               status=ok oscillator_std=1.9342193215945933 event_rate_hz=88.76875
+  pes_learning             status=ok late_error_rmse=0.2626805413480706 event_rate_hz=30.90796019900497
+T031 | adaptive theta 0.95 origin rate_to_current 60 | adaptive
+  communication_channel    status=ok decoded_rmse=0.4756771384085227 event_rate_hz=51.0
+  function_square          status=ok function_rmse=0.45565805586846914 event_rate_hz=41.88333333333333
+  transform_2d             status=ok transform_rmse=0.9010141767158271 event_rate_hz=51.4
+  working_memory           status=ok hold_error_to_0.3=1.5405651838938916 event_rate_hz=59.822916666666664
+  oscillator               status=ok oscillator_std=1.645127936791319 event_rate_hz=73.83125
+  pes_learning             status=ok late_error_rmse=0.40804618164841217 event_rate_hz=24.87562189054726
+T032 | adaptive theta 0.95 origin rate_to_current 100 | adaptive
+  communication_channel    status=ok decoded_rmse=0.2380802558393025 event_rate_hz=39.0625
+  function_square          status=ok function_rmse=0.263833929906115 event_rate_hz=31.983333333333334
+  transform_2d             status=ok transform_rmse=0.47971962863154777 event_rate_hz=33.86666666666667
+  working_memory           status=ok hold_error_to_0.3=0.9108085283449066 event_rate_hz=37.552083333333336
+  oscillator               status=ok oscillator_std=1.0925922263314785 event_rate_hz=46.63125
+  pes_learning             status=ok late_error_rmse=0.5441756085386994 event_rate_hz=18.22139303482587
+T033 | adaptive theta 0.95 origin rate_to_current 140 | adaptive
+  communication_channel    status=ok decoded_rmse=0.16945399430268865 event_rate_hz=33.020833333333336
+  function_square          status=ok function_rmse=0.17318219431369847 event_rate_hz=27.05
+  transform_2d             status=ok transform_rmse=0.2838614791865455 event_rate_hz=25.6
+  working_memory           status=ok hold_error_to_0.3=0.5264257203275935 event_rate_hz=26.0
+  oscillator               status=ok oscillator_std=0.6949776841720665 event_rate_hz=30.28125
+  pes_learning             status=ok late_error_rmse=0.6055483906080579 event_rate_hz=14.987562189054724
+
+Top candidates by robustness score:
+  #01 T001 | LIF native reference | score=0.679 | bad_apps=0 | mean_event_rate=22.60
+  #02 T023 | hyperlif theta 0.95 origin rate_to_current 140 | score=1.252 | bad_apps=0 | mean_event_rate=24.39
+  #03 T033 | adaptive theta 0.95 origin rate_to_current 140 | score=1.902 | bad_apps=1 | mean_event_rate=26.16
+  #04 T002 | hyperlif theta 1.00 | score=1.908 | bad_apps=1 | mean_event_rate=17.94
+  #05 T008 | hyperlif theta 0.95 mild static origin | score=2.759 | bad_apps=2 | mean_event_rate=30.28
+  #06 T020 | hyperlif theta 0.95 origin rate_to_current 40 | score=2.852 | bad_apps=2 | mean_event_rate=31.70
+  #07 T003 | hyperlif theta 0.95 | score=3.052 | bad_apps=3 | mean_event_rate=25.73
+  #08 T022 | hyperlif theta 0.95 origin rate_to_current 100 | score=3.231 | bad_apps=3 | mean_event_rate=29.76
+  #09 T004 | adaptive theta 1.00 | score=3.468 | bad_apps=3 | mean_event_rate=26.45
+  #10 T006 | hyperlif theta 0.95 static origin current baseline | score=3.522 | bad_apps=3 | mean_event_rate=32.82

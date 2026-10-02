@@ -1,0 +1,23 @@
+packaged_path,source_name,notes
+manuscript/current/main.tex,main (1).tex,current LaTeX source
+manuscript/current/EHEKATL_BWB_LQR_IJCOPI.pdf,EHEKATL_BWB_LQR_IJCOPI (1).pdf,current rendered manuscript
+manuscript/legacy/BWB_V1_IJCOPI.docx,BWB_V1_IJCOPI.docx,legacy manuscript
+manuscript/legacy/BWB_V1_IJCOPI.pdf,BWB_V1_IJCOPI.pdf,legacy manuscript
+references/EHEKATL_BWB_Tesis.pdf,EHEKATL_BWB_Tesis,source detected as PDF and extension added
+summaries/lti/summary_Rlon_0p3_Rlat_1p0.txt,summary_rad_internal(1).txt,renamed by stored controller tuning
+summaries/lti/summary_Rlon_1p0_Rlat_1p0.txt,summary_rad_internal.txt,principal baseline
+summaries/lti/summary_Rlon_3p0_Rlat_1p0.txt,summary_rad_internal(2).txt,conservative longitudinal tuning
+summaries/lti/summary_Rscan_and_Rlon_0p3.json,summary_rad_internal.json,full R scan and structured metrics
+summaries/missions/mission_summary.txt,mission_summary.txt,mission metrics
+data/lti/longitudinal/Rlon_0p3/small_perturbation.npz,longitudinal_small_data(1).npz,R value verified inside NPZ
+data/lti/longitudinal/Rlon_0p3/stress_saturated.npz,longitudinal_stress_saturated_data(1).npz,R value verified inside NPZ
+data/lti/longitudinal/Rlon_1p0/small_perturbation.npz,longitudinal_small_data.npz,R value verified inside NPZ
+data/lti/longitudinal/Rlon_1p0/stress_saturated.npz,longitudinal_stress_saturated_data.npz,R value verified inside NPZ
+data/lti/longitudinal/Rlon_3p0/small_perturbation.npz,longitudinal_small_data(2).npz,R value verified inside NPZ
+data/lti/longitudinal/Rlon_3p0/stress_saturated.npz,longitudinal_stress_saturated_data(2).npz,R value verified inside NPZ
+data/lti/lateral/Rlat_1p0/small_perturbation.npz,lateral_small_data.npz,duplicate (1) and (2) uploads were byte-identical and omitted
+data/lti/lateral/Rlat_1p0/stress_saturated.npz,lateral_stress_saturated_data.npz,duplicate (1) and (2) uploads were byte-identical and omitted
+data/missions/longitudinal/step_pitch_0p1deg.npz,longitudinal_step_pitch_0p1deg_data.npz,canonical mission file
+data/missions/longitudinal/sine_pitch_0p75deg_0p12Hz.npz,longitudinal_sine_pitch_0p75deg_data.npz,duplicate (1) upload was byte-identical and omitted
+data/missions/lateral/step_roll_5deg.npz,lateral_step_roll_5deg_data.npz,duplicate (1) upload was byte-identical and omitted
+data/missions/lateral/sine_roll_5deg_0p1Hz.npz,lateral_sine_roll_5deg_data.npz,duplicate (1) upload was byte-identical and omitted

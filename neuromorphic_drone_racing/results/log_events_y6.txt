@@ -1,0 +1,51 @@
+WARNING: Attach conflict when attaching 'Skydio X2' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+timestep: parent has 0.002 (default), child has 0.01, keeping parent value
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+
+WARNING: Attach conflict when attaching 'cf2 four-rotor design study' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+integrator: parent has 0 (default), child has 1, keeping parent value
+
+C:\Research\neuromorphic_drone_racing\build_scene.py:137: UserWarning: Attach conflict when attaching 'Skydio X2' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+timestep: parent has 0.002 (default), child has 0.01, keeping parent value
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+  model = spec.compile()
+C:\Research\neuromorphic_drone_racing\build_scene.py:137: UserWarning: Attach conflict when attaching 'cf2 four-rotor design study' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+integrator: parent has 0 (default), child has 1, keeping parent value
+  model = spec.compile()
+C:\Research\neuromorphic_drone_racing\build_scene.py:138: UserWarning: Attach conflict when attaching 'Skydio X2' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+timestep: parent has 0.002 (default), child has 0.01, keeping parent value
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+  out.write_text(spec.to_xml())
+C:\Research\neuromorphic_drone_racing\build_scene.py:138: UserWarning: Attach conflict when attaching 'cf2 four-rotor design study' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+integrator: parent has 0 (default), child has 1, keeping parent value
+  out.write_text(spec.to_xml())
+  y6: 0/48410 frames, 0 events, 1 s
+  y6: 2500/48410 frames, 4706128 events, 110 s
+  y6: 5000/48410 frames, 6772317 events, 206 s
+  y6: 7500/48410 frames, 15462033 events, 294 s
+  y6: 10000/48410 frames, 27554119 events, 379 s
+  y6: 12500/48410 frames, 36570697 events, 461 s
+  y6: 15000/48410 frames, 40912224 events, 527 s
+  y6: 17500/48410 frames, 49860917 events, 601 s
+  y6: 20000/48410 frames, 63253873 events, 684 s
+  y6: 22500/48410 frames, 76890072 events, 799 s
+  y6: 25000/48410 frames, 82234858 events, 884 s
+  y6: 27500/48410 frames, 87760202 events, 972 s
+  y6: 30000/48410 frames, 90237979 events, 1065 s
+  y6: 32500/48410 frames, 90319512 events, 1130 s
+  y6: 35000/48410 frames, 90364901 events, 1165 s
+  y6: 37500/48410 frames, 90409942 events, 1199 s
+  y6: 40000/48410 frames, 90455044 events, 1233 s
+  y6: 42500/48410 frames, 90499624 events, 1267 s
+  y6: 45000/48410 frames, 90544741 events, 1307 s
+  y6: 47500/48410 frames, 90589596 events, 1368 s
+{'vehicle': 'y6', 'frames': 48410, 'frame_rate_hz': 500.0, 'events': 90605888, 'on_frac': 0.499, 'mean_rate_Mev_s': np.float64(0.936), 'peak_rate_Mev_s_10ms': 21.619, 'raw_file': 'results/events_y6.bin', 'raw_MB': 1177.9, 'dvs': {'C': 0.25, 'sigma_C': 0.03, 't_ref_s': 0.0001, 'noise_hz_per_px': 0.1, 'W': 346, 'H': 260, 'fovy_deg': 75, 'frame_rate_hz': 500, 'shadows': False}, 'wall_s': 1392.4}

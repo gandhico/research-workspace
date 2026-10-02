@@ -1,0 +1,149 @@
+{
+  "status": "exploratory",
+  "algorithm": "online linear Gaussian TD(lambda) actor-critic",
+  "learning_signal": "TD reward prediction error, not PES teacher error",
+  "development_missions": [
+    "full3",
+    "hard45"
+  ],
+  "held_out_missions": [
+    "roll",
+    "hardstep",
+    "yaw360"
+  ],
+  "family_settings": [
+    0.75,
+    1.25,
+    0.005
+  ],
+  "args": {
+    "platform": "x2",
+    "family": "cmg",
+    "mode": "train-eval",
+    "train_episodes": 6,
+    "train_duration": 10.0,
+    "eval_duration": 15.0,
+    "eval_missions": [
+      "roll",
+      "full3",
+      "hard45",
+      "hardstep",
+      "yaw360"
+    ],
+    "dt": 0.0005,
+    "policy_dt": 0.02,
+    "beta": 0.5,
+    "seed": 1,
+    "disturbance_frac": 0.0,
+    "checkpoint": null,
+    "output": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\neuromorphic_rl_attitude_2026-09-30\\results\\pilot_x2_cmg"
+  },
+  "versions": {
+    "mujoco": "3.12.0",
+    "nengo": "4.1.0",
+    "numpy": "2.5.2"
+  },
+  "source_sha256": {
+    "runner": "d8a5dcd1d7b466912120e33137e214a62ebf806d0a1e118937dfe5020364437d",
+    "cmg_neuron": "fbfd069d78d4040e738a8df702acb35a08b5141e34a7cdb70c9d4e954d782562",
+    "baseline": "3c12f663e4034fd94308f5d6293afaeda4ee2ad94cd590b57574b3b168b278e6",
+    "math3d": "31620612f184a22f15971b1a7d15548ff2997b09a093254ab71ddb289e502c5e"
+  },
+  "eval": [
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "family": "cmg",
+      "train": false,
+      "seed": 10001,
+      "duration_s": 15.0,
+      "dt_s": 0.0005,
+      "policy_dt_s": 0.02,
+      "beta": 0.5,
+      "disturbance_frac_limits": 0.0,
+      "qerr_true_mean_rad": 0.0018053920436583379,
+      "qerr_true_mean_deg": 0.10344134446812123,
+      "qerr_true_max_deg": 0.360115726560184,
+      "rotor_saturation_fraction": 0.0,
+      "output_gate_fraction": 0.0,
+      "realized_residual_normalized_rms": 0.014048210596863585,
+      "model_sha256": "d932ffbe9f0d1fa4bcfe5746d4cfc0c5652960f00223fdaf2ffd6aff6b217c97"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "family": "cmg",
+      "train": false,
+      "seed": 10001,
+      "duration_s": 15.0,
+      "dt_s": 0.0005,
+      "policy_dt_s": 0.02,
+      "beta": 0.5,
+      "disturbance_frac_limits": 0.0,
+      "qerr_true_mean_rad": 0.015792052702735867,
+      "qerr_true_mean_deg": 0.90481796971493,
+      "qerr_true_max_deg": 28.64788975654116,
+      "rotor_saturation_fraction": 0.007866666666666666,
+      "output_gate_fraction": 0.0072,
+      "realized_residual_normalized_rms": 0.02786510027559203,
+      "model_sha256": "d932ffbe9f0d1fa4bcfe5746d4cfc0c5652960f00223fdaf2ffd6aff6b217c97"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "family": "cmg",
+      "train": false,
+      "seed": 10001,
+      "duration_s": 15.0,
+      "dt_s": 0.0005,
+      "policy_dt_s": 0.02,
+      "beta": 0.5,
+      "disturbance_frac_limits": 0.0,
+      "qerr_true_mean_rad": 0.01610656864632105,
+      "qerr_true_mean_deg": 0.9228384058719358,
+      "qerr_true_max_deg": 23.412626407011206,
+      "rotor_saturation_fraction": 0.0,
+      "output_gate_fraction": 0.0,
+      "realized_residual_normalized_rms": 0.04428891222915239,
+      "model_sha256": "d932ffbe9f0d1fa4bcfe5746d4cfc0c5652960f00223fdaf2ffd6aff6b217c97"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "family": "cmg",
+      "train": false,
+      "seed": 10001,
+      "duration_s": 15.0,
+      "dt_s": 0.0005,
+      "policy_dt_s": 0.02,
+      "beta": 0.5,
+      "disturbance_frac_limits": 0.0,
+      "qerr_true_mean_rad": 0.2561978402613202,
+      "qerr_true_mean_deg": 14.679054967340488,
+      "qerr_true_max_deg": 111.46489519811962,
+      "rotor_saturation_fraction": 0.09446666666666667,
+      "output_gate_fraction": 0.2699,
+      "realized_residual_normalized_rms": 0.04770518341537799,
+      "model_sha256": "d932ffbe9f0d1fa4bcfe5746d4cfc0c5652960f00223fdaf2ffd6aff6b217c97"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "family": "cmg",
+      "train": false,
+      "seed": 10001,
+      "duration_s": 15.0,
+      "dt_s": 0.0005,
+      "policy_dt_s": 0.02,
+      "beta": 0.5,
+      "disturbance_frac_limits": 0.0,
+      "qerr_true_mean_rad": 0.00273773094633974,
+      "qerr_true_mean_deg": 0.15686042866762395,
+      "qerr_true_max_deg": 0.3211788773781333,
+      "rotor_saturation_fraction": 0.0,
+      "output_gate_fraction": 0.0,
+      "realized_residual_normalized_rms": 0.012650299374017444,
+      "model_sha256": "d932ffbe9f0d1fa4bcfe5746d4cfc0c5652960f00223fdaf2ffd6aff6b217c97"
+    }
+  ]
+}

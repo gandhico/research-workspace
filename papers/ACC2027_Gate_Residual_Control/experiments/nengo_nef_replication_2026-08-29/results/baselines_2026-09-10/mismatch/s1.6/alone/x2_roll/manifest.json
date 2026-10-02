@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "created_utc": "2026-09-11T07:08:21.974976+00:00",
+  "platform": "x2",
+  "controller": "classical",
+  "model": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\third_party\\mujoco_menagerie\\skydio_x2\\scene.xml",
+  "model_sha256": "d932ffbe9f0d1fa4bcfe5746d4cfc0c5652960f00223fdaf2ffd6aff6b217c97",
+  "git_commit": "67e7e03f1dba9ee394b84324096222e8ff5344c5",
+  "python": "3.13.11",
+  "mujoco": "3.12.0",
+  "numpy": "2.5.2",
+  "arguments": {
+    "platform": "x2",
+    "controller": "classical",
+    "mission": "roll",
+    "duration": 45.0,
+    "dt": 0.0005,
+    "beta": 0.5,
+    "learning_rate": 0.0008,
+    "k_error": 8.0,
+    "k_rate": 0.0,
+    "torque_policy": "model",
+    "actuator_scale": 1.0,
+    "initial_angle_deg": 0.0,
+    "disturbance_torque": 0.0,
+    "attitude_noise_std": 0.0,
+    "rate_noise_std": 0.0,
+    "seed": 1,
+    "ki_factor": 0.0,
+    "antiwindup": "torque",
+    "rate_ff": "left-neg",
+    "baseline": "backstepping",
+    "bw_scale": 3.0,
+    "baseline_rate_hz": 0.0,
+    "no_model_ff": false,
+    "smc_eta_frac": 0.5,
+    "mpc_dt": 0.02,
+    "mpc_horizon": 120,
+    "mpc_q_rate": 0.0,
+    "nmpc_dt": 0.06,
+    "nmpc_horizon": 5,
+    "nmpc_terminal": 1.5,
+    "nmpc_offset_frac": 0.1,
+    "model_inertia_scale": 1.6,
+    "nmpc_rate_weight": 2.0,
+    "nmpc_grid": 3,
+    "nmpc_predict": "policy",
+    "log_every": 10,
+    "save_neural_archive": false,
+    "output": "results\\baselines_2026-09-10\\mismatch\\s1.6\\alone\\x2_roll"
+  },
+  "derived": {
+    "body_inertia_kgm2": [
+      0.060711294842784244,
+      0.0364684032704233,
+      0.025411698113207547
+    ],
+    "torque_limits_Nm": [
+      0.7285355381134109,
+      0.43762083924507955,
+      0.2541169811320755
+    ],
+    "kq_Nm": [
+      1.9427614349690958,
+      1.1669889046535455,
+      0.622586603773585
+    ],
+    "kw_Nm_s": [
+      0.46140584080516023,
+      0.27715986485521704,
+      0.1689877924528302
+    ]
+  }
+}

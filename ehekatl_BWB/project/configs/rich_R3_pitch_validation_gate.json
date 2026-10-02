@@ -1,0 +1,11 @@
+{
+  "frozen_after_design_validation_log": "rich_R3_pitch_validation_01_revised_20260712_182600.csv",
+  "claim": "The unchanged frozen local predictor reproduces revised R3 pitch data comparably to training over qdot and 0.1-2.0 second recursive rate horizons.",
+  "required_new_confirmation_runs": 1,
+  "maximum_validation_to_training_qdot_nrmse_ratio": 1.15,
+  "maximum_validation_to_training_recursive_mean_nrmse_ratio": 1.15,
+  "maximum_absolute_residual_lag1": 0.85,
+  "require_execution_gate_pass": true,
+  "require_richness_gate_pass": true,
+  "no_refit_or_reselection": true
+}

@@ -1,0 +1,234 @@
+{
+  "schema": 2,
+  "experiment": "final_robustness_gating_2026-09-20",
+  "platform": "cf2-rotor",
+  "model_interface": "rotor4",
+  "mission": "hardstep",
+  "duration_s": 45.0,
+  "dt_s": 0.0005,
+  "controller": "classical",
+  "controller_backend": "none",
+  "baseline": {
+    "name": "PD + desired-rate feedforward",
+    "implementation": "AdvancedBaseline(backstepping, no model feedforward)",
+    "rho": 3.0,
+    "base_wn_rad_s": [
+      4.0,
+      4.0,
+      3.5
+    ],
+    "effective_wn_rad_s": [
+      12.0,
+      12.0,
+      10.5
+    ],
+    "zeta": 0.95,
+    "reference_rate_convention": "left-neg",
+    "model_feedforward": false,
+    "shared_by_classical_and_cmg": true,
+    "stats": {
+      "bw_scale": 3.0,
+      "wn": [
+        12.0,
+        12.0,
+        10.5
+      ],
+      "update_every_steps": 1
+    }
+  },
+  "cmg_pes": {
+    "beta": 0.0,
+    "learning_rate_direct_equivalent": 0.0008,
+    "nengo_pes_learning_rate": null,
+    "k_error": 8.0,
+    "k_rate": 0.0,
+    "pes_learning_active_every_step": false,
+    "max_native_vs_reconstructed_command_error_Nm": null
+  },
+  "output_gate": {
+    "mode": "none",
+    "location": "after decoder/residual scaling and before outer torque-box clip",
+    "learning_semantics": "output-only; PES target/error/update are never masked",
+    "epsilon_fraction_of_axis_limit": 0.0,
+    "epsilon_Nm": 1e-12,
+    "load_threshold_fraction_of_axis_limit": 1.0,
+    "loaded_threshold_Nm": [
+      0.000287411999,
+      0.000287411999,
+      0.000323469999
+    ],
+    "blocked_fraction_any_axis": 0.0,
+    "blocked_fraction_per_axis": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "blocked_share_of_loaded_per_axis": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "noise": {
+    "attitude_std_rad_per_rotation_vector_component": 0.02,
+    "rate_std_rad_s_per_axis": 0.05,
+    "seed": 7,
+    "generator": "numpy.random.default_rng / PCG64",
+    "primary_metric_uses_true_state": true
+  },
+  "disturbance": {
+    "amplitude_Nm": 0.0,
+    "schedule": "continuous",
+    "warmup_s": 5.0,
+    "on_s": 5.0,
+    "off_s": 5.0,
+    "raised_cosine_ramp_s": 0.25
+  },
+  "actuation": {
+    "torque_policy": "model",
+    "torque_limits_Nm": [
+      0.000287412,
+      0.000287412,
+      0.00032347
+    ],
+    "actuator_scale": 1.5,
+    "baseline_loaded_fraction_per_axis": [
+      0.2633666666666667,
+      0.13118888888888888,
+      0.12953333333333333
+    ],
+    "torque_box_saturation_fraction_any_axis": 0.3073888888888889,
+    "torque_box_saturation_fraction_per_axis": [
+      0.2633666666666667,
+      0.13118888888888888,
+      0.12953333333333333
+    ],
+    "rotor_saturation_fraction_any_rotor": 0.004333333333333333,
+    "rotor_saturation_fraction_per_rotor": [
+      0.00037777777777777777,
+      0.003766666666666667,
+      0.00037777777777777777,
+      0.0034444444444444444
+    ],
+    "allocation_torque_error_normalized_rms": 0.01062933577293541
+  },
+  "metrics": {
+    "qerr_true_mean_rad": 0.26339269446688823,
+    "qerr_true_max_rad": 1.9469649640825586,
+    "qerr_true_rmse_rad": 0.5668796653608168,
+    "qerr_feedback_mean_rad": 0.281639154114674,
+    "qerr_feedback_max_rad": 2.000723552994127,
+    "qerr_feedback_rmse_rad": 0.5678340338869582,
+    "qerr_mean_rad": 0.26339269446688823,
+    "raw_residual_normalized_rms": 0.0,
+    "gated_residual_normalized_rms": 0.0,
+    "realized_residual_normalized_rms": 0.0,
+    "tau0_normalized_rms": 0.5091378299796214,
+    "tau_command_normalized_rms": 0.5091378299796214,
+    "tau_realized_normalized_rms": 0.5086024304454019,
+    "z_std_m": 0.04713689979041412
+  },
+  "hardstep": {
+    "definition": {
+      "step_period_s": 2.0,
+      "first_step_s": 1.0,
+      "slew_window_s": 0.5,
+      "settled_window_s": 0.5,
+      "settling_threshold_deg": 5.0,
+      "settling_hold_s": 0.1
+    },
+    "step_onsets_s": [
+      1.0,
+      3.0,
+      5.0,
+      7.0,
+      9.0,
+      11.0,
+      13.0,
+      15.0,
+      17.0,
+      19.0,
+      21.0,
+      23.0,
+      25.0,
+      27.0,
+      29.0,
+      31.0,
+      33.0,
+      35.0,
+      37.0,
+      39.0,
+      41.0,
+      43.0
+    ],
+    "n_complete_steps": 22,
+    "whole_mean_rad": 0.26339269446688823,
+    "whole_mean_deg": 15.091289747531487,
+    "slew_mean_rad": 1.0081263884940357,
+    "slew_mean_deg": 57.76138727647424,
+    "settled_mean_rad": 0.0013059143877377306,
+    "settled_mean_deg": 0.0748233828227829,
+    "settling_time_5deg_s_per_step": [
+      0.47599999999989295,
+      0.9055000000004716,
+      0.511499999999665,
+      0.5099999999985574,
+      0.8205000000005107,
+      0.8695000000030149,
+      0.5150000000050259,
+      0.5135000000074683,
+      0.8260000000038055,
+      0.8684999999990453,
+      0.514999999995208,
+      0.511499999990555,
+      0.8279999999851562,
+      0.8714999999803936,
+      0.5144999999765645,
+      0.5134999999719057,
+      0.821999999979468,
+      0.8734999999892636,
+      0.5134999999970944,
+      0.5125000000066393,
+      0.8255000000176835,
+      0.8705000000274481
+    ],
+    "settling_time_5deg_s_mean": 0.6812499999970381
+  },
+  "disturbance_phase_metrics_true_state": {
+    "active_definition": "disturbance_gain >= 0.5",
+    "quiet_definition": "disturbance_gain == 0 after warmup",
+    "warmup": {
+      "mean_rad": 0.2005717380086026,
+      "mean_deg": 11.491914077496608,
+      "max_rad": 1.945613442863772,
+      "max_deg": 111.47543884001166,
+      "sample_fraction": 0.11112222222222222
+    },
+    "active": {
+      "mean_rad": 0.26339269446688823,
+      "mean_deg": 15.091289747531487,
+      "max_rad": 1.9469649640825586,
+      "max_deg": 111.55287530177053,
+      "sample_fraction": 1.0
+    },
+    "quiet": {
+      "mean_rad": null,
+      "mean_deg": null,
+      "max_rad": null,
+      "max_deg": null,
+      "sample_fraction": 0.0
+    }
+  },
+  "n_steps": 90000,
+  "logged_steps": 9000,
+  "log_every": 10,
+  "logged_dt_s": 0.005,
+  "nengo_version": "4.1.0",
+  "files": {
+    "trace": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_robustness_gating_2026-09-20\\results\\confirmatory\\noise\\cf2-rotor\\hardstep\\pdff_rho3\\noise_realistic\\seed_007\\trace.csv",
+    "neural_trace_full_rate": null,
+    "neural_trace_schema": null
+  },
+  "run_id": "ef7677114daabd38c8de",
+  "configuration_sha256": "ca761d9094b548aa90a77233a468230e8665fbecfc3101704d9066456d555e29"
+}

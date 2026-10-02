@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dilisic"
+version = "0.1.0"
+description = "DILISIC: limbic-system-inspired performance-guaranteed control for nonlinear multi-agent systems. Replication scaffold."
+readme = "README.md"
+requires-python = ">=3.10"
+
+# The controller and the experiment need nothing but NumPy. The parent
+# repository this was extracted from also pulled mujoco, nengo, opencv and
+# pygame; none of them are reachable from dilisic.
+dependencies = ["numpy"]
+
+[project.optional-dependencies]
+# SciPy gives solve_continuous_are; without it riccati.py falls back to a
+# NumPy Hamiltonian solver, which the test suite covers either way.
+riccati = ["scipy"]
+# Only plot_flexible_arm_mas.plot needs matplotlib. summarize() does not.
+plots = ["matplotlib"]
+dev = ["pytest", "scipy", "matplotlib"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

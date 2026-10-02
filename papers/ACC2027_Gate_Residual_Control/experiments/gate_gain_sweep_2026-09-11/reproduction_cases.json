@@ -1,0 +1,531 @@
+[
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "constant",
+    "gain": 1,
+    "chi": 0
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1000000,
+    "chi": 0
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1000000,
+    "chi": 1
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 100000,
+    "chi": 0
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 100000,
+    "chi": 1
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1000,
+    "chi": 0
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1000,
+    "chi": 1
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 0
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 1
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "linear",
+    "gain": 0,
+    "chi": 0
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "nengo",
+    "gain": 1000000,
+    "chi": 1
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "nengo",
+    "gain": 100000,
+    "chi": 1
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "nengo",
+    "gain": 1000,
+    "chi": 1
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "nengo",
+    "gain": 1,
+    "chi": 1
+  },
+  {
+    "platform": "cf2-rotor",
+    "mission": "hardstep",
+    "backend": "pd",
+    "gain": 0,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "constant",
+    "gain": 1,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1000000,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1000000,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 100000,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 100000,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1000,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1000,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 0,
+    "gamma": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 0,
+    "gamma": 0.5
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 0,
+    "gamma": 0.5,
+    "bias": 1.0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 1,
+    "gamma": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 1,
+    "gamma": 0.5
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 1,
+    "gamma": 0.5,
+    "bias": 1.0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 0,
+    "gamma": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 0,
+    "gamma": 0.5
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 0,
+    "gamma": 0.5,
+    "bias": 1.0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 1,
+    "gamma": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 1,
+    "gamma": 0.5
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 1,
+    "gamma": 0.5,
+    "bias": 1.0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "linear",
+    "gain": 0,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "nengo",
+    "gain": 1000000,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "nengo",
+    "gain": 100000,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "nengo",
+    "gain": 1000,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "nengo",
+    "gain": 1,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "full3",
+    "backend": "pd",
+    "gain": 0,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 100000,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 0,
+    "gamma": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 0,
+    "gamma": 0.5
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 0,
+    "gamma": 0.5,
+    "bias": 1.0
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 1,
+    "gamma": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 1,
+    "gamma": 0.5
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 1,
+    "gamma": 0.5,
+    "bias": 1.0
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 0,
+    "gamma": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 0,
+    "gamma": 0.5
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 0,
+    "gamma": 0.5,
+    "bias": 1.0
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 1,
+    "gamma": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 1,
+    "gamma": 0.5
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "direct",
+    "gain": 3,
+    "chi": 1,
+    "gamma": 0.5,
+    "bias": 1.0
+  },
+  {
+    "platform": "x2",
+    "mission": "hardstep",
+    "backend": "pd",
+    "gain": 0,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "constant",
+    "gain": 1,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 1000000,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 1000000,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 100000,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 100000,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 10000,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 10000,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 1000,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 1000,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 100,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 100,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "direct",
+    "gain": 1,
+    "chi": 1
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "linear",
+    "gain": 0,
+    "chi": 0
+  },
+  {
+    "platform": "x2",
+    "mission": "roll",
+    "backend": "pd",
+    "gain": 0,
+    "chi": 0
+  }
+]

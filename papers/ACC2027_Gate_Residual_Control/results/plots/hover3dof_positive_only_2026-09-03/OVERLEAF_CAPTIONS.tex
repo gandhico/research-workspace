@@ -1,0 +1,34 @@
+% ACC 2027 candidate captions for the generated physical-hardware figures.
+
+% Primary hardware result:
+\caption{Paired physical Roll validation on the Quanser 3DOF Hover
+($n=3$ runs per controller).  CMG--PES reduced the mean quaternion-angle
+tracking error in every matched pair, yielding a paired improvement of
+$2.65\%\pm1.08\%$ (sample standard deviation).  Both controllers used the
+same quaternion-PD baseline, reference, actuator allocation, safety limits,
+and trial duration; CMG--PES added a bounded online-adapted residual.}
+
+% Positive-case summary:
+\caption{Completed physical 3DOF Hover cases in which CMG--PES reduced the
+mean quaternion-angle error relative to the matched PD baseline.  Panel (a)
+reports absolute mean error on a logarithmic axis and annotates the relative
+reduction.  Panel (b) reports the corresponding peak-error change, making
+clear that lower mean error did not imply lower peak error in every single
+run.  The Hover-hold percentage is not treated as a headline result because
+both errors are near the encoder-resolution floor.}
+
+% Per-mission tracking figure; replace MISSION and values:
+\caption{Physical Quanser 3DOF Hover tracking for MISSION.  Panels (a)--(c)
+compare yaw, pitch, and roll with the common reference; panel (d) shows the
+quaternion-angle error used for the reported metric.  CMG--PES changed the
+mean error from PDMEAN$^\circ$ to CMGMEAN$^\circ$ (IMPROVEMENT reduction).
+This is a matched single-pair result unless otherwise stated.}
+
+% Mechanism figure:
+\caption{Internal CMG--PES signals for the four physical cases selected by
+lower mean quaternion-angle error.  The left column shows the requested
+bounded residual torque in yaw, pitch, and roll; the right column shows the
+six paired gate-derived decoder activities ordered as
+$[+\psi,+\theta,+\phi,-\psi,-\theta,-\phi]$.  These signals are logged from
+the controller rather than reconstructed from the tracking error.}
+

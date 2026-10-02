@@ -1,0 +1,873 @@
+\documentclass[10pt]{article}
+
+% =========================================================
+% EHEKATL BWB LQR paper - Overleaf version
+% Generated from the Word update proposal.
+% Compile with pdfLaTeX on Overleaf.
+% =========================================================
+
+\usepackage[a4paper,top=2.2cm,bottom=2.2cm,left=2.0cm,right=2.0cm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue
+}
+
+% IJCOPI-style running header for pages after the first one.
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\footnotesize Author et al. / International Journal of Combinatorial Optimization Problems and Informatics, 10(2) 2019, 17--25.}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\captionsetup{font=small,labelfont=bf}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlist[itemize]{leftmargin=*}
+\setlist[enumerate]{leftmargin=*}
+
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\de}{\delta_e}
+\newcommand{\da}{\delta_a}
+
+% First-page journal header matching the original IJCOPI template.
+\newcommand{\IJCOPIHeader}{%
+\thispagestyle{empty}%
+\noindent
+\begin{minipage}[t]{0.25\textwidth}
+    \vspace{-0.25cm}
+    \includegraphics[width=3.15cm]{figures/editada_logo.jpeg}\\[-0.15cm]
+    {\color{gray}\large www.editada.org}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.70\textwidth}
+    \centering
+    \vspace{0.05cm}
+    {\itshape\color{gray}\large International Journal of Combinatorial Optimization Problems and\\
+    Informatics, 10(2), May-Aug 2019, 17--25. ISSN: 2007-1558.}
+\end{minipage}
+\vspace{0.55cm}
+\par\noindent\rule{\textwidth}{0.45pt}
+\vspace{0.55cm}
+}
+
+\begin{document}
+\IJCOPIHeader
+
+\begin{center}
+{\Large \bfseries LQR Control for a BWB Aircraft}\par
+\vspace{0.25cm}
+{\normalsize Gandhi Contreras Torres, Rodolfo Garcia-  Rodriguez, Rodolfo Garcia Carrillo}\par
+{\small $^1$New Mexico State University, $^2$Universidad Autónoma de Coahuila, $^3$New Mexico State University}\par
+{\small gandhico@nmsu.edu, rodolfo.garcia@uadec.edu.mx, }\par
+\end{center}
+
+\vspace{0.25cm}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|X|p{0.32\textwidth}|}
+\hline
+\textbf{Abstract.} This paper presents an LQR control design for an EHEKATL blended-wing-body aircraft using thesis-based longitudinal and lateral linearized models. Before integration with X-Plane 12, the controllers are evaluated in a time-invariant simulation using SI units and radians internally. A practical actuator-saturation study shows that the original longitudinal input penalty is mathematically stable but physically too aggressive. Retuning the longitudinal penalty to $R_{lon}=1.0$ limits the small-perturbation elevator demand to $9.45^\circ$ with zero saturation, while the lateral controller remains feasible with $R_{lat}=1.0$. The resulting gains provide a clean baseline for simulator implementation.
+
+\vspace{0.15cm}
+\textbf{Keywords:} Blended-wing-body aircraft, EHEKATL, LQR control, time-invariant simulation, X-Plane 12, actuator saturation.
+&
+\textbf{Article Info}\\
+& Received: [to be completed]\\
+& Accepted: [to be completed]\\
+\hline
+\end{tabularx}
+\end{table}
+
+\section{Introduction}
+
+Blended-wing-body (BWB) aircraft are attractive configurations because they integrate lifting surfaces, fuselage volume, and control effectors into a compact geometry. This integration can improve aerodynamic efficiency, but it also creates modeling and control challenges because the longitudinal and lateral dynamics are strongly influenced by the aerodynamic geometry, the control-surface distribution, and the operating flight condition.
+
+The EHEKATL BWB aircraft considered in this work follows the thesis-based modeling sequence: aerodynamic design, dynamic modeling, linearization around a nominal flight condition, and controller synthesis. The present paper focuses on the LQR stage and establishes a reproducible pre-X-Plane validation step before simulator integration. This step is important because a controller that is mathematically stable in the linear model can still generate unrealistic control-surface commands when implemented in a flight simulator.
+
+The main update proposed in this version is to separate the mathematical LQR design from the implementation feasibility check. The original longitudinal LQR configuration is stable in the linear model, but it may command physically unrealistic elevator deflections. Therefore, this paper introduces a radian-consistent time-invariant validation workflow with actuator saturation and input-penalty scanning. The objective is to select practical baseline gains before moving to X-Plane 12.
+
+\section{BWB Dynamical Model}
+\begin{figure}
+    \centering    \includegraphics[width=0.5\linewidth]{Fig1.png}
+    \caption{BWB coordinate frames: inertial frame and body-fixed frame}
+    \label{Figure1}
+\end{figure}
+
+Let the local tangential plane (LTP) be the inertial reference frame
+$\mathcal{F}_{I}=\{O_t,x_t,y_t,z_t\}$, where the origin is fixed to the
+Earth, $x_t$ and $y_t$ are oriented north and east, respectively, and
+$z_t$ is oriented downward. Let the body-fixed frame be
+$\mathcal{F}_{B}=\{O_b,x_b,y_b,z_b\}$, with origin at the aircraft center
+of mass, see Figure \ref{Figure1}. 
+%
+From second law of Newton, the BWB dynamical equations, expressed in the body frame, are given as 
+%
+%The nonlinear six-degree-of-freedom rigid-body dynamics of the BWB
+%aircraft, expressed in the body frame, are written as
+\begin{align}
+    m\left(\dot{V}+\Omega \times V\right)&=F\label{eq1F}\\
+    I\dot{\Omega}+\Omega \times (I\Omega)&=M\label{eq2M}
+\end{align}
+%\begin{equation}
+%    m\left(\dot{V}+\Omega \times V\right)=F,
+%\end{equation}
+%\begin{equation}
+%    I\dot{\Omega}+\Omega \times (I\Omega)=M,
+%\end{equation}
+where $m$ is the aircraft mass, $I$ is the inertia matrix, $F=[F_x, F_y, F_z]^T$,and $M=[M_x, M_y, M_z]^T$ the forces and moments on the aircraft, respectively, $V =[u, v, w]^T$ the translational, $\Omega =[p, q, r]^T$ the angular velocity vectors. 
+%\begin{equation}
+%    V =
+%    \begin{bmatrix}
+%        u & v & w
+%    \end{bmatrix}^{T},
+%    \qquad
+%    \Omega =
+%    \begin{bmatrix}
+%        p & q & r
+%    \end{bmatrix}^{T},
+%\end{equation}
+%$u$, $v$, and $w$ are the body-axis linear velocity components, and
+%$p$, $q$, and $r$ are the roll, pitch, and yaw angular rates, respectively. 
+%\begin{equation}
+%    F =
+%    \begin{bmatrix}
+%        F_x & F_y & F_z
+%    \end{bmatrix}^{T},
+%    \qquad
+%    M =
+%    \begin{bmatrix}
+%        M_x & M_y & M_z
+%    \end{bmatrix}^{T}
+%\end{equation}
+%are the total forces and moments acting on the aircraft.
+%
+%Additionally, The force and moment vectors are decomposed into aerodynamic,
+%control-surface, propulsion, and gravitational contributions as
+Additionally, the forces and moments acting on the axes x, y, and z are decomposed in aerodynamic components A, the control surfaces C, the propulsion components P, and the Earth’s gravity G, that is  
+\begin{equation}
+    F = F_A + F_C + F_P + F_G,
+    \qquad
+    M = M_A + M_C + M_P + M_G.
+\end{equation}
+
+Expanding the equations $(\ref{eq1F})$-$(\ref{eq2M})$, we obtain the BWB equations motion. 
+
+\textbf{Translational motion}
+\begin{align}
+    m(\dot{u}+qw-rv) &= F_x = F_{Ax}+F_{Cx}+F_{Px}+F_{Gx},\\
+    m(\dot{v}+ru-pw) &= F_y = F_{Ay}+F_{Cy}+F_{Py}+F_{Gy},\\
+    m(\dot{w}+pv-qu) &= F_z = F_{Az}+F_{Cz}+F_{Pz}+F_{Gz}.
+\end{align}
+where the the gravitational force, $F_G$, and the propulsion vector are defined as
+\begin{equation}
+    F_G =
+    \begin{bmatrix}
+        F_{Gx} & F_{Gy} & F_{Gz}
+    \end{bmatrix}^{T}
+    =
+    \begin{bmatrix}
+        -mg\sin\theta\\
+        mg\cos\theta\sin\phi\\
+        mg\cos\theta\cos\phi
+    \end{bmatrix},\quad
+    %
+    F_P =
+    \begin{bmatrix}
+        F_{Px} & F_{Py} & F_{Pz}
+    \end{bmatrix}^{T}
+    =
+    \begin{bmatrix}
+        P_T C_{\theta}C_{\psi}\\
+        P_T S_{\psi}\\
+        P_T C_{\psi}S_{\theta}
+    \end{bmatrix}
+\end{equation}
+where $\phi$, $\theta$, and $\psi$ are roll, pitch, and yaw angles, respectively, $P_T$ is the trust, assumed constant, with  $C_{(\cdot)}=\cos(\cdot)$ and
+$S_{(\cdot)}=\sin(\cdot)$.
+
+\textbf{Rotational motion}
+%Assuming the inertia matrix includes the product of inertia $I_{xz}$, the rotational equations are expressed as
+\begin{align}
+    I_x\dot{p} + qr(I_z-I_y) - I_{xz}(\dot{r}+pq)
+    &= M_x = M_{Ax}+M_{Cx}+M_{Px}+M_{Gx},\\
+    I_y\dot{q} + pr(I_x-I_z) + I_{xz}(p^2-r^2)
+    &= M_y = M_{Ay}+M_{Cy}+M_{Py}+M_{Gy},\\
+    I_z\dot{r} + pq(I_y-I_x) + I_{xz}(qr-\dot{p})
+    &= M_z = M_{Az}+M_{Cz}+M_{Pz}+M_{Gz}.
+\end{align}
+where $I_x$, $I_y$, $I_z$, $I_{xz}$, are components of the inertia matrix.
+
+%Now, using the Euler angles $\phi$, $\theta$, and $\psi$ for roll, pitch, and yaw, respectively; the gravitational force, $F_G$, in body axes is
+%\begin{equation}
+%    F_G =
+%    \begin{bmatrix}
+%        F_{Gx} & F_{Gy} & F_{Gz}
+%    \end{bmatrix}^{T}
+%    =
+%    \begin{bmatrix}
+%        -mg\sin\theta\\
+%        mg\cos\theta\sin\phi\\
+%        mg\cos\theta\cos\phi
+%    \end{bmatrix}.
+%\end{equation}
+%For compact notation, let $C_{(\cdot)}=\cos(\cdot)$ and
+%$S_{(\cdot)}=\sin(\cdot)$. The propulsion contribution is modeled as
+%\begin{equation}
+%    F_P =
+%    \begin{bmatrix}
+%        F_{Px} & F_{Py} & F_{Pz}
+%    \end{bmatrix}^{T}
+%    =
+%    \begin{bmatrix}
+%        P_T C_{\theta}C_{\psi}\\
+%        P_T S_{\psi}\\
+%        P_T C_{\psi}S_{\theta}
+%    \end{bmatrix},
+%\end{equation}
+%where $P_T$ is the total thrust, assumed constant for the linearized LQR analysis.
+
+The BWB configuration considered in this work uses two
+elevators, two ailerons, and one rudder. The elevator, aileron, and
+rudder deflections are denoted by $\delta_e$, $\delta_a$, and
+$\delta_r$, respectively, Figure \ref{Figure2}. The force and moment contributions generated
+by the control surfaces are modeled as
+\begin{align}
+    F_{Cx} &= \sum_{i=1}^{2} X_{\delta e_i}\delta_{e_i},
+    &
+    F_{Cy} &= \sum_{i=1}^{2} Y_{\delta a_i}\delta_{a_i}
+             +Y_{\delta r}\delta_r,
+    &
+    F_{Cz} &= \sum_{i=1}^{2} Z_{\delta e_i}\delta_{e_i},
+\end{align}
+\begin{align}
+    M_{Cx} &= \sum_{i=1}^{2} L_{\delta a_i}\delta_{a_i}
+             +L_{\delta r}\delta_r,
+    &
+    M_{Cy} &= \sum_{i=1}^{2} M_{\delta e_i}\delta_{e_i},
+    &
+    M_{Cz} &= \sum_{i=1}^{2} N_{\delta a_i}\delta_{a_i}
+             +N_{\delta r}\delta_r.
+\end{align}
+where $X_{\delta e}$, $Y_{\delta a}$, and $Z_{\delta e}$ are the control
+dimensional force derivatives, while $L_{\delta a}$, $M_{\delta e}$, and
+$N_{\delta a}$ are the corresponding forces dimensional moment derivatives. 
+%
+
+Finally, the aerodynamic forces and moments are defined in Table \ref{tab:aerodynamics} where where $\bar{q}=\frac{1}{2}\rho V_{omega}^2$ is the dynamic pressure with $rho$ the air
+density and $V_{omega}$ the air speed, 
+$C_{D},C_{Y}, C_{L}, C_{l}, C_{m}, C_{n} $ are the non-dimensional aerodynamic coefficients of the forces (drag, side force, lift) and moments (roll, pitch, yaw) related to air properties and to the geometry of the airfoil (span $b$, chord $c$, reference area $S$). Additionally, $Mach$ is the Mach number that represents the relationship between aircraft speed and sound speed, and $Re$ is the Reynolds number which characterizes airflow properties as laminar and turbulent flow and is in the function of airfoil chord.
+%
+\begin{table}
+    \centering
+    \caption{BWB aerodynamics forces and moment.}
+    \begin{tabular}{c |c}
+    \hline
+        $F_{Ax} = \bar{q} S C_{D} (\alpha, Mach, Re,U,W,Q, \delta_{e}, \delta_{T})$ & $M_{Ax} = \bar{q} S b C_{l} (\beta, Mach, Re,V, P, R, \delta_{a}, \delta_{r}, \delta_{T})$\\
+        %
+        $F_{Ay} = \bar{q} S C_{Y} (\beta, Mach, Re,V, P, R, \delta_{a},\delta_{r}, \delta_{T})$ & $M_{Ay} = \bar{q} S c C_{m} (\alpha, Mach, Re,U,W,Q, \delta_{e}, \delta_{T})$\\
+        %
+        $F_{Az} = \bar{q} S C_{L} (\alpha, Mach, Re,U,W, Q, \delta_{e},  \delta_{T} )$ & $M_{Az} = \bar{q} S b C_{n} (\beta, Mach, Re,V, P, R, \delta_{a}, \delta_{r}, \delta_{T})$\\
+        \hline
+    \end{tabular}
+    \label{tab:aerodynamics}
+\end{table} 
+%
+
+In this paper, all angular variables and control deflections are
+represented internally in radians. Degrees are used only for reporting
+and graphical interpretation.
+
+\subsection{Model linearization}
+In order to control the BWB longitudinal motion and lateral-directional motion, the nonlinear equations are linearized around a
+trimmed cruise condition.
+The assumption flight operations at equilibrium points are: a) the cruise flight, the turn, and ascent have constant speed. Additionally, takeoff and landing do not satisfy the equilibrium conditions, since the airspeed is not constant.
+%
+\begin{figure}
+    \centering    \includegraphics[width=0.5\linewidth]{Fig2.png}
+    \caption{BWB aerodynamics control surfaces: $\delta_e$, $\delta_a$, and $\delta_r$}
+    \label{Figure2}
+\end{figure}
+Assuming that aerodynamic forces and moments are dependent on the perturbed motion variables and their derivatives, we obtain the linear models.
+%The perturbation model is written in the continuous-time state-space form
+%\begin{equation}
+%    \dot{x}=Ax+B\delta,
+%\end{equation}
+%where $x$ is the perturbation state vector and $\delta$ is the control
+%surface deflection. All angular variables and control deflections are
+%represented internally in radians. Degrees are used only for reporting
+%and graphical interpretation.
+
+\textbf{Longitudinal Linear Model}
+Let the longitudinal linear model defined as
+\begin{align}\label{longitudinal_model}
+    \dot{u}=&\frac{1}{m}(X_u u+X_w w+X_q q)-g-qw_0+\frac{1}{m}\textcolor{red}{X_c}\nonumber\\
+    \dot{w}=&\frac{1}{m}(Z_u u+Z_w w+Z_q q)+g+qu_0+\frac{1}{m}\textcolor{red}{Z_c}\nonumber\\
+    \dot{q}=&\frac{1}{I_z}(M_u u+M_w w+M_q q)+\frac{1}{I_z}\textcolor{red}{M_c}\nonumber\\
+    \dot{\theta}=&q
+\end{align}
+where $X_c=X_{\delta_T}\delta_T+X_{\delta_{e1}}\delta_{e1}+X_{\delta_{e2}}\delta_{e1}$, $Z_c=Z_{\delta_T}\delta_T+Z_{\delta_{e1}}\delta_{e1}+Z_{\delta_{e2}}\delta_{e1}$, $M_c=M_{\delta_{e1}}\delta_{e1}+M_{\delta_{e2}}\delta_{e1}$ are the inputs control, \textcolor{red}{$X_u$ is, $X_w$ is, $X_q$ is , $Z_u$ is, $Z_w$ is, $Z_q$ is , $M_u$ is, $M_w$ is, $M_q$ is.}
+
+\textbf{Lateral-Directional Linear Model}
+
+Let the lateral-directional
+time-invariant model defined as
+\begin{align}
+    \dot{v}=&\frac{1}{m}(Y_\beta\beta+Y_q q+Y_r r)+g-ru_0+\frac{1}{m}Y_c\nonumber\\
+    \dot{p}=&\frac{1}{I_x}(L'_\beta\beta+L'_q q+L'_r r)+\frac{1}{I_x}L'_c\nonumber\\
+    \dot{r}=&\frac{1}{I_z}(N'_\beta\beta+N'_q q+N'_r r)+\frac{1}{I_z}N'_c\nonumber
+\end{align}
+where \textcolor{red}{$Y_c=Y_{\delta_T}\delta_T+Y_{\delta_{a1}}\delta_{a1}+Y_{\delta_{a2}}\delta_{e2}+Y_{\delta_r}\delta_r$, $L'_c=$ , $N'_c=$ are the inputs control, $Y_\beta, Y_q, Y_r$ are...,$L'_\beta, L'_q, L'_r$ are..., $N'_\beta, N'_q, N'_r$ are....
+}
+
+These two linear subsystems provide the time-invariant baseline used for
+the pre-X-Plane LQR validation. In the numerical implementation, actuator
+commands are computed in radians and then saturated according to the
+selected physical deflection limit before being converted to degrees for
+interpretation.
+
+\section{Linear Quadratic Regulator, LQR}
+
+Let a linearized model in state space form as  
+%
+%After obtaining the longitudinal and lateral-directional linear time-invariant models, continuous-time Linear Quadratic Regulator (LQR) controllers were designed for both subsystems. For a general linear system
+\begin{equation}\label{LQR1}
+    \dot{x}=Ax+B\delta,
+\end{equation}
+where $A\in\mathbb{R}^{n\times n}$, $B\in\mathbb{R}^{n\times m}$ ,$x\in\mathbb{R}^{n}$ is the state vector and
+$\delta\in\mathbb{R}^{m}$ is the control input. The LQR is characterized by minimizes the infinite-horizon quadratic cost function
+\begin{equation}
+    J=\int_{0}^{\infty}
+    \left(
+        x^{T}Qx+\delta^{T}R\delta
+    \right)dt,
+\end{equation}
+where $Q=Q^{T}\geq 0$ penalizes the state deviation and
+$R=R^{T}>0$ penalizes the control effort.  The values of $Q$ and $R$ are fundamental to get robustness and desired performance of the system in the closed loop. 
+%
+If the optimal control is defined as $\delta^*=-1/2R^{-1}B^T\nabla_x J^*$ to solve LQR Hamiltonian $\partial H/\partial\delta=0$ with $H=x^TQx+\delta^TR\delta+\partial J^*/\partial x (Ax+B\delta)$ and the optimal cost can be defined as a quadratic time-varying function of the system state $J^*=x^TPx$ with $\nabla_x J^*=2Px$ for $P=P^T>0$, we have that the Hamilton-Jacobi-Bellman, HJB can be written as, \cite{LewisBook}
+\begin{equation}
+    x^T[-\dot{P}-PA-A^TP-Q+PBR^{-1}B^TP]x=0
+\end{equation}
+where $\dot{P}=-PA-A^TP-Q+PBR^{-1}B^TP$ is called Ricatti equation that must be satisfied for any state $x$. Moreover, it has a unique solution. Thus, the optimal control is defined as
+\begin{equation}
+    \delta^*=-\frac{1}{2}R^{-1}B^T\nabla_x J^*=R^{-1}B^TP=-Kx,\quad K=R^{-1}B^TP
+\end{equation}
+where $K$ is called the control optimal gain.
+%
+Thus, designing the LQR controller is sufficient to solve the Riccati equation to obtain the P and K matrices using the A and B matrices. 
+%
+Software such as MATLAB or Python has built-in functions to compute the optimal gain matrix and the P matrix.
+
+Hence, for a linearized model $(\ref{LQR1})$, let the optimal feedback law defined as
+\begin{equation}
+    \delta=-Kx,
+\end{equation}
+%
+%where the optimal gain matrix is
+%\begin{equation}
+%    K=R^{-1}B^{T}P.
+%\end{equation}
+%The matrix $P=P^{T}>0$ is obtained by solving the continuous-time
+%algebraic Riccati equation (CARE)
+%\begin{equation}
+%    A^{T}P+PA-PBR^{-1}B^{T}P+Q=0.
+%\end{equation}
+such that the closed-loop dynamics is given as
+\begin{equation}
+    \dot{x}=(A-BK)x.
+\end{equation}
+where eigenvalues of $A-BK$ are used to verify the closed-loop stability
+of each LQR-controlled subsystem.
+
+In this work, both the longitudinal and lateral-directional controllers
+are single-input LQR regulators. Therefore, the matrix $R$ is scalar for
+each subsystem. This is important because the longitudinal model uses
+one elevator input, $\delta_e$, and the lateral-directional model uses
+one aileron input, $\delta_a$. All internal computations are performed
+using SI units and radians. Degrees are used only for plots, tables, and
+interpretation.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Flight Simulations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{\textcolor{red}{Here mention the objective of the simulations for longitudinal and lateral-directional model}}
+
+\textcolor{red}{Explain the steps for how the simulations are carried out: 1.-Python, 2.-X-Plane, etc.
+Mention the necessity of evaluating the aircraft performance on X-Plane.}
+
+\textcolor{red}{Mention the software used by simulations}
+
+Following the aerodynamic design as in \cite{CCE_Gandhi_22}, the aerodynamics coefficients obtained by XLFR5 is show in Table \ref{tab: EHEKATl Aero coeff}.
+%
+\begin{table}[htb]
+\caption{XFLR5 simulation results: Aerodynamic coefficients }
+\centering
+\begin{tabular}{ |p{2.3cm}|p{2.4cm}|p{2.1cm}|  }
+\hline
+\multicolumn{3}{|c|}{EHEKATL BWB Aerodynamic coefficients} \\
+\hline
+Non-dimensional & Stability & Control \\
+\hline
+$C_L = 0.229$ & $X_u = -0.027843$ &$X_{\delta_{e}}=0.30605$\\
+$C_D = 0.015$ & $X_w = 0.34641$ &$Z_{\delta_{e}}=-8.8438$\\
+$C_m = -0.019$ & $Z_u = -1.5092$ &$M_{\delta_{e}}=-2.3445$\\
+$CL/CD = 14.79$ &  $Z_w = -17.434$ & \\
+Efficiency =$1.045$ & $Z_q = -5.415$ & \\
+ & $M_u = 6.1021e{-07}$ &  \\
+ & $M_w = -1.2103$ & \\
+ & $M_q = -1.1697$ & \\
+\hline
+\end{tabular}
+\label{tab: EHEKATl Aero coeff}
+\end{table}
+
+\subsection{Pre-X-Plane LTI Validation}
+
+Before implementing the controllers in X-Plane 12, the different gain controllers are evaluated under different conditions, assuming that the actuator deflection is limited to:
+%For each subsystem, two scenarios are considered: a) a small perturbation case, and b) a stress case with actuator saturation.  
+%
+\begin{equation}
+    |\delta_e|,|\delta_a| \leq 25^{\circ}
+    =
+    0.436332~\mathrm{rad}.
+\end{equation}
+%
+The longitudinal small perturbation case confirms that the selected
+$R_{\mathrm{lon}}=1.0$ produces a realistic elevator command of
+$9.45^{\circ}$ with no saturation. This represents a practical
+improvement over the original aggressive tuning with
+$R_{\mathrm{lon}}=0.001$, which generated unrealistically large elevator
+commands, see Table \ref{tab:lqr_validation_results}. The raw controller output was computed in radians, saturated in radians,
+and then converted to degrees for interpretation.
+%
+The lateral-directional controller also remained within the
+actuator limit in the small perturbation case, with a maximum aileron
+deflection of $18.405^{\circ}$ and no saturation.
+%
+%To justify the longitudinal retuning, a scan over $R_{\mathrm{lon}}$ was performed while keeping $Q_{\mathrm{lon}}=\mathrm{diag}(6,18,3,0.1)$.
+The results are summarized in Table~\ref{tab1:rscan}.
+\begin{table}[h!]
+\centering
+\caption{Pre-X-Plane LTI validation results for the selected LQR controllers}
+\label{tab:lqr_validation_results}
+\begin{tabular}{l l c c c c}
+\hline
+Subsystem & Case & $R$ & Max raw input & Saturation & Settling time \\
+          &      &     & [deg]         & [\%]       & [s] \\
+\hline
+Longitudinal & Small & 1.0 & 9.450 & 0.000 & 6.360 \\
+Longitudinal & Stress saturated & 1.0 & 150.537 & 0.380 & 5.930 \\
+Lateral-directional & Small & 1.0 & 18.405 & 0.000 & 4.176 \\
+Lateral-directional & Stress saturated & 1.0 & 83.996 & 0.020 & 3.768 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[h!]
+\centering
+\caption{Effect of the longitudinal input penalty $R_{\mathrm{lon}}$ on elevator demand}
+\label{tab1:rscan}
+\begin{tabular}{c c c c}
+\hline
+$R_{\mathrm{lon}}$ & Max raw elevator [deg] & Saturation [\%] & Fastest real eigenvalue \\
+\hline
+0.001 & 395.094 & 0.060 & -2321.054 \\
+0.003 & 226.662 & 0.060 & -1339.881 \\
+0.010 & 122.611 & 0.060 & -733.536 \\
+0.030 & 69.370  & 0.040 & -422.932 \\
+0.100 & 36.508  & 0.020 & -230.531 \\
+0.300 & 19.734  & 0.000 & -131.164 \\
+1.000 & 9.450   & 0.000 & -67.329 \\
+3.000 & 4.295   & 0.000 & -31.410 \\
+10.000 & 2.017  & 0.000 & -20.638 \\
+\hline
+\end{tabular}
+\end{table}
+
+The scan shows that increasing $R_{\mathrm{lon}}$ reduces the elevator
+command and removes the unrealistically fast closed-loop pole generated
+by the original tuning. Although $R_{\mathrm{lon}}=0.3$ also avoids
+saturation in the small perturbation case, $R_{\mathrm{lon}}=1.0$ was
+selected as the safer baseline for the first X-Plane 12 implementation.
+This choice provides a more conservative elevator demand while
+maintaining stable convergence. The value $R_{\mathrm{lon}}=0.3$ is
+retained as a more aggressive alternative for future comparisons.
+
+
+\subsection{Offline Time-Invariant LQR Simulation}
+
+Once the gains controllers are defined, a pre-X-Plane stage is carried out.
+%
+In the pre-X-Plane stage, the closed-loop behavior is evaluated using the continuous-time model $\dot{\bm{x}}=(A-BK)\bm{x}$, considering the saturation applied to the commanded control surface. 
+%
+For each subsystem, two scenarios are considered: a) a small perturbation case, and b) a stress case with actuator saturation. 
+%
+The small case is used to evaluate nominal feasibility, while the stress case is used to verify recovery behavior under saturation, see Table \ref{tab:validation_results}.
+
+\begin{table}[H]
+\centering
+\caption{Time-invariant LQR validation results using radians internally}
+\label{tab:validation_results}
+\small
+\begin{tabularx}{\textwidth}{l l c X X c c}
+\toprule
+System & Case & $R$ & Max raw control & Max applied control & Saturation & Settling time \\
+\midrule
+Longitudinal & Small & 1.0 & $0.1649$ rad / $9.45^\circ$ & $0.1649$ rad / $9.45^\circ$ & 0.000\% & 6.36 s \\
+Longitudinal & Stress saturated & 1.0 & $2.6274$ rad / $150.54^\circ$ & $0.4363$ rad / $25.00^\circ$ & 0.380\% & 5.93 s \\
+Lateral & Small & 1.0 & $0.3212$ rad / $18.40^\circ$ & $0.3212$ rad / $18.40^\circ$ & 0.000\% & 4.176 s \\
+Lateral & Stress saturated & 1.0 & $1.4660$ rad / $84.00^\circ$ & $0.4363$ rad / $25.00^\circ$ & 0.020\% & 3.768 s \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\textcolor{red}{Explain the principal results of the table 3}
+
+
+\subsection{Longitudinal input-penalty scan}
+
+The original thesis value $R_{lon}=0.001$ generated an unrealistically large elevator command in the small-perturbation case. The input penalty was therefore scanned to select a more practical pre-X-Plane baseline. The selected value $R_{lon}=1.0$ limits the small-case elevator demand to $9.45^\circ$ while preserving stable convergence.
+
+\textcolor{red}{Discuss the principal Table 4 results }
+
+\begin{table}[H]
+\centering
+\caption{Longitudinal $R$ scan used to choose a practical elevator command}
+\label{tab:rscan}
+\small
+\begin{tabular}{c c c c c}
+\toprule
+$R_{lon}$ & Max raw elevator & Saturation & Settling time & Fastest real eigenvalue \\
+\midrule
+0.001 & $395.09^\circ$ & 0.060\% & 6.356 s & -2321.054 \\
+0.01  & $122.61^\circ$ & 0.060\% & 6.356 s & -733.536 \\
+0.1   & $36.51^\circ$  & 0.020\% & 6.356 s & -230.531 \\
+0.3   & $19.73^\circ$  & 0.000\% & 6.356 s & -131.164 \\
+1.0   & $9.45^\circ$   & 0.000\% & 6.360 s & -67.329 \\
+3.0   & $4.29^\circ$   & 0.000\% & 6.370 s & -31.410 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{figures/longitudinal_R_scan_max_elevator.png}
+\caption{Longitudinal $R$ scan showing the reduction of elevator demand as the input penalty increases.}
+\label{fig:rscan}
+\end{figure}
+\textcolor{red}{Explain the figue in the text}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Longitudinal LQR Controller Simulations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Let the longitudinal time-invariant model defined as
+\begin{equation}
+    \dot{x}_{\mathrm{lon}}
+    =
+    A_{\mathrm{lon}}x_{\mathrm{lon}}
+    +
+    B_{\mathrm{lon}}\delta_e,
+\end{equation}
+%\begin{equation}
+%    x_{\mathrm{lon}} =
+%    \begin{bmatrix}
+%        u & w & q & \theta
+%    \end{bmatrix}^{T},
+%    \qquad
+%    \delta_{\mathrm{lon}} = \delta_e,
+%\end{equation}
+%is defined using the perturbation state
+where $x_{\mathrm{lon}}=[u,  w,  q,  \theta]^T$, $\delta_{\mathrm{lon}} = \delta_e$, with 
+%
+%$w$ are measured in m/s, $q$ is measured in rad/s, and$\theta$ and $\delta_e$ are measured in rad. The longitudinal time-invariant model used in the LQR simulations is
+%with
+\begin{equation}
+A_{\mathrm{lon}} =
+\begin{bmatrix}
+-0.0276445 &  0.467688  &  0        & -9.81\\
+-1.1998    & -6.03618   & 13.3267   &  0\\
+-6.70053\times 10^{-7} & -4.84984 & -6.13596 & 0\\
+0          &  0         &  1        &  0
+\end{bmatrix},
+\end{equation}
+\begin{equation}
+B_{\mathrm{lon}} =
+\begin{bmatrix}
+0.4311744\\
+-13.21339\\
+-27.35091\\
+0
+\end{bmatrix}.
+\end{equation}
+
+%For the longitudinal subsystem,
+%\begin{equation}
+%    x_{\mathrm{lon}} =
+%    \begin{bmatrix}
+%        u & w & q & \theta
+%    \end{bmatrix}^{T},
+%    \qquad
+%    \delta_{\mathrm{lon}}=\delta_e,
+%\end{equation}
+For a LQR control law $\delta_e=-K_{\mathrm{lon}}x_{\mathrm{lon}}$, firstly, it is assumed a very small input penalty, such that $R$ is chosen as $R_{\mathrm{lon}}=0.001$. Although the system is mathematically stable, an aggressive elevator command results.
+%\begin{equation}
+%    \delta_e= K_{\mathrm{lon}}x_{\mathrm{lon}}.
+%\end{equation}
+%The original thesis-based weighting used a very small input penalty,
+%$R_{\mathrm{lon}}=0.001$, which resulted in a mathematically stable but
+%physically aggressive elevator command. 
+In the pre-X-Plane validation,
+an input-penalty scan was performed and the practical baseline was
+selected as $Q_{\mathrm{lon}}=\mathrm{diag}(6,18,3,0.1)$. 
+%\begin{equation}
+%    Q_{\mathrm{lon}}=\mathrm{diag}(6,18,3,0.1),
+%    \qquad
+%    R_{\mathrm{lon}}=1.0.
+%\end{equation}
+This selection reduces the elevator demand while preserving stable
+closed-loop convergence. Finally, after several testings, the gains used are
+\begin{equation}
+    K_{\mathrm{lon}} =
+    \begin{bmatrix}
+        1.58255059 & -2.53350077 & -1.84584039 & -22.06327663
+    \end{bmatrix}.
+\end{equation}
+such that, the control law is given as
+%Thus, the implemented longitudinal control law is
+\begin{equation}
+    \delta_e =
+    -1.58255059u
+    +2.53350077w
+    +1.84584039q
+    +22.06327663\theta.
+\end{equation}
+Finally, the closed-loop system is given as
+\begin{equation}
+    \lambda(A_{\mathrm{lon}}-B_{\mathrm{lon}}K_{\mathrm{lon}})
+    =
+    \left\{
+    -67.3285,\,
+    -28.2843,\,
+    -0.6154 \pm 1.0412j
+    \right\}.
+\end{equation}
+Notice that since all eigenvalues have negative real parts, the longitudinal system in closed-loop is asymptotically stable.
+
+\textcolor{red}{Here are the simulation results under different conditions. Each case indicates the principal features used in the simulations as initial conditions, sampling, etc. Finally, discuss the results of the simulation}
+
+\subsection{Lateral-Directional LQR Controller Simulations}
+
+The lateral-directional 
+time-invariant model defined as
+\begin{equation}
+    \dot{x}_{\mathrm{lat}}
+    =
+    A_{\mathrm{lat}}x_{\mathrm{lat}}
+    +
+    B_{\mathrm{lat}}\delta_a,
+\end{equation}
+where $x_{\mathrm{lat}} =[v, p, r, \phi]^T$, $\delta_{\mathrm{lat}} = \delta_a$ with 
+
+%The lateral-directional subsystem is defined by
+%\begin{equation}
+%    x_{\mathrm{lat}} =
+%    \begin{bmatrix}
+%        v & p & r & \phi
+%    \end{bmatrix}^{T},
+%    \qquad
+%    \delta_{\mathrm{lat}} = \delta_a,
+%\end{equation}
+%where $v$ is measured in m/s, $p$ and $r$ are measured in rad/s, and
+%$\phi$ and $\delta_a$ are measured in rad. 
+%The lateral-directional time-invariant model used in the LQR simulations is
+%with
+\begin{equation}
+A_{\mathrm{lat}} =
+\begin{bmatrix}
+-0.440144 & -0.263171 & -16.0681 & 9.81\\
+-8.22254  & -22.4261  &  8.34045 & 0\\
+ 2.0262   &  1.4176   & -1.72499 & 0\\
+ 0        &  1        &  0       & 0
+\end{bmatrix},
+\end{equation}
+\begin{equation}
+B_{\mathrm{lat}} =
+\begin{bmatrix}
+2.882972\\
+500.764\\
+-18.97689\\
+0
+\end{bmatrix}.
+\end{equation}
+
+For the lateral control law $\delta_a = -K_{\mathrm{lat}}x_{\mathrm{lat}}$
+%\begin{equation}
+%    \delta_a = -K_{\mathrm{lat}}x_{\mathrm{lat}}.
+%\end{equation}
+%
+%
+%
+%The lateral LQR design used
+%\begin{equation}
+%    Q_{\mathrm{lat}}=\mathrm{diag}(3,9,9,3),
+%    \qquad
+%    R_{\mathrm{lat}}=1.0,
+%\end{equation}
+%which gives
+%\begin{equation}
+%    K_{\mathrm{lat}} =
+%    \begin{bmatrix}
+%        0.11366923 & 2.95176288 & %-0.16714788 & 2.67770629
+%    \end{bmatrix}.
+%\end{equation}
+%The lateral control law is therefore
+%\begin{equation}
+%    \delta_a = -%K_{\mathrm{lat}}x_{\mathrm{lat}}.
+%\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%the LQR control law is
+%\begin{equation}
+%    \delta_a=-K_{\mathrm{lat}}x_{\mathrm{lat}}.
+%\end{equation}
+was used the weighting matrices 
+\begin{equation}
+    Q_{\mathrm{lat}}=\mathrm{diag}(3,9,9,3),
+    \qquad
+    R_{\mathrm{lat}}=1.0.
+\end{equation}
+Thus, the feedback gains is given as
+\begin{equation}
+    K_{\mathrm{lat}} =
+    \begin{bmatrix}
+        0.11366923 & 2.95176288 & -0.16714788 & 2.67770629
+    \end{bmatrix}.
+\end{equation}
+%Therefore, the implemented lateral-directional control law is
+%\begin{equation}
+%    \delta_a =
+%    -0.11366923v
+%    -2.95176288p
+%    +0.16714788r
+%    -2.67770629\phi.
+%\end{equation}
+Finally, the closed-loop system is given as
+\begin{equation}
+    \lambda(A_{\mathrm{lat}}-B_{\mathrm{lat}}K_{\mathrm{lat}})
+    =
+    \left\{
+    -1503.5520,\,
+    -0.8772,\,
+    -0.8991 \pm 5.2302j
+    \right\}.
+\end{equation}
+given that all eigenvalues have negative real parts, the lateral-directional closed-loop system is also
+asymptotically stable.
+\textcolor{red}{Here are the simulation results under different conditions. Each case indicates the principal features used in the simulations as initial conditions, sampling, etc. Finally, discuss the results of the simulation }
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{figures/longitudinal_small_states.png}
+\caption{Longitudinal small-perturbation state response using $R_{lon}=1.0$.}
+\label{fig:lon_states}
+\end{figure}
+\textcolor{red}{Explain the figue in the text}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{figures/longitudinal_small_control.png}
+\caption{Longitudinal elevator command using $R_{lon}=1.0$.}
+\label{fig:lon_control}
+\end{figure}
+\textcolor{red}{Explain the figue in the text}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{figures/lateral_small_states.png}
+\caption{Lateral small-perturbation state response using $R_{lat}=1.0$.}
+\label{fig:lat_states}
+\end{figure}
+\textcolor{red}{Explain the figue in the text}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{figures/lateral_small_control.png}
+\caption{Lateral aileron command using $R_{lat}=1.0$.}
+\label{fig:lat_control}
+\end{figure}
+\textcolor{red}{Explain the figue in the text}
+
+\subsection{Discussion}
+
+The longitudinal controller with $R_{lon}=1.0$ is selected as the safest first candidate for X-Plane 12 because it produces a small-case elevator command below $10^\circ$ with no saturation. The value $R_{lon}=0.3$ remains useful as a more aggressive alternative because it also avoids small-case saturation, but $R_{lon}=1.0$ provides a more conservative transition to the nonlinear simulator.
+
+The lateral controller with $R_{lat}=1.0$ is already suitable for the next stage. It achieves stable convergence with no saturation in the small case and only brief saturation in the stress case. Therefore, the pre-X-Plane baseline is defined by $R_{lon}=1.0$ and $R_{lat}=1.0$.
+
+The longitudinal and lateral thesis-based linear models were simulated as time-invariant continuous systems, using radians internally and degrees only for interpretation. Actuator saturation was included to evaluate whether the computed LQR commands are physically feasible.
+
+The main technical finding is that the original longitudinal input penalty produced physically unrealistic elevator commands despite closed-loop stability. Increasing the longitudinal input penalty to $R_{lon}=1.0$ produced a practical baseline with a maximum small-case elevator command of $9.45^\circ$, zero saturation, and a settling time of approximately 6.36 s. This value is therefore recommended as the initial longitudinal controller for X-Plane 12 implementation.
+
+The lateral controller with $R_{lat}=1.0$ also showed stable behavior, with a maximum small-case aileron command of $18.40^\circ$ and zero saturation. These results support moving to the next stage: implementation in X-Plane 12 with actuator saturation, real-time sampling, and comparison against the linear time-invariant validation baseline.
+
+\section{Conclusions}
+
+
+
+\begin{thebibliography}{99}
+\bibitem{Ussama_2025}
+Ussama A., Mohamed O., Tarek N.D., Mostafa S.A.E., Mohamed M.K. (2025).
+\textit{Blended wing body designs for aerodynamic, stability, and control optimization: A comprehensive review,
+Transportation Engineering},
+Volume 22, 100397.
+doi.org/10.1016/j.treng.2025.100397.
+
+\bibitem{anderson2007}
+Anderson, B. D. O., \& Moore, J. B. (2007). \textit{Optimal control: Linear quadratic methods}. Dover Publications.
+
+\bibitem{bryson1975}
+Bryson, A. E., \& Ho, Y.-C. (1975). \textit{Applied optimal control: Optimization, estimation, and control}. Taylor \& Francis.
+
+\bibitem{contreras_thesis}
+Contreras Torres, G. A. S. (n.d.). \textit{Dise\~no y control de una aeronave de ala-integrada} [Thesis manuscript].
+
+\bibitem{stevens2015}
+Stevens, B. L., Lewis, F. L., \& Johnson, E. N. (2015). \textit{Aircraft control and simulation: Dynamics, controls design, and autonomous systems} (3rd ed.). Wiley.
+
+\bibitem{xflr5}
+XFLR5. (n.d.). \textit{XFLR5 analysis tool for airfoils, wings and planes operating at low Reynolds numbers}.
+
+\bibitem{LewisBook}
+Lewis, F.L., Vrabie, D.L. and Syrmos, V.L. (2012) \textit{Optimal Control}. 3rd Edition, John Wiley & Sons, Hoboken.
+https://doi.org/10.1002/9781118122631
+
+\bibitem{CCE_Gandhi_22}
+G. A. S. Contreras-Torres, R. Garcia-Rodriguez, C. R. Dominguez-Mayorga and E. S. Espinoza. (2022). \textit{Adaptive Backstepping Control for the Longitudinal Flight of a Blended Wing Body Aircraft}, 2022 19th International Conference on Electrical Engineering, Computing Science and Automatic Control (CCE), Mexico City, Mexico, 2022, pp. 1-6, doi: 10.1109/CCE56709.2022.9975869.
+\end{thebibliography}
+
+\end{document}

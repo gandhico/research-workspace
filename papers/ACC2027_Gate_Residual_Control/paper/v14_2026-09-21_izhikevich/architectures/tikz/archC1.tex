@@ -1,0 +1,34 @@
+% C1 -- MATCHED TWIN-PLANT EVALUATION HARNESS.
+% Justifies attributing the measured difference to the residual path alone.
+\begin{tikzpicture}[node distance=6mm and 9mm]
+  \node[blk] (ref) {shared mission\\generator $q_d(t)$};
+
+  % --- baseline twin -------------------------------------------------------
+  \node[clas,above right=7mm and 12mm of ref] (pd1) {quaternion PD\\$K_q,K_\omega$};
+  \node[plant,right=of pd1]                   (pl1) {MuJoCo twin A};
+  \node[meas,right=of pl1]                    (m1)  {$\bar\theta_q^{\rm PD}$,\;$\bar\tau$,\;$f_{\rm sat}$};
+
+  % --- augmented twin ------------------------------------------------------
+  \node[clas,below right=7mm and 12mm of ref] (pd2) {\emph{identical} PD\\same $K_q,K_\omega$};
+  \node[neuro,right=of pd2]                   (rsd) {CMG$+$PES residual\\$\beta,\eta,\chi$};
+  \node[plant,right=of rsd]                   (pl2) {MuJoCo twin B};
+  \node[meas,right=of pl2]                    (m2)  {$\bar\theta_q^{\rm CMG}$,\;$\bar\tau$,\;$f_{\rm sat}$};
+
+  \node[blk,right=12mm of m1] (cmp) {matched comparison\\
+        $\Delta=1-\bar\theta_q^{\rm CMG}/\bar\theta_q^{\rm PD}$};
+
+  \draw[sig] (ref.east) -- ++(5mm,0) |- (pd1.west);
+  \draw[sig] (ref.east) -- ++(5mm,0) |- (pd2.west);
+  \draw[sig] (pd1) -- (pl1); \draw[sig] (pl1) -- (m1);
+  \draw[sig] (pd2) -- (rsd); \draw[sig] (rsd) -- (pl2); \draw[sig] (pl2) -- (m2);
+  \draw[sig] (m1) -- (cmp);
+  \draw[sig] (m2.east) -- ++(6mm,0) |- (cmp.south);
+  \draw[sigd] (pl1.north) -- ++(0,5mm) -| (pd1.north);
+  \draw[sigd] (pl2.south) -- ++(0,-5mm) -| (pd2.south);
+
+  \node[note,anchor=north west,text width=0.92\linewidth] at ($(pd2.south west)+(-2.6cm,-11mm)$)
+    {Both twins share reference, duration, integration step, actuator scale,
+     allocator, initial condition, safety limits and logging. The residual
+     path is the only difference, so the reported improvement is
+     attributable to it rather than to re-tuning.};
+\end{tikzpicture}

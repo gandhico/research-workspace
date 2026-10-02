@@ -1,0 +1,23 @@
+% NMPC: grid receding horizon around the backstepping law, closed-loop ("policy") RK4 prediction.
+\begin{tikzpicture}
+  \commonleft
+  \node[law,right=10mm of err] (nom) {\textbf{Nominal law}\\$\bm a=\dot{\bm\omega}_d-k_1\bm e-k_2\bm\omega_e$\\
+        $\bm\tau_{\rm nom}=\sat_{\bm\ell}(\bm J\odot\bm a)$};
+  \node[law,above=10mm of nom] (cand) {\textbf{Candidate grid} (27)\\
+        $\bm d_c\in\{-1,0,1\}^3\odot0.1\bm\ell$\\$\bm\tau^{(c)}_0=\sat_{\bm\ell}(\bm\tau_{\rm nom}+\bm d_c)$};
+  \node[law,right=8mm of cand] (roll) {\textbf{Closed-loop rollout} (RK4, rigid body)\\
+        $N=5$ steps of $\Delta=60$\,ms; at $k\ge1$:\\
+        $\bm\tau^{(c)}_k=\sat_{\bm\ell}(\bm J\odot\bm a(\hat q_k,\hat{\bm\omega}_k)+\bm d_c)$\\
+        $J_c=\sum_k w_k(\|\bm e_k\|^2_{Q_e}+\|\bm\omega_{e,k}\|^2_{Q_\omega})+\|\bm\tau_k\oslash\bm J\|^2$};
+  \node[law,below=10mm of roll.south east,anchor=north east] (sel) {\textbf{Select and apply}\\
+        $c^\star=\arg\min_c J_c$\\$\bm u_0=\bm\tau^{(c^\star)}_0$};
+  \draw[sig] (err) -- node[lbl,above]{$\bm e,\bm\omega_e$} (nom);
+  \draw[sig] (nom) -- node[lbl,left]{$\bm\tau_{\rm nom}$} (cand);
+  \draw[sig] (cand) -- node[lbl,above]{$\bm d_c$} (roll);
+  \draw[sig] (roll.south-|sel.north) -- node[lbl,right]{$J_c$} (sel.north);
+  \draw[sigd] (ref.north) |- node[lbl,pos=.7,above]{future reference $q_d(t+k\Delta),\ \bm\omega_d(t+k\Delta)$} ($(roll.north)+(0,7mm)$) -- (roll.north);
+  \coordinate (satx) at ($(sel.east)+(20mm,0)$);
+  \commonloop{sel}{\textbf{Output}\\$\bm u_0\in\mathcal U$\\(each candidate already saturated)};
+  \node[fam,fit=(nom)(cand)(roll)(sel)] (g) {};
+  \node[famlbl,anchor=north west] at (g.south west) {family: NMPC (\code{--baseline nmpc --nmpc-predict policy}), re-planned every plant step};
+\end{tikzpicture}

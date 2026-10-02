@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+results/runs/
+results/validation/
+results/legacy/
+results/plots_data/
+*.egg-info/
+.pytest_cache/
+tmp/
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.pdf
+paper/$BuildDir/
+output/pdf/acc2027_cmg_residual_draft_*.pdf

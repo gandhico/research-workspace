@@ -1,0 +1,52 @@
+{
+  "status": "frozen_guarded_design_pilot",
+  "source_artifact": "configs/rich_R3_deepc_uncertainty_replay.json",
+  "sample_rate_hz": 35.0,
+  "fallback_rate_hz": 10.0,
+  "duration_s": 30.0,
+  "disturbance": {
+    "starts_s": [
+      10.0,
+      12.0
+    ],
+    "duration_s": 0.2,
+    "signs": [
+      1,
+      -1
+    ],
+    "amplitude": 5e-05
+  },
+  "limits": {
+    "command": 0.0002,
+    "slew_per_sample": 5e-05,
+    "pitch_deg": 10.0,
+    "roll_deg": 10.0,
+    "body_rate_deg_s": 20.0
+  },
+  "pilot_gates": {
+    "minimum_rows": 1040,
+    "maximum_gap_s": 0.071428572,
+    "minimum_rate_hz": 34.0,
+    "maximum_rate_hz": 36.0,
+    "maximum_runtime_ms": 28.571428571428573,
+    "minimum_peak_abs_delta_p_deg_s": 0.0015,
+    "maximum_final_5s_abs_delta_p_deg_s": 0.02,
+    "minimum_sent_to_realized_lag1_correlation": 0.95,
+    "maximum_restoration_error": 1e-06
+  },
+  "offline_summary": {
+    "cases": 243,
+    "worst_integral_ratio_deepc_to_lqr": 0.895344303745929,
+    "median_integral_ratio_deepc_to_lqr": 0.7880561197716921,
+    "worst_peak_ratio_deepc_to_lqr": 0.9281541485080503,
+    "maximum_sent_command": 4.392880128058101e-05,
+    "maximum_base_slew": 9.96963361399939e-06,
+    "optimizer_nonconverged_updates": 0,
+    "batch_runtime_ms_median": 0.17780550115276128,
+    "batch_runtime_ms_max": 22.098252000432694,
+    "estimated_per_case_runtime_ms_max": 0.09093930864375595,
+    "control_period_ms": 28.571428571428573
+  },
+  "held_out_response_files_opened": [],
+  "claim_boundary": "Frozen guarded design-pilot protocol only; no X-Plane control-performance claim."
+}

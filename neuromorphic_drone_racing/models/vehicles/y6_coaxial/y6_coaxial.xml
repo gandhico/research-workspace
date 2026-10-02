@@ -1,0 +1,57 @@
+<!--
+  Coaxial Y6 tri-rotor, standalone (vehicle only).  Identical airframe to
+  C:\Research\y6_hexa\mujoco_y6\y6_turbine_scene.xml (validated there to 0.48 mm against the
+  Nengo RK4 plant): Mehndiratta & Kayacan 2018 Table I, rotors 3,4 on the aft arm, odd = top.
+  ctrl = rotor thrust F_i [N], 0..KF*900^2 = 5.548 N; gear[5] = +/-Ktau/KF = 0.048905.
+-->
+<mujoco model="y6_coaxial">
+  <compiler angle="degree" inertiafromgeom="auto"/>
+  <option timestep="0.002"/>
+  <asset>
+    <material name="y6_frame" rgba="0.12 0.12 0.14 1"/>
+    <material name="y6_nmsu" rgba="0.55 0.07 0.16 1"/>
+    <material name="y6_top" rgba="0.95 0.55 0.10 0.85"/>
+    <material name="y6_bot" rgba="0.15 0.55 0.90 0.85"/>
+  </asset>
+  <default>
+    <default class="y6viz"><geom contype="0" conaffinity="0" density="0" group="1"/></default>
+    <default class="y6rotor"><site type="cylinder" size="0.11 0.004" group="1"/></default>
+  </default>
+  <worldbody>
+    <body name="y6" pos="0 0 0.13">
+      <freejoint/>
+      <inertial pos="0 0 0" mass="1.412" diaginertia="0.014965 0.021915 0.034433"/>
+      <geom class="y6viz" type="cylinder" size="0.075 0.012" material="y6_frame"/>
+      <geom class="y6viz" type="box" size="0.07 0.035 0.022" pos="0 0 -0.035" material="y6_nmsu"/>
+      <geom class="y6viz" type="capsule" fromto="0 0 0  0.14 -0.243 0" size="0.011" material="y6_frame"/>
+      <geom class="y6viz" type="capsule" fromto="0 0 0 -0.28  0     0" size="0.011" material="y6_frame"/>
+      <geom class="y6viz" type="capsule" fromto="0 0 0  0.14  0.243 0" size="0.011" material="y6_frame"/>
+      <geom class="y6viz" type="cylinder" size="0.016 0.045" pos=" 0.14 -0.243 0.005" material="y6_frame"/>
+      <geom class="y6viz" type="cylinder" size="0.016 0.045" pos="-0.28  0     0.005" material="y6_frame"/>
+      <geom class="y6viz" type="cylinder" size="0.016 0.045" pos=" 0.14  0.243 0.005" material="y6_frame"/>
+      <geom class="y6viz" type="sphere" size="0.025" pos="0.10 0 0.01" rgba="0.1 0.9 0.2 1"/>
+      <!-- colliding hull: legs + a thin disc spanning the rotors (so gate strikes are detected) -->
+      <geom name="leg1" type="capsule" fromto=" 0.10 -0.10 -0.02  0.13 -0.13 -0.12" size="0.008" density="0"/>
+      <geom name="leg2" type="capsule" fromto=" 0.10  0.10 -0.02  0.13  0.13 -0.12" size="0.008" density="0"/>
+      <geom name="leg3" type="capsule" fromto="-0.12  0    -0.02 -0.17  0    -0.12" size="0.008" density="0"/>
+      <geom name="rotor_hull1" type="cylinder" size="0.11 0.045" pos=" 0.14 -0.243 0.005" density="0" rgba="0 0 0 0"/>
+      <geom name="rotor_hull2" type="cylinder" size="0.11 0.045" pos="-0.28  0     0.005" density="0" rgba="0 0 0 0"/>
+      <geom name="rotor_hull3" type="cylinder" size="0.11 0.045" pos=" 0.14  0.243 0.005" density="0" rgba="0 0 0 0"/>
+      <site name="r1" class="y6rotor" pos=" 0.14 -0.243  0.05" material="y6_top"/>
+      <site name="r2" class="y6rotor" pos=" 0.14 -0.243 -0.04" material="y6_bot"/>
+      <site name="r3" class="y6rotor" pos="-0.28  0      0.05" material="y6_top"/>
+      <site name="r4" class="y6rotor" pos="-0.28  0     -0.04" material="y6_bot"/>
+      <site name="r5" class="y6rotor" pos=" 0.14  0.243  0.05" material="y6_top"/>
+      <site name="r6" class="y6rotor" pos=" 0.14  0.243 -0.04" material="y6_bot"/>
+      <site name="imu" pos="0 0 0" size="0.01" rgba="1 1 0 0"/>
+    </body>
+  </worldbody>
+  <actuator>
+    <general name="F1" site="r1" gear="0 0 1 0 0  0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+    <general name="F2" site="r2" gear="0 0 1 0 0 -0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+    <general name="F3" site="r3" gear="0 0 1 0 0  0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+    <general name="F4" site="r4" gear="0 0 1 0 0 -0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+    <general name="F5" site="r5" gear="0 0 1 0 0  0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+    <general name="F6" site="r6" gear="0 0 1 0 0 -0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+  </actuator>
+</mujoco>

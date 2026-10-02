@@ -1,0 +1,33 @@
+{
+  "config": {
+    "execution_mode": "hardware",
+    "model_variant": "helicopter_2dof",
+    "controller": "qpd",
+    "controller_kwargs": {},
+    "application": "pitch_yaw_steps",
+    "duration_s": 24.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 14.0,
+    "out": "results_paper\\hardware"
+  },
+  "metrics": {
+    "n": 4800,
+    "duration_s": 23.995200700001078,
+    "realized_hz": 199.9983275139772,
+    "pitch_rms": 0.1737778887392232,
+    "yaw_rms": 1.2822458600417868,
+    "tail_pitch_mae": 0.06391541164907567,
+    "tail_yaw_mae": 1.8912295735763285,
+    "pitch_sat_frac": 0.028125,
+    "yaw_sat_frac": 0.0004166666666666667,
+    "theta_range": [
+      -0.39051742013373125,
+      0.3294308963139297
+    ],
+    "psi_range": [
+      -0.02761165418194154,
+      4.37798116862562
+    ]
+  }
+}

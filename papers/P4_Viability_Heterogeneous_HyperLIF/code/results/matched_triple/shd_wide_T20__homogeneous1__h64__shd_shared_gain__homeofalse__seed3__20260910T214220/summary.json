@@ -1,0 +1,248 @@
+{
+  "checkpoint": "C:\\Research\\papers\\P4_Viability_Heterogeneous_HyperLIF\\code\\results\\matched_triple\\shd_wide_T20__homogeneous1__h64__shd_shared_gain__homeofalse__seed3__20260910T214220\\checkpoint.jls",
+  "claim_boundary": "single run; a claim requires the matched heterogeneous/ensemble/homogeneous triple over paired seeds",
+  "command_line": [
+    "--cache=C:/Research/papers/P1_HyperLIF_Learning/code/hpc/upload_data/shd_wide_T20.h5",
+    "--model=homogeneous",
+    "--seed=3",
+    "--regime-profile=shd_shared_gain",
+    "--epochs=12",
+    "--hidden-per-population=16",
+    "--batch-size=32",
+    "--max-train=800",
+    "--max-test=400",
+    "--patience=4",
+    "--homeostasis=false",
+    "--results-root=results/matched_triple"
+  ],
+  "dataset": {
+    "classes": 20,
+    "input_features": 700,
+    "path": "C:\\Research\\papers\\P1_HyperLIF_Learning\\code\\hpc\\upload_data\\shd_wide_T20.h5",
+    "sha256": "6e5eb592c7530184daf83ecdff54ef4db34a42a45551195898a1e1a557c74738",
+    "split_rule": "P1 class-stratified seeded cap and validation split",
+    "test_used": 400,
+    "time_steps": 20,
+    "train_used": 720,
+    "validation_used": 80
+  },
+  "finished_at_utc": "2026-09-10T21:42:24.296",
+  "model": {
+    "effective_parameter_count": 47445,
+    "event_definition": "upward threshold crossing",
+    "family": "homogeneous",
+    "final_threshold_offsets": [
+      0.0
+    ],
+    "hidden_per_population": 64,
+    "homeostasis": false,
+    "homeostasis_effective": false,
+    "homeostasis_interval_batches": 0,
+    "homeostasis_rule": "slow population-specific threshold offsets from training upcrossing bands",
+    "input_scales": [
+      1.4
+    ],
+    "learning_mode": "continuous",
+    "parameter_count": 52181,
+    "populations": 1,
+    "readout": "hybrid_vr logit ensemble",
+    "readout_uses_events": false,
+    "regime_calibration": "single shared input gain in the unsaturated window; intrinsic parameters set the regime. See results/shared_gain_sweep.csv.",
+    "regime_profile": "shd_shared_gain",
+    "regimes": [
+      "homogeneous_mean"
+    ],
+    "target_rate_bands": [
+      [
+        0.007125,
+        0.017125
+      ]
+    ],
+    "total_hidden": 64
+  },
+  "optimization": {
+    "best_epoch": 11,
+    "best_validation_accuracy": 0.4375,
+    "epochs_completed": 12,
+    "epochs_requested": 12,
+    "seed": 3
+  },
+  "schema_version": 1,
+  "started_at_utc": "2026-09-10T21:35:25.259",
+  "status": "exploratory_complete",
+  "test": {
+    "accuracy": 0.3975,
+    "loss": 1.8037272548675538,
+    "mix_weights": [
+      1.0
+    ],
+    "populations": [
+      {
+        "event_rate": 0.005205078106373548,
+        "gate_mean": 0.024235645830631255,
+        "no_event_fraction": 0.9003125,
+        "occupancy_rate": 0.020373046696186066,
+        "standalone_accuracy": 0.3975
+      }
+    ]
+  },
+  "trace": [
+    {
+      "epoch": 1,
+      "rate_band_penalty": 0.0,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 3.1534923712412515,
+      "training_event_rates": [
+        0.01024631
+      ],
+      "validation_accuracy": 0.125,
+      "validation_loss": 2.8222641944885254
+    },
+    {
+      "epoch": 2,
+      "rate_band_penalty": 0.0,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 2.6995732095506457,
+      "training_event_rates": [
+        0.010703125
+      ],
+      "validation_accuracy": 0.175,
+      "validation_loss": 2.5993087768554686
+    },
+    {
+      "epoch": 3,
+      "rate_band_penalty": 0.0,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 2.510567707485623,
+      "training_event_rates": [
+        0.009589843
+      ],
+      "validation_accuracy": 0.2125,
+      "validation_loss": 2.464649963378906
+    },
+    {
+      "epoch": 4,
+      "rate_band_penalty": 0.0,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 2.2872443834940595,
+      "training_event_rates": [
+        0.008702257
+      ],
+      "validation_accuracy": 0.3,
+      "validation_loss": 2.200607442855835
+    },
+    {
+      "epoch": 5,
+      "rate_band_penalty": 0.0,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 2.13474875026279,
+      "training_event_rates": [
+        0.007832032
+      ],
+      "validation_accuracy": 0.325,
+      "validation_loss": 2.074591541290283
+    },
+    {
+      "epoch": 6,
+      "rate_band_penalty": 0.0,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 1.9670243872536552,
+      "training_event_rates": [
+        0.0077636717
+      ],
+      "validation_accuracy": 0.325,
+      "validation_loss": 1.969231653213501
+    },
+    {
+      "epoch": 7,
+      "rate_band_penalty": 5.5135377e-8,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 1.7878029902776083,
+      "training_event_rates": [
+        0.0068901908
+      ],
+      "validation_accuracy": 0.3625,
+      "validation_loss": 1.855010175704956
+    },
+    {
+      "epoch": 8,
+      "rate_band_penalty": 1.5140516e-8,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 1.6713967005411783,
+      "training_event_rates": [
+        0.007001953
+      ],
+      "validation_accuracy": 0.4,
+      "validation_loss": 1.7650609254837035
+    },
+    {
+      "epoch": 9,
+      "rate_band_penalty": 2.5594445e-6,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 1.560823792881436,
+      "training_event_rates": [
+        0.0055251736
+      ],
+      "validation_accuracy": 0.35,
+      "validation_loss": 1.7252434968948365
+    },
+    {
+      "epoch": 10,
+      "rate_band_penalty": 5.2886026e-6,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 1.469387345843845,
+      "training_event_rates": [
+        0.004825304
+      ],
+      "validation_accuracy": 0.425,
+      "validation_loss": 1.668869638442993
+    },
+    {
+      "epoch": 11,
+      "rate_band_penalty": 5.169505e-6,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 1.441174284617106,
+      "training_event_rates": [
+        0.0048513454
+      ],
+      "validation_accuracy": 0.4375,
+      "validation_loss": 1.57951979637146
+    },
+    {
+      "epoch": 12,
+      "rate_band_penalty": 4.8346537e-6,
+      "threshold_offsets": [
+        0.0
+      ],
+      "train_loss": 1.2887186818652683,
+      "training_event_rates": [
+        0.0049262154
+      ],
+      "validation_accuracy": 0.375,
+      "validation_loss": 1.7364179372787476
+    }
+  ],
+  "wall_seconds": 419.0369999408722
+}

@@ -1,0 +1,33 @@
+
+# --- EHEKATL BWB LQR X-Plane 12 runners ---
+
+# Health check:
+cd ~/GHYN/Xplane_controllers/EHEKATL_BWB_XP12/lqr
+source ../backstepping/ehekatl_xplane12_backstepping_bridge/.venv/bin/activate
+python health_check_xpc.py --host 127.0.0.1 --port 49009
+
+# LQR safe attitude validation, no time limit:
+cd ~/GHYN/Xplane_controllers/EHEKATL_BWB_XP12/lqr
+source ../backstepping/ehekatl_xplane12_backstepping_bridge/.venv/bin/activate
+python run_lqr_xp12.py \
+  --duration 0 \
+  --hz 20 \
+  --mode attitude \
+  --routing corrected \
+  --pitch-sp 2 \
+  --roll-sp 0 \
+  --clip 0.12 \
+  --throttle -998 \
+  --out ../logs/lqr_attitude_safe_xp12_$(date +%Y%m%d_%H%M%S).csv
+
+# LQR original/full-state test, no time limit:
+cd ~/GHYN/Xplane_controllers/EHEKATL_BWB_XP12/lqr
+source ../backstepping/ehekatl_xplane12_backstepping_bridge/.venv/bin/activate
+python run_lqr_xp12.py \
+  --duration 0 \
+  --hz 20 \
+  --mode full \
+  --routing corrected \
+  --clip 0.25 \
+  --throttle -998 \
+  --out ../logs/lqr_full_xp12_$(date +%Y%m%d_%H%M%S).csv

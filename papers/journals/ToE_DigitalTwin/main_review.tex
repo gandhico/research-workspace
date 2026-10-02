@@ -1,0 +1,1303 @@
+\documentclass[journal]{IEEEtran}
+
+% ---------------------------------------------------------
+% Clean IEEE Transactions on Education Draft Template
+% Topic: Control Systems Laboratory with Quanser Robotics
+% ---------------------------------------------------------
+
+% --- Encoding and fonts ---
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+% --- Math, figures, tables ---
+\usepackage{amsmath}
+\let\Bbbk\relax
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{caption} % caption alignment control
+\captionsetup[figure]{justification=centering, singlelinecheck=false}
+\usepackage[table]{xcolor} % \rowcolor in tables
+\usepackage{enumitem} % compact itemize in tables
+\definecolor{labred}{HTML}{A32D2D}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{makecell}
+% --- Algorithms and code snippets, if needed ---
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+
+% --- IEEE citations and links ---
+\usepackage{cite}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
+
+% --- Float control and final-page balance ---
+\usepackage{placeins}
+\usepackage{dblfloatfix}
+\usepackage{balance}
+\usepackage{comment}
+\raggedbottom
+
+% --- Compact float spacing for IEEE two-column layout ---
+\setlength{\textfloatsep}{7pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{7pt plus 2pt minus 2pt}
+\setlength{\floatsep}{6pt plus 2pt minus 2pt}
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+
+% --- TikZ/plots, optional for block diagrams and control plots ---
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes, calc, fit, backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{pgfplots.groupplots}
+
+% --- Useful commands ---
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\todo}[1]{\textbf{[TODO: #1]}}
+
+% --- Listings style for MATLAB/Python pseudocode, if needed ---
+\lstdefinestyle{CodeStyle}{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=lines
+}
+\lstset{style=CodeStyle}
+
+\begin{document}
+
+% ==================== TITLE ====================
+\title{Experiential Learning in Control Systems Education\\ Through Robotics and Digital-Twins}
+
+\author{Hilda Cecilia Contreras Aguirre,~\IEEEmembership{}
+        Hengameh Mirhajianmoghadam,~\IEEEmembership{}
+        Omar Alejandro Garcia Alcantara,~\IEEEmembership{}
+        Gandhi Alexis Sinhue Contreras Torres,~\IEEEmembership{}
+        and~Luis Rodolfo Garcia Carrillo,~\IEEEmembership{Senior Member,~IEEE}%
+\thanks{H.C. Contreras Aguirre is with the College of Engineering, New Mexico State University, Las Cruces, NM 88003 USA. E-mail: \ cecontre@nmsu.edu.}%
+\thanks{H. Mirhajianmoghadam, O.A. Garcia Alcantara, and G.A.S. Contreras Torres are with the Klipsch School of Electrical and Computer Engineering, New Mexico State University, Las Cruces, NM 88003 USA. E-mail: \{\}@nmsu.edu.}%
+\thanks{L.~R.~Garcia Carrillo is with the Space Vehicles Directorate, Air Force Research Laboratory (AFRL), Kirtland Air Force Base (KAFB), Albuquerque, NM 87117, USA. E-mail: luis\_rodolfo.garcia\_carrillo@spaceforce.mil}
+\thanks{Manuscript received \todo{month day, year}; revised \todo{month day, year}.}%
+}
+
+\maketitle
+
+% ---------------------------------------------------------
+\begin{abstract}
+% ---------------------------------------------------------
+Hands-on laboratories are fundamental to Control Engineering Education;
+ however, advanced topics such as system identification, robust control, optimal control, and nonlinear control
+  are rarely integrated into a comprehensive, student-driven design experience, particularly in fully asynchronous online courses.
+   This paper presents the design, implementation, and initial offering of EE 475/551: 
+   Control Systems Synthesis at New Mexico State University, a project-based course that 
+   combines advanced control theory with experiential learning through robotics and digital twins.
+    The course is grounded in Kolb’s Experiential Learning Theory (ELT) by guiding students through the ELT learning modes of
+    (i) concrete experimentation with robotic digital twins, (ii) reflection on observed system behavior,
+    (iii) development of control-theoretic models and design rationales, and (iv) iterative controller implementation and evaluation.
+    The laboratory infrastructure uses an interoperable MATLAB/Simulink–QUARC–QLabs toolchain that enables
+    the same identification and control workflows to be executed in high-fidelity digital twins, and
+    transferred to corresponding physical hardware for validation without redesign. 
+    Preliminary results from the Spring 2026 offering (21 students) indicate successful attainment of 
+    course learning outcomes and provide a scalable,
+    reproducible model for modern control engineering education.
+    These results also demonstrate the feasibility of delivering advanced, experiential,
+    project-based control systems education in a fully asynchronous, flexible format.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Control systems education, digital twins, robotics laboratories, experiential learning, project-based learning, system identification, feedback control, real-time control.
+\end{IEEEkeywords}
+
+% ==================== SECTION: Introduction ====================
+\section{Introduction}
+\label{sec:introduction}
+% ---------------------------------------------------------
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.95\linewidth]{Pictures/qube_aero_hardware_twins_cropped.pdf}
+    \caption{\small Quanser Qube-Servo 3 and Aero 2 platforms are used in the course. The physical systems (upper) alongside their corresponding QLabs digital twins (lower). The one-to-one correspondence enables seamless controller development in simulation and transfer to hardware for experimental validation.}
+    \label{fig:qube-aero-twin}
+\end{figure}
+
+%=========
+Control systems is a foundational subject in Engineering %education 
+because it integrates multiple theoretical concepts across several disciplines.
+%
+ At the same time, control systems is one of the more conceptually abstract subjects students encounter in college. Students are often attracted to control systems because of the applications in robotics, autonomous systems, unmanned vehicles, and industrial automation.
+ %
+ Yet, as the curriculum progresses toward mathematically rigorous analysis and controller synthesis, many struggle to connect theoretical concepts with the behavior of real-world dynamic systems~\cite{wellstead1990}. 
+ %
+ Advanced control system's courses often emphasize theoretical depth but provide limited exposure to implementation over realistic scenarios~\cite{serbezov2022openAccessResourcesFeedbackDynamicsControl,dorato1990}. 
+ %=========
+%
+
+
+
+%Dr. Mark W. Spong, writing as President of the IEEE Control Systems Society, 
+The authors in~\cite{spong2005}
+identified hands-on student projects as an effective remedy for this theory-practice gap because relating a system's mathematical description to its observed behavior requires exposure to real systems.
+%~\cite{spong2005}. 
+Modern resources, e.g., virtual laboratories, application-based assignments, and digital-controller implementation, can strengthen this connection while also developing students' programming, problem-solving, and communication skills~\cite{chaconvasquez2024digitalControlEducation}.
+%
+
+Project-Based Learning (PBL) has become a widely recognized response to the theory-practice gap, fostering deeper engagement, teamwork, and the transfer of theory to authentic problems~\cite{Mistry2017, McManus2019}. 
+%
+Prior work reports that introducing practical setups into a control course can improve examination performance and students' grasp of abstract concepts~\cite{chevalier2021studentFeedbackEducationalInnovationControl}. 
+%
+Similarly, learn-by-doing models in which students build or interact with laboratory systems also report gains in technical competence and soft skills~\cite{soares2014}.
+
+Furthermore, the implementation of theoretical or overly simplified assignments to evaluate the students' learning outcomes is often compromised by the commonly termed ``ceiling effect''~\cite{Wang2009, Uttl2005, edwards2024, gilbert2025}. This effect is present when a substantial proportion of participants achieve the highest possible scores. When this happens, the true extent of the students cannot be correctly measured and can lead into vague assumptions of their true competencies.
+
+% ========================
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/experential_learning_chart_light.pdf}
+    \caption{\small Software stack and signal flow of the laboratory environment. Students develop identification and control designs in MATLAB/Simulink, deploy them for real-time execution via QUARC, and validate the same controller either on the QLabs Digital-Twin or the corresponding physical Qube Servo hardware.}
+    \label{fig:toolchain}
+\end{figure*}
+%=========================
+
+% Despite this consensus, three conditions still rarely appear together in one course: (i) advanced synthesis content beyond an introductory control sequence, (ii) a complete student-owned design project built on interoperable digital-twin and hardware laboratories, and (iii) the availability of these two conditions in a fully asynchronous online delivery mode. Advanced courses often emphasize theoretical depth but provide limited exposure to implementation constraints, while many laboratory experiences focus on introductory topics such as PID control, time-response analysis, or basic frequency-response analysis~\cite{serbezov2022openAccessResourcesFeedbackDynamicsControl,dorato1990}. This gap motivates the course design studied in this paper.
+
+%=====
+% Advanced Control System's courses often emphasize theoretical depth but provide limited exposure to implementation over realistic scenarios~\cite{serbezov2022openAccessResourcesFeedbackDynamicsControl,dorato1990}. 
+
+Despite this consensus on the value of learning-by-doing, the integration of advanced theoretical content along with practical assignments bridging the gap to real world scenarios into a single course framework still rarely appear together in one course.
+% This gap motivates the course design studied in this work.
+%
+% (i) advanced theoretical content beyond an introductory curriculum, 
+% %
+% (ii) practical assignments and projects bridging the gap to real world scenarios, e.g. built on interoperable robotic digital-twins
+% % a complete student-owned design project built on interoperable digital-twin and hardware laboratories, and 
+% %
+% (iii) the availability of these two conditions in a fully asynchronous online delivery mode. 
+%
+% Advanced courses often emphasize theoretical depth but provide limited exposure to implementation constraints, while many laboratory experiences focus on introductory topics such as PID control, time-response analysis, or basic frequency-response analysis~\cite{serbezov2022openAccessResourcesFeedbackDynamicsControl,dorato1990}. 
+ To address this gap, this paper explores the intersection of these threads with the integration of technology through hands-on activities in a full asynchronous online course.
+ %
+ %Although each of these elements has been reported individually, their integration into a single course framework is rarely described in the reviewed literature. 
+ %The newly designed EE~475/551---Control Systems Synthesis course at NMSU is positioned at this intersection. 
+ %Its primary contribution is a reproducible course-level framework that integrates: (i) advanced theoretical content beyond an introductory curriculum, (ii) a complete student-owned team design project, and (iii) a fully asynchronous online delivery supported by interoperable digital-twin and hardware laboratories.%
+ 
+
+
+
+
+%====
+
+%
+% answering Dr. Rodolfo first comment, 1) ELT to self-guided asynchronous experimentation,
+% 2) An integrated advanced control-synthesis content
+% 3) a digital-twin-centered laboratory model in which QLabs virtual plants and hardware
+% 4) a semester-long, student-owned team project
+% The subsection Literature Synthesis and Research Gap, mention the four gaps, but it can be improved. 
+
+
+
+\subsection*{Main Contributions}
+
+% This work presents preliminary evidence and practical implementation lessons from the Spring 2026 offering of EE 475/551: Control Systems Synthesis at New Mexico State University (NMSU),
+This work presents preliminary evidence and practical implementation lessons from the Spring 2026 offering of EE 475/551, a Control Systems Synthesis course in the Electrical and Computer Engineering (ECE) Department at New Mexico State University (NMSU). Our goal is to inspire faculty teaching Control Systems courses and similar courses to adopt advanced, project-based approaches, supported by digital twins and hardware laboratory experiences.%Our goal is to guide institutions seeking to adopt advanced, project-based control systems education supported by digital twins and hardware laboratory experiences.% 
+The main contributions of this paper are as follows:
+\begin{itemize}
+\item %We present 
+An instructional design rationale grounded in Kolb's Experiential Learning Theory (ELT) to support self-guided asynchronous experimentation.
+\item %We integrate
+An integrated advanced control-synthesis content: system identification, robust control, optimal control, and nonlinear control; into a single project-based course delivered fully online and asynchronously.
+\item %We introduce a 
+A digital-twin-centered laboratory model in which QLabs virtual plants and their corresponding Quanser hardware are one-to-one interoperable, see Fig.~\ref{fig:qube-aero-twin}, in such a way that controllers synthesized in MATLAB/Simulink transfer from simulation to physical validation without redesign.
+\item %We describe a 
+A semester-long, student-owned team project in which students select a system, perform data-driven modeling, design and compare multiple controllers, and communicate results through IEEE-style technical reports and presentations.
+%\item 
+\end{itemize}
+
+\medskip
+
+The remainder of the paper is organized as follows. Section~\ref{sec:course-context} introduces the course and laboratory context. Section~\ref{sec:literature-review} reviews prior work on project-based control systems education and laboratory modalities, and %Subsection~\ref{subsec:gap-contribution}
+synthesizes the literature to articulate the research gap addressed in this study. Section~\ref{sec:theoretical-framework} presents Kolb's Experiential Learning Theory as the guiding framework. Section~\ref{sec:Methodology} describes the methodology. Section~\ref{sec:course-description} details the structure of the course and laboratory modules. The outcomes of the Spring~2026 offering are presented in Section~\ref{sec:Results}, and a discussion is provided in Section~\ref{sec:Discussion}. Finally, Section~\ref{sec:Conclusion} concludes with implications, limitations, and directions for future work.
+
+
+ % ==================== SUBSECTION: Context ====================
+\section{Course and Laboratory Context}
+\label{sec:course-context}
+% ---------------------------------------------------------
+
+EE~475/551: Control Systems Synthesis is an advanced cross-listed senior/graduate level course at NMSU that was recently redesigned to provide a project-based learning experience centered on robotics and digital twins. The course addresses a common limitation in control systems education: advanced synthesis topics are often taught theoretically, while realistic implementation experience is limited by hardware access, scheduling constraints, or the difficulty of supporting asynchronous experimentation. High-fidelity digital twins constitute the primary laboratory platform, allowing students to complete the full control design workflow, from system modeling and identification to controller synthesis and performance evaluation, before optionally deploying their controllers to the corresponding physical hardware for experimental validation.
+
+%\begin{figure}[!hb]
+%    \centering
+%    \includegraphics[width=\linewidth]{Pictures/Qlabs_NMSUlab_light.pdf}
+%    \caption{\small Hybrid delivery model linking asynchronous QLabs digital-twin experimentation with optional physical-hardware validation through interoperable MATLAB/Simulink-based controller workflows.}
+%    \label{fig:hybrid-delivery}
+%\end{figure}
+
+The course integrates three main components: asynchronous lecture content, digital-twin-based laboratories, and a semester-long team design project. The lecture sequence covers Model Identification in the time and frequency domains, Robust Control, LQR/LQG Optimal Control, and Nonlinear Control. For executing the design project, teams of two to three students select a virtual or physical system, see Fig.~\ref{fig:qube-aero-twin}, perform system identification, design and implement at least two controllers from the course topics, and communicate their work through an IEEE-formatted report and final presentation.
+
+The laboratory workflow is supported by MATLAB/Simulink, QUARC, Quanser Interactive Labs (QLabs), and corresponding Quanser hardware, as summarized in Fig.~\ref{fig:toolchain}. The overall module-to-project workflow is summarized in Fig.~\ref{fig:course-structure}.
+The group of available QLabs digital-twin platforms are shown in Fig.~\ref{fig:qlabs-platforms}. 
+% Physical platforms with their corresponding digital twins (used when students opt into hardware validation and have access to the equipment) are shown in Fig.~\ref{fig:hardware-with-digital-twins}.
+
+Due to the scope and focus of this paper, selected laboratories using the QLabs Digital-Twin environment, an example of a design project, and two students' learning outcomes were included. 
+
+% \begin{figure}[!b]
+%     \centering
+%     \includegraphics[width=\linewidth]{Pictures/Quanser_robots_cropped.pdf}
+%     \caption{\small Quanser robotics hardware platforms available for optional physical validation that have corresponding QLabs digital-twin models, enabling the same controller-design workflow in simulation and on physical hardware.}
+%     \label{fig:hardware-with-digital-twins}
+% \end{figure}
+
+%\begin{figure}[!t]
+%    \centering
+%    \includegraphics[width=\linewidth]{Pictures/Quanser_robots2_cropped.pdf}
+%    \caption{Additional Quanser robotics hardware platforms available to students that did not have corresponding QLabs digital-twin models at the time of the course; these systems support in-person experimentation and extension projects when physical access is available.}
+%    \label{fig:hardware-no-digital-twins}
+%\end{figure}
+
+
+% ==================== SECTION: Literature Review ====================
+\section{Literature Review}
+\label{sec:literature-review}
+% ---------------------------------------------------------
+
+% -------------------- SUBSECTION: Theory-Practice Gap and Experiential Learning --------------------
+\subsection{The Theory--Practice Gap in learning} %and Experiential Learning%}
+\label{subsec:gap-experiential}
+
+% Control systems education 
+The field of Control Systems
+is both conceptually broad and mathematically abstract, and the resulting theory--practice gap is well documented. Students often struggle with core ideas like Laplace transforms, state-space models, controllability, observability, and frequency response when these ideas appear disconnected from real-world problems~\cite{wellstead1990,kim2011lego,podrzaj2005}. To bridge the gap between mathematical theory and physical intuition, control systems 
+%education 
+courses have traditionally relied on laboratory-based learning~\cite{spong2005}, practical setups that improve grades and conceptual understanding~\cite{chevalier2021studentFeedbackEducationalInnovationControl}, and learn-by-doing approaches that support both technical and soft-skill development~\cite{soares2014,chaconvasquez2024digitalControlEducation}. The rationale for the present course follows directly from this literature, as advanced concepts are more likely to be retained when students repeatedly connect theory to real-time system behavior.
+%, implementation constraints, sensor noise, actuator limits, sampling effects, and iterative redesign.
+
+% -------------------- SUBSECTION: Laboratory Modalities --------------------
+\subsection{Laboratory Modalities in Control Systems Education}
+\label{subsec:lab-modalities}
+
+To broaden access beyond dedicated physical laboratories, control 
+education 
+systems courses have adopted virtual, remote, and hybrid laboratory modalities. Virtual laboratories use simulation to scale access and allow students to rehearse procedures before interacting with scarce equipment~\cite{granado2007webBasedVirtualLaboratoryAutomaticControl}. Remote laboratories provide internet-mediated access to real plants and can support tasks such as identification, relay-tuned Proportional-Integral-Derivative (PID) control, anti-windup design, and disturbance rejection~\cite{sanchez2004,ionescu2013,buiu2008}. Although many reported remote laboratory implementations rely on MATLAB/Simulink, the central educational lesson is independent of the software platform: virtual and remote modalities complement, rather than fully substitute for, in-person experimentation with physical hardware because simulation and network-mediated access cannot fully capture the nonlinear dynamics, sensor noise, actuator constraints, communication delays, and implementation uncertainties encountered in real systems~\cite{granado2007webBasedVirtualLaboratoryAutomaticControl,ionescu2013}.
+
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/course_sequence_project.pdf}
+    \caption{\small Course structure linking the taught lecture sequence (system identification, robust design, optimal control, and nonlinear control) to a semester-long, project-based learning workflow aligned with Kolb's Experiential Learning Theory (ELT).}
+    \label{fig:course-structure}
+\end{figure*}
+
+
+
+
+
+More recently, the literature has emphasized \textit{paired} digital-twin/hardware laboratory modalities, in which a high-fidelity virtual replica is used to develop and debug identification and control workflows and the corresponding physical platform is then used for confirmation when access is available. Reported implementations expanded during and after the COVID-19 disruption, largely because interoperable twins and plants allow students to rehearse procedures, iterate designs, and reduce demand on shared hardware resources~\cite{quanser2021yorkhybridlab,quanser2022calgaryhybridlearning,quanser2022bitpblcontrols,mohammadi2025stralsundhybridlabs,mohammadi2025epflremotelabs}. Robotics and aerospace platforms are particularly effective in this setting because they provide an end-to-end context that connects identification, controller design, real-time implementation, and visually interpretable system behavior~\cite{ghazi2024djiTelloEducationalControl,qinghua2014}.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{Pictures/virtual_twins_models_first_page.pdf}
+    \caption{\small QLabs digital-twin platforms available to students. The Qube-Servo~3 DC motor and pendulum are classic electromechanical systems . Aero~2 is a coupled nonlinear aerospace plant. The QBot, Self-Driving Car Studio, and QDrone~2 offer  higher- autonomy mobile robotics. Each platform preserves the same one-to-one interoperability with its physical counterpart,
+    %shown in Fig.~1, 
+    allowing the course to extend advanced synthesis topics to increasingly complex plants without changing the underlying MATLAB/Simulink--QUARC workflow.}
+    \label{fig:qlabs-platforms}
+\end{figure}
+
+\subsection{Advanced Control Topics}
+
+Most course laboratory implementations still emphasize introductory content, especially PID control and basic time- or frequency-domain analysis. Advanced synthesis methods like system identification, robust control, Linear Quadratic Regulator (LQR), Linear Quadratic Gaussian (LQG), and nonlinear control appear less often and seldom as an integrated, open-ended project. Academic surveys highlight that open educational resources concentrate on introductory feedback, dynamics, and control topics~\cite{serbezov2022openAccessResourcesFeedbackDynamicsControl}, while advanced control material has historically been concentrated at the graduate level~\cite{dorato1990,peec2008}. When advanced elements are included, for example LQR/auto-tuning on remote platforms, estimation in simulation, aerospace testbeds, or full design cycles on a single plant~\cite{sanchez2004,ionescu2013,dunnigan2001,ghazi2024djiTelloEducationalControl,qinghua2014,kassas2008unifiedApproachClassroomLaboratoryControl}, they are typically instructor-scaffolded rather than organized as student-owned team projects.
+
+\subsection{Asynchronous Delivery and Open Educational Resources}
+
+The adopted delivery format further constrains what institutions can implement. Online and hybrid instruction have become structural features of Engineering education~\cite{chaconvasquez2024digitalControlEducation,quanser2021yorkhybridlab,quanser2022calgaryhybridlearning,quanser2022bitpblcontrols,mohammadi2025stralsundhybridlabs,mohammadi2025epflremotelabs}, and asynchronous delivery can better serve conflicting schedules, including those of working professionals~\cite{buiu2008,chaconvasquez2024digitalControlEducation}. Within control systems education, curated open repositories are advocated to enable reuse, benchmarking, and dissemination of tested teaching practice~\cite{serbezov2022openAccessResourcesFeedbackDynamicsControl}. However, most existing resources focus on introductory instruction or coordinated access to laboratory hardware. In contrast, the literature provides relatively few examples of fully asynchronous courses that integrate advanced control systems synthesis with a comprehensive, team-based design project.
+
+%==================================
+\subsection{The Ceiling Effect}
+
+Although tipical learning frameworks address the  theory-practice pedagogical gap, quantifying their effectiveness introduces a significant psychometric challenge known as the ``ceiling effect"~\cite{Wang2009, Uttl2005, edwards2024, gilbert2025, Call2016, Bahnson2023, Staus2021}. In Engineering and other Science and Mathematics courses, this measurement limitation occurs when an assessment instrument lacks sufficient difficulty, causing high-performing students to cluster near the maximum possible score, compressing statistical variance. 
+
+For example, studies that evaluate spatial ability in Engineering sophomore students have demonstrated that when an instrument frequently yields high average performance, its utility to distinguish individual capabilities is severely compromised~\cite{Call2016}. Similarly, in advanced engineering contexts, this lack of variability has been shown to distort data distributions, violate normality assumptions, and limit the interpretability of statistical analyses \cite{Bahnson2023}. 
+%
+Furthermore, when traditional theoretical assessments consistently result in maximum scores, they obscure critical blind spots in applied proficiency and hinder efforts to evaluate the success of educational interventions.
+
+If students unnaturally ``max out" a baseline theoretical assessment, evaluators may mistakenly conclude that a subsequent project-based learning module would have no pedagogical impact, simply because the testing instrument left no statistical room for measurable improvement \cite{Staus2021}. Therefore, to rigorously evaluate advanced Engineering competencies, assessment structures must mitigate the ceiling effect by utilizing high-variance, applied evaluations—such as high-fidelity virtual simulations—capable of capturing the true spectrum of students' learning outcomes.
+
+
+
+% ==================== SECTION: Statement Gap ====================
+\subsection{Literature Synthesis and Research Gap}\label{subsec:gap-contribution}%\section{Statement Gap}
+%\label{sec:statement-gap}
+
+
+% -------------------- SUBSECTION: Synthesis, the Gap, and the Contribution of This Work --------------------
+%\subsection*{Synthesis, the Gap, and the Contribution of This Work}
+
+
+The literature review reveals four key findings. First, project-based and active learning are established strategies for reducing the theory--practice gap in control systems education~\cite{wellstead1990,kim2011lego,podrzaj2005,spong2005,chevalier2021studentFeedbackEducationalInnovationControl,soares2014,chaconvasquez2024digitalControlEducation}. Second, laboratory access has evolved from physical and scale-model laboratories to real-time digital implementation, virtual laboratories, remote laboratories, and hybrid digital-twin models, with the common conclusion that these modalities should complement rather than replace authentic interaction with real-time systems~\cite{wellstead1990,kim2011lego,podrzaj2005,walker1980,lim2005,dunnigan2001,kassas2008unifiedApproachClassroomLaboratoryControl,granado2007webBasedVirtualLaboratoryAutomaticControl,sanchez2004,ionescu2013,buiu2008,ghazi2024djiTelloEducationalControl,qinghua2014,quanser2021yorkhybridlab,quanser2022calgaryhybridlearning,quanser2022bitpblcontrols,mohammadi2025stralsundhybridlabs,mohammadi2025epflremotelabs}. Third, advanced synthesis topics and complete design cycles appear in the literature, but they are rarely embedded in open-ended, student-owned team projects~\cite{dunnigan2001,kassas2008unifiedApproachClassroomLaboratoryControl,serbezov2022openAccessResourcesFeedbackDynamicsControl,dorato1990}. Fourth, online and asynchronous delivery has become increasingly important in Engineering education, but it is seldom combined with advanced synthesis content delivered through a full design project~\cite{chaconvasquez2024digitalControlEducation,buiu2008,serbezov2022openAccessResourcesFeedbackDynamicsControl,quanser2021yorkhybridlab,quanser2022calgaryhybridlearning,quanser2022bitpblcontrols,mohammadi2025stralsundhybridlabs,mohammadi2025epflremotelabs}.
+
+% To address this gap, this paper explores the intersection of these threads: advanced synthesis content, a complete student-owned team design project, and fully asynchronous online delivery supported by interoperable digital-twin and hardware laboratories. Although each of these elements has been reported individually, their integration into a single course framework is rarely described in the reviewed literature. The newly designed EE~475/551---Control Systems Synthesis course at NMSU is positioned at this intersection. The contribution is then the course-level integration of advanced control topics, real-time digital-twin experimentation, optional physical validation, and a structured experiential workflow that can be reproduced by other institutions.
+
+In this paper, we address these key findings that highlight the need to integrate a more practical, technology driven approach into Engineering education.
+
+
+% ==================== SECTION: Theoretical Framework ====================
+\section{Theoretical Framework}
+\label{sec:theoretical-framework}
+ 
+Experiential Learning Theory (ELT), developed by David Kolb, conceptualizes learning as a continuous process in which knowledge is created through the transformation of experience~\cite{kolb1984}. ELT postulates that knowledge is created through a cycle of four distinct stages: %Concrete Experience (CE), reflective observation (RO), abstract conceptualization (AC), and active experimentation (AE)~\cite{kolb1984,ng2009culturalintelligence}. In the 
+Concrete Experience (CE) is a stage where individuals engage directly in a new situation or draw upon lived experiences; Reflective Observation (RO), which emphasizes deliberate observation and reflection from multiple perspectives; Abstract Conceptualization (AC), which involves analytical thinking to formulate concepts and mental models; and Active Experimentation (AE), where individuals apply those concepts to solve problems and make decisions~\cite{atkinson1988kolb,ng2009culturalintelligence}.
+
+ELT serves as the theoretical framework for this study because it provides an integrated, iterative learning process that links interaction with a real-time system (experience), analysis of observed behavior (reflection), formulation of models and design arguments (conceptualization), and control algorithms implementation and validation (experimentation)~\cite{kolb1984,atkinson1988kolb,ng2009culturalintelligence}. This mapping matches the structure of the course laboratories and supports the intended progression from hands-on activity to reflection, generalization, and redesign. Table~\ref{tab:integrated-framework} summarizes the ELT stages and their relationship to the asynchronous laboratory activities.
+
+
+% % ==================== SECTION: Statement Gap ====================
+% \section{Literature Synthesis, Research Gap, and Contributions}%\section{Statement Gap}
+% \label{sec:statement-gap}
+
+% % -------------------- SUBSECTION: Synthesis, the Gap, and the Contribution of This Work --------------------
+% %\subsection*{Synthesis, the Gap, and the Contribution of This Work}
+% \label{subsec:gap-contribution}
+
+% The literature review reveals four key findings. First, project-based and active learning are established strategies for reducing the theory--practice gap in control systems education~\cite{wellstead1990,kim2011lego,podrzaj2005,spong2005,chevalier2021studentFeedbackEducationalInnovationControl,soares2014,chaconvasquez2024digitalControlEducation}. Second, laboratory access has evolved from physical and scale-model laboratories to real-time digital implementation, virtual laboratories, remote laboratories, and hybrid digital-twin models, with the common conclusion that these modalities should complement rather than replace authentic interaction with real-time systems~\cite{wellstead1990,kim2011lego,podrzaj2005,walker1980,lim2005,dunnigan2001,kassas2008unifiedApproachClassroomLaboratoryControl,granado2007webBasedVirtualLaboratoryAutomaticControl,sanchez2004,ionescu2013,buiu2008,ghazi2024djiTelloEducationalControl,qinghua2014,quanser2021yorkhybridlab,quanser2022calgaryhybridlearning,quanser2022bitpblcontrols,mohammadi2025stralsundhybridlabs,mohammadi2025epflremotelabs}. Third, advanced synthesis topics and complete design cycles appear in the literature, but they are rarely embedded in open-ended, student-owned team projects~\cite{dunnigan2001,kassas2008unifiedApproachClassroomLaboratoryControl,serbezov2022openAccessResourcesFeedbackDynamicsControl,dorato1990}. Fourth, online and asynchronous delivery has become increasingly important in Engineering education, but it is seldom combined with advanced synthesis content delivered through a full design project~\cite{chaconvasquez2024digitalControlEducation,buiu2008,serbezov2022openAccessResourcesFeedbackDynamicsControl,quanser2021yorkhybridlab,quanser2022calgaryhybridlearning,quanser2022bitpblcontrols,mohammadi2025stralsundhybridlabs,mohammadi2025epflremotelabs}.
+
+% To address this gap, this paper explores the intersection of these threads: advanced synthesis content, a complete student-owned team design project, and fully asynchronous online delivery supported by interoperable digital-twin and hardware laboratories. Although each of these elements has been reported individually, their integration into a single course framework is rarely described in the reviewed literature. The newly designed EE~475/551---Control Systems Synthesis course at NMSU is positioned at this intersection. The contribution is then the course-level integration of advanced control topics, real-time digital-twin experimentation, optional physical validation, and a structured experiential workflow that can be reproduced by other institutions.
+
+
+\begin{table*}[!b]
+\centering
+\caption{\small Kolb experiential learning stages mapped to asynchronous control-laboratory activities.}
+\label{tab:integrated-framework}
+\renewcommand{\arraystretch}{1.15}
+\footnotesize
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.22\textwidth}
+  >{\raggedright\arraybackslash}X
+}
+\toprule
+\textbf{Kolb Stage} & \textbf{Laboratory Activity} \\
+\midrule
+\textbf{Concrete experience} &
+Launch the QLabs digital twin (and/or hardware when available), run baseline open-/closed-loop tests, apply excitation signals (e.g., steps, sinusoidals, chirps,), observe real-time behavior, and log synchronized input--output data while noting operating limits (saturation, safety constraints, sampling). \\
+\midrule
+\textbf{Reflective observation} &
+Visualize time- and frequency-domain responses, compare predicted vs. measured behavior, compute performance and fit metrics, and attribute discrepancies to non-idealities (noise, delay, unmodeled dynamics, actuator limits); summarize findings in a brief technical reflection. \\
+\midrule
+\textbf{Abstract conceptualization} &
+Identify and validate transfer-function or state-space models from experimental data, justify model structure/order and parameters, translate observations into design requirements/constraints, and select an appropriate synthesis approach (e.g., loop shaping, LQR/LQG, nonlinear methods). \\
+\midrule
+\textbf{Active experimentation} &
+Implement controllers in MATLAB/Simulink and deploy via the real-time workflow (e.g., QUARC), tune gains/weights/sample time, execute closed-loop validation tests, evaluate tracking/disturbance rejection/robustness/control effort, and iterate the model--design--test cycle; when possible, compare digital-twin results to hardware. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+% ==================== SECTION: Methodology ====================
+\section{Methodology}
+\label{sec:Methodology}
+
+% Control systems courses often introduce students to a broad range of modeling, identification, analysis, and controller design methodologies, including state-space representations, system identification, robust control, and optimal control techniques. While these topics provide the theoretical foundation for modern control engineering, students frequently encounter difficulties connecting mathematical formulations with the behavior of real dynamic systems. Consequently, effective control systems education requires learning environments that integrate theoretical instruction with experimental validation, allowing students to observe, analyze, and control dynamic systems while applying the concepts introduced throughout the course.
+
+% The design of an integrated control systems course must therefore consider students' foundational knowledge and provide a structured progression from theoretical instruction to hands-on experimentation. In addition, modern Engineering education increasingly relies on flexible and asynchronous learning modalities, requiring laboratory infrastructures that allow students to interact with realistic physical or virtual systems beyond traditional classroom settings.
+
+% To effectively support an asynchronous learning environment, 
+% the experimentation ecosystem must provide students with robust tools to interact with both physical and/or simulated control systems.
+
+% Specifically this environment requires the following characteristics: 
+% \begin{itemize}
+%     \item real-time, closed-loop validation with input/output data acquisition capabilities,
+%     \item interactive visualization to provide visual feedback of dynamic system behavior,
+%     \item integration with an standard Integrated Development Environment (IDE) or a design and simulation environment, to facilitate controller-in-the-loop design.
+% \end{itemize}
+
+% To effectively support this educational framework, the Experiential Learning ecosystem must provide students with practical tools for controller implementation, system analysis, and performance evaluation. Specifically, the learning environment should support:
+% \begin{itemize}
+%     \item real-time closed-loop experimentation with input-output data acquisition capabilities
+%     \item interactive visualization that allows students to observe the effects of control actions on system behavior
+%     \item integration with Engineering software used for modeling, simulation, and controller design, enabling students to move efficiently between theoretical analysis and experimental validation.
+% \end{itemize}
+
+% In this Experiental Learning study, we follow a course-design, implementation, and evaluation methodology for teaching advanced control synthesis through a fully asynchronous, project-based digital-twin laboratory experience. The methodology defines how the instructional sequence, laboratory workflow, and assessment evidence were organized during the Spring~2026 offering of EE~475/551.
+
+The course structure was designed around three connected layers. The \textit{instructional layer} organized the technical content from modeling and system identification toward robust, optimal, and nonlinear control. The \textit{laboratory layer} provided real-time, closed-loop experimentation primarily through QLabs digital twins, with corresponding Quanser hardware used as an optional validation pathway when students opted in and had access to the equipment. The \textit{pedagogical layer} mapped laboratory activities using Kolb's Experiential Learning Theory (ELT), so that students repeatedly moved from system interaction to reflection, modeling, controller synthesis, validation, and redesign.
+
+Within this structure, the laboratory platforms were intentionally sequenced from classic electromechanical plants to more autonomous robotic systems. Students first developed the core real-time identification and controller-implementation workflow on the Qube-Servo~3 and Qube 3 inverted pendulum (the base platforms for the course), and then they were given the option to apply the same toolchain and experimental cycle to higher-autonomy robots, like the QCar and QDrone, as capstone-style extensions. This progression is reflected in the software and deployment workflow shown in Fig.~\ref{fig:toolchain}, the overall module-to-project structure shown in Fig.~\ref{fig:course-structure}, and the Experiential Learning mapping used to connect activities across the term, as seen in Table~\ref{tab:integrated-framework}. Each laboratory followed a common workflow in which students collected experimental data, developed or validated mathematical models, designed and implemented controllers in MATLAB/Simulink, and evaluated system performance through quantitative analysis. The iterative process encouraged students to compare theoretical predictions with experimental observations and refine their engineering decisions based on the results.
+
+%Each laboratory activity followed the same iterative workflow. Students first observed the behavior of a digital twin or physical plant, applied excitation or control signals, and collected input--output data. Next, they used the data to identify or validate transfer-function or state-space models, comparing candidate representations through quantitative metrics and physical interpretation. Based on the identified or provided model, students designed controllers using methods from the lecture sequence, such as identification-based design, loop shaping, LQR/LQG, or nonlinear control. The controllers were implemented in MATLAB/Simulink and executed through the real-time laboratory workflow. Students evaluated performance using error, transient-response, robustness, and control-effort measures, and when possible compared simulated, digital-twin, and hardware behavior. Finally, they reflected on discrepancies between theoretical predictions and experimental results, revised assumptions or parameters, and documented the engineering rationale for their final designs.
+
+\subsection{Data Collection}
+Data were collected from the Spring 2026 offering of EE
+475/551, a Control Systems Synthesis course in the ECE department at NMSU. The course had 21 undergraduate and graduate students. Quantitative data came from laboratory submissions, semester-long project artifacts, final IEEE-style technical reports, and presentations. These artifacts were used to assess whether students could collect and interpret data, identify or validate models, design and implement controllers, evaluate closed-loop behavior, compare alternatives quantitatively and communicate engineering decisions clearly. For each laboratory assignment, rubric-based scores were collected from the course platform.
+
+%
+Statistical data were extracted from the students' scores to study the influence of virtual laboratory implementations on overall grading outcomes. Additionally, the individual scoring histories of two specific students across the 16 laboratory assignments were studied. This allowed for a direct comparison of student performance on digital-twin laboratory that were immediately preceded by a theoretical laboratory covering the same topic.
+%
+
+Qualitative data were collected from surveys with open ended questions addressing students' experiences in Engineering courses and recommendations to improve the Engineering curricula. From all students enrolled in the course, 62\% responded to the survey by the end of the Spring 2026 semester.  
+
+% When available, rubric-based scores and student perception data were used to complement the artifact-based evaluation.
+\subsection{Data Analysis}
+The quantitative data analysis was performed as follows. For each laboratory assignment, raw grade data from the student cohort were extracted from the course platform and normalized to a 100-point scale to ensure consistency across all modules. The assignments were then partitioned into two distinct assessment categories: theoretical laboratories and Digital Twin-based laboratories.
+
+To evaluate the pedagogical impact of the experimental interventions, the statistical analysis was conducted at two levels: 
+\begin{itemize}
+    \item \textbf{Aggregate population Analysis}: Class-wide performance was evaluated using the aggregate arithmetic mean (representing general proficiency) and the sample standard deviation (measuring diagnostic sensitivity)\cite{Montgomery2013}. The arithmetic mean, $\mu$, and sample standard deviation, $s$, are calculated as
+    %
+    \begin{align}
+        \mu=\frac{1}{n}\sum_{i=1}^{n}x_i, \quad s=\sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\mu)^2},
+    \end{align}
+    %
+    where $n$ is the total number of observations and $x_i$ represents each individual score. Additionally, probability density distributions were calculated for both categories to compare variance and identify statistical measurement limitations. These were modeled using the Gaussian probability density function defined as
+    %
+    \begin{align}
+        f(x)=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2},
+    \end{align}
+    %
+    where $x$ represents the continuous random variable (the laboratory scores).
+    
+    \item \textbf{Longitudinal Individual Trajectories}: Individual student scores were mapped chronologically according to the syllabus sequence. To quantify the theory-to-practice gap, a performance index $\delta$, was calculated for specific case studies. This index was defined as the numerical difference between a student's score on a preceding theoretical module, $s_{\text{theory}}$, and their score on the corresponding, immediately subsequent DT laboratory, $s_{\text{DT}}$:
+        $$\delta=s_{\text{theory}}-s_{\text{DT}}$$
+\end{itemize}
+
+Qualitative data were analyzed using an inductive approach. We assessed raw data to make sense of student perceptions and learning outcomes. Student responses were read several times to identify patterns and similarities. The information was labeled by themes and organized to inform  student experiences with experiential learning. (add a reference)
+
+
+% ==================== SECTION: Course Description ====================
+\section{Course Description}
+\label{sec:course-description}
+% ---------------------------------------------------------
+% The design of an integrated control systems course must take into account students' foundational knowledge and ensure a structured delivery of instructional theoretical modules prior to experimental validations.
+
+%Control systems courses often introduce students to a broad range of modeling, identification, analysis, and controller design methodologies, including state-space representations, system identification, robust control, and optimal control techniques. While these topics provide the theoretical foundation for modern control engineering, students frequently encounter difficulties connecting mathematical formulations with the behavior of real dynamic systems. Consequently, effective control systems education requires learning environments that integrate theoretical instruction with experimental validation, allowing students to observe, analyze, and control dynamic systems while applying the concepts introduced throughout the course.
+
+%The design of an integrated control systems course must therefore consider students' foundational knowledge and provide a structured progression from theoretical instruction to hands-on experimentation. In addition, modern Engineering education increasingly relies on flexible and asynchronous learning modalities, requiring laboratory infrastructures that allow students to interact with realistic physical or virtual systems beyond traditional classroom settings.
+
+% To effectively support an asynchronous learning environment, 
+% the experimentation ecosystem must provide students with robust tools to interact with both physical and/or simulated control systems.
+
+% Specifically this environment requires the following characteristics: 
+% \begin{itemize}
+%     \item real-time, closed-loop validation with input/output data acquisition capabilities,
+%     \item interactive visualization to provide visual feedback of dynamic system behavior,
+%     \item integration with an standard Integrated Development Environment (IDE) or a design and simulation environment, to facilitate controller-in-the-loop design.
+% \end{itemize}
+
+%To effectively support this educational framework, the Experiential Learning ecosystem must provide students with practical tools for controller implementation, system analysis, and performance evaluation. Specifically, the learning environment should support:
+%\begin{itemize}
+%    \item real-time closed-loop experimentation with input-output data acquisition capabilities
+%    \item interactive visualization that allows students to observe the effects of control actions on system behavior
+%    \item integration with Engineering software used for modeling, simulation, and controller design, enabling students to move efficiently between theoretical analysis and experimental validation.
+%\end{itemize}
+
+
+
+This section %details the unified methodology implemented in 
+presents the instructional framework developed for the EE~475/551: Control Systems Synthesis course to integrate mathematical theory with practical implementation, i.e., students learn the underlying control-system analysis and design tools and then apply them through programming, deployment, and real-time robotics-focused laboratory activities. %First, a description of the course contents is provided to contextualize the structured timeline of knowledge delivery to prepare students for the experimental laboratories. Next, the Quanser ecosystem along with the Quanser Interactive Labs software, utilized for experimental execution are introduced. Finally, the design and workflow of two specific laboratory experiments are detailed to demonstrate the practical application of this methodology.
+First, a course content overview is provided to establish the sequence of topics through which students develop competencies in system modeling, identification, analysis, and controller design. Next, the Quanser Interactive Labs (QLabs) environment used to support the Experiential Learning activities is introduced. Finally, three laboratory modules are presented to illustrate how theoretical concepts are reinforced through hands-on experimentation and applied to increasingly complex control engineering tasks, ranging from system identification and model validation to optimal controller synthesis.
+
+%===================
+
+
+
+% ==================== SUBSECTION: Labs ====================
+\subsection{Course Content}
+
+The course is designed to provide a perspective of modern linear control systems analysis and design, including the essential algebraic, structural, and numerical properties of linear dynamical systems, as well as computer-aided solution of real-world design problems. 
+EE~407: \textit{Introduction to Control Systems} (or an equivalent introductory controls course) is a prerequisite for taking this class. Therefore, students are expected to be able to derive basic mathematical models and transfer functions for continuous-time systems, analyze transient and steady-state responses, and evaluate stability using classical methods such as Routh--Hurwitz and root locus.%Modules \textit{$5$. Practical considerations in continuous-time ARX identification} and \textit{$11$. Linear Quadratic Regulation (LQR)} were selected to be studied in this manuscript as the corresponding laboratories were designed to interact with the Quanser Interactive Labs Digital-Twins using MATLAB Simulink.
+
+The course objectives are as follows:
+\begin{itemize}
+    \item Understand the concepts of Model Identification and Parameter Estimation: least-square identification of a %an auto-regressive
+    model; nonparametric identification in the time domain; and nonparametric identification in the frequency domain.
+    \item Understand Robust Control techniques: Nyquist-plots, small-gain, and passivity.
+    \item Understand Optimal control techniques: LQR/LQG for state-space systems and time-optimal controller for the positioning of a mass using force actuation.
+    \item Understand Nonlinear control techniques: Lyapunov's stability method; feedback linearization controller for a fully actuated 2nd order mechanical system; backstepping for triangular nonlinear systems; actuator limitations.
+\end{itemize}
+To ensure the students are exposed to both theoretical foundations and practical implementation techniques, the course consists of three main components: lecture-based instruction, theoretical and experimental laboratories, and a semester-long design project. 
+%The lecture component introduces advanced topics that are typically not covered in introductory control courses, including system identification and parameter estimation, robust control, optimal control, and nonlinear control. 
+% Students are exposed to both theoretical foundations and practical implementation techniques 
+%through topics such as non-parametric and parametric system identification, least-squares estimation, robust stability analysis, loop-shaping design, Linear Quadratic Regulation (LQR), Linear Quadratic Gaussian (LQG) control, feedback linearization, and Lyapunov-based stability analysis. 
+Table~\ref{tab:course_modules} outlines the lectures covered in the course. %\textbf{Prerequisite knowledge:} \quad 
+The project requires students to design, implement, document, and present a control systems application that integrates concepts learned throughout the semester. 
+
+
+
+
+\begin{table}[b]
+\centering
+\caption{\small Topics used to support the theoretical and experimental components of EE 475/EE 551: Control Systems Synthesis. Lectures 5, 7 and 11 include Digital-Twin-based laboratories. 
+%
+Subsequent pairs $(4,5)$, $(6,7)$ and $(10,11)$ each consist of a theoretical laboratory followed immediately by a Digital-Twin-based laboratory involving the same topic.
+}
+%\begin{tabular}{p{0.095\columnwidth} p{0.8\columnwidth}}
+\begin{tabular}{>{\centering\arraybackslash}p{0.12\columnwidth} p{0.8\columnwidth}}
+\hline
+\textbf{Lecture} & \textbf{Topic} \\
+\hline
+Intro & State-space models, transfer function, and conversions\\
+1 & Computer-controlled systems \\
+2 & Non-parametric identification \\
+3 & Parametric identification using least-squares \\
+4 & Continuous-time (CT) ARX model identification \\
+\textbf{5} & \textbf{Practical considerations in CT ARX identification} \\
+6 & Discrete-time (DT) ARX model identification \\
+\textbf{7 }& \textbf{Practical considerations in DT ARX identification} \\
+8 & Robust stability \\
+9 & Control design by loop shaping \\
+10 & Review of state-space models \\
+\textbf{11} & \textbf{Linear Quadratic Regulation (LQR) }\\
+12 & LQG/LQR output feedback \\
+13 & Set-point control \\
+14 & Feedback linearization controllers \\
+15 & Lyapunov stability \\
+16 & Lyapunov-based control design \\
+\hline
+\end{tabular}
+\label{tab:course_modules}
+\end{table}
+
+
+%EE 475/EE 551: \textit{Control Systems Synthesis} is an advanced control systems course designed to bridge the gap between foundational control theory and practical control system design encountered in engineering practice. 
+
+The course has been designed to accommodate both graduate and undergraduate students. Furthermore, since it is delivered in an entirely asynchronous online format, it can serve a geographically distributed cohort (local, national, and international), including traditional full-time students as well as working engineering professionals who require flexible access to laboratory environments.
+%For the 2026 cohort, a total of 21 students enrolled in the class, from which 19 where graduate students and 2 where undergradaute students. 
+
+%Table~\ref{tab:course_overview} outlines the structural overview of this cohort.
+%\begin{table}[b!]
+%\centering
+%\caption{Course demographics and structure.}
+%\begin{tabular}{ll}
+%\hline
+%\textbf{Item} & \textbf{Value} \\
+%\hline
+%Enrollment & 21 Students \\
+%Graduate Students & 19 \\
+%Undergraduate Students & 2 \\
+%Components & Lectures + Project \\
+%Software & MATLAB/Simulink \\
+%\hline
+%\end{tabular}
+%\label{tab:course_overview}
+%\end{table}
+
+
+
+
+
+%\textbf{Course demographics:} \quad The course is designed to accommodate both graduate and undergraduate students. Because it is delivered in an entirely asynchronous online format, it can serve a geographically distributed cohort (local, national, and international), including traditional full-time students as well as working engineering professionals who require flexible access to laboratory environments. Table~\ref{tab:course_overview} outlines the structural overview of this cohort.
+
+
+
+%Table~\ref{tab:course_overview} outlines the structural overview of this cohort.
+
+% The course enrolled 21 students, including 19 graduate students and 2 senior undergraduate students, creating a learning environment that emphasized both advanced theoretical analysis and practical engineering problem solving.
+
+
+
+
+\subsection{Quanser-Based Experimental Environment}
+
+%The experimentation ecosystem is built on the Quanser Interactive Labs (QLabs) environment, which provides high-fidelity Digital-Twins of Quanser hardware that share identical interfaces and dynamics with their physical counterparts. Students are first introduced to the Qube Servo, a compact rotary servo platform well suited to the modeling and identification tasks that open the course; the full set of Digital-Twins available in QLabs is shown in Fig.~\ref{fig:qlabs-platforms}, spanning servo, pendulum, aerospace, and mobile-robot systems that students may later select for their design projects.
+
+The experimental activities in EE 475/551 are conducted using the Quanser Interactive Labs (QLabs) environment, which provides Digital-Twin representations of Quanser hardware platforms. These Digital Twins reproduce the interfaces and dynamic behavior of their physical counterparts, allowing students to perform modeling, system identification, and controller design activities in a realistic yet accessible environment. Students are initially introduced to the Qube Servo platform, which serves as the primary system for the identification and modeling laboratories. As shown in Fig.~\ref{fig:qlabs-platforms}, the QLabs ecosystem includes didactic platforms like the pendulum, aerial, and ground mobile robots that can be used for advanced laboratory exercises and design projects.
+
+
+
+% This Digital-Twin layer is what enables the course's hybrid delivery model. As
+% illustrated in Fig.~\ref{fig:hybrid-delivery}, off-campus students each interact with
+% a dedicated Digital-Twin of the hardware through MATLAB/Simulink, while on-campus
+% teams work with the corresponding physical system. Because the Digital-Twin and the hardware
+% expose the same interface, the two environments are fully interoperable on a one-to-one
+% basis: a controller designed and validated against the Digital-Twin runs unchanged on
+% the physical plant. This decoupling of the student from a single shared apparatus is
+% what makes individual, asynchronous hands-on access feasible at the scale of the cohort.
+
+The use of Digital Twins enables the fully asynchronous laboratory model adopted in this course by decoupling experimental access from shared, scheduled hardware sessions. Each student (or team) interacts with a dedicated Digital-Twin instance through MATLAB/Simulink to run real-time experiments, collect data, and validate controllers on demand. 
+%
+When physical access to the platforms is possible, e.g., if a student visits a real physical laboratory at NMSU, the same workflow and interface support hardware validation, allowing controllers and identification algorithms developed with the Digital Twin to transfer directly to the corresponding physical plant. This approach maintains methodological consistency and hands-on access for asynchronous cohorts.
+
+
+The software and hardware architecture used in the course are illustrated in Fig.~\ref{fig:toolchain}. MATLAB/Simulink serves as the primary environment for modeling, controller design, and data analysis, while QUARC provides real-time communication with either the Digital-Twin or physical hardware platform. Control inputs are applied to the system and measured outputs are returned to MATLAB for analysis, creating the closed-loop experimental framework used across all laboratory modules.
+
+
+% The same software stack underpins both access modes. Fig.~\ref{fig:toolchain} summarizes
+% the toolchain and its signal flow: controllers and identification routines are developed
+% in MATLAB/Simulink, deployed for real-time execution through QUARC, and exercised against
+% the Qube Servo either as a QLabs Digital-Twin or as physical hardware. Control and
+% excitation signals $u[k]$ are applied to the plant, and the measured output $y[k]$ is
+% returned to MATLAB for analysis, closing the sampled-data loop used throughout the
+% laboratory exercises.
+
+%#############################
+%Modules \textit{$5$. Practical considerations in continuous-time ARX identification} and \textit{$11$. Linear Quadratic Regulation (LQR)} were selected to be studied in this manuscript as the corresponding laboratories were designed to interact with the Quanser Interactive Labs Digital-Twins using MATLAB Simulink.
+
+\subsection{Course Laboratories}
+
+% In this section, we describe the three laboratory modules that utilize the Quanser Interactive Labs (QLabs) Digital-Twin environment. These laboratories constitute the primary experimental component of the course and are designed to reinforce the theoretical concepts introduced throughout the semester. Implemented using MATLAB/Simulink and QLabs, the laboratory sequence guides students through system identification, model validation, and optimal control design, providing hands-on experience with realistic dynamic systems and modern control engineering workflows.
+
+%This section presents the
+Three laboratory modules facilitate the experimental component of the course, utilizing the Quanser QLabs Digital-Twin environment. As summarized in Table~\ref{tab:lab_summary}, the laboratories are integrated with MATLAB/Simulink and are designed to reinforce the theoretical concepts introduced throughout the semester. Together, they provide a progressive learning experience that guides students from data-driven system identification and model validation to optimal state-space control design, while providing hands-on experience with realistic dynamic systems and modern control engineering workflows.
+
+Pedagogically, these laboratories are organized around Kolb's Experiential Learning Theory (ELT), in which learning proceeds through concrete experience, reflective observation, abstract conceptualization, and active experimentation~\cite{kolb1984}. This ELT-based progression connects each laboratory activity to the next and ensures that hands-on work is paired with reflection and generalization rather than treated as isolated procedure; its concrete mapping onto the laboratory features is developed in Section~\ref{sec:Methodology}.
+
+\begin{table*}[t]
+\centering
+\caption{\small Summary of the QLabs-based laboratory modules.}
+\label{tab:lab_summary}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{0.18\textwidth} p{0.25\textwidth} p{0.15\textwidth} p{0.25\textwidth}}
+\hline
+\textbf{Laboratory} &
+\textbf{Objective} &
+\textbf{Quanser Platform} &
+\textbf{Learning Outcomes} \\
+\hline
+
+\makecell[l]{\textbf{Lecture 5}\\Transfer Function\\Identification}
+&
+\makecell[l]{Data-driven system identification\\Transfer-function estimation\\Model selection}
+&
+\makecell[l]{QLabs Virtual\\Qube Servo 3}
+&
+\makecell[l]{Black-box modeling\\Transfer-function estimation\\Pole-zero interpretation\\Model validation\\Parameter uncertainty\\Engineering model selection}
+\\
+\hline
+
+\makecell[l]{\textbf{Lecture 7}\\Model Validation\\and Robustness Analysis}
+&
+\makecell[l]{Evaluate model reliability\\Analyze identification robustness\\Sensitivity analysis}
+&
+\makecell[l]{QLabs Virtual\\Qube Servo 3}
+&
+\makecell[l]{Least-squares identification\\Noise sensitivity\\Excitation design\\Sampling effects\\Model-order selection\\Robustness evaluation}
+\\
+\hline
+
+\makecell[l]{\textbf{Lecture 11}\\Optimal State-Space\\Control Design}
+&
+\makecell[l]{Model-based controller synthesis\\Optimal state-feedback control\\Closed-loop performance evaluation}
+&
+\makecell[l]{QLabs Virtual\\Qube 3\\Inverted Pendulum}
+&
+\makecell[l]{LQR controller design\\Feedback stabilization\\Reference tracking\\Controller tuning\\Performance evaluation\\Model-based control implementation}
+\\
+\hline
+\end{tabular}
+\end{table*}
+
+
+\medskip
+\subsubsection{Lecture 5 Laboratory: Transfer Function Identification} 
+%##########################
+
+\paragraph{Objective}
+%The objective of this laboratory is to 
+To introduce students to the principles of data-driven system identification and transfer-function modeling using experimental measurements obtained from an electromechanical control system. Through interaction with the Quanser Qube Servo platform in the QLabs virtual environment, see Fig.~\ref{fig:qlab1}, students learn how mathematical models can be constructed directly from measured input-output data rather than derived from first-principles equations. The laboratory guides students through the complete workflow of model estimation, validation, and selection while examining how model complexity influences prediction accuracy, parameter uncertainty, and physical interpretability. Using MATLAB/Simulink for data acquisition, model estimation, visualization, and automation, students gain both theoretical understanding and practical experience with %engineering methodologies widely employed in
+modern control system design, robotics, and industrial system identification.
+
+% \paragraph{Objective} The objective of this laboratory is to introduce students to the principles of data-driven system identification and dynamic system modeling using experimental measurements obtained from an electromechanical control system. Unlike traditional modeling approaches that rely on first-principles derivations, this laboratory exposes students to the process of constructing mathematical models directly from measured input-output data. Through interaction with the Quanser Qube Servo platform in the QLabs virtual environment, which is shown in~\ref{fig:qlab1}, students investigate how transfer-function representations can be estimated from experimental observations and how model complexity influences model accuracy, uncertainty, and physical interpretability.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Pictures/QlabVirtual-Qube-Servo-mcmaster-CS-1.jpg}
+    \caption{\small QLabs Virtual Qube-Servo 3, which behaves in the same way as the physical hardware and can be measured and controlled using MATLAB/Simulink}
+    \label{fig:qlab1}
+\end{figure}
+
+% The laboratory emphasizes several fundamental concepts in modern control engineering, including system identification, model validation, parameter uncertainty analysis, and model structure selection. Students learn that identifying an accurate model involves more than minimizing estimation error; it also requires evaluating the tradeoffs between model complexity, robustness, and confidence in the estimated parameters. MATLAB and Simulink are used as computational tools to support data acquisition, model estimation, visualization, and automated analysis. Through this process, students develop both theoretical understanding and practical experience with engineering workflows commonly employed in industrial system identification, control system design, and dynamic system analysis.
+
+% \paragraph{Methodology} The laboratory is organized as a sequence of experimental, computational, and analytical activities designed to expose students to the complete workflow of data-driven system identification. 
+
+% \begin{itemize}
+%     \item Step 1: Students begin by generating experimental input-output data from the Quanser Qube Servo platform operating within the QLabs virtual environment. This activity introduces the concept of black-box modeling, where the internal physics of the system are not explicitly used, and the mathematical model is inferred directly from measured data.
+%     \item Step 2: After collecting the experimental data, students employ a transfer-function identification algorithm to estimate candidate models containing different numbers of poles and zeros. Rather than focusing on a single model, students systematically investigate multiple model structures and evaluate how increasing model complexity influences estimation accuracy and parameter uncertainty. This process encourages students to recognize that more complex models do not necessarily provide better representations of physical systems and may introduce overfitting, numerical sensitivity, or physically unrealistic dynamics.
+%     \item Step 3: To assess model quality, students compute quantitative performance metrics, including normalized prediction error and parameter uncertainty measures. These metrics provide complementary information regarding model accuracy and confidence in the estimated parameters. 
+%     \item Step 4: Students further analyze pole-zero locations in the complex plane to investigate the dynamic characteristics and stability properties of the identified models. Through these activities, they learn how mathematical representations can be interpreted from both numerical and physical perspectives.
+%     \item Step 5: To reinforce computational thinking and reproducible engineering practices, students develop MATLAB scripts that automate data processing, model estimation, performance evaluation, and visualization tasks. The requirement for automation encourages students to move beyond isolated calculations and develop reusable engineering tools capable of systematically evaluating multiple candidate models. 
+% \end{itemize}
+
+% The laboratory concludes with a comparative analysis of the identified models, where students justify their final model selection based on accuracy, parameter confidence, dynamic behavior, and overall engineering suitability.
+
+
+% \paragraph{Educational Outcomes} Through this laboratory, students develop both theoretical understanding and practical experience in system identification, transfer function estimation, and model validation. By analyzing experimental input-output data obtained from the Quanser Qube Servo platform, students learn how dynamic system models can be constructed directly from measured responses without requiring explicit knowledge of the underlying physical equations. This activity introduces the concept of data-driven or black-box modeling and highlights its importance in modern control engineering applications.
+
+% The laboratory reinforces fundamental control systems concepts, including transfer function modeling, system identification, model validation, pole-zero analysis, and parameter uncertainty assessment. Particular emphasis is placed on understanding the tradeoff between model complexity, estimation accuracy, and confidence in the identified parameters. Through the comparison of multiple candidate models, students develop engineering judgment regarding the selection of mathematically efficient, physically meaningful, and practically useful representations of dynamic systems.
+
+\paragraph{Methodology}
+
+The laboratory is organized as a sequence of experimental, computational, and analytical activities designed to introduce students to the complete workflow of data-driven system identification. Students begin by interacting with the Quanser Qube Servo platform within the QLabs virtual environment to generate experimental input-output data from the electromechanical system. This activity introduces the concept of black-box modeling, where mathematical representations are inferred directly from measured data rather than derived from first-principles equations, allowing students to establish the connection between experimental observations and dynamic system modeling.
+
+Using the acquired experimental data, students apply transfer-function identification techniques to estimate candidate models with different numbers of poles and zeros. Instead of focusing on a single mathematical representation, the laboratory encourages students to compare multiple model structures and investigate how model complexity influences prediction accuracy, parameter uncertainty, and physical interpretability. Through this process, students learn that increasing model complexity does not necessarily improve model quality and that selecting an appropriate model requires balancing accuracy with engineering practicality.
+
+The laboratory then focuses on model validation and dynamic interpretation. Students evaluate the identified models using quantitative performance measures, including normalized prediction error and parameter uncertainty metrics, while examining pole-zero locations to investigate system dynamics and stability characteristics. By comparing alternative models using both numerical and physical criteria, students develop engineering judgment regarding model selection and gain an understanding of the tradeoffs between model simplicity, estimation accuracy, and confidence in the identified parameters.
+
+To reinforce computational thinking and reproducible engineering practices, students develop MATLAB scripts that automate data processing, model estimation, performance evaluation, and visualization. Through this workflow, students gain experience constructing reusable engineering tools capable of systematically comparing multiple candidate models and supporting evidence-based model selection. This combination of experimentation, computation, and engineering analysis prepares students for the model validation and robustness studies introduced in the subsequent laboratory module.
+
+
+\paragraph{Educational Outcomes}
+%Upon completion of this laboratory,
+Students are expected to develop the ability to construct, validate, and interpret transfer-function models from experimental input-output data using data-driven system identification techniques. Through the analysis of multiple candidate models, students gain an understanding of black-box modeling, parameter estimation, model validation, and pole-zero analysis while learning to evaluate the tradeoffs between model complexity, prediction accuracy, parameter confidence, and physical interpretability. These activities strengthen students' engineering judgment by requiring them to justify model-selection decisions using both quantitative performance measures and qualitative engineering reasoning.
+
+%Beyond the technical concepts of system identification,
+
+\medskip
+
+Laboratory 5 develops practical engineering competencies in experimental design, computational problem solving, quantitative data analysis, and reproducible engineering workflows. By automating model estimation, validation, and visualization using MATLAB, students gain experience with modern model-based engineering practices commonly applied in industrial automation, robotics, and dynamic system analysis, while improving their ability to communicate technical findings through systematic analysis and evidence-based decision making.
+
+% Upon completion of the laboratory, students should be able to:
+
+% \begin{itemize}
+% \item acquire and process experimental input-output data from a dynamic electromechanical system,
+% \item formulate transfer-function models using data-driven system identification techniques,
+% \item explain the principles of black-box modeling and its role in control engineering practice,
+% \item evaluate model quality using prediction-error and parameter-confidence metrics,
+% \item interpret pole-zero locations and relate them to system dynamics and stability characteristics,
+% \item analyze the tradeoff between model complexity, model accuracy, and parameter uncertainty,
+% \item identify potential overfitting and underfitting conditions in identified models,
+% \item justify model selection decisions using both quantitative metrics and engineering reasoning,
+% \item develop automated computational workflows for model estimation and validation,
+% \item and communicate system identification results using appropriate engineering analysis and visualization tools.
+% \end{itemize}
+
+% Upon completion of this laboratory, students are expected to develop the ability to construct and validate transfer-function models from experimental input-output data using data-driven system identification techniques. Through the analysis of identified models, students gain an understanding of black-box modeling, model validation, parameter uncertainty assessment, and pole-zero interpretation. The laboratory further develops students' ability to evaluate the tradeoffs between model complexity, accuracy, and confidence while recognizing potential overfitting and underfitting conditions. By comparing alternative model structures and justifying model-selection decisions using quantitative and qualitative criteria, students strengthen their engineering judgment and analytical reasoning skills. In addition, the laboratory promotes the development of automated computational workflows for model estimation, validation, visualization, and effective communication of system identification results.
+
+% In addition to technical control concepts, the laboratory develops practical engineering skills including experimental analysis, quantitative reasoning, computational problem solving, data interpretation, model validation, and evidence-based engineering decision-making. Students also gain experience with modern system identification methodologies commonly employed in industrial automation, robotics, control system design, and dynamic system analysis.
+
+
+
+\medskip
+\subsubsection{Lecture 7 Laboratory: Model Validation and Robustness Analysis} 
+% \paragraph{Objective} Building upon the transfer-function modeling and model-selection concepts introduced in the laboratory module I, this laboratory focuses on evaluating the reliability, robustness, and sensitivity of identified models under varying experimental conditions.%While the laboratory module I emphasized the construction of mathematical models from measured input-output data, the laboratory module II investigates how excitation magnitude, measurement noise, model order, and sampling frequency influence identification accuracy and model confidence.
+
+% While Laboratory Module I emphasized the construction of mathematical models from measured input-output data, Laboratory Module II focuses on evaluating the reliability of those models under realistic experimental conditions. Specifically, students investigate how the strength of the excitation signal affects the amount of information available for identification, how measurement noise influences parameter estimation accuracy, how model order selection impacts the balance between model complexity and predictive capability, and how sampling frequency affects the fidelity with which system dynamics are captured. Through these investigations, students develop a deeper understanding of the factors that influence model quality, robustness, and confidence in data-driven system identification.
+
+
+% Using the Quanser Qube Servo platform implemented within the QLabs virtual environment, which is shown in~\ref{fig:qlab2}, students examine advanced system identification concepts including least-squares parameter estimation, model-order determination, singular-value analysis, and robustness assessment. MATLAB and Simulink are utilized as the primary computational tools for data collection, signal processing, model estimation, and automated analysis. Through this laboratory, students move beyond model construction and develop a deeper understanding of the factors that influence model quality, reliability, and suitability for engineering applications.
+
+\paragraph{Objective}
+Building upon the transfer-function modeling and model-selection concepts introduced in Lecture 5, this laboratory
+extends students' understanding of system identification by investigating the factors that influence model reliability and robustness under realistic experimental conditions. Using the Quanser Qube Servo platform implemented within the QLabs virtual environment, see Fig.~\ref{fig:qlab2}, students examine how excitation magnitude, measurement noise, model order selection, and sampling frequency affect parameter estimation accuracy, model confidence, and dynamic system representation. The laboratory introduces advanced concepts including least-squares parameter estimation, singular-value analysis, and robustness assessment while utilizing MATLAB/Simulink for data acquisition, signal processing, model estimation, and automated analysis. Through this process, students move beyond model construction and develop the analytical skills required to evaluate the quality, reliability, and engineering suitability of identified dynamic system models.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Pictures/QlabVirtual-Qube-Servo2.jpg}
+    \caption{\small The Quanser Qube Servo platform implemented within the QLabs virtual environment}
+    \label{fig:qlab2}
+\end{figure}
+
+% \paragraph{Methodology} The laboratory is organized as a sequence of experimental and analytical activities designed to investigate the sensitivity of identified models to various experimental and numerical factors. Students begin by generating input-output data from the Quanser Qube Servo system using step excitation signals of different amplitudes under both noiseless and noisy conditions. By comparing responses obtained from varying excitation levels, students investigate how input design affects the quality of the resulting mathematical models and the ability of the identification algorithm to accurately capture system dynamics.
+
+% Using the collected data, students implement least-squares identification techniques to estimate transfer-function representations of the system. Unlike the laboratory module I, where the primary objective was to identify an appropriate model structure, the emphasis in this laboratory is on evaluating the robustness and reliability of the estimation process. Students systematically compare identification results obtained under different experimental conditions and assess the sensitivity of the estimated models to measurement disturbances and excitation characteristics.
+
+% The laboratory further investigates model-order determination through the analysis of candidate numerator and denominator structures. Students evaluate the relationship between model complexity and estimation performance using quantitative measures such as the Sum of Squares Error (SSE) and singular-value distributions. These analyses provide insight into the numerical conditioning of the identification problem and help students identify model structures that balance accuracy and complexity.
+
+% A final component of the laboratory examines the influence of sampling frequency and down-sampling on system identification performance. Students compare models obtained from datasets with different sampling resolutions and investigate how information loss and discretization effects influence model quality. Through these activities, students develop a comprehensive understanding of how experimental design choices affect the reliability and interpretability of identified dynamic models.
+
+% To reinforce reproducible engineering practices, students develop MATLAB scripts that automate data processing, parameter estimation, model-order evaluation, and performance assessment. The automation requirement encourages students to develop reusable computational tools capable of systematically evaluating multiple identification scenarios and comparing their results using consistent criteria.
+
+% \paragraph{Educational Outcomes} Through this laboratory, students develop advanced competencies in system identification by investigating the factors that influence model reliability, robustness, and numerical performance. Building upon the model-construction skills developed in the laboratory module I, students learn to critically evaluate identified models and assess their suitability under realistic experimental conditions.
+
+% The laboratory reinforces fundamental concepts related to least-squares estimation, model-order determination, numerical conditioning, sampling theory, and robustness analysis. Particular emphasis is placed on understanding how experimental design choices influence identification accuracy and how quantitative metrics can be used to assess confidence in estimated models.
+
+% Upon completion of the laboratory, students should be able to:
+
+% \begin{itemize}
+% \item assess the influence of excitation magnitude on system identification accuracy,
+% \item evaluate the effects of measurement noise on parameter estimation and model quality,
+% \item apply least-squares estimation techniques to identify dynamic system models,
+% \item investigate the relationship between model order and identification performance,
+% \item interpret singular-value distributions and use them for model-order determination,
+% \item evaluate model robustness using quantitative performance metrics such as SSE,
+% \item analyze the effects of sampling frequency and down-sampling on system representation,
+% \item assess the numerical conditioning and reliability of identified models,
+% \item design automated computational workflows for sensitivity and robustness studies,
+% \item and justify engineering decisions regarding model suitability based on experimental evidence.
+% \end{itemize}
+
+% Upon completion of this laboratory, students are expected to develop the ability to critically evaluate the reliability and robustness of identified dynamic system models under varying experimental conditions. Through the application of least-squares identification techniques, students investigate how excitation magnitude, measurement noise, model order selection, and sampling frequency influence parameter estimation accuracy and model quality. The laboratory further develops students' understanding of model-order determination through singular-value analysis, numerical conditioning, and quantitative performance metrics such as the Sum of Squares Error (SSE). By conducting sensitivity and robustness analyses using automated computational workflows, students strengthen their ability to assess model suitability and justify engineering decisions based on experimental evidence and quantitative evaluation.
+
+
+% In addition to advanced control systems concepts, the laboratory develops practical engineering skills, including sensitivity analysis, numerical evaluation, uncertainty assessment, experimental design, and evidence-based decision making. Students also gain experience with methodologies commonly employed in system identification, model validation, control system development, and industrial data-driven engineering applications.
+
+\paragraph{Methodology}
+The laboratory
+%is organized to extend the system identification concepts introduced in Lecture 5 by
+investigates the reliability of identified models under different experimental conditions. Students begin by generating input-output data from the Quanser Qube Servo platform using step excitation signals of varying amplitudes under both noiseless and noisy conditions. By comparing the resulting datasets, students examine how excitation strength and measurement disturbances affect the amount of information available for identification and the quality of the estimated models.
+
+Using the collected experimental data, students apply least-squares identification techniques to estimate transfer-function models with different orders in the numerator and denominator. Rather than focusing solely on obtaining an accurate mathematical representation, the laboratory emphasizes understanding how model complexity influences estimation performance and parameter confidence. Students compare multiple candidate models and investigate the tradeoffs between model accuracy, robustness, and computational complexity.
+
+The laboratory further explores the effects of sampling frequency and model-order selection on system identification. Students analyze the influence of down-sampling, numerical conditioning, and singular-value distributions while evaluating model quality using quantitative performance measures such as the Sum of Squares Error (SSE). These activities demonstrate how experimental design choices influence the reliability and interpretability of the dynamic models identified.
+
+To reinforce reproducible engineering practices, students develop MATLAB scripts that automate data processing, parameter estimation, model-order evaluation, and comparative analysis. Through this workflow, students gain experience conducting systematic sensitivity studies and making evidence-based engineering decisions regarding the suitability and robustness of identified models.
+
+\paragraph{Educational Outcomes}
+%Upon completion of this laboratory,
+Students are expected to develop the ability to critically evaluate the reliability and robustness of identified dynamic system models under varying experimental conditions. By applying least-squares system identification techniques, students investigate how excitation magnitude, measurement noise, model order selection, and sampling frequency influence parameter estimation accuracy, numerical conditioning, and model quality. Through sensitivity analyses and quantitative performance evaluation using measures such as the Sum of Squares Error (SSE) and singular-value analysis, students strengthen their ability to assess model suitability and justify engineering decisions based on experimental evidence.
+
+\medskip
+
+Beyond advanced system identification concepts, Laboratory~7 develops practical engineering competencies in sensitivity analysis, uncertainty assessment, numerical evaluation, experimental design, and reproducible computational workflows.
+By automating parameter estimation, model evaluation, and comparative analysis using MATLAB, students gain experience with modern engineering methodologies commonly employed in system identification, model validation, and data-driven control system development while strengthening their analytical reasoning and evidence-based decision-making skills.
+
+\medskip
+\subsubsection{Lecture 11 Laboratory: Optimal State-Space Control Design}
+
+% \paragraph{Objective} Following the system identification and model validation activities presented in Laboratory Modules I and II, this laboratory introduces students to model-based controller synthesis through optimal control design. The primary objective of this module is to demonstrate how mathematical models can be utilized to design stabilizing feedback controllers capable of regulating unstable dynamic systems while achieving desired performance objectives.
+
+% Using the Quanser Qube 3 inverted pendulum platform implemented within the QLabs virtual environment, which is shown in~\ref{fig:qlab3}, students investigate fundamental concepts in modern state-space control, including feedback stabilization, reference tracking, optimal control, and controller tuning. The laboratory introduces the LQR framework and emphasizes the relationship between system dynamics, performance specifications, and control effort. Through the use of MATLAB and Simulink, students gain practical experience in controller synthesis, simulation, and performance evaluation while developing an understanding of how control design decisions influence closed-loop system behavior.
+
+\paragraph{Objective}
+Building upon the system identification and model validation concepts developed in Lectures 5 and 7, this laboratory
+introduces students to model-based controller synthesis using optimal state-space control techniques. Using the Quanser Qube 3 inverted pendulum platform implemented within the QLabs virtual environment, see Fig.~\ref{fig:qlab3}, students learn how mathematical system models can be utilized to design stabilizing feedback controllers for unstable dynamic systems. The laboratory introduces the LQR framework and investigates the relationships among state-space modeling, feedback stabilization, reference tracking, controller tuning, and closed-loop performance. Through MATLAB/Simulink, students gain practical experience in controller synthesis, simulation, and performance evaluation while developing an understanding of the engineering tradeoffs between tracking performance, stabilization, and control effort.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Pictures/QlabVirtual-Qube-Servo3-NEW-3.jpg}
+    \caption{The Quanser Qube 3 inverted pendulum platform implemented within the QLabs virtual environment}
+    \label{fig:qlab3}
+\end{figure}
+
+% \paragraph{Methodology} The laboratory is organized as a sequence of controller design, implementation, and performance evaluation activities that guide students from system regulation to optimal trajectory tracking. Students interact with the Quanser Qube 3 digital-twin environment, where the inverted pendulum system serves as a representative unstable electromechanical platform for advanced control design experiments.
+
+% The first phase of the laboratory introduces reference generation and trajectory tracking concepts. Students construct a square-wave reference signal and transform it into an appropriate state reference for the control system. This activity establishes the distinction between regulation and tracking objectives while introducing the role of reference signals in feedback control systems.
+
+% The second phase focuses on stabilization of the inverted pendulum at its unstable upright equilibrium position. Students utilize the provided state-space representation of the system and investigate how feedback can be employed to maintain stability in a naturally unstable dynamic system. This activity reinforces concepts related to state-space modeling, controllability, equilibrium points, and feedback stabilization.
+
+% After establishing the stabilization objective, students design an LQR using the pendulum system's state-space model. Through this activity, students are introduced to optimal control design and learn how to compute feedback gains by minimizing a quadratic performance index that balances state regulation and control effort. Rather than tuning gains through trial and error, students experience a systematic controller synthesis methodology based on optimization principles.
+
+% Once the stabilizing controller is obtained, students evaluate closed-loop performance through both time-domain and frequency-domain analyses. System behavior is assessed using pendulum-angle regulation, base-angle response, and frequency-response characteristics. These analyses provide insight into the relationship between controller design parameters and overall system performance.
+
+% The laboratory then extends the stabilization problem to trajectory tracking, requiring the pendulum to remain upright while the rotating base follows a square-wave reference signal. This activity introduces students to the practical challenges associated with simultaneously satisfying multiple control objectives, including disturbance rejection, tracking performance, and stabilization requirements.
+
+% The final phase of the laboratory investigates the influence of weighting matrix selection on controller behavior. Students modify the state weighting matrix and compare the resulting feedback gains and closed-loop responses. Through this sensitivity study, students examine how prioritizing different system states affects transient response characteristics, control effort, tracking accuracy, and stabilization performance. This activity reinforces the concept that controller design is inherently a tradeoff process and that different performance objectives lead to different optimal solutions.
+
+% To promote reproducible engineering practices, students develop MATLAB scripts that automate controller synthesis, simulation, performance evaluation, and comparative analysis. The automation component encourages students to develop reusable computational workflows and systematically evaluate alternative controller configurations using quantitative performance measures.
+
+% \paragraph{Educational Outcomes} Through this laboratory, students develop both theoretical understanding and practical experience in optimal state-space control design. By implementing an LQR controller on an inverted pendulum system, students learn how mathematical models can be transformed into stabilizing control laws capable of regulating unstable systems and achieving desired performance objectives.
+
+% The laboratory reinforces fundamental control engineering concepts, including state-space modeling, state-feedback control, optimal control theory, feedback stabilization, reference tracking, and controller tuning. Particular emphasis is placed on understanding the relationship between weighting matrix selection, feedback gains, control effort, and closed-loop performance.
+
+% Upon completion of the laboratory, students should be able to:
+
+% \begin{itemize}
+% \item formulate control problems using state-space representations,
+% \item explain the principles of feedback stabilization for unstable dynamic systems,
+% \item design optimal state-feedback controllers using the Linear Quadratic Regulator framework,
+% \item evaluate closed-loop performance using time-domain and frequency-domain analyses,
+% \item distinguish between regulation and trajectory-tracking objectives,
+% \item interpret the effects of weighting matrix selection on controller gains and system behavior,
+% \item analyze tradeoffs between tracking performance, stabilization performance, and control effort,
+% \item compare alternative controller designs and justify tuning decisions using engineering reasoning,
+% \item implement and evaluate control algorithms within a digital-twin environment,
+% \item and develop automated computational workflows for controller synthesis and performance assessment.
+% \end{itemize}
+
+% Upon completion of this laboratory, students are expected to develop the ability to formulate and solve control design problems using state-space methods and optimal control techniques. Through the design and implementation of LQR controllers, students gain an understanding of feedback stabilization, trajectory tracking, and closed-loop performance evaluation for unstable dynamic systems. The laboratory further develops students' ability to analyze the effects of controller tuning parameters on system behavior, evaluate tradeoffs between stabilization performance, tracking accuracy, and control effort, and justify controller design decisions using engineering reasoning. By implementing and assessing control algorithms within a digital-twin environment, students also gain practical experience in model-based controller synthesis, performance analysis, and automated computational workflows for modern control system development.
+
+
+% In addition to advanced control systems concepts, the laboratory develops practical engineering skills, including controller tuning, performance evaluation, optimization-based design, stability analysis, and evidence-based engineering decision-making. Students also gain experience with methodologies commonly employed in robotics, autonomous systems, industrial automation, and modern model-based control system development.
+
+
+\paragraph{Methodology}
+The laboratory is organized as a sequence of controller design and performance evaluation activities using the Quanser Qube 3 inverted pendulum Digital-Twin. Students begin by examining the state-space representation of the system and defining reference trajectories for the rotating base. This activity introduces the distinction between regulation and trajectory-tracking problems while reinforcing the role of state variables and reference signals in modern feedback control systems.
+
+Students then design an optimal state-feedback controller using the LQR framework. Based on the mathematical model developed for the inverted pendulum, they compute optimal feedback gains by minimizing a quadratic performance index that balances state regulation and control effort. This activity demonstrates a systematic controller synthesis methodology and illustrates how optimization principles can be used to design stabilizing feedback controllers for unstable dynamic systems.
+
+Following controller synthesis, students evaluate closed-loop system performance through both time-domain and frequency-domain analyses. They investigate pendulum stabilization, reference tracking, and transient response characteristics while examining how modifications to the weighting matrices influence feedback gains, control effort, tracking accuracy, and overall closed-loop behavior. These experiments highlight the tradeoffs inherent in practical controller design.
+
+To encourage reproducible engineering practices, students implement MATLAB scripts that automate controller synthesis, simulation, performance evaluation, and comparative analysis. By systematically comparing alternative controller configurations within the QLabs Digital-Twin environment, students gain practical experience in model-based controller design, optimization, and evidence-based engineering decision-making.
+
+
+
+\paragraph{Educational Outcomes}
+%Upon completion of this laboratory,
+Students are expected to develop the ability to formulate and solve control design problems using state-space methods and optimal control techniques. Through the design and implementation of LQR controllers, students learn how mathematical models can be transformed into stabilizing feedback controllers for unstable dynamic systems while satisfying tracking and performance objectives. By evaluating closed-loop responses under different controller configurations, students develop an understanding of feedback stabilization, reference tracking, controller tuning, and the tradeoffs between tracking accuracy, stabilization performance, and control effort.
+
+Beyond optimal control concepts, Laboratory~11 develops practical engineering competencies in model-based controller synthesis, performance evaluation, optimization-based design, stability analysis, and reproducible computational workflows. By implementing and comparing controller designs using MATLAB, Simulink, and the QLabs Digital-Twin environment, students gain experience with engineering methodologies commonly employed in robotics, autonomous systems, industrial automation, and modern feedback control system development while strengthening their analytical reasoning and evidence-based design skills.
+
+
+% ==================== SECTION: Results and Discussion ====================
+\section{Results}
+\label{sec:Results}
+
+The course design responds to the challenge of delivering practical experience
+for asynchronous academic laboratory setups.
+%Pedagogically, the laboratory is organized around Kolb's Experiential Learning Theory (ELT), in which learning proceeds through concrete experience, reflective observation, abstract conceptualization, and active experimentation~\cite{kolb1984}. This ELT-based progression connects each laboratory activity to the next and ensures that hands-on work is paired with reflection and generalization rather than treated as isolated procedure; its concrete mapping onto the laboratory features is developed in Section~\ref{sec:Methodology}.
+%=========
+To support this educational framework, the Experiential Learning ecosystem must provide students with practical tools for controller implementation, system analysis, and performance evaluation. Specifically, the learning environment should support:
+\begin{itemize}
+    \item real-time closed-loop experimentation with input-output data acquisition capabilities
+    \item interactive visualization that allows students to observe the effects of control actions on system behavior
+    \item integration with Engineering software used for modeling, simulation, and controller design, enabling students to move efficiently between theoretical analysis and experimental validation.
+\end{itemize}
+
+%In this Experiental Learning study, we follow a course-design, implementation, and evaluation methodology for teaching advanced control synthesis through a fully asynchronous, project-based digital-twin laboratory experience. The methodology defines how the instructional sequence, laboratory workflow, and assessment evidence were organized during the Spring~2026 offering of EE~475/551.
+
+The results presented here correspond to a course offered during the Spring~2026 to 21 students, from which 19~are graduate,
+2~are undergraduate. We report outcomes along three lines: attainment of
+the learning outcomes, performance against the assessment rubric, and student perception of the course.
+
+% ==================== SUBSECTION: Representative Team Design Project ====================
+\subsection{Example of a Semester-long Design Project}
+\label{subsec:representative-project}
+
+%The semester project of a three-student team from the Spring~2026 cohort is presented as an illustrative implementation case.
+
+This project
+%from a three-students team
+documents the complete course workflow (plant
+characterization, data-driven identification, robustness screening, controller
+synthesis, real-time implementation, and comparative hardware testing) within
+a single activity report. The team used the Quanser Aero~2 in its
+two-degree-of-freedom configuration, see Figure~\ref{fig:qlabs-platforms}, whose coupled pitch--yaw dynamics expose practical effects e.g., %trim sensitivity, weak yaw breakaway,
+actuator saturation, and encoder quantization, that are difficult to represent in an ideal nominal model. The project progressed from offline simulation to the QLabs
+digital twin, and then to hardware validation -- an additional step taken by the students at their own initiative. 
+%
+\begin{comment}
+
+The objective was to obtain stable and repeatable pitch and yaw
+tracking within the established voltage and safety limits, and to compare
+controller configurations using similar reference signals and hardware
+conditions. The performance evaluation considered tracking error, transient behavior,
+control effort and saturation, and the sample rate achieved during real-time
+execution. 
+
+Before controller design, the
+team estimated gyroscope bias, checked encoder resolution and safe voltage
+limits, and performed a trim search that established the pitch operating point
+at $U_0\approx1.4$~V. 
+%
+For identification, the team applied axis-specific excitation based on knowledge obtained from
+Lectures~2--7. 
+%: collective-voltage doublets around trim for pitch, differential-thrust chirps for yaw, and simultaneous collective and differential inputs for the coupled model. 
+Least-squares %ARX/DARX
+models
+produced %one-step-ahead
+fits of $97$--$99\%$ with respect to ground truth data. However, as seen in Fig.~\ref{fig:project-process}~(a) the
+free-run response diverges after recursive
+prediction begins. The result supports a narrower conclusion than
+the fit percentage alone: the model captures short-horizon behavior near the
+tested operating condition, but the available evidence does not establish it
+as an accurate open-loop simulator over longer trajectories. For this reason, the students treated the model as a local design approximation and retained
+independent robustness and hardware checks rather than relying on prediction
+fit as the sole validation criterion.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{Pictures/aero2_project_process.pdf}
+    \caption{\small Aero~2 project results: 
+    (a)~Hardware pitch-model validation: the %one-step-ahead ARX
+    least squares prediction
+    follows the measured response, whereas the recursively simulated free-run
+    response departs from it. (b)~Pitch and (c)~Yaw hardware responses for PD,
+    LQR, and SMC without yawboost under identical square-wave references.
+    Each trace corresponds to one benchmark run, and is interpreted together
+    with the error summary in Fig.~\ref{fig:project-benchmark-tail}.}
+    \label{fig:project-process}
+\end{figure}
+
+A complementary frequency-domain analysis from knowledge obtained in Lectures~8--9 fitted a
+multiplicative-uncertainty weight to the measured response and applied a
+small-gain screening test to candidate pitch loops. The largest modeled
+uncertainty occurred near $0.7$--$0.8$~Hz, which restricted the bandwidth of
+the designs that satisfied the selected robustness condition. The hardware
+responses in Fig.~\ref{fig:project-process}~(b) show that PD and SMC settle near
+the pitch plateaus after their switching transients, whereas LQR exhibits
+larger excursions and offsets under the chosen tuning and voltage limits. In
+the yaw dynamics, Fig.~\ref{fig:project-process}~(c) shows substantial motion with PD but
+only limited excursions with the non-yawboost LQR and SMC configurations.
+These observations are consistent with conservative model-based tuning and
+limited yaw authority, but they should not be interpreted as a general ranking
+of the controller families.
+
+Nine controller configurations were then tested on the physical plant using
+the same $\pm20^{\circ}$ pitch and $\pm45^{\circ}$ yaw square-wave commands.
+The linear control set comprised PD, LQR, LQG, and linear MPC; while the nonlinear control set
+comprised backstepping, sliding-mode control (SMC), and nonlinear MPC. Additional yaw-gain-boosted configurations were tested for backstepping and SMC. Because the benchmark contains one hardware run per configuration, its purpose is comparative diagnosis within this project rather than statistical
+generalization across repeated trials.
+\end{comment}
+%Although
+
+For system identification, the students applied axis-specific excitation based on knowledge obtained from
+Lectures~2--7. From knowledge obtained in Lectures~8--9, the team fitted a
+multiplicative-uncertainty weight to the measured responses, which allowed them to generate a robust control response. 
+
+For initial deployment in the Quanser Aero 2 digital twin, all of the course workflow was implemented in MATLAB/Simulink, achieving a control loop running at 500~hz. Subsequently, the
+team reproduced the real-time interface %and reference PD controller
+in Python using the Quanser API and open-source scientific libraries.
+%This choice made execution effects explicit. 
+The real-time control loop achieved
+approximately 380~Hz. Taking this difference into account, the control and filter algorithms implementation were updated using the measured sample interval.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\linewidth]{Pictures/aero2_project_paper_cropped.pdf}
+    \caption{Aero2 semester-long design project}
+    \label{fig:aero2 project}
+\end{figure}
+
+\begin{comment}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{Pictures/aero2_project_mae25.pdf}
+    \caption{\small Final-segment tracking error for the representative
+    Aero~2 benchmark. Bars report mean absolute error (MAE) over the final
+    $25\%$ of each 30~s hardware run under identical square-wave references;
+    lower values indicate closer tracking during that interval. One run was
+    available for each controller configuration, so the figure does not
+    quantify trial-to-trial variability or transient quality. Hatched bars
+    denote yawboost configurations.}
+    \label{fig:project-benchmark-tail}
+\end{figure}
+%
+Figure~\ref{fig:project-benchmark-tail} reveals an axis-dependent tradeoff
+rather than a single best universal controller. The tuned PD combined low
+pitch error with the lowest yaw mean absolute error (MAE) %in this benchmark
+and therefore provided
+the most balanced result across the two axes. SMC produced the lowest pitch
+MAE, but its non-yawboost configuration retained a large yaw error. The LQR,
+LQG, and linear MPC runs showed larger pitch errors and limited
+yaw tracking under the selected weights, gains, and voltage constraints. This
+result characterizes the implemented configurations, not the inherent
+capability of the methods. The nonlinear MPC run was also associated with an
+achieved rate of approximately 304~Hz and saturation during more than $80\%$
+of its samples. These observations suggest that computation and actuator
+usage contributed to its practical limitations, although the single benchmark
+run does not isolate their individual causal effects.
+%
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{Pictures/aero2_project_pd_smc_yawboost.pdf}
+    \caption{\small Representative hardware histories comparing the tuned PD
+    baseline and yawboost SMC. (a)~Both configurations approach the pitch
+    plateaus, with different switching transients. (b)~Yawboost SMC reaches
+    the negative $-45^{\circ}$ segment but responds slowly and asymmetrically
+    in the positive direction. The comparison illustrates a change in yaw
+    excursion; Fig.~\ref{fig:project-benchmark-tail} shows that PD retains the
+    lower overall yaw MAE for this run.}
+    \label{fig:project-pd-smcyb}
+\end{figure}
+%
+Relative to their corresponding non-yawboost versions, both yawboost
+configurations reduced yaw MAE while increasing pitch MAE only slightly.
+Figure~\ref{fig:project-pd-smcyb} clarifies the nature of that improvement for
+SMC: additional yaw gain enables the system to reach the negative reference,
+but the positive response remains slow and incomplete. The asymmetry is
+consistent with the previously observed breakaway behavior and limited
+differential-thrust authority; however, dedicated friction and actuator tests
+would be required to separate these effects from controller tuning and
+reference bandwidth. The square-wave command may also demand faster yaw
+reversal than the plant can provide under the imposed limits.
+\end{comment}
+
+The exercise of real testbed deployment connected controller design
+to timing, filtering, and software execution rather than treating
+digital implementation as a separate final step.
+\begin{comment}
+The design project therefore motivates the students to explore three focused extensions: repeated trials to
+quantify variability, comparison of step commands with rate-limited or
+filtered references to separate steady-state accuracy from bandwidth, and
+friction-aware yaw compensation before adding controller complexity. These
+studies could not be completed within the semester tuning window, so yaw control remains
+an %explicitly bounded
+open problem rather than a resolved performance claim.
+\end{comment}
+%As a course artifact,
+Ultimately, the project demonstrates how the digital-twin workflow integrated into the asynchronous course structure supports a complete end-to-end engineering design process, providing students with authentic experiential learning that prepares them to address the challenges of real-time control systems. The optional hardware implementation completed by one student team further highlighted the educational value of transitioning from simulation to physical experimentation, revealing practical limitations related to modeling accuracy, actuator dynamics, timing constraints, and controller tuning that are often not apparent through theoretical analysis or simulation alone.
+
+
+\subsection{Student academic performance: two case studies}
+%
+While aggregate statistics demonstrated a broader variance in student performance, an analysis of individual student trajectories was performed to understand the specific limitations of the traditional assessment model. 
+%
+
+The performance of two representative students, Student A and Student B, was analyzed individually across the 16-module sequence.
+%
+These students were selected for case study analysis because their performances exhibited a strong divergence between theoretical and applied competency, a phenomenon that statistical means often obscure.
+
+Individual student scores were mapped chronologically to visualize performance evolution in time. As detailed in the course sequence in Table~\ref{tab:course_modules}, the course structure provides theoretical foundations before addressing digital twin-enabled laboratories. 
+%
+To evaluate the performance at the transitions from theory to practice, a performance index $\delta$ was calculated as the difference between a student's grade on a theoretical laboratory and their subsequent grade on a corresponding digital twin %DT 
+laboratory.
+%======
+%To contextualize these performance trajectories, 
+Table~\ref{tab:lab_summary} %~\ref{tab:theoretical_vs_applied} 
+outlines the %chronological sequence of the theoretical assignments and their corresponding 
+digital twin laboratories. As depicted in Fig.~\ref{fig:individual_cases}, both Student A and Student B achieved high scores on the foundational theoretical assignments. % preceding the digital twin %DT 
+laboratories.
+
+% \begin{table}[H]
+% \centering
+% \renewcommand{\arraystretch}{1.2}
+% \caption{\small Chronological Sequence of Theoretical Assignments and Subsequent Digital Twin Laboratories}
+% \begin{tabular}{@{} >{\raggedright\arraybackslash}p{0.4\linewidth} >{\raggedright\arraybackslash}p{0.5\linewidth} @{}}
+% \toprule
+% \textbf{Preceding Theoretical Assignment} & \textbf{Subsequent Digital Twin Laboratory} \\
+% \midrule
+% Module 04: Continuous-time ARX model identification & Module 05: Practical considerations in continuous-time ARX \\
+% Module 06: Discrete-time ARX model identification & Module 07: Practical considerations in discrete-time ARX \\
+% Module 10: Review of state-space models & Module 11: Linear Quadratic Regulation (LQR) \\
+% \bottomrule
+% \end{tabular}
+\label{tab:theoretical_vs_applied}
+\end{table}
+
+Both students achieved proficient scores ($\ge 90\%$) on the theoretical Module 04 Laboratory. For the first DT-based laboratory on Module 05, Student A's performance dropped from $90\%$ to $40\%$, while Student B experienced a decline from $100\%$ to $35\%$.
+%
+Similarly, both student's achieved perfect scores on the theoretical Module 06 laboratory, followed by a score decrease in the subsequent digital twin-enabled laboratory in Module 07. Here, Student A's performance dropped from $100\%$ to $55\%$. Similarly, Student B experienced a decline from $100\%$ to $70\%$.
+%
+Finally, after again demonstrating theoretical mastery in state-space models addressed in Module 10 with scores of $100\%$, the transition to the LQR digital twin laboratory in Module 11 resulted in Student A dropping to $75\%$ and Student B dropping to $65\%$.
+
+Under a traditional assessment model, and based on the theoretical modules, both students would be evaluated as possessing the required skills to succeed in control systems engineering. However the adoption of digital twins enabling realistic scenarios quickly revealed gaps in the learning outcomes. This was evidenced by the performance decline when transitioning from pure theoretical to applied environments.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Pictures/Individual_Case_Studies_Updated.pdf}
+    \caption{\small Representative students' grades across EE 475/551 Control Systems Synthesis Laboratory assignments.}
+    \label{fig:individual_cases}
+\end{figure}
+
+
+%==================================
+\subsection{Quantitative Analysis}
+
+To evaluate the pedagogical impact of integrating digital twin laboratories in a remote class environment, a comparative statistical analysis was performed on student scores data ($N=21$). 
+%
+Overall, the EE $475/551$ Control Systems Synthesis course consists on 13 theoretical laboratory assignments and 3 digital twin laboratory assignments. 
+%
+Throughout the semester, theoretical laboratories were used to reinforce fundamental control theory, while digital twin laboratories were implemented to expose students to realistic system dynamics, noise, and non-linearities.
+
+Student's grade data was extracted and normalized to a 100 point scale to ensure consistency across the two distinct laboratory modalities. %categories: theoretical and Digital Twin laboratories.
+Performance was evaluated using two primary metrics: the aggregate arithmetic mean, serving as an indicator of general proficiency, and the standard deviation, used as an indicator of the assessment’s diagnostic sensitivity.
+
+As illustrated in Fig.~\ref{fig:probability} there was a pronounced shift in score distributions when transitioning from theoretical to digital twin-based laboratories. The theoretical laboratories showed a mean of $93.65\%$ with a lower standard deviation value of $14.9$. This curve shape indicates a pronounced ceiling effect~\cite{Wang2009, Uttl2005}. As a conclusion, traditional written assessments failed to provide sufficient diagnostic differentiation and the true extent of the high-scoring participants' abilities cannot be correctly determined.
+%
+Conversely, the probability density curve for digital twin-based laboratories shows a mean of $82.20\%$ with a standard deviation value of $20.0$. The significantly broader variance with a lower aggregate mean mitigates the ceiling effect, providing a more accurate representation of student skills. By requiring students to interact with realistic systems, the laboratories separated students based on their applied engineering competencies.
+
+Most of the students agreed that the laboratories were helpful in preparing for real-world applications and building on the material learned in lecture. The following quotes represent some of the student perception related to experiential learning: 
+
+\medskip
+
+``The emphasis on practical experience through lab work and design projects, which helps reinforce concepts and develop real-world skills." Student 1
+
+\medskip
+
+``I’ve learned a lot, especially in terms of applying what we learn to real-world situations. The mix of lectures, labs, and projects has helped me understand the material better instead of just memorizing it." Student 2
+
+\medskip
+
+``Labs are most helpful when their purpose is taught through lecture and builds on the learned material." Student 3
+
+\medskip
+
+``I feel that I have learned more due to the hands-on projects, presentations, guided labs, and practical activities of the course." Student 4
+
+\medskip
+
+These quotes emphasized the importance of incorporating hands-on activities that are very close to real-world scenarios. Students feel that if they develop practical skills, they would be better prepared to the workforce. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{Pictures/Distribution_Curves.pdf}
+    \caption{\small Probability density distributions of student performance across Laboratory modalities. A taller probability density curve with a narrow variance in the Theoretical Laboratories indicates a pronounced ceiling effect where scores are accumulated near the mean. A broader distribution in the digital twin-based laboratories indicate a wider spectrum of applied competency among students.}
+    \label{fig:probability}
+\end{figure}
+
+
+% ==================== SECTION: Results and Discussion ====================
+\section{Discussion}
+\label{sec:Discussion}
+
+%==========================================
+%\subsection{Learning Outcome Attainment}
+
+This study contributes to the theory-practice gap usually experienced in some of the advanced engineering courses, highlighting the importance of incorporating hands-on activities and experiential learning~\cite{wellstead1990},~\cite{chaconvasquez2024digitalControlEducation},~\cite{kolb1984}. The novelty lies in integrating virtual laboratories and hybrid digital-twin models to an asynchronous course with student-owned team projects. At each laboratory included in this paper, students experienced the four Kolb’s stages~\cite{kolb1984}: First, concrete experience was accomplished by learning theoretical concepts and traditional applications through a lecture-based approach. Additionally, students followed specific guidelines to complete the digital laboratory assignments. Second, reflective observation was experienced when students visualized differences, for example, between model complexity, prediction accuracy, parameter confidence, and physical interpretability. Third, abstract conceptualization was achieved by understanding the concepts, applying the knowledge to virtual laboratories, and interpreting the observations. Resulting in being able to synthesize the information and create an argument. Lastly, fourth, active experimentation happened when students implemented ideas, executed tests, evaluated results, and compared digital twins with hardware%[35-Kolb]
+~\cite{atkinson1988kolb},~\cite{ng2009culturalintelligence}. 
+
+The steady growth of asynchronous college courses in rigorous disciplines such as Engineering calls for adopting innovative pedagogical approaches that continue preparing students for a robust digital era~\cite{chaconvasquez2024digitalControlEducation},~\cite{quanser2021yorkhybridlab,quanser2022calgaryhybridlearning,mohammadi2025stralsundhybridlabs,mohammadi2025epflremotelabs}. Therefore, the literature reported the increasing use of virtual laboratories to address specific needs, such as practicing with simulations before using equipment, complementing virtual with in-person experimentation, and during and after the COVID-19 pandemic~\cite{quanser2021yorkhybridlab,quanser2022calgaryhybridlearning,mohammadi2025stralsundhybridlabs,mohammadi2025epflremotelabs}. However, a more robust offer like paired digital-twin/hardware laboratory modalities has revolutionized the idea of digital laboratories’ effectiveness because of the end-to-end context in addition to the ability to rehearse procedures, iterate designs, and reduce demand on shared hardware resources~\cite{ghazi2024djiTelloEducationalControl},~\cite{qinghua2014}.
+
+Students who were enrolled in the Control System Synthesis course and participated in the survey emphasized the importance of laboratories to practice concepts and apply them to real-world scenarios. Because this was a graduate-level course, senior or graduate students appreciated the closeness of the class content and format to real-world applications that they could transfer to the workplace~\cite{chaconvasquez2024digitalControlEducation},~\cite{buiu2008}. Students highlighted their experiences in taking this course with a multi-learning approach such as hands-on projects, presentations, guided labs, and practical activities~\cite{serbezov2022openAccessResourcesFeedbackDynamicsControl}. Students appreciated the experiential learning of the course and noted that learning was better due to the practical activities, such as the laboratories and the team project. 
+
+
+%Attainment of the course learning outcomes is assessed using the rubric %-based evidence generated throughout the course sequence described in Section~V. Performance evidence considers weekly quizzes and MATLAB/Simulink homework assignments. Both of these are centered on the inverted-pendulum system and submitted through the Canvas learning management system.
+%Evidence also include digital twin laboratory submissions, as well as aa semester-long project accompanied with a final IEEE-style report and a presentation. This evaluation approach require students to collect and interpret experimental data, identify and/or validate models, design and implement controllers, and communicate engineering decisions, therefore, it provides a more direct measure of synthesis-level competence than a single end-of-module examination.
+
+%Two support channels reinforced this asynchronous structure without requiring fixed class meetings: a per-request synchronous session on Canvas, %WisCom platform, for students to raise questions directly to the instructors, and a general Canvas discussion forum held each Friday, where the full cohort could ask questions or share insights on course topics at any time.
+
+%The following analysis examines this evidence at the aggregate level, across theoretical and digital-twin laboratory categories, and at the level of individual student trajectories at the theory-to-application transition.
+
+%\subsection{Student Perception}
+
+% ==================== SECTION: Conclusion ====================
+\section{Conclusion \& Future Work}
+\label{sec:Conclusion}
+
+Autonomous systems and intelligent robotics are expanding what
+control engineers must study and design in a control systems course. With the proliferation of online and asynchronous courses, access to real laboratory platforms and equipment that students could use to put theory into practice has become a challenge.
+%pathway from a first course in control to genuine synthesis-level competence often lacks a structured bridge.
+
+This paper presented EE 475/551 Control Systems Synthesis, a senior/graduate level course offered at NMSU that integrates three complementary instructional components: advanced control synthesis content, a fully asynchronous online learning environment, and a student-driven team design project. Although each of these elements has demonstrated educational value independently, they have not previously been intentionally combined into a unified course design. 
+We described the course architecture, the Quanser digital-twin laboratory environment that enables meaningful hands-on experimentation for remote learners, and a project-based learning experience that reinforces the integration of theoretical concepts with practical control system design skills. 
+
+Evidence from the Spring~2026 cohort of 21~students . . .
+
+%\textcolor{red}{[Collaborators: please give us the single strongest, defensible
+%finding from the offering, in one sentence --- for example, the headline rubric
+%result, the proportion of teams meeting the core outcomes, or the most positive
+%and well-supported survey result. This sentence should follow directly from data
+%reported in the Results section, so we are not claiming anything we cannot show.]}
+
+%The main limitation is that these findings derive from a single cohort at one
+%institution; multi-cohort and multi-institution replication is needed to establish
+%generality. Future work will extend the laboratory sequence to the LQR and nonlinear
+%modules, add pre/post concept inventories, and release the lab materials as an open
+%resource in the spirit of Serbezov \textit{et al.}~[2].
+
+%\textcolor{red}{[Collaborators: please confirm these future-work items are
+%accurate and add or remove any you have planned --- e.g., specific platforms
+%(QDrone, QBot) you intend to incorporate, or a planned multi-institution study.]}
+%We offer the course as a reproducible model for institutions seeking to deliver
+%advanced, project-based controls education in a flexible format.
+
+%   Criterion Table
+%\begin{table}[!t]
+%\centering
+%\caption{Proposed assessment rubric.}
+%\label{tab:rubric}
+%\renewcommand{\arraystretch}{1.08}
+%\begin{tabularx}{\columnwidth}{@{}Xc@{}}
+%\toprule
+%\textbf{Criterion} & \textbf{Weight} \\
+%\midrule
+%Modeling and identification quality & 20\% \\
+%Controller design rationale & 20\% \\
+%Simulation and hardware comparison & 20\% \\
+%Quantitative performance analysis & 15\% \\
+%Discussion of practical limitations & 15\% \\
+%Report organization and technical clarity & 10\% \\
+%\bottomrule
+%\end{tabularx}
+%\end{table}
+
+
+% ---------------------------------------------------------
+% References
+% ---------------------------------------------------------
+\IEEEtriggeratref{1}
+\IEEEtriggercmd{\IEEEpubidadjcol\balance}
+
+% Draft mode: print the whole .bib even if entries aren't cited yet
+\nocite{*}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

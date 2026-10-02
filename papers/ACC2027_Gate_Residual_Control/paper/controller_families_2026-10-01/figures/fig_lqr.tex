@@ -1,0 +1,15 @@
+% LQR: per-axis double integrator, closed-form CARE gain.
+\begin{tikzpicture}
+  \commonleft
+  \node[law,right=10mm of err] (law) {\textbf{LQR state feedback} (per axis)\\
+        $a_i=\dot\omega_{d,i}-K_i\,[e_i,\ \omega_{e,i}]\T$\\$K_i=[\omega_i^2,\ \sqrt2\,\omega_i]$,\ \ $\omega_i=\rho\omega_{n,i}$};
+  \node[offl,above=9mm of law] (care) {\textbf{CARE, solved in closed form}\\
+        $\dot{\bm x}=\left[\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right]\bm x+\left[\begin{smallmatrix}0\\1\end{smallmatrix}\right]a$,\ \
+        $\bm x=[e,\omega_e]\T$\\$Q=\operatorname{diag}(\omega^4,0)$,\ \ $R=1$};
+  \draw[sigd] (care) -- node[lbl,right]{$K$ (fixed)} (law);
+  \draw[sig] (err) -- node[lbl,above]{$\bm e,\bm\omega_e$} (law);
+  \coordinate (satx) at ($(law.east)+(25mm,0)$);
+  \commonloop{law}{\textbf{Torque box}\\$\bm u_0=\sat_{\bm\ell}(\bm J\odot\bm a)$};
+  \node[fam,fit=(law)(care)] (g) {};
+  \node[famlbl,anchor=south west] at (g.north west) {family: LQR (\code{--baseline lqr})};
+\end{tikzpicture}

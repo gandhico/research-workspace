@@ -1,0 +1,69 @@
+{
+  "status": "offline_metric_and_waveform_proposal_not_flight_authorized",
+  "source_use": "failed pair used as design evidence only; frozen failure retained",
+  "retrospective_design_metrics": {
+    "baseline": {
+      "sign_aligned_peak_abs_p_deg_s": 0.004809601470299287,
+      "sign_aligned_integral_abs_p_deg": 0.001454521435479397,
+      "positive_negative_correlation": 0.8575485983422074,
+      "replicate_nrmse": 0.3068353586981219,
+      "individual_integrals": [
+        0.00127523039504226,
+        0.002274385636196109
+      ]
+    },
+    "lqr": {
+      "sign_aligned_peak_abs_p_deg_s": 0.00501130838218402,
+      "sign_aligned_integral_abs_p_deg": 0.0013221673298268058,
+      "positive_negative_correlation": 0.9489266359110305,
+      "replicate_nrmse": 0.1528350130102515,
+      "individual_integrals": [
+        0.0010383365453660828,
+        0.001628837127781993
+      ]
+    }
+  },
+  "retrospective_integral_ratio": 0.9090050497544104,
+  "interpretation": "about 9.1 percent locally detrended improvement; two pulses per run are insufficient to establish a confidence bound",
+  "proposed_experiment": {
+    "pulse_starts_s": [
+      7,
+      10,
+      13,
+      16,
+      19,
+      22
+    ],
+    "pulse_signs": [
+      1,
+      -1,
+      1,
+      -1,
+      1,
+      -1
+    ],
+    "pulse_duration_s": 0.2,
+    "pulse_amplitude": 5e-05,
+    "local_pretrend_window_s": 0.5,
+    "response_window_s": 1.0,
+    "sample_rate_hz": 35,
+    "primary_metric": "integral absolute sign-aligned mean P response",
+    "statistical_gate": "paired pulse bootstrap 95-percent upper confidence bound for LQR/baseline integral ratio <1.0",
+    "quality_gates": {
+      "pulse_count_each_run": 6,
+      "median_opposite_sign_response_correlation_min": 0.75,
+      "baseline_mean_peak_abs_p_deg_s_min": 0.0015,
+      "response_snr_min": 3.0,
+      "command_abs_max": 0.0002,
+      "command_slew_max": 5e-05,
+      "final_5s_abs_p_deg_s_max": 0.002
+    }
+  },
+  "required_before_flight": [
+    "moving-block bootstrap power audit using immutable background residuals",
+    "243-case repeated-waveform command/safety audit",
+    "new default-observe wrapper and exact waveform analyzer",
+    "fresh observe-only X-Plane gate"
+  ],
+  "claim_boundary": "offline statistical experiment redesign only"
+}

@@ -1,0 +1,3 @@
+seed,model,use_nsa,epochs,train_batches,test_batches,train_loss,train_accuracy,test_loss,test_accuracy,correct_test,seen_test
+1,dense_lif_control,false,1,2,2,3.5251958,0.0390625,3.4423335,0.0234375,3,128
+1,dense_hyperlif_nsa,true,1,2,2,3.4753163,0.0234375,3.342813,0.0234375,3,128

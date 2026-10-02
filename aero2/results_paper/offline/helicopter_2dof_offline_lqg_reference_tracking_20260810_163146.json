@@ -1,0 +1,33 @@
+{
+  "config": {
+    "execution_mode": "offline",
+    "model_variant": "helicopter_2dof",
+    "controller": "lqg",
+    "controller_kwargs": {},
+    "application": "reference_tracking",
+    "duration_s": 18.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 15.0,
+    "out": "results_paper\\offline"
+  },
+  "metrics": {
+    "n": 3600,
+    "duration_s": 17.995000000000704,
+    "realized_hz": 199.99999999999218,
+    "pitch_rms": 0.20303897658049155,
+    "yaw_rms": 0.3070549412382488,
+    "tail_pitch_mae": 0.05939896088830731,
+    "tail_yaw_mae": 0.06685465260370586,
+    "pitch_sat_frac": 0.0,
+    "yaw_sat_frac": 0.0,
+    "theta_range": [
+      -0.40434625040952504,
+      0.4486939546288723
+    ],
+    "psi_range": [
+      -0.8113915648665754,
+      0.888542169775286
+    ]
+  }
+}

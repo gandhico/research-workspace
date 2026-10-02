@@ -1,0 +1,62 @@
+{
+ "platform": "cf2-rotor",
+ "mission": "hardstep",
+ "family": "backstepping",
+ "arm": "res",
+ "controller": "backstepping_res",
+ "allocation": "apa",
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "z_min_m": 0.015371896859181073,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "tuner": null,
+ "qerr_mean_rad": 2.090428400851268,
+ "qerr_rmse_rad": 2.3320815736949827,
+ "qerr_max_rad": 3.141552039709716,
+ "saturation_fraction": 0.8140111111111111,
+ "residual_rms_Nm": 4.945292704178454e-05,
+ "torque_limits_Nm": [
+  0.000287412,
+  0.000287412,
+  0.00032347
+ ],
+ "multiplier_mean": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_min": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_max": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "WS_final_fro": null,
+ "WR_final_fro": 2.3748435292546217,
+ "wall_s": 151.29084899999725,
+ "hashes": {
+  "run_dual_v5.py": "79e7849d5b778c5b",
+  "dual_controller_v5.py": "1af5cd0c0a625f5b",
+  "dual_controller.py": "4786d16cc2f51140",
+  "run_dual.py": "024712601f975101",
+  "run_mujoco_nef_baselines.py": "3c12f663e4034fd9",
+  "model": "410e0975d066abb1"
+ }
+}

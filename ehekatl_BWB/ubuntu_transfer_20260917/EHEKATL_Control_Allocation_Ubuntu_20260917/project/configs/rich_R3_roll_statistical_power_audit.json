@@ -1,0 +1,16 @@
+{
+  "status": "fail",
+  "method": "moving-block residual bootstrap; deterministic seed 20260712",
+  "virtual_experiments": 1000,
+  "bootstrap_resamples_each": 500,
+  "pulses_each_controller": 6,
+  "median_estimated_ratio": 0.8207308523929786,
+  "ratio_5_95_percentiles": [
+    0.46727534091472617,
+    1.5128185395842024
+  ],
+  "median_upper_95_bound": 1.2826067640615184,
+  "power_upper_bound_below_one": 0.272,
+  "required_power": 0.8,
+  "claim_boundary": "offline prospective power only"
+}

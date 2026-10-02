@@ -1,0 +1,29 @@
+{
+  "duration_s": 2.0,
+  "neural_dt_s": 0.0005,
+  "currents": [
+    0.4,
+    0.8,
+    1.2,
+    1.6,
+    2.0,
+    2.8
+  ],
+  "parameters": {
+    "tau": 0.05,
+    "tau_r": 0.005,
+    "v_rest": 0.0,
+    "v_reset": 0.0,
+    "v_threshold": 0.55,
+    "alpha": 12.0,
+    "gamma": 0.35,
+    "base_gain": 20.0,
+    "gain_scaling": 10.0,
+    "gate_gain": 1.0,
+    "adaptive": true,
+    "event_threshold": 0.48,
+    "event_filter_tau": 0.025,
+    "event_scale_hz": 80.0
+  },
+  "note": "crossing mode is upward crossings without reset; reset_spike changes the cell dynamics"
+}

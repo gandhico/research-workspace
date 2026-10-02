@@ -1,0 +1,33 @@
+{
+  "config": {
+    "execution_mode": "virtual_twin",
+    "model_variant": "helicopter_2dof",
+    "controller": "backstepping",
+    "controller_kwargs": {},
+    "application": "regulation_disturbance",
+    "duration_s": 18.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 15.0,
+    "out": "results_paper\\twin"
+  },
+  "metrics": {
+    "n": 3600,
+    "duration_s": 17.9948887999999,
+    "realized_hz": 200.0012355631897,
+    "pitch_rms": 0.042304893622978734,
+    "yaw_rms": 0.4585831396258997,
+    "tail_pitch_mae": 0.02982573766185865,
+    "tail_yaw_mae": 0.6128014628369465,
+    "pitch_sat_frac": 0.0,
+    "yaw_sat_frac": 0.0,
+    "theta_range": [
+      -0.06763150851478027,
+      0.0
+    ],
+    "psi_range": [
+      0.0015339807878856412,
+      0.6427379501240836
+    ]
+  }
+}

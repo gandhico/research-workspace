@@ -1,0 +1,108 @@
+% =====================================================================
+%  Paper 4 — drop-in section: MuJoCo gate-residual MECHANISM results
+%  \input{sec_mujoco_gate_mechanism} inside main2.tex (after \section{Results}).
+%  Requires: booktabs, siunitx, multirow (already in main2.tex preamble).
+%
+%  IMPORTANT — corrects Contribution (3) of the current draft: the claim that
+%  "Adaptive HyperLIF outperforms fixed HyperLIF" is DISPROVEN. In gate mode the
+%  two neurons are numerically identical (proof below). Please update the
+%  contributions list and Section headings accordingly.
+% =====================================================================
+
+\subsection{Gate-residual mechanism: reproducibility and the fixed-gate ceiling}
+\label{sec:mech_fixed}
+Our self-contained evaluation reproduces the ground-truth classical
+($J{=}0.287391$) and HyperLIF gate-residual ($J{=}0.266117$) scores on the
+Bitcraze Crazyflie~2 Hard45 benchmark bit-for-bit. The gate reduces mean
+quaternion error by \SI{7.4}{\percent} (Bitcraze) and \SI{5.8}{\percent}
+(Skydio~X2). We stress an honest characterization of \emph{where} this gain comes
+from: at the validated operating point (control-scale time constants, gate mode,
+$G{=}10^5$, blend $\beta{=}0.5$) the decoded residual torque is only
+\SI{1.75e-5}{N.m}. The positive/negative pair-coded gate channels are
+near-symmetric, so the fixed decode $s=a_{0:3}-a_{3:6}$ cancels them, and the
+commanded torque reduces to $\tau\!\approx\!(1{-}\beta)\tau_\mathrm{pd}$. The
+fixed-gate improvement is therefore best understood as \emph{selective half-gain
+detuning of the PD backbone}, with a bounded, demand-triggered gate that remains
+active at only $\sim$\SI{0.04}{\percent} duty --- consistent with the
+selectivity, timing-causality, and actuation-economy claims. Unlocking the gate's
+\emph{performance} potential requires learning the decode, which is the subject of
+the companion paper.
+
+\begin{table}[t]
+\caption{Fixed HyperLIF gate-state residual, Hard45, 45\,s (lower $J$ is
+better). The improvement is real but modest; the decoded residual is
+$\sim\!10^{-5}$\,N$\cdot$m (half-PD detuning).}
+\label{tab:fixed_cross}
+\centering\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Platform & classical & fixed gate & improvement \\
+\midrule
+Bitcraze Crazyflie~2 & 0.287391 & 0.266117 & \SI{7.4}{\percent} \\
+Skydio~X2            & 0.299286 & 0.282060 & \SI{5.8}{\percent} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Adaptive HyperLIF equals HyperLIF in gate mode}
+\label{sec:mech_equiv}
+We tested whether the Adaptive HyperLIF variant --- whose reset conductance
+$g=(g_b+\kappa|I|)r^2$ scales with input magnitude --- improves the gate residual.
+It does not: across every platform, mission, decode (fixed or learned), and
+operating point, Adaptive HyperLIF produces scores \emph{numerically identical} to
+plain HyperLIF (Table~\ref{tab:equiv}). The reason is exact. In gate mode the
+membrane rests near $v\!\approx\!0.75<v_\mathrm{th}$, so
+$r=\sigma(\alpha(v-\theta_\mathrm{eff}))\approx 3.7\times10^{-6}$. The adaptive
+gain enters \emph{only} through $g=(g_b+\kappa|I|)r^2$; with
+$r^2\!\approx\!1.4\times10^{-11}$ we get $g\!\approx\!2\times10^{-9}$, which is ten
+orders of magnitude below $1/\tau=20$ in the membrane rate $\lambda=1/\tau+g$.
+Whether the effective gain is 120 or 180, $v$ (hence $r$, the gate activity, and
+the torque) is unchanged to $\sim$9 significant figures.
+
+\emph{Consequence.} A single neuron model (HyperLIF) suffices for the
+gate-residual controller; the ``Adaptive'' conductance is inert in this regime. To
+make adaptation influence control one must read the voltage/event pathway or drive
+the gate into the reset regime ($r\!\rightarrow\!O(1)$). This \emph{replaces} the
+earlier contribution claim that Adaptive HyperLIF outperforms HyperLIF.
+
+\begin{table}[t]
+\caption{HyperLIF vs Adaptive HyperLIF, gate mode. Identical scores (fixed and
+learned decode). See text for the analytic reason ($g=\kappa|I|r^2\!\to\!0$).}
+\label{tab:equiv}
+\centering\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Condition & HyperLIF & Adaptive HyperLIF \\
+\midrule
+Bitcraze fixed gate & 0.266117 & 0.266117 \\
+Bitcraze learned (aggr.) & 0.038258 & 0.038258 \\
+Bitcraze learned (bal.) & 0.120469 & 0.120469 \\
+Skydio learned (aggr.) & 0.129264 & 0.129264 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Neuron and encoding parameters}
+\label{sec:mech_params}
+\begin{table}[t]
+\caption{Gate-residual controller parameters (control scale).}
+\label{tab:mech_params}
+\centering\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Group & Parameter & Value \\
+\midrule
+\multirow{4}{*}{HyperLIF}
+  & $\tau,\ \tau_r$ & \SI{0.05}{s},\ \SI{0.005}{s} \\
+  & $g_0,\ \gamma$ & 120,\ 2 \\
+  & $\alpha,\ v_\mathrm{th},\ \theta_\mathrm{event}$ & 50,\ 1,\ 0.5 \\
+  & activity, gain $G$ & gate,\ $10^5$ \\
+\midrule
+Adaptive & $g_b,\ \kappa$ & 120,\ 30 (inert, \S\ref{sec:mech_equiv}) \\
+\midrule
+Encoding & bias $b$, gain $\eta$, channels & 0.75,\ 1.25,\ 6 \\
+\midrule
+Blend / sim & $\beta$,\ $\Delta t$,\ $T$ & 0.5,\ \SI{5e-4}{s},\ \SI{45}{s} \\
+\bottomrule
+\end{tabular}
+\end{table}

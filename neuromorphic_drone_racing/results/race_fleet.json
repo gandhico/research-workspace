@@ -1,0 +1,574 @@
+{
+ "x2": {
+  "mass_kg": 1.325,
+  "thrust_to_weight": 4.0,
+  "n_rotors": 4,
+  "tilt_authority_rad_s2": 63.8,
+  "kR": 140.0,
+  "kW": 24.0,
+  "planner_margin": 0.35,
+  "lap_time_planned_s": 22.81,
+  "v_max_ms": 8.88,
+  "track_rmse_cm": 5.15,
+  "track_max_cm": 18.32,
+  "saturation_pct": 11.98,
+  "gates_passed_in_order": 15,
+  "gates_expected": 15,
+  "race_time_planned_s": 45.62,
+  "min_clearance_m": 0.41,
+  "gate_collisions": [],
+  "passes": [
+   {
+    "t": 10.82,
+    "gate": 1,
+    "off_y": 0.018,
+    "off_z": 0.01,
+    "clearance": 0.412,
+    "in_order": true
+   },
+   {
+    "t": 13.32,
+    "gate": 2,
+    "off_y": 0.0,
+    "off_z": 0.007,
+    "clearance": 0.423,
+    "in_order": true
+   },
+   {
+    "t": 15.626,
+    "gate": 3,
+    "off_y": 0.004,
+    "off_z": 0.008,
+    "clearance": 0.422,
+    "in_order": true
+   },
+   {
+    "t": 18.04,
+    "gate": 4,
+    "off_y": 0.02,
+    "off_z": 0.004,
+    "clearance": 0.41,
+    "in_order": true
+   },
+   {
+    "t": 20.606,
+    "gate": 5,
+    "off_y": 0.006,
+    "off_z": 0.001,
+    "clearance": 0.424,
+    "in_order": true
+   },
+   {
+    "t": 22.734,
+    "gate": 6,
+    "off_y": 0.009,
+    "off_z": 0.015,
+    "clearance": 0.415,
+    "in_order": true
+   },
+   {
+    "t": 26.76,
+    "gate": 7,
+    "off_y": 0.002,
+    "off_z": 0.011,
+    "clearance": 0.419,
+    "in_order": true
+   },
+   {
+    "t": 31.69,
+    "gate": 1,
+    "off_y": 0.008,
+    "off_z": 0.005,
+    "clearance": 0.422,
+    "in_order": true
+   },
+   {
+    "t": 34.01,
+    "gate": 2,
+    "off_y": 0.001,
+    "off_z": 0.014,
+    "clearance": 0.416,
+    "in_order": true
+   },
+   {
+    "t": 36.312,
+    "gate": 3,
+    "off_y": 0.004,
+    "off_z": 0.007,
+    "clearance": 0.423,
+    "in_order": true
+   },
+   {
+    "t": 38.724,
+    "gate": 4,
+    "off_y": 0.02,
+    "off_z": 0.003,
+    "clearance": 0.41,
+    "in_order": true
+   },
+   {
+    "t": 41.29,
+    "gate": 5,
+    "off_y": 0.006,
+    "off_z": 0.001,
+    "clearance": 0.424,
+    "in_order": true
+   },
+   {
+    "t": 43.422,
+    "gate": 6,
+    "off_y": 0.009,
+    "off_z": 0.015,
+    "clearance": 0.415,
+    "in_order": true
+   },
+   {
+    "t": 47.446,
+    "gate": 7,
+    "off_y": 0.002,
+    "off_z": 0.011,
+    "clearance": 0.419,
+    "in_order": true
+   },
+   {
+    "t": 52.618,
+    "gate": 1,
+    "off_y": 0.009,
+    "off_z": 0.004,
+    "clearance": 0.421,
+    "in_order": true
+   }
+  ]
+ },
+ "y6": {
+  "mass_kg": 1.412,
+  "thrust_to_weight": 2.4,
+  "n_rotors": 6,
+  "tilt_authority_rad_s2": 124.2,
+  "kR": 62.1,
+  "kW": 14.2,
+  "planner_margin": 0.6,
+  "lap_time_planned_s": 22.02,
+  "v_max_ms": 9.48,
+  "track_rmse_cm": 7.24,
+  "track_max_cm": 20.82,
+  "saturation_pct": 2.03,
+  "gates_passed_in_order": 15,
+  "gates_expected": 15,
+  "race_time_planned_s": 44.05,
+  "min_clearance_m": 0.331,
+  "gate_collisions": [],
+  "passes": [
+   {
+    "t": 12.012,
+    "gate": 1,
+    "off_y": 0.059,
+    "off_z": 0.047,
+    "clearance": 0.331,
+    "in_order": true
+   },
+   {
+    "t": 14.46,
+    "gate": 2,
+    "off_y": 0.008,
+    "off_z": 0.005,
+    "clearance": 0.382,
+    "in_order": true
+   },
+   {
+    "t": 16.69,
+    "gate": 3,
+    "off_y": 0.012,
+    "off_z": 0.013,
+    "clearance": 0.377,
+    "in_order": true
+   },
+   {
+    "t": 19.004,
+    "gate": 4,
+    "off_y": 0.007,
+    "off_z": 0.016,
+    "clearance": 0.374,
+    "in_order": true
+   },
+   {
+    "t": 21.544,
+    "gate": 5,
+    "off_y": 0.024,
+    "off_z": 0.004,
+    "clearance": 0.366,
+    "in_order": true
+   },
+   {
+    "t": 23.632,
+    "gate": 6,
+    "off_y": 0.022,
+    "off_z": 0.046,
+    "clearance": 0.344,
+    "in_order": true
+   },
+   {
+    "t": 27.602,
+    "gate": 7,
+    "off_y": 0.058,
+    "off_z": 0.05,
+    "clearance": 0.332,
+    "in_order": true
+   },
+   {
+    "t": 32.29,
+    "gate": 1,
+    "off_y": 0.025,
+    "off_z": 0.014,
+    "clearance": 0.365,
+    "in_order": true
+   },
+   {
+    "t": 34.564,
+    "gate": 2,
+    "off_y": 0.007,
+    "off_z": 0.031,
+    "clearance": 0.359,
+    "in_order": true
+   },
+   {
+    "t": 36.778,
+    "gate": 3,
+    "off_y": 0.006,
+    "off_z": 0.006,
+    "clearance": 0.384,
+    "in_order": true
+   },
+   {
+    "t": 39.092,
+    "gate": 4,
+    "off_y": 0.008,
+    "off_z": 0.015,
+    "clearance": 0.375,
+    "in_order": true
+   },
+   {
+    "t": 41.634,
+    "gate": 5,
+    "off_y": 0.024,
+    "off_z": 0.004,
+    "clearance": 0.366,
+    "in_order": true
+   },
+   {
+    "t": 43.724,
+    "gate": 6,
+    "off_y": 0.022,
+    "off_z": 0.046,
+    "clearance": 0.344,
+    "in_order": true
+   },
+   {
+    "t": 47.694,
+    "gate": 7,
+    "off_y": 0.058,
+    "off_z": 0.05,
+    "clearance": 0.332,
+    "in_order": true
+   },
+   {
+    "t": 52.546,
+    "gate": 1,
+    "off_y": 0.033,
+    "off_z": 0.023,
+    "clearance": 0.357,
+    "in_order": true
+   }
+  ]
+ },
+ "cf2": {
+  "mass_kg": 0.027,
+  "thrust_to_weight": 2.25,
+  "n_rotors": 4,
+  "tilt_authority_rad_s2": 359.4,
+  "kR": 140.0,
+  "kW": 21.3,
+  "planner_margin": 0.6,
+  "lap_time_planned_s": 24.3,
+  "v_max_ms": 8.52,
+  "track_rmse_cm": 1.82,
+  "track_max_cm": 4.45,
+  "saturation_pct": 0.0,
+  "gates_passed_in_order": 15,
+  "gates_expected": 15,
+  "race_time_planned_s": 48.61,
+  "min_clearance_m": 0.654,
+  "gate_collisions": [],
+  "passes": [
+   {
+    "t": 14.086,
+    "gate": 1,
+    "off_y": 0.013,
+    "off_z": 0.007,
+    "clearance": 0.657,
+    "in_order": true
+   },
+   {
+    "t": 16.748,
+    "gate": 2,
+    "off_y": 0.0,
+    "off_z": 0.009,
+    "clearance": 0.661,
+    "in_order": true
+   },
+   {
+    "t": 19.22,
+    "gate": 3,
+    "off_y": 0.008,
+    "off_z": 0.016,
+    "clearance": 0.654,
+    "in_order": true
+   },
+   {
+    "t": 21.826,
+    "gate": 4,
+    "off_y": 0.01,
+    "off_z": 0.011,
+    "clearance": 0.659,
+    "in_order": true
+   },
+   {
+    "t": 24.504,
+    "gate": 5,
+    "off_y": 0.003,
+    "off_z": 0.0,
+    "clearance": 0.667,
+    "in_order": true
+   },
+   {
+    "t": 26.798,
+    "gate": 6,
+    "off_y": 0.008,
+    "off_z": 0.009,
+    "clearance": 0.661,
+    "in_order": true
+   },
+   {
+    "t": 31.056,
+    "gate": 7,
+    "off_y": 0.015,
+    "off_z": 0.013,
+    "clearance": 0.655,
+    "in_order": true
+   },
+   {
+    "t": 36.312,
+    "gate": 1,
+    "off_y": 0.008,
+    "off_z": 0.005,
+    "clearance": 0.662,
+    "in_order": true
+   },
+   {
+    "t": 38.778,
+    "gate": 2,
+    "off_y": 0.0,
+    "off_z": 0.005,
+    "clearance": 0.665,
+    "in_order": true
+   },
+   {
+    "t": 41.252,
+    "gate": 3,
+    "off_y": 0.007,
+    "off_z": 0.016,
+    "clearance": 0.654,
+    "in_order": true
+   },
+   {
+    "t": 43.858,
+    "gate": 4,
+    "off_y": 0.01,
+    "off_z": 0.011,
+    "clearance": 0.659,
+    "in_order": true
+   },
+   {
+    "t": 46.534,
+    "gate": 5,
+    "off_y": 0.003,
+    "off_z": 0.0,
+    "clearance": 0.667,
+    "in_order": true
+   },
+   {
+    "t": 48.832,
+    "gate": 6,
+    "off_y": 0.008,
+    "off_z": 0.009,
+    "clearance": 0.661,
+    "in_order": true
+   },
+   {
+    "t": 53.09,
+    "gate": 7,
+    "off_y": 0.015,
+    "off_z": 0.013,
+    "clearance": 0.655,
+    "in_order": true
+   },
+   {
+    "t": 58.61,
+    "gate": 1,
+    "off_y": 0.007,
+    "off_z": 0.003,
+    "clearance": 0.663,
+    "in_order": true
+   }
+  ]
+ },
+ "omni": {
+  "mass_kg": 2.5,
+  "thrust_to_weight": 1.87,
+  "n_rotors": 8,
+  "tilt_authority_rad_s2": 42.0,
+  "kR": 140.0,
+  "kW": 24.0,
+  "planner_margin": 0.6,
+  "lap_time_planned_s": 39.07,
+  "v_max_ms": 5.15,
+  "track_rmse_cm": 0.12,
+  "track_max_cm": 1.13,
+  "saturation_pct": 0.0,
+  "gates_passed_in_order": 15,
+  "gates_expected": 15,
+  "race_time_planned_s": 78.14,
+  "min_clearance_m": 0.269,
+  "gate_collisions": [],
+  "passes": [
+   {
+    "t": 18.234,
+    "gate": 1,
+    "off_y": 0.001,
+    "off_z": 0.0,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 22.402,
+    "gate": 2,
+    "off_y": 0.0,
+    "off_z": 0.0,
+    "clearance": 0.27,
+    "in_order": true
+   },
+   {
+    "t": 26.372,
+    "gate": 3,
+    "off_y": 0.001,
+    "off_z": 0.0,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 30.582,
+    "gate": 4,
+    "off_y": 0.001,
+    "off_z": 0.0,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 34.866,
+    "gate": 5,
+    "off_y": 0.0,
+    "off_z": 0.001,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 38.544,
+    "gate": 6,
+    "off_y": 0.001,
+    "off_z": 0.0,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 45.26,
+    "gate": 7,
+    "off_y": 0.001,
+    "off_z": 0.0,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 53.85,
+    "gate": 1,
+    "off_y": 0.001,
+    "off_z": 0.0,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 57.714,
+    "gate": 2,
+    "off_y": 0.0,
+    "off_z": 0.0,
+    "clearance": 0.27,
+    "in_order": true
+   },
+   {
+    "t": 61.688,
+    "gate": 3,
+    "off_y": 0.001,
+    "off_z": 0.0,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 65.896,
+    "gate": 4,
+    "off_y": 0.001,
+    "off_z": 0.0,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 70.18,
+    "gate": 5,
+    "off_y": 0.0,
+    "off_z": 0.001,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 73.864,
+    "gate": 6,
+    "off_y": 0.001,
+    "off_z": 0.0,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 80.578,
+    "gate": 7,
+    "off_y": 0.001,
+    "off_z": 0.0,
+    "clearance": 0.269,
+    "in_order": true
+   },
+   {
+    "t": 89.638,
+    "gate": 1,
+    "off_y": 0.001,
+    "off_z": 0.0,
+    "clearance": 0.269,
+    "in_order": true
+   }
+  ]
+ },
+ "_meta": {
+  "gate_inner_m": 1.5,
+  "lap_length_m": 101.0,
+  "dt": 0.002,
+  "sim_s": 96.8,
+  "wall_s": 238.1,
+  "cf2_authority_scale": 1.7
+ }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "circle_yaw_360",
+  "stage": 5,
+  "status": "aborted",
+  "abort_reason": "viewer_closed",
+  "failed_gates": [
+    "missing_final_hold"
+  ],
+  "completed_time_s": 46.65000000001105,
+  "planned_duration_s": 58.0,
+  "samples": 23325,
+  "peak_position_error_m": 1.0695476787998504e-05,
+  "peak_attitude_error_deg": 0.00040570220828622873,
+  "tail_position_error_m": 0.0,
+  "tail_attitude_error_deg": 0.0,
+  "max_abs_input_N": 5.371556253526063,
+  "saturated_steps": 0,
+  "steps_with_contacts": 0,
+  "peak_force_residual_N": 8.506681124161152e-15,
+  "peak_torque_residual_Nm": 2.3787723062161645e-15,
+  "peak_pes_residual_norm": 0.0,
+  "rotation_progress_peak_error_deg": 0.0004057022072743166,
+  "tail_samples": 0,
+  "saturation_fraction": 0.0,
+  "position_RMSE_m": 6.280200688527023e-06,
+  "attitude_RMSE_deg": 0.0002915459329428836,
+  "actual_rotation_progress_deg": 358.8985766999336,
+  "rotation_endpoint_error_deg": 1.1014233000664149
+}

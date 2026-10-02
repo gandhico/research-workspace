@@ -1,0 +1,29 @@
+{
+  "samples": 1401,
+  "time_offset_s": 0.0,
+  "position_m_RMSE": 0.0,
+  "position_m_median": 0.0,
+  "position_m_p95": 0.0,
+  "position_m_peak": 0.0,
+  "attitude_deg_RMSE": 0.0,
+  "attitude_deg_median": 0.0,
+  "attitude_deg_p95": 0.0,
+  "attitude_deg_peak": 0.0,
+  "rate_rad_s_RMSE": 0.0,
+  "rate_rad_s_median": 0.0,
+  "rate_rad_s_p95": 0.0,
+  "rate_rad_s_peak": 0.0,
+  "motor_command_RMSE_N": 0.0,
+  "motor_command_peak_N": 0.0,
+  "physical_log": "C:\\Research\\omnicopter\\mujoco\\control\\output\\nengo_pd_common_log_smoke_20260910\\hover\\trace.csv",
+  "twin_log": "C:\\Research\\omnicopter\\mujoco\\control\\output\\nengo_pd_common_log_smoke_20260910\\hover\\trace.csv",
+  "frame_requirement": "both logs already expressed in MuJoCo world/body frames",
+  "timing_requirement": "confirmatory offset supplied by clock synchronization, not outcome fitting",
+  "gates": {
+    "position_m_RMSE": 0.05,
+    "attitude_deg_RMSE": 5.0,
+    "rate_rad_s_RMSE": 0.5
+  },
+  "failed_gates": [],
+  "status": "pass"
+}

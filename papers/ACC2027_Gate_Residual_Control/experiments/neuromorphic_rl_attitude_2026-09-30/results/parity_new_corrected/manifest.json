@@ -1,0 +1,69 @@
+{
+  "status": "exploratory",
+  "algorithm": "online linear Gaussian TD(lambda) actor-critic",
+  "learning_signal": "TD reward prediction error, not PES teacher error",
+  "development_missions": [
+    "full3",
+    "hard45"
+  ],
+  "held_out_missions": [
+    "roll",
+    "hardstep",
+    "yaw360"
+  ],
+  "family_settings": [
+    0.75,
+    1.25,
+    0.005
+  ],
+  "args": {
+    "platform": "x2",
+    "family": "cmg",
+    "mode": "baseline",
+    "train_episodes": 12,
+    "train_duration": 15.0,
+    "eval_duration": 2.0,
+    "eval_missions": [
+      "full3"
+    ],
+    "dt": 0.0005,
+    "policy_dt": 0.02,
+    "beta": 0.5,
+    "seed": 1,
+    "disturbance_frac": 0.0,
+    "checkpoint": null,
+    "output": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\neuromorphic_rl_attitude_2026-09-30\\results\\parity_new_corrected"
+  },
+  "versions": {
+    "mujoco": "3.12.0",
+    "nengo": "4.1.0",
+    "numpy": "2.5.2"
+  },
+  "source_sha256": {
+    "runner": "d8a5dcd1d7b466912120e33137e214a62ebf806d0a1e118937dfe5020364437d",
+    "cmg_neuron": "fbfd069d78d4040e738a8df702acb35a08b5141e34a7cdb70c9d4e954d782562",
+    "baseline": "3c12f663e4034fd94308f5d6293afaeda4ee2ad94cd590b57574b3b168b278e6",
+    "math3d": "31620612f184a22f15971b1a7d15548ff2997b09a093254ab71ddb289e502c5e"
+  },
+  "eval": [
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "family": "cmg",
+      "train": false,
+      "seed": 10001,
+      "duration_s": 2.0,
+      "dt_s": 0.0005,
+      "policy_dt_s": 0.02,
+      "beta": 0.5,
+      "disturbance_frac_limits": 0.0,
+      "qerr_true_mean_rad": 0.06290529998830455,
+      "qerr_true_mean_deg": 3.6042081983341974,
+      "qerr_true_max_deg": 28.64788975654116,
+      "rotor_saturation_fraction": 0.06248437890527368,
+      "output_gate_fraction": 0.0,
+      "realized_residual_normalized_rms": 0.0,
+      "model_sha256": "d932ffbe9f0d1fa4bcfe5746d4cfc0c5652960f00223fdaf2ffd6aff6b217c97"
+    }
+  ]
+}

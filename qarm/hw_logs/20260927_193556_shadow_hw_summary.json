@@ -1,0 +1,43 @@
+{
+  "mode": "hw",
+  "abort_reason": null,
+  "amplitude_rad": 0.3,
+  "primary_readout": "frozen LISIC weights",
+  "adaptive_u_abs_p50": 374.4701601593127,
+  "adaptive_u_abs_p95": 2173.3611130045147,
+  "adaptive_saturated_frac": 0.0,
+  "adaptive_h_hat_range": [
+    1.2253157897386144,
+    8.186584093323642
+  ],
+  "freq_hz": 0.25,
+  "rate_hz": 100.0,
+  "actuated": "baseline only",
+  "estimator_bandwidth_hz": 2.069460738508006,
+  "samples": 3000,
+  "duration_s": 29.990000000000002,
+  "all_finite": true,
+  "u_lisic_abs_p50": 169.49973035695712,
+  "u_lisic_abs_p95": 444.1126627138639,
+  "u_lisic_abs_max": 803.4832731982435,
+  "u_lisic_abs_p95_after_2s": 452.1450872938302,
+  "lisic_saturated_frac": 0.0,
+  "shadow_bound_hit_frac": 0.0,
+  "s_abs_max": 14.42987157791433,
+  "h_hat_range": [
+    1.2251126912826646,
+    1.2257456554640425
+  ],
+  "f_hat_abs_max": 0.0,
+  "w_norm_max": 1.2257456554640425,
+  "meas_minus_baseline_abs_max": 0.015323454191423669,
+  "ref_model_minus_baseline_abs_max_after_2s": 0.003179232290982159,
+  "estimator_minus_meas_abs_max": 0.0037922631025877063,
+  "s_term_rms_after_2s": {
+    "s_e3": 0.8639489972684395,
+    "s_e2": 2.3664945607708425,
+    "s_e1": 1.5648623245398596,
+    "s_e0": 1.0881341895162355
+  },
+  "log": "C:\\Research\\qarm\\hw_logs\\20260927_193556_shadow_hw.csv"
+}

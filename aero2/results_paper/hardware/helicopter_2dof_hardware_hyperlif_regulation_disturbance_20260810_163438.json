@@ -1,0 +1,33 @@
+{
+  "config": {
+    "execution_mode": "hardware",
+    "model_variant": "helicopter_2dof",
+    "controller": "hyperlif",
+    "controller_kwargs": {},
+    "application": "regulation_disturbance",
+    "duration_s": 10.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 12.0,
+    "out": "results_paper\\hardware"
+  },
+  "metrics": {
+    "n": 2000,
+    "duration_s": 9.995126199999504,
+    "realized_hz": 199.99747603186242,
+    "pitch_rms": 0.05431686702166034,
+    "yaw_rms": 0.004301988883997926,
+    "tail_pitch_mae": 0.04034764898297892,
+    "tail_yaw_mae": 0.00423378697456437,
+    "pitch_sat_frac": 0.0,
+    "yaw_sat_frac": 0.0,
+    "theta_range": [
+      -0.004363323129985824,
+      0.0916297857297023
+    ],
+    "psi_range": [
+      -0.009203884727313847,
+      0.01380582709097077
+    ]
+  }
+}

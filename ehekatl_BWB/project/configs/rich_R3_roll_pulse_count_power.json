@@ -1,0 +1,39 @@
+{
+  "status": "no_practical_candidate_through_48",
+  "method": "same measured moving-block residual bootstrap; independent controller resampling; deterministic seed 20260713",
+  "virtual_experiments_per_count": 300,
+  "bootstrap_resamples_each": 300,
+  "required_power": 0.8,
+  "curve": [
+    {
+      "pulse_count_each_controller": 6,
+      "minimum_seconds_at_3s_spacing": 23,
+      "median_ratio": 0.8505810731909058,
+      "median_upper_95_bound": 1.3067023449545125,
+      "power_upper_bound_below_one": 0.29333333333333333
+    },
+    {
+      "pulse_count_each_controller": 12,
+      "minimum_seconds_at_3s_spacing": 41,
+      "median_ratio": 0.8890006468646943,
+      "median_upper_95_bound": 1.2678214293550478,
+      "power_upper_bound_below_one": 0.20333333333333334
+    },
+    {
+      "pulse_count_each_controller": 24,
+      "minimum_seconds_at_3s_spacing": 77,
+      "median_ratio": 0.9003463993973759,
+      "median_upper_95_bound": 1.190928796071363,
+      "power_upper_bound_below_one": 0.19
+    },
+    {
+      "pulse_count_each_controller": 48,
+      "minimum_seconds_at_3s_spacing": 149,
+      "median_ratio": 0.8950286601301584,
+      "median_upper_95_bound": 1.1129400798592881,
+      "power_upper_bound_below_one": 0.19
+    }
+  ],
+  "minimum_qualified_count": null,
+  "decision": "no flight authorization; duration and 243-case cumulative safety audit still required even if power qualifies"
+}

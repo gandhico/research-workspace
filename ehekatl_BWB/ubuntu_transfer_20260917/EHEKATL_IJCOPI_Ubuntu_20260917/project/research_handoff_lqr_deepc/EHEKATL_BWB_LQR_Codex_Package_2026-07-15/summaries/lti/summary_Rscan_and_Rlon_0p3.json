@@ -1,0 +1,318 @@
+{
+  "unit_policy": {
+    "internal_simulation": "SI units + radians",
+    "angles_inside_state": "rad",
+    "angular_rates_inside_state": "rad/s",
+    "control_inside_controller": "rad",
+    "degrees_used_only_for": "plots, printed metrics, and interpretation"
+  },
+  "summaries": [
+    {
+      "system": "longitudinal",
+      "case": "small",
+      "R": 0.3,
+      "K": [
+        [
+          2.8627829173122405,
+          -4.858778909323173,
+          -2.970332233754185,
+          -40.12842064888257
+        ]
+      ],
+      "closed_loop_eigenvalues": [
+        [
+          -131.16375706566453,
+          0.0
+        ],
+        [
+          -26.480951426711968,
+          0.0
+        ],
+        [
+          -0.6158324812486049,
+          1.0415573703921073
+        ],
+        [
+          -0.6158324812486049,
+          -1.0415573703921073
+        ]
+      ],
+      "max_abs_raw_control_rad": 0.3444215418710517,
+      "max_abs_raw_control_deg": 19.73390072259963,
+      "max_abs_applied_control_rad": 0.3444215418710517,
+      "max_abs_applied_control_deg": 19.73390072259963,
+      "saturation_fraction_percent": 0.0,
+      "settling_time_sec": 6.356,
+      "final_norm": 0.0010029267527877279
+    },
+    {
+      "system": "longitudinal",
+      "case": "stress_saturated",
+      "R": 0.3,
+      "K": [
+        [
+          2.8627829173122405,
+          -4.858778909323173,
+          -2.970332233754185,
+          -40.12842064888257
+        ]
+      ],
+      "closed_loop_eigenvalues": [
+        [
+          -131.16375706566453,
+          0.0
+        ],
+        [
+          -26.480951426711968,
+          0.0
+        ],
+        [
+          -0.6158324812486049,
+          1.0415573703921073
+        ],
+        [
+          -0.6158324812486049,
+          -1.0415573703921073
+        ]
+      ],
+      "max_abs_raw_control_rad": 4.940842148744727,
+      "max_abs_raw_control_deg": 283.08940236342175,
+      "max_abs_applied_control_rad": 0.4363323129985824,
+      "max_abs_applied_control_deg": 25.0,
+      "saturation_fraction_percent": 0.43991201759648074,
+      "settling_time_sec": 5.926,
+      "final_norm": 0.001627851463405893
+    },
+    {
+      "system": "lateral",
+      "case": "small",
+      "R": 1.0,
+      "K": [
+        [
+          0.11366923179342336,
+          2.9517628794503112,
+          -0.16714787878538573,
+          2.6777062923516866
+        ]
+      ],
+      "closed_loop_eigenvalues": [
+        [
+          -1503.5519854792515,
+          0.0
+        ],
+        [
+          -0.8991288586524394,
+          5.230238057926429
+        ],
+        [
+          -0.8991288586524394,
+          -5.230238057926429
+        ],
+        [
+          -0.8772294904661923,
+          0.0
+        ]
+      ],
+      "max_abs_raw_control_rad": 0.32122398083931475,
+      "max_abs_raw_control_deg": 18.404778380483958,
+      "max_abs_applied_control_rad": 0.32122398083931475,
+      "max_abs_applied_control_deg": 18.404778380483958,
+      "saturation_fraction_percent": 0.0,
+      "settling_time_sec": 4.176,
+      "final_norm": 1.8313511768050496e-05
+    },
+    {
+      "system": "lateral",
+      "case": "stress_saturated",
+      "R": 1.0,
+      "K": [
+        [
+          0.11366923179342336,
+          2.9517628794503112,
+          -0.16714787878538573,
+          2.6777062923516866
+        ]
+      ],
+      "closed_loop_eigenvalues": [
+        [
+          -1503.5519854792515,
+          0.0
+        ],
+        [
+          -0.8991288586524394,
+          5.230238057926429
+        ],
+        [
+          -0.8991288586524394,
+          -5.230238057926429
+        ],
+        [
+          -0.8772294904661923,
+          0.0
+        ]
+      ],
+      "max_abs_raw_control_rad": 1.4660005265238274,
+      "max_abs_raw_control_deg": 83.9956429337718,
+      "max_abs_applied_control_rad": 0.4363323129985824,
+      "max_abs_applied_control_deg": 25.0,
+      "saturation_fraction_percent": 0.01999600079984003,
+      "settling_time_sec": 3.7680000000000002,
+      "final_norm": 7.163018421951963e-05
+    }
+  ],
+  "longitudinal_R_scan": [
+    {
+      "R_lon": 0.001,
+      "max_raw_deg": 395.09424781469204,
+      "max_applied_deg": 25.0,
+      "saturation_percent": 0.05998800239952009,
+      "settling_time_sec": 6.356,
+      "dominant_real_eig": -0.6159977189226198,
+      "fastest_real_eig": -2321.054143283469,
+      "K": [
+        [
+          48.9348944834056,
+          -89.1894830663098,
+          -41.548876939453194,
+          -691.8417650137485
+        ]
+      ]
+    },
+    {
+      "R_lon": 0.003,
+      "max_raw_deg": 226.66150266540618,
+      "max_applied_deg": 25.0,
+      "saturation_percent": 0.05998800239952009,
+      "settling_time_sec": 6.356,
+      "dominant_real_eig": -0.6159966131358312,
+      "fastest_real_eig": -1339.8805344193304,
+      "K": [
+        [
+          28.271463166654815,
+          -51.35635171534976,
+          -24.278644231744785,
+          -399.52153336056045
+        ]
+      ]
+    },
+    {
+      "R_lon": 0.01,
+      "max_raw_deg": 122.61072597672752,
+      "max_applied_deg": 25.0,
+      "saturation_percent": 0.05998800239952009,
+      "settling_time_sec": 6.356,
+      "dominant_real_eig": -0.6159927429367904,
+      "fastest_real_eig": -733.5358826625269,
+      "K": [
+        [
+          15.504787062531022,
+          -27.983339116521222,
+          -13.602920851286981,
+          -218.91886912818563
+        ]
+      ]
+    },
+    {
+      "R_lon": 0.03,
+      "max_raw_deg": 69.36998455131103,
+      "max_applied_deg": 25.0,
+      "saturation_percent": 0.03999200159968006,
+      "settling_time_sec": 6.356,
+      "dominant_real_eig": -0.6159816856962703,
+      "fastest_real_eig": -422.9323752227054,
+      "K": [
+        [
+          8.969726512010467,
+          -16.02182131972671,
+          -8.12969887196271,
+          -126.47777472317331
+        ]
+      ]
+    },
+    {
+      "R_lon": 0.1,
+      "max_raw_deg": 36.50782287848898,
+      "max_applied_deg": 25.0,
+      "saturation_percent": 0.01999600079984003,
+      "settling_time_sec": 6.356,
+      "dominant_real_eig": -0.6159429908519727,
+      "fastest_real_eig": -230.53128185838403,
+      "K": [
+        [
+          4.931249091352292,
+          -8.634972550775508,
+          -4.732151595201248,
+          -69.3639033450404
+        ]
+      ]
+    },
+    {
+      "R_lon": 0.3,
+      "max_raw_deg": 19.73390072259963,
+      "max_applied_deg": 19.73390072259963,
+      "saturation_percent": 0.0,
+      "settling_time_sec": 6.356,
+      "dominant_real_eig": -0.6158324812486049,
+      "fastest_real_eig": -131.16375706566453,
+      "K": [
+        [
+          2.8627829173122405,
+          -4.858778909323173,
+          -2.970332233754185,
+          -40.12842064888257
+        ]
+      ]
+    },
+    {
+      "R_lon": 1.0,
+      "max_raw_deg": 9.450003018532522,
+      "max_applied_deg": 9.450003018532522,
+      "saturation_percent": 0.0,
+      "settling_time_sec": 6.36,
+      "dominant_real_eig": -0.6154462460765908,
+      "fastest_real_eig": -67.32850003702578,
+      "K": [
+        [
+          1.5825505866741416,
+          -2.533500774559606,
+          -1.8458403873354516,
+          -22.06327662997387
+        ]
+      ]
+    },
+    {
+      "R_lon": 3.0,
+      "max_raw_deg": 4.2945938580500576,
+      "max_applied_deg": 4.2945938580500576,
+      "saturation_percent": 0.0,
+      "settling_time_sec": 6.37,
+      "dominant_real_eig": -0.6143473924918774,
+      "fastest_real_eig": -31.40999591171925,
+      "K": [
+        [
+          0.9243851052397254,
+          -1.3532217444631756,
+          -1.2273699211188696,
+          -12.814757662694527
+        ]
+      ]
+    },
+    {
+      "R_lon": 10.0,
+      "max_raw_deg": 2.017105251889581,
+      "max_applied_deg": 2.017105251889581,
+      "saturation_percent": 0.0,
+      "settling_time_sec": 6.406,
+      "dominant_real_eig": -0.6105549790504131,
+      "fastest_real_eig": -20.638283626803897,
+      "K": [
+        [
+          0.5137191007566141,
+          -0.6381861308170983,
+          -0.791337032208216,
+          -7.101442859532506
+        ]
+      ]
+    }
+  ]
+}

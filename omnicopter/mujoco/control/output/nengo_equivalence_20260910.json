@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "steps": 1000,
+  "dt_s": 0.002,
+  "mission_excitation": "yaw_360_6s",
+  "maxima": {
+    "pd_wrench_max_abs_error": 0.0,
+    "pd_motor_max_abs_error_N": 0.0,
+    "cmg_motor_max_abs_error_N": 1.143634120737147e-07,
+    "cmg_residual_norm_max_abs_error": 5.230341315609621e-07
+  },
+  "thresholds": {
+    "pd_wrench_max_abs_error": 1e-10,
+    "pd_motor_max_abs_error_N": 1e-10,
+    "cmg_motor_max_abs_error_N": 0.0001,
+    "cmg_residual_norm_max_abs_error": 0.0001
+  },
+  "scope": "software backend equivalence; not physical validation"
+}

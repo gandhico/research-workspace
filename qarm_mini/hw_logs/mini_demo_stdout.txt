@@ -1,0 +1,318 @@
+-> hold rest          target deg [1.6, 191.9, -149.6, 21.0] grip 0.29
+-> profile check      target deg [1.6, 191.9, -149.6, 38.2] grip 0.29
+-> profile check back target deg [1.6, 191.9, -149.6, 21.0] grip 0.29
+-> home               target deg [0.0, 90.0, -90.0, 90.0] grip 0.29
+-> base left          target deg [28.6, 90.0, -90.0, 90.0] grip 0.29
+-> base right         target deg [-28.6, 90.0, -90.0, 90.0] grip 0.29
+-> base centre        target deg [0.0, 90.0, -90.0, 90.0] grip 0.29
+-> wrist +            target deg [0.0, 90.0, -90.0, 118.6] grip 0.29
+-> wrist -            target deg [0.0, 90.0, -90.0, 61.4] grip 0.29
+-> wrist centre       target deg [0.0, 90.0, -90.0, 90.0] grip 0.29
+-> gripper open       target deg [0.0, 90.0, -90.0, 90.0] grip 0.27
+-> gripper close 70%  target deg [0.0, 90.0, -90.0, 90.0] grip 0.70
+-> gripper open       target deg [0.0, 90.0, -90.0, 90.0] grip 0.27
+-> back to rest       target deg [1.6, 190.2, -150.0, 20.9] grip 0.29
+FAULT: 'back to rest' not reached: err [0.002, 0.003, 1.047, 0.002, 0.001] - returning to rest under torque before closing
+   safe return: {'reached_rest': False, 's': 25.0}
+{
+  "fault": "'back to rest' not reached: err [0.002, 0.003, 1.047, 0.002, 0.001]",
+  "options": "j0_mode=0;j0_profile_velocity=0.6;j0_profile_acceleration=0.6;j1_mode=0;j1_profile_velocity=0.6;j1_profile_acceleration=0.6;j2_mode=0;j2_profile_velocity=0.6;j2_profile_acceleration=0.6;j3_mode=0;j3_profile_velocity=0.6;j3_profile_acceleration=0.6;gripper_mode=0;gripper_profile_velocity=0.6;gripper_profile_acceleration=0.6;",
+  "duration_s": 76.2,
+  "dropped_bad_samples": 3,
+  "dropped_detail": [
+    {
+      "t": 55.07,
+      "segment": "gripper close 70%",
+      "why": "servo error: yaw:input_voltage, yaw:overheating, yaw:motor_encoder, yaw:electrical_shock, yaw:overload, gripper:input_voltage, gripper:overheating, gripper:motor_encoder, gripper:electrical_shock, gripper:overload"
+    },
+    {
+      "t": 55.091,
+      "segment": "gripper close 70%",
+      "why": "servo error: yaw:input_voltage, yaw:overheating, yaw:motor_encoder, yaw:electrical_shock, yaw:overload, gripper:input_voltage, gripper:overheating, gripper:motor_encoder, gripper:electrical_shock, gripper:overload"
+    },
+    {
+      "t": 55.111,
+      "segment": "gripper close 70%",
+      "why": "servo error: yaw:input_voltage, yaw:overheating, yaw:motor_encoder, yaw:electrical_shock, yaw:overload, gripper:input_voltage, gripper:overheating, gripper:motor_encoder, gripper:electrical_shock, gripper:overload"
+    }
+  ],
+  "samples": 3451,
+  "safe_return": {
+    "reached_rest": false,
+    "s": 25.0
+  },
+  "events": [
+    {
+      "label": "start",
+      "q_deg": [
+        1.58,
+        191.9,
+        -149.6,
+        21.01
+      ],
+      "gripper": 0.286
+    },
+    {
+      "label": "hold rest",
+      "arrive_s": 0.0,
+      "err": [
+        0.0015,
+        0.0,
+        0.0,
+        0.0015,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.0,
+        0.0,
+        0.02,
+        0.0
+      ],
+      "max_speed_so_far": 0.059
+    },
+    {
+      "label": "profile check",
+      "arrive_s": 3.32,
+      "err": [
+        0.0,
+        0.0,
+        0.0,
+        0.0392,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.02,
+        0.03,
+        0.11,
+        0.0
+      ],
+      "max_speed_so_far": 0.21
+    },
+    {
+      "label": "profile check back",
+      "arrive_s": 3.15,
+      "err": [
+        0.0,
+        0.0,
+        0.0,
+        0.0399,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.02,
+        0.03,
+        0.03,
+        0.0
+      ],
+      "max_speed_so_far": 0.21
+    },
+    {
+      "label": "home",
+      "arrive_s": 9.71,
+      "err": [
+        0.0014,
+        0.0375,
+        0.0014,
+        0.0046,
+        0.0
+      ],
+      "analog": [
+        -0.0,
+        0.09,
+        0.17,
+        0.09,
+        0.0
+      ],
+      "max_speed_so_far": 0.348
+    },
+    {
+      "label": "base left",
+      "arrive_s": 4.47,
+      "err": [
+        0.0384,
+        0.0009,
+        0.0001,
+        0.0046,
+        0.0
+      ],
+      "analog": [
+        0.01,
+        0.34,
+        0.16,
+        0.09,
+        0.0
+      ],
+      "max_speed_so_far": 0.348
+    },
+    {
+      "label": "base right",
+      "arrive_s": 6.26,
+      "err": [
+        0.0382,
+        0.0009,
+        0.0001,
+        0.0046,
+        0.0
+      ],
+      "analog": [
+        -0.02,
+        0.34,
+        0.16,
+        0.09,
+        0.0
+      ],
+      "max_speed_so_far": 0.348
+    },
+    {
+      "label": "base centre",
+      "arrive_s": 4.11,
+      "err": [
+        0.0384,
+        0.0009,
+        0.0001,
+        0.0046,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.33,
+        0.16,
+        0.09,
+        0.0
+      ],
+      "max_speed_so_far": 0.348
+    },
+    {
+      "label": "wrist +",
+      "arrive_s": 4.2,
+      "err": [
+        0.0016,
+        0.0009,
+        0.0001,
+        0.0398,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.33,
+        0.15,
+        0.1,
+        0.0
+      ],
+      "max_speed_so_far": 0.348
+    },
+    {
+      "label": "wrist -",
+      "arrive_s": 6.57,
+      "err": [
+        0.0016,
+        0.0009,
+        0.0001,
+        0.0367,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.34,
+        0.15,
+        0.06,
+        0.0
+      ],
+      "max_speed_so_far": 0.348
+    },
+    {
+      "label": "wrist centre",
+      "arrive_s": 4.26,
+      "err": [
+        0.0016,
+        0.0009,
+        0.0001,
+        0.0399,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.34,
+        0.15,
+        0.12,
+        0.0
+      ],
+      "max_speed_so_far": 0.348
+    },
+    {
+      "label": "gripper open",
+      "arrive_s": 0.0,
+      "err": [
+        0.0016,
+        0.0009,
+        0.0001,
+        0.0077,
+        0.0163
+      ],
+      "analog": [
+        0.0,
+        0.34,
+        0.15,
+        0.13,
+        0.0
+      ],
+      "max_speed_so_far": 0.348
+    },
+    {
+      "label": "gripper close 70%",
+      "arrive_s": 5.45,
+      "err": [
+        0.0016,
+        0.0009,
+        0.0001,
+        0.0077,
+        0.0797
+      ],
+      "analog": [
+        0.0,
+        0.34,
+        0.15,
+        0.13,
+        0.05
+      ],
+      "max_speed_so_far": 0.348
+    },
+    {
+      "label": "gripper open",
+      "arrive_s": 5.55,
+      "err": [
+        0.0016,
+        0.0009,
+        0.0001,
+        0.0077,
+        0.0792
+      ],
+      "analog": [
+        0.0,
+        0.34,
+        0.15,
+        0.13,
+        -0.06
+      ],
+      "max_speed_so_far": 0.348
+    }
+  ],
+  "max_abs_analog": [
+    0.13,
+    0.36,
+    0.38,
+    0.15,
+    0.07
+  ],
+  "max_temp_C": [
+    36.0,
+    32.0,
+    35.0,
+    34.0,
+    35.0
+  ],
+  "log": "C:\\Research\\qarm_mini\\hw_logs\\20260927_204210_mini_hello_demo.csv"
+}

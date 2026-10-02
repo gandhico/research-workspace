@@ -1,0 +1,14 @@
+{
+  "platform": "cf2-rotor-6dof-cascade",
+  "controller": "online-pes-adaptive",
+  "mission": "waypoint_step",
+  "duration": 15.0,
+  "dt": 0.0005,
+  "pos_err_mean_m": 0.2098906203963343,
+  "pos_err_max_m": 1.8650598379974488,
+  "qerr_mean_rad": 0.16911135855215262,
+  "qerr_max_rad": 1.0840857918209608,
+  "pos_ff": "fd",
+  "actuator_scale": 1.0,
+  "authority_scale": 1.0
+}

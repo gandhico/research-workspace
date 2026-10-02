@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "dt_seconds": 0.0005,
+  "cases": [
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "simulated_seconds": 0.2,
+      "steps": 400,
+      "last_pd_qerror_rad": 0.42974492833697536,
+      "last_cmg_pes_qerror_rad": 0.3852290892146787,
+      "max_abs_residual_Nm": 0.2229204268496628,
+      "max_activity": 1.0,
+      "decoder_frobenius_norm": 2.449368246046942,
+      "finite": true
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "simulated_seconds": 0.2,
+      "steps": 400,
+      "last_pd_qerror_rad": 0.00035955632621270135,
+      "last_cmg_pes_qerror_rad": 0.00035470639473618833,
+      "max_abs_residual_Nm": 2.598722332150471e-07,
+      "max_activity": 0.17596613385280807,
+      "decoder_frobenius_norm": 2.448510147192721,
+      "finite": true
+    }
+  ]
+}

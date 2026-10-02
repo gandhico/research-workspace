@@ -1,0 +1,38 @@
+[
+  {
+    "controller": "pd",
+    "passed": 25,
+    "runs": 25,
+    "mean_position_RMSE_m": 0.0010292435548402436,
+    "mean_attitude_RMSE_deg": 0.025999364419986147,
+    "mean_max_abs_input_N": 6.458198699539312,
+    "mean_saturation_fraction": 0.0
+  },
+  {
+    "controller": "cmg-pes",
+    "passed": 25,
+    "runs": 25,
+    "mean_position_RMSE_m": 0.011579301463924998,
+    "mean_attitude_RMSE_deg": 0.06289405865967437,
+    "mean_max_abs_input_N": 6.770010576459747,
+    "mean_saturation_fraction": 0.0
+  },
+  {
+    "controller": "nengo-pd",
+    "passed": 25,
+    "runs": 25,
+    "mean_position_RMSE_m": 0.0010292435548402436,
+    "mean_attitude_RMSE_deg": 0.025999364419986147,
+    "mean_max_abs_input_N": 6.458198699539312,
+    "mean_saturation_fraction": 0.0
+  },
+  {
+    "controller": "nengo-cmg-pes",
+    "passed": 25,
+    "runs": 25,
+    "mean_position_RMSE_m": 0.011579294605242242,
+    "mean_attitude_RMSE_deg": 0.06289403565332435,
+    "mean_max_abs_input_N": 6.770010574776664,
+    "mean_saturation_fraction": 0.0
+  }
+]

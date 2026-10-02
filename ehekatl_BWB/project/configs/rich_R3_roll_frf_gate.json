@@ -1,0 +1,12 @@
+{
+  "frozen_after_metric_design_log": "rich_R3_roll_validation_01_20260712_185227.csv",
+  "validated_frequency_candidates_hz": [0.35, 0.55, 0.8, 1.1],
+  "excluded_low_frequencies_hz": [0.1, 0.2],
+  "minimum_magnitude_ratio": 0.8,
+  "maximum_magnitude_ratio": 1.25,
+  "maximum_absolute_phase_difference_deg": 10.0,
+  "minimum_realized_input_spectral_snr": 2.0,
+  "minimum_rate_response_spectral_snr": 5.0,
+  "required_new_confirmation_runs": 1,
+  "no_reference_refit": true
+}

@@ -1,0 +1,36 @@
+{
+  "config": {
+    "execution_mode": "offline",
+    "model_variant": "helicopter_2dof",
+    "controller": "gate_residual",
+    "controller_kwargs": {
+      "neuron": "adaptive_hyperlif",
+      "aug": "residual"
+    },
+    "application": "yaw_reference_tracking",
+    "duration_s": 18.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 15.0,
+    "out": "results_paper\\offline"
+  },
+  "metrics": {
+    "n": 3600,
+    "duration_s": 17.995000000000704,
+    "realized_hz": 199.99999999999218,
+    "pitch_rms": 0.015465751634854202,
+    "yaw_rms": 0.32552175440014025,
+    "tail_pitch_mae": 0.017509145609587818,
+    "tail_yaw_mae": 0.15776547659841017,
+    "pitch_sat_frac": 0.0,
+    "yaw_sat_frac": 0.008611111111111111,
+    "theta_range": [
+      -0.0034737647895251664,
+      0.029152171714590152
+    ],
+    "psi_range": [
+      -0.8060409656212265,
+      0.7752059814994332
+    ]
+  }
+}

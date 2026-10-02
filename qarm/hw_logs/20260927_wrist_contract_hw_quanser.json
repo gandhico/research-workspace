@@ -1,0 +1,819 @@
+{
+  "contract": "QArm position-servo ARX(2) compatibility screen",
+  "samples": 2750,
+  "median_dt_s": 0.009999999999999787,
+  "max_relative_sample_time_jitter": 1.7763568394002883e-13,
+  "command_standard_deviation": 0.06497551986570159,
+  "best_model": {
+    "delay_samples": 16,
+    "a1": 1.3847078557587618,
+    "a2": -0.395449073596846,
+    "b": 0.013266293270256174,
+    "c": -0.0004331520527297017,
+    "poles": [
+      [
+        0.9820173322872573,
+        0.0
+      ],
+      [
+        0.40269052347150447,
+        0.0
+      ]
+    ],
+    "max_pole_magnitude": 0.9820173322872573,
+    "dc_gain": 1.2350827876536483,
+    "validation_rmse": 0.000952000260512961,
+    "validation_nrmse_range": 0.0056922584048968205,
+    "validation_r2": 0.9996478622892551,
+    "standardized_design_condition": 130.26370498800375,
+    "train_samples": 1913,
+    "validation_samples": 820
+  },
+  "candidate_models": [
+    {
+      "delay_samples": 0,
+      "a1": 1.4900244336536907,
+      "a2": -0.4948619812048928,
+      "b": 0.008253026118893055,
+      "c": -0.0005942620638627327,
+      "poles": [
+        [
+          0.9903308300961154,
+          0.0
+        ],
+        [
+          0.4996936035575753,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9903308300961154,
+      "dc_gain": 1.7060351410586871,
+      "validation_rmse": 0.0009951726957021481,
+      "validation_nrmse_range": 0.005950397679914559,
+      "validation_r2": 0.9996147971916889,
+      "standardized_design_condition": 112.17305484214059,
+      "train_samples": 1923,
+      "validation_samples": 825
+    },
+    {
+      "delay_samples": 1,
+      "a1": 1.48097242599109,
+      "a2": -0.486127916225159,
+      "b": 0.008599726647560582,
+      "c": -0.0005991749322908357,
+      "poles": [
+        [
+          0.9898692826119978,
+          0.0
+        ],
+        [
+          0.4911031433790921,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9898692826119978,
+      "dc_gain": 1.668071561988599,
+      "validation_rmse": 0.0009918591946282555,
+      "validation_nrmse_range": 0.00593058539086399,
+      "validation_r2": 0.9996173580437712,
+      "standardized_design_condition": 113.20893732037338,
+      "train_samples": 1923,
+      "validation_samples": 825
+    },
+    {
+      "delay_samples": 2,
+      "a1": 1.472078514336402,
+      "a2": -0.47754273383081747,
+      "b": 0.008910062472588971,
+      "c": -0.0005992864317291291,
+      "poles": [
+        [
+          0.9894382592615389,
+          0.0
+        ],
+        [
+          0.4826402550748629,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9894382592615389,
+      "dc_gain": 1.6306194291234226,
+      "validation_rmse": 0.0009897835205430181,
+      "validation_nrmse_range": 0.005918174392939312,
+      "validation_r2": 0.9996189578856431,
+      "standardized_design_condition": 114.5923844754184,
+      "train_samples": 1922,
+      "validation_samples": 825
+    },
+    {
+      "delay_samples": 3,
+      "a1": 1.4670922382537945,
+      "a2": -0.47279743692876214,
+      "b": 0.009089983679685967,
+      "c": -0.0005880797868625109,
+      "poles": [
+        [
+          0.9890700357323102,
+          0.0
+        ],
+        [
+          0.4780222025214843,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9890700357323102,
+      "dc_gain": 1.5932808299156351,
+      "validation_rmse": 0.0009861433715084513,
+      "validation_nrmse_range": 0.005896408990348009,
+      "validation_r2": 0.9996218709644684,
+      "standardized_design_condition": 115.93442677183191,
+      "train_samples": 1922,
+      "validation_samples": 824
+    },
+    {
+      "delay_samples": 4,
+      "a1": 1.4646171372822498,
+      "a2": -0.47054192287040825,
+      "b": 0.009218777553255562,
+      "c": -0.0005719655014662928,
+      "poles": [
+        [
+          0.9886948335517183,
+          0.0
+        ],
+        [
+          0.47592230373053157,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9886948335517183,
+      "dc_gain": 1.5559681301684092,
+      "validation_rmse": 0.0009865249055591102,
+      "validation_nrmse_range": 0.005898690282167664,
+      "validation_r2": 0.9996215783153156,
+      "standardized_design_condition": 116.84896798750093,
+      "train_samples": 1921,
+      "validation_samples": 824
+    },
+    {
+      "delay_samples": 5,
+      "a1": 1.4574684648182081,
+      "a2": -0.4637478017789107,
+      "b": 0.009565082245801413,
+      "c": -0.0005703639953290318,
+      "poles": [
+        [
+          0.9881678071560428,
+          0.0
+        ],
+        [
+          0.4693006576621654,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9881678071560428,
+      "dc_gain": 1.5232630938046137,
+      "validation_rmse": 0.00098298929702078,
+      "validation_nrmse_range": 0.0058775499545296326,
+      "validation_r2": 0.9996242859071655,
+      "standardized_design_condition": 117.46189676033254,
+      "train_samples": 1920,
+      "validation_samples": 824
+    },
+    {
+      "delay_samples": 6,
+      "a1": 1.4484213376121964,
+      "a2": -0.45508067412236686,
+      "b": 0.009941834410858637,
+      "c": -0.0005692817384319038,
+      "poles": [
+        [
+          0.9876502609144394,
+          0.0
+        ],
+        [
+          0.46077107669775696,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9876502609144394,
+      "dc_gain": 1.4929166585402258,
+      "validation_rmse": 0.000978531044207713,
+      "validation_nrmse_range": 0.0058508928955991425,
+      "validation_r2": 0.9996277751942005,
+      "standardized_design_condition": 118.64574357116524,
+      "train_samples": 1920,
+      "validation_samples": 823
+    },
+    {
+      "delay_samples": 7,
+      "a1": 1.4380096505084787,
+      "a2": -0.4450843157392831,
+      "b": 0.010350744938764865,
+      "c": -0.0005679282881362602,
+      "poles": [
+        [
+          0.9871160391181808,
+          0.0
+        ],
+        [
+          0.4508936113902979,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9871160391181808,
+      "dc_gain": 1.463072046673795,
+      "validation_rmse": 0.000973861942182611,
+      "validation_nrmse_range": 0.005822975114115148,
+      "validation_r2": 0.9996313188921562,
+      "standardized_design_condition": 120.06571573264749,
+      "train_samples": 1919,
+      "validation_samples": 823
+    },
+    {
+      "delay_samples": 8,
+      "a1": 1.4282616371529617,
+      "a2": -0.4357477207362229,
+      "b": 0.010734277609499793,
+      "c": -0.0005627886481243127,
+      "poles": [
+        [
+          0.9865920182077159,
+          0.0
+        ],
+        [
+          0.4416696189452458,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9865920182077159,
+      "dc_gain": 1.4338976435557742,
+      "validation_rmse": 0.0009690011537669677,
+      "validation_nrmse_range": 0.005793911189596407,
+      "validation_r2": 0.9996349900665165,
+      "standardized_design_condition": 121.59867804105625,
+      "train_samples": 1918,
+      "validation_samples": 823
+    },
+    {
+      "delay_samples": 9,
+      "a1": 1.416536798371659,
+      "a2": -0.42451286875680616,
+      "b": 0.011217936095967131,
+      "c": -0.0005614231564060046,
+      "poles": [
+        [
+          0.9859935448396782,
+          0.0
+        ],
+        [
+          0.4305432535319809,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9859935448396782,
+      "dc_gain": 1.4064489848104806,
+      "validation_rmse": 0.00096791134835159,
+      "validation_nrmse_range": 0.005787394958149113,
+      "validation_r2": 0.9996358106354285,
+      "standardized_design_condition": 123.02884817330542,
+      "train_samples": 1917,
+      "validation_samples": 823
+    },
+    {
+      "delay_samples": 10,
+      "a1": 1.41466977963727,
+      "a2": -0.4228767470374322,
+      "b": 0.011293637385083447,
+      "c": -0.0005343720323840728,
+      "poles": [
+        [
+          0.9856259233021238,
+          0.0
+        ],
+        [
+          0.4290438563351462,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9856259233021238,
+      "dc_gain": 1.376103600077692,
+      "validation_rmse": 0.0009650214160050943,
+      "validation_nrmse_range": 0.005770115297238034,
+      "validation_r2": 0.9996380679933118,
+      "standardized_design_condition": 124.7073577606628,
+      "train_samples": 1917,
+      "validation_samples": 822
+    },
+    {
+      "delay_samples": 11,
+      "a1": 1.4077582264498782,
+      "a2": -0.41643940445976757,
+      "b": 0.011722872137769316,
+      "c": -0.0005262616222498628,
+      "poles": [
+        [
+          0.9849598873354413,
+          0.0
+        ],
+        [
+          0.42279833911443704,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9849598873354413,
+      "dc_gain": 1.350378039065089,
+      "validation_rmse": 0.0009631921297091493,
+      "validation_nrmse_range": 0.005759177516309859,
+      "validation_r2": 0.9996394388431913,
+      "standardized_design_condition": 125.02823674974067,
+      "train_samples": 1916,
+      "validation_samples": 822
+    },
+    {
+      "delay_samples": 12,
+      "a1": 1.397808220401553,
+      "a2": -0.40700526856230845,
+      "b": 0.012195055191324449,
+      "c": -0.0005183079324470041,
+      "poles": [
+        [
+          0.9843190479549707,
+          0.0
+        ],
+        [
+          0.4134891724465822,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9843190479549707,
+      "dc_gain": 1.3259749191443473,
+      "validation_rmse": 0.0009605511346532413,
+      "validation_nrmse_range": 0.005743386316529953,
+      "validation_r2": 0.9996414133916126,
+      "standardized_design_condition": 126.28132620115267,
+      "train_samples": 1915,
+      "validation_samples": 822
+    },
+    {
+      "delay_samples": 13,
+      "a1": 1.3958479133454962,
+      "a2": -0.4053284537718043,
+      "b": 0.01234114549400484,
+      "c": -0.0004932310644483462,
+      "poles": [
+        [
+          0.9838774415718479,
+          0.0
+        ],
+        [
+          0.4119704717736484,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9838774415718479,
+      "dc_gain": 1.301734388448852,
+      "validation_rmse": 0.000963151659562375,
+      "validation_nrmse_range": 0.005758935534723637,
+      "validation_r2": 0.9996395297017063,
+      "standardized_design_condition": 127.77973929246235,
+      "train_samples": 1915,
+      "validation_samples": 821
+    },
+    {
+      "delay_samples": 14,
+      "a1": 1.3873115956120643,
+      "a2": -0.3973750119237994,
+      "b": 0.012875415019652713,
+      "c": -0.00048443365584099896,
+      "poles": [
+        [
+          0.9831093414121237,
+          0.0
+        ],
+        [
+          0.4042022541999406,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9831093414121237,
+      "dc_gain": 1.2794278424751704,
+      "validation_rmse": 0.000952691717175936,
+      "validation_nrmse_range": 0.005696392805027469,
+      "validation_r2": 0.9996473166882769,
+      "standardized_design_condition": 128.1299564334667,
+      "train_samples": 1914,
+      "validation_samples": 821
+    },
+    {
+      "delay_samples": 15,
+      "a1": 1.3828660579893515,
+      "a2": -0.3933279406321528,
+      "b": 0.013149026770522675,
+      "c": -0.00046221658371028984,
+      "poles": [
+        [
+          0.9825544692092352,
+          0.0
+        ],
+        [
+          0.4003115887801163,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9825544692092352,
+      "dc_gain": 1.256850914837045,
+      "validation_rmse": 0.0009555429331164483,
+      "validation_nrmse_range": 0.005713440970426932,
+      "validation_r2": 0.9996452025079884,
+      "standardized_design_condition": 129.6076779409168,
+      "train_samples": 1913,
+      "validation_samples": 821
+    },
+    {
+      "delay_samples": 16,
+      "a1": 1.3847078557587618,
+      "a2": -0.395449073596846,
+      "b": 0.013266293270256174,
+      "c": -0.0004331520527297017,
+      "poles": [
+        [
+          0.9820173322872573,
+          0.0
+        ],
+        [
+          0.40269052347150447,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9820173322872573,
+      "dc_gain": 1.2350827876536483,
+      "validation_rmse": 0.000952000260512961,
+      "validation_nrmse_range": 0.0056922584048968205,
+      "validation_r2": 0.9996478622892551,
+      "standardized_design_condition": 130.26370498800375,
+      "train_samples": 1913,
+      "validation_samples": 820
+    },
+    {
+      "delay_samples": 17,
+      "a1": 1.376890656896276,
+      "a2": -0.3882818553650217,
+      "b": 0.013847985432986484,
+      "c": -0.00042086409578726003,
+      "poles": [
+        [
+          0.9811484457821407,
+          0.0
+        ],
+        [
+          0.3957422111141353,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9811484457821407,
+      "dc_gain": 1.2156741427147923,
+      "validation_rmse": 0.0009584393498037499,
+      "validation_nrmse_range": 0.005730759402906659,
+      "validation_r2": 0.9996430826385069,
+      "standardized_design_condition": 130.34081230999746,
+      "train_samples": 1912,
+      "validation_samples": 820
+    },
+    {
+      "delay_samples": 18,
+      "a1": 1.3731417417398182,
+      "a2": -0.38496400936242664,
+      "b": 0.014140126669031767,
+      "c": -0.00039614780317054343,
+      "poles": [
+        [
+          0.9805360922220934,
+          0.0
+        ],
+        [
+          0.39260564951772475,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9805360922220934,
+      "dc_gain": 1.1960587528902422,
+      "validation_rmse": 0.0009531506519389251,
+      "validation_nrmse_range": 0.005699136895938238,
+      "validation_r2": 0.9996470107328471,
+      "standardized_design_condition": 131.77995936784188,
+      "train_samples": 1911,
+      "validation_samples": 820
+    },
+    {
+      "delay_samples": 19,
+      "a1": 1.3712458982606426,
+      "a2": -0.3835265508999685,
+      "b": 0.0144585760565249,
+      "c": -0.00037129074324132594,
+      "poles": [
+        [
+          0.9798206334757128,
+          0.0
+        ],
+        [
+          0.3914252647849298,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9798206334757128,
+      "dc_gain": 1.1773459018150778,
+      "validation_rmse": 0.0009557541810681456,
+      "validation_nrmse_range": 0.005714704077149107,
+      "validation_r2": 0.9996450797201889,
+      "standardized_design_condition": 132.33598761007684,
+      "train_samples": 1910,
+      "validation_samples": 820
+    },
+    {
+      "delay_samples": 20,
+      "a1": 1.3696146825829363,
+      "a2": -0.38237110056857393,
+      "b": 0.014797412620264563,
+      "c": -0.00034654442938608643,
+      "poles": [
+        [
+          0.9790691195062329,
+          0.0
+        ],
+        [
+          0.3905455630767034,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9790691195062329,
+      "dc_gain": 1.159997472403684,
+      "validation_rmse": 0.000956905095009405,
+      "validation_nrmse_range": 0.0057215856924460575,
+      "validation_r2": 0.9996442320458522,
+      "standardized_design_condition": 132.8253210078188,
+      "train_samples": 1910,
+      "validation_samples": 819
+    },
+    {
+      "delay_samples": 21,
+      "a1": 1.3673647233685446,
+      "a2": -0.38063280039939756,
+      "b": 0.015166502570800716,
+      "c": -0.00032119228376426,
+      "poles": [
+        [
+          0.9782817019394512,
+          0.0
+        ],
+        [
+          0.3890830214290935,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9782817019394512,
+      "dc_gain": 1.1430821916042009,
+      "validation_rmse": 0.0009592748382417213,
+      "validation_nrmse_range": 0.005735755006669072,
+      "validation_r2": 0.9996424677692609,
+      "standardized_design_condition": 133.36609875839318,
+      "train_samples": 1909,
+      "validation_samples": 819
+    },
+    {
+      "delay_samples": 22,
+      "a1": 1.3701908843991861,
+      "a2": -0.3837934458246208,
+      "b": 0.01532169046202192,
+      "c": -0.00028944594306196114,
+      "poles": [
+        [
+          0.977605816542171,
+          0.0
+        ],
+        [
+          0.392585067857015,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.977605816542171,
+      "dc_gain": 1.1263827438685712,
+      "validation_rmse": 0.0009571174548921575,
+      "validation_nrmse_range": 0.005722855447694663,
+      "validation_r2": 0.9996440741216762,
+      "standardized_design_condition": 133.91093731374255,
+      "train_samples": 1908,
+      "validation_samples": 819
+    },
+    {
+      "delay_samples": 23,
+      "a1": 1.3668424215639594,
+      "a2": -0.3811115631369002,
+      "b": 0.0158649870367923,
+      "c": -0.0002670234953338624,
+      "poles": [
+        [
+          0.976598611360208,
+          0.0
+        ],
+        [
+          0.39024381020375143,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.976598611360208,
+      "dc_gain": 1.1118389256770556,
+      "validation_rmse": 0.0009607070782308968,
+      "validation_nrmse_range": 0.005744318743943493,
+      "validation_r2": 0.9996413792680462,
+      "standardized_design_condition": 133.72458548685552,
+      "train_samples": 1908,
+      "validation_samples": 818
+    },
+    {
+      "delay_samples": 24,
+      "a1": 1.3709614125383955,
+      "a2": -0.38550459014201793,
+      "b": 0.015946952938362104,
+      "c": -0.00023302428428365052,
+      "poles": [
+        [
+          0.9759617013881561,
+          0.0
+        ],
+        [
+          0.39499971115023946,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9759617013881561,
+      "dc_gain": 1.0965246642102522,
+      "validation_rmse": 0.0009636039368107432,
+      "validation_nrmse_range": 0.005761639818614253,
+      "validation_r2": 0.9996392132804182,
+      "standardized_design_condition": 134.6364677338226,
+      "train_samples": 1907,
+      "validation_samples": 818
+    },
+    {
+      "delay_samples": 25,
+      "a1": 1.3803610311155823,
+      "a2": -0.395087444492381,
+      "b": 0.015929796839501117,
+      "c": -0.00019767445304111342,
+      "poles": [
+        [
+          0.9752448934853699,
+          0.0
+        ],
+        [
+          0.4051161376302124,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9752448934853699,
+      "dc_gain": 1.0817159909824572,
+      "validation_rmse": 0.0009661460867478909,
+      "validation_nrmse_range": 0.005776839997591557,
+      "validation_r2": 0.9996373071367604,
+      "standardized_design_condition": 134.1803777289501,
+      "train_samples": 1906,
+      "validation_samples": 818
+    },
+    {
+      "delay_samples": 26,
+      "a1": 1.3815777660455653,
+      "a2": -0.3968881634722087,
+      "b": 0.016356434439896702,
+      "c": -0.00017010035071776675,
+      "poles": [
+        [
+          0.9741634009944149,
+          0.0
+        ],
+        [
+          0.4074143650511503,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9741634009944149,
+      "dc_gain": 1.0683220026302487,
+      "validation_rmse": 0.0009700647489777732,
+      "validation_nrmse_range": 0.005800270703379368,
+      "validation_r2": 0.9996343373527213,
+      "standardized_design_condition": 133.30955749288958,
+      "train_samples": 1906,
+      "validation_samples": 817
+    },
+    {
+      "delay_samples": 27,
+      "a1": 1.3861157006966467,
+      "a2": -0.40176493508374045,
+      "b": 0.016516514376165695,
+      "c": -0.00013843586071318748,
+      "poles": [
+        [
+          0.973350998401747,
+          0.0
+        ],
+        [
+          0.41276470229489964,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.973350998401747,
+      "dc_gain": 1.0554199628952583,
+      "validation_rmse": 0.0009743014179017199,
+      "validation_nrmse_range": 0.005825602854316077,
+      "validation_r2": 0.9996311363817508,
+      "standardized_design_condition": 133.55820421673846,
+      "train_samples": 1905,
+      "validation_samples": 817
+    },
+    {
+      "delay_samples": 28,
+      "a1": 1.3984402292182596,
+      "a2": -0.4141230243351623,
+      "b": 0.0163496799939786,
+      "c": -0.00010313382537299742,
+      "poles": [
+        [
+          0.9726899380610827,
+          0.0
+        ],
+        [
+          0.42575029115717683,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9726899380610827,
+      "dc_gain": 1.0425233430714886,
+      "validation_rmse": 0.0009760692265797283,
+      "validation_nrmse_range": 0.00583617304449672,
+      "validation_r2": 0.9996297966076876,
+      "standardized_design_condition": 133.16253366818927,
+      "train_samples": 1904,
+      "validation_samples": 817
+    },
+    {
+      "delay_samples": 29,
+      "a1": 1.4089457126500187,
+      "a2": -0.42484104633066466,
+      "b": 0.016383438182594027,
+      "c": -7.160063893718593e-05,
+      "poles": [
+        [
+          0.97175727219704,
+          0.0
+        ],
+        [
+          0.4371884404529787,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.97175727219704,
+      "dc_gain": 1.0307074083347079,
+      "validation_rmse": 0.0009854402038626088,
+      "validation_nrmse_range": 0.0058922045671896146,
+      "validation_r2": 0.999622654038789,
+      "standardized_design_condition": 131.86381314209683,
+      "train_samples": 1903,
+      "validation_samples": 817
+    },
+    {
+      "delay_samples": 30,
+      "a1": 1.4233084595316006,
+      "a2": -0.4391413712997975,
+      "b": 0.0161451962375513,
+      "c": -3.988806116217436e-05,
+      "poles": [
+        [
+          0.9710966539060262,
+          0.0
+        ],
+        [
+          0.45221180562557434,
+          0.0
+        ]
+      ],
+      "max_pole_magnitude": 0.9710966539060262,
+      "dc_gain": 1.0197237547916878,
+      "validation_rmse": 0.000988445188676097,
+      "validation_nrmse_range": 0.005910172156874883,
+      "validation_r2": 0.9996202961262363,
+      "standardized_design_condition": 130.95593717490885,
+      "train_samples": 1903,
+      "validation_samples": 816
+    }
+  ],
+  "checks": {
+    "sample_time_jitter_le_5pct": true,
+    "validation_r2_ge_0_70": true,
+    "discrete_model_stable": true,
+    "finite_nonzero_dc_gain": true,
+    "standardized_condition_le_1e4": true
+  },
+  "shadow_ready": true,
+  "direct_dilisic_actuation_ready": false,
+  "interpretation": "A passing result permits recorded-data replay and shadow-mode work. It does not validate direct DILISIC actuation: identify the actual torque/PWM plant or design a rigorously bounded outer setpoint loop."
+}

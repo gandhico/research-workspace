@@ -1,0 +1,5 @@
+@echo off
+call "%USERPROFILE%\AppData\Local\miniconda3\Scripts\activate.bat" hyperlif
+cd /d "%~dp0.."
+python run_realtime.py --ctrl classical %*
+pause

@@ -1,0 +1,39 @@
+{
+  "config": {
+    "dataset": null,
+    "data_file": "C:\\00_Research_\\Neural_Networks_and_Learning\\07_AdHyperLIF_Triage\\data\\tonic\\_cache\\nmnist_tiny_T20.pt",
+    "neuron": "alif",
+    "readout": "spike_count",
+    "arch": "ff",
+    "seed": 0,
+    "mode": "full",
+    "epochs": 5,
+    "hidden": 64,
+    "T": 20,
+    "batch": 32,
+    "lr": 0.001,
+    "input_scale": 16.0,
+    "clip": 1.0,
+    "results_root": "C:\\00_Research_\\Neural_Networks_and_Learning\\07_AdHyperLIF_Triage\\results\\p1_plif_alif_ff_nmnist_tiny_20260719",
+    "device": "cpu",
+    "skip_existing": true
+  },
+  "meta": {
+    "n_in": 2312,
+    "T": 20,
+    "n_classes": 6,
+    "dataset": "nmnist_tiny_T20"
+  },
+  "final_epoch": 4,
+  "final_accuracy": 0.825,
+  "final_balanced_accuracy": 0.8250000000000001,
+  "final_macro_f1": 0.8194501915593039,
+  "events_per_sample": 303.6875,
+  "gate_mean": 3.0121402740478516,
+  "active_neuron_fraction": 0.8046875,
+  "voltage_max": 111.85416412353516,
+  "nan_batches": 0,
+  "stable": true,
+  "wall_time_s": 1.3,
+  "device": "cpu"
+}

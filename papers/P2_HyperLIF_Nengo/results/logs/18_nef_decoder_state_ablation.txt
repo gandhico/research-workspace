@@ -1,0 +1,21 @@
+Experiment 18 NEF decoder-state ablation
+seeds=[0, 1, 2, 3, 4] n_neurons=100 duration=1.2 dt=0.001 ridge=0.01 min_feature_scale=0.05 clip_z=20.0
+summary:
+T001_LIF                               nengo_decoded                test=0.2269 +/- 0.0004 rate=100.5 n=5
+T001_LIF                               spikes_filtered              test=0.3200 +/- 0.0071 rate=100.5 n=5
+T001_LIF                               spikes_plus_voltage          test=0.3237 +/- 0.0242 rate=100.5 n=5
+T001_LIF                               voltage                      test=0.1830 +/- 0.0045 rate=100.5 n=5
+T023_HyperLIF_theta095_origin_r2c140   combined_spikes_voltage_gate test=0.1106 +/- 0.0212 rate=40.3 n=5
+T023_HyperLIF_theta095_origin_r2c140   nengo_decoded                test=0.2273 +/- 0.0047 rate=40.3 n=5
+T023_HyperLIF_theta095_origin_r2c140   reset_gate                   test=0.1110 +/- 0.0064 rate=40.3 n=5
+T023_HyperLIF_theta095_origin_r2c140   spikes_filtered              test=0.3252 +/- 0.0096 rate=40.3 n=5
+T023_HyperLIF_theta095_origin_r2c140   spikes_plus_voltage          test=0.1735 +/- 0.0232 rate=40.3 n=5
+T023_HyperLIF_theta095_origin_r2c140   voltage                      test=0.2726 +/- 0.0203 rate=40.3 n=5
+T023_HyperLIF_theta095_origin_r2c140   voltage_plus_gate            test=0.1237 +/- 0.0288 rate=40.3 n=5
+T033_Adaptive_theta095_origin_r2c140   combined_spikes_voltage_gate test=0.1167 +/- 0.0141 rate=53.3 n=5
+T033_Adaptive_theta095_origin_r2c140   nengo_decoded                test=0.2339 +/- 0.0012 rate=53.3 n=5
+T033_Adaptive_theta095_origin_r2c140   reset_gate                   test=0.1269 +/- 0.0073 rate=53.3 n=5
+T033_Adaptive_theta095_origin_r2c140   spikes_filtered              test=0.3228 +/- 0.0100 rate=53.3 n=5
+T033_Adaptive_theta095_origin_r2c140   spikes_plus_voltage          test=0.0973 +/- 0.0161 rate=53.3 n=5
+T033_Adaptive_theta095_origin_r2c140   voltage                      test=0.2387 +/- 0.0085 rate=53.3 n=5
+T033_Adaptive_theta095_origin_r2c140   voltage_plus_gate            test=0.2089 +/- 0.0197 rate=53.3 n=5

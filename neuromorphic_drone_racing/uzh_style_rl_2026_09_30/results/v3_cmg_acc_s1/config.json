@@ -1,0 +1,18 @@
+{
+ "arm": "cmg_acc",
+ "seed": "1",
+ "n_env": "1024",
+ "horizon": "64",
+ "total_steps": "20000000.0",
+ "epochs": "5",
+ "minibatch": "8192",
+ "lr": "0.0003",
+ "gamma": "0.99",
+ "lam": "0.95",
+ "threads": "6",
+ "out": "results\\v3_cmg_acc_s1",
+ "pass_bonus": "10.0",
+ "crash_penalty": "10.0",
+ "w_smooth": "0.01",
+ "w_rate": "0.002"
+}

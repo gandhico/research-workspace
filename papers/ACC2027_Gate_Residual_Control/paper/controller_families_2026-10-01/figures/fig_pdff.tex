@@ -1,0 +1,14 @@
+% PD+ff in backstepping (computed-torque) form: the paper's rho = 3 primary baseline.
+\begin{tikzpicture}
+  \commonleft
+  \node[law,right=10mm of err] (law) {\textbf{Computed-torque backstepping}\\
+        $\bm a=\dot{\bm\omega}_d-k_1\bm e-k_2\bm\omega_e$\\$k_1=(\rho\omega_n)^2,\quad k_2=2\zeta\rho\omega_n$};
+  \node[offl,above=9mm of law] (ff) {\textbf{Model feedforward} (off in every run)\\
+        $\bm J\odot\dot{\bm\omega}_d$ \ and \ $\bm\omega\times(\bm J\odot\bm\omega)$};
+  \draw[off] (ff) -- node[lbl,right]{$\times0$} (law);
+  \draw[sig] (err) -- node[lbl,above]{$\bm e,\bm\omega_e$} (law);
+  \coordinate (satx) at ($(law.east)+(25mm,0)$);
+  \commonloop{law}{\textbf{Torque box}\\$\bm u_0=\sat_{\bm\ell}(\bm J\odot\bm a)$};
+  \node[fam,fit=(law)(ff)] (g) {};
+  \node[famlbl,anchor=south west] at (g.north west) {family: PD+ff, backstepping form (\code{--baseline backstepping})};
+\end{tikzpicture}

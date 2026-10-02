@@ -1,0 +1,18 @@
+{
+  "platform": "hover3dof_hardware",
+  "hardware": true,
+  "controller": "online-pes-adaptive",
+  "armed": true,
+  "beta": 0.4,
+  "learning_rate": 0.0003,
+  "max_residual_volts": 3.0,
+  "k_error": 2.0,
+  "k_rate": 0.0,
+  "duration": 30.0,
+  "rate_hz": 200.0,
+  "mission": "yaw360",
+  "angle_err_mean_deg": 5.931158468067223,
+  "angle_err_max_deg": 8.4887720276066,
+  "n_steps_logged": 6000,
+  "trace": "C:\\Research\\hover3dof\\results\\hardware\\online-pes-adaptive_armed_20260828_111307\\trace.csv"
+}

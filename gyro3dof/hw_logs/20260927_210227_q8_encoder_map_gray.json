@@ -1,0 +1,85 @@
+{
+  "duration_s": 19.980015399996773,
+  "channels": {
+    "enc0": {
+      "moved": true,
+      "active_from_s": 0.0,
+      "active_to_s": 20.0,
+      "min": -46328,
+      "max": -45908,
+      "span_counts": 420,
+      "span_deg": 36.9,
+      "final_counts": -46317,
+      "final_deg": -4070.8,
+      "first_direction": 1
+    },
+    "enc1": {
+      "moved": true,
+      "active_from_s": 0.1,
+      "active_to_s": 19.9,
+      "min": 3785,
+      "max": 3790,
+      "span_counts": 5,
+      "span_deg": 0.4,
+      "final_counts": 3789,
+      "final_deg": 341.0,
+      "first_direction": 1
+    },
+    "enc2": {
+      "moved": true,
+      "active_from_s": 0.0,
+      "active_to_s": 20.0,
+      "min": -11968,
+      "max": -11960,
+      "span_counts": 8,
+      "span_deg": 0.7,
+      "final_counts": -11963,
+      "final_deg": -1076.7,
+      "first_direction": 1
+    },
+    "enc3": {
+      "moved": false
+    },
+    "enc4": {
+      "moved": false
+    },
+    "enc5": {
+      "moved": false
+    },
+    "enc6": {
+      "moved": false
+    },
+    "enc7": {
+      "moved": false
+    }
+  },
+  "order_moved": [
+    "enc0",
+    "enc2",
+    "enc1"
+  ],
+  "bursts_in_time_order": [
+    {
+      "enc": 0,
+      "from_s": 0.0,
+      "to_s": 20.0,
+      "span_counts": 420,
+      "span_deg": 36.9
+    },
+    {
+      "enc": 2,
+      "from_s": 0.0,
+      "to_s": 20.0,
+      "span_counts": 8,
+      "span_deg": 0.7
+    },
+    {
+      "enc": 1,
+      "from_s": 0.1,
+      "to_s": 19.9,
+      "span_counts": 5,
+      "span_deg": 0.4
+    }
+  ],
+  "log": "C:\\Research\\gyro3dof\\hw_logs\\20260927_210227_q8_encoder_map_gray.csv"
+}

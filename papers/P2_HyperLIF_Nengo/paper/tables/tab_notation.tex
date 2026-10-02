@@ -1,0 +1,25 @@
+\begin{table}[t]
+\centering
+\caption{Notation used throughout the paper.}
+\label{tab:notation}
+\begin{tabular}{l p{0.72\columnwidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$v(t)$ & Membrane voltage (normalized) \\
+$r(t)\in[0,1]$ & Continuous reset gate (fast activation-like proxy) \\
+$J$ (= $I_{\mathrm{in}}$) & Net input current / drive (normalized) \\
+$\tau,\ \tau_r$ & Membrane and gate time constants ($\tau_r\ll\tau$) \\
+$v_{\mathrm{rest}},v_{\mathrm{reset}},v_{\mathrm{thresh}}$ & Rest, reset, threshold voltages \\
+$\sigma(\cdot)$ & Logistic gate detector, steepness $\alpha$ \\
+$\gamma,\ \theta_{\mathrm{eff}}$ & Hysteresis and effective threshold $\theta_{\mathrm{eff}}=v_{\mathrm{thresh}}-\gamma r$ \\
+$G_b$ & Fixed reset gain (baseline HyperLIF) \\
+$G_{\mathrm{base}},\ \beta$ & Baseline gain and adaptive scaling (Adaptive HyperLIF) \\
+$G(r,J)$ & Reset conductance scale; $G_b r^2$ or $(G_{\mathrm{base}}+\beta|J|)r^2$ \\
+$G_{\mathrm{dyn}}$ & Adaptive conductance scale $G_{\mathrm{base}}+\beta|J|$ \\
+$\lambda$ & Membrane relaxation rate $1/\tau + G$ \\
+$J_{\mathrm{DB}}$ & Frozen-open-gate DB branch estimate \\
+$\Delta t$ & Simulation time step \\
+\bottomrule
+\end{tabular}
+\end{table}

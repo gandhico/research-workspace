@@ -1,0 +1,50 @@
+{
+  "status": "independent_score_no_refit",
+  "validation_file": "rich_R3_pitch_confirmation_01_revised_20260712_183326.csv",
+  "frozen_training_file": "rich_R3_pitch_training_01_revised_20260712_181333.csv",
+  "model_name": "local",
+  "fields": [
+    "pitch_deg",
+    "q_deg_s",
+    "total_pitch_ratio"
+  ],
+  "delay_samples": 3,
+  "beta": [
+    -7.631572467985915,
+    -1.4108395610437894,
+    -274.5110200542849
+  ],
+  "qdot_rmse": 0.1002922220129332,
+  "qdot_nrmse": 0.5110708003665771,
+  "training_qdot_nrmse": 0.5122910878070123,
+  "validation_to_training_qdot_nrmse_ratio": 0.9976179803446145,
+  "recursive_prediction": {
+    "1": {
+      "rate_rmse_deg_s": 0.010048793104496578,
+      "rate_nrmse": 0.2831638329630347
+    },
+    "5": {
+      "rate_rmse_deg_s": 0.02321435183051408,
+      "rate_nrmse": 0.654154660736258
+    },
+    "10": {
+      "rate_rmse_deg_s": 0.029901734722557572,
+      "rate_nrmse": 0.8425976859344891
+    },
+    "20": {
+      "rate_rmse_deg_s": 0.037975234130928785,
+      "rate_nrmse": 1.0700999356201957
+    }
+  },
+  "recursive_mean_nrmse": 0.7125040288134944,
+  "training_temporal_recursive_mean_nrmse": 0.734990776858322,
+  "validation_to_training_recursive_ratio": 0.9694054010569412,
+  "residual_lag1": 0.5941612593920329,
+  "acceptance_note": "Frozen post-design gate applied without refit or reselection.",
+  "frozen_gate_checks": {
+    "qdot_ratio": true,
+    "recursive_ratio": true,
+    "residual_lag1": true
+  },
+  "frozen_gate_pass": true
+}

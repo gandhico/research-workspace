@@ -1,0 +1,104 @@
+{
+  "status": "coverage_fail",
+  "stated_target_throttle": 0.17,
+  "existing_run_count": 3,
+  "existing_throttle_mean_range": [
+    0.0235294122248888,
+    0.0235294122248888
+  ],
+  "distance_to_target": 0.1464705877751112,
+  "high_rate_matched_logs_have_propulsion_channels": false,
+  "runs": [
+    {
+      "file": "logs/rich_R3_baseline_01_20260712_174514.csv",
+      "throttle_engine_0": {
+        "mean": 0.0235294122248888,
+        "min": 0.0235294122248888,
+        "max": 0.0235294122248888
+      },
+      "throttle_engine_1": {
+        "mean": 0.0235294122248888,
+        "min": 0.0235294122248888,
+        "max": 0.0235294122248888
+      },
+      "ias_kts": {
+        "mean": 38.26058900197347,
+        "min": 38.10178756713867,
+        "max": 38.32539749145508
+      },
+      "tas_m_s": {
+        "mean": 21.409979667663574,
+        "min": 21.30950164794922,
+        "max": 21.44516372680664
+      },
+      "dynamic_pressure_pa": {
+        "mean": 237.43316117057384,
+        "min": 235.24309142017074,
+        "max": 238.17637840572922
+      }
+    },
+    {
+      "file": "logs/rich_R3_baseline_02_20260712_174845.csv",
+      "throttle_engine_0": {
+        "mean": 0.0235294122248888,
+        "min": 0.0235294122248888,
+        "max": 0.0235294122248888
+      },
+      "throttle_engine_1": {
+        "mean": 0.0235294122248888,
+        "min": 0.0235294122248888,
+        "max": 0.0235294122248888
+      },
+      "ias_kts": {
+        "mean": 38.74051172892253,
+        "min": 38.676231384277344,
+        "max": 38.77220916748047
+      },
+      "tas_m_s": {
+        "mean": 21.679698422749837,
+        "min": 21.64057731628418,
+        "max": 21.697776794433594
+      },
+      "dynamic_pressure_pa": {
+        "mean": 243.3772854083589,
+        "min": 242.531885197262,
+        "max": 243.74951110261642
+      }
+    },
+    {
+      "file": "logs/rich_R3_baseline_observe_20260712_174155.csv",
+      "throttle_engine_0": {
+        "mean": 0.0235294122248888,
+        "min": 0.0235294122248888,
+        "max": 0.0235294122248888
+      },
+      "throttle_engine_1": {
+        "mean": 0.0235294122248888,
+        "min": 0.0235294122248888,
+        "max": 0.0235294122248888
+      },
+      "ias_kts": {
+        "mean": 38.3681298828125,
+        "min": 38.363014221191406,
+        "max": 38.37320327758789
+      },
+      "tas_m_s": {
+        "mean": 21.521713676452638,
+        "min": 21.517120361328125,
+        "max": 21.52630615234375
+      },
+      "dynamic_pressure_pa": {
+        "mean": 238.68953487513198,
+        "min": 238.61133640128008,
+        "max": 238.76918339218108
+      }
+    }
+  ],
+  "decision": "current LQR is local to 2.35-percent throttle evidence and cannot be claimed at 17 percent",
+  "required_next": [
+    "read-only 35-Hz propulsion/dataref availability and timing audit at actual steady trim",
+    "freeze actual throttle/IAS/dynamic-pressure envelope",
+    "only then decide whether new identification is required"
+  ],
+  "flight_authorized": false
+}

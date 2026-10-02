@@ -1,0 +1,44 @@
+{
+  "status": "independent_score_no_refit",
+  "validation_file": "rich_R3_pitch_validation_01_revised_20260712_182600.csv",
+  "frozen_training_file": "rich_R3_pitch_training_01_revised_20260712_181333.csv",
+  "model_name": "local",
+  "fields": [
+    "pitch_deg",
+    "q_deg_s",
+    "total_pitch_ratio"
+  ],
+  "delay_samples": 3,
+  "beta": [
+    -7.631572467985915,
+    -1.4108395610437894,
+    -274.5110200542849
+  ],
+  "qdot_rmse": 0.10201588025261002,
+  "qdot_nrmse": 0.5248338441782088,
+  "training_qdot_nrmse": 0.5122910878070123,
+  "validation_to_training_qdot_nrmse_ratio": 1.0244836513258289,
+  "recursive_prediction": {
+    "1": {
+      "rate_rmse_deg_s": 0.010214986752076185,
+      "rate_nrmse": 0.287750328968658
+    },
+    "5": {
+      "rate_rmse_deg_s": 0.025876242038776472,
+      "rate_nrmse": 0.7289189246982799
+    },
+    "10": {
+      "rate_rmse_deg_s": 0.03264017500840868,
+      "rate_nrmse": 0.9194550442618251
+    },
+    "20": {
+      "rate_rmse_deg_s": 0.04037781550903742,
+      "rate_nrmse": 1.1374199475491051
+    }
+  },
+  "recursive_mean_nrmse": 0.7683860613694671,
+  "training_temporal_recursive_mean_nrmse": 0.734990776858322,
+  "validation_to_training_recursive_ratio": 1.0454363313970978,
+  "residual_lag1": 0.7593968046523327,
+  "acceptance_note": "No new numeric ratio threshold was frozen before collection; report ratios without retroactive pass/fail."
+}

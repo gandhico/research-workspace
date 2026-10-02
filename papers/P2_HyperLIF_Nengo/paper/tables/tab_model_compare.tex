@@ -1,0 +1,19 @@
+\begin{table*}[t]
+\centering
+\caption{Qualitative comparison of the three neuron models in the reference implementation.}
+\label{tab:modelcompare}
+\small
+\begin{tabular}{p{0.17\textwidth} p{0.23\textwidth} p{0.24\textwidth} p{0.25\textwidth}}
+\toprule
+Property & LIF & HyperLIF & Adaptive HyperLIF \\
+\midrule
+State variables & $\{v\}$ & $\{v, r\}$ & $\{v, r\}$ \\
+Reset mechanism & hard jump to $v_{\mathrm{reset}}$ & gate conductance $G_b r^2$ & input-modulated $(G_{\mathrm{base}}+\beta|J|)r^2$ \\
+Threshold event & discontinuous & smooth crossing & smooth crossing \\
+Continuous \& differentiable & no (hybrid) & yes & yes \\
+Refractory handling & explicit $\tau_{\mathrm{ref}}$ & gate hysteresis $\gamma$ & gate hysteresis $\gamma$ \\
+High-drive behaviour & increasing firing & high-voltage latch & bounded subthreshold dynamics \\
+Nengo \texttt{NeuronType} & (built-in) & \texttt{HyperLIFNengo} & \texttt{AdaptiveHyperLIFNengo} \\
+\bottomrule
+\end{tabular}
+\end{table*}

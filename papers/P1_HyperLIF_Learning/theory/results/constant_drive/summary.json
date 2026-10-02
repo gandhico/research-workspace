@@ -1,0 +1,40 @@
+{
+  "parameters": {
+    "tau": 0.02,
+    "tau_r": 0.002,
+    "alpha": 100.0,
+    "gamma": 0.2,
+    "v_rest": 0.0,
+    "v_reset": 0.0,
+    "theta": 1.0,
+    "event_threshold": 1.0,
+    "fixed_gain": 100.0,
+    "base_gain": 20.0,
+    "adaptive_gain": 80.0
+  },
+  "dt": 0.0001,
+  "duration": 2.0,
+  "transient": 1.0,
+  "event_definition": "upward sampled crossing v[k-1] < theta_e <= v[k]",
+  "occupancy_definition": "sampled threshold occupancy v[k] >= theta_e",
+  "warning": "Occupancy, crossing count, and measured hardware energy are distinct quantities.",
+  "HyperLIF": {
+    "sampled_periodic_crossing_current_range": [
+      1.45,
+      2.21
+    ],
+    "sampled_high_occupancy_zero_crossing_current_range": [
+      3.0,
+      6.0
+    ],
+    "peak_crossing_rate_hz": 74.0
+  },
+  "AdaptiveHyperLIF": {
+    "sampled_periodic_crossing_current_range": [
+      1.51,
+      3.62
+    ],
+    "sampled_high_occupancy_zero_crossing_current_range": null,
+    "peak_crossing_rate_hz": 151.0
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "matched_pairs": [
+    {
+      "mission": "roll",
+      "pd_mean_deg": 5.3674939091334615,
+      "cmg_mean_deg": 5.265233469498998,
+      "improvement_pct": 1.9051803572697936,
+      "pd_max_deg": 8.216676488409645,
+      "cmg_max_deg": 7.897586465634549
+    },
+    {
+      "mission": "full3",
+      "pd_mean_deg": 11.438577704029992,
+      "cmg_mean_deg": 11.414732070270997,
+      "improvement_pct": 0.20846677249562226,
+      "pd_max_deg": 16.90474903325515,
+      "cmg_max_deg": 16.459816660305048
+    },
+    {
+      "mission": "hard45",
+      "pd_mean_deg": 9.977232439858884,
+      "cmg_mean_deg": 10.036416108333258,
+      "improvement_pct": -0.5931872273310563,
+      "pd_max_deg": 16.010246150064837,
+      "cmg_max_deg": 16.185766669091525
+    },
+    {
+      "mission": "hardstep",
+      "pd_mean_deg": 13.315036306735335,
+      "cmg_mean_deg": 13.431292553073815,
+      "improvement_pct": -0.8731200100421254,
+      "pd_max_deg": 34.77911637857138,
+      "cmg_max_deg": 34.98126436959678
+    }
+  ],
+  "yaw360_pd_only": {
+    "mean_deg": 7.95337191030808,
+    "max_deg": 27.522144097066366,
+    "status": "roll safety limit exceeded: -20.083 deg"
+  }
+}

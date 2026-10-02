@@ -1,0 +1,222 @@
+{
+  "fault": "'gripper open' not reached: err [0.002, 0.001, 0.0, 0.008, 0.9]",
+  "options": "j0_mode=0;j0_profile_velocity=0.6;j0_profile_acceleration=0.6;j1_mode=0;j1_profile_velocity=0.6;j1_profile_acceleration=0.6;j2_mode=0;j2_profile_velocity=0.6;j2_profile_acceleration=0.6;j3_mode=0;j3_profile_velocity=0.6;j3_profile_acceleration=0.6;gripper_mode=0;gripper_profile_velocity=0.6;gripper_profile_acceleration=0.6;",
+  "duration_s": 60.6,
+  "events": [
+    {
+      "label": "start",
+      "q_deg": [
+        -10.73,
+        191.29,
+        -151.18,
+        27.33
+      ],
+      "gripper": 1.0
+    },
+    {
+      "label": "hold rest",
+      "arrive_s": 0.0,
+      "err": [
+        0.0,
+        0.0,
+        0.0206,
+        0.0,
+        0.05
+      ],
+      "analog": [
+        0.0,
+        0.0,
+        -0.01,
+        0.0,
+        0.0
+      ],
+      "max_speed_so_far": 0.0
+    },
+    {
+      "label": "profile check",
+      "arrive_s": 2.98,
+      "err": [
+        0.0,
+        0.0,
+        0.0206,
+        0.0392,
+        0.0002
+      ],
+      "analog": [
+        0.0,
+        -0.03,
+        0.0,
+        0.13,
+        -0.0
+      ],
+      "max_speed_so_far": 0.231
+    },
+    {
+      "label": "profile check back",
+      "arrive_s": 3.21,
+      "err": [
+        0.0,
+        0.0,
+        0.0206,
+        0.0399,
+        0.0002
+      ],
+      "analog": [
+        0.0,
+        -0.03,
+        0.0,
+        0.02,
+        -0.0
+      ],
+      "max_speed_so_far": 0.231
+    },
+    {
+      "label": "home",
+      "arrive_s": 9.63,
+      "err": [
+        0.0016,
+        0.039,
+        0.0001,
+        0.0046,
+        0.0002
+      ],
+      "analog": [
+        0.0,
+        0.07,
+        0.44,
+        0.08,
+        -0.0
+      ],
+      "max_speed_so_far": 0.307
+    },
+    {
+      "label": "base left",
+      "arrive_s": 3.92,
+      "err": [
+        0.0384,
+        0.0009,
+        0.0001,
+        0.0046,
+        0.0002
+      ],
+      "analog": [
+        0.01,
+        0.34,
+        0.35,
+        0.08,
+        -0.0
+      ],
+      "max_speed_so_far": 0.307
+    },
+    {
+      "label": "base right",
+      "arrive_s": 6.05,
+      "err": [
+        0.0397,
+        0.0009,
+        0.0001,
+        0.0046,
+        0.0005
+      ],
+      "analog": [
+        -0.03,
+        0.34,
+        0.22,
+        0.09,
+        -0.0
+      ],
+      "max_speed_so_far": 0.307
+    },
+    {
+      "label": "base centre",
+      "arrive_s": 4.09,
+      "err": [
+        0.04,
+        0.0009,
+        0.0001,
+        0.0046,
+        0.0002
+      ],
+      "analog": [
+        0.0,
+        0.34,
+        0.18,
+        0.08,
+        -0.0
+      ],
+      "max_speed_so_far": 0.307
+    },
+    {
+      "label": "wrist +",
+      "arrive_s": 4.22,
+      "err": [
+        0.0016,
+        0.0009,
+        0.0001,
+        0.0383,
+        0.0002
+      ],
+      "analog": [
+        0.0,
+        0.34,
+        0.16,
+        0.12,
+        -0.0
+      ],
+      "max_speed_so_far": 0.307
+    },
+    {
+      "label": "wrist -",
+      "arrive_s": 6.01,
+      "err": [
+        0.0016,
+        0.0009,
+        0.0001,
+        0.0398,
+        0.0002
+      ],
+      "analog": [
+        0.0,
+        0.06,
+        0.16,
+        0.06,
+        0.0
+      ],
+      "max_speed_so_far": 0.307
+    },
+    {
+      "label": "wrist centre",
+      "arrive_s": 4.47,
+      "err": [
+        0.0016,
+        0.0009,
+        0.0001,
+        0.0399,
+        0.0002
+      ],
+      "analog": [
+        0.0,
+        0.05,
+        0.16,
+        0.13,
+        0.0
+      ],
+      "max_speed_so_far": 0.307
+    }
+  ],
+  "max_abs_analog": [
+    0.13,
+    0.36,
+    0.48,
+    0.16,
+    0.05
+  ],
+  "max_temp_C": [
+    35.0,
+    32.0,
+    34.0,
+    33.0,
+    34.0
+  ],
+  "log": "C:\\Research\\qarm_mini\\hw_logs\\20260927_202751_mini_hello_demo.csv"
+}

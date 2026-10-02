@@ -1,0 +1,21 @@
+EHEKATL BWB XP12 CONTROLLER RUNNERS
+===================================
+
+The authoritative formatted runner guide is:
+  /home/ubuntu/GHYN/Xplane_controllers/RUNNERS_EHEKATL_BWB_XP12.md
+
+Project environment:
+  cd /home/ubuntu/GHYN/Xplane_controllers/EHEKATL_BWB_XP12
+  source backstepping/ehekatl_xplane12_backstepping_bridge/.venv/bin/activate
+
+Backstepping runner:
+  python backstepping/run_backstepping_xp12.py --help
+
+PID runner:
+  python pid/run_pid_xp12.py --help
+
+LQR placeholder (not flight validation):
+  python lqr/run_lqr_xp12.py --help
+
+Status: Backstepping works. PID works. LQR requires identification before final
+validation. Follow docs/CONTROL_DEVELOPMENT_PROCESS.md before any flight work.

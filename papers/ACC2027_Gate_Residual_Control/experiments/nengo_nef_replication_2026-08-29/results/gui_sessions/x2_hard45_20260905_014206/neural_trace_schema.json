@@ -1,0 +1,287 @@
+{
+  "schema": 1,
+  "source": "interactive synchronized MuJoCo/Nengo GUI",
+  "sample_rate_hz": 2000.0,
+  "sample_period_s": 0.0005,
+  "axis_order": [
+    "x/roll",
+    "y/pitch",
+    "z/yaw"
+  ],
+  "unit_order": [
+    "+x",
+    "+y",
+    "+z",
+    "-x",
+    "-y",
+    "-z"
+  ],
+  "weight_shape_per_sample": [
+    3,
+    6
+  ],
+  "plant_output_layout": [
+    "q_w",
+    "q_x",
+    "q_y",
+    "q_z",
+    "omega_x",
+    "omega_y",
+    "omega_z",
+    "z",
+    "vz",
+    "rotor_1_norm",
+    "rotor_2_norm",
+    "rotor_3_norm",
+    "rotor_4_norm",
+    "saturated"
+  ],
+  "signals": {
+    "t": {
+      "shape": [
+        90001
+      ],
+      "dtype": "float64"
+    },
+    "reference_quat": {
+      "shape": [
+        90001,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "reference_euler": {
+      "shape": [
+        90001,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "baseline_plant_output": {
+      "shape": [
+        90001,
+        14
+      ],
+      "dtype": "float64"
+    },
+    "neural_plant_output": {
+      "shape": [
+        90001,
+        14
+      ],
+      "dtype": "float64"
+    },
+    "baseline_quaternion_error": {
+      "shape": [
+        90001,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "neural_quaternion_error": {
+      "shape": [
+        90001,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "baseline_tau": {
+      "shape": [
+        90001,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "neural_tau0": {
+      "shape": [
+        90001,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "target": {
+      "shape": [
+        90001,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "current": {
+      "shape": [
+        90001,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "voltage": {
+      "shape": [
+        90001,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate": {
+      "shape": [
+        90001,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "activity": {
+      "shape": [
+        90001,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "effective_threshold": {
+      "shape": [
+        90001,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate_argument": {
+      "shape": [
+        90001,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate_target": {
+      "shape": [
+        90001,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "conductance_gain": {
+      "shape": [
+        90001,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "conductance": {
+      "shape": [
+        90001,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "membrane_lambda": {
+      "shape": [
+        90001,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "membrane_drive": {
+      "shape": [
+        90001,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "decoded_raw": {
+      "shape": [
+        90001,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "decoded_clipped": {
+      "shape": [
+        90001,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "pes_error": {
+      "shape": [
+        90001,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "weights": {
+      "shape": [
+        90001,
+        3,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "weight_delta": {
+      "shape": [
+        90001,
+        3,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "command_torque": {
+      "shape": [
+        90001,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "residual_torque": {
+      "shape": [
+        90001,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "attitude_tracking": {
+      "shape": [
+        90001,
+        9
+      ],
+      "dtype": "float64"
+    },
+    "error_comparison": {
+      "shape": [
+        90001,
+        2
+      ],
+      "dtype": "float64"
+    },
+    "normalized_torque": {
+      "shape": [
+        90001,
+        9
+      ],
+      "dtype": "float64"
+    },
+    "actuator_comparison": {
+      "shape": [
+        90001,
+        8
+      ],
+      "dtype": "float64"
+    },
+    "beta": {
+      "shape": [
+        90001,
+        1
+      ],
+      "dtype": "float64"
+    },
+    "learning_enable": {
+      "shape": [
+        90001,
+        1
+      ],
+      "dtype": "float64"
+    }
+  },
+  "semantics": {
+    "decoded_raw": "unbounded W @ activity",
+    "decoded_clipped": "clip(W @ activity,-1,1), used by PES and residual",
+    "weight_delta": "all 18 decoder changes during this 0.5-ms Nengo step",
+    "gate_target": "sigmoid(alpha*(voltage-effective_threshold))",
+    "pes_error": "learning_enable*(decoded_clipped-target)"
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "arm": "residual",
+  "mode": "mlp",
+  "vehicle": "x2",
+  "seed": 1,
+  "train_scenario": "gust",
+  "rollouts": 10,
+  "samples_per_rollout": 600,
+  "mujoco_training_steps": 60000,
+  "training": [
+    {
+      "rollout": 0,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 115.25744610543771,
+      "mean_position_error_m": 0.19140358308388938,
+      "collisions_last_episode": 0,
+      "ppo_loss": 9.073206448554993,
+      "log_std": [
+        -1.601933240890503,
+        -1.6026132106781006,
+        -1.5972436666488647,
+        -1.6025350093841553
+      ]
+    },
+    {
+      "rollout": 1,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 115.26018935792436,
+      "mean_position_error_m": 0.1913773038536509,
+      "collisions_last_episode": 0,
+      "ppo_loss": 8.963999629020691,
+      "log_std": [
+        -1.6038833856582642,
+        -1.6048898696899414,
+        -1.5946052074432373,
+        -1.605430245399475
+      ]
+    },
+    {
+      "rollout": 2,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 115.2389440571732,
+      "mean_position_error_m": 0.19151820382400342,
+      "collisions_last_episode": 0,
+      "ppo_loss": 8.804547142982482,
+      "log_std": [
+        -1.6057864427566528,
+        -1.6071977615356445,
+        -1.5920448303222656,
+        -1.6083860397338867
+      ]
+    },
+    {
+      "rollout": 3,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 115.18096296079372,
+      "mean_position_error_m": 0.19192977060275135,
+      "collisions_last_episode": 0,
+      "ppo_loss": 8.590076184272766,
+      "log_std": [
+        -1.6076343059539795,
+        -1.6094253063201904,
+        -1.5896161794662476,
+        -1.6112390756607056
+      ]
+    },
+    {
+      "rollout": 4,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 115.07979110515434,
+      "mean_position_error_m": 0.1926250551375662,
+      "collisions_last_episode": 0,
+      "ppo_loss": 8.330477452278137,
+      "log_std": [
+        -1.6092455387115479,
+        -1.611425518989563,
+        -1.587512493133545,
+        -1.6138075590133667
+      ]
+    },
+    {
+      "rollout": 5,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 114.93868927503902,
+      "mean_position_error_m": 0.19359817408324015,
+      "collisions_last_episode": 0,
+      "ppo_loss": 8.04112467765808,
+      "log_std": [
+        -1.6106946468353271,
+        -1.6132599115371704,
+        -1.5855249166488647,
+        -1.6162028312683105
+      ]
+    },
+    {
+      "rollout": 6,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 114.80092846705067,
+      "mean_position_error_m": 0.19447037312956147,
+      "collisions_last_episode": 0,
+      "ppo_loss": 7.740542054176331,
+      "log_std": [
+        -1.6120495796203613,
+        -1.6149265766143799,
+        -1.5837217569351196,
+        -1.6184381246566772
+      ]
+    },
+    {
+      "rollout": 7,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 114.63982791342022,
+      "mean_position_error_m": 0.19547379030091117,
+      "collisions_last_episode": 0,
+      "ppo_loss": 7.436778664588928,
+      "log_std": [
+        -1.6132913827896118,
+        -1.6164487600326538,
+        -1.5820082426071167,
+        -1.6205137968063354
+      ]
+    },
+    {
+      "rollout": 8,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 114.47455811160472,
+      "mean_position_error_m": 0.196502722618189,
+      "collisions_last_episode": 0,
+      "ppo_loss": 7.139612913131714,
+      "log_std": [
+        -1.6144806146621704,
+        -1.61787748336792,
+        -1.5803234577178955,
+        -1.6224987506866455
+      ]
+    },
+    {
+      "rollout": 9,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 114.33813567837788,
+      "mean_position_error_m": 0.19750069157873465,
+      "collisions_last_episode": 0,
+      "ppo_loss": 6.848371815681458,
+      "log_std": [
+        -1.6155952215194702,
+        -1.6192408800125122,
+        -1.5786447525024414,
+        -1.6244057416915894
+      ]
+    }
+  ],
+  "evaluation": {
+    "gust": {
+      "kind": "eval",
+      "arm": "residual",
+      "mode": "mlp",
+      "vehicle": "x2",
+      "scenario": "gust",
+      "seed": 1,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 114.00220201755603,
+      "gates": 4,
+      "collisions": 0,
+      "termination_reason": "time_limit",
+      "mean_position_error_m": 0.20063213252205334,
+      "max_position_error_m": 0.36097390986287897,
+      "mean_saturation": 0.06,
+      "action_rms": 0.12027475904634778,
+      "gain_min": 1.0,
+      "gain_max": 1.0
+    },
+    "nominal": {
+      "kind": "eval",
+      "arm": "residual",
+      "mode": "mlp",
+      "vehicle": "x2",
+      "scenario": "nominal",
+      "seed": 1,
+      "samples": 600,
+      "episodes": 1,
+      "return_sum": 127.0618059363749,
+      "gates": 4,
+      "collisions": 0,
+      "termination_reason": "time_limit",
+      "mean_position_error_m": 0.061680006260783765,
+      "max_position_error_m": 0.17720701120007398,
+      "mean_saturation": 0.07516666666666666,
+      "action_rms": 0.11975961437638794,
+      "gain_min": 1.0,
+      "gain_max": 1.0
+    }
+  },
+  "wall_s": 1251.8532950878143,
+  "note": "Exploratory dual racing pilot; see PREREGISTRATION.md"
+}

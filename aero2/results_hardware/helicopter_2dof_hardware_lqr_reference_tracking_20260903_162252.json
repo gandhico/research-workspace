@@ -1,0 +1,33 @@
+{
+  "config": {
+    "execution_mode": "hardware",
+    "model_variant": "helicopter_2dof",
+    "controller": "lqr",
+    "application": "reference_tracking",
+    "duration_s": 15.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 15.0,
+    "out": "results_hardware",
+    "controller_kwargs": {}
+  },
+  "metrics": {
+    "n": 3001,
+    "duration_s": 14.995679899999232,
+    "realized_hz": 200.05759872258548,
+    "pitch_rms": 0.20270276282290592,
+    "yaw_rms": 0.5069512249820899,
+    "tail_pitch_mae": 0.2092038907903003,
+    "tail_yaw_mae": 0.6940424489018481,
+    "pitch_sat_frac": 0.0,
+    "yaw_sat_frac": 0.0,
+    "theta_range": [
+      -0.3621558197888234,
+      0.6784967467127956
+    ],
+    "psi_range": [
+      -0.4878058905476339,
+      0.16873788666742054
+    ]
+  }
+}

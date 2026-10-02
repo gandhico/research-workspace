@@ -1,0 +1,85 @@
+seed,capability,app,candidate,metric,error,rate_hz,status
+1,NEF repr,comm_channel,T001_LIF,decode_rmse,0.19332651627989994,118.155,ok
+1,NEF repr,comm_channel,T002_HyperLIF_theta1,decode_rmse,0.5018342012373846,6.225,ok
+1,NEF repr,comm_channel,T023_HyperLIF_theta095_origin_r2c140,decode_rmse,0.20149308986053838,34.555,ok
+1,NEF repr,comm_channel,T033_Adaptive_theta095_origin_r2c140,decode_rmse,0.20229865920918622,62.76,ok
+1,NEF repr,function_square,T001_LIF,function_rmse,0.19399512281371598,118.045,ok
+1,NEF repr,function_square,T002_HyperLIF_theta1,function_rmse,0.4525059228284592,5.795,ok
+1,NEF repr,function_square,T023_HyperLIF_theta095_origin_r2c140,function_rmse,0.22424993077765973,32.24,ok
+1,NEF repr,function_square,T033_Adaptive_theta095_origin_r2c140,function_rmse,0.2006608564678602,61.62,ok
+1,NEF repr,transform_2d,T001_LIF,transform_rmse,0.19666756673218788,116.39,ok
+1,NEF repr,transform_2d,T002_HyperLIF_theta1,transform_rmse,0.39973186461463484,6.046666666666667,ok
+1,NEF repr,transform_2d,T023_HyperLIF_theta095_origin_r2c140,transform_rmse,0.2049186027073566,32.43666666666667,ok
+1,NEF repr,transform_2d,T033_Adaptive_theta095_origin_r2c140,transform_rmse,0.20902604825243365,60.78333333333333,ok
+1,NEF dyn,integrator,T001_LIF,hold_err_to_0.3,0.010860784856960126,83.32666666666667,ok
+1,NEF dyn,integrator,T002_HyperLIF_theta1,hold_err_to_0.3,0.10866460525390942,14.206666666666667,ok
+1,NEF dyn,integrator,T023_HyperLIF_theta095_origin_r2c140,hold_err_to_0.3,0.00804339315795205,38.516666666666666,ok
+1,NEF dyn,integrator,T033_Adaptive_theta095_origin_r2c140,hold_err_to_0.3,0.015914989344065655,45.766666666666666,ok
+1,NEF dyn,oscillator,T001_LIF,osc_amp_err,0.14954917476129737,116.5,ok
+1,NEF dyn,oscillator,T002_HyperLIF_theta1,osc_amp_err,0.028317906703028584,8.455555555555556,ok
+1,NEF dyn,oscillator,T023_HyperLIF_theta095_origin_r2c140,osc_amp_err,0.04004522154060963,39.775555555555556,ok
+1,NEF dyn,oscillator,T033_Adaptive_theta095_origin_r2c140,osc_amp_err,0.15859996393151432,61.81777777777778,ok
+1,memory,working_memory,T001_LIF,hold_err_to_0.6,0.02615625897400531,106.11666666666666,ok
+1,memory,working_memory,T002_HyperLIF_theta1,hold_err_to_0.6,0.08377451427841642,7.4366666666666665,ok
+1,memory,working_memory,T023_HyperLIF_theta095_origin_r2c140,hold_err_to_0.6,0.04744403976567235,41.42666666666667,ok
+1,memory,working_memory,T033_Adaptive_theta095_origin_r2c140,hold_err_to_0.6,0.022888054453503615,56.03333333333333,ok
+1,online learn,pes_learning,T001_LIF,pes_late_rmse,0.046645611450123386,117.03625,ok
+1,online learn,pes_learning,T002_HyperLIF_theta1,pes_late_rmse,0.5399646660686636,5.99,ok
+1,online learn,pes_learning,T023_HyperLIF_theta095_origin_r2c140,pes_late_rmse,0.4357543793787693,33.59,ok
+1,online learn,pes_learning,T033_Adaptive_theta095_origin_r2c140,pes_late_rmse,0.10603786827555793,62.3525,ok
+2,NEF repr,comm_channel,T001_LIF,decode_rmse,0.19367123617428847,121.75,ok
+2,NEF repr,comm_channel,T002_HyperLIF_theta1,decode_rmse,0.5254078774874282,5.87,ok
+2,NEF repr,comm_channel,T023_HyperLIF_theta095_origin_r2c140,decode_rmse,0.20400642396764804,32.105,ok
+2,NEF repr,comm_channel,T033_Adaptive_theta095_origin_r2c140,decode_rmse,0.20435219220588177,63.015,ok
+2,NEF repr,function_square,T001_LIF,function_rmse,0.19369695968055106,113.815,ok
+2,NEF repr,function_square,T002_HyperLIF_theta1,function_rmse,0.4038084881637967,5.77,ok
+2,NEF repr,function_square,T023_HyperLIF_theta095_origin_r2c140,function_rmse,0.22792060102441006,31.71,ok
+2,NEF repr,function_square,T033_Adaptive_theta095_origin_r2c140,function_rmse,0.19969167731532714,59.82,ok
+2,NEF repr,transform_2d,T001_LIF,transform_rmse,0.19514894172948946,119.9,ok
+2,NEF repr,transform_2d,T002_HyperLIF_theta1,transform_rmse,0.43716849865753316,6.076666666666667,ok
+2,NEF repr,transform_2d,T023_HyperLIF_theta095_origin_r2c140,transform_rmse,0.21222761984557026,33.03333333333333,ok
+2,NEF repr,transform_2d,T033_Adaptive_theta095_origin_r2c140,transform_rmse,0.20811425831295752,62.57,ok
+2,NEF dyn,integrator,T001_LIF,hold_err_to_0.3,0.01618134370904528,88.34,ok
+2,NEF dyn,integrator,T002_HyperLIF_theta1,hold_err_to_0.3,0.050237340214210946,12.956666666666667,ok
+2,NEF dyn,integrator,T023_HyperLIF_theta095_origin_r2c140,hold_err_to_0.3,0.000602353790244925,40.14,ok
+2,NEF dyn,integrator,T033_Adaptive_theta095_origin_r2c140,hold_err_to_0.3,0.005443528278755716,47.223333333333336,ok
+2,NEF dyn,oscillator,T001_LIF,osc_amp_err,0.15715732848751063,115.68888888888888,ok
+2,NEF dyn,oscillator,T002_HyperLIF_theta1,osc_amp_err,0.06541412066834729,7.635555555555555,ok
+2,NEF dyn,oscillator,T023_HyperLIF_theta095_origin_r2c140,osc_amp_err,0.10098850766958734,37.78888888888889,ok
+2,NEF dyn,oscillator,T033_Adaptive_theta095_origin_r2c140,osc_amp_err,0.1716073622008052,60.77777777777778,ok
+2,memory,working_memory,T001_LIF,hold_err_to_0.6,0.03356496148141763,103.39,ok
+2,memory,working_memory,T002_HyperLIF_theta1,hold_err_to_0.6,0.10085605017172306,6.593333333333334,ok
+2,memory,working_memory,T023_HyperLIF_theta095_origin_r2c140,hold_err_to_0.6,0.017266859464759143,41.29666666666667,ok
+2,memory,working_memory,T033_Adaptive_theta095_origin_r2c140,hold_err_to_0.6,0.03895114244019493,54.99,ok
+2,online learn,pes_learning,T001_LIF,pes_late_rmse,0.04959487090253644,119.06125,ok
+2,online learn,pes_learning,T002_HyperLIF_theta1,pes_late_rmse,0.6086577427036537,6.1275,ok
+2,online learn,pes_learning,T023_HyperLIF_theta095_origin_r2c140,pes_late_rmse,0.45251219480465354,34.225,ok
+2,online learn,pes_learning,T033_Adaptive_theta095_origin_r2c140,pes_late_rmse,0.10037067556190164,63.77875,ok
+3,NEF repr,comm_channel,T001_LIF,decode_rmse,0.193106200895529,120.985,ok
+3,NEF repr,comm_channel,T002_HyperLIF_theta1,decode_rmse,0.5003964166286126,6.225,ok
+3,NEF repr,comm_channel,T023_HyperLIF_theta095_origin_r2c140,decode_rmse,0.20348654861820253,34.13,ok
+3,NEF repr,comm_channel,T033_Adaptive_theta095_origin_r2c140,decode_rmse,0.20442990595538446,63.84,ok
+3,NEF repr,function_square,T001_LIF,function_rmse,0.1935292195963317,123.595,ok
+3,NEF repr,function_square,T002_HyperLIF_theta1,function_rmse,0.4258809650506746,6.065,ok
+3,NEF repr,function_square,T023_HyperLIF_theta095_origin_r2c140,function_rmse,0.2375332231326832,32.77,ok
+3,NEF repr,function_square,T033_Adaptive_theta095_origin_r2c140,function_rmse,0.20087173500512673,64.075,ok
+3,NEF repr,transform_2d,T001_LIF,transform_rmse,0.1969379173819748,118.43666666666667,ok
+3,NEF repr,transform_2d,T002_HyperLIF_theta1,transform_rmse,0.4094355514497886,6.136666666666667,ok
+3,NEF repr,transform_2d,T023_HyperLIF_theta095_origin_r2c140,transform_rmse,0.2067015954266988,33.916666666666664,ok
+3,NEF repr,transform_2d,T033_Adaptive_theta095_origin_r2c140,transform_rmse,0.2089458350477319,62.53,ok
+3,NEF dyn,integrator,T001_LIF,hold_err_to_0.3,0.008467381765855764,90.58,ok
+3,NEF dyn,integrator,T002_HyperLIF_theta1,hold_err_to_0.3,0.21640462558188045,11.123333333333333,ok
+3,NEF dyn,integrator,T023_HyperLIF_theta095_origin_r2c140,hold_err_to_0.3,0.0026037863305229947,38.61333333333334,ok
+3,NEF dyn,integrator,T033_Adaptive_theta095_origin_r2c140,hold_err_to_0.3,0.005491153979822083,46.89333333333333,ok
+3,NEF dyn,oscillator,T001_LIF,osc_amp_err,0.15626619579673062,112.35111111111111,ok
+3,NEF dyn,oscillator,T002_HyperLIF_theta1,osc_amp_err,0.04504703873664051,7.986666666666666,ok
+3,NEF dyn,oscillator,T023_HyperLIF_theta095_origin_r2c140,osc_amp_err,0.060693998674356375,37.31333333333333,ok
+3,NEF dyn,oscillator,T033_Adaptive_theta095_origin_r2c140,osc_amp_err,0.16645973466917885,59.724444444444444,ok
+3,memory,working_memory,T001_LIF,hold_err_to_0.6,0.027843486205657353,100.91666666666667,ok
+3,memory,working_memory,T002_HyperLIF_theta1,hold_err_to_0.6,0.061476191215555365,8.496666666666666,ok
+3,memory,working_memory,T023_HyperLIF_theta095_origin_r2c140,hold_err_to_0.6,0.045718284977599666,39.48,ok
+3,memory,working_memory,T033_Adaptive_theta095_origin_r2c140,hold_err_to_0.6,0.025451082657392043,53.57666666666667,ok
+3,online learn,pes_learning,T001_LIF,pes_late_rmse,0.0504357259038767,117.61125,ok
+3,online learn,pes_learning,T002_HyperLIF_theta1,pes_late_rmse,0.5527928206503288,5.8975,ok
+3,online learn,pes_learning,T023_HyperLIF_theta095_origin_r2c140,pes_late_rmse,0.4295370073818657,33.97625,ok
+3,online learn,pes_learning,T033_Adaptive_theta095_origin_r2c140,pes_late_rmse,0.10116879424103949,62.64,ok

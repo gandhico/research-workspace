@@ -1,0 +1,82 @@
+{
+  "schema_version": 2,
+  "purpose": "Traceable parameter ledger for the Omnicopter MuJoCo virtual twin",
+  "model": {
+    "canonical_xml": "../Omnidrone/mujoco model=omnidrone.xml",
+    "timestep_s": {"value": 0.002, "status": "configured"},
+    "gravity_world_m_s2": {"value": [0.0, 0.0, -9.81], "status": "configured"},
+    "mass_kg": {
+      "value": 2.5,
+      "status": "configured_unverified",
+      "source": "mesh geom mass attribute; replace with scale measurement"
+    },
+    "com_body_m": {
+      "value": [0.00326881, 0.00071909, 0.00103101],
+      "status": "mesh_inferred_unverified"
+    },
+    "inertia_body_kg_m2": {
+      "value": [
+        [0.0862437890, 0.0000215936, -0.0000369610],
+        [0.0000215936, 0.0862749670, 0.0000039037],
+        [-0.0000369610, 0.0000039037, 0.0861079624]
+      ],
+      "status": "mesh_uniform_density_inferred_unverified",
+      "required_measurement": "CAD component mass properties or bifilar/trifilar pendulum identification"
+    }
+  },
+  "geometry": {
+    "stl_units": {"value": "millimetres", "status": "identified_from_scale_and_dimensions"},
+    "stl_to_mujoco_scale": {"value": [0.001, 0.001, 0.001], "status": "configured"},
+    "mesh_geom_translation_body_m": {"value": [0.1936, -0.2036, 0.1786], "status": "configured"},
+    "rotor_site_corner_coordinate_m": {"value": 0.0973, "status": "configured_from_model_unverified"},
+    "rotor_site_cube_span_m": {"value": 0.1946, "status": "derived_from_configured_sites"},
+    "rotor_frames": {"status": "hardware_visually_confirmed_and_geometry_regression_tested"}
+  },
+  "propulsion": {
+    "command_variable": {"value": "signed axial thrust in newtons", "status": "model_definition"},
+    "per_rotor_command_bounds_N": {"value": [-10.0, 10.0], "status": "configured_unverified"},
+    "thrust_axis": {"value": "site local +Z", "status": "verified"},
+    "thrust_curve_forward": {"value": null, "status": "measurement_required"},
+    "thrust_curve_reverse": {"value": null, "status": "measurement_required"},
+    "motor_time_constant_s": {"value": null, "status": "measurement_required"},
+    "rotor_reaction_torque_per_thrust_m": {"value": null, "status": "measurement_required"},
+    "rotor_inertia_kg_m2": {"value": null, "status": "measurement_required"},
+    "esc_deadband_and_delay": {"value": null, "status": "measurement_required"},
+    "battery_voltage_sag_model": {"value": null, "status": "measurement_required"}
+  },
+  "aerodynamics": {
+    "mujoco_fluid_density_kg_m3": {"value": 0.0, "status": "disabled_in_canonical_model"},
+    "mujoco_fluid_viscosity_Pa_s": {"value": 0.0, "status": "disabled_in_canonical_model"},
+    "wind_world_m_s": {"value": [0.0, 0.0, 0.0], "status": "configured_zero"},
+    "identified_body_drag": {"value": null, "status": "measurement_required"},
+    "rotor_inflow_induced_velocity": {"value": null, "status": "not_native_requires_custom_model"},
+    "ground_effect": {"value": null, "status": "not_native_requires_custom_model"},
+    "rotor_rotor_interference": {"value": null, "status": "not_native_requires_custom_model_or_CFD"}
+  },
+  "sensing_and_computation": {
+    "imu_pose_body_m": {"value": [0.0, 0.0, 0.0], "status": "configured_unverified"},
+    "imu_orientation": {"value": [1.0, 0.0, 0.0, 0.0], "status": "configured_unverified"},
+    "sensor_noise_bias_bandwidth": {"value": null, "status": "measurement_required"},
+    "estimator_delay_s": {"value": null, "status": "measurement_required"},
+    "control_transport_delay_s": {"value": null, "status": "measurement_required"}
+  },
+  "validation": {
+    "hardware_revision": {"value": null, "status": "must_freeze_before_identification"},
+    "parameter_measurement_ledger": {
+      "value": "identification/parameter_measurements.csv",
+      "status": "template_ready"
+    },
+    "common_log_schema": {
+      "value": "../hardware/COMMON_LOG_SCHEMA.md",
+      "status": "defined"
+    },
+    "parameter_acceptance_rule": {
+      "value": "measurement uncertainty plus controller-sensitivity-derived tolerance",
+      "status": "must_preregister_before_confirmatory_test"
+    },
+    "trajectory_acceptance_gates": {
+      "value": null,
+      "status": "must_preregister_after_sensor-floor and repeatability pilot"
+    }
+  }
+}

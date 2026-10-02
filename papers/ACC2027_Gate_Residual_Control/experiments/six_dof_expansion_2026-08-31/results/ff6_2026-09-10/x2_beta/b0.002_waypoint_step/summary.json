@@ -1,0 +1,14 @@
+{
+  "platform": "x2-6dof-cascade",
+  "controller": "online-pes-adaptive",
+  "mission": "waypoint_step",
+  "duration": 15.0,
+  "dt": 0.0005,
+  "pos_err_mean_m": 0.02721355460726683,
+  "pos_err_max_m": 0.6051005393666475,
+  "qerr_mean_rad": 0.012014767373024074,
+  "qerr_max_rad": 0.24311515926507712,
+  "pos_ff": "fd",
+  "actuator_scale": 1.0,
+  "authority_scale": 1.0
+}

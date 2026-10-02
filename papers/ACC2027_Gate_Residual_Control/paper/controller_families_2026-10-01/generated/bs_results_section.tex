@@ -1,0 +1,20 @@
+\subsection{Results: recursive backstepping with and without the residual}
+Same protocol as A5 (Table~\ref{tab:results}): 45-s missions, $\rho=3$, noise-free, seed 1, gate on, the residual unchanged. Run by \code{experiments/backstepping_true_2026-10-01/run_campaign_true_bs.py}; numbers computed from the run summaries by \code{tools/build_family_tables.py}.
+\begin{table}[H]\centering\small
+\caption{Reduction of mean quaternion-angle error by the gated CMG--PES residual on the recursive backstepping laws (\%, positive is better; 5-mission = reduction of geometric means; last column: baseline geometric mean, mrad).}\label{tab:bsres}
+\begin{tabular}{@{}llrrrrrrr@{}}\toprule
+Family & Platform & Roll & Full3 & Hard45 & Hardstep & Yaw360 & 5-mission & base (mrad)\\\midrule
+Recursive backstepping & X2 & -114.8 & +7.2 & +11.8 & -2.9 & +43.5 & \textbf{-0.4} & 3.30\\
+ & CF2 & -1416.5 & -18.2 & -38.1 & -0.8 & -1467.9 & \textbf{-230.0} & 0.59\\\addlinespace
+Adaptive recursive backstepping & X2 & -114.7 & +6.5 & +11.7 & -0.8 & +30.9 & \textbf{-4.3} & 2.63\\
+ & CF2 & -669.0 & -9.6 & -19.6 & -0.4 & -2494.5 & \textbf{-204.7} & 0.88\\\addlinespace
+\bottomrule\end{tabular}\end{table}
+\begin{table}[H]\centering\small
+\caption{Nominal laws alone (no residual): error reduction of the recursive designs relative to the computed-torque PD+ff (the paper's primary baseline), \% (positive: the recursive law tracks better). The linearizations are identical, so these differences come from the backstepping structure.}\label{tab:bsvsct}
+\begin{tabular}{@{}llrrrrrr@{}}\toprule
+Platform & law & Roll & Full3 & Hard45 & Hardstep & Yaw360 & 5-mission\\\midrule
+X2 & recursive & +29.6 & +30.5 & +31.0 & -2.4 & +41.5 & \textbf{+27.4}\\
+X2 & adaptive & +36.5 & +30.8 & +29.1 & -7.9 & +80.7 & \textbf{+42.2}\\
+CF2 & recursive & +95.0 & +64.8 & +73.3 & -0.5 & +97.9 & \textbf{+84.2}\\
+CF2 & adaptive & +91.2 & +47.5 & +58.9 & -695.8 & +99.6 & \textbf{+76.7}\\
+\bottomrule\end{tabular}\end{table}

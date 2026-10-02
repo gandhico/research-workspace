@@ -1,0 +1,2000 @@
+{
+  "status": "frozen_training_only_predictor",
+  "training_file": "rich_R3_pitch_training_01_revised_20260712_181333.csv",
+  "validation_files_opened": [],
+  "fit_window_s": [
+    10.0,
+    50.0
+  ],
+  "candidate_count": 25,
+  "selection_rule": "minimum bidirectional mean recursive 0.1/0.5/1.0/2.0-s rate NRMSE with scaled condition < 1e4",
+  "claim_boundary": "qdot/short-horizon predictor; full expanded state dynamics still required before LQR synthesis",
+  "selected": {
+    "name": "local",
+    "fields": [
+      "pitch_deg",
+      "q_deg_s",
+      "total_pitch_ratio"
+    ],
+    "delay_samples": 3,
+    "temporal_folds": [
+      {
+        "rmse": 0.09497570209975217,
+        "nrmse": 0.5157913564780413,
+        "condition_scaled": 2.2828902438047454,
+        "multistep": {
+          "1": {
+            "rate_rmse_deg_s": 0.00954362284499575,
+            "rate_nrmse": 0.2876952601902488
+          },
+          "5": {
+            "rate_rmse_deg_s": 0.0228268791858064,
+            "rate_nrmse": 0.6881228495042095
+          },
+          "10": {
+            "rate_rmse_deg_s": 0.029665493134554785,
+            "rate_nrmse": 0.894274837201153
+          },
+          "20": {
+            "rate_rmse_deg_s": 0.036897349892163214,
+            "rate_nrmse": 1.1122812426648523
+          }
+        },
+        "multistep_mean_nrmse": 0.7455935473901159
+      },
+      {
+        "rmse": 0.10058990918728423,
+        "nrmse": 0.5094611712264244,
+        "condition_scaled": 2.2112716831816597,
+        "multistep": {
+          "1": {
+            "rate_rmse_deg_s": 0.010024958912185931,
+            "rate_nrmse": 0.279806615947503
+          },
+          "5": {
+            "rate_rmse_deg_s": 0.02401277302659261,
+            "rate_nrmse": 0.6702204786015729
+          },
+          "10": {
+            "rate_rmse_deg_s": 0.03151678444932608,
+            "rate_nrmse": 0.8796649322515708
+          },
+          "20": {
+            "rate_rmse_deg_s": 0.038259469214955,
+            "rate_nrmse": 1.0678599985054662
+          }
+        },
+        "multistep_mean_nrmse": 0.7243880063265282
+      }
+    ],
+    "temporal_mean_nrmse": 0.5126262638522329,
+    "temporal_multistep_mean_nrmse": 0.734990776858322,
+    "beta": [
+      -7.631572467985915,
+      -1.4108395610437894,
+      -274.5110200542849
+    ],
+    "training_rmse": 0.09780569735349451,
+    "training_nrmse": 0.5122910878070123,
+    "condition_scaled": 2.2371033940635745,
+    "residual_lag1": 0.6841160551127956,
+    "sample_count": 400
+  },
+  "candidates": [
+    {
+      "name": "local",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 0,
+      "temporal_folds": [
+        {
+          "rmse": 0.1419643692843631,
+          "nrmse": 0.7709760811015083,
+          "condition_scaled": 7.10664709157905,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.014255791209134868,
+              "rate_nrmse": 0.42974493310792017
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0646462359098894,
+              "rate_nrmse": 1.9487794061526662
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.1268049793747399,
+              "rate_nrmse": 3.822572635900426
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.6579415668101654,
+              "rate_nrmse": 19.83383808515484
+            }
+          },
+          "multistep_mean_nrmse": 6.508733765078963
+        },
+        {
+          "rmse": 0.14617140038862014,
+          "nrmse": 0.7403193167531636,
+          "condition_scaled": 7.246984515669752,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.01460793845815037,
+              "rate_nrmse": 0.4077221524545069
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.06029458287507339,
+              "rate_nrmse": 1.6828820289460804
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.11633958207668672,
+              "rate_nrmse": 3.247153933175216
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.4455268970627309,
+              "rate_nrmse": 12.435100679483181
+            }
+          },
+          "multistep_mean_nrmse": 4.443214698514746
+        }
+      ],
+      "temporal_mean_nrmse": 0.755647698927336,
+      "temporal_multistep_mean_nrmse": 5.4759742317968545,
+      "beta": [
+        -13.626128224093302,
+        2.6896674296542735,
+        -483.743676444289
+      ],
+      "training_rmse": 0.14380487819590146,
+      "training_nrmse": 0.7532276695157278,
+      "condition_scaled": 7.14866425352277,
+      "residual_lag1": 0.7096833255801818,
+      "sample_count": 400
+    },
+    {
+      "name": "local",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 1,
+      "temporal_folds": [
+        {
+          "rmse": 0.08909808843683292,
+          "nrmse": 0.48387137845179934,
+          "condition_scaled": 4.096206601401567,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.008943541545064783,
+              "rate_nrmse": 0.2696056365197716
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.040657573812033096,
+              "rate_nrmse": 1.2256342760538246
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.05971739431702577,
+              "rate_nrmse": 1.8001980563313076
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.2853036719599419,
+              "rate_nrmse": 8.600561387522584
+            }
+          },
+          "multistep_mean_nrmse": 2.973999839106872
+        },
+        {
+          "rmse": 0.09395112686526509,
+          "nrmse": 0.4758375021663801,
+          "condition_scaled": 4.182681350711363,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.009308304580670012,
+              "rate_nrmse": 0.2598040777763151
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.04441101279225458,
+              "rate_nrmse": 1.239555723774277
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.06363767224756128,
+              "rate_nrmse": 1.7761909923363286
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.3161291635505391,
+              "rate_nrmse": 8.823480697548668
+            }
+          },
+          "multistep_mean_nrmse": 3.0247578728588973
+        }
+      ],
+      "temporal_mean_nrmse": 0.47985444030908975,
+      "temporal_multistep_mean_nrmse": 2.9993788559828847,
+      "beta": [
+        -11.485772962862583,
+        2.3559484062132596,
+        -461.15993944721635
+      ],
+      "training_rmse": 0.09140122398677923,
+      "training_nrmse": 0.47874544868123203,
+      "condition_scaled": 4.121836875744864,
+      "residual_lag1": 0.5821558415251022,
+      "sample_count": 400
+    },
+    {
+      "name": "local",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 2,
+      "temporal_folds": [
+        {
+          "rmse": 0.08085637137805075,
+          "nrmse": 0.439112494574398,
+          "condition_scaled": 2.7468854407378642,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.00812501909092106,
+              "rate_nrmse": 0.24493104132242288
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.025443776303309986,
+              "rate_nrmse": 0.767009967042187
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.03335411086289405,
+              "rate_nrmse": 1.0054692813166153
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.06358040021060309,
+              "rate_nrmse": 1.9166494819292863
+            }
+          },
+          "multistep_mean_nrmse": 0.9835149429026279
+        },
+        {
+          "rmse": 0.08604447138502201,
+          "nrmse": 0.4357923923338556,
+          "condition_scaled": 2.7388982332583187,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.00854836114209888,
+              "rate_nrmse": 0.23859329739100857
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.027260397088057563,
+              "rate_nrmse": 0.7608649098125184
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.03542287997552901,
+              "rate_nrmse": 0.9886879597101647
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.06384819331942912,
+              "rate_nrmse": 1.7820668457159745
+            }
+          },
+          "multistep_mean_nrmse": 0.9425532531574166
+        }
+      ],
+      "temporal_mean_nrmse": 0.4374524434541268,
+      "temporal_multistep_mean_nrmse": 0.9630340980300223,
+      "beta": [
+        -8.65388787953869,
+        0.22590555599245973,
+        -337.1045605569949
+      ],
+      "training_rmse": 0.08341447359531946,
+      "training_nrmse": 0.43691208767265866,
+      "condition_scaled": 2.731812906671379,
+      "residual_lag1": 0.605703424366089,
+      "sample_count": 400
+    },
+    {
+      "name": "local",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 3,
+      "temporal_folds": [
+        {
+          "rmse": 0.09497570209975217,
+          "nrmse": 0.5157913564780413,
+          "condition_scaled": 2.2828902438047454,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.00954362284499575,
+              "rate_nrmse": 0.2876952601902488
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0228268791858064,
+              "rate_nrmse": 0.6881228495042095
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.029665493134554785,
+              "rate_nrmse": 0.894274837201153
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.036897349892163214,
+              "rate_nrmse": 1.1122812426648523
+            }
+          },
+          "multistep_mean_nrmse": 0.7455935473901159
+        },
+        {
+          "rmse": 0.10058990918728423,
+          "nrmse": 0.5094611712264244,
+          "condition_scaled": 2.2112716831816597,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.010024958912185931,
+              "rate_nrmse": 0.279806615947503
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.02401277302659261,
+              "rate_nrmse": 0.6702204786015729
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.03151678444932608,
+              "rate_nrmse": 0.8796649322515708
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.038259469214955,
+              "rate_nrmse": 1.0678599985054662
+            }
+          },
+          "multistep_mean_nrmse": 0.7243880063265282
+        }
+      ],
+      "temporal_mean_nrmse": 0.5126262638522329,
+      "temporal_multistep_mean_nrmse": 0.734990776858322,
+      "beta": [
+        -7.631572467985915,
+        -1.4108395610437894,
+        -274.5110200542849
+      ],
+      "training_rmse": 0.09780569735349451,
+      "training_nrmse": 0.5122910878070123,
+      "condition_scaled": 2.2371033940635745,
+      "residual_lag1": 0.6841160551127956,
+      "sample_count": 400
+    },
+    {
+      "name": "local",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 4,
+      "temporal_folds": [
+        {
+          "rmse": 0.11748719824382123,
+          "nrmse": 0.6380461529764593,
+          "condition_scaled": 2.401922487995587,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.01180131408765965,
+              "rate_nrmse": 0.35575401314359084
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.024153970682652223,
+              "rate_nrmse": 0.7281284050130931
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.030851797714136927,
+              "rate_nrmse": 0.9300363305282627
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.03201687332130778,
+              "rate_nrmse": 0.9651578703659448
+            }
+          },
+          "multistep_mean_nrmse": 0.7447691547627229
+        },
+        {
+          "rmse": 0.12378546625908102,
+          "nrmse": 0.6269405065645738,
+          "condition_scaled": 2.3006370515464445,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.01236126391063753,
+              "rate_nrmse": 0.3450152219043165
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.02538124000723922,
+              "rate_nrmse": 0.7084157588261311
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.03278564930105014,
+              "rate_nrmse": 0.9150802175774858
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.03400682970155066,
+              "rate_nrmse": 0.949164582243571
+            }
+          },
+          "multistep_mean_nrmse": 0.7294189451378761
+        }
+      ],
+      "temporal_mean_nrmse": 0.6324933297705165,
+      "temporal_multistep_mean_nrmse": 0.7370940499502995,
+      "beta": [
+        -7.448785868143272,
+        -2.533085724311363,
+        -238.61777797574385
+      ],
+      "training_rmse": 0.12064604672787643,
+      "training_nrmse": 0.6319252987324178,
+      "condition_scaled": 2.3434796663067416,
+      "residual_lag1": 0.7355104022912908,
+      "sample_count": 400
+    },
+    {
+      "name": "aerodynamic",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 0,
+      "temporal_folds": [
+        {
+          "rmse": 0.07785619256557565,
+          "nrmse": 0.4228192083427477,
+          "condition_scaled": 437.37987895516073,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.007817948582625012,
+              "rate_nrmse": 0.2356743123824998
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.0927608472311973,
+              "rate_nrmse": 2.7963024642827987
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.701741463168717,
+              "rate_nrmse": 21.15419857967992
+            },
+            "20": {
+              "rate_rmse_deg_s": 32.19497296945521,
+              "rate_nrmse": 970.5267355700463
+            }
+          },
+          "multistep_mean_nrmse": 248.67822773159787
+        },
+        {
+          "rmse": 0.08263944469026184,
+          "nrmse": 0.41854683657199543,
+          "condition_scaled": 86.41120436642993,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.008265005134733027,
+              "rate_nrmse": 0.2306845482156818
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.051540631995197865,
+              "rate_nrmse": 1.438550516635219
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.10151918559716211,
+              "rate_nrmse": 2.833501865145757
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.49072504454577,
+              "rate_nrmse": 13.696626118650064
+            }
+          },
+          "multistep_mean_nrmse": 4.549840762161681
+        }
+      ],
+      "temporal_mean_nrmse": 0.42068302245737155,
+      "temporal_multistep_mean_nrmse": 126.61403424687978,
+      "beta": [
+        -5.813670299203379,
+        2.4055633515416375,
+        -198.88879883169213,
+        -17.271134274717223,
+        1102.8723314645567
+      ],
+      "training_rmse": 0.07737087080597528,
+      "training_nrmse": 0.40525663271448176,
+      "condition_scaled": 70.21906516283093,
+      "residual_lag1": 0.7313096292327906,
+      "sample_count": 400
+    },
+    {
+      "name": "aerodynamic",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 1,
+      "temporal_folds": [
+        {
+          "rmse": 0.10709631978803483,
+          "nrmse": 0.5816156641754451,
+          "condition_scaled": 417.07107347025936,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.010664479138201146,
+              "rate_nrmse": 0.32148379606881095
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.46478588868630144,
+              "rate_nrmse": 14.01110451975547
+            },
+            "10": {
+              "rate_rmse_deg_s": 29.5520707178108,
+              "rate_nrmse": 890.8556857712871
+            },
+            "20": {
+              "rate_rmse_deg_s": 114781.05154747216,
+              "rate_nrmse": 3460107.8674410954
+            }
+          },
+          "multistep_mean_nrmse": 865253.2639287956
+        },
+        {
+          "rmse": 0.09262653742715483,
+          "nrmse": 0.46912880850131905,
+          "condition_scaled": 100.98811405912524,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.009290473538337904,
+              "rate_nrmse": 0.2593063955755732
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.12722482639961274,
+              "rate_nrmse": 3.550971974170616
+            },
+            "10": {
+              "rate_rmse_deg_s": 1.571845803392154,
+              "rate_nrmse": 43.871786297679904
+            },
+            "20": {
+              "rate_rmse_deg_s": 206.04192563182673,
+              "rate_nrmse": 5750.835934526298
+            }
+          },
+          "multistep_mean_nrmse": 1449.629499798431
+        }
+      ],
+      "temporal_mean_nrmse": 0.525372236338382,
+      "temporal_multistep_mean_nrmse": 433351.446714297,
+      "beta": [
+        -6.528438837740171,
+        4.381009664902205,
+        31.930381065085594,
+        -4.057332045703231,
+        -923.8002108052262
+      ],
+      "training_rmse": 0.07953467374850279,
+      "training_nrmse": 0.4165902972475513,
+      "condition_scaled": 88.67875274165192,
+      "residual_lag1": 0.29133781705994954,
+      "sample_count": 400
+    },
+    {
+      "name": "aerodynamic",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 2,
+      "temporal_folds": [
+        {
+          "rmse": 0.08205998785884495,
+          "nrmse": 0.4456490609127666,
+          "condition_scaled": 512.968209023184,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.008232143757189054,
+              "rate_nrmse": 0.2481603452498014
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.054971211549804264,
+              "rate_nrmse": 1.6571230094331322
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.17845140970363,
+              "rate_nrmse": 5.379469157556109
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.8282287398826701,
+              "rate_nrmse": 24.967193977340457
+            }
+          },
+          "multistep_mean_nrmse": 8.062986622394876
+        },
+        {
+          "rmse": 0.08154759502250575,
+          "nrmse": 0.4130169080231732,
+          "condition_scaled": 109.56309374607221,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.008161751116515821,
+              "rate_nrmse": 0.22780262543939797
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.03160898378756629,
+              "rate_nrmse": 0.8822383078685254
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.03066499759594783,
+              "rate_nrmse": 0.8558907104278155
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.12586875180617627,
+              "rate_nrmse": 3.5131225778503357
+            }
+          },
+          "multistep_mean_nrmse": 1.3697635553965186
+        }
+      ],
+      "temporal_mean_nrmse": 0.4293329844679699,
+      "temporal_multistep_mean_nrmse": 4.716375088895697,
+      "beta": [
+        -4.609787695972965,
+        -0.521518164426819,
+        24.5816819297796,
+        -0.5029720094732623,
+        -498.8679495372306
+      ],
+      "training_rmse": 0.07793209937129003,
+      "training_nrmse": 0.40819626097759126,
+      "condition_scaled": 91.49779103154162,
+      "residual_lag1": 0.5270355539026397,
+      "sample_count": 400
+    },
+    {
+      "name": "aerodynamic",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 3,
+      "temporal_folds": [
+        {
+          "rmse": 0.14485155748819414,
+          "nrmse": 0.7866557411317898,
+          "condition_scaled": 483.43272461795266,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.01441245940968805,
+              "rate_nrmse": 0.4344677411498704
+            },
+            "5": {
+              "rate_rmse_deg_s": 1.712351845353991,
+              "rate_nrmse": 51.61933970857673
+            },
+            "10": {
+              "rate_rmse_deg_s": 421.3647057047861,
+              "rate_nrmse": 12702.160449088875
+            },
+            "20": {
+              "rate_rmse_deg_s": 25709866.66004485,
+              "rate_nrmse": 775031337.5068731
+            }
+          },
+          "multistep_mean_nrmse": 193761022.9302824
+        },
+        {
+          "rmse": 0.10861551566003359,
+          "nrmse": 0.550108736240094,
+          "condition_scaled": 109.10246923260154,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.010872824492163202,
+              "rate_nrmse": 0.3034713911141553
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.16528276384741797,
+              "rate_nrmse": 4.613207019769437
+            },
+            "10": {
+              "rate_rmse_deg_s": 1.9412466322208681,
+              "rate_nrmse": 54.182132379709635
+            },
+            "20": {
+              "rate_rmse_deg_s": 231.58367110384657,
+              "rate_nrmse": 6463.731561183783
+            }
+          },
+          "multistep_mean_nrmse": 1630.707592993594
+        }
+      ],
+      "temporal_mean_nrmse": 0.6683822386859419,
+      "temporal_multistep_mean_nrmse": 96881326.8189377,
+      "beta": [
+        -7.76952693842638,
+        4.225706534238512,
+        -76.18911275001601,
+        -13.148795202211796,
+        -222.79624874075512
+      ],
+      "training_rmse": 0.09578513721815936,
+      "training_nrmse": 0.5017077069026344,
+      "condition_scaled": 90.64086052378121,
+      "residual_lag1": 0.683050402029347,
+      "sample_count": 400
+    },
+    {
+      "name": "aerodynamic",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 4,
+      "temporal_folds": [
+        {
+          "rmse": 0.18864583015319186,
+          "nrmse": 1.0244924383548717,
+          "condition_scaled": 381.04871722385366,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.01872676944452985,
+              "rate_nrmse": 0.564523860107468
+            },
+            "5": {
+              "rate_rmse_deg_s": 9.053376976852679,
+              "rate_nrmse": 272.91665725472194
+            },
+            "10": {
+              "rate_rmse_deg_s": 14925.688622597978,
+              "rate_nrmse": 449939.1836349201
+            },
+            "20": {
+              "rate_rmse_deg_s": 41022673859.322266,
+              "rate_nrmse": 1236640322165.067
+            }
+          },
+          "multistep_mean_nrmse": 309160193094.4329
+        },
+        {
+          "rmse": 0.1339556232810242,
+          "nrmse": 0.6784496504719311,
+          "condition_scaled": 98.2545078075409,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.013430320112632803,
+              "rate_nrmse": 0.3748536482518179
+            },
+            "5": {
+              "rate_rmse_deg_s": 1.1306460333008452,
+              "rate_nrmse": 31.557460053808324
+            },
+            "10": {
+              "rate_rmse_deg_s": 176.50391771359529,
+              "rate_nrmse": 4926.40063161604
+            },
+            "20": {
+              "rate_rmse_deg_s": 4114478.5253626634,
+              "rate_nrmse": 114839205.09349684
+            }
+          },
+          "multistep_mean_nrmse": 28711040.85661054
+        }
+      ],
+      "temporal_mean_nrmse": 0.8514710444134014,
+      "temporal_multistep_mean_nrmse": 154594452067.64478,
+      "beta": [
+        -12.792536493888209,
+        13.51713029392429,
+        -204.54793006133463,
+        -29.58990057713562,
+        45.07970190195007
+      ],
+      "training_rmse": 0.10286124153236526,
+      "training_nrmse": 0.5387712448625825,
+      "condition_scaled": 83.1794389776079,
+      "residual_lag1": 0.7196375909074945,
+      "sample_count": 400
+    },
+    {
+      "name": "coupled",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "p_deg_s",
+        "r_deg_s",
+        "beta_deg",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 0,
+      "temporal_folds": [
+        {
+          "rmse": 0.12429676692619611,
+          "nrmse": 0.6750273659610558,
+          "condition_scaled": 991.8501847062765,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.012367002301571828,
+              "rate_nrmse": 0.37280684732734715
+            },
+            "5": {
+              "rate_rmse_deg_s": 4.154949475819876,
+              "rate_nrmse": 125.2521489939358
+            },
+            "10": {
+              "rate_rmse_deg_s": 4347.784902939003,
+              "rate_nrmse": 131065.22850053271
+            },
+            "20": {
+              "rate_rmse_deg_s": 4618588248.902216,
+              "rate_nrmse": 139228673383.32465
+            }
+          },
+          "multistep_mean_nrmse": 34807201143.544525
+        },
+        {
+          "rmse": 0.08440836851756418,
+          "nrmse": 0.4275059658937038,
+          "condition_scaled": 652.0198947372708,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.00845345007139117,
+              "rate_nrmse": 0.23594423461246716
+            },
+            "5": {
+              "rate_rmse_deg_s": 7.72101860488351,
+              "rate_nrmse": 215.5013408458045
+            },
+            "10": {
+              "rate_rmse_deg_s": 32385.663214046042,
+              "rate_nrmse": 903916.2063918981
+            },
+            "20": {
+              "rate_rmse_deg_s": 601113488170.3688,
+              "rate_nrmse": 16777677833761.357
+            }
+          },
+          "multistep_mean_nrmse": 4194419684473.325
+        }
+      ],
+      "temporal_mean_nrmse": 0.5512666659273798,
+      "temporal_multistep_mean_nrmse": 2114613442808.4348,
+      "beta": [
+        -4.250731117716637,
+        33.86983136378188,
+        -517.944894772786,
+        -79.19812092859394,
+        21.57863520006042,
+        21.796579007413293,
+        -111.38125420644413,
+        323.6945754462437
+      ],
+      "training_rmse": 0.06930175877619367,
+      "training_nrmse": 0.36299187420626206,
+      "condition_scaled": 551.8129031308138,
+      "residual_lag1": 0.5584243410552268,
+      "sample_count": 400
+    },
+    {
+      "name": "coupled",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "p_deg_s",
+        "r_deg_s",
+        "beta_deg",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 1,
+      "temporal_folds": [
+        {
+          "rmse": 0.11567476708854707,
+          "nrmse": 0.6282032531248734,
+          "condition_scaled": 719.645997907989,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.011512772803250176,
+              "rate_nrmse": 0.34705585299601754
+            },
+            "5": {
+              "rate_rmse_deg_s": 2.5835921619730393,
+              "rate_nrmse": 77.88313005831613
+            },
+            "10": {
+              "rate_rmse_deg_s": 1556.4531512586962,
+              "rate_nrmse": 46919.728660495144
+            },
+            "20": {
+              "rate_rmse_deg_s": 572490092.9315575,
+              "rate_nrmse": 17257878786.424057
+            }
+          },
+          "multistep_mean_nrmse": 4314481446.095726
+        },
+        {
+          "rmse": 0.07659456252905861,
+          "nrmse": 0.38793111407404113,
+          "condition_scaled": 501.55006403183626,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.00767429843799355,
+              "rate_nrmse": 0.21419733432483093
+            },
+            "5": {
+              "rate_rmse_deg_s": 4.1452209633829105,
+              "rate_nrmse": 115.69725724351265
+            },
+            "10": {
+              "rate_rmse_deg_s": 9075.064895917887,
+              "rate_nrmse": 253294.1252202179
+            },
+            "20": {
+              "rate_rmse_deg_s": 44998044702.212524,
+              "rate_nrmse": 1255940370695.759
+            }
+          },
+          "multistep_mean_nrmse": 313985156026.4489
+        }
+      ],
+      "temporal_mean_nrmse": 0.5080671835994572,
+      "temporal_multistep_mean_nrmse": 159149818736.2723,
+      "beta": [
+        -3.511854217455011,
+        30.094829466358263,
+        -358.47279715238847,
+        -62.401387072534746,
+        42.561812591819915,
+        34.72028266954709,
+        445.5233561006773,
+        -532.9994301123774
+      ],
+      "training_rmse": 0.063453983122578,
+      "training_nrmse": 0.332362131441741,
+      "condition_scaled": 422.30117233042256,
+      "residual_lag1": 0.2969227795836757,
+      "sample_count": 400
+    },
+    {
+      "name": "coupled",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "p_deg_s",
+        "r_deg_s",
+        "beta_deg",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 2,
+      "temporal_folds": [
+        {
+          "rmse": 0.12490745967991591,
+          "nrmse": 0.6783438988938855,
+          "condition_scaled": 1110.1339773997684,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.012425914964066552,
+              "rate_nrmse": 0.3745827865110511
+            },
+            "5": {
+              "rate_rmse_deg_s": 2.7404569588077687,
+              "rate_nrmse": 82.6118645518132
+            },
+            "10": {
+              "rate_rmse_deg_s": 1603.361998749908,
+              "rate_nrmse": 48333.80938260638
+            },
+            "20": {
+              "rate_rmse_deg_s": 542422954.0099611,
+              "rate_nrmse": 16351496221.257957
+            }
+          },
+          "multistep_mean_nrmse": 4087886159.513447
+        },
+        {
+          "rmse": 0.08625985948856818,
+          "nrmse": 0.4368832758666816,
+          "condition_scaled": 753.6905989057013,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.00863997448897611,
+              "rate_nrmse": 0.2411503174037472
+            },
+            "5": {
+              "rate_rmse_deg_s": 10.770936546301648,
+              "rate_nrmse": 300.6275967817207
+            },
+            "10": {
+              "rate_rmse_deg_s": 67753.22120382632,
+              "rate_nrmse": 1891060.0742254336
+            },
+            "20": {
+              "rate_rmse_deg_s": 2827405208740.8164,
+              "rate_nrmse": 78915703326070.48
+            }
+          },
+          "multistep_mean_nrmse": 19728926304357.855
+        }
+      ],
+      "temporal_mean_nrmse": 0.5576135873802835,
+      "temporal_multistep_mean_nrmse": 9866507095258.684,
+      "beta": [
+        -3.9217574413341447,
+        33.07795976758272,
+        -452.8928105991744,
+        -73.4893493722463,
+        33.501520032075156,
+        27.36769464915828,
+        110.67481953327125,
+        -146.21503163099158
+      ],
+      "training_rmse": 0.06917567543854877,
+      "training_nrmse": 0.36233146922021103,
+      "condition_scaled": 637.1170834228961,
+      "residual_lag1": 0.5296690318466034,
+      "sample_count": 400
+    },
+    {
+      "name": "coupled",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "p_deg_s",
+        "r_deg_s",
+        "beta_deg",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 3,
+      "temporal_folds": [
+        {
+          "rmse": 0.15729695350701578,
+          "nrmse": 0.8542438457999961,
+          "condition_scaled": 860.7205009955212,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.015636828764250252,
+              "rate_nrmse": 0.4713767080852561
+            },
+            "5": {
+              "rate_rmse_deg_s": 38.72894082745734,
+              "rate_nrmse": 1167.4950790925825
+            },
+            "10": {
+              "rate_rmse_deg_s": 567492.7816193319,
+              "rate_nrmse": 17107233.397186335
+            },
+            "20": {
+              "rate_rmse_deg_s": 119930856758696.98,
+              "rate_nrmse": 3615350229197804.5
+            }
+          },
+          "multistep_mean_nrmse": 903837561576551.5
+        },
+        {
+          "rmse": 0.08488874993140341,
+          "nrmse": 0.42993897015533683,
+          "condition_scaled": 592.433327890371,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.008504737879970477,
+              "rate_nrmse": 0.2373757285750504
+            },
+            "5": {
+              "rate_rmse_deg_s": 27.56937026883461,
+              "rate_nrmse": 769.4886598836208
+            },
+            "10": {
+              "rate_rmse_deg_s": 610224.6814608527,
+              "rate_nrmse": 17031980.33855816
+            },
+            "20": {
+              "rate_rmse_deg_s": 315297230437552.75,
+              "rate_nrmse": 8800260613448730.0
+            }
+          },
+          "multistep_mean_nrmse": 2200065157620370.0
+        }
+      ],
+      "temporal_mean_nrmse": 0.6420914079776665,
+      "temporal_multistep_mean_nrmse": 1551951359598460.8,
+      "beta": [
+        -5.576802063189781,
+        59.08552469093918,
+        -816.6368205438171,
+        -129.99291774375183,
+        39.712953160950114,
+        48.111026426128866,
+        175.25424389741664,
+        178.50086013412292
+      ],
+      "training_rmse": 0.06672587238670073,
+      "training_nrmse": 0.34949978043005564,
+      "condition_scaled": 507.42580459091187,
+      "residual_lag1": 0.39822893686076466,
+      "sample_count": 400
+    },
+    {
+      "name": "coupled",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "p_deg_s",
+        "r_deg_s",
+        "beta_deg",
+        "total_pitch_ratio"
+      ],
+      "delay_samples": 4,
+      "temporal_folds": [
+        {
+          "rmse": 0.15114096161921128,
+          "nrmse": 0.8208120591842614,
+          "condition_scaled": 562.1363887605692,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.015007508699437337,
+              "rate_nrmse": 0.4524056734236934
+            },
+            "5": {
+              "rate_rmse_deg_s": 33.78804161322507,
+              "rate_nrmse": 1018.5502488012527
+            },
+            "10": {
+              "rate_rmse_deg_s": 437616.30151871016,
+              "rate_nrmse": 13192069.487001585
+            },
+            "20": {
+              "rate_rmse_deg_s": 72877466808870.88,
+              "rate_nrmse": 2196912233028804.8
+            }
+          },
+          "multistep_mean_nrmse": 549228061555473.3
+        },
+        {
+          "rmse": 0.07486974698344852,
+          "nrmse": 0.3791953814830116,
+          "condition_scaled": 401.490407456881,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.007499666656721271,
+              "rate_nrmse": 0.20932318689114074
+            },
+            "5": {
+              "rate_rmse_deg_s": 16.54276837446902,
+              "rate_nrmse": 461.72518788451094
+            },
+            "10": {
+              "rate_rmse_deg_s": 229246.81088424425,
+              "rate_nrmse": 6398507.45845011
+            },
+            "20": {
+              "rate_rmse_deg_s": 45937747931210.85,
+              "rate_nrmse": 1282168426372012.2
+            }
+          },
+          "multistep_mean_nrmse": 320542108192745.44
+        }
+      ],
+      "temporal_mean_nrmse": 0.6000037203336365,
+      "temporal_multistep_mean_nrmse": 434885084874109.4,
+      "beta": [
+        -6.741494624316909,
+        56.431841525126735,
+        -769.7630606878142,
+        -121.35439494682721,
+        37.21328442166152,
+        45.532932759339964,
+        206.0422040492241,
+        208.03207363018598
+      ],
+      "training_rmse": 0.05959149258407411,
+      "training_nrmse": 0.3121310044915097,
+      "condition_scaled": 339.89778676946133,
+      "residual_lag1": 0.26184727260552987,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_aerodynamic",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "distributed_elv1_wing2l_deg"
+      ],
+      "delay_samples": 0,
+      "temporal_folds": [
+        {
+          "rmse": 0.07785740082206904,
+          "nrmse": 0.42282577010793526,
+          "condition_scaled": 437.3772399090873,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.007818065270720844,
+              "rate_nrmse": 0.2356778299787666
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.09276959938094634,
+              "rate_nrmse": 2.796566300358487
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.7019040360431773,
+              "rate_nrmse": 21.159099385817946
+            },
+            "20": {
+              "rate_rmse_deg_s": 32.21271614517686,
+              "rate_nrmse": 971.0616087140033
+            }
+          },
+          "multistep_mean_nrmse": 248.81323805753965
+        },
+        {
+          "rmse": 0.08263969194595966,
+          "nrmse": 0.4185480888564285,
+          "condition_scaled": 86.41159088224344,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.00826503531629823,
+              "rate_nrmse": 0.23068539061331128
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.05153921270309051,
+              "rate_nrmse": 1.438510902774945
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.1015090408647209,
+              "rate_nrmse": 2.8332187155309874
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.49071386946184936,
+              "rate_nrmse": 13.696314210896412
+            }
+          },
+          "multistep_mean_nrmse": 4.5496823049539135
+        }
+      ],
+      "temporal_mean_nrmse": 0.4206869294821819,
+      "temporal_multistep_mean_nrmse": 126.68146018124678,
+      "beta": [
+        -5.813686321848738,
+        2.4054735355086203,
+        -198.8872485563624,
+        -17.270933300361214,
+        -36.7623001020748
+      ],
+      "training_rmse": 0.07737111320757957,
+      "training_nrmse": 0.4052579023765251,
+      "condition_scaled": 70.21925356099895,
+      "residual_lag1": 0.731310143773295,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_aerodynamic",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "distributed_elv1_wing2l_deg"
+      ],
+      "delay_samples": 1,
+      "temporal_folds": [
+        {
+          "rmse": 0.10709593955592518,
+          "nrmse": 0.5816135992216593,
+          "condition_scaled": 417.0708591385124,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.010664445383055447,
+              "rate_nrmse": 0.32148277851021895
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.46479194051913286,
+              "rate_nrmse": 14.011286953999713
+            },
+            "10": {
+              "rate_rmse_deg_s": 29.553081770080826,
+              "rate_nrmse": 890.8861642332523
+            },
+            "20": {
+              "rate_rmse_deg_s": 114789.98566571593,
+              "rate_nrmse": 3460377.1890094825
+            }
+          },
+          "multistep_mean_nrmse": 865320.601985862
+        },
+        {
+          "rmse": 0.09262658149523556,
+          "nrmse": 0.4691290316944425,
+          "condition_scaled": 100.98756043840669,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.009290476186001493,
+              "rate_nrmse": 0.2593064694745084
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.1272262190452523,
+              "rate_nrmse": 3.5510108443013597
+            },
+            "10": {
+              "rate_rmse_deg_s": 1.5718990238609907,
+              "rate_nrmse": 43.873271734120564
+            },
+            "20": {
+              "rate_rmse_deg_s": 206.05918425581714,
+              "rate_nrmse": 5751.317639959404
+            }
+          },
+          "multistep_mean_nrmse": 1449.750307251825
+        }
+      ],
+      "temporal_mean_nrmse": 0.5253713154580509,
+      "temporal_multistep_mean_nrmse": 433385.1761465569,
+      "beta": [
+        -6.528452412151105,
+        4.381117615187806,
+        31.928661507373405,
+        -4.057559812514176,
+        30.793242987929286
+      ],
+      "training_rmse": 0.07953457828532662,
+      "training_nrmse": 0.41658979722622647,
+      "condition_scaled": 88.67829046244977,
+      "residual_lag1": 0.29133737643908575,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_aerodynamic",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "distributed_elv1_wing2l_deg"
+      ],
+      "delay_samples": 2,
+      "temporal_folds": [
+        {
+          "rmse": 0.08205991214158956,
+          "nrmse": 0.4456486497096378,
+          "condition_scaled": 512.9676460679583,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.00823213700818037,
+              "rate_nrmse": 0.24816014179899024
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.05497081661790191,
+              "rate_nrmse": 1.6571111040971553
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.17844826138206005,
+              "rate_nrmse": 5.379374250495348
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.8281820557086202,
+              "rate_nrmse": 24.965786669463963
+            }
+          },
+          "multistep_mean_nrmse": 8.062608041463864
+        },
+        {
+          "rmse": 0.08154757517427312,
+          "nrmse": 0.41301680749714703,
+          "condition_scaled": 109.56274617658354,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.008161749458378201,
+              "rate_nrmse": 0.2278025791591209
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.03160968037971128,
+              "rate_nrmse": 0.8822577504510329
+            },
+            "10": {
+              "rate_rmse_deg_s": 0.030666335808958795,
+              "rate_nrmse": 0.8559280612895293
+            },
+            "20": {
+              "rate_rmse_deg_s": 0.12587722883647182,
+              "rate_nrmse": 3.513359180232556
+            }
+          },
+          "multistep_mean_nrmse": 1.3698368927830598
+        }
+      ],
+      "temporal_mean_nrmse": 0.42933272860339244,
+      "temporal_multistep_mean_nrmse": 4.716222467123462,
+      "beta": [
+        -4.609802777921753,
+        -0.521445777462202,
+        24.58063620527112,
+        -0.5031136790567294,
+        16.628883731185095
+      ],
+      "training_rmse": 0.07793208197721273,
+      "training_nrmse": 0.40819616987010954,
+      "condition_scaled": 91.49753191407271,
+      "residual_lag1": 0.5270358069256631,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_aerodynamic",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "distributed_elv1_wing2l_deg"
+      ],
+      "delay_samples": 3,
+      "temporal_folds": [
+        {
+          "rmse": 0.1448517088121482,
+          "nrmse": 0.7866565629376392,
+          "condition_scaled": 483.4325680703644,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.01441247373147916,
+              "rate_nrmse": 0.43446817288438955
+            },
+            "5": {
+              "rate_rmse_deg_s": 1.7123672259820364,
+              "rate_nrmse": 51.61980336204034
+            },
+            "10": {
+              "rate_rmse_deg_s": 421.3731431487659,
+              "rate_nrmse": 12702.414798268483
+            },
+            "20": {
+              "rate_rmse_deg_s": 25710952.89825066,
+              "rate_nrmse": 775064082.4705337
+            }
+          },
+          "multistep_mean_nrmse": 193769209.2349009
+        },
+        {
+          "rmse": 0.10861549688160328,
+          "nrmse": 0.5501086411323325,
+          "condition_scaled": 109.10229728565612,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.010872822218660644,
+              "rate_nrmse": 0.30347132765842816
+            },
+            "5": {
+              "rate_rmse_deg_s": 0.16528256132537983,
+              "rate_nrmse": 4.613201367177077
+            },
+            "10": {
+              "rate_rmse_deg_s": 1.9412425510974596,
+              "rate_nrmse": 54.18201847147917
+            },
+            "20": {
+              "rate_rmse_deg_s": 231.5828799763228,
+              "rate_nrmse": 6463.709480024433
+            }
+          },
+          "multistep_mean_nrmse": 1630.702042797687
+        }
+      ],
+      "temporal_mean_nrmse": 0.6683826020349859,
+      "temporal_multistep_mean_nrmse": 96885419.96847184,
+      "beta": [
+        -7.7695333492876175,
+        4.225732649318627,
+        -76.18946119735082,
+        -13.148838938738585,
+        7.42652515402778
+      ],
+      "training_rmse": 0.09578513655170993,
+      "training_nrmse": 0.5017077034118756,
+      "condition_scaled": 90.6407064348718,
+      "residual_lag1": 0.6830503909934371,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_aerodynamic",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "distributed_elv1_wing2l_deg"
+      ],
+      "delay_samples": 4,
+      "temporal_folds": [
+        {
+          "rmse": 0.18864588938068078,
+          "nrmse": 1.024492760005843,
+          "condition_scaled": 381.0485297358481,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.018726774983226314,
+              "rate_nrmse": 0.5645240270730686
+            },
+            "5": {
+              "rate_rmse_deg_s": 9.053376988259375,
+              "rate_nrmse": 272.9166575985801
+            },
+            "10": {
+              "rate_rmse_deg_s": 14925.680365975817,
+              "rate_nrmse": 449938.9347366663
+            },
+            "20": {
+              "rate_rmse_deg_s": 41022605748.03911,
+              "rate_nrmse": 1236638268930.8132
+            }
+          },
+          "multistep_mean_nrmse": 309159679785.8073
+        },
+        {
+          "rmse": 0.13395562417109688,
+          "nrmse": 0.6784496549799127,
+          "condition_scaled": 98.25437494733733,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.013430320395461196,
+              "rate_nrmse": 0.3748536561458408
+            },
+            "5": {
+              "rate_rmse_deg_s": 1.130644651909018,
+              "rate_nrmse": 31.557421497782727
+            },
+            "10": {
+              "rate_rmse_deg_s": 176.50337872839873,
+              "rate_nrmse": 4926.385588000879
+            },
+            "20": {
+              "rate_rmse_deg_s": 4114451.056436076,
+              "rate_nrmse": 114838438.40832043
+            }
+          },
+          "multistep_mean_nrmse": 28710849.181545895
+        }
+      ],
+      "temporal_mean_nrmse": 0.8514712074928779,
+      "temporal_multistep_mean_nrmse": 154594195317.49442,
+      "beta": [
+        -12.792534533407798,
+        13.517122291466926,
+        -204.547830533961,
+        -29.589887889978083,
+        -1.5026511929328767
+      ],
+      "training_rmse": 0.10286124268031897,
+      "training_nrmse": 0.5387712508753862,
+      "condition_scaled": 83.17931294971736,
+      "residual_lag1": 0.7196375560248487,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_coupled",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "p_deg_s",
+        "r_deg_s",
+        "beta_deg",
+        "distributed_elv1_wing2l_deg"
+      ],
+      "delay_samples": 0,
+      "temporal_folds": [
+        {
+          "rmse": 0.12429689696374971,
+          "nrmse": 0.6750280721653237,
+          "condition_scaled": 991.8380846307633,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.012367017742508233,
+              "rate_nrmse": 0.3728073127988236
+            },
+            "5": {
+              "rate_rmse_deg_s": 4.155081334148044,
+              "rate_nrmse": 125.25612390122696
+            },
+            "10": {
+              "rate_rmse_deg_s": 4348.100330408527,
+              "rate_nrmse": 131074.7371524765
+            },
+            "20": {
+              "rate_rmse_deg_s": 4619306206.388994,
+              "rate_nrmse": 139250316418.60788
+            }
+          },
+          "multistep_mean_nrmse": 34812611904.74349
+        },
+        {
+          "rmse": 0.08440842074571787,
+          "nrmse": 0.42750623041542934,
+          "condition_scaled": 652.0166748504801,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.008453455627958031,
+              "rate_nrmse": 0.23594438970179804
+            },
+            "5": {
+              "rate_rmse_deg_s": 7.721084060191827,
+              "rate_nrmse": 215.5031677688349
+            },
+            "10": {
+              "rate_rmse_deg_s": 32386.263651746525,
+              "rate_nrmse": 903932.9652078225
+            },
+            "20": {
+              "rate_rmse_deg_s": 601136739379.6107,
+              "rate_nrmse": 16778326798234.096
+            }
+          },
+          "multistep_mean_nrmse": 4194581925595.7
+        }
+      ],
+      "temporal_mean_nrmse": 0.5512671512903765,
+      "temporal_multistep_mean_nrmse": 2114697268750.222,
+      "beta": [
+        -4.250728723564201,
+        33.87009329006542,
+        -517.9472503191598,
+        -79.19859066831705,
+        21.57917069152848,
+        21.796893472926488,
+        -111.3768886879777,
+        -10.789521805417664
+      ],
+      "training_rmse": 0.06930178555220953,
+      "training_nrmse": 0.3629920144548842,
+      "condition_scaled": 551.8089078464507,
+      "residual_lag1": 0.558423953430763,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_coupled",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "p_deg_s",
+        "r_deg_s",
+        "beta_deg",
+        "distributed_elv1_wing2l_deg"
+      ],
+      "delay_samples": 1,
+      "temporal_folds": [
+        {
+          "rmse": 0.11567539506606435,
+          "nrmse": 0.6282066635274112,
+          "condition_scaled": 719.6440180269785,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.01151283096443582,
+              "rate_nrmse": 0.34705760628171506
+            },
+            "5": {
+              "rate_rmse_deg_s": 2.583681318056823,
+              "rate_nrmse": 77.88581769414775
+            },
+            "10": {
+              "rate_rmse_deg_s": 1556.5673003058764,
+              "rate_nrmse": 46923.169716408855
+            },
+            "20": {
+              "rate_rmse_deg_s": 572575314.8111181,
+              "rate_nrmse": 17260447824.535927
+            }
+          },
+          "multistep_mean_nrmse": 4315123706.48463
+        },
+        {
+          "rmse": 0.07659449621101426,
+          "nrmse": 0.387930778190762,
+          "condition_scaled": 501.54934144766224,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.007674291245262201,
+              "rate_nrmse": 0.21419713356851505
+            },
+            "5": {
+              "rate_rmse_deg_s": 4.145152669634356,
+              "rate_nrmse": 115.69535109678021
+            },
+            "10": {
+              "rate_rmse_deg_s": 9074.748902274838,
+              "rate_nrmse": 253285.30552203287
+            },
+            "20": {
+              "rate_rmse_deg_s": 44994808943.78261,
+              "rate_nrmse": 1255850057446.1758
+            }
+          },
+          "multistep_mean_nrmse": 313962577711.8477
+        }
+      ],
+      "temporal_mean_nrmse": 0.5080687208590866,
+      "temporal_multistep_mean_nrmse": 159138850709.16617,
+      "beta": [
+        -3.5118709127906267,
+        30.094891688372126,
+        -358.4739475477381,
+        -62.401565675011284,
+        42.56151682165565,
+        34.72032938322163,
+        445.5233146486067,
+        17.766550720127768
+      ],
+      "training_rmse": 0.06345398625254883,
+      "training_nrmse": 0.33236214783604323,
+      "condition_scaled": 422.30006151957446,
+      "residual_lag1": 0.29692327579300115,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_coupled",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "p_deg_s",
+        "r_deg_s",
+        "beta_deg",
+        "distributed_elv1_wing2l_deg"
+      ],
+      "delay_samples": 2,
+      "temporal_folds": [
+        {
+          "rmse": 0.12490725623939655,
+          "nrmse": 0.6783427940548674,
+          "condition_scaled": 1110.1305207457397,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.012425894527941805,
+              "rate_nrmse": 0.3745821704581829
+            },
+            "5": {
+              "rate_rmse_deg_s": 2.7404226092879744,
+              "rate_nrmse": 82.61082907564287
+            },
+            "10": {
+              "rate_rmse_deg_s": 1603.3183905997912,
+              "rate_nrmse": 48332.494802357556
+            },
+            "20": {
+              "rate_rmse_deg_s": 542392146.0102382,
+              "rate_nrmse": 16350567505.230492
+            }
+          },
+          "multistep_mean_nrmse": 4087653980.177676
+        },
+        {
+          "rmse": 0.08625995539987924,
+          "nrmse": 0.436883761631996,
+          "condition_scaled": 753.6907114733802,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.008639984079575953,
+              "rate_nrmse": 0.24115058508696774
+            },
+            "5": {
+              "rate_rmse_deg_s": 10.77109370599463,
+              "rate_nrmse": 300.6319832657195
+            },
+            "10": {
+              "rate_rmse_deg_s": 67755.40289520372,
+              "rate_nrmse": 1891120.967410802
+            },
+            "20": {
+              "rate_rmse_deg_s": 2827595873146.281,
+              "rate_nrmse": 78921024960058.4
+            }
+          },
+          "multistep_mean_nrmse": 19730256712870.062
+        }
+      ],
+      "temporal_mean_nrmse": 0.5576132778434317,
+      "temporal_multistep_mean_nrmse": 9867172183425.12,
+      "beta": [
+        -3.92176289676926,
+        33.07799267118652,
+        -452.8932883354657,
+        -73.4894285358439,
+        33.501482665355205,
+        27.367780892718127,
+        110.67678005490144,
+        4.873814046082139
+      ],
+      "training_rmse": 0.06917567697255901,
+      "training_nrmse": 0.362331477255119,
+      "condition_scaled": 637.1158591482832,
+      "residual_lag1": 0.5296691088242789,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_coupled",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "p_deg_s",
+        "r_deg_s",
+        "beta_deg",
+        "distributed_elv1_wing2l_deg"
+      ],
+      "delay_samples": 3,
+      "temporal_folds": [
+        {
+          "rmse": 0.1572968938371404,
+          "nrmse": 0.8542435217465247,
+          "condition_scaled": 860.7198054272625,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.015636822058065707,
+              "rate_nrmse": 0.47137650592539093
+            },
+            "5": {
+              "rate_rmse_deg_s": 38.72909843547296,
+              "rate_nrmse": 1167.4998302316203
+            },
+            "10": {
+              "rate_rmse_deg_s": 567498.4855599008,
+              "rate_nrmse": 17107405.344118092
+            },
+            "20": {
+              "rate_rmse_deg_s": 119933513290436.39,
+              "rate_nrmse": 3615430311112438.5
+            }
+          },
+          "multistep_mean_nrmse": 903857582055253.0
+        },
+        {
+          "rmse": 0.0848886794561784,
+          "nrmse": 0.4299386132170418,
+          "condition_scaled": 592.4345502784691,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.008504731270527139,
+              "rate_nrmse": 0.23737554409888545
+            },
+            "5": {
+              "rate_rmse_deg_s": 27.569537717238916,
+              "rate_nrmse": 769.4933335358288
+            },
+            "10": {
+              "rate_rmse_deg_s": 610234.0930766996,
+              "rate_nrmse": 17032243.026156563
+            },
+            "20": {
+              "rate_rmse_deg_s": 315307969807175.5,
+              "rate_nrmse": 8800560359981147.0
+            }
+          },
+          "multistep_mean_nrmse": 2200140094253540.0
+        }
+      ],
+      "temporal_mean_nrmse": 0.6420910674817832,
+      "temporal_multistep_mean_nrmse": 1551998838154396.5,
+      "beta": [
+        -5.576802392444777,
+        59.08563181088902,
+        -816.6382835883743,
+        -129.9931570319318,
+        39.71294251522275,
+        48.111082861127116,
+        175.252973278044,
+        -5.950059958488733
+      ],
+      "training_rmse": 0.06672583113330147,
+      "training_nrmse": 0.34949956435114243,
+      "condition_scaled": 507.4261052044889,
+      "residual_lag1": 0.39822793619192437,
+      "sample_count": 400
+    },
+    {
+      "name": "surface_coupled",
+      "fields": [
+        "pitch_deg",
+        "q_deg_s",
+        "alpha_deg",
+        "tas_m_s",
+        "p_deg_s",
+        "r_deg_s",
+        "beta_deg",
+        "distributed_elv1_wing2l_deg"
+      ],
+      "delay_samples": 4,
+      "temporal_folds": [
+        {
+          "rmse": 0.15114088023709435,
+          "nrmse": 0.8208116172165627,
+          "condition_scaled": 562.1361059479896,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.015007501136212709,
+              "rate_nrmse": 0.45240544542810807
+            },
+            "5": {
+              "rate_rmse_deg_s": 33.787987777811075,
+              "rate_nrmse": 1018.5486259171878
+            },
+            "10": {
+              "rate_rmse_deg_s": 437615.1510498058,
+              "rate_nrmse": 13192034.805785013
+            },
+            "20": {
+              "rate_rmse_deg_s": 72877117086945.31,
+              "rate_nrmse": 2196901690560603.5
+            }
+          },
+          "multistep_mean_nrmse": 549225425938414.3
+        },
+        {
+          "rmse": 0.07486964161069723,
+          "nrmse": 0.37919484779801554,
+          "condition_scaled": 401.49054228936865,
+          "multistep": {
+            "1": {
+              "rate_rmse_deg_s": 0.007499656225358963,
+              "rate_nrmse": 0.2093228957414001
+            },
+            "5": {
+              "rate_rmse_deg_s": 16.542781553444172,
+              "rate_nrmse": 461.7255557228703
+            },
+            "10": {
+              "rate_rmse_deg_s": 229247.82662146163,
+              "rate_nrmse": 6398535.808690343
+            },
+            "20": {
+              "rate_rmse_deg_s": 45938306234533.43,
+              "rate_nrmse": 1282184009175366.5
+            }
+          },
+          "multistep_mean_nrmse": 320546003893591.06
+        }
+      ],
+      "temporal_mean_nrmse": 0.6000032325072892,
+      "temporal_multistep_mean_nrmse": 434885714916002.7,
+      "beta": [
+        -6.741493402016267,
+        56.431864809671566,
+        -769.7633781673591,
+        -121.3544532355623,
+        37.213220552916155,
+        45.53289024668239,
+        206.03958930938816,
+        -6.934405879643463
+      ],
+      "training_rmse": 0.05959144395014619,
+      "training_nrmse": 0.31213074975453103,
+      "condition_scaled": 339.8977410524944,
+      "residual_lag1": 0.2618454536990104,
+      "sample_count": 400
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "status": "pass",
+  "training_model_only": true,
+  "held_out_response_files_opened": [],
+  "fixed": {
+    "t_ini": 5,
+    "horizon": 5,
+    "lambda_g": 10.0,
+    "q_y": 1.0,
+    "disturbance_amplitude": 5e-05,
+    "command_limit": 0.0002,
+    "slew_limit": 5e-05,
+    "uncertainty_cases": 243,
+    "worst_integral_ratio_gate": 0.9,
+    "worst_peak_ratio_gate": 1.1
+  },
+  "grid": {
+    "r_u": [
+      0.001,
+      0.003,
+      0.01
+    ],
+    "r_du": [
+      0.005,
+      0.01,
+      0.02,
+      0.05
+    ]
+  },
+  "selection_rule": "Among fixed-gate passes, choose the least aggressive penalty pair within 2 percent of the minimum worst-case integral ratio.",
+  "results": [
+    {
+      "r_u": 0.001,
+      "r_du": 0.005,
+      "worst_integral_ratio": 0.8823914398131862,
+      "median_integral_ratio": 0.7688248287233148,
+      "worst_peak_ratio": 0.9164686902426136,
+      "maximum_sent_command": 4.3309828684194644e-05,
+      "maximum_base_slew": 1.0899035782037742e-05,
+      "optimizer_nonconverged_updates": 6454,
+      "passes_fixed_gates": false
+    },
+    {
+      "r_u": 0.001,
+      "r_du": 0.01,
+      "worst_integral_ratio": 0.8864671666465676,
+      "median_integral_ratio": 0.7751228844623292,
+      "worst_peak_ratio": 0.9200184020018684,
+      "maximum_sent_command": 4.350270004086648e-05,
+      "maximum_base_slew": 1.0655084124488195e-05,
+      "optimizer_nonconverged_updates": 4964,
+      "passes_fixed_gates": false
+    },
+    {
+      "r_u": 0.001,
+      "r_du": 0.02,
+      "worst_integral_ratio": 0.8927431698596489,
+      "median_integral_ratio": 0.7845638589580679,
+      "worst_peak_ratio": 0.9260226760785017,
+      "maximum_sent_command": 4.382318827588158e-05,
+      "maximum_base_slew": 1.016087664232504e-05,
+      "optimizer_nonconverged_updates": 0,
+      "passes_fixed_gates": true
+    },
+    {
+      "r_u": 0.001,
+      "r_du": 0.05,
+      "worst_integral_ratio": 0.904731233888738,
+      "median_integral_ratio": 0.8038903134137766,
+      "worst_peak_ratio": 0.9378280482424526,
+      "maximum_sent_command": 4.443941564991855e-05,
+      "maximum_base_slew": 9.08631149108625e-06,
+      "optimizer_nonconverged_updates": 0,
+      "passes_fixed_gates": false
+    },
+    {
+      "r_u": 0.003,
+      "r_du": 0.005,
+      "worst_integral_ratio": 0.8832893338220827,
+      "median_integral_ratio": 0.7702072461681169,
+      "worst_peak_ratio": 0.9171100824619974,
+      "maximum_sent_command": 4.3342330068724786e-05,
+      "maximum_base_slew": 1.0852352200693959e-05,
+      "optimizer_nonconverged_updates": 6056,
+      "passes_fixed_gates": false
+    },
+    {
+      "r_u": 0.003,
+      "r_du": 0.01,
+      "worst_integral_ratio": 0.887227290148943,
+      "median_integral_ratio": 0.7762844180132027,
+      "worst_peak_ratio": 0.9206275509123742,
+      "maximum_sent_command": 4.3533352414415255e-05,
+      "maximum_base_slew": 1.060441316780039e-05,
+      "optimizer_nonconverged_updates": 4234,
+      "passes_fixed_gates": false
+    },
+    {
+      "r_u": 0.003,
+      "r_du": 0.02,
+      "worst_integral_ratio": 0.8933373025272697,
+      "median_integral_ratio": 0.7853610549499443,
+      "worst_peak_ratio": 0.926509531761316,
+      "maximum_sent_command": 4.384732769366862e-05,
+      "maximum_base_slew": 1.0117332089194704e-05,
+      "optimizer_nonconverged_updates": 0,
+      "passes_fixed_gates": true
+    },
+    {
+      "r_u": 0.003,
+      "r_du": 0.05,
+      "worst_integral_ratio": 0.9051376421343658,
+      "median_integral_ratio": 0.8045435814401459,
+      "worst_peak_ratio": 0.9381446346898716,
+      "maximum_sent_command": 4.445462094146888e-05,
+      "maximum_base_slew": 9.05665427722162e-06,
+      "optimizer_nonconverged_updates": 0,
+      "passes_fixed_gates": false
+    },
+    {
+      "r_u": 0.01,
+      "r_du": 0.005,
+      "worst_integral_ratio": 0.886236491871104,
+      "median_integral_ratio": 0.7744317882827217,
+      "worst_peak_ratio": 0.9193530806353261,
+      "maximum_sent_command": 4.3456148562284706e-05,
+      "maximum_base_slew": 1.06811071460214e-05,
+      "optimizer_nonconverged_updates": 5194,
+      "passes_fixed_gates": false
+    },
+    {
+      "r_u": 0.01,
+      "r_du": 0.01,
+      "worst_integral_ratio": 0.8897527687171264,
+      "median_integral_ratio": 0.7796281679134475,
+      "worst_peak_ratio": 0.9226779171849561,
+      "maximum_sent_command": 4.3636496141335176e-05,
+      "maximum_base_slew": 1.04314501463185e-05,
+      "optimizer_nonconverged_updates": 2196,
+      "passes_fixed_gates": false
+    },
+    {
+      "r_u": 0.01,
+      "r_du": 0.02,
+      "worst_integral_ratio": 0.895344303745929,
+      "median_integral_ratio": 0.7880561197716921,
+      "worst_peak_ratio": 0.9281541485080503,
+      "maximum_sent_command": 4.392880128058101e-05,
+      "maximum_base_slew": 9.96963361399939e-06,
+      "optimizer_nonconverged_updates": 0,
+      "passes_fixed_gates": true
+    },
+    {
+      "r_u": 0.01,
+      "r_du": 0.05,
+      "worst_integral_ratio": 0.9065344863023748,
+      "median_integral_ratio": 0.8067924845568171,
+      "worst_peak_ratio": 0.9392313355140641,
+      "maximum_sent_command": 4.450678011009714e-05,
+      "maximum_base_slew": 8.97315649824275e-06,
+      "optimizer_nonconverged_updates": 0,
+      "passes_fixed_gates": false
+    }
+  ],
+  "best_effect_candidate": {
+    "r_u": 0.001,
+    "r_du": 0.02,
+    "worst_integral_ratio": 0.8927431698596489,
+    "median_integral_ratio": 0.7845638589580679,
+    "worst_peak_ratio": 0.9260226760785017,
+    "maximum_sent_command": 4.382318827588158e-05,
+    "maximum_base_slew": 1.016087664232504e-05,
+    "optimizer_nonconverged_updates": 0,
+    "passes_fixed_gates": true
+  },
+  "selected_candidate": {
+    "r_u": 0.01,
+    "r_du": 0.02,
+    "worst_integral_ratio": 0.895344303745929,
+    "median_integral_ratio": 0.7880561197716921,
+    "worst_peak_ratio": 0.9281541485080503,
+    "maximum_sent_command": 4.392880128058101e-05,
+    "maximum_base_slew": 9.96963361399939e-06,
+    "optimizer_nonconverged_updates": 0,
+    "passes_fixed_gates": true
+  },
+  "pass": true,
+  "claim_boundary": "Training/model hyperparameter design only; no held-out or X-Plane claim."
+}

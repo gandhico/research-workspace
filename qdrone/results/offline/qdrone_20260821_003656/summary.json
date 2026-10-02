@@ -1,0 +1,88 @@
+{
+  "artifacts": {
+    "baseline_csv": "C:\\Research\\qdrone\\results\\offline\\qdrone_20260821_003656\\csv\\qdrone_baseline.csv",
+    "figure": null,
+    "residual_csv": "C:\\Research\\qdrone\\results\\offline\\qdrone_20260821_003656\\csv\\qdrone_hyperlif_residual.csv"
+  },
+  "baseline": {
+    "dt_s": 0.01,
+    "duration_s": 2.0,
+    "final_error_norm": 0.059778964641745765,
+    "max_abs_command": 0.231,
+    "max_abs_residual": 0.0,
+    "max_error_norm": 0.31,
+    "max_gate": 0.0,
+    "mean_abs_command": 0.04184363415828495,
+    "mean_abs_residual": 0.0,
+    "mean_error_norm": 0.11763018372669183,
+    "mean_gate": 0.0,
+    "mode": "baseline",
+    "platform": "qdrone",
+    "rms_error_norm": 0.1485747731773564,
+    "samples": 201,
+    "saturation_fraction": 0.0
+  },
+  "baseline_controller": "cascaded PD-style attitude/altitude baseline",
+  "comparison": {
+    "baseline_mean_abs_command": 0.04184363415828495,
+    "baseline_mode": "baseline",
+    "baseline_rms_error_norm": 0.1485747731773564,
+    "control_effort_delta_percent": 12.551064324620969,
+    "mean_error_delta_percent": -3.29986942617572,
+    "platform": "qdrone",
+    "residual_mean_abs_command": 0.04709545559725037,
+    "residual_mode": "residual",
+    "residual_rms_error_norm": 0.1432274269314251,
+    "rms_error_delta_percent": -3.5990943358520773
+  },
+  "control_labels": [
+    "roll_cmd",
+    "pitch_cmd",
+    "yaw_cmd",
+    "thrust_delta"
+  ],
+  "description": "Roll/pitch/yaw/altitude error abstraction for hover and waypoint hold.",
+  "hyperlif_residual": {
+    "dt_s": 0.01,
+    "duration_s": 2.0,
+    "final_error_norm": 0.058068945633976445,
+    "max_abs_command": 0.3648980570610604,
+    "max_abs_residual": 0.15749333671391708,
+    "max_error_norm": 0.31,
+    "max_gate": 1.0,
+    "mean_abs_command": 0.04709545559725037,
+    "mean_abs_residual": 0.0067624587781649394,
+    "mean_error_norm": 0.1137485412579404,
+    "mean_gate": 0.9557210445342968,
+    "mode": "residual",
+    "platform": "qdrone",
+    "rms_error_norm": 0.1432274269314251,
+    "samples": 201,
+    "saturation_fraction": 0.0
+  },
+  "interpretation_note": "Offline simulation is a reproducibility and controller-wiring check. It should not be reported as hardware evidence until repeated on the physical platform.",
+  "label": "QDrone/QDrone2 attitude and altitude",
+  "platform": "qdrone",
+  "residual_controller": "baseline plus bounded Adaptive HyperLIF gate-state residual",
+  "safety_limits": {
+    "max_attitude_cmd": 0.35,
+    "max_thrust_delta": 0.45,
+    "min_altitude_m": 0.3
+  },
+  "state_labels": [
+    "roll_error",
+    "roll_rate",
+    "pitch_error",
+    "pitch_rate",
+    "yaw_error",
+    "yaw_rate",
+    "z_error",
+    "z_rate"
+  ],
+  "target_state_indices": [
+    0,
+    2,
+    4,
+    6
+  ]
+}

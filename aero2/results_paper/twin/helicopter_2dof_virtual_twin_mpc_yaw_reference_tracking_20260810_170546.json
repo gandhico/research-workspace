@@ -1,0 +1,33 @@
+{
+  "config": {
+    "execution_mode": "virtual_twin",
+    "model_variant": "helicopter_2dof",
+    "controller": "mpc",
+    "controller_kwargs": {},
+    "application": "yaw_reference_tracking",
+    "duration_s": 18.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 15.0,
+    "out": "results_paper\\twin"
+  },
+  "metrics": {
+    "n": 3647,
+    "duration_s": 17.999987999999576,
+    "realized_hz": 202.55498087530447,
+    "pitch_rms": 0.17948883792867631,
+    "yaw_rms": 0.5412808923218768,
+    "tail_pitch_mae": 0.21958387729673995,
+    "tail_yaw_mae": 0.4732103411849635,
+    "pitch_sat_frac": 0.0,
+    "yaw_sat_frac": 0.0,
+    "theta_range": [
+      -0.3577924966588375,
+      0.19416787928436918
+    ],
+    "psi_range": [
+      -0.9510680884890975,
+      1.3100195928543377
+    ]
+  }
+}

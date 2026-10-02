@@ -1,0 +1,23 @@
+{
+  "platform": "hover3dof_offline_surrogate",
+  "fidelity": "PLACEHOLDER physical constants (Kf/Kt/L/inertia not vendor-identified); structure (state/control vectors, Eq. 2.5 positive-voltage-only law) matches the vendor Laboratory Guide. NOT hardware-validated.",
+  "controller": "online-pes-adaptive",
+  "mission": "vendor-demo",
+  "duration": 10.0,
+  "dt": 0.001,
+  "beta": 0.5,
+  "learning_rate": 0.0008,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "seed": 0,
+  "torque_limits_Nm_pitch_roll_yaw": [
+    1.76,
+    1.0032,
+    1.0032
+  ],
+  "angle_err_mean_deg": 1.6312320249221888,
+  "angle_err_max_deg": 8.166248209062143,
+  "min_voltage_seen": 0.0,
+  "max_voltage_seen": 7.888579987650173,
+  "trace": "C:\\Research\\hover3dof\\results\\offline\\online-pes-adaptive_vendor-demo_20260827_173939\\trace.csv"
+}

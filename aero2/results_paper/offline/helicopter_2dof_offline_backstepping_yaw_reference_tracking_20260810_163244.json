@@ -1,0 +1,35 @@
+{
+  "config": {
+    "execution_mode": "offline",
+    "model_variant": "helicopter_2dof",
+    "controller": "backstepping",
+    "controller_kwargs": {
+      "yawboost": true
+    },
+    "application": "yaw_reference_tracking",
+    "duration_s": 18.0,
+    "hz": 200.0,
+    "estimator": "passthrough",
+    "voltage_limit": 15.0,
+    "out": "results_paper\\offline"
+  },
+  "metrics": {
+    "n": 3600,
+    "duration_s": 17.995000000000704,
+    "realized_hz": 199.99999999999218,
+    "pitch_rms": 5.252926790443005e-18,
+    "yaw_rms": 0.31546425570800324,
+    "tail_pitch_mae": 4.133347634670481e-18,
+    "tail_yaw_mae": 0.06026151487096449,
+    "pitch_sat_frac": 0.0,
+    "yaw_sat_frac": 0.0,
+    "theta_range": [
+      -6.549793972606259e-18,
+      2.0682601589701204e-17
+    ],
+    "psi_range": [
+      -0.7879922734190171,
+      0.7905863834405348
+    ]
+  }
+}

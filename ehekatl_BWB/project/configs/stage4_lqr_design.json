@@ -1,0 +1,1032 @@
+{
+  "dt_s": 0.1,
+  "nominal_delay_samples": 3,
+  "command_limit": 0.003,
+  "slew_per_sample": 0.0005,
+  "bryson_scales": {
+    "angle_deg": 2.0,
+    "attitude_rate_deg_s": 2.0,
+    "inner_rate_deg_s": 1.0,
+    "command": 0.003
+  },
+  "controllers": {
+    "roll": {
+      "Ad": [
+        [
+          0.9910244330512626,
+          0.09952109339946393
+        ],
+        [
+          -0.17913448907140567,
+          0.9874429338873882
+        ]
+      ],
+      "Bd": [
+        [
+          -1.4287293494323678
+        ],
+        [
+          -28.514600079707005
+        ]
+      ],
+      "A_delay_augmented": [
+        [
+          0.9910244330512626,
+          0.09952109339946393,
+          0.0,
+          0.0,
+          -1.4287293494323678
+        ],
+        [
+          -0.17913448907140567,
+          0.9874429338873882,
+          0.0,
+          0.0,
+          -28.514600079707005
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "B_delay_augmented": [
+        [
+          0.0
+        ],
+        [
+          0.0
+        ],
+        [
+          1.0
+        ],
+        [
+          0.0
+        ],
+        [
+          0.0
+        ]
+      ],
+      "Q": [
+        [
+          0.25,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.25,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "R": [
+        [
+          111111.11111111111
+        ]
+      ],
+      "K": [
+        [
+          0.0008744491804893158,
+          -0.00155497284610372,
+          0.04859605299869144,
+          0.04759902438446351,
+          0.04575163339572148
+        ]
+      ],
+      "nominal_closed_loop_poles": [
+        {
+          "real": 0.9649356569699783,
+          "imag": 0.1294613116595459
+        },
+        {
+          "real": 0.9649356569699783,
+          "imag": -0.1294613116595459
+        },
+        {
+          "real": -9.563182643316983e-07,
+          "imag": 1.6563901809639795e-06
+        },
+        {
+          "real": -9.563182643316983e-07,
+          "imag": -1.6563901809639795e-06
+        },
+        {
+          "real": 1.912636528936604e-06,
+          "imag": 0.0
+        }
+      ],
+      "nominal_spectral_radius": 0.9735815596593301,
+      "robustness_cases": 81,
+      "worst_case_spectral_radius": 0.9857659256214034,
+      "unstable_robustness_cases": 0,
+      "worst_case": {
+        "sigma_offsets": [
+          -2.0,
+          2.0,
+          2.0
+        ],
+        "delay_samples": 4,
+        "spectral_radius": 0.9857659256214034
+      },
+      "disturbance_replays": [
+        {
+          "initial": [
+            1.0,
+            0.0
+          ],
+          "peak_angle_deg": 0.9910244330512626,
+          "peak_rate_deg_s": 1.0451391536470402,
+          "final_angle_deg": 0.0009526030986413075,
+          "final_rate_deg_s": -0.006595456598991217,
+          "final_5s_max_angle_deg": 0.012231682260361367,
+          "final_5s_max_rate_deg_s": 0.023723321269539722,
+          "peak_command": 0.0017749247300246484,
+          "command_saturation_fraction": 0.0
+        },
+        {
+          "initial": [
+            -1.0,
+            0.0
+          ],
+          "peak_angle_deg": 0.9910244330512626,
+          "peak_rate_deg_s": 1.0451391536470402,
+          "final_angle_deg": -0.0009526030986413075,
+          "final_rate_deg_s": 0.006595456598991217,
+          "final_5s_max_angle_deg": 0.012231682260361367,
+          "final_5s_max_rate_deg_s": 0.023723321269539722,
+          "peak_command": 0.0017749247300246484,
+          "command_saturation_fraction": 0.0
+        },
+        {
+          "initial": [
+            0.0,
+            1.0
+          ],
+          "peak_angle_deg": 0.6588213626508392,
+          "peak_rate_deg_s": 0.9874429338873882,
+          "final_angle_deg": 0.004214566898574524,
+          "final_rate_deg_s": -0.0007103657530876874,
+          "final_5s_max_angle_deg": 0.014994403803783769,
+          "final_5s_max_rate_deg_s": 0.015475871826934233,
+          "peak_command": 0.0012438707724574134,
+          "command_saturation_fraction": 0.0
+        },
+        {
+          "initial": [
+            0.0,
+            -1.0
+          ],
+          "peak_angle_deg": 0.6588213626508392,
+          "peak_rate_deg_s": 0.9874429338873882,
+          "final_angle_deg": -0.004214566898574524,
+          "final_rate_deg_s": 0.0007103657530876874,
+          "final_5s_max_angle_deg": 0.014994403803783769,
+          "final_5s_max_rate_deg_s": 0.015475871826934233,
+          "peak_command": 0.0012438707724574134,
+          "command_saturation_fraction": 0.0
+        },
+        {
+          "initial": [
+            1.0,
+            1.0
+          ],
+          "peak_angle_deg": 1.241266520834161,
+          "peak_rate_deg_s": 1.2832574862417223,
+          "final_angle_deg": 0.005088230351324142,
+          "final_rate_deg_s": -0.007348949096332167,
+          "final_5s_max_angle_deg": 0.02245036943846775,
+          "final_5s_max_rate_deg_s": 0.029150723932695164,
+          "peak_command": 0.0021795870323438426,
+          "command_saturation_fraction": 0.0
+        },
+        {
+          "initial": [
+            -1.0,
+            -1.0
+          ],
+          "peak_angle_deg": 1.241266520834161,
+          "peak_rate_deg_s": 1.2832574862417223,
+          "final_angle_deg": -0.005088230351324142,
+          "final_rate_deg_s": 0.007348949096332167,
+          "final_5s_max_angle_deg": 0.02245036943846775,
+          "final_5s_max_rate_deg_s": 0.029150723932695164,
+          "peak_command": 0.0021795870323438426,
+          "command_saturation_fraction": 0.0
+        }
+      ],
+      "saved_log_command_replay": [
+        {
+          "file": "stage2_roll_training_01_20260710_142240.csv",
+          "peak_offline_command": 0.000268422371672066,
+          "rms_offline_command": 8.810079775753114e-05,
+          "saturation_fraction": 0.0
+        },
+        {
+          "file": "stage2_roll_training_02_20260710_142615.csv",
+          "peak_offline_command": 0.00029799439691679874,
+          "rms_offline_command": 0.00010695420813889514,
+          "saturation_fraction": 0.0
+        },
+        {
+          "file": "stage2_roll_validation_01_20260710_143047.csv",
+          "peak_offline_command": 0.00029810211464070303,
+          "rms_offline_command": 0.00010403935946049242,
+          "saturation_fraction": 0.0
+        },
+        {
+          "file": "stage2_roll_validation_02_20260712_135450.csv",
+          "peak_offline_command": 0.00029463363064267175,
+          "rms_offline_command": 9.961091891185568e-05,
+          "saturation_fraction": 0.0
+        }
+      ],
+      "inner_rate_controller": {
+        "reduced_A_delay": [
+          [
+            0.9964077339441634,
+            0.0,
+            0.0,
+            -28.60032217661042
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "reduced_B_delay": [
+          [
+            0.0
+          ],
+          [
+            1.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ]
+        ],
+        "Q": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "R": [
+          [
+            111111.11111111111
+          ]
+        ],
+        "K_rate_history": [
+          [
+            -0.002726230955066341,
+            0.07881743562285519,
+            0.07853430242425911,
+            0.07825218631544166
+          ]
+        ],
+        "K_full_state_mapping": [
+          [
+            0.0,
+            -0.002726230955066341,
+            0.07881743562285519,
+            0.07853430242425911,
+            0.07825218631544166
+          ]
+        ],
+        "nominal_closed_loop_poles_full_plant": [
+          {
+            "real": 0.9522799088977196,
+            "imag": 0.14048888079421293
+          },
+          {
+            "real": 0.9522799088977196,
+            "imag": -0.14048888079421293
+          },
+          {
+            "real": 0.025176426512754604,
+            "imag": 0.06269065459031273
+          },
+          {
+            "real": 0.025176426512754604,
+            "imag": -0.06269065459031273
+          },
+          {
+            "real": -0.05526273950515348,
+            "imag": 0.0
+          }
+        ],
+        "nominal_spectral_radius_full_plant": 0.9625872170962274,
+        "robustness_cases": 81,
+        "worst_case_spectral_radius": 0.9792477252016171,
+        "unstable_robustness_cases": 0,
+        "worst_case": {
+          "sigma_offsets": [
+            -2.0,
+            2.0,
+            2.0
+          ],
+          "delay_samples": 4,
+          "spectral_radius": 0.9792477252016171
+        },
+        "disturbance_replays_full_plant": [
+          {
+            "initial": [
+              1.0,
+              0.0
+            ],
+            "peak_angle_deg": 0.9910244330512626,
+            "peak_rate_deg_s": 1.0638011953500952,
+            "final_angle_deg": -0.00038568962247556994,
+            "final_rate_deg_s": 0.0006298763963473118,
+            "final_5s_max_angle_deg": 0.0032277111230216856,
+            "final_5s_max_rate_deg_s": 0.003468756362597765,
+            "peak_command": 0.002372071145632864,
+            "command_saturation_fraction": 0.0
+          },
+          {
+            "initial": [
+              -1.0,
+              0.0
+            ],
+            "peak_angle_deg": 0.9910244330512626,
+            "peak_rate_deg_s": 1.0638011953500952,
+            "final_angle_deg": 0.00038568962247556994,
+            "final_rate_deg_s": -0.0006298763963473118,
+            "final_5s_max_angle_deg": 0.0032277111230216856,
+            "final_5s_max_rate_deg_s": 0.003468756362597765,
+            "peak_command": 0.002372071145632864,
+            "command_saturation_fraction": 0.0
+          },
+          {
+            "initial": [
+              0.0,
+              1.0
+            ],
+            "peak_angle_deg": 0.6317807074530727,
+            "peak_rate_deg_s": 0.9874429338873882,
+            "final_angle_deg": -0.00036337078155938157,
+            "final_rate_deg_s": -0.00027969022131563615,
+            "final_5s_max_angle_deg": 0.0020629873536607978,
+            "final_5s_max_rate_deg_s": 0.004374906150042432,
+            "peak_command": 0.002,
+            "command_saturation_fraction": 0.0
+          },
+          {
+            "initial": [
+              0.0,
+              -1.0
+            ],
+            "peak_angle_deg": 0.6317807074530727,
+            "peak_rate_deg_s": 0.9874429338873882,
+            "final_angle_deg": 0.00036337078155938157,
+            "final_rate_deg_s": 0.00027969022131563615,
+            "final_5s_max_angle_deg": 0.0020629873536607978,
+            "final_5s_max_rate_deg_s": 0.004374906150042432,
+            "peak_command": 0.002,
+            "command_saturation_fraction": 0.0
+          },
+          {
+            "initial": [
+              1.0,
+              1.0
+            ],
+            "peak_angle_deg": 1.240236368418351,
+            "peak_rate_deg_s": 1.4012933012478324,
+            "final_angle_deg": -0.0007771686964116501,
+            "final_rate_deg_s": 0.00045940716846916603,
+            "final_5s_max_angle_deg": 0.004314903140105488,
+            "final_5s_max_rate_deg_s": 0.004639018439455864,
+            "peak_command": 0.003,
+            "command_saturation_fraction": 0.025
+          },
+          {
+            "initial": [
+              -1.0,
+              -1.0
+            ],
+            "peak_angle_deg": 1.240236368418351,
+            "peak_rate_deg_s": 1.4012933012478324,
+            "final_angle_deg": 0.0007771686964116501,
+            "final_rate_deg_s": -0.00045940716846916603,
+            "final_5s_max_angle_deg": 0.004314903140105488,
+            "final_5s_max_rate_deg_s": 0.004639018439455864,
+            "peak_command": 0.003,
+            "command_saturation_fraction": 0.025
+          }
+        ],
+        "saved_log_command_replay": [
+          {
+            "file": "stage2_roll_training_01_20260710_142240.csv",
+            "peak_offline_command": 0.00039965092842281626,
+            "rms_offline_command": 0.00013763072421455226,
+            "saturation_fraction": 0.0
+          },
+          {
+            "file": "stage2_roll_training_02_20260710_142615.csv",
+            "peak_offline_command": 0.0004751242860113135,
+            "rms_offline_command": 0.00016831775015496201,
+            "saturation_fraction": 0.0
+          },
+          {
+            "file": "stage2_roll_validation_01_20260710_143047.csv",
+            "peak_offline_command": 0.00046903594968583016,
+            "rms_offline_command": 0.00016466148321397098,
+            "saturation_fraction": 0.0
+          },
+          {
+            "file": "stage2_roll_validation_02_20260712_135450.csv",
+            "peak_offline_command": 0.0004656270890242981,
+            "rms_offline_command": 0.00015807068488433667,
+            "saturation_fraction": 0.0
+          }
+        ]
+      }
+    },
+    "pitch": {
+      "Ad": [
+        [
+          0.9767509410228415,
+          0.09821932873840762
+        ],
+        [
+          -0.4615962004545014,
+          0.9568334457116645
+        ]
+      ],
+      "Bd": [
+        [
+          -1.0420460938501135
+        ],
+        [
+          -20.689203726147948
+        ]
+      ],
+      "A_delay_augmented": [
+        [
+          0.9767509410228415,
+          0.09821932873840762,
+          0.0,
+          0.0,
+          -1.0420460938501135
+        ],
+        [
+          -0.4615962004545014,
+          0.9568334457116645,
+          0.0,
+          0.0,
+          -20.689203726147948
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "B_delay_augmented": [
+        [
+          0.0
+        ],
+        [
+          0.0
+        ],
+        [
+          1.0
+        ],
+        [
+          0.0
+        ],
+        [
+          0.0
+        ]
+      ],
+      "Q": [
+        [
+          0.25,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.25,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "R": [
+        [
+          111111.11111111111
+        ]
+      ],
+      "K": [
+        [
+          0.0013164881429705416,
+          -0.0006435012765313033,
+          0.0189824485021429,
+          0.01736575415599599,
+          0.014976763150930762
+        ]
+      ],
+      "nominal_closed_loop_poles": [
+        {
+          "real": 0.9573009691161825,
+          "imag": 0.21014775777370762
+        },
+        {
+          "real": 0.9573009691161825,
+          "imag": -0.21014775777370762
+        },
+        {
+          "real": -1.7785251644034532e-06,
+          "imag": 0.0
+        },
+        {
+          "real": 8.892625822662685e-07,
+          "imag": 1.5402585182117824e-06
+        },
+        {
+          "real": 8.892625822662685e-07,
+          "imag": -1.5402585182117824e-06
+        }
+      ],
+      "nominal_spectral_radius": 0.9800955185940291,
+      "robustness_cases": 81,
+      "worst_case_spectral_radius": 0.9893822084831501,
+      "unstable_robustness_cases": 0,
+      "worst_case": {
+        "sigma_offsets": [
+          -2.0,
+          2.0,
+          2.0
+        ],
+        "delay_samples": 2,
+        "spectral_radius": 0.9893822084831501
+      },
+      "disturbance_replays": [
+        {
+          "initial": [
+            1.0,
+            0.0
+          ],
+          "peak_angle_deg": 0.9767509410228415,
+          "peak_rate_deg_s": 1.9277694775505052,
+          "final_angle_deg": 0.012398680017321667,
+          "final_rate_deg_s": 0.026717666663255844,
+          "final_5s_max_angle_deg": 0.0409563779209101,
+          "final_5s_max_rate_deg_s": 0.10385229789423686,
+          "peak_command": 0.0018192240226119847,
+          "command_saturation_fraction": 0.0
+        },
+        {
+          "initial": [
+            -1.0,
+            0.0
+          ],
+          "peak_angle_deg": 0.9767509410228415,
+          "peak_rate_deg_s": 1.9277694775505052,
+          "final_angle_deg": -0.012398680017321667,
+          "final_rate_deg_s": -0.026717666663255844,
+          "final_5s_max_angle_deg": 0.0409563779209101,
+          "final_5s_max_rate_deg_s": 0.10385229789423686,
+          "peak_command": 0.0018192240226119847,
+          "command_saturation_fraction": 0.0
+        },
+        {
+          "initial": [
+            0.0,
+            1.0
+          ],
+          "peak_angle_deg": 0.42295742713661905,
+          "peak_rate_deg_s": 0.9568334457116645,
+          "final_angle_deg": -0.006171014773526996,
+          "final_rate_deg_s": 0.014671897572677776,
+          "final_5s_max_angle_deg": 0.02269776450162327,
+          "final_5s_max_rate_deg_s": 0.043005833190730085,
+          "peak_command": 0.0007529168777338285,
+          "command_saturation_fraction": 0.0
+        },
+        {
+          "initial": [
+            0.0,
+            -1.0
+          ],
+          "peak_angle_deg": 0.42295742713661905,
+          "peak_rate_deg_s": 0.9568334457116645,
+          "final_angle_deg": 0.006171014773526996,
+          "final_rate_deg_s": -0.014671897572677776,
+          "final_5s_max_angle_deg": 0.02269776450162327,
+          "final_5s_max_rate_deg_s": 0.043005833190730085,
+          "peak_command": 0.0007529168777338285,
+          "command_saturation_fraction": 0.0
+        },
+        {
+          "initial": [
+            1.0,
+            1.0
+          ],
+          "peak_angle_deg": 1.0986200923562945,
+          "peak_rate_deg_s": 2.0781039955806553,
+          "final_angle_deg": 0.005996320254766088,
+          "final_rate_deg_s": 0.04137447095100499,
+          "final_5s_max_angle_deg": 0.04413903469515724,
+          "final_5s_max_rate_deg_s": 0.11181642435474683,
+          "peak_command": 0.0019572927916865885,
+          "command_saturation_fraction": 0.0
+        },
+        {
+          "initial": [
+            -1.0,
+            -1.0
+          ],
+          "peak_angle_deg": 1.0986200923562945,
+          "peak_rate_deg_s": 2.0781039955806553,
+          "final_angle_deg": -0.005996320254766088,
+          "final_rate_deg_s": -0.04137447095100499,
+          "final_5s_max_angle_deg": 0.04413903469515724,
+          "final_5s_max_rate_deg_s": 0.11181642435474683,
+          "peak_command": 0.0019572927916865885,
+          "command_saturation_fraction": 0.0
+        }
+      ],
+      "saved_log_command_replay": [
+        {
+          "file": "stage2_pitch_training_01_20260712_140739.csv",
+          "peak_offline_command": 0.00018272886719952907,
+          "rms_offline_command": 7.299329248692616e-05,
+          "saturation_fraction": 0.0
+        },
+        {
+          "file": "stage2_pitch_training_02_20260712_141515.csv",
+          "peak_offline_command": 0.00017459141230542126,
+          "rms_offline_command": 6.499564039483293e-05,
+          "saturation_fraction": 0.0
+        },
+        {
+          "file": "stage2_pitch_validation_01_20260712_142028.csv",
+          "peak_offline_command": 0.00016540131619949806,
+          "rms_offline_command": 6.524543545988881e-05,
+          "saturation_fraction": 0.0
+        },
+        {
+          "file": "stage2_pitch_validation_02_20260712_142348.csv",
+          "peak_offline_command": 0.00016894376786874421,
+          "rms_offline_command": 6.106564729734205e-05,
+          "saturation_fraction": 0.0
+        }
+      ],
+      "inner_rate_controller": {
+        "reduced_A_delay": [
+          [
+            0.9799256374578188,
+            0.0,
+            0.0,
+            -20.852148817862993
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "reduced_B_delay": [
+          [
+            0.0
+          ],
+          [
+            1.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ]
+        ],
+        "Q": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "R": [
+          [
+            111111.11111111111
+          ]
+        ],
+        "K_rate_history": [
+          [
+            -0.0019913193146360608,
+            0.044127808679216333,
+            0.04324197104959773,
+            0.0423739160457096
+          ]
+        ],
+        "K_full_state_mapping": [
+          [
+            0.0,
+            -0.0019913193146360608,
+            0.044127808679216333,
+            0.04324197104959773,
+            0.0423739160457096
+          ]
+        ],
+        "nominal_closed_loop_poles_full_plant": [
+          {
+            "real": 0.9480189815378794,
+            "imag": 0.22173716663753384
+          },
+          {
+            "real": 0.9480189815378794,
+            "imag": -0.22173716663753384
+          },
+          {
+            "real": 0.026915880079540294,
+            "imag": 0.07029682346784147
+          },
+          {
+            "real": 0.026915880079540294,
+            "imag": -0.07029682346784147
+          },
+          {
+            "real": -0.060413145179551035,
+            "imag": 0.0
+          }
+        ],
+        "nominal_spectral_radius_full_plant": 0.97360534120585,
+        "robustness_cases": 81,
+        "worst_case_spectral_radius": 0.9872755228072653,
+        "unstable_robustness_cases": 0,
+        "worst_case": {
+          "sigma_offsets": [
+            -2.0,
+            2.0,
+            2.0
+          ],
+          "delay_samples": 4,
+          "spectral_radius": 0.9872755228072653
+        },
+        "disturbance_replays_full_plant": [
+          {
+            "initial": [
+              1.0,
+              0.0
+            ],
+            "peak_angle_deg": 0.9767509410228415,
+            "peak_rate_deg_s": 1.9596111562131266,
+            "final_angle_deg": -0.0014043389912478316,
+            "final_rate_deg_s": -0.011703497996575283,
+            "final_5s_max_angle_deg": 0.02017759981382066,
+            "final_5s_max_rate_deg_s": 0.039652834531074134,
+            "peak_command": 0.003,
+            "command_saturation_fraction": 0.02
+          },
+          {
+            "initial": [
+              -1.0,
+              0.0
+            ],
+            "peak_angle_deg": 0.9767509410228415,
+            "peak_rate_deg_s": 1.9596111562131266,
+            "final_angle_deg": 0.0014043389912478316,
+            "final_rate_deg_s": 0.011703497996575283,
+            "final_5s_max_angle_deg": 0.02017759981382066,
+            "final_5s_max_rate_deg_s": 0.039652834531074134,
+            "peak_command": 0.003,
+            "command_saturation_fraction": 0.02
+          },
+          {
+            "initial": [
+              0.0,
+              1.0
+            ],
+            "peak_angle_deg": 0.4154191158796327,
+            "peak_rate_deg_s": 0.9568334457116645,
+            "final_angle_deg": 0.0022583905148355196,
+            "final_rate_deg_s": -0.0023407491003318466,
+            "final_5s_max_angle_deg": 0.00745473927357789,
+            "final_5s_max_rate_deg_s": 0.02012065699683927,
+            "peak_command": 0.0015,
+            "command_saturation_fraction": 0.0
+          },
+          {
+            "initial": [
+              0.0,
+              -1.0
+            ],
+            "peak_angle_deg": 0.4154191158796327,
+            "peak_rate_deg_s": 0.9568334457116645,
+            "final_angle_deg": -0.0022583905148355196,
+            "final_rate_deg_s": 0.0023407491003318466,
+            "final_5s_max_angle_deg": 0.00745473927357789,
+            "final_5s_max_rate_deg_s": 0.02012065699683927,
+            "peak_command": 0.0015,
+            "command_saturation_fraction": 0.0
+          },
+          {
+            "initial": [
+              1.0,
+              1.0
+            ],
+            "peak_angle_deg": 1.0986200923562945,
+            "peak_rate_deg_s": 2.205256363995653,
+            "final_angle_deg": 0.00120702095276756,
+            "final_rate_deg_s": -0.017056509004768676,
+            "final_5s_max_angle_deg": 0.02612589466869635,
+            "final_5s_max_rate_deg_s": 0.051083054089624706,
+            "peak_command": 0.003,
+            "command_saturation_fraction": 0.015
+          },
+          {
+            "initial": [
+              -1.0,
+              -1.0
+            ],
+            "peak_angle_deg": 1.0986200923562945,
+            "peak_rate_deg_s": 2.205256363995653,
+            "final_angle_deg": -0.00120702095276756,
+            "final_rate_deg_s": 0.017056509004768676,
+            "final_5s_max_angle_deg": 0.02612589466869635,
+            "final_5s_max_rate_deg_s": 0.051083054089624706,
+            "peak_command": 0.003,
+            "command_saturation_fraction": 0.015
+          }
+        ],
+        "saved_log_command_replay": [
+          {
+            "file": "stage2_pitch_training_01_20260712_140739.csv",
+            "peak_offline_command": 0.00036989881602055014,
+            "rms_offline_command": 0.00012873618517134688,
+            "saturation_fraction": 0.0
+          },
+          {
+            "file": "stage2_pitch_training_02_20260712_141515.csv",
+            "peak_offline_command": 0.00034510997193701066,
+            "rms_offline_command": 0.0001230565444958277,
+            "saturation_fraction": 0.0
+          },
+          {
+            "file": "stage2_pitch_validation_01_20260712_142028.csv",
+            "peak_offline_command": 0.00033092087656548573,
+            "rms_offline_command": 0.00012221470427991232,
+            "saturation_fraction": 0.0
+          },
+          {
+            "file": "stage2_pitch_validation_02_20260712_142348.csv",
+            "peak_offline_command": 0.0003516306520679045,
+            "rms_offline_command": 0.00012686781300426974,
+            "saturation_fraction": 0.0
+          }
+        ]
+      }
+    }
+  }
+}

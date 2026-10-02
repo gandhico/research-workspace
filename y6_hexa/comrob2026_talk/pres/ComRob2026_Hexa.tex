@@ -1,0 +1,491 @@
+\documentclass{beamer}
+
+\mode<presentation> {
+\usetheme{Warsaw}
+\usecolortheme{seahorse}
+}
+
+\usepackage{subcaption}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{array, multirow, multicol, tabularx}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{ragged2e}
+\usepackage{bm}
+\usefonttheme[onlymath]{serif}
+\usepackage{amsthm}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage[outline]{contour}
+\setbeamertemplate{caption}[numbered]
+
+% Colors (same values as the paper)
+\definecolor{morado}{rgb}{.88,.50,.90}
+\definecolor{darkgreen}{rgb}{0,0.39,0}
+\definecolor{matlabBlue}{rgb}{0.000,0.380,0.900}
+
+% Swatches for figure legends (same as the paper)
+\DeclareRobustCommand{\legsolid}[1]{\textcolor{#1}{\rule[0.55ex]{1.6em}{0.8pt}}}
+\DeclareRobustCommand{\legdotted}[1]{\textcolor{#1}{\makebox[1.6em][l]{\dotfill}}}
+
+% Reference line at the bottom of a slide
+\newcommand{\slideref}[1]{\vfill{\tiny #1}}
+
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+\oldmacro\hfill%
+\insertframenumber\,/\,\inserttotalframenumber}
+
+\title[{October 26-28, 2026 CDMX, México}]{Neuromorphic Modeling and Control for a Coaxial Hexarotor UAV using Spiking Neural Networks}
+\author[{XXVIII Congreso Mexicano de Robótica}]
+{
+    \texorpdfstring{
+    \\ \textbf{Anel Olivares}, Gandhi Contreras, Victor J. Silva\\ Eduardo S. Espinoza, Juan M. Bustamante, and Patricio Ordaz \\
+    \vspace{0.15cm}
+    \begin{center}
+        \includegraphics[scale = .2]{images_comrob/Comrob_logo.png}
+    \end{center}
+   }
+   { }
+}
+\date[October 2026]{}
+
+\begin{document}
+\contourlength{0.01cm}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Content}
+    \tableofcontents[hideallsubsections]
+\end{frame}
+
+%===================================================================
+\section{Introduction}
+
+\subsection*{Motivation}
+\begin{frame}{Motivation}
+\begin{columns}
+\column{5.8cm}
+\justifying
+\small
+Neuromorphic processors put memory and computation together in distributed spiking neural networks (SNNs):
+\begin{itemize}
+    \item low power consumption
+    \item asynchronous computation
+    \item fault tolerance
+\end{itemize}
+\vspace{0.2cm}
+To use them in practice, conventional flight-control algorithms have to be translated into SNNs \textbf{without losing closed-loop performance}.
+\column{5.2cm}
+\begin{block}{Coaxial hexarotor UAV (T6)}
+    \centering
+    \includegraphics[width=\linewidth]{images_hexa/dinamica_hexa3.pdf}
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}{State of the art and gap}
+\footnotesize
+\begin{itemize}
+    \item NEF-based SNN controllers have been used on underactuated systems and quadrotor UAVs\textsuperscript{1,2}.
+    \item Neuromorphic control on Intel Loihi for a robotic arm\textsuperscript{3}.
+    \item SNN flight control on neuromorphic hardware is limited to reduced-order cases: 1-DOF attitude\textsuperscript{4} and single-axis vertical landing\textsuperscript{5}.
+\end{itemize}
+
+\begin{table}[h]
+    \centering
+    \begin{tcolorbox}[
+        tabularx = {l | X},
+        title = Gap:,
+        colback = morado!10,
+        colframe = morado!80,
+        fontupper=\footnotesize
+    ]
+        $\star$ & In these works the vehicle dynamics are simulated \textbf{outside} the neural framework.\\
+        $\star$ & A fully neuromorphic architecture (dynamics \textbf{and} cascade controller in the NEF) has received little attention, especially beyond the quadrotor.\\
+    \end{tcolorbox}
+\end{table}
+
+\slideref{[1] O. A. Garcia \emph{et al.}, CCE 2023. \quad [2] A. Olivares \emph{et al.}, IFAC-PapersOnLine, 2025; Neural Comput.\ Appl., 2026. \quad [3] T. DeWolf \emph{et al.}, Neuromorph.\ Comput.\ Eng., 2023. \quad [4] R. K. Stagsted \emph{et al.}, IROS 2020. \quad [5] J. Dupeyroux \emph{et al.}, ICRA 2021.}
+\end{frame}
+
+\begin{frame}{Contributions}
+\begin{enumerate}
+    \item[(i)] A \textbf{neuromorphic modeling and control framework} for a coaxial hexarotor UAV: the reduced nonlinear dynamics and the cascade flight controllers are mapped into recurrent SNNs within the NEF (Nengo).
+    \vspace{0.3cm}
+    \item[(ii)] \textbf{Quantitative validation} of the SNN controller in trajectory tracking against a conventional MATLAB/Simulink implementation (outer PID, inner PD).
+    \vspace{0.3cm}
+    \item[(iii)] A \textbf{modular and scalable} NEF-based architecture: flight control as interconnected spiking neural populations.
+\end{enumerate}
+\end{frame}
+
+%===================================================================
+\section{Dynamic modeling of the coaxial hexarotor}
+
+\subsection{Newton--Euler formulation}
+\begin{frame}{Newton--Euler formulation}
+\begin{columns}
+\column{6cm}
+\small
+Rigid-body dynamics:
+\begin{align*}
+\dot{\bm{\xi}} &= \bm{V}, & m\dot{\bm{V}} &= \bm{R}\bm{F},\\
+\dot{\bm{R}} &= \bm{R}\hat{\bm{\Omega}}, & \mathbb{I}\dot{\bm{\Omega}} &= -\bm{\Omega}\times\mathbb{I}\bm{\Omega}+\bm{\Gamma}
+\end{align*}
+Virtual inputs (T6, coaxial pairs $(f_1,f_2)$, $(f_3,f_4)$, $(f_5,f_6)$):
+\begin{align*}
+u &= \textstyle\sum_{i=1}^{6} f_i\\
+\Gamma_\phi &= l_1(f_1+f_2-f_5-f_6)\\
+\Gamma_\theta &= l_2(f_1+f_2+f_5+f_6)-l_3(f_3+f_4)\\
+\Gamma_\psi &= (\gamma_1+\gamma_3+\gamma_5)-(\gamma_2+\gamma_4+\gamma_6)
+\end{align*}
+\column{5cm}
+\begin{tcolorbox}[
+    tabularx = {l | X},
+    colback = morado!10,
+    colframe = morado!80,
+    fontupper=\scriptsize
+]
+    where: & \\
+    \hline \hline
+    $\bm{\xi}$ & position $(x,y,z)^\top$ in $\{\mathcal{I}\}$\\
+    $\bm{\eta}$ & Euler angles $(\psi,\theta,\phi)^\top$\\
+    $\bm{\Omega}$ & body angular velocity $(p,q,r)^\top$\\
+    $\bm{R}$ & rotation $\{\mathcal{B}\}\to\{\mathcal{I}\}$\\
+    $l_{1,2,3}$ & moment arms\\
+    $\gamma_i$ & rotor drag torque\\
+\end{tcolorbox}
+\vspace{0.1cm}
+\scriptsize
+\textbf{Assumptions:} near-hover flight; aerodynamics, strong wind and rotor/actuator dynamics are neglected.
+\end{columns}
+\end{frame}
+
+\subsection{Reduced subsystems}
+\begin{frame}{Decomposition into four subsystems}
+With the altitude control law and $\psi\approx 0$ (small angles), the dynamics reduce to:
+\begin{table}[h]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{lll}
+        \hline
+        \textbf{Subsystem} & \textbf{Translational} & \textbf{Rotational}\\ \hline \hline
+        Altitude & $\ddot z = -\dfrac{u}{m}\cos\theta\cos\phi + g$ & -- \\
+        Longitudinal & $\ddot x = -g\tan\theta$ & $\ddot\theta = \Gamma_\theta/I_{yy}$\\
+        Lateral & $\ddot y = g\tan\phi/\cos\theta$ & $\ddot\phi = \Gamma_\phi/I_{xx}$\\
+        Directional & -- & $\ddot\psi = \Gamma_\psi/I_{zz}$\\
+        \hline \hline
+    \end{tabular}
+\end{table}
+Each subsystem is a \textbf{double integrator} in its own coordinate.
+\end{frame}
+
+\subsection{Neural representation in Nengo}
+\begin{frame}{Neural Engineering Framework, NEF\textsuperscript{1}}
+\justifying
+It proposes three quantitatively specified principles that enable the construction of large-scale SNNs:
+\begin{columns}
+\column{4.2cm}
+    \begin{itemize}
+        \item Representation: encoding and decoding
+        \item Transformation
+        \item \textbf{Dynamics} $\leftarrow$ used here to implement the vehicle model
+    \end{itemize}
+\column{6.5cm}
+    \begin{block}{Nengo Brain Maker}
+        \centering
+        \includegraphics[width=\linewidth]{CongresoParis/Nengo.pdf}
+    \end{block}
+\end{columns}
+\slideref{[1] C. Eliasmith and C. H. Anderson, \emph{Neural Engineering: Computation, Representation, and Dynamics in Neurobiological Systems}, MIT Press, 2003; A. B. Research, ``Nengo,'' https://www.nengo.ai/.}
+\end{frame}
+
+\begin{frame}{Nonlinear dynamics as a recurrent population}
+\begin{columns}
+\column{4.6cm}
+\begin{block}{Recurrent spiking population}
+    \centering
+    \includegraphics[width=\linewidth]{images_hexa/NLS_population.pdf}
+\end{block}
+\scriptsize
+$h(t)=\frac{1}{\tau}e^{-t/\tau}$: synaptic filter,\\ $\tau$: synaptic time constant.
+\column{6.3cm}
+\small
+With $W(t)=F'(\chi)+G'(\upsilon)$ and $\chi = h * W$:
+\begin{equation*}
+\dot \chi = \frac{1}{\tau}\bigl[F'(\chi)- \chi + G'(\upsilon)\bigr]
+\end{equation*}
+Matching it with $\dot\chi = F(\chi)+G(\upsilon)$ gives
+\begin{tcolorbox}[colback = morado!10, colframe = morado!80, left=1mm, right=1mm]
+\begin{equation*}
+F'(\chi)= \tau F(\chi) + \chi, \quad G'(\upsilon) = \tau G(\upsilon)
+\end{equation*}
+\end{tcolorbox}
+\end{columns}
+\end{frame}
+
+\begin{frame}{One neural template for the six subsystems}
+For $\chi=[\zeta,\dot\zeta]^\top$, $\zeta\in\{z,x,\theta,y,\phi,\psi\}$:
+\begin{equation*}
+F'_\zeta(\chi)=
+\begin{bmatrix} \chi_1+\tau\chi_2\\ \chi_2 \end{bmatrix},
+\qquad
+G'_\zeta(\upsilon_\zeta)=\tau
+\begin{bmatrix} 0\\ \upsilon_\zeta \end{bmatrix}
+\end{equation*}
+Only the input function $\upsilon_\zeta$ changes:
+\begin{table}[h]
+    \centering
+    \begin{tcolorbox}[
+        tabularx = {l | l || l | l},
+        colback = morado!10,
+        colframe = morado!80
+    ]
+        $\zeta$ & $\upsilon_\zeta$ & $\zeta$ & $\upsilon_\zeta$\\
+        \hline \hline
+        $z$ & $-u\cos\theta\cos\phi/m+g$ & $\theta$ & $\Gamma_\theta/I_{yy}$\\
+        $x$ & $-g\tan\theta$ & $\phi$ & $\Gamma_\phi/I_{xx}$\\
+        $y$ & $g\tan\phi/\cos\theta$ & $\psi$ & $\Gamma_\psi/I_{zz}$\\
+    \end{tcolorbox}
+\end{table}
+$\Rightarrow$ a modular and scalable neuromorphic model of the hexarotor.
+\end{frame}
+
+%===================================================================
+\section{Control architecture}
+
+\subsection{Classic cascade controller}
+\begin{frame}{Cascade control scheme}
+\begin{block}{Classic cascade controller (MATLAB/Simulink baseline): outer PID position loops, inner PD attitude loops}
+    \centering
+    \includegraphics[width=\linewidth]{images_hexa/cascade_classic.pdf}
+\end{block}
+\end{frame}
+
+\begin{frame}{Classic control laws}
+\small
+\textbf{Altitude} (feedback linearization, PID):
+\begin{equation*}
+u= \frac{m}{\cos\theta \cos \phi}\Bigl( g - \underbrace{\bigl(k_{p_z} e_z+k_{d_z} \dot e_z +k_{i_z}\textstyle\int e_z\,dt\bigr)}_{u_z}\Bigr)
+\end{equation*}
+\textbf{Outer loops} (PID) $\rightarrow$ desired angles:
+\begin{equation*}
+\theta_d=-\tan^{-1}\!\left(\frac{u_x}{g}\right),\qquad
+\phi_d=\tan^{-1}\!\left(\frac{u_y\cos\theta}{g}\right)
+\end{equation*}
+\textbf{Inner loops} (PD):
+\begin{equation*}
+\Gamma_\theta = I_{yy}\underbrace{(k_{p_\theta}e_\theta+k_{d_\theta}\dot e_\theta)}_{u_\theta},\quad
+\Gamma_\phi = I_{xx}\underbrace{(k_{p_\phi}e_\phi+k_{d_\phi}\dot e_\phi)}_{u_\phi},
+\end{equation*}
+\vspace{-0.3cm}
+\begin{equation*}
+\Gamma_\psi = I_{zz}\underbrace{(k_{p_\psi}e_\psi+k_{d_\psi}\dot e_\psi)}_{u_\psi}
+\end{equation*}
+with $e_\zeta=\zeta_d-\zeta$ and $\dot e_\zeta=\dot\zeta_d-\dot\zeta$.
+\end{frame}
+
+\subsection{Neural controller}
+\begin{frame}{Neural controller: error and derivative term}
+\begin{itemize}
+    \item Translational loops $u_x,u_y,u_z$: \textbf{neural PID} (remove steady-state error).
+    \item Attitude loops $u_\phi,u_\theta,u_\psi$: \textbf{neural PD} (no integral action needed).
+\end{itemize}
+The error $e_\zeta$ is computed with an excitatory connection (reference $\zeta_d$) and an inhibitory connection (measured $\zeta$). The derivative uses the Euler approximation\textsuperscript{1}:
+\begin{equation*}
+\dot e_\zeta \approx \textcolor{darkgreen}{\Delta e_\zeta} = \frac{e_\zeta(\tau)-e_\zeta(2\tau)}{\tau}
+\end{equation*}
+One connection provides the excitatory feedforward signal $e_\zeta(\tau)$; the inhibitory one, $e_\zeta(2\tau)$, has a longer time constant.
+\slideref{[1] A. Olivares \emph{et al.}, ``Biologically-inspired self-tuning neuromorphic PID control for real-time trajectory tracking of a UAS,'' IFAC-PapersOnLine, 2025.}
+\end{frame}
+
+\begin{frame}{Neural controller: integral term}
+The integral action of the translational loops is a neural integrator\textsuperscript{1}:
+\begin{align*}
+    \dot{\mathbf{x}}_\xi &= \mathbf{A}\mathbf{x}_\xi + \mathbf{B}\nu_\xi
+\end{align*}
+\begin{tcolorbox}[
+    tabularx = {l},
+    colback = morado!10,
+    colframe = morado!80
+]
+    NEF mapping:\\
+    \hline \hline
+    $\mathbf{A}_{\text{neu}} = \tau \mathbf{A} + \mathbf{I}, \quad \mathbf{B}_{\text{neu}} = \tau \mathbf{B}$\\
+    Pure integrator: $\mathbf{A} = \mathbf{0}$, $\mathbf{B} = \mathbf{I}$\\
+    $\Rightarrow \mathbf{A}_{\text{neu}} = \mathbf{I}, \quad \mathbf{B}_{\text{neu}} = \tau \mathbf{K}_i$\\
+\end{tcolorbox}
+The gain $\mathbf{K}_i$ is applied to the input \textbf{before} the neural integration stage.
+\slideref{[1] A. Olivares \emph{et al.}, ``Self-tuning neuromorphic controller for real-time UAS trajectory tracking based on prescribed error sensitivity,'' Neural Comput.\ Appl., 2026.}
+\end{frame}
+
+\begin{frame}{Complete neuromorphic flight-control architecture}
+\vspace{-0.2cm}
+\begin{block}{Dynamics + controllers as spiking populations (cyan: couplings)}
+    \centering
+    \includegraphics[width=0.95\linewidth]{images_hexa/Digrama_UAV_dinamyc_ZXTheta-YPhi-3.pdf}
+\end{block}
+\vspace{-0.1cm}
+\tiny
+Nonlinear terms that mix variables are computed in shared ensembles, e.g.\ $\bar\phi_d$: $\phi_d=\tan^{-1}(u_y\cos\theta/g)$, and $\upsilon_y = g\tan\phi/\cos\theta$.
+\end{frame}
+
+%===================================================================
+\section{Simulation results}
+
+\subsection{Mission}
+\begin{frame}{3D trajectory-tracking mission}
+60\,s mission, sampling period 1\,ms, identical references and initial conditions for both controllers:
+\begin{align*}
+x_d(t) &= \frac{1}{1+e^{-(t-5)}}, \qquad z_d(t) = \frac{-3}{1+e^{-(t-4)}}, \qquad \psi_d(t)=0\\
+y_d(t) &= \begin{cases} 0, & t<15\,\text{s}\\ \dfrac{1.5}{1+e^{-(t-20)}}, & t\geq 15\,\text{s}\end{cases}
+\end{align*}
+\begin{itemize}
+    \item Climb to 3\,m while moving 1\,m along $x_\mathcal{I}$; after 15\,s, 1.5\,m along $y_\mathcal{I}$.
+    \item Starts from rest, with an initial yaw offset $\psi(0)=0.08$\,rad.
+    \item Rotor-level allocation is abstracted: the comparison is about the controller and its neural realization.
+\end{itemize}
+\end{frame}
+
+\subsection{Configuration}
+\begin{frame}{Configuration of the controllers}
+\begin{table}[htb!]
+\centering
+\caption{Controller gains and simulation parameters.}
+\scriptsize
+\begin{tabular}{llccc@{\hspace{9pt}}ccc}
+\toprule
+& & \multicolumn{3}{c}{SNN/Nengo} & \multicolumn{3}{c}{MATLAB/Simulink} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}
+Controller & DOF & $k_p$ & $k_d$ & $k_i$ & $k_p$ & $k_d$ & $k_i$ \\
+\midrule
+PID$_x$       & $x_\mathcal{I}$  & 8.8  & 0.1  & 0.3  & 1.6 & 5.0 & 0.08 \\
+PID$_y$       & $y_\mathcal{I}$  & 10.3 & 4.2  & 0.7  & 3.0 & 2.0 & 0.10 \\
+PID$_z$       & $z_\mathcal{I}$  & 40   & 5.0  & 0.1  & 40  & 5.0 & 2.00 \\
+PD$_\theta$   & pitch $\theta$   & 90   & 12.1 & --   & 120 & 8.0 & -- \\
+PD$_\phi$     & roll $\phi$      & 90   & 12.0 & --   & 40  & 8.0 & -- \\
+PD$_\psi$     & yaw $\psi$       & 90   & 70   & --   & 7.0 & 4.0 & -- \\
+\midrule
+\multicolumn{2}{l}{Integration} & \multicolumn{3}{c}{NEF recurrent dynamics} & \multicolumn{3}{c}{RK4} \\
+\multicolumn{2}{l}{Mass, $m$} & \multicolumn{3}{c}{1 kg} & \multicolumn{3}{c}{1 kg} \\
+\multicolumn{2}{l}{Neurons per ensemble, $J$} & \multicolumn{3}{c}{200} & \multicolumn{3}{c}{--} \\
+\multicolumn{2}{l}{Postsynaptic constant, $\tau$} & \multicolumn{3}{c}{0.1 s} & \multicolumn{3}{c}{--} \\
+\bottomrule
+\end{tabular}
+\end{table}
+\scriptsize SNN gains, $J$ and $\tau$ were tuned heuristically, independently of the Simulink implementation.
+\end{frame}
+
+\subsection{Tracking results}
+\begin{frame}{Closed-loop states}
+\begin{columns}
+\column{5.5cm}
+\begin{block}{Positions \quad\quad Attitude}
+    \centering
+    \includegraphics[height=5.7cm]{images_hexa/fig01_states_v5_rad.pdf}
+\end{block}
+\column{5cm}
+\small
+\legdotted{black} Reference\\
+\legsolid{matlabBlue} MATLAB/Simulink\\
+\legsolid{red} SNN/Nengo\\
+\vspace{0.4cm}
+Both controllers track the trajectory similarly in all degrees of freedom.
+\end{columns}
+\end{frame}
+
+\begin{frame}{Control commands}
+\begin{columns}
+\column{5.5cm}
+\begin{block}{Control commands}
+    \centering
+    \includegraphics[height=5.7cm]{images_hexa/fig02_commands_v5_rads2.pdf}
+\end{block}
+\column{5cm}
+\small
+\legsolid{matlabBlue} MATLAB/Simulink\\
+\legsolid{red} SNN/Nengo\\
+\vspace{0.3cm}
+Total thrust $u$, virtual commands $u_x$, $u_y$, and normalized attitude commands $u_\psi$, $u_\theta$, $u_\phi$.\\
+\vspace{0.3cm}
+The neural and classic control commands also agree closely.
+\end{columns}
+\end{frame}
+
+\subsection{Performance indices}
+\begin{frame}{Tracking performance over the 60\,s mission}
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{lcccc}
+\toprule
+ & \multicolumn{2}{c}{RMSE} & \multicolumn{2}{c}{ISE} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Variable & Classic & SNN & Classic & SNN \\
+\midrule
+$x$ [m]        & $0.008$ & $0.032$ & $3.95 \times 10^{-3}$ & $0.0627$ \\
+$y$ [m]        & $0.013$ & $0.033$ & $0.0101$ & $0.0660$ \\
+$z$ [m]        & $0.019$ & $0.048$ & $0.0213$ & $0.1367$ \\
+$\theta$ [rad] & $3.26 \times 10^{-4}$ & $0.005$ & $6.38 \times 10^{-6}$ & $1.71 \times 10^{-3}$ \\
+$\phi$ [rad]   & $9.73 \times 10^{-4}$ & $0.012$ & $5.68 \times 10^{-5}$ & $8.67 \times 10^{-3}$ \\
+$\psi$ [rad]   & $6.62 \times 10^{-3}$ & $0.009$ & $2.63 \times 10^{-3}$ & $4.61 \times 10^{-3}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{tcolorbox}[colback = morado!10, colframe = morado!80, title = SNN vs.\ classic correlation $\rho_{\mathrm{SNN,cls}}$]
+\centering
+$x$: 0.9993 \qquad $y$: 0.9998 \qquad $-z$: 0.9992
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}{Discussion}
+\begin{itemize}
+    \item $\rho_{\mathrm{SNN,cls}} > 0.999$: the SNN reproduces the dynamics of the classic controller.
+    \vspace{0.2cm}
+    \item Position RMSE stays below 5\,cm, but the SNN has higher RMSE and ISE than the classic baseline on every variable.
+    \vspace{0.2cm}
+    \item These differences are consistent with known limitations of the NEF\textsuperscript{1}:
+    \begin{itemize}
+        \item decoding errors from finite neural ensembles;
+        \item LIF vs.\ rectified-linear activation functions;
+        \item bounded maximum firing rates $\rightarrow$ saturation for large inputs.
+    \end{itemize}
+\end{itemize}
+\vspace{0.3cm}
+\small Source code and gains: \texttt{github.com/esteedeq/UAV\_Nengo}
+\slideref{[1] T. DeWolf \emph{et al.}, ``Neuromorphic control of a simulated 7-DOF arm using Loihi,'' Neuromorph.\ Comput.\ Eng., 2023.}
+\end{frame}
+
+%===================================================================
+\section{Conclusions}
+
+\begin{frame}{Conclusions and future work}
+\begin{itemize}
+    \item A neuromorphic modeling and control framework for a coaxial hexarotor UAV was presented: the reduced nonlinear dynamics \textbf{and} the cascade flight controller are implemented as SNNs with the NEF and Nengo.
+    \vspace{0.2cm}
+    \item In a 60\,s trajectory-tracking simulation, the SNN controller closely reproduced the conventional MATLAB/Simulink implementation ($\rho > 0.99$ in the translational axes).
+    \vspace{0.2cm}
+    \item \textbf{Limitations:} simulation only; reduced model without rotor-level aerodynamics, actuator dynamics or external disturbances.
+    \vspace{0.2cm}
+    \item \textbf{Future work:} complete UAV dynamics, disturbances and uncertainties, and implementation on neuromorphic hardware for real-time experiments.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+    \textbf{\Huge Thank you for your attention}
+    \end{center}
+\end{frame}
+
+\end{document}

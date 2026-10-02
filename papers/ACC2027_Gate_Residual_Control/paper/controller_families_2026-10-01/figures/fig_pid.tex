@@ -1,0 +1,21 @@
+% PID+ff with conditional-integration anti-windup at rotor level (run_controllers_gated.py, --baseline pd).
+\begin{tikzpicture}
+  \commonleft
+  \node[law,right=12mm of err] (law) {\textbf{PID + rate feedforward}\\
+        $\bm\tau_{\rm u}=-\bm k_q\odot\bm e_q-\bm k_\omega\odot\bm\omega_e-\bm k_i\odot\bm z$\\
+        $\bm k_q=2\bm J\odot\bm\omega^2,\ \bm k_\omega=2\zeta\bm J\odot\bm\omega,\ \bm k_i=0.3\bm k_q$,\ \ $\bm\omega=\rho\bm\omega_n$};
+  \node[law,above=12mm of law] (int) {\textbf{Conditional integrator}\\
+        $z_i^+=z_i+h\,e_{q,i}\,m_i$\\
+        $m_i=1$ iff axis $i$ was not clipped \emph{and}\\no rotor saturated at the previous step};
+  \draw[sig] (int) -- node[lbl,right]{$\bm z$} (law);
+  \draw[sig] (err) -- node[lbl,above]{$\bm e_q,\bm\omega_e$} (law);
+  \draw[sig] ($(err.north)+(4mm,0)$) |- node[lbl,pos=.75,above]{$\bm e_q$} ($(int.west)+(0,2mm)$);
+  \coordinate (satx) at ($(law.east)+(24mm,0)$);
+  \commonloop{law}{\textbf{Torque box}\\$\bm u_0=\sat_{\bm\ell}(\bm\tau_{\rm u})$};
+  \draw[sigd] (sat.north) |- node[lbl,pos=.3,right]{clip active on axis $i$?} (int.east);
+  \draw[sigd] ($(plant.north)+(-10mm,0)$) -- ($(plant.north)+(-10mm,4mm)$) -| ($(law.west)+(-5mm,0)$)
+        |- ($(int.west)+(0,-3mm)$);
+  \node[lbl,anchor=east,align=right] at ($(law.north west)+(-6mm,5mm)$) {rotor saturated\\at step $k-1$};
+  \node[fam,fit=(law)(int)] (g) {};
+  \node[famlbl,anchor=south west] at (g.north west) {family: PID+ff (\code{--baseline pd --ki-factor 0.3 --antiwindup rotor})};
+\end{tikzpicture}

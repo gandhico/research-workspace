@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "audit_date": "2026-09-02",
+  "timezone": "America/Denver",
+  "status": "passed_with_documented_claim_reconciliation_required",
+  "scope": "Full project history from early P3 experiments through the latest direct-Nengo 3DOF Hover physical campaign",
+  "artifacts": [
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\docs\\FULL_PROJECT_AUDIT_2026-09-02.md",
+      "sha256": "D4CF4B953F3686F866F299D6D28558E0E783179F62BE89BF38E86E7701ACB5DF",
+      "lines": 651
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\docs\\FULL_PROJECT_RESULT_LEDGER_2026-09-02.csv",
+      "sha256": "71C0E75F9A394F39EC23B9AEAD4FC26E7C9B4424300FA09BB48C92D4CA00DAA0",
+      "rows": 65
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\docs\\FULL_PROJECT_FILE_GRAPH_2026-09-02.csv",
+      "sha256": "521E59F209808E99BD713B14AF2FDDB6923EC3A62A45249E37D6DD0635F93035",
+      "rows": 21
+    },
+    {
+      "path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\docs\\FULL_PROJECT_PARAMETER_LEDGER_2026-09-02.csv",
+      "sha256": "BFA1ADD63EC3992F585DA3BEFD04D14AE9E618D516C02B127CE90AE2133FA7F8",
+      "rows": 47
+    }
+  ],
+  "upstream_frozen_audit": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\FROZEN_AUDIT_2026-09-02\\CONSOLIDATED_RESEARCH_AUDIT_2026-09-02.md",
+  "upstream_verification": {
+    "canonical_physical_runs": 12,
+    "canonical_physical_deep_checks": "144/144",
+    "upstream_manifests": "3/3",
+    "files_rehashed": 1485,
+    "bytes_rehashed": 6327420429,
+    "hash_mismatches": 0
+  },
+  "known_scope_limits": [
+    "The D: historical Nengo repository was not mounted and was not freshly hash-verified.",
+    "Historical P3 and QCar files were cataloged selectively by result family; the ledger is an evidence ledger, not a hash of every virtual-environment or vendor file.",
+    "The current manuscript contains stale Hover wording and must be reconciled against the newest direct-Nengo results before submission.",
+    "Full-scale physical yaw360 is not validated; the completed scale-0.3 profile ends near 108 degrees."
+  ]
+}

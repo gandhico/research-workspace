@@ -1,0 +1,211 @@
+GATE-RESIDUAL RUNNERS — QUICK START
+(Updated 2026-08-21 — added PowerShell setup gotchas + Quanser platform commands)
+
+============================================================
+0. ONE-TIME POWERSHELL SETUP (do this first, every new terminal window)
+============================================================
+Two gotchas hit today, both because PowerShell state does NOT persist
+between terminal windows/tabs — each new window starts clean:
+
+(a) Running Launch_Gate_Residual_Demo.ps1 needs script execution allowed
+    for that process. Run this ONCE per new terminal, before the launcher:
+
+      Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+    Scope is "Process" — it only applies to the current window, not
+    system-wide, and does not need Administrator. You'll need to run it
+    again in any NEW terminal window/tab.
+
+(b) If you see an error like "the expression after '&' ... produced an
+    object that was not valid", it means a $PY variable from an earlier
+    terminal window doesn't exist in this one. Either re-run the launcher
+    (no $PY needed, see below), or use the fully-qualified fallback
+    commands in section 3 — those never depend on a variable being set.
+
+============================================================
+1. MASTER LAUNCHER (recommended — checks Python/deps/assets for you)
+============================================================
+C:\Research\papers\_meeting_2026-08-22\Launch_Gate_Residual_Demo.ps1
+
+Show a command without running or checking dependencies:
+
+  & 'C:\Research\papers\_meeting_2026-08-22\Launch_Gate_Residual_Demo.ps1' -Mode adaptive-cf2 -Viewer -Dashboard -DryRun
+
+Run the recommended visual Crazyflie demonstration:
+
+  & 'C:\Research\papers\_meeting_2026-08-22\Launch_Gate_Residual_Demo.ps1' -Mode adaptive-cf2 -Viewer -Dashboard
+
+Run the Skydio rotor-residual demonstration:
+
+  & 'C:\Research\papers\_meeting_2026-08-22\Launch_Gate_Residual_Demo.ps1' -Mode rotor-x2 -Viewer -Dashboard
+
+Reproduce the focused learned-gate Crazyflie comparison:
+
+  & 'C:\Research\papers\_meeting_2026-08-22\Launch_Gate_Residual_Demo.ps1' -Mode learned-cf2
+
+Reproduce learned-gate Skydio transfer:
+
+  & 'C:\Research\papers\_meeting_2026-08-22\Launch_Gate_Residual_Demo.ps1' -Mode learned-x2
+
+Reproduce the robust hard-step configurations:
+
+  & 'C:\Research\papers\_meeting_2026-08-22\Launch_Gate_Residual_Demo.ps1' -Mode frontier-balanced
+  & 'C:\Research\papers\_meeting_2026-08-22\Launch_Gate_Residual_Demo.ps1' -Mode frontier-strong
+
+Available launcher modes
+------------------------
+classical-cf2       Classical Crazyflie baseline
+fixed-cf2           Fixed HyperLIF gate residual, Crazyflie
+adaptive-cf2        Fixed Adaptive-HyperLIF gate residual, Crazyflie   [VERIFIED WORKING 2026-08-21: rmse_euler_mean=0.1747, score=0.2916]
+fixed-x2            Fixed body-torque HyperLIF residual, Skydio
+rotor-x2            Adaptive rotor-level HyperLIF residual, Skydio
+fixed-table1        Five-controller Crazyflie paper-table reproduction
+learned-cf2         Focused classical/fixed/PES/e-prop Crazyflie comparison
+learned-all         Full learned-gate method suite
+learned-x2          Learned-gate Skydio transfer comparison
+frontier-balanced   Hard-step run, k_rate=0.3 and leak=1e-3
+frontier-strong     Hard-step run, k_rate=1.0 and leak=2e-3
+
+Canonical Python entry points
+-----------------------------
+Fixed/adaptive single-run controller:
+  C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py
+
+Fixed/adaptive multi-controller sweep:
+  C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_benchmark_sweep.py
+
+Learned decode experiment:
+  C:\Research\papers\P3_Gate_Residual\learned\code\experiments\controller_benchmarks\learned_gate_experiment.py
+
+Classical/STN benchmark harness imported by the learned experiment:
+  C:\Research\papers\P3_Gate_Residual\learned\code\experiments\controller_benchmarks\mujoco_classical_vs_neural_stn.py
+
+STN-PID-PES controller dependency:
+  C:\Research\papers\P3_Gate_Residual\learned\code\experiments\mujoco_stn_hyperlif_benchmark\stn_pid_attitude_controller.py
+
+Required environment and model assets
+-------------------------------------
+The launcher now defaults to the recovered HyperLIF environment:
+
+  C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe
+
+This is Python 3.11.15 and was verified to contain mujoco, numpy, matplotlib, nengo, scipy, YAML, and quanser. Override it with `-Python` only when intentionally using another environment.
+NOTE: `conda` itself is NOT on PATH on this machine — always call python.exe
+by its full path above, never `conda run -n hyperlif ...` (confirmed today).
+
+If rebuilding an environment, install:
+
+  python -m pip install mujoco numpy matplotlib nengo
+
+The open-source MuJoCo Menagerie assets were recovered from the OneDrive research archive and junctioned into the two paths hard-coded by the runners. If those junctions are later removed, recreate them from:
+
+  C:\Users\gandhico\OneDrive - New Mexico State University\Documents\ChatGPT\HyperLIF\projects\mujoco_gate_residual\models\mujoco_menagerie
+
+The launcher validates the selected Python and the required vehicle scene.xml before starting. The -DryRun switch prints the exact command without requiring the environment or model assets.
+
+Presentation recommendation
+---------------------------
+For a live visual demonstration, use adaptive-cf2 or rotor-x2 with -Viewer -Dashboard. The learned_gate_experiment.py runner reports rankings to the console and saves JSON, but it does not expose a live viewer flag. For the learned result, it is safer to show the presentation chart and optionally run learned-cf2 in the background.
+
+============================================================
+2. FALLBACK — direct calls, no launcher, no $PY variable, no execution
+   policy needed (use if the launcher or script execution is blocked)
+============================================================
+Working dir: C:\Research\papers\P3_Gate_Residual\fixed_adaptive
+
+Classical baseline (Skydio X2), with plots+CSV:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py" --quad skydio_x2 --controller classical --mission hard45 --sim-time 45 --save-csv --save-figures
+
+Classical baseline, headless / no file output (fastest sanity check):
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py" --quad skydio_x2 --controller classical --mission hard45 --sim-time 45 --no-save
+
+Direct HyperLIF gate-state residual (Crazyflie 2), with plots+CSV:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py" --quad bitcraze_crazyflie_2 --controller direct_hyperlif --mission hard45 --sim-time 45 --blend 0.50 --direct-scale control --activity-mode gate --gate-gain 100000 --save-csv --save-figures
+
+Adaptive HyperLIF gate-state residual (Crazyflie 2), with plots+CSV — matches launcher's adaptive-cf2 mode:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py" --quad bitcraze_crazyflie_2 --controller direct_adaptive_hyperlif --mission hard45 --sim-time 45 --blend 0.50 --direct-scale control --activity-mode gate --gate-gain 100000 --save-csv --save-figures --viewer --dashboard
+
+Rotor-level Adaptive HyperLIF residual (Skydio X2) — matches launcher's rotor-x2 mode:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py" --quad skydio_x2 --controller rotor_residual_adaptive_hyperlif --mission hard45 --sim-time 45 --residual-blend 0.10 --gate-gain 100000 --save-csv --save-figures --viewer --dashboard
+
+Benchmark sweep, fast smoke:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_benchmark_sweep.py" --preset smoke --quad skydio_x2 --missions roll,hard45 --sim-time 20
+
+Controller choices for run_rotor_level.py --controller:
+  classical, direct_lif, direct_hyperlif, direct_adaptive_hyperlif,
+  direct_izhikevich, rotor_residual_hyperlif, rotor_residual_adaptive_hyperlif,
+  nengo_lifrate, nengo_lif, nengo_adaptive_lif
+
+============================================================
+3. QUANSER HARDWARE PLATFORMS — offline benchmarks (verified 2026-08-21)
+============================================================
+Same fully-qualified pattern, no launcher exists for these yet. Each
+platform's own RUNNERS.md (in C:\Research\<platform>\) has virtual-twin
+and hardware-tier commands too; this is just the offline tier, safe to
+run with no QLabs/hardware connected.
+
+Aero2 — cross-platform shared-campaign benchmark:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\aero2\runners\run_cross_platform_offline_benchmark.py" --duration 20
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\aero2\runners\plot_cross_platform_results.py"
+
+Aero2 — own controller runner (pd/lqr/lqg/mpc/backstepping/smc/nmpc/hyperlif/julia_policy):
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\aero2\runners\run_control.py" --controller hyperlif --model helicopter_2dof --mode offline --duration 5 --hz 200 --save
+
+Pendulum (Qube-Servo 3):
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\pendulum\runners\run_offline_benchmark.py" --duration 20
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\pendulum\runners\plot_results.py"
+
+QCar / QCar2:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\qcar\runners\run_offline_benchmark.py" --duration 20
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\qcar\runners\plot_results.py"
+
+QDrone / QDrone2:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\qdrone\runners\run_offline_benchmark.py" --duration 20
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\qdrone\runners\plot_results.py"
+
+Add --no-plots to any of the four run_offline_benchmark.py calls above to
+skip figure generation and get the console summary only.
+
+============================================================
+4. REAL-TIME SIMULATION DEMO (--realtime, needs --viewer + a display)
+============================================================
+--realtime only does something when --viewer is also passed — it paces
+the MuJoCo step loop to match wall-clock time (45s sim = ~45s to watch),
+instead of running as fast as the CPU allows. Use this for an in-person
+demo where the audience watches the quad fly live; drop --realtime for a
+fast headless benchmark run.
+
+Recommended demo (Adaptive HyperLIF, Crazyflie 2), WITH plots/CSV saved:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py" --quad bitcraze_crazyflie_2 --controller direct_adaptive_hyperlif --mission hard45 --sim-time 45 --blend 0.50 --direct-scale control --activity-mode gate --gate-gain 100000 --viewer --realtime --dashboard --save-csv --save-figures
+
+Same, WITHOUT plots (no file output, just watch it fly):
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py" --quad bitcraze_crazyflie_2 --controller direct_adaptive_hyperlif --mission hard45 --sim-time 45 --blend 0.50 --direct-scale control --activity-mode gate --gate-gain 100000 --viewer --realtime --dashboard --no-save
+
+Skydio rotor-residual alternative, WITH plots/CSV saved:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py" --quad skydio_x2 --controller rotor_residual_adaptive_hyperlif --mission hard45 --sim-time 45 --residual-blend 0.10 --gate-gain 100000 --viewer --realtime --dashboard --save-csv --save-figures
+
+Skydio rotor-residual alternative, WITHOUT plots:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py" --quad skydio_x2 --controller rotor_residual_adaptive_hyperlif --mission hard45 --sim-time 45 --residual-blend 0.10 --gate-gain 100000 --viewer --realtime --dashboard --no-save
+
+Classical baseline for side-by-side comparison, WITH plots:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py" --quad bitcraze_crazyflie_2 --controller classical --mission hard45 --sim-time 45 --viewer --realtime --dashboard --save-csv --save-figures
+
+Classical baseline, WITHOUT plots:
+  & "C:\Users\gandhico\AppData\Local\miniconda3\envs\hyperlif\python.exe" "C:\Research\papers\P3_Gate_Residual\fixed_adaptive\runners\run_rotor_level.py" --quad bitcraze_crazyflie_2 --controller classical --mission hard45 --sim-time 45 --viewer --realtime --dashboard --no-save
+
+NOTE: --viewer opens an actual MuJoCo window and needs a real display
+attached (not a headless/remote shell). At 45s sim-time with --realtime,
+each of the above takes ~45 wall-clock seconds to finish — plan the demo
+timing accordingly. Same equivalents via the launcher (Section 1) do NOT
+currently expose -Realtime as a switch, only -Viewer/-Dashboard — use the
+direct calls above for a paced real-time run.
+
+============================================================
+KNOWN BLOCKER (as of 2026-08-21): Aero2 virtual-twin and hardware modes
+(run_control.py --mode virtual_twin / --mode hardware) currently fail with
+"ModuleNotFoundError: No module named 'pal'" — Quanser's pal/qvl Python
+library was never installed on this machine, and the D: backup drive that
+has a vendor copy was not plugged in when this was diagnosed. Plug in D:
+and ask for the pal/qvl folders to be copied over to unblock this, or
+git clone quanser/Quanser_Academic_Resources (dev-windows branch) if wifi
+is available and check whether it carries the library.

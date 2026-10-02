@@ -1,0 +1,26 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% arch_lib.tex -- architecture diagram library for the CMG-PES paper.
+%
+% USAGE IN THE PAPER
+%   preamble:  \usepackage{tikz}
+%              \usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
+%              \input{figures/arch/arch_style.tex}
+%   body:      \begin{figure}[t]\centering
+%                \resizebox{\columnwidth}{!}{\input{figures/arch/archA1.tex}}
+%                \caption{...}\label{fig:archA1}\end{figure}
+%
+% Each diagram lives in its own file so you can include only what fits.
+% This file simply documents the set; nothing here is compiled.
+%
+%   arch_style.tex  shared tikzset (grayscale-safe, print-ready)
+%   archA1.tex      MAIN loop, single-column compact          [proposal 1]
+%   archA2.tex      MAIN loop, two-column detailed            [proposal 2]
+%   archA3.tex      MAIN loop, signal-flow / layered          [proposal 3]
+%   archB1.tex      CMG unit internals, block form            [proposal 1]
+%   archB2.tex      CMG unit internals, +/- pair form         [proposal 2]
+%   archC1.tex      matched twin-plant evaluation harness
+%   archD1.tex      Nengo realization (Ensemble vs Node, S1-S4)
+%   archE1.tex      3DOF Hover hardware loop (200 Hz / 2 kHz)
+%   archF1.tex      6-DOF cascade (position -> attitude -> mixer)
+%   archG1.tex      instantaneous PES vs annealed activity trace
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

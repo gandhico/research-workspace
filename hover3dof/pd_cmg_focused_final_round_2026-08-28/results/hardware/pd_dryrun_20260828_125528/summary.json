@@ -1,0 +1,30 @@
+{
+  "platform": "hover3dof_hardware_pd_track",
+  "hardware": true,
+  "controller": "pd",
+  "armed": false,
+  "mission": "hover",
+  "duration": 5.0,
+  "rate_hz": 200.0,
+  "beta": 0.0,
+  "max_residual_volts_parameter": 3.0,
+  "actual_motor_residual_cap_volts": 0.0,
+  "residual_torque_limits_ypr_Nm": [
+    0.0432,
+    0.14031468000000002,
+    0.14031468000000002
+  ],
+  "learning_rate": 0.0003,
+  "k_error": 4.0,
+  "k_rate": 0.0,
+  "residual_slew_v_per_s": 4.0,
+  "neural_substeps": 1,
+  "angle_err_mean_deg": 0.0,
+  "angle_err_max_deg": 0.0,
+  "lower_saturation_fraction": 0.0,
+  "upper_saturation_fraction": 0.0,
+  "deadline_miss_fraction": 0.0,
+  "abort_reason": "",
+  "n_steps_logged": 1000,
+  "trace": "C:\\Research\\hover3dof\\pd_cmg_focused_final_round_2026-08-28\\results\\hardware\\pd_dryrun_20260828_125528\\trace.csv"
+}

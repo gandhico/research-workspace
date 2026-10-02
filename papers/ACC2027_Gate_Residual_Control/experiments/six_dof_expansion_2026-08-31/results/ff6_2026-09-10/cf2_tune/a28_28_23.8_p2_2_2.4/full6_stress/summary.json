@@ -1,0 +1,14 @@
+{
+  "platform": "cf2-rotor-6dof-cascade",
+  "controller": "classical",
+  "mission": "full6_stress",
+  "duration": 15.0,
+  "dt": 0.0005,
+  "pos_err_mean_m": 0.008762808242497235,
+  "pos_err_max_m": 0.07044120813473187,
+  "qerr_mean_rad": 0.004010186167270127,
+  "qerr_max_rad": 0.08140270716563512,
+  "pos_ff": "fd",
+  "actuator_scale": 1.0,
+  "authority_scale": 1.0
+}

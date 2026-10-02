@@ -1,0 +1,26 @@
+{
+  "case": "Pitch SISO",
+  "output": "theta",
+  "inputs": [
+    "u_common"
+  ],
+  "na": 1,
+  "nb": 3,
+  "nk": 1,
+  "sample_time_s": 0.005619716818246633,
+  "downsample": 1,
+  "constant_c": -4.191532541920033e-06,
+  "denominator_z_minus_1": [
+    1.0,
+    -0.9998287791201427
+  ],
+  "numerators_z_minus_1": {
+    "u_common": [
+      -0.00047512898055435127,
+      -8.413198471224348e-08,
+      0.0005124275727734773
+    ]
+  },
+  "cond_ztz": 40018.08852733361,
+  "rank": 5
+}

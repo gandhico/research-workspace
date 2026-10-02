@@ -1,0 +1,134 @@
+10−1
+100
+101
+102
+Error (deg)
+11.0
+11.5
+12.0
+12.5
+13.0
+Time (s)
+−0.2
+0.0
+0.2
+Yaw torque
+(N⋅m)
+PD+ff
+CMG-PES
+CMG-PES, gated
+residual blocked
+Fig. 3.
+X2 Hardstep, one step at t = 11 s: attitude error (log axis, dotted
+line: 5◦band) and yaw torque against the box ±ℓz (dashed). Shading marks
+where the gate blocks the residual. Ungated, the residual pulls the command
+off the box during braking; gated, it follows PD+ff into the box and leaves
+it later.
+F. Saturation-Aware Gating on Hardstep
+Hardstep commands 63◦–111◦attitude changes every 2
+s, and 97–99% of its mean error accumulates during slew.
+At ρ = 3 the ungated residual degrades it by 17.0% on X2
+and, at β = .5, diverges on CF2 (mean error 136◦, rotors
+at a bound in 92% of samples). Because the reference is
+piecewise constant, the latched decoder acts as the first-order
+filter (30) and lags a 12 rad/s baseline; on a saturated axis
+that lag can only oppose u0 (Sec. III). At β = .5 the gate
+(28) blocks the residual in 20.5% (X2) and 15.5% (CF2)
+of Hardstep samples and in at most 0.04% elsewhere, so
+the other eight cells differ from the ungated residual by at
+most 0.1%. It cuts the X2 loss from 17.0% to 2.0% and,
+noise-free, removes the CF2 divergence at β = .5 (−1.2%
+on Hardstep, 36.5% geometric mean).
+The gate does not make the residual beat the baseline
+here, and Fig. 3 shows why. The gated residual helps while
+braking (0.25–0.75 s after a step; −0.13◦of the X2 45-
+s mean) but leaves a larger tail once the baseline has left
+its box (+0.40◦over 0.75–1.5 s), because the decoder still
+holds the slew-phase correction, with the 9.6 rad/s corner
+of Sec. VI-C. That tail occurs on an unsaturated axis, so
+no rule conditioned on saturation can remove it. An X2-
+only exploratory screen of twelve gate configurations (load
+thresholds .001–1, with and without freezing the decoder
+on gated axes) ranged from −2.1% to +0.3%: at the limit
+the gate blocks 79% of samples and recovers the baseline’s
+settled error, but parity, not gain, is its ceiling here.
+VII. CONCLUSIONS AND FUTURE WORK
+Six continuous CMG units with an eighteen-parameter
+PES-adapted decoder form a bounded residual that aug-
+ments a quaternion PD controller without changing its
+sensing, collective-thrust, allocation, or actuator interface.
+The interface bounds and exact zero-authority recovery hold
+independently of the learned weights, and the saturation-
+aware gate preserves both. In the numerical study, the gated
+residual lowers geometric-mean error against the bandwidth-
+tuned PD+feedforward baseline by 37.3% on X2 and 22.4%
+on CF2 noise-free, lowers burst-phase error under repeated
+torque disturbances, and keeps its benefit under sensor noise
+only where the baseline error exceeds the noise floor; the
+ablations identify online decoder adaptation and persistent
+activity (necessary, but not sufficient for low effort) as the
+principal mechanisms in the tested regime. Three limitations
+remain. On Hardstep the gate restores near-parity but cannot
+remove the settling-tail lag of the latched decoder, which oc-
+curs on an unsaturated axis. On CF2 under noise, rotor-level
+saturation defeats a gate defined on the torque box and caps
+the usable authority at β = .2. And the noise-free geometric
+mean overstates the practical benefit, being dominated by
+missions whose baseline error is already near the noise floor.
+The present results are simulation based and do not
+provide a closed-loop stability certificate for the reported
+tracking experiments. Future work will add decoder-side lag
+compensation and an allocation-aware gate; evaluate under
+model mismatch; sweep the activity gain G and conductance
+modulation χ more systematically; test retention with frozen
+weights and held-out missions; extend the wrapper, already
+confirmed across five classical control families in the plane,
+to 6-DOF; and validate the method on hardware.
+REFERENCES
+[1] T. Johannink et al., “Residual reinforcement learning for robot con-
+trol,” in 2019 International Conference on Robotics and Automation
+(ICRA), 2019, pp. 6023–6029.
+[2] Z. Wu et al., “L1Quad: L1 adaptive augmentation of geometric control
+for agile quadrotors with performance guarantees,” IEEE Transactions
+on Control Systems Technology, vol. 33, no. 2, pp. 597–612, 2025.
+[3] I. Rubio Scola, L. R. Garcia Carrillo, and J. P. Hespanha, “Limbic
+system-inspired performance-guaranteed control for nonlinear multi-
+agent systems with uncertainties,” IEEE Transactions on Neural Net-
+works and Learning Systems, vol. 34, no. 8, pp. 4196–4207, 2023.
+[4] I. Rubio Scola, G. A. Guijarro Reyes, L. R. Garcia Carrillo, J. P.
+Hespanha, and L. Burlion, “A robust control strategy with perturbation
+estimation for the Parrot Mambo platform,” IEEE Transactions on
+Control Systems Technology, vol. 29, no. 4, pp. 1389–1404, 2021.
+[5] C. Eliasmith and C. H. Anderson, Neural Engineering: Computation,
+Representation, and Dynamics in Neurobiological Systems.
+MIT
+Press, 2004.
+[6] T. Bekolay et al., “Nengo: A Python tool for building large-scale
+functional brain models,” Frontiers in Neuroinformatics, vol. 7, p. 48,
+2014.
+[7] A. R. Voelker, “A solution to the dynamics of the prescribed
+error sensitivity learning rule,” Centre for Theoretical Neuroscience,
+University of Waterloo, Tech. Rep. CTN-TR-20151001-01, Oct.
+2015. [Online]. Available: https://www.compneuro.uwaterloo.ca/files/
+publications/voelker.2015.pdf
+[8] O. A. Garc´ıa Alc´antara, D. Chavez Arana, E. S. Espinoza, I. Rubio
+Scola, L. R. Garcia Carrillo, and A. T. Sornborger, “Spiking neural
+network-based control of an unmanned aerial system implemented on
+a customized neural flight simulation environment,” in 2024 American
+Control Conference (ACC), 2024, pp. 3125–3129.
+[9] A. Olivares, E. S. Espinoza, L. E. Ramos, O. A. Garc´ıa Alc´antara,
+L. R. Garcia Carrillo, and A. T. Sornborger, “Self-tuning neuromorphic
+controller for real-time UAS trajectory tracking based on prescribed
+error sensitivity,” Neural Computing and Applications, vol. 38, no. 7,
+p. 192, 2026.
+[10] H. Schaub and J. L. Junkins, Analytical Mechanics of Space Systems,
+4th ed.
+AIAA, 2018.
+[11] J. Diebel, “Representing attitude: Euler angles, unit quaternions, and
+rotation vectors,” Matrix, vol. 58, no. 15–16, pp. 1–35, 2006.
+[12] N. A. Chaturvedi, A. K. Sanyal, and N. H. McClamroch, “Rigid-body
+attitude control,” IEEE Control Systems Magazine, vol. 31, no. 3, pp.
+30–51, 2011.
+[13] C. G. Mayhew, R. G. Sanfelice, and A. R. Teel, “Quaternion-based
+hybrid control for robust global attitude tracking,” IEEE Transactions
+on Automatic Control, vol. 56, no. 11, pp. 2555–2566, 2011.

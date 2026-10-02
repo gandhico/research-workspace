@@ -1,0 +1,150 @@
+EHEKATL BWB XP12 CODEX AND LQR NOTEPAD
+======================================
+
+Project root:
+  /home/ubuntu/GHYN/Xplane_controllers/EHEKATL_BWB_XP12
+
+
+LAUNCH CODEX FROM THIS PROJECT
+------------------------------
+
+cd /home/ubuntu/GHYN/Xplane_controllers/EHEKATL_BWB_XP12
+codex
+
+
+LQR SETUP FROM PROJECT ROOT
+---------------------------
+
+cd /home/ubuntu/GHYN/Xplane_controllers/EHEKATL_BWB_XP12
+source backstepping/ehekatl_xplane12_backstepping_bridge/.venv/bin/activate
+mkdir -p logs
+
+
+CANONICAL LQR LOCATION
+----------------------
+
+lqr/LQR.py
+lqr/run_lqr_xp12.py
+tests/test_lqr.py
+
+Compatibility wrappers still exist under lqr/, but do not edit them.
+
+
+LQR LOCAL CODE CHECKS
+---------------------
+
+python -m unittest tests/test_lqr.py
+python -m py_compile \
+  lqr/LQR.py \
+  lqr/run_lqr_xp12.py \
+  tests/test_lqr.py
+
+
+X-PLANE CONNECTION CHECK
+------------------------
+
+python scripts/health_check_xpc.py \
+  --host 127.0.0.1 \
+  --port 49009
+
+
+LQR PITCH-ONLY DIAGNOSTIC
+-------------------------
+
+Trim X-Plane close to pitch=2 deg, roll=0 deg before running.
+
+python lqr/run_lqr_xp12.py \
+  --duration 4 \
+  --hz 20 \
+  --controller lqr \
+  --mode attitude \
+  --axis pitch \
+  --rate-units deg_s \
+  --routing legacy \
+  --trim-source current \
+  --trim-mode incremental \
+  --pitch-sp 2 \
+  --roll-sp 0 \
+  --clip 0.08 \
+  --throttle -998 \
+  --max-abs-pitch 25 \
+  --max-abs-roll 35 \
+  --max-abs-rate 80 \
+  --out logs/lqr_pitch_lqr_$(date +%Y%m%d_%H%M%S).csv
+
+If pitch moves away from 2 deg, rerun with:
+  --elevator-sign -1
+
+
+LQR ROLL-ONLY DIAGNOSTIC
+------------------------
+
+Trim X-Plane close to pitch=2 deg, roll=0 deg before running.
+
+python lqr/run_lqr_xp12.py \
+  --duration 4 \
+  --hz 20 \
+  --controller lqr \
+  --mode attitude \
+  --axis roll \
+  --rate-units deg_s \
+  --routing legacy \
+  --trim-source current \
+  --trim-mode incremental \
+  --pitch-sp 2 \
+  --roll-sp 0 \
+  --clip 0.08 \
+  --throttle -998 \
+  --max-abs-pitch 25 \
+  --max-abs-roll 35 \
+  --max-abs-rate 80 \
+  --out logs/lqr_roll_lqr_$(date +%Y%m%d_%H%M%S).csv
+
+If roll moves away from 0 deg, rerun with:
+  --aileron-sign 1
+
+
+LQR COMBINED ATTITUDE TEST
+--------------------------
+
+Run only after pitch-only and roll-only move in the correct direction.
+
+python lqr/run_lqr_xp12.py \
+  --duration 8 \
+  --hz 20 \
+  --controller lqr \
+  --mode attitude \
+  --axis both \
+  --rate-units deg_s \
+  --routing legacy \
+  --trim-source current \
+  --trim-mode incremental \
+  --pitch-sp 2 \
+  --roll-sp 0 \
+  --clip 0.08 \
+  --throttle -998 \
+  --max-start-pitch-error 5 \
+  --max-start-roll-error 5 \
+  --max-abs-pitch 25 \
+  --max-abs-roll 35 \
+  --max-abs-rate 80 \
+  --out logs/lqr_attitude_lqr_$(date +%Y%m%d_%H%M%S).csv
+
+
+WHAT TO REPORT BACK TO CODEX
+----------------------------
+
+After each LQR run, report:
+  1. The exact CSV path printed by the runner.
+  2. The CTRL trim bias line printed at startup.
+  3. Whether pitch moved toward 2 degrees or away from it.
+  4. Whether roll moved toward 0 degrees or away from it.
+  5. Whether stop_reason was empty or a safety limit triggered.
+
+Current LQR integration defaults:
+  --rate-units deg_s
+  --routing legacy
+  --trim-source current
+  --trim-mode incremental
+  --elevator-sign 1
+  --aileron-sign -1

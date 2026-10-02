@@ -1,0 +1,58 @@
+{
+  "stage": "steps",
+  "clock": "hw",
+  "gains": "quanser",
+  "abort_reason": null,
+  "samples": 2750,
+  "overruns": 0,
+  "options": "j0_mode=0;j0_profile_config=0;j0_profile_velocity=0.5;j0_profile_acceleration=0.5;j1_mode=0;j1_profile_config=0;j1_profile_velocity=0.5;j1_profile_acceleration=0.5;j2_mode=0;j2_profile_config=0;j2_profile_velocity=0.5;j2_profile_acceleration=0.5;j3_mode=0;j3_profile_config=0;j3_profile_velocity=1.0;j3_profile_acceleration=1.0;gripper_mode=0;gripper_profile_config=0;",
+  "start_pose": [
+    -0.6758835476953866,
+    -1.4921606132435037,
+    1.3249158761293218,
+    0.17414933635284102,
+    0.09190848214285713
+  ],
+  "hold_cmd": [
+    -0.6758835476953866,
+    -1.4835298641951802,
+    1.308996938995747,
+    0.17414933635284102,
+    0.1
+  ],
+  "log": "C:\\Research\\qarm\\hw_logs\\20260927_191953_steps_hw_quanser_full.csv",
+  "dt_mean_ms": 10.0,
+  "dt_max_ms": 10.000000000001563,
+  "jitter_pct": 1.1921238342294893e-11,
+  "host_dt_max_ms": 13.07230000384152,
+  "host_dt_max_rel_dev_pct": 32.96800006646663,
+  "max_abs_err_settled": {
+    "yaw": 0.0031,
+    "shoulder": 0.0006,
+    "elbow": 0.0021,
+    "wrist": 0.2013,
+    "gripper": 0.0076
+  },
+  "max_abs_current_A": {
+    "yaw": 0.086,
+    "shoulder": 1.391,
+    "elbow": 0.89,
+    "wrist": 0.043,
+    "gripper": 0.134
+  },
+  "mean_current_A": {
+    "yaw": -0.011,
+    "shoulder": 1.274,
+    "elbow": -0.824,
+    "wrist": 0.002,
+    "gripper": 0.1
+  },
+  "final_pos": {
+    "yaw": -0.6743,
+    "shoulder": -1.483,
+    "elbow": 1.3096,
+    "wrist": 0.1741,
+    "gripper": 0.0924
+  },
+  "ident_log": "C:\\Research\\qarm\\hw_logs\\20260927_191953_steps_hw_quanser_wrist_ident.csv"
+}

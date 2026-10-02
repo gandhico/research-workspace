@@ -1,0 +1,261 @@
+{
+  "archive": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hardware_q8_qualification_2026-08-31\\nengo-pes_hover_none_q8-dryrun_20260831_182204\\neural_trace_2khz.npz",
+  "samples": 10000,
+  "t_start_s": 0.0005,
+  "t_end_s": 5.0,
+  "sample_rate_hz_schema": 2000.0,
+  "signals": {
+    "t": {
+      "shape": [
+        10000
+      ],
+      "dtype": "float64",
+      "min": 0.0005,
+      "max": 5.0,
+      "mean": 2.50025,
+      "rms": 2.8869678513970327
+    },
+    "hardware_step": {
+      "shape": [
+        10000
+      ],
+      "dtype": "int64",
+      "min": 0.0,
+      "max": 999.0,
+      "mean": 499.5,
+      "rms": 576.9172384319955
+    },
+    "substep": {
+      "shape": [
+        10000
+      ],
+      "dtype": "int64",
+      "min": 0.0,
+      "max": 9.0,
+      "mean": 4.5,
+      "rms": 5.338539126015656
+    },
+    "baseline_tau_ypr": {
+      "shape": [
+        10000,
+        3
+      ],
+      "dtype": "float64",
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "rms": 0.0
+    },
+    "target_ypr": {
+      "shape": [
+        10000,
+        3
+      ],
+      "dtype": "float64",
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "rms": 0.0
+    },
+    "current": {
+      "shape": [
+        10000,
+        6
+      ],
+      "dtype": "float64",
+      "min": 0.75,
+      "max": 0.75,
+      "mean": 0.75,
+      "rms": 0.75
+    },
+    "voltage": {
+      "shape": [
+        10000,
+        6
+      ],
+      "dtype": "float64",
+      "min": 0.00746262468812392,
+      "max": 0.7499999999257307,
+      "mean": 0.7425374374302915,
+      "rms": 0.7443726384646463
+    },
+    "gate": {
+      "shape": [
+        10000,
+        6
+      ],
+      "dtype": "float64",
+      "min": 1.9287498479639182e-23,
+      "max": 3.728028826030013e-06,
+      "mean": 3.567841691366288e-06,
+      "rms": 3.633780867452205e-06
+    },
+    "activity": {
+      "shape": [
+        10000,
+        6
+      ],
+      "dtype": "float64",
+      "min": 1.9287498479639184e-18,
+      "max": 0.37280288260300126,
+      "mean": 0.3567841691366289,
+      "rms": 0.36337808674522043
+    },
+    "effective_threshold": {
+      "shape": [
+        10000,
+        6
+      ],
+      "dtype": "float64",
+      "min": 0.9999925439423479,
+      "max": 1.0,
+      "mean": 0.9999928643166173,
+      "rms": 0.999992864317567
+    },
+    "gate_argument": {
+      "shape": [
+        10000,
+        6
+      ],
+      "dtype": "float64",
+      "min": -49.6268687655938,
+      "max": -12.49962720083086,
+      "mean": -12.872771344316286,
+      "rms": 13.135084652927484
+    },
+    "gate_target": {
+      "shape": [
+        10000,
+        6
+      ],
+      "dtype": "float64",
+      "min": 2.8010750229809596e-22,
+      "max": 3.7280288260300145e-06,
+      "mean": 3.571569720192319e-06,
+      "rms": 3.635735536044611e-06
+    },
+    "conductance_gain": {
+      "shape": [
+        10000,
+        6
+      ],
+      "dtype": "float64",
+      "min": 142.5,
+      "max": 142.5,
+      "mean": 142.5,
+      "rms": 142.5
+    },
+    "conductance": {
+      "shape": [
+        10000,
+        6
+      ],
+      "dtype": "float64",
+      "min": 5.301108265829694e-44,
+      "max": 1.9804933471987767e-09,
+      "mean": 1.881621783454291e-09,
+      "rms": 1.9233569364462177e-09
+    },
+    "membrane_lambda": {
+      "shape": [
+        10000,
+        6
+      ],
+      "dtype": "float64",
+      "min": 20.0,
+      "max": 20.000000001980492,
+      "mean": 20.000000001881617,
+      "rms": 20.000000001881624
+    },
+    "membrane_drive": {
+      "shape": [
+        10000,
+        6
+      ],
+      "dtype": "float64",
+      "min": 15.0,
+      "max": 15.0,
+      "mean": 15.0,
+      "rms": 15.0
+    },
+    "decoded_raw": {
+      "shape": [
+        10000,
+        3
+      ],
+      "dtype": "float64",
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "rms": 0.0
+    },
+    "decoded_clipped": {
+      "shape": [
+        10000,
+        3
+      ],
+      "dtype": "float64",
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "rms": 0.0
+    },
+    "pes_error": {
+      "shape": [
+        10000,
+        3
+      ],
+      "dtype": "float64",
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "rms": 0.0
+    },
+    "weights": {
+      "shape": [
+        10000,
+        3,
+        6
+      ],
+      "dtype": "float64",
+      "min": -0.999999,
+      "max": 0.999999,
+      "mean": -2.8372366184865114e-20,
+      "rms": 0.5744752212996679
+    },
+    "weight_delta": {
+      "shape": [
+        10000,
+        3,
+        6
+      ],
+      "dtype": "float64",
+      "min": -1.0000000000287557e-06,
+      "max": 1.0000000000287557e-06,
+      "mean": 0.0,
+      "rms": 5.744757957753948e-07
+    },
+    "residual_torque_ypr": {
+      "shape": [
+        10000,
+        3
+      ],
+      "dtype": "float64",
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "rms": 0.0
+    },
+    "disturbance_torque_ypr": {
+      "shape": [
+        10000,
+        3
+      ],
+      "dtype": "float64",
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "rms": 0.0
+    }
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "regime": "R3",
+  "baseline_logs": [
+    "rich_R3_baseline_01_20260712_174514.csv",
+    "rich_R3_baseline_02_20260712_174845.csv"
+  ],
+  "frequencies_hz": [
+    0.1,
+    0.2,
+    0.35,
+    0.55,
+    0.8,
+    1.1
+  ],
+  "phases_rad": [
+    0.0,
+    1.256637,
+    2.513274,
+    3.769911,
+    5.026548,
+    0.628319
+  ],
+  "window": {
+    "start_s": 10.0,
+    "duration_s": 40.0,
+    "ramp_s": 2.0
+  },
+  "selection_gates": {
+    "minimum_input_spectral_snr": 2.0,
+    "minimum_predicted_rate_snr": 5.0
+  },
+  "axes": {
+    "pitch": {
+      "baseline_control_spectral_amplitude": [
+        5.483074113909306e-05,
+        6.0546608021964116e-05,
+        3.6898276474169e-05,
+        1.7416986982542404e-05,
+        2.1214414989801153e-05,
+        6.011465825915946e-06
+      ],
+      "baseline_rate_rms_deg_s": 0.0037974251937751124,
+      "candidates": [
+        {
+          "amplitude": 0.0002,
+          "minimum_input_spectral_snr": 0.5505400619840043,
+          "predicted_rate_snr": 4.943045051764552,
+          "rate_rms_deg_s": 0.018770843813536116,
+          "peak_abs_rate_deg_s": 0.039240421154532266,
+          "peak_abs_excitation": 0.00013238256422121509
+        },
+        {
+          "amplitude": 0.0005,
+          "minimum_input_spectral_snr": 1.3763501549600106,
+          "predicted_rate_snr": 12.357612629411378,
+          "rate_rms_deg_s": 0.04692710953384028,
+          "peak_abs_rate_deg_s": 0.09810105288633066,
+          "peak_abs_excitation": 0.00033095641055303767
+        },
+        {
+          "amplitude": 0.001,
+          "minimum_input_spectral_snr": 2.752700309920021,
+          "predicted_rate_snr": 24.715225258822755,
+          "rate_rms_deg_s": 0.09385421906768056,
+          "peak_abs_rate_deg_s": 0.1962021057726613,
+          "peak_abs_excitation": 0.0006619128211060753
+        }
+      ],
+      "selected_amplitude": 0.001,
+      "selected_nominal_response": {
+        "amplitude": 0.001,
+        "minimum_input_spectral_snr": 2.752700309920021,
+        "predicted_rate_snr": 24.715225258822755,
+        "rate_rms_deg_s": 0.09385421906768056,
+        "peak_abs_rate_deg_s": 0.1962021057726613,
+        "peak_abs_excitation": 0.0006619128211060753
+      },
+      "uncertainty_delay_cases": 81,
+      "uncertainty_peak_abs_rate_range_deg_s": [
+        0.11881850271167028,
+        0.4581820666828224
+      ],
+      "uncertainty_rate_rms_range_deg_s": [
+        0.05390450205797408,
+        0.2058307127634241
+      ]
+    },
+    "roll": {
+      "baseline_control_spectral_amplitude": [
+        1.6667383116845507e-06,
+        9.219602172938677e-07,
+        1.2851262431972543e-06,
+        7.441942609906314e-07,
+        9.932739793453184e-07,
+        1.0559263586135242e-06
+      ],
+      "baseline_rate_rms_deg_s": 0.0005912692715358181,
+      "candidates": [
+        {
+          "amplitude": 0.0002,
+          "minimum_input_spectral_snr": 19.999140296741466,
+          "predicted_rate_snr": 74.72762181185598,
+          "rate_rms_deg_s": 0.044184146512300196,
+          "peak_abs_rate_deg_s": 0.0890165234302068,
+          "peak_abs_excitation": 0.00013238256422121509
+        },
+        {
+          "amplitude": 0.0005,
+          "minimum_input_spectral_snr": 49.99785074185366,
+          "predicted_rate_snr": 186.81905452963986,
+          "rate_rms_deg_s": 0.11046036628075043,
+          "peak_abs_rate_deg_s": 0.2225413085755168,
+          "peak_abs_excitation": 0.00033095641055303767
+        },
+        {
+          "amplitude": 0.001,
+          "minimum_input_spectral_snr": 99.99570148370732,
+          "predicted_rate_snr": 373.6381090592797,
+          "rate_rms_deg_s": 0.22092073256150085,
+          "peak_abs_rate_deg_s": 0.4450826171510336,
+          "peak_abs_excitation": 0.0006619128211060753
+        }
+      ],
+      "selected_amplitude": 0.0002,
+      "selected_nominal_response": {
+        "amplitude": 0.0002,
+        "minimum_input_spectral_snr": 19.999140296741466,
+        "predicted_rate_snr": 74.72762181185598,
+        "rate_rms_deg_s": 0.044184146512300196,
+        "peak_abs_rate_deg_s": 0.0890165234302068,
+        "peak_abs_excitation": 0.00013238256422121509
+      },
+      "uncertainty_delay_cases": 81,
+      "uncertainty_peak_abs_rate_range_deg_s": [
+        0.029251740497583494,
+        0.5525449621336053
+      ],
+      "uncertainty_rate_rms_range_deg_s": [
+        0.012970612800155181,
+        0.18295394518125876
+      ]
+    }
+  }
+}

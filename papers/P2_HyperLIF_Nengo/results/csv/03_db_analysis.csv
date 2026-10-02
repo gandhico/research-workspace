@@ -1,0 +1,9 @@
+quantity,value,note
+hyperlif_db_onset_current,2.4000000000000004,(v_thresh-gamma)(1+tau*reset_gain); fixed-gain DB latch onset
+gate_knee_voltage,0.8,v_thresh - gamma
+hyperlif_latched_voltage_pred_at_I4,1.3333333333333333,analytical v* with r=1
+hyperlif_latched_voltage_sim_at_I4,1.333333333334516,simulated mean voltage in latched regime
+adaptive_asymptotic_voltage,0.625,open-gate voltage as |I|->inf
+adaptive_gain_scaling,80.0,configured gain_scaling (beta)
+adaptive_gain_scaling_critical,62.5,1/(tau(v_thresh-gamma)); above this the open-gate eq stays below the knee
+adaptive_db_free,1.0,1 if asymptotic voltage < gate knee

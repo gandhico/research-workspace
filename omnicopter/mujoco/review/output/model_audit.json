@@ -1,0 +1,1018 @@
+[
+  {
+    "model": "omni",
+    "xml": "C:\\Research\\omnicopter\\mujoco\\Omnidrone\\mujoco model=omnidrone.xml",
+    "mujoco_version": "3.12.0",
+    "nq": 7,
+    "nv": 6,
+    "nu": 8,
+    "mass_kg": 2.5,
+    "com_body_m": [
+      0.0032688055261152205,
+      0.0007190884651182006,
+      0.001031010258533832
+    ],
+    "principal_inertia_kg_m2": [
+      0.08628714606454656,
+      0.086241492259069,
+      0.086098080057167
+    ],
+    "inertial_frame_quaternion_wxyz": [
+      0.8620663469659899,
+      0.0858564061839241,
+      0.09784391819980073,
+      0.48979266901129304
+    ],
+    "initial_qpos": [
+      0.0,
+      0.0,
+      1.0,
+      0.7071067811865476,
+      0.0,
+      0.7071067811865476,
+      0.0
+    ],
+    "timestep_s": 0.002,
+    "integrator": "mjINT_EULER",
+    "density": 0.0,
+    "viscosity": 0.0,
+    "sensors": [
+      "accel",
+      "gyro",
+      "vel"
+    ],
+    "actuators": [
+      {
+        "name": "thrust_1",
+        "site": "rotor_1",
+        "position_body_m": [
+          -0.0973,
+          -0.0973,
+          -0.0973
+        ],
+        "force_body_per_control": [
+          -0.5773502691177722,
+          -0.21132486550334134,
+          0.7886751346211136
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_range": [
+          -10.0,
+          10.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust_2",
+        "site": "rotor_2",
+        "position_body_m": [
+          -0.0973,
+          -0.0973,
+          0.0973
+        ],
+        "force_body_per_control": [
+          0.5773502691177723,
+          -0.7886751346211136,
+          -0.21132486550334134
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_range": [
+          -10.0,
+          10.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust_3",
+        "site": "rotor_3",
+        "position_body_m": [
+          -0.0973,
+          0.0973,
+          -0.0973
+        ],
+        "force_body_per_control": [
+          0.5773502691177723,
+          0.7886751346211136,
+          0.21132486550334134
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_range": [
+          -10.0,
+          10.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust_4",
+        "site": "rotor_4",
+        "position_body_m": [
+          -0.0973,
+          0.0973,
+          0.0973
+        ],
+        "force_body_per_control": [
+          -0.5773502691177722,
+          0.21132486550334134,
+          -0.7886751346211136
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_range": [
+          -10.0,
+          10.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust_5",
+        "site": "rotor_5",
+        "position_body_m": [
+          0.0973,
+          -0.0973,
+          -0.0973
+        ],
+        "force_body_per_control": [
+          -0.5773502691177722,
+          0.21132486550334134,
+          -0.7886751346211136
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_range": [
+          -10.0,
+          10.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust_6",
+        "site": "rotor_6",
+        "position_body_m": [
+          0.0973,
+          -0.0973,
+          0.0973
+        ],
+        "force_body_per_control": [
+          0.5773502691177723,
+          0.7886751346211136,
+          0.21132486550334134
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_range": [
+          -10.0,
+          10.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust_7",
+        "site": "rotor_7",
+        "position_body_m": [
+          0.0973,
+          0.0973,
+          -0.0973
+        ],
+        "force_body_per_control": [
+          0.5773502691177722,
+          -0.7886751346211137,
+          -0.21132486550334154
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_range": [
+          -10.0,
+          10.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust_8",
+        "site": "rotor_8",
+        "position_body_m": [
+          0.0973,
+          0.0973,
+          0.0973
+        ],
+        "force_body_per_control": [
+          -0.5773502691177722,
+          -0.21132486550334134,
+          0.7886751346211136
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_range": [
+          -10.0,
+          10.0
+        ],
+        "control_limited": true
+      }
+    ],
+    "wrench_matrix_body_COM_rows_Fx_Fy_Fz_Mx_My_Mz": [
+      [
+        -0.5773502691177722,
+        0.5773502691177723,
+        0.5773502691177723,
+        -0.5773502691177722,
+        -0.5773502691177722,
+        0.5773502691177723,
+        0.5773502691177722,
+        -0.5773502691177722
+      ],
+      [
+        -0.21132486550334134,
+        -0.7886751346211136,
+        0.7886751346211136,
+        0.21132486550334134,
+        0.21132486550334134,
+        0.7886751346211136,
+        -0.7886751346211137,
+        -0.21132486550334134
+      ],
+      [
+        0.7886751346211136,
+        -0.21132486550334134,
+        0.21132486550334134,
+        -0.7886751346211136,
+        -0.7886751346211136,
+        0.21132486550334134,
+        -0.21132486550334154,
+        0.7886751346211136
+      ],
+      [
+        -0.09808500530835831,
+        0.09663882913084068,
+        0.0979611708933783,
+        -0.09651499471586067,
+        0.09808500530835831,
+        -0.09663882913084068,
+        -0.09796117089337833,
+        0.09651499471586067
+      ],
+      [
+        0.13608755147238039,
+        0.034328237833293605,
+        -0.03551874593374898,
+        -0.134897043371925,
+        0.1309315001956622,
+        0.03570979760961932,
+        -0.03690030571007468,
+        -0.12974099209520681
+      ],
+      [
+        -0.035338657802376765,
+        0.1359074633410082,
+        -0.13507713150329723,
+        0.034508325964665805,
+        -0.03672021757870248,
+        0.13075141206429,
+        -0.12992108022657903,
+        0.03588988574099152
+      ]
+    ],
+    "wrench_rank": 6,
+    "force_rank": 3,
+    "initial_attitude_hover_controls": [
+      5.257151549482126,
+      -5.290759170421923,
+      -5.3288773448064175,
+      5.362484965746215,
+      5.257151549482124,
+      -5.2907591704219215,
+      -5.3288773448064175,
+      5.362484965746215
+    ],
+    "hover_feasible": true,
+    "hover_wrench_residual": [
+      -3.552713678800501e-15,
+      1.0904678133989884e-15,
+      2.9953781365471437e-15,
+      -1.1870040354265017e-16,
+      2.220446049250313e-16,
+      0.0
+    ],
+    "airborne_hover_qacc": [
+      1.0872192794450368e-15,
+      8.687503272492258e-16,
+      1.4235629632507927e-15,
+      -7.719229431524798e-15,
+      4.8502019573850415e-15,
+      3.5087702915905944e-15
+    ],
+    "airborne_contacts": 0,
+    "mesh_body_bounds_m": [
+      [
+        -0.20178688528953886,
+        -0.20311575521449005,
+        -0.2029709979640594
+      ],
+      [
+        0.2059531318937649,
+        0.21423426650219896,
+        0.2042290181149821
+      ]
+    ]
+  },
+  {
+    "model": "x2",
+    "xml": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\third_party\\mujoco_menagerie\\skydio_x2\\scene.xml",
+    "mujoco_version": "3.12.0",
+    "nq": 7,
+    "nv": 6,
+    "nu": 4,
+    "mass_kg": 1.325,
+    "com_body_m": [
+      0.0,
+      0.0,
+      0.053962264150943406
+    ],
+    "principal_inertia_kg_m2": [
+      0.060711294842784244,
+      0.0364684032704233,
+      0.025411698113207547
+    ],
+    "inertial_frame_quaternion_wxyz": [
+      0.4777675511597489,
+      0.4777675511597489,
+      -0.521285111104104,
+      0.521285111104104
+    ],
+    "initial_qpos": [
+      0.0,
+      0.0,
+      0.1,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "timestep_s": 0.01,
+    "integrator": "mjINT_EULER",
+    "density": 1.225,
+    "viscosity": 1.8e-05,
+    "sensors": [
+      "body_gyro",
+      "body_linacc",
+      "body_quat"
+    ],
+    "actuators": [
+      {
+        "name": "thrust1",
+        "site": "thrust1",
+        "position_body_m": [
+          -0.14,
+          -0.18,
+          0.05
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.0201
+        ],
+        "control_range": [
+          0.0,
+          13.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust2",
+        "site": "thrust2",
+        "position_body_m": [
+          -0.14,
+          0.18,
+          0.05
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0201
+        ],
+        "control_range": [
+          0.0,
+          13.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust3",
+        "site": "thrust3",
+        "position_body_m": [
+          0.14,
+          0.18,
+          0.08
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.0201
+        ],
+        "control_range": [
+          0.0,
+          13.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust4",
+        "site": "thrust4",
+        "position_body_m": [
+          0.14,
+          -0.18,
+          0.08
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0201
+        ],
+        "control_range": [
+          0.0,
+          13.0
+        ],
+        "control_limited": true
+      }
+    ],
+    "wrench_matrix_body_COM_rows_Fx_Fy_Fz_Mx_My_Mz": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        -0.18,
+        0.18,
+        0.18,
+        -0.18
+      ],
+      [
+        0.14,
+        0.14,
+        -0.14,
+        -0.14
+      ],
+      [
+        -0.0201,
+        0.0201,
+        -0.0201,
+        0.0201
+      ]
+    ],
+    "wrench_rank": 4,
+    "force_rank": 1,
+    "initial_attitude_hover_controls": [
+      3.2495624999999992,
+      3.2495625000000006,
+      3.2495625000000015,
+      3.2495625000000006
+    ],
+    "hover_feasible": true,
+    "hover_wrench_residual": [
+      0.0,
+      0.0,
+      1.7763568394002505e-15,
+      4.440892098500626e-16,
+      -2.7755575615628914e-16,
+      0.0
+    ],
+    "airborne_hover_qacc": [
+      4.715162902879292e-16,
+      6.558447937221052e-16,
+      1.3406466712454721e-15,
+      1.2153767156388608e-14,
+      -8.737889295545503e-15,
+      6.509499543389913e-16
+    ],
+    "airborne_contacts": 0
+  },
+  {
+    "model": "cf2",
+    "xml": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\third_party\\mujoco_menagerie\\bitcraze_crazyflie_2\\scene.xml",
+    "mujoco_version": "3.12.0",
+    "nq": 7,
+    "nv": 6,
+    "nu": 4,
+    "mass_kg": 0.027,
+    "com_body_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "principal_inertia_kg_m2": [
+      2.3951e-05,
+      2.3951e-05,
+      3.2347e-05
+    ],
+    "inertial_frame_quaternion_wxyz": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "initial_qpos": [
+      0.0,
+      0.0,
+      0.1,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "timestep_s": 0.002,
+    "integrator": "mjINT_RK4",
+    "density": 1.225,
+    "viscosity": 1.8e-05,
+    "sensors": [
+      "body_gyro",
+      "body_linacc",
+      "body_quat"
+    ],
+    "actuators": [
+      {
+        "name": "body_thrust",
+        "site": "actuation",
+        "position_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_range": [
+          0.0,
+          0.35
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "x_moment",
+        "site": "actuation",
+        "position_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          0.0,
+          -1e-05,
+          0.0,
+          0.0
+        ],
+        "control_range": [
+          -1.0,
+          1.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "y_moment",
+        "site": "actuation",
+        "position_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1e-05,
+          0.0
+        ],
+        "control_range": [
+          -1.0,
+          1.0
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "z_moment",
+        "site": "actuation",
+        "position_body_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1e-05
+        ],
+        "control_range": [
+          -1.0,
+          1.0
+        ],
+        "control_limited": true
+      }
+    ],
+    "wrench_matrix_body_COM_rows_Fx_Fy_Fz_Mx_My_Mz": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1e-05,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        -1e-05
+      ]
+    ],
+    "wrench_rank": 4,
+    "force_rank": 1,
+    "initial_attitude_hover_controls": [
+      0.26487,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "hover_feasible": true,
+    "hover_wrench_residual": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "airborne_hover_qacc": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "airborne_contacts": 0
+  },
+  {
+    "model": "cf2-rotor",
+    "xml": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\models\\cf2_rotor_design\\scene.xml",
+    "mujoco_version": "3.12.0",
+    "nq": 7,
+    "nv": 6,
+    "nu": 4,
+    "mass_kg": 0.027,
+    "com_body_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "principal_inertia_kg_m2": [
+      2.3951e-05,
+      2.3951e-05,
+      3.2347e-05
+    ],
+    "inertial_frame_quaternion_wxyz": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "initial_qpos": [
+      0.0,
+      0.0,
+      0.1,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "timestep_s": 0.002,
+    "integrator": "mjINT_RK4",
+    "density": 1.225,
+    "viscosity": 1.8e-05,
+    "sensors": [
+      "body_gyro",
+      "body_linacc",
+      "body_quat"
+    ],
+    "actuators": [
+      {
+        "name": "thrust1",
+        "site": "thrust1",
+        "position_body_m": [
+          -0.0325,
+          -0.0325,
+          0.0
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.005
+        ],
+        "control_range": [
+          0.0,
+          0.0875
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust2",
+        "site": "thrust2",
+        "position_body_m": [
+          -0.0325,
+          0.0325,
+          0.0
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.005
+        ],
+        "control_range": [
+          0.0,
+          0.0875
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust3",
+        "site": "thrust3",
+        "position_body_m": [
+          0.0325,
+          0.0325,
+          0.0
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.005
+        ],
+        "control_range": [
+          0.0,
+          0.0875
+        ],
+        "control_limited": true
+      },
+      {
+        "name": "thrust4",
+        "site": "thrust4",
+        "position_body_m": [
+          0.0325,
+          -0.0325,
+          0.0
+        ],
+        "force_body_per_control": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "gear_site": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.005
+        ],
+        "control_range": [
+          0.0,
+          0.0875
+        ],
+        "control_limited": true
+      }
+    ],
+    "wrench_matrix_body_COM_rows_Fx_Fy_Fz_Mx_My_Mz": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        -0.0325,
+        0.0325,
+        0.0325,
+        -0.0325
+      ],
+      [
+        0.0325,
+        0.0325,
+        -0.0325,
+        -0.0325
+      ],
+      [
+        -0.005,
+        0.005,
+        -0.005,
+        0.005
+      ]
+    ],
+    "wrench_rank": 4,
+    "force_rank": 1,
+    "initial_attitude_hover_controls": [
+      0.06621750000000015,
+      0.06621749999999994,
+      0.06621749999999996,
+      0.06621749999999996
+    ],
+    "hover_feasible": true,
+    "hover_wrench_residual": [
+      0.0,
+      0.0,
+      5.551115123125783e-17,
+      -6.5052130349130266e-18,
+      5.637851296924623e-18,
+      -1.0842021724855044e-18
+    ],
+    "airborne_hover_qacc": [
+      0.0,
+      0.0,
+      0.0,
+      -2.7160507013957777e-13,
+      2.172840561116622e-13,
+      -3.184196568031747e-14
+    ],
+    "airborne_contacts": 0
+  }
+]

@@ -1,0 +1,106 @@
+\documentclass[journal]{IEEEtran}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+\title{Gate-State Residual Control for Quadrotor Attitude Tracking with HyperLIF Neurons}
+
+\author{Gandhi Alexis Sinhue Contreras Torres, Steven Sandoval, and Luis Rodolfo Garcia Carrillo%
+\thanks{Proposal scaffold prepared on 2026-07-19. Intended for IEEE robotics/control journal or RA-L style development.}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper investigates whether the continuous HyperLIF gate state can serve as a bounded residual signal for aggressive quadrotor attitude control. A classical quaternion PD controller provides the nominal safe baseline, while pair-coded HyperLIF gates generate residual torque or motor-level corrections. Existing MuJoCo results on Bitcraze Crazyflie 2 and Skydio X2 show that gate-state residual control can improve selected Hard45 and multi-axis maneuvers while direct LIF, Izhikevich, and Nengo LIF-rate baselines degrade performance. The paper should be framed as a control mechanism paper: the useful signal is the continuous, bounded gate state, not generic neural augmentation. Before submission, the draft must be hardened with repeated trials, ablations, energy/fault statistics, rotor-level X2 completion, and an explicit connection to the Nengo/NEF reference implementation.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Quadrotor control, neuromorphic control, HyperLIF, spiking neural networks, residual control, MuJoCo, quaternion attitude control.
+\end{IEEEkeywords}
+
+\section{Introduction}
+The learning and Nengo papers establish that HyperLIF exposes a decodable gate state. This paper asks whether the same gate state is useful in closed-loop control. The control contribution should be stated narrowly: a bounded, interpretable gate-state residual can improve selected aggressive attitude maneuvers when blended with a classical controller.
+
+\section{System Model}
+Use the existing quaternion attitude-control model and two MuJoCo platforms:
+\begin{itemize}
+  \item Bitcraze Crazyflie 2;
+  \item Skydio X2.
+\end{itemize}
+Report mass, inertia, actuator model, sample time, controller gains, and mission definitions.
+
+\section{Gate-State Residual Architecture}
+Define the baseline controller:
+\begin{equation}
+\tau_{\mathrm{cmd}} = \tau_{\mathrm{PD}} + \beta_r \tau_{\mathrm{gate}}.
+\end{equation}
+The gate residual should be pair-coded so positive and negative corrections are represented by separate gate states. Bound the residual so it cannot exceed a documented fraction of nominal classical authority.
+
+\section{Experiments}
+Required missions:
+\begin{itemize}
+  \item hover or step;
+  \item roll;
+  \item Hard45;
+  \item yaw360 or inversion-style stress if stable and well defined;
+  \item X2 rotor-level motor residual test.
+\end{itemize}
+
+Baselines:
+\begin{itemize}
+  \item classical quaternion PD;
+  \item direct LIF residual;
+  \item direct HyperLIF residual;
+  \item Adaptive HyperLIF residual;
+  \item Izhikevich or other continuous spiking baseline;
+  \item Nengo LIF-rate NEF baseline where computationally appropriate;
+  \item timing-shuffled gate ablation;
+  \item energy-matched residual ablation.
+\end{itemize}
+
+\section{Current Findings}
+The existing draft supports these preliminary claims:
+\begin{itemize}
+  \item HyperLIF gate residual improves selected hard maneuvers on Skydio X2 and Crazyflie 2.
+  \item Other neural controllers can degrade performance, so the gate mechanism matters.
+  \item Gate-mode residual makes Adaptive HyperLIF approximately equivalent to HyperLIF at saturated gate gain; Adaptive-specific claims require voltage or event pathway readout.
+\end{itemize}
+
+\section{Figures and Tables}
+\begin{table}[t]
+\centering
+\caption{Control paper artifacts before submission.}
+\begin{tabular}{lll}
+\toprule
+Artifact & Status & Source \\
+\midrule
+Hard45 controller table & Exists, verify & v2\_clean/paper \\
+Gate-gain sweep table & Partial/TODO & v2\_clean/results \\
+Cross-quad comparison & Exists, verify & main2.tex \\
+X2 rotor-level rows & Pending/TODO & run\_rotor\_level \\
+Timing-shuffle ablation & Needed & new run \\
+Energy/fault table & Needed & new aggregation \\
+Repeated-trial stats & Needed & new run \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Submission Checklist}
+\begin{itemize}
+  \item Fill all TODO rows in the existing LaTeX draft.
+  \item Verify figure paths and render the final PDF.
+  \item Add repeated trials and report mean, standard deviation, and fault/failure counts.
+  \item Add timing-shuffled and energy-matched ablations.
+  \item Connect the controller to the Nengo reference implementation or explain why a direct simulation kernel is used.
+  \item Separate HyperLIF gate-state claims from Adaptive HyperLIF claims.
+\end{itemize}
+
+\section{Conclusion}
+This paper is promising but not yet submission-ready. Current readiness: approximately 68 percent.
+
+\end{document}
+

@@ -1,0 +1,74 @@
+{
+  "file": "rich_R3_pitch_confirmation_01_revised_20260712_183326.csv",
+  "frequencies_hz": [
+    0.35,
+    0.55,
+    0.8,
+    1.1
+  ],
+  "realized_input_amplitude": [
+    0.00011828915699231,
+    0.00019292189433940156,
+    0.00028616091652987444,
+    0.00032203483050952434
+  ],
+  "realized_input_snr": [
+    4.837479092461254,
+    17.939237279010776,
+    20.414675081352396,
+    22.152405067082853
+  ],
+  "rate_response_amplitude_deg_s": [
+    0.014165065956398262,
+    0.020712331001395724,
+    0.028913794796912022,
+    0.030617519672241137
+  ],
+  "rate_response_snr": [
+    18.161244984615045,
+    31.745799743988908,
+    23.806975863157813,
+    26.963600767112904
+  ],
+  "distributed_surfaces": {
+    "distributed_elv1_wing2l_deg": {
+      "range_deg": [
+        -4.3869500160217285,
+        -4.3350114822387695
+      ],
+      "peak_to_peak_deg": 0.051938533782958984,
+      "correlation_with_total_pitch": -0.9999999999125174
+    },
+    "distributed_elv1_wing2r_deg": {
+      "range_deg": [
+        -4.3869500160217285,
+        -4.3350114822387695
+      ],
+      "peak_to_peak_deg": 0.051938533782958984,
+      "correlation_with_total_pitch": -0.9999999999125174
+    },
+    "distributed_elv1_outer_l_deg": {
+      "range_deg": [
+        -4.3869500160217285,
+        -4.3350114822387695
+      ],
+      "peak_to_peak_deg": 0.051938533782958984,
+      "correlation_with_total_pitch": -0.9999999999125174
+    },
+    "distributed_elv1_outer_r_deg": {
+      "range_deg": [
+        -4.3869500160217285,
+        -4.3350114822387695
+      ],
+      "peak_to_peak_deg": 0.051938533782958984,
+      "correlation_with_total_pitch": -0.9999999999125174
+    }
+  },
+  "checks": {
+    "minimum_input_spectral_snr": true,
+    "minimum_rate_spectral_snr": true,
+    "distributed_surface_motion": true,
+    "distributed_surface_correlation": true
+  },
+  "pass": true
+}

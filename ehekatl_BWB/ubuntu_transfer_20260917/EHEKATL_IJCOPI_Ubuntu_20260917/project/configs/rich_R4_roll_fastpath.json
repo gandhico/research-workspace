@@ -1,0 +1,54 @@
+{
+  "status": "frozen_observe_only_required",
+  "strategy": "single-design-run, single-confirmation fast path",
+  "sample_rate_hz": 35.0,
+  "controller_rate_hz": 10.0,
+  "duration_s": 30.0,
+  "excitation": {
+    "start_s": 5.0,
+    "duration_s": 20.0,
+    "ramp_s": 2.0,
+    "amplitude": 0.0001,
+    "frequencies_hz": [2.0, 4.0, 6.0, 8.0, 10.0],
+    "phases_rad": [0.0, 1.256637, 2.513274, 3.769911, 5.026548]
+  },
+  "operating_point": {
+    "altitude_m": 1760.0,
+    "altitude_tolerance_m": 100.0,
+    "ias_kts": 47.0,
+    "ias_tolerance_kts": 1.5,
+    "dynamic_pressure_pa": 353.5,
+    "dynamic_pressure_tolerance_pa": 25.0,
+    "cockpit_throttle": 0.04142,
+    "cockpit_throttle_tolerance": 0.008,
+    "maximum_abs_pitch_deg": 5.0,
+    "maximum_abs_roll_deg": 5.0,
+    "maximum_abs_body_rate_deg_s": 1.0
+  },
+  "abort_envelope": {
+    "maximum_abs_pitch_deg": 10.0,
+    "maximum_abs_roll_deg": 10.0,
+    "maximum_abs_body_rate_deg_s": 20.0
+  },
+  "timing": {
+    "minimum_rows": 1040,
+    "effective_rate_hz_min": 34.0,
+    "effective_rate_hz_max": 36.0,
+    "maximum_gap_s": 0.071428572
+  },
+  "response_bound_basis": {
+    "r3_dynamic_pressure_pa": 240.0,
+    "r4_dynamic_pressure_pa": 353.5,
+    "r3_excitation_amplitude": 0.0002,
+    "r4_excitation_amplitude": 0.0001,
+    "scaled_fraction_of_r3_response": 0.7364583333
+  },
+  "hard_stop_rules": {
+    "maximum_design_identification_runs": 1,
+    "maximum_confirmation_runs": 1,
+    "no_repeat_after_safety_stop": true,
+    "no_gain_or_limit_increase_to_force_pass": true,
+    "reject_before_controller_flight_if_predicted_improvement_is_weak": true
+  },
+  "claim_boundary": "R4 identification design only; no R4 LQR authorization"
+}

@@ -1,0 +1,43 @@
+WARNING: Attach conflict when attaching 'Skydio X2' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+timestep: parent has 0.002 (default), child has 0.01, keeping parent value
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+
+WARNING: Attach conflict when attaching 'cf2 four-rotor design study' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+integrator: parent has 0 (default), child has 1, keeping parent value
+
+C:\Research\neuromorphic_drone_racing\build_scene.py:137: UserWarning: Attach conflict when attaching 'Skydio X2' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+timestep: parent has 0.002 (default), child has 0.01, keeping parent value
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+  model = spec.compile()
+C:\Research\neuromorphic_drone_racing\build_scene.py:137: UserWarning: Attach conflict when attaching 'cf2 four-rotor design study' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+integrator: parent has 0 (default), child has 1, keeping parent value
+  model = spec.compile()
+C:\Research\neuromorphic_drone_racing\build_scene.py:138: UserWarning: Attach conflict when attaching 'Skydio X2' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+timestep: parent has 0.002 (default), child has 0.01, keeping parent value
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+  out.write_text(spec.to_xml())
+C:\Research\neuromorphic_drone_racing\build_scene.py:138: UserWarning: Attach conflict when attaching 'cf2 four-rotor design study' to 'neuromorphic_heterogeneous_race', policy is 'warning'
+density: parent has 0 (default), child has 1.225, keeping parent value
+viscosity: parent has 0 (default), child has 1.8e-05, keeping parent value
+integrator: parent has 0 (default), child has 1, keeping parent value
+  out.write_text(spec.to_xml())
+x2    alpha_max     64 rad/s2  kR 140.0  kW 24.0
+x2    T/W 4.00  race  45.6 s  v_max  8.9 m/s  peak thrust/weight in plan 1.39
+y6    alpha_max    124 rad/s2  kR  62.1  kW 14.2
+y6    T/W 2.40  race  44.0 s  v_max  9.5 m/s  peak thrust/weight in plan 1.44
+cf2   alpha_max    359 rad/s2  kR 140.0  kW 21.3
+cf2   T/W 2.25  race  48.6 s  v_max  8.5 m/s  peak thrust/weight in plan 1.34
+omni  alpha_max     42 rad/s2  kR 140.0  kW 24.0
+omni  T/W 1.87  race  78.1 s  v_max  5.2 m/s  peak thrust/weight in plan 1.12
+simulated 96.8 s in 238.1 s wall
+  x2    RMSE    5.2 cm  max   18.3 cm  gates 15/15  min clearance 0.41 m  collisions 0  sat 11.98 %
+  y6    RMSE    7.2 cm  max   20.8 cm  gates 15/15  min clearance 0.331 m  collisions 0  sat 2.03 %
+  cf2   RMSE    1.8 cm  max    4.5 cm  gates 15/15  min clearance 0.654 m  collisions 0  sat 0.0 %
+  omni  RMSE    0.1 cm  max    1.1 cm  gates 15/15  min clearance 0.269 m  collisions 0  sat 0.0 %

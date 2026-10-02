@@ -1,0 +1,16 @@
+% MPC: unconstrained finite-horizon problem, condensed offline; only the first-move gain runs online.
+\begin{tikzpicture}
+  \commonleft
+  \node[law,right=10mm of err] (law) {\textbf{First-move state feedback}\\
+        $a_i=\dot\omega_{d,i}-K_{0,i}\,[e_i,\ \omega_{e,i}]\T$\\applied at every $0.5$\,ms plant step};
+  \node[offl,above=9mm of law] (qp) {\textbf{Condensed finite-horizon QP} (offline, per axis)\\
+        ZOH model $(A_d,B_d)$, $T=20$\,ms, $N=120$ ($2.4$\,s)\\
+        $\bm x_{\rm pred}=S_x\bm x_0+S_u U$,\ \ $H=S_u\T\bar QS_u+\bar R$\\
+        $U^\star=-H^{-1}F\bm x_0$,\ \ $F=S_u\T\bar QS_x$;\ \ $K_0=[H^{-1}F]_{1,:}$};
+  \draw[sigd] (qp) -- node[lbl,right]{$K_0$ (fixed)} (law);
+  \draw[sig] (err) -- node[lbl,above]{$\bm e,\bm\omega_e$} (law);
+  \coordinate (satx) at ($(law.east)+(25mm,0)$);
+  \commonloop{law}{\textbf{Torque box}\\$\bm u_0=\sat_{\bm\ell}(\bm J\odot\bm a)$};
+  \node[fam,fit=(law)(qp)] (g) {};
+  \node[famlbl,anchor=south west] at (g.north west) {family: MPC (\code{--baseline mpc}), receding horizon realized as its first-move gain};
+\end{tikzpicture}

@@ -1,0 +1,27 @@
+Full HyperLIF/Nengo tuning setup
+Candidates: 73
+CSV: C:\00_Research_\Neural_Networks_and_Learning\04_Adaptive_HyperLIF_Nengo\05_Adaptive_HyperLIF_Nengo_Paper\results\csv\11_full_tuning_candidate_matrix.csv
+
+Stages:
+- 0_anchor: 7
+- 1_origin_threshold: 12
+- 2_origin_aware_calibration: 20
+- 3_adaptive_gain: 10
+- 4_gate_shape: 10
+- 5_out_of_box: 14
+
+Implementation classes:
+- app_builder: 2
+- core_params: 59
+- local_subclass: 9
+- new_decoder: 2
+- new_learning_rule: 1
+
+Recommended execution order:
+1. Run all priority-1 rows from stages 0-2 on the existing six-app sweep.
+2. Add stage-3 adaptive-gain rows if memory/oscillator remain poor.
+3. Add stage-4 gate-shape rows only after single-neuron F-I sanity checks.
+4. Prototype stage-5 rows in separate experiment-local subclasses/decoders.
+
+Claim rule: a row is interesting only if it improves decoded metrics without
+hiding instability behind higher event count or longer synaptic smoothing.

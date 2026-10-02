@@ -1,0 +1,47 @@
+[
+  {
+    "controller": "pd",
+    "cells": 0,
+    "runs": 3,
+    "passed": 3,
+    "mean_position_RMSE_m": 0.30053735120649083,
+    "std_position_RMSE_m": 0.009945368726562577,
+    "mean_attitude_RMSE_deg": 3.983696163775724,
+    "std_attitude_RMSE_deg": 0.49593502649763366,
+    "worst_peak_position_m": 0.36033410319363585,
+    "worst_peak_attitude_deg": 6.843959300334357,
+    "max_motor_N": 9.999999999999988,
+    "max_saturation_fraction": 0.3050534574263518,
+    "mean_peak_residual_norm": 0.0
+  },
+  {
+    "controller": "legacy_12",
+    "cells": 12,
+    "runs": 3,
+    "passed": 3,
+    "mean_position_RMSE_m": 0.12563148968206392,
+    "std_position_RMSE_m": 0.0040383328240609535,
+    "mean_attitude_RMSE_deg": 3.079776821864794,
+    "std_attitude_RMSE_deg": 0.38105625555181005,
+    "worst_peak_position_m": 0.1559770940506146,
+    "worst_peak_attitude_deg": 5.7170778485707086,
+    "max_motor_N": 9.999999999999988,
+    "max_saturation_fraction": 0.29374663487424046,
+    "mean_peak_residual_norm": 2.1507344842430247
+  },
+  {
+    "controller": "cmg_12",
+    "cells": 12,
+    "runs": 3,
+    "passed": 3,
+    "mean_position_RMSE_m": 0.1478046909742425,
+    "std_position_RMSE_m": 0.04911998254832114,
+    "mean_attitude_RMSE_deg": 3.026796878322733,
+    "std_attitude_RMSE_deg": 0.6635478389750996,
+    "worst_peak_position_m": 0.3591800156246061,
+    "worst_peak_attitude_deg": 6.419326461713839,
+    "max_motor_N": 9.999999999999988,
+    "max_saturation_fraction": 0.27797861702945925,
+    "mean_peak_residual_norm": 2.6480178624397688
+  }
+]

@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Mean quaternion-angle-error reduction versus PD under measurement noise. Clean reproduces Table~\ref{tab:mujoco}; moderate is $0.010$ rad / $0.025$ rad\,s$^{-1}$ and realistic is $0.020$ rad / $0.050$ rad\,s$^{-1}$ on the attitude and rate estimates. Noisy entries are the mean of two seeds; the seed standard deviation is given for the realistic level.}
+\label{tab:noise}\centering\small
+\begin{tabular}{llrrr@{\,}l}
+\toprule
+Model&Mission&Clean&Moderate&\multicolumn{2}{c}{Realistic}\\\midrule
+X2&Roll&17.4\%&32.3\%&32.2\%&$\pm$0.01\\
+&Full3&56.6\%&56.4\%&55.7\%&$\pm$0.00\\
+&Hard45&53.1\%&52.9\%&52.3\%&$\pm$0.01\\
+&Hardstep&20.9\%&20.8\%&20.6\%&$\pm$0.02\\
+&Yaw360&60.6\%&56.8\%&47.8\%&$\pm$0.03\\
+\midrule
+CF2&Roll&17.3\%&32.4\%&32.5\%&$\pm$0.01\\
+&Full3&56.1\%&55.9\%&55.2\%&$\pm$0.00\\
+&Hard45&53.6\%&53.4\%&52.7\%&$\pm$0.01\\
+&Hardstep&18.4\%&18.3\%&18.1\%&$\pm$0.02\\
+&Yaw360&60.6\%&56.8\%&47.8\%&$\pm$0.03\\
+\bottomrule
+\end{tabular}
+\end{table}

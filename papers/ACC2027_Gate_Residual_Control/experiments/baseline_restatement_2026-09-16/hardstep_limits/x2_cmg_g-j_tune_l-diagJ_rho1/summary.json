@@ -1,0 +1,28 @@
+{
+ "platform": "x2",
+ "controller": "cmg",
+ "gains": "j_tune",
+ "limits": "diagJ",
+ "rho": 1.0,
+ "torque_limits_Nm": [
+  0.4398203773584929,
+  0.3049403773584922,
+  0.6052800000000033
+ ],
+ "accel_envelope_rad_s2": [
+  12.0,
+  12.0,
+  10.0
+ ],
+ "qerr_mean_rad": 0.4603087235379195,
+ "qerr_mean_deg": 26.373747131777005,
+ "settled_deg": 8.82944778513028,
+ "t_settle_5deg_s": 1.2524999999958584,
+ "saturation_fraction": 0.1725,
+ "z_min_m": 0.16483284616206695,
+ "tau_at_limit_frac": [
+  0.06691111111111112,
+  0.02652222222222222,
+  0.0
+ ]
+}

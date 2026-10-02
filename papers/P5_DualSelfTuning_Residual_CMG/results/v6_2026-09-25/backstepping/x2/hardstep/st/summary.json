@@ -1,0 +1,78 @@
+{
+ "platform": "x2",
+ "mission": "hardstep",
+ "family": "backstepping",
+ "arm": "st",
+ "controller": "backstepping_st",
+ "allocation": "apa",
+ "sat_gate_axes": true,
+ "gate_blocked_fraction": 0.35481111111111113,
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "z_min_m": 0.20539284211226927,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "tuner": {
+  "beta_p": 0.5,
+  "beta_i": 0.5,
+  "beta_d": 0.5,
+  "e_ref": 0.010537051191250082,
+  "w_ref": 1.0,
+  "kappa_d": 1.0,
+  "tau_lp": 1.0,
+  "learning_rate": 0.0001,
+  "leak": 1e-06,
+  "w_max": 6.0,
+  "freeze_on_sat": false,
+  "v2_gating": true,
+  "e_gate": 0.25
+ },
+ "qerr_mean_rad": 0.2667572227392061,
+ "qerr_rmse_rad": 0.5464328324028078,
+ "qerr_max_rad": 1.9455651185955374,
+ "saturation_fraction": 0.08877777777777777,
+ "residual_rms_Nm": 0.0,
+ "torque_limits_Nm": [
+  0.7285355381134109,
+  0.43762083924507955,
+  0.2541169811320755
+ ],
+ "multiplier_mean": [
+  1.0292059070813762,
+  1.0232709989977296,
+  1.0707021261807037,
+  1.0000001319577527,
+  1.0000168488649177,
+  1.003648005654424
+ ],
+ "multiplier_min": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_max": [
+  1.1497746203634556,
+  1.160418818786482,
+  1.2378070882890166,
+  1.0000024808556498,
+  1.0018694758252369,
+  1.057650665195438
+ ],
+ "WS_final_fro": 0.344266132899195,
+ "WR_final_fro": null,
+ "wall_s": 37.97456830000738,
+ "hashes": {
+  "run_dual_v5.py": "6c93217276417a3c",
+  "dual_controller_v5.py": "1af5cd0c0a625f5b",
+  "dual_controller.py": "4786d16cc2f51140",
+  "run_dual.py": "024712601f975101",
+  "run_mujoco_nef_baselines.py": "3c12f663e4034fd9",
+  "model": "d932ffbe9f0d1fa4"
+ }
+}

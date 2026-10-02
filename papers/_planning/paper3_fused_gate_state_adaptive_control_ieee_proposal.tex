@@ -1,0 +1,128 @@
+\documentclass[journal]{IEEEtran}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+\title{Gate-State and Adaptive/Learned Residual Control with HyperLIF Neurons}
+
+\author{Gandhi Alexis Sinhue Contreras Torres, Steven Sandoval, and Luis Rodolfo Garcia Carrillo%
+\thanks{Fused control-paper scaffold prepared on 2026-07-19. This replaces the separate P3/P4 split.}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper studies HyperLIF-family neurons as residual-control primitives for aggressive quadrotor attitude tracking. The core mechanism is the continuous HyperLIF gate state, a bounded internal variable that can be decoded as a smooth residual signal and blended with a classical quaternion controller. The extension asks when Adaptive HyperLIF or learned gate mechanisms improve beyond a fixed gate-state residual. Existing MuJoCo results on Crazyflie 2 and Skydio X2 show that fixed HyperLIF gate-state residuals can improve selected maneuvers where direct LIF, Izhikevich, and Nengo LIF-rate residuals degrade performance. The fused manuscript must now establish the adaptive/learned component through repeated trials, cross-platform ablations, timing-shuffled controls, energy/fault reporting, and voltage/event-mode residuals that actually activate the Adaptive HyperLIF conductance pathway.
+\end{abstract}
+
+\begin{IEEEkeywords}
+HyperLIF, Adaptive HyperLIF, quadrotor control, residual control, neuromorphic control, MuJoCo, spiking neural networks.
+\end{IEEEkeywords}
+
+\section{Introduction}
+P1 establishes that the HyperLIF gate is a decodable temporal state. P2 establishes that the neuron can be implemented faithfully in Nengo/NEF. This paper is the deep control study: can that same gate state, and eventually its adaptive or learned variants, improve closed-loop quadrotor control?
+
+The paper must make a strict distinction between three claims:
+\begin{itemize}
+  \item fixed HyperLIF gate-state residual improves selected maneuvers;
+  \item Adaptive HyperLIF improves only if the readout path engages voltage/event/conductance dynamics, not merely saturated gate mode;
+  \item learned gate control is publishable only if it beats fixed gate control under matched ablations.
+\end{itemize}
+
+\section{System and Baseline Controller}
+Use the existing quaternion PD controller and MuJoCo models:
+\begin{itemize}
+  \item Bitcraze Crazyflie 2;
+  \item Skydio X2.
+\end{itemize}
+Report mass, inertia, actuator model, mission definitions, sample time, and nominal controller gains.
+
+\section{Residual Architectures}
+\subsection{Fixed Gate-State Residual}
+Pair-code positive and negative residual corrections through HyperLIF gate variables:
+\begin{equation}
+\tau_{\mathrm{cmd}} = \tau_{\mathrm{PD}} + \beta_r \tau_{\mathrm{gate}}.
+\end{equation}
+The fixed gate-state residual is the core result and should be evaluated first.
+
+\subsection{Adaptive HyperLIF Residual}
+Adaptive HyperLIF changes the conductance pathway:
+\begin{equation}
+G(r,J) = (G_0 + \beta |J|)r^2.
+\end{equation}
+If gate-mode decoding saturates $r$, the Adaptive and non-adaptive variants can become indistinguishable. Therefore this section must include voltage-mode or event-mode residuals, or another mechanism proving that the adaptive conductance changes the output.
+
+\subsection{Learned Gate Residual}
+Learned or online-tuned variants may adapt:
+\begin{itemize}
+  \item residual blend $\beta_r(t)$;
+  \item gate gain $G_{\mathrm{gate}}$;
+  \item readout weights from gate/voltage/event channels;
+  \item PES-style or eligibility-style updates using $r(t)$.
+\end{itemize}
+
+\section{Experiments}
+Minimum experiment matrix:
+\begin{itemize}
+  \item platforms: Crazyflie 2 and Skydio X2;
+  \item missions: hover/step, roll, Hard45, yaw360 or another multi-axis stress case;
+  \item controllers: classical PD, fixed HyperLIF gate residual, Adaptive HyperLIF residual, learned gate residual, direct LIF, Izhikevich, Nengo LIF-rate;
+  \item ablations: timing-shuffled gate, frozen gate, energy-matched residual, gain-matched residual, and no-residual blend.
+\end{itemize}
+
+Metrics:
+\begin{itemize}
+  \item mean and peak quaternion error;
+  \item attitude RMSE by axis;
+  \item control energy;
+  \item fault/amplifier/saturation count;
+  \item active duty cycle and gate selectivity;
+  \item stability/failure rate across seeds or repeated trials.
+\end{itemize}
+
+\section{Expected Figures and Tables}
+\begin{table}[t]
+\centering
+\caption{Required fused-control artifacts before submission.}
+\begin{tabular}{lll}
+\toprule
+Artifact & Status & Action \\
+\midrule
+Hard45 fixed gate table & Exists & Verify and update \\
+Gate-gain sweep & Partial & Fill rows from CSV \\
+Cross-quad comparison & Exists & Add stats \\
+X2 rotor-level rows & Pending & Complete run/aggregation \\
+Fixed vs adaptive vs learned & Pending & Core new table \\
+Timing-shuffled ablation & Pending & Core reviewer defense \\
+Energy/fault table & Pending & Core control evidence \\
+Nengo/reference alignment note & Pending & Bridge to P2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Manuscript Boundary}
+P1 and P2 may mention this result only as a bridge:
+\begin{itemize}
+  \item P1: the same gate state used for sparse temporal readout can later be decoded for residual control.
+  \item P2: Nengo/NEF compatibility makes gate-state residual control a principled downstream target.
+\end{itemize}
+The MuJoCo result tables and detailed controller claims belong only here.
+
+\section{Submission Checklist}
+\begin{itemize}
+  \item Complete X2 rotor-level results.
+  \item Add repeated trials and failure counts.
+  \item Add timing-shuffled, frozen-gate, and energy-matched ablations.
+  \item Prove whether Adaptive HyperLIF is active or inert in each residual mode.
+  \item Decide whether learned gate control is a main result, secondary result, or future-work result.
+  \item Render and inspect the final IEEE PDF.
+\end{itemize}
+
+\section{Conclusion}
+The fused control paper is the right home for the gate-state residual discovery and the learned/adaptive gate extension. Current readiness is approximately 62 percent because the fixed gate-state residual is promising, but the adaptive/learned extension still needs decisive validation.
+
+\end{document}
+

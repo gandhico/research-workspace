@@ -1,0 +1,65 @@
+{
+  "lqr/x2": {
+    "geo_base_mrad": 4.6174930241761505,
+    "geo_res_mrad": 3.2974477707923966,
+    "geo_st_mrad": 4.608367555662584,
+    "geo_dual_mrad": 3.2932826417628553,
+    "st_vs_base_pct": 0.19762820356820088,
+    "dual_vs_res_pct": 0.1263137225837041,
+    "dual_vs_base_pct": 28.678124156983632
+  },
+  "lqr/cf2-rotor": {
+    "geo_base_mrad": 3.8741700762164655,
+    "geo_res_mrad": 3.6452496842473416,
+    "geo_st_mrad": 3.8720145103821926,
+    "geo_dual_mrad": 3.6527588445431984,
+    "st_vs_base_pct": 0.05563942191144644,
+    "dual_vs_res_pct": -0.20599851714704354,
+    "dual_vs_base_pct": 5.715062253784653
+  },
+  "backstepping/x2": {
+    "geo_base_mrad": 4.5348134174030585,
+    "geo_res_mrad": 2.921718703925158,
+    "geo_st_mrad": 4.519584295676438,
+    "geo_dual_mrad": 2.917696631122802,
+    "st_vs_base_pct": 0.33582686485349456,
+    "dual_vs_res_pct": 0.13766119226168438,
+    "dual_vs_base_pct": 35.66005119580702
+  },
+  "backstepping/cf2-rotor": {
+    "geo_base_mrad": 3.764147668522363,
+    "geo_res_mrad": 3.6099346888006765,
+    "geo_st_mrad": 3.742507944313184,
+    "geo_dual_mrad": 3.599583512227669,
+    "st_vs_base_pct": 0.5748904164982971,
+    "dual_vs_res_pct": 0.2867413808100405,
+    "dual_vs_base_pct": 4.371883645024333
+  },
+  "mpc/x2": {
+    "geo_base_mrad": 5.16204365486976,
+    "geo_res_mrad": 3.555736294142856,
+    "geo_st_mrad": 5.152263089348446,
+    "geo_dual_mrad": 3.557665410689079,
+    "st_vs_base_pct": 0.18947080217128764,
+    "dual_vs_res_pct": -0.05425364500175611,
+    "dual_vs_base_pct": 31.08029205966023
+  },
+  "mpc/cf2-rotor": {
+    "geo_base_mrad": 4.294661998269428,
+    "geo_res_mrad": 3.955345495638561,
+    "geo_st_mrad": 4.283797859970505,
+    "geo_dual_mrad": 3.952546469119149,
+    "st_vs_base_pct": 0.25296841295777694,
+    "dual_vs_res_pct": 0.07076566440272769,
+    "dual_vs_base_pct": 7.966064134689466
+  },
+  "nmpc/x2": {
+    "geo_base_mrad": 1.912816514232958,
+    "geo_res_mrad": 1.0145725256247053,
+    "geo_st_mrad": 1.9033198550294779,
+    "geo_dual_mrad": 1.0114429623980892,
+    "st_vs_base_pct": 0.49647517850337497,
+    "dual_vs_res_pct": 0.30846126300227983,
+    "dual_vs_base_pct": 47.12284451372592
+  }
+}

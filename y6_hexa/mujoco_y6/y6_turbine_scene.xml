@@ -1,0 +1,151 @@
+<!--
+  Coaxial Y6 tri-rotor + simple wind turbine  (MuJoCo 3.x)
+
+  Airframe = Mehndiratta & Kayacan (CCTA 2018) Table I, the same parameters as
+  nengo_y6/src/models/coaxial_trirotor.py:  m = 1.412 kg, I = diag(0.014965,
+  0.021915, 0.034433), l1 = 0.28, l2 = 0.243, l3 = 0.14, KF = 6.85e-6,
+  Ktau = 3.35e-7, omega_max = 900 rad/s.
+
+  Frame: z-up, x forward, y left (MuJoCo world).  Rotor placement reproduces the
+  moment equations used in the Nengo plant EXACTLY:
+      tau_x = l2 [(F5+F6) - (F1+F2)]           -> pair 5,6 at y = +l2, pair 1,2 at y = -l2
+      tau_y = l1 (F3+F4) - l3 (F1+F2+F5+F6)     -> pair 3,4 at x = -l1, pairs 1,2 / 5,6 at x = +l3
+      tau_z = Ktau/KF [(F1+F3+F5) - (F2+F4+F6)] -> odd = top rotor, even = bottom rotor
+  i.e. the classic Y6 layout: two arms forward, single tail arm (rotors 3,4) aft.
+
+  Each actuator is a thrust motor on a rotor site.  ctrl = rotor thrust F_i [N];
+  gear[5] = +/-Ktau/KF adds the rotor drag (reaction) torque about body z.
+  F_max = KF * 900^2 = 5.548 N per rotor.
+-->
+<mujoco model="y6_coaxial_wind_turbine">
+  <compiler angle="degree" inertiafromgeom="auto"/>
+  <option timestep="0.001" gravity="0 0 -9.81"/>
+
+  <visual>
+    <global offwidth="1280" offheight="720" fovy="45"/>
+    <quality shadowsize="4096"/>
+    <headlight ambient="0.35 0.35 0.35" diffuse="0.6 0.6 0.6" specular="0.1 0.1 0.1"/>
+    <map znear="0.01" zfar="200" shadowclip="40"/>
+  </visual>
+
+  <asset>
+    <texture name="sky" type="skybox" builtin="gradient" rgb1="0.55 0.72 0.92" rgb2="0.95 0.97 1.0" width="512" height="512"/>
+    <texture name="grass" type="2d" builtin="checker" rgb1="0.33 0.50 0.27" rgb2="0.30 0.46 0.25" width="512" height="512"/>
+    <material name="grass" texture="grass" texrepeat="40 40" reflectance="0.02"/>
+    <material name="pad" rgba="0.25 0.25 0.28 1"/>
+    <material name="frame" rgba="0.12 0.12 0.14 1"/>
+    <material name="nmsu" rgba="0.55 0.07 0.16 1"/>
+    <material name="prop_top" rgba="0.95 0.55 0.10 0.85"/>
+    <material name="prop_bot" rgba="0.15 0.55 0.90 0.85"/>
+    <material name="tower" rgba="0.92 0.92 0.92 1" specular="0.3"/>
+    <material name="blade" rgba="0.97 0.97 0.97 1" specular="0.4"/>
+    <material name="tip" rgba="0.85 0.15 0.12 1"/>
+  </asset>
+
+  <default>
+    <default class="viz">
+      <geom contype="0" conaffinity="0" density="0" group="1"/>
+    </default>
+    <default class="rotor">
+      <site type="cylinder" size="0.11 0.004" group="1"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <light name="sun" pos="0 0 30" dir="0.3 0.3 -1" directional="true" castshadow="true" diffuse="0.8 0.8 0.8"/>
+    <geom name="ground" type="plane" size="60 60 0.1" material="grass"/>
+    <geom name="landing_pad" type="cylinder" size="0.6 0.004" pos="0 0 0.001" material="pad" contype="0" conaffinity="0"/>
+
+    <!-- fixed cameras for the presentation video -->
+    <camera name="overview" pos="-5 -15 11" mode="targetbody" target="nacelle" fovy="50"/>
+    <camera name="side"     pos="3 -16 6"   mode="targetbody" target="y6" fovy="40"/>
+
+    <!-- ================= Y6 coaxial tri-rotor ================= -->
+    <body name="y6" pos="0 0 0.13">
+      <freejoint name="y6_root"/>
+      <!-- lumped rigid-body inertia from [M] Table I (Ixz = 0, see PROGRESS.md sec. 6) -->
+      <inertial pos="0 0 0" mass="1.412" diaginertia="0.014965 0.021915 0.034433"/>
+
+      <!-- centre plate + battery -->
+      <geom class="viz" type="cylinder" size="0.075 0.012" material="frame"/>
+      <geom class="viz" type="box" size="0.07 0.035 0.022" pos="0 0 -0.035" material="nmsu"/>
+      <!-- arms: front-right (1,2), tail (3,4), front-left (5,6) -->
+      <geom class="viz" type="capsule" fromto="0 0 0  0.14 -0.243 0" size="0.011" material="frame"/>
+      <geom class="viz" type="capsule" fromto="0 0 0 -0.28  0     0" size="0.011" material="frame"/>
+      <geom class="viz" type="capsule" fromto="0 0 0  0.14  0.243 0" size="0.011" material="frame"/>
+      <!-- coaxial motor posts -->
+      <geom class="viz" type="cylinder" size="0.016 0.045" pos=" 0.14 -0.243 0.005" material="frame"/>
+      <geom class="viz" type="cylinder" size="0.016 0.045" pos="-0.28  0     0.005" material="frame"/>
+      <geom class="viz" type="cylinder" size="0.016 0.045" pos=" 0.14  0.243 0.005" material="frame"/>
+      <!-- nose marker so heading is visible in the video -->
+      <geom class="viz" type="sphere" size="0.025" pos="0.10 0 0.01" rgba="0.1 0.9 0.2 1"/>
+
+      <!-- landing legs (the only colliding geoms of the vehicle) -->
+      <geom name="leg1" type="capsule" fromto=" 0.10 -0.10 -0.02  0.13 -0.13 -0.12" size="0.008" rgba="0.2 0.2 0.2 1" density="0"/>
+      <geom name="leg2" type="capsule" fromto=" 0.10  0.10 -0.02  0.13  0.13 -0.12" size="0.008" rgba="0.2 0.2 0.2 1" density="0"/>
+      <geom name="leg3" type="capsule" fromto="-0.12  0    -0.02 -0.17  0    -0.12" size="0.008" rgba="0.2 0.2 0.2 1" density="0"/>
+
+      <!-- rotor sites: odd = top (CCW-reaction +z), even = bottom -->
+      <site name="r1" class="rotor" pos=" 0.14 -0.243  0.05" material="prop_top"/>
+      <site name="r2" class="rotor" pos=" 0.14 -0.243 -0.04" material="prop_bot"/>
+      <site name="r3" class="rotor" pos="-0.28  0      0.05" material="prop_top"/>
+      <site name="r4" class="rotor" pos="-0.28  0     -0.04" material="prop_bot"/>
+      <site name="r5" class="rotor" pos=" 0.14  0.243  0.05" material="prop_top"/>
+      <site name="r6" class="rotor" pos=" 0.14  0.243 -0.04" material="prop_bot"/>
+
+      <!-- IMU site for sensors -->
+      <site name="imu" pos="0 0 0" size="0.01" rgba="1 1 0 0"/>
+
+      <!-- onboard cameras.  MuJoCo cameras look along their local -z with +y up:
+           xyaxes "0 -1 0  0 0 1" => optical axis = body +x (forward), image-up = body +z. -->
+      <camera name="fpv"    pos="0.16 0 -0.02" xyaxes="0 -1 0 0.17 0 0.985" fovy="70"/>
+      <camera name="gimbal_down" pos="0 0 -0.06" xyaxes="0 -1 0 1 0 0" fovy="60"/>
+      <camera name="chase"  pos="-2.2 0 0.8" xyaxes="0 -1 0 0.35 0 0.94" mode="trackcom" fovy="55"/>
+    </body>
+
+    <!-- ================= simple wind turbine =================
+         Tower at (12, 0), hub height 8 m, rotor radius 3.5 m, rotor disc faces -x
+         (upwind side is toward the drone's take-off pad).  Blades spin about the
+         shaft (hinge along x) driven by a velocity servo; they are visual-only for
+         the drone (contype 0) except the tower, which collides.                 -->
+    <body name="turbine" pos="12 0 0">
+      <geom name="foundation" type="cylinder" size="0.9 0.15" pos="0 0 0.15" rgba="0.6 0.6 0.6 1"/>
+      <geom name="tower" type="cylinder" fromto="0 0 0 0 0 7.8" size="0.28" material="tower"/>
+      <body name="nacelle" pos="0 0 8">
+        <geom name="nacelle_g" type="box" size="0.7 0.28 0.28" pos="0.15 0 0" material="tower"/>
+        <body name="rotor" pos="-0.72 0 0">
+          <joint name="shaft" type="hinge" axis="1 0 0" damping="0.0"/>
+          <inertial pos="0 0 0" mass="30" diaginertia="60 30 30"/>
+          <geom class="viz" type="sphere" size="0.3" material="tower"/>
+          <geom class="viz" type="cylinder" fromto="0.0 0 0 -0.45 0 0" size="0.18" material="tower"/>
+          <!-- three blades at 0 / 120 / 240 deg, slight pitch -->
+          <geom class="viz" type="box" size="0.03 0.16 1.7" pos="0 0 1.95" euler="0 0 8" material="blade"/>
+          <geom class="viz" type="box" size="0.031 0.12 0.18" pos="0 0 3.55" euler="0 0 8" material="tip"/>
+          <geom class="viz" type="box" size="0.03 0.16 1.7" pos="0 -1.689 -0.975" euler="120 0 8" material="blade"/>
+          <geom class="viz" type="box" size="0.031 0.12 0.18" pos="0 -3.074 -1.775" euler="120 0 8" material="tip"/>
+          <geom class="viz" type="box" size="0.03 0.16 1.7" pos="0 1.689 -0.975" euler="-120 0 8" material="blade"/>
+          <geom class="viz" type="box" size="0.031 0.12 0.18" pos="0 3.074 -1.775" euler="-120 0 8" material="tip"/>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <!-- thrust (N) along site +z; reaction torque sign: top +, bottom - (Ktau/KF = 0.048905) -->
+    <general name="F1" site="r1" gear="0 0 1 0 0  0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+    <general name="F2" site="r2" gear="0 0 1 0 0 -0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+    <general name="F3" site="r3" gear="0 0 1 0 0  0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+    <general name="F4" site="r4" gear="0 0 1 0 0 -0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+    <general name="F5" site="r5" gear="0 0 1 0 0  0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+    <general name="F6" site="r6" gear="0 0 1 0 0 -0.048905" ctrllimited="true" ctrlrange="0 5.548"/>
+    <!-- turbine shaft speed servo -->
+    <velocity name="shaft_speed" joint="shaft" kv="400" ctrlrange="-3 3"/>
+  </actuator>
+
+  <sensor>
+    <gyro name="gyro" site="imu"/>
+    <accelerometer name="accel" site="imu"/>
+    <framequat name="quat" objtype="site" objname="imu"/>
+    <framepos name="pos" objtype="site" objname="imu"/>
+  </sensor>
+</mujoco>

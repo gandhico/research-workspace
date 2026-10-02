@@ -1,0 +1,28 @@
+capability,app,neuron,metric,error,rate_hz,status
+NEF repr,comm_channel,LIF,decode_rmse,0.19313028890317124,123.815,ok
+NEF repr,comm_channel,HyperLIF_T023,decode_rmse,0.21139188330394615,33.115,ok
+NEF repr,comm_channel,Adaptive_T033,decode_rmse,0.20490014079727722,64.5,ok
+NEF repr,function_square,LIF,function_rmse,0.19362562991409202,122.345,ok
+NEF repr,function_square,HyperLIF_T023,function_rmse,0.22216636421630193,35.04,ok
+NEF repr,function_square,Adaptive_T033,function_rmse,0.2003728257910502,65.075,ok
+NEF repr,transform_2d,LIF,transform_rmse,0.19654197793841444,117.72333333333333,ok
+NEF repr,transform_2d,HyperLIF_T023,transform_rmse,0.21125384022447927,32.99333333333333,ok
+NEF repr,transform_2d,Adaptive_T033,transform_rmse,0.20855492415792637,61.82333333333333,ok
+NEF dyn,integrator,LIF,hold_err_to_0.3,0.0006146872239877754,83.80333333333333,ok
+NEF dyn,integrator,HyperLIF_T023,hold_err_to_0.3,0.0031349314222464675,37.986666666666665,ok
+NEF dyn,integrator,Adaptive_T033,hold_err_to_0.3,0.009735457062362951,45.193333333333335,ok
+NEF dyn,oscillator,LIF,osc_amp_err,0.14681539204651772,117.31555555555556,ok
+NEF dyn,oscillator,HyperLIF_T023,osc_amp_err,0.09971402816657521,39.65777777777778,ok
+NEF dyn,oscillator,Adaptive_T033,osc_amp_err,0.1635767782352664,62.117777777777775,ok
+memory,working_memory,LIF,hold_err_to_0.6,0.03303140144524874,112.51,ok
+memory,working_memory,HyperLIF_T023,hold_err_to_0.6,0.018988878624855654,44.913333333333334,ok
+memory,working_memory,Adaptive_T033,hold_err_to_0.6,0.035328949879012694,60.266666666666666,ok
+online learn,pes_learning,LIF,pes_late_rmse,0.05060511184931691,116.525,ok
+online learn,pes_learning,HyperLIF_T023,pes_late_rmse,0.44478166019582893,33.4625,ok
+online learn,pes_learning,Adaptive_T033,pes_late_rmse,0.10152590753693022,61.935,ok
+cognition,binding_cconv,LIF,binding_1-cos,0.013982480523722418,nan,ok
+cognition,binding_cconv,HyperLIF_T023,binding_1-cos,0.053546037506447264,nan,ok
+cognition,binding_cconv,Adaptive_T033,binding_1-cos,0.01139891654354741,nan,ok
+cognition,action_selection,LIF,select_err(argmax),0.0,nan,ok
+cognition,action_selection,HyperLIF_T023,select_err(argmax),0.0,nan,ok
+cognition,action_selection,Adaptive_T033,select_err(argmax),0.0,nan,ok

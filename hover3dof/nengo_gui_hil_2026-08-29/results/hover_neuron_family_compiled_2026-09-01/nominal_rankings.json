@@ -1,0 +1,312 @@
+{
+  "roll": [
+    {
+      "rank": 1,
+      "controller": "nengo-cmg-fixed",
+      "qerr_mean_deg": 2.9153070322031076,
+      "improvement_percent": 10.647513038901861
+    },
+    {
+      "rank": 2,
+      "controller": "nengo-nef-pes",
+      "qerr_mean_deg": 2.9314615355081997,
+      "improvement_percent": 10.152386786336814
+    },
+    {
+      "rank": 3,
+      "controller": "nengo-izhikevich-pes",
+      "qerr_mean_deg": 3.2165262219772996,
+      "improvement_percent": 1.4153177917372695
+    },
+    {
+      "rank": 4,
+      "controller": "nengo-izhikevich-fixed",
+      "qerr_mean_deg": 3.259506508259317,
+      "improvement_percent": 0.09799669067437093
+    },
+    {
+      "rank": 5,
+      "controller": "nengo-lif-fixed",
+      "qerr_mean_deg": 3.26270385005888,
+      "improvement_percent": 0.0
+    },
+    {
+      "rank": 6,
+      "controller": "nengo-lif-pes",
+      "qerr_mean_deg": 3.26270385005888,
+      "improvement_percent": 0.0
+    },
+    {
+      "rank": 7,
+      "controller": "nengo-alif-fixed",
+      "qerr_mean_deg": 3.26270385005888,
+      "improvement_percent": 0.0
+    },
+    {
+      "rank": 8,
+      "controller": "nengo-alif-pes",
+      "qerr_mean_deg": 3.26270385005888,
+      "improvement_percent": 0.0
+    },
+    {
+      "rank": 9,
+      "controller": "nengo-lifrate-fixed",
+      "qerr_mean_deg": 3.26270385005888,
+      "improvement_percent": 0.0
+    },
+    {
+      "rank": 10,
+      "controller": "nengo-lifrate-pes",
+      "qerr_mean_deg": 3.26270385005888,
+      "improvement_percent": 0.0
+    }
+  ],
+  "full3": [
+    {
+      "rank": 1,
+      "controller": "nengo-izhikevich-pes",
+      "qerr_mean_deg": 19.97208714337875,
+      "improvement_percent": 0.41489020553157635
+    },
+    {
+      "rank": 2,
+      "controller": "nengo-lifrate-fixed",
+      "qerr_mean_deg": 19.982790293071563,
+      "improvement_percent": 0.3615220057208367
+    },
+    {
+      "rank": 3,
+      "controller": "nengo-lif-fixed",
+      "qerr_mean_deg": 20.01839793367278,
+      "improvement_percent": 0.183974673119208
+    },
+    {
+      "rank": 4,
+      "controller": "nengo-alif-fixed",
+      "qerr_mean_deg": 20.027693683264108,
+      "improvement_percent": 0.13762407205140056
+    },
+    {
+      "rank": 5,
+      "controller": "nengo-nef-pes",
+      "qerr_mean_deg": 20.03077755896596,
+      "improvement_percent": 0.1222472064210543
+    },
+    {
+      "rank": 6,
+      "controller": "nengo-lifrate-pes",
+      "qerr_mean_deg": 20.041494105762546,
+      "improvement_percent": 0.06881220577769448
+    },
+    {
+      "rank": 7,
+      "controller": "nengo-cmg-fixed",
+      "qerr_mean_deg": 20.048609443833328,
+      "improvement_percent": 0.03333360417152397
+    },
+    {
+      "rank": 8,
+      "controller": "nengo-alif-pes",
+      "qerr_mean_deg": 20.05235410794469,
+      "improvement_percent": 0.014661905815897984
+    },
+    {
+      "rank": 9,
+      "controller": "nengo-lif-pes",
+      "qerr_mean_deg": 20.05396177693359,
+      "improvement_percent": 0.006645723449809099
+    },
+    {
+      "rank": 10,
+      "controller": "nengo-izhikevich-fixed",
+      "qerr_mean_deg": 20.105637416050623,
+      "improvement_percent": -0.25102009576203443
+    }
+  ],
+  "hard45": [
+    {
+      "rank": 1,
+      "controller": "nengo-lifrate-fixed",
+      "qerr_mean_deg": 19.748619512598378,
+      "improvement_percent": 0.21679460664172728
+    },
+    {
+      "rank": 2,
+      "controller": "nengo-izhikevich-fixed",
+      "qerr_mean_deg": 19.768174562085704,
+      "improvement_percent": 0.11798944619866857
+    },
+    {
+      "rank": 3,
+      "controller": "nengo-izhikevich-pes",
+      "qerr_mean_deg": 19.76906569158296,
+      "improvement_percent": 0.11348686526636897
+    },
+    {
+      "rank": 4,
+      "controller": "nengo-cmg-fixed",
+      "qerr_mean_deg": 19.77091817673154,
+      "improvement_percent": 0.10412687400464059
+    },
+    {
+      "rank": 5,
+      "controller": "nengo-lif-fixed",
+      "qerr_mean_deg": 19.771416347678443,
+      "improvement_percent": 0.10160978191706677
+    },
+    {
+      "rank": 6,
+      "controller": "nengo-alif-fixed",
+      "qerr_mean_deg": 19.776917698171886,
+      "improvement_percent": 0.07381328779362303
+    },
+    {
+      "rank": 7,
+      "controller": "nengo-alif-pes",
+      "qerr_mean_deg": 19.789479237000098,
+      "improvement_percent": 0.010344010452362676
+    },
+    {
+      "rank": 8,
+      "controller": "nengo-lif-pes",
+      "qerr_mean_deg": 19.79017731668015,
+      "improvement_percent": 0.006816846032025031
+    },
+    {
+      "rank": 9,
+      "controller": "nengo-nef-pes",
+      "qerr_mean_deg": 19.792093216160946,
+      "improvement_percent": -0.0028635567568045433
+    },
+    {
+      "rank": 10,
+      "controller": "nengo-lifrate-pes",
+      "qerr_mean_deg": 19.79474271386946,
+      "improvement_percent": -0.01625058737275519
+    }
+  ],
+  "hardstep": [
+    {
+      "rank": 1,
+      "controller": "nengo-lif-fixed",
+      "qerr_mean_deg": 22.402800269628482,
+      "improvement_percent": 0.055856524036829294
+    },
+    {
+      "rank": 2,
+      "controller": "nengo-lifrate-pes",
+      "qerr_mean_deg": 22.40451059285512,
+      "improvement_percent": 0.04822637120342422
+    },
+    {
+      "rank": 3,
+      "controller": "nengo-lifrate-fixed",
+      "qerr_mean_deg": 22.404884285746828,
+      "improvement_percent": 0.04655923961562506
+    },
+    {
+      "rank": 4,
+      "controller": "nengo-alif-fixed",
+      "qerr_mean_deg": 22.405409487999982,
+      "improvement_percent": 0.04421618925087589
+    },
+    {
+      "rank": 5,
+      "controller": "nengo-lif-pes",
+      "qerr_mean_deg": 22.41305709178334,
+      "improvement_percent": 0.010098436087337119
+    },
+    {
+      "rank": 6,
+      "controller": "nengo-alif-pes",
+      "qerr_mean_deg": 22.414056976111958,
+      "improvement_percent": 0.005637717713027133
+    },
+    {
+      "rank": 7,
+      "controller": "nengo-izhikevich-pes",
+      "qerr_mean_deg": 22.425521999142525,
+      "improvement_percent": -0.04551043755913606
+    },
+    {
+      "rank": 8,
+      "controller": "nengo-cmg-fixed",
+      "qerr_mean_deg": 22.434216596816427,
+      "improvement_percent": -0.08429907589575844
+    },
+    {
+      "rank": 9,
+      "controller": "nengo-izhikevich-fixed",
+      "qerr_mean_deg": 22.43877831423807,
+      "improvement_percent": -0.10464996663256215
+    },
+    {
+      "rank": 10,
+      "controller": "nengo-nef-pes",
+      "qerr_mean_deg": 22.451923738171544,
+      "improvement_percent": -0.16329478423781987
+    }
+  ],
+  "yaw360": [
+    {
+      "rank": 1,
+      "controller": "nengo-nef-pes",
+      "qerr_mean_deg": 6.431128643440375,
+      "improvement_percent": 1.7703015106228381
+    },
+    {
+      "rank": 2,
+      "controller": "nengo-cmg-fixed",
+      "qerr_mean_deg": 6.4458630922493,
+      "improvement_percent": 1.5452460741429384
+    },
+    {
+      "rank": 3,
+      "controller": "nengo-izhikevich-pes",
+      "qerr_mean_deg": 6.515790986584377,
+      "improvement_percent": 0.47716046159064157
+    },
+    {
+      "rank": 4,
+      "controller": "nengo-lif-fixed",
+      "qerr_mean_deg": 6.547030829109035,
+      "improvement_percent": 0.0
+    },
+    {
+      "rank": 5,
+      "controller": "nengo-lif-pes",
+      "qerr_mean_deg": 6.547030829109035,
+      "improvement_percent": 0.0
+    },
+    {
+      "rank": 6,
+      "controller": "nengo-alif-fixed",
+      "qerr_mean_deg": 6.547030829109035,
+      "improvement_percent": 0.0
+    },
+    {
+      "rank": 7,
+      "controller": "nengo-alif-pes",
+      "qerr_mean_deg": 6.547030829109035,
+      "improvement_percent": 0.0
+    },
+    {
+      "rank": 8,
+      "controller": "nengo-lifrate-fixed",
+      "qerr_mean_deg": 6.547030829109035,
+      "improvement_percent": 0.0
+    },
+    {
+      "rank": 9,
+      "controller": "nengo-lifrate-pes",
+      "qerr_mean_deg": 6.547030829109035,
+      "improvement_percent": 0.0
+    },
+    {
+      "rank": 10,
+      "controller": "nengo-izhikevich-fixed",
+      "qerr_mean_deg": 6.561082093487,
+      "improvement_percent": -0.21462040953726963
+    }
+  ]
+}

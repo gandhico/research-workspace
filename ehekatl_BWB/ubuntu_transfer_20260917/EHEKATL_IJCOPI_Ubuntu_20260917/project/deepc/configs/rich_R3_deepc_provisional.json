@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "status": "provisional training-only formulation for offline optimization audit",
+  "operating_point": "R3 approximately 39 kt and 240 Pa dynamic pressure",
+  "sample_rate_hz": 35.0,
+  "manipulated_input": "trim-relative yoke_roll_ratio perturbation",
+  "prediction_outputs": [
+    "p_deg_s"
+  ],
+  "audit_only_channels": [
+    "roll_deg",
+    "total_roll_ratio",
+    "aileron_wing2l_deg"
+  ],
+  "t_ini_samples": 5,
+  "prediction_samples": 5,
+  "prediction_seconds": 0.14285714285714285,
+  "lambda_g": 10.0,
+  "q_y": 1.0,
+  "r_u": 0.01,
+  "r_du": 0.02,
+  "input_limit": 0.0002,
+  "input_slew_limit_per_sample": 0.00005,
+  "selection_rule": "After the initially selected 15/20 formulation failed the 35-Hz runtime gate, choose the best-NRMSE tested P-only formulation that passes the frozen control-period deadline on every audit case.",
+  "selection_evidence": {
+    "best_overall_nrmse": 0.29257078600344166,
+    "selected_nrmse": 0.29257078600344166,
+    "selected_ratio_to_best": 1.0,
+    "constraint_rank": 15,
+    "constraint_rows": 15,
+    "optimizer_runtime_ms_median": 6.38262150096125,
+    "optimizer_runtime_ms_p95": 10.914778099686373,
+    "optimizer_runtime_ms_max": 11.364183999830857,
+    "control_period_ms": 28.571428571428573
+  },
+  "robust_replay_selection": {
+    "uncertainty_cases": 243,
+    "worst_integral_ratio_deepc_to_lqr": 0.895344303745929,
+    "median_integral_ratio_deepc_to_lqr": 0.7880561197716921,
+    "worst_peak_ratio_deepc_to_lqr": 0.9281541485080503,
+    "selection_rule": "Least aggressive penalty pair within 2 percent of the minimum passing worst-case integral ratio."
+  },
+  "held_out_response_files_opened": [],
+  "not_authorized": [
+    "online control",
+    "X-Plane engagement",
+    "performance claim",
+    "confirmation-data tuning"
+  ]
+}

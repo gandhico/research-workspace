@@ -1,0 +1,44 @@
+[
+  {
+    "metric": "attitude_rmse_deg",
+    "mean_reduction_percent": 2.319618432456358,
+    "ci95_low_percent": 2.1777493219525894,
+    "ci95_high_percent": 2.4614875429601266,
+    "trials": 20
+  },
+  {
+    "metric": "peak_attitude_error_deg",
+    "mean_reduction_percent": 1.0105853646607277,
+    "ci95_low_percent": 0.9391802968593821,
+    "ci95_high_percent": 1.0819904324620733,
+    "trials": 20
+  },
+  {
+    "metric": "post_fault_rmse_deg",
+    "mean_reduction_percent": 3.398588838645536,
+    "ci95_low_percent": 3.2212525939735315,
+    "ci95_high_percent": 3.57592508331754,
+    "trials": 20
+  },
+  {
+    "metric": "allocation_rmse_deg_s2",
+    "mean_reduction_percent": 70.74359309575308,
+    "ci95_low_percent": 66.5925286254547,
+    "ci95_high_percent": 74.89465756605146,
+    "trials": 20
+  },
+  {
+    "metric": "surface_rms_command",
+    "mean_reduction_percent": 9.065064247996474,
+    "ci95_low_percent": 8.509131082920051,
+    "ci95_high_percent": 9.620997413072898,
+    "trials": 20
+  },
+  {
+    "metric": "total_variation",
+    "mean_reduction_percent": 11.652242119144011,
+    "ci95_low_percent": 11.322341291318011,
+    "ci95_high_percent": 11.982142946970011,
+    "trials": 20
+  }
+]

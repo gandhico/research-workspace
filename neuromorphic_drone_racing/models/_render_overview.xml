@@ -1,0 +1,448 @@
+<mujoco model="neuromorphic_heterogeneous_race">
+  <compiler angle="radian"/>
+
+  <size nkey="2"/>
+
+  <visual>
+    <global offwidth="1280" offheight="720"/>
+    <map znear="0.005" zfar="200" shadowclip="40"/>
+  </visual>
+
+  <default>
+    <default class="x2/main">
+      <default class="x2/x2">
+        <mesh scale="0.01 0.01 0.01"/>
+        <site group="5"/>
+        <general ctrlrange="0 13"/>
+        <default class="x2/visual">
+          <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+        </default>
+        <default class="x2/collision">
+          <geom type="box" group="3"/>
+          <default class="x2/rotor">
+            <geom size="0.13 0.13 0.01" type="ellipsoid"/>
+          </default>
+        </default>
+      </default>
+    </default>
+    <default class="cf2/main">
+      <default class="cf2/cf2">
+        <site group="5"/>
+        <general ctrlrange="0 0.0875"/>
+        <default class="cf2/visual">
+          <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+        </default>
+        <default class="cf2/collision">
+          <geom type="mesh" group="3"/>
+        </default>
+      </default>
+    </default>
+    <default class="omni/main"/>
+    <default class="y6/main">
+      <default class="y6/y6viz">
+        <geom contype="0" conaffinity="0" group="1" density="0"/>
+      </default>
+      <default class="y6/y6rotor">
+        <site size="0.11 0.004 0.005" group="1" type="cylinder"/>
+      </default>
+    </default>
+  </default>
+
+  <asset>
+    <texture type="skybox" colorspace="auto" name="sky" builtin="gradient" rgb1="0.55 0.7 0.9" rgb2="0.95 0.97 1" width="512" height="3072"/>
+    <texture type="2d" colorspace="auto" name="floor" builtin="checker" rgb1="0.3 0.32 0.34" rgb2="0.4 0.42 0.44" width="512" height="512"/>
+    <texture type="2d" colorspace="linear" name="x2/X2_lowpoly_texture_SpinningProps_1024" file="X2_lowpoly_texture_SpinningProps_1024.png"/>
+    <material name="floor" texture="floor" texrepeat="30 30" reflectance="0.05"/>
+    <material name="gate_a" rgba="0.95 0.35 0.05 1"/>
+    <material name="gate_b" rgba="0.06 0.06 0.08 1"/>
+    <material name="pad" rgba="0.55 0.07 0.16 1"/>
+    <material name="x2/phong3SG" texture="x2/X2_lowpoly_texture_SpinningProps_1024"/>
+    <material name="x2/invisible" rgba="0 0 0 0"/>
+    <material name="cf2/polished_plastic" rgba="0.631 0.659 0.678 1"/>
+    <material name="cf2/polished_gold" rgba="0.969 0.878 0.6 1"/>
+    <material name="cf2/medium_gloss_plastic" rgba="0.109 0.184 0 1"/>
+    <material name="cf2/propeller_plastic" rgba="0.792 0.82 0.933 1"/>
+    <material name="cf2/white"/>
+    <material name="cf2/body_frame_plastic" rgba="0.102 0.102 0.102 1"/>
+    <material name="cf2/burnished_chrome" rgba="0.898 0.898 0.898 1"/>
+    <material name="y6/y6_frame" rgba="0.12 0.12 0.14 1"/>
+    <material name="y6/y6_nmsu" rgba="0.55 0.07 0.16 1"/>
+    <material name="y6/y6_top" rgba="0.95 0.55 0.1 0.85"/>
+    <material name="y6/y6_bot" rgba="0.15 0.55 0.9 0.85"/>
+    <mesh name="x2/X2_lowpoly" class="x2/x2" file="X2_lowpoly.obj"/>
+    <mesh name="cf2/cf2_0" file="cf2_0.obj"/>
+    <mesh name="cf2/cf2_1" file="cf2_1.obj"/>
+    <mesh name="cf2/cf2_2" file="cf2_2.obj"/>
+    <mesh name="cf2/cf2_3" file="cf2_3.obj"/>
+    <mesh name="cf2/cf2_4" file="cf2_4.obj"/>
+    <mesh name="cf2/cf2_5" file="cf2_5.obj"/>
+    <mesh name="cf2/cf2_6" file="cf2_6.obj"/>
+    <mesh name="cf2/cf2_collision_0" file="cf2_collision_0.obj"/>
+    <mesh name="cf2/cf2_collision_1" file="cf2_collision_1.obj"/>
+    <mesh name="cf2/cf2_collision_2" file="cf2_collision_2.obj"/>
+    <mesh name="cf2/cf2_collision_3" file="cf2_collision_3.obj"/>
+    <mesh name="cf2/cf2_collision_4" file="cf2_collision_4.obj"/>
+    <mesh name="cf2/cf2_collision_5" file="cf2_collision_5.obj"/>
+    <mesh name="cf2/cf2_collision_6" file="cf2_collision_6.obj"/>
+    <mesh name="cf2/cf2_collision_7" file="cf2_collision_7.obj"/>
+    <mesh name="cf2/cf2_collision_8" file="cf2_collision_8.obj"/>
+    <mesh name="cf2/cf2_collision_9" file="cf2_collision_9.obj"/>
+    <mesh name="cf2/cf2_collision_10" file="cf2_collision_10.obj"/>
+    <mesh name="cf2/cf2_collision_11" file="cf2_collision_11.obj"/>
+    <mesh name="cf2/cf2_collision_12" file="cf2_collision_12.obj"/>
+    <mesh name="cf2/cf2_collision_13" file="cf2_collision_13.obj"/>
+    <mesh name="cf2/cf2_collision_14" file="cf2_collision_14.obj"/>
+    <mesh name="cf2/cf2_collision_15" file="cf2_collision_15.obj"/>
+    <mesh name="cf2/cf2_collision_16" file="cf2_collision_16.obj"/>
+    <mesh name="cf2/cf2_collision_17" file="cf2_collision_17.obj"/>
+    <mesh name="cf2/cf2_collision_18" file="cf2_collision_18.obj"/>
+    <mesh name="cf2/cf2_collision_19" file="cf2_collision_19.obj"/>
+    <mesh name="cf2/cf2_collision_20" file="cf2_collision_20.obj"/>
+    <mesh name="cf2/cf2_collision_21" file="cf2_collision_21.obj"/>
+    <mesh name="cf2/cf2_collision_22" file="cf2_collision_22.obj"/>
+    <mesh name="cf2/cf2_collision_23" file="cf2_collision_23.obj"/>
+    <mesh name="cf2/cf2_collision_24" file="cf2_collision_24.obj"/>
+    <mesh name="cf2/cf2_collision_25" file="cf2_collision_25.obj"/>
+    <mesh name="cf2/cf2_collision_26" file="cf2_collision_26.obj"/>
+    <mesh name="cf2/cf2_collision_27" file="cf2_collision_27.obj"/>
+    <mesh name="cf2/cf2_collision_28" file="cf2_collision_28.obj"/>
+    <mesh name="cf2/cf2_collision_29" file="cf2_collision_29.obj"/>
+    <mesh name="cf2/cf2_collision_30" file="cf2_collision_30.obj"/>
+    <mesh name="cf2/cf2_collision_31" file="cf2_collision_31.obj"/>
+    <mesh name="omni/omnidrone_mesh" file="Omnidrone.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+
+  <worldbody>
+    <geom name="ground" size="40 40 0.1" type="plane" conaffinity="2" material="floor"/>
+    <geom name="podium" size="0.9 2.4 0.025" pos="-12 -10 0.025" type="box" conaffinity="2" material="pad"/>
+    <camera name="overview" target="gate4" pos="-22 -24 16" mode="targetbodycom" fovy="55"/>
+    <camera name="splits_cam" target="gate4" pos="0 -4 4.5" mode="targetbody" fovy="60"/>
+    <light name="sun" pos="0 0 30" dir="0.282216 0.188144 -0.940721" type="directional" diffuse="0.8 0.8 0.8"/>
+    <body name="gate1" pos="-8 -10 2">
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.04 0.05" pos="0 -0.85 -1" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+      <geom size="0.04 0.05" pos="0 0.85 -1" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+    </body>
+    <body name="gate2" pos="6 -10 3">
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.04 0.55" pos="0 -0.85 -1.5" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+      <geom size="0.04 0.55" pos="0 0.85 -1.5" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+    </body>
+    <body name="gate3" pos="12 -2 3.5" quat="0.707107 0 0 0.707107">
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.04 0.8" pos="0 -0.85 -1.75" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+      <geom size="0.04 0.8" pos="0 0.85 -1.75" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+    </body>
+    <body name="gate4" pos="6 6 5.4" quat="0 0 0 1">
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.04 1.75" pos="0 -0.85 -2.7" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+      <geom size="0.04 1.75" pos="0 0.85 -2.7" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+    </body>
+    <body name="gate5" pos="6 6 1.8">
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.04 0.05" pos="0 -0.85 -0.9" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+      <geom size="0.04 0.05" pos="0 0.85 -0.9" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+    </body>
+    <body name="gate6" pos="12 10.5 2.5" quat="0.707107 0 0 0.707107">
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.04 0.3" pos="0 -0.85 -1.25" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+      <geom size="0.04 0.3" pos="0 0.85 -1.25" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+    </body>
+    <body name="gate7" pos="-4 10.5 3" quat="0 0 0 1">
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 -0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.38 -0.85" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.19 0.1" pos="0 0.76 -0.85" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 -0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.38" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 0.85 0.76" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 -0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.38" type="box" conaffinity="2" material="gate_a"/>
+      <geom size="0.05 0.1 0.19" pos="0 -0.85 0.76" type="box" conaffinity="2" material="gate_b"/>
+      <geom size="0.04 0.55" pos="0 -0.85 -1.5" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+      <geom size="0.04 0.55" pos="0 0.85 -1.5" quat="0 1 0 0" type="cylinder" conaffinity="2" rgba="0.3 0.3 0.32 1"/>
+    </body>
+    <body name="x2/x2" childclass="x2/x2" pos="-12 -8.5 0.15">
+      <joint type="free"/>
+      <geom class="x2/visual" quat="0 0 0.707107 0.707107" mass="0" material="x2/phong3SG" mesh="x2/X2_lowpoly"/>
+      <geom class="x2/collision" size="0.06 0.027 0.02" pos="0.04 0 0.02" contype="2" mass="0"/>
+      <geom class="x2/collision" size="0.06 0.027 0.02" pos="0.04 0 0.06" contype="2" mass="0"/>
+      <geom class="x2/collision" size="0.05 0.027 0.02" pos="-0.07 0 0.065" contype="2" mass="0"/>
+      <geom class="x2/collision" size="0.023 0.017 0.01" pos="-0.137 0.008 0.065" quat="0.707107 0 0 0.707107" contype="2" mass="0"/>
+      <geom name="x2/rotor1" class="x2/rotor" pos="-0.14 -0.18 0.05" contype="2" mass="0.25"/>
+      <geom name="x2/rotor2" class="x2/rotor" pos="-0.14 0.18 0.05" contype="2" mass="0.25"/>
+      <geom name="x2/rotor3" class="x2/rotor" pos="0.14 0.18 0.08" contype="2" mass="0.25"/>
+      <geom name="x2/rotor4" class="x2/rotor" pos="0.14 -0.18 0.08" contype="2" mass="0.25"/>
+      <geom class="x2/visual" size="0.16 0.04 0.02" pos="0 0 0.02" type="ellipsoid" mass="0.325" material="x2/invisible"/>
+      <site name="x2/imu" pos="0 0 0.02"/>
+      <site name="x2/thrust1" pos="-0.14 -0.18 0.05"/>
+      <site name="x2/thrust2" pos="-0.14 0.18 0.05"/>
+      <site name="x2/thrust3" pos="0.14 0.18 0.08"/>
+      <site name="x2/thrust4" pos="0.14 -0.18 0.08"/>
+      <camera name="x2/track" pos="-1 0 0.5" quat="0.601501 0.371748 -0.371748 -0.601501" mode="trackcom"/>
+      <camera name="x2/fpv" pos="0.2 0 0.03" quat="-0.430459 -0.560986 0.560986 0.430459" fovy="90"/>
+      <camera name="x2/dvs" pos="0.2 0 0.03" quat="-0.430459 -0.560986 0.560986 0.430459" fovy="75"/>
+    </body>
+    <body name="cf2/cf2" childclass="cf2/cf2" pos="-12 -9.5 0.15">
+      <inertial pos="0 0 0" mass="0.027" diaginertia="2.3951e-05 2.3951e-05 3.2347e-05"/>
+      <joint type="free"/>
+      <geom class="cf2/visual" material="cf2/propeller_plastic" mesh="cf2/cf2_0"/>
+      <geom class="cf2/visual" material="cf2/medium_gloss_plastic" mesh="cf2/cf2_1"/>
+      <geom class="cf2/visual" material="cf2/polished_gold" mesh="cf2/cf2_2"/>
+      <geom class="cf2/visual" material="cf2/polished_plastic" mesh="cf2/cf2_3"/>
+      <geom class="cf2/visual" material="cf2/burnished_chrome" mesh="cf2/cf2_4"/>
+      <geom class="cf2/visual" material="cf2/body_frame_plastic" mesh="cf2/cf2_5"/>
+      <geom class="cf2/visual" material="cf2/white" mesh="cf2/cf2_6"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_0"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_1"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_2"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_3"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_4"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_5"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_6"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_7"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_8"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_9"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_10"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_11"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_12"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_13"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_14"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_15"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_16"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_17"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_18"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_19"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_20"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_21"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_22"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_23"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_24"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_25"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_26"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_27"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_28"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_29"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_30"/>
+      <geom class="cf2/collision" contype="2" mesh="cf2/cf2_collision_31"/>
+      <site name="cf2/imu" pos="0 0 0"/>
+      <site name="cf2/actuation" pos="0 0 0"/>
+      <site name="cf2/thrust1" pos="-0.0325 -0.0325 0"/>
+      <site name="cf2/thrust2" pos="-0.0325 0.0325 0"/>
+      <site name="cf2/thrust3" pos="0.0325 0.0325 0"/>
+      <site name="cf2/thrust4" pos="0.0325 -0.0325 0"/>
+      <camera name="cf2/track" pos="-1 0 0.5" quat="0.601501 0.371748 -0.371748 -0.601501" mode="trackcom"/>
+      <camera name="cf2/fpv" pos="0.04 0 0.01" quat="-0.430459 -0.560986 0.560986 0.430459" fovy="90"/>
+      <camera name="cf2/dvs" pos="0.04 0 0.01" quat="-0.430459 -0.560986 0.560986 0.430459" fovy="75"/>
+    </body>
+    <body name="omni/drone" pos="-12 -10.5 0.55" quat="0.707107 0 0.707107 0">
+      <joint name="omni/root" type="free"/>
+      <geom name="omni/drone_geom" pos="0.1936 -0.2036 0.1786" quat="1 0 0 0" type="mesh" contype="2" mass="2.5" mesh="omni/omnidrone_mesh"/>
+      <site name="omni/rotor_8" pos="0.0973 0.0973 0.0973" quat="0.888074 5.52623e-11 -0.325058 0.325058" size="0.025 0.005" type="cylinder" rgba="1 0 0 0.5"/>
+      <site name="omni/rotor_4" pos="-0.0973 0.0973 0.0973" quat="-0.325058 0.325058 0.888074 5.52623e-11" size="0.025 0.005" type="cylinder" rgba="1 0 0 0.5"/>
+      <site name="omni/rotor_6" pos="0.0973 -0.0973 0.0973" quat="0.627963 -0.627963 -2.86059e-11 -0.459701" size="0.025 0.005" type="cylinder" rgba="1 0 0 0.5"/>
+      <site name="omni/rotor_2" pos="-0.0973 -0.0973 0.0973" quat="-2.86059e-11 -0.459701 0.627963 -0.627963" size="0.025 0.005" type="cylinder" rgba="1 0 0 0.5"/>
+      <site name="omni/rotor_7" pos="0.0973 0.0973 -0.0973" quat="0.627963 0.627963 0.459701 -2.8606e-11" size="0.025 0.005" type="cylinder" rgba="0 0 1 0.5"/>
+      <site name="omni/rotor_3" pos="-0.0973 0.0973 -0.0973" quat="0.459701 -2.86059e-11 0.627963 0.627963" size="0.025 0.005" type="cylinder" rgba="0 0 1 0.5"/>
+      <site name="omni/rotor_5" pos="0.0973 -0.0973 -0.0973" quat="-5.52623e-11 0.888074 -0.325058 -0.325058" size="0.025 0.005" type="cylinder" rgba="0 0 1 0.5"/>
+      <site name="omni/rotor_1" pos="-0.0973 -0.0973 -0.0973" quat="-0.325058 -0.325058 -5.52623e-11 0.888074" size="0.025 0.005" type="cylinder" rgba="0 0 1 0.5"/>
+      <site name="omni/imu_site" pos="0 0 0" size="0.01 0.01 0.01" type="box" rgba="0 1 0 1"/>
+      <camera name="omni/fpv" pos="0 0 0.4" quat="0.092296 -0.701057 0.701057 -0.092296" fovy="90"/>
+      <camera name="omni/dvs" pos="0 0 0.4" quat="0.092296 -0.701057 0.701057 -0.092296" fovy="75"/>
+    </body>
+    <body name="y6/y6" pos="-12 -11.5 0.18">
+      <inertial pos="0 0 0" mass="1.412" diaginertia="0.014965 0.021915 0.034433"/>
+      <joint type="free"/>
+      <geom class="y6/y6viz" size="0.075 0.012" type="cylinder" material="y6/y6_frame"/>
+      <geom class="y6/y6viz" size="0.07 0.035 0.022" pos="0 0 -0.035" type="box" material="y6/y6_nmsu"/>
+      <geom class="y6/y6viz" size="0.011 0.140222" pos="0.07 -0.1215 0" quat="0.707107 -0.612695 -0.352993 0" type="capsule" material="y6/y6_frame"/>
+      <geom class="y6/y6viz" size="0.011 0.14" pos="-0.14 0 0" quat="0.707107 0 0.707107 0" type="capsule" material="y6/y6_frame"/>
+      <geom class="y6/y6viz" size="0.011 0.140222" pos="0.07 0.1215 0" quat="0.707107 0.612695 -0.352993 0" type="capsule" material="y6/y6_frame"/>
+      <geom class="y6/y6viz" size="0.016 0.045" pos="0.14 -0.243 0.005" type="cylinder" material="y6/y6_frame"/>
+      <geom class="y6/y6viz" size="0.016 0.045" pos="-0.28 0 0.005" type="cylinder" material="y6/y6_frame"/>
+      <geom class="y6/y6viz" size="0.016 0.045" pos="0.14 0.243 0.005" type="cylinder" material="y6/y6_frame"/>
+      <geom class="y6/y6viz" size="0.025" pos="0.1 0 0.01" rgba="0.1 0.9 0.2 1"/>
+      <geom name="y6/leg1" size="0.008 0.0543139" pos="0.115 -0.115 -0.07" quat="0.979943 -0.140913 -0.140913 0" type="capsule" contype="2" density="0"/>
+      <geom name="y6/leg2" size="0.008 0.0543139" pos="0.115 0.115 -0.07" quat="0.979943 0.140913 -0.140913 0" type="capsule" contype="2" density="0"/>
+      <geom name="y6/leg3" size="0.008 0.0559017" pos="-0.145 0 -0.07" quat="0.973249 0 0.229753 0" type="capsule" contype="2" density="0"/>
+      <geom name="y6/rotor_hull1" size="0.11 0.045" pos="0.14 -0.243 0.005" type="cylinder" contype="2" density="0" rgba="0 0 0 0"/>
+      <geom name="y6/rotor_hull2" size="0.11 0.045" pos="-0.28 0 0.005" type="cylinder" contype="2" density="0" rgba="0 0 0 0"/>
+      <geom name="y6/rotor_hull3" size="0.11 0.045" pos="0.14 0.243 0.005" type="cylinder" contype="2" density="0" rgba="0 0 0 0"/>
+      <site name="y6/r1" class="y6/y6rotor" pos="0.14 -0.243 0.05" material="y6/y6_top"/>
+      <site name="y6/r2" class="y6/y6rotor" pos="0.14 -0.243 -0.04" material="y6/y6_bot"/>
+      <site name="y6/r3" class="y6/y6rotor" pos="-0.28 0 0.05" material="y6/y6_top"/>
+      <site name="y6/r4" class="y6/y6rotor" pos="-0.28 0 -0.04" material="y6/y6_bot"/>
+      <site name="y6/r5" class="y6/y6rotor" pos="0.14 0.243 0.05" material="y6/y6_top"/>
+      <site name="y6/r6" class="y6/y6rotor" pos="0.14 0.243 -0.04" material="y6/y6_bot"/>
+      <site name="y6/imu" pos="0 0 0" size="0.01" rgba="1 1 0 0"/>
+      <camera name="y6/fpv" pos="0.18 0 -0.02" quat="-0.430459 -0.560986 0.560986 0.430459" fovy="90"/>
+      <camera name="y6/dvs" pos="0.18 0 -0.02" quat="-0.430459 -0.560986 0.560986 0.430459" fovy="75"/>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <general name="x2/thrust1" class="x2/x2" site="x2/thrust1" gear="0 0 1 0 0 -0.0201"/>
+    <general name="x2/thrust2" class="x2/x2" site="x2/thrust2" gear="0 0 1 0 0 0.0201"/>
+    <general name="x2/thrust3" class="x2/x2" site="x2/thrust3" gear="0 0 1 0 0 -0.0201"/>
+    <general name="x2/thrust4" class="x2/x2" site="x2/thrust4" gear="0 0 1 0 0 0.0201"/>
+    <general name="cf2/thrust1" class="cf2/cf2" site="cf2/thrust1" ctrlrange="0 0.14875" gear="0 0 1 0 0 -0.005"/>
+    <general name="cf2/thrust2" class="cf2/cf2" site="cf2/thrust2" ctrlrange="0 0.14875" gear="0 0 1 0 0 0.005"/>
+    <general name="cf2/thrust3" class="cf2/cf2" site="cf2/thrust3" ctrlrange="0 0.14875" gear="0 0 1 0 0 -0.005"/>
+    <general name="cf2/thrust4" class="cf2/cf2" site="cf2/thrust4" ctrlrange="0 0.14875" gear="0 0 1 0 0 0.005"/>
+    <general name="omni/thrust_1" site="omni/rotor_1" ctrlrange="-10 10" gear="0 0 1 0 0 0"/>
+    <general name="omni/thrust_2" site="omni/rotor_2" ctrlrange="-10 10" gear="0 0 1 0 0 0"/>
+    <general name="omni/thrust_3" site="omni/rotor_3" ctrlrange="-10 10" gear="0 0 1 0 0 0"/>
+    <general name="omni/thrust_4" site="omni/rotor_4" ctrlrange="-10 10" gear="0 0 1 0 0 0"/>
+    <general name="omni/thrust_5" site="omni/rotor_5" ctrlrange="-10 10" gear="0 0 1 0 0 0"/>
+    <general name="omni/thrust_6" site="omni/rotor_6" ctrlrange="-10 10" gear="0 0 1 0 0 0"/>
+    <general name="omni/thrust_7" site="omni/rotor_7" ctrlrange="-10 10" gear="0 0 1 0 0 0"/>
+    <general name="omni/thrust_8" site="omni/rotor_8" ctrlrange="-10 10" gear="0 0 1 0 0 0"/>
+    <general name="y6/F1" site="y6/r1" ctrllimited="true" ctrlrange="0 5.548" gear="0 0 1 0 0 0.048905"/>
+    <general name="y6/F2" site="y6/r2" ctrllimited="true" ctrlrange="0 5.548" gear="0 0 1 0 0 -0.048905"/>
+    <general name="y6/F3" site="y6/r3" ctrllimited="true" ctrlrange="0 5.548" gear="0 0 1 0 0 0.048905"/>
+    <general name="y6/F4" site="y6/r4" ctrllimited="true" ctrlrange="0 5.548" gear="0 0 1 0 0 -0.048905"/>
+    <general name="y6/F5" site="y6/r5" ctrllimited="true" ctrlrange="0 5.548" gear="0 0 1 0 0 0.048905"/>
+    <general name="y6/F6" site="y6/r6" ctrllimited="true" ctrlrange="0 5.548" gear="0 0 1 0 0 -0.048905"/>
+  </actuator>
+
+  <sensor>
+    <gyro site="x2/imu" name="x2/body_gyro"/>
+    <accelerometer site="x2/imu" name="x2/body_linacc"/>
+    <framequat objtype="site" objname="x2/imu" name="x2/body_quat"/>
+    <gyro site="cf2/imu" name="cf2/body_gyro"/>
+    <accelerometer site="cf2/imu" name="cf2/body_linacc"/>
+    <framequat objtype="site" objname="cf2/imu" name="cf2/body_quat"/>
+    <accelerometer site="omni/imu_site" name="omni/accel"/>
+    <gyro site="omni/imu_site" name="omni/gyro"/>
+    <velocimeter site="omni/imu_site" name="omni/vel"/>
+  </sensor>
+
+  <keyframe>
+    <key name="x2/hover" qpos="0 0 0.3 1 0 0 0 -12 -9.5 0.15 1 0 0 0 -12 -10.5 0.55 0.707107 0 0.707107 0 -12 -11.5 0.18 1 0 0 0" ctrl="3.24956 3.24956 3.24956 3.24956 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+    <key name="cf2/hover" qpos="-12 -8.5 0.15 1 0 0 0 0 0 0.1 1 0 0 0 -12 -10.5 0.55 0.707107 0 0.707107 0 -12 -11.5 0.18 1 0 0 0" ctrl="0 0 0 0 0.0662175 0.0662175 0.0662175 0.0662175 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+  </keyframe>
+</mujoco>

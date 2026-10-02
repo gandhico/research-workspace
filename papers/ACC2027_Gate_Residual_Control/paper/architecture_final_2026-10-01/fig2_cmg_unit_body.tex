@@ -1,0 +1,20 @@
+% Fig. 2 -- coupling topology of one CMG unit (picture only; no preamble). Light-blue neuromorphic blocks, as in Fig. 1.
+% For ACC2027.tex: \input{architectures/fig2_cmg_unit_body.tex} inside a figure (fits one IEEE column).
+% Requires arch_style.tex and \sat. The state equations stay in the text; the figure shows which variable acts on which.
+\begin{tikzpicture}[node distance=6mm and 9mm,font=\footnotesize,
+    nb/.style={blk,fill=blue!10,draw=black!65,thick},       % neuromorphic state blocks (light blue)
+    nbl/.style={blk,fill=blue!4,draw=black!50}]             % input/output and auxiliary blocks (lighter)
+  \node[nbl]                        (I) {$I_j$};
+  \node[nb,right=11mm of I]         (v) {membrane\\$v_j$};
+  \node[nb,below=12mm of v]         (r) {gate\\$r_j$};
+  \node[nb] at (I|-r)               (c) {conductance\\$c_j\!\propto\! r_j^{2}$};
+  \node[nbl,right=9mm of r]         (a) {$a_j=\sat_{[0,1]}(G r_j)$};
+
+  \draw[sig] (I) -- (v);
+  \draw[sig] (v) -- node[lbl,right]{$v_j$} (r);
+  \draw[sig] (r) -- node[lbl,above]{$r_j^{2}$} (c);
+  \draw[sig] (c.north east) -- node[lbl,above left=-1pt]{$c_j$} (v.south west);
+  \draw[sig] (I) -- node[lbl,left]{$\chi g_1|I_j|$} (c);
+  \draw[sig] (r) -- (a);
+  \draw[sigd] (r.south east) to[out=-60,in=-120,looseness=1.8] node[lbl,below=1pt]{$\gamma r_j$} (r.south west);
+\end{tikzpicture}

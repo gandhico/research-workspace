@@ -1,0 +1,165 @@
+{
+  "fault": "position jump [-1.957, -3.324, -3.028, -3.135, -0.976] (bus desync?)",
+  "options": "j0_mode=0;j0_profile_velocity=0.6;j0_profile_acceleration=0.6;j1_mode=0;j1_profile_velocity=0.6;j1_profile_acceleration=0.6;j2_mode=0;j2_profile_velocity=0.6;j2_profile_acceleration=0.6;j3_mode=0;j3_profile_velocity=0.6;j3_profile_acceleration=0.6;gripper_mode=0;gripper_profile_velocity=0.6;gripper_profile_acceleration=0.6;",
+  "duration_s": 35.2,
+  "events": [
+    {
+      "label": "start",
+      "q_deg": [
+        -10.38,
+        190.15,
+        -150.56,
+        20.92
+      ],
+      "gripper": 0.286
+    },
+    {
+      "label": "hold rest",
+      "arrive_s": 0.0,
+      "err": [
+        0.0,
+        0.0,
+        0.0098,
+        0.0,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.0,
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "max_speed_so_far": 0.0
+    },
+    {
+      "label": "profile check",
+      "arrive_s": 3.19,
+      "err": [
+        0.0,
+        0.0,
+        0.0098,
+        0.0392,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.03,
+        0.07,
+        0.1,
+        0.0
+      ],
+      "max_speed_so_far": 0.209
+    },
+    {
+      "label": "profile check back",
+      "arrive_s": 3.34,
+      "err": [
+        0.0015,
+        0.0,
+        0.0098,
+        0.0399,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.05,
+        0.07,
+        0.03,
+        0.0
+      ],
+      "max_speed_so_far": 0.21
+    },
+    {
+      "label": "home",
+      "arrive_s": 9.56,
+      "err": [
+        0.0016,
+        0.039,
+        0.0016,
+        0.0061,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.09,
+        0.4,
+        0.12,
+        0.0
+      ],
+      "max_speed_so_far": 0.281
+    },
+    {
+      "label": "base left",
+      "arrive_s": 4.16,
+      "err": [
+        0.0399,
+        0.0009,
+        0.0001,
+        0.0061,
+        0.0
+      ],
+      "analog": [
+        0.01,
+        0.32,
+        0.42,
+        0.12,
+        0.0
+      ],
+      "max_speed_so_far": 0.281
+    },
+    {
+      "label": "base right",
+      "arrive_s": 6.27,
+      "err": [
+        0.0366,
+        0.0009,
+        0.0001,
+        0.0061,
+        0.0
+      ],
+      "analog": [
+        -0.01,
+        0.33,
+        0.41,
+        0.12,
+        0.0
+      ],
+      "max_speed_so_far": 0.281
+    },
+    {
+      "label": "base centre",
+      "arrive_s": 4.1,
+      "err": [
+        0.04,
+        0.0009,
+        0.0001,
+        0.0061,
+        0.0
+      ],
+      "analog": [
+        0.0,
+        0.33,
+        0.41,
+        0.12,
+        0.0
+      ],
+      "max_speed_so_far": 0.281
+    }
+  ],
+  "max_abs_analog": [
+    0.13,
+    0.35,
+    0.43,
+    0.14,
+    0.0
+  ],
+  "max_temp_C": [
+    36.0,
+    32.0,
+    34.0,
+    34.0,
+    35.0
+  ],
+  "log": "C:\\Research\\qarm_mini\\hw_logs\\20260927_203321_mini_hello_demo.csv"
+}

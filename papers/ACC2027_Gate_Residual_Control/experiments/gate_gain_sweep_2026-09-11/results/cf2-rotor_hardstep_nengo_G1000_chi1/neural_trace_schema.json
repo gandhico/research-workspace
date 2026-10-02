@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "format": "NumPy compressed archive",
+  "sample_rate_hz": 2000.0,
+  "sample_period_s": 0.0005,
+  "axis_order": [
+    "x/roll",
+    "y/pitch",
+    "z/yaw"
+  ],
+  "unit_order": [
+    "+x",
+    "+y",
+    "+z",
+    "-x",
+    "-y",
+    "-z"
+  ],
+  "weight_shape_per_sample": [
+    3,
+    6
+  ],
+  "signals": {
+    "t": {
+      "shape": [
+        90000
+      ],
+      "dtype": "float64"
+    },
+    "plant_step": {
+      "shape": [
+        90000
+      ],
+      "dtype": "int64"
+    },
+    "baseline_tau": {
+      "shape": [
+        90000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "target": {
+      "shape": [
+        90000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "current": {
+      "shape": [
+        90000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "voltage": {
+      "shape": [
+        90000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate": {
+      "shape": [
+        90000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "activity": {
+      "shape": [
+        90000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "effective_threshold": {
+      "shape": [
+        90000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate_argument": {
+      "shape": [
+        90000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate_target": {
+      "shape": [
+        90000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "conductance_gain": {
+      "shape": [
+        90000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "conductance": {
+      "shape": [
+        90000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "membrane_lambda": {
+      "shape": [
+        90000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "membrane_drive": {
+      "shape": [
+        90000,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "decoded_raw": {
+      "shape": [
+        90000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "decoded_clipped": {
+      "shape": [
+        90000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "pes_error": {
+      "shape": [
+        90000,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "weights": {
+      "shape": [
+        90000,
+        3,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "weight_delta": {
+      "shape": [
+        90000,
+        3,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "residual_torque": {
+      "shape": [
+        90000,
+        3
+      ],
+      "dtype": "float64"
+    }
+  },
+  "semantics": {
+    "decoded_raw": "unbounded W @ activity",
+    "decoded_clipped": "clip(W @ activity,-1,1), used by PES and residual",
+    "weight_delta": "change in all 18 decoder weights during this Nengo step",
+    "pes_error": "decoded_clipped - target",
+    "gate_target": "sigmoid(alpha*(voltage-effective_threshold))",
+    "conductance": "conductance_gain * gate^2"
+  },
+  "controller": "nengo-nef-pes"
+}

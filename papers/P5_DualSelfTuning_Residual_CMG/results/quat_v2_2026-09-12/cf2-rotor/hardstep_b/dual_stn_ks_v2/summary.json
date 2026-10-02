@@ -1,0 +1,112 @@
+{
+ "platform": "cf2-rotor",
+ "mission": "hardstep_b",
+ "controller": "dual_stn_ks_v2",
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "z_min_m": 0.5963227746603761,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "ki_factor": 0.05,
+ "tuner": null,
+ "stn": {
+  "bounded": true,
+  "mu_p": 5e-05,
+  "mu_i": 5e-05,
+  "mu_d": 5e-05,
+  "e_ref": 0.1,
+  "w_ref": 1.0,
+  "xi_ref": 0.1,
+  "tau_syn": 0.05,
+  "kappa_s": 1.0,
+  "sens_learning_rate": 0.0008,
+  "sens_leak": 1e-06,
+  "du_deadband": 0.001,
+  "m_min": 0.5,
+  "m_max": 1.5,
+  "leak_m": 5e-05,
+  "w_max": 6.0,
+  "known_sign": true,
+  "v2_gating": true,
+  "e_gate": 0.25,
+  "retreat_tau": 1.0
+ },
+ "qerr_mean_rad": 0.30771958298245927,
+ "qerr_rmse_rad": 0.604767805770421,
+ "qerr_max_rad": 2.2310632336695964,
+ "saturation_fraction": 0.009733333333333333,
+ "residual_rms_Nm": 0.00010730227769261589,
+ "torque_limits_Nm": [
+  0.000287412,
+  0.000287412,
+  0.00032347
+ ],
+ "multiplier_mean": [
+  1.0752724217776637,
+  1.116087908445762,
+  1.0871386732295425,
+  0.8033283518174373,
+  0.9868997838142519,
+  0.8808941079961567,
+  1.0001203184986438,
+  1.0001446357313084,
+  1.0000943192386689
+ ],
+ "multiplier_min": [
+  1.0,
+  1.0,
+  1.0,
+  0.5,
+  0.9653217515595259,
+  0.7875262606290029,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_max": [
+  1.0913881993290324,
+  1.1711311065713785,
+  1.1288287655473241,
+  1.017452770313916,
+  1.0286391632202465,
+  1.053250108210299,
+  1.0019386492207072,
+  1.0024155680021396,
+  1.0018156023372855
+ ],
+ "integral_frozen_fraction": [
+  0.03406666666666667,
+  0.0,
+  0.012755555555555555
+ ],
+ "WS_final_fro": null,
+ "WR_final_fro": 2.2800948674512953,
+ "yhat_mean": [
+  1.0,
+  1.0,
+  1.0
+ ],
+ "yhat_negative_fraction": 0.0,
+ "stn_valid_fraction": [
+  0.9761222222222222,
+  0.9748222222222223,
+  0.9756111111111111
+ ],
+ "stn_blocked_fraction": [
+  0.035244444444444446,
+  0.009733333333333333,
+  0.0162
+ ],
+ "wall_s": 158.31931589999658,
+ "hashes": {
+  "run_dual.py": "1bdc9be5c1a8a5a7",
+  "dual_controller.py": "0db1f5c0e50da177",
+  "gra_control/gate.py": "ea6d7853fff724d2",
+  "gra_control/platforms/drone.py": "50af6d1f6de51788",
+  "gra_control/math3d.py": "31620612f184a22f",
+  "model": "410e0975d066abb1"
+ }
+}

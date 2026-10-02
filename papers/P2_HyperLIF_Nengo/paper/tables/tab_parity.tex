@@ -1,0 +1,15 @@
+\begin{table}[t]
+\centering
+\caption{Standalone stable stepping vs.\ the Nengo \texttt{NeuronType} port (from \texttt{07\_parity\_metrics.csv}). Agreement is exact to floating point: zero RMSE, zero maximum voltage/gate difference, and zero event-timing mismatches across both protocols and both models.}
+\label{tab:parity}
+\begin{tabular}{llcccc}
+\toprule
+Model & Protocol & $v$ RMSE & $\max|\Delta v|$ & $r$ RMSE & Event mism. \\
+\midrule
+HyperLIF & stress & $0$ & $0$ & $0$ & 0 \\
+Adaptive & stress & $0$ & $0$ & $0$ & 0 \\
+HyperLIF & step & $0$ & $0$ & $0$ & 0 \\
+Adaptive & step & $0$ & $0$ & $0$ & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}

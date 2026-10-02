@@ -1,0 +1,62 @@
+{
+  "experiment": "nengo_nef_replication_2026-08-29",
+  "platform": "cf2-rotor",
+  "model_interface": "rotor4",
+  "controller": "classical",
+  "controller_backend": "none",
+  "mission": "hardstep",
+  "duration": 45.0,
+  "dt": 0.0005,
+  "beta": 0.5,
+  "learning_rate_direct_equivalent": 0.0008,
+  "nengo_pes_learning_rate": null,
+  "neuron_family_metadata": null,
+  "decoder_leak_per_step": 0.0,
+  "decoder_weight_bound": 0.0,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "actuator_scale": 1.5,
+  "initial_angle_deg": 0.0,
+  "disturbance_torque_Nm": 0.0,
+  "attitude_noise_std_rad": 0.0,
+  "rate_noise_std_rad_s": 0.0,
+  "seed": 1,
+  "ki_factor": 0.2,
+  "ki": [
+    0.0001532864,
+    0.0001532864,
+    0.0001585003
+  ],
+  "baseline": "PID",
+  "integral_final": [
+    0.04790081341980709,
+    -0.08928877038971954,
+    0.49834448450285196
+  ],
+  "integral_frozen_fraction": [
+    0.18965555555555555,
+    0.9311333333333334,
+    0.22175555555555557
+  ],
+  "torque_policy": "model",
+  "torque_limits_Nm": [
+    0.000287412,
+    0.000287412,
+    0.00032347
+  ],
+  "qerr_mean_rad": 2.4844163605967235,
+  "qerr_max_rad": 3.1412395319113195,
+  "qerr_rmse_rad": 2.574593088004944,
+  "tau_mean_Nm": 0.000399788242236667,
+  "residual_mean_Nm": 0.0,
+  "saturation_fraction": 0.9388222222222222,
+  "z_std_m": 0.24214002488194258,
+  "n_steps": 90000,
+  "logged_steps": 9000,
+  "log_every": 10,
+  "logged_dt": 0.005,
+  "nengo_version": "4.1.0",
+  "trace": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\pid_baseline_2026-09-10\\tune\\ki0.2\\cf2_rotor_hardstep_classical\\trace.csv",
+  "neural_trace_full_rate": null,
+  "neural_trace_schema": null
+}

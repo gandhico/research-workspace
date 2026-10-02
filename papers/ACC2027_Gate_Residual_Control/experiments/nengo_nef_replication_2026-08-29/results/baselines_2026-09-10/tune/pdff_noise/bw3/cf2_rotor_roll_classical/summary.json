@@ -1,0 +1,74 @@
+{
+  "experiment": "nengo_nef_replication_2026-08-29",
+  "platform": "cf2-rotor",
+  "model_interface": "rotor4",
+  "controller": "classical",
+  "controller_backend": "none",
+  "mission": "roll",
+  "duration": 45.0,
+  "dt": 0.0005,
+  "beta": 0.5,
+  "learning_rate_direct_equivalent": 0.0008,
+  "nengo_pes_learning_rate": null,
+  "neuron_family_metadata": null,
+  "decoder_leak_per_step": 0.0,
+  "decoder_weight_bound": 0.0,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "actuator_scale": 1.5,
+  "initial_angle_deg": 0.0,
+  "disturbance_torque_Nm": 0.0,
+  "attitude_noise_std_rad": 0.02,
+  "rate_noise_std_rad_s": 0.05,
+  "seed": 7,
+  "ki_factor": 0.0,
+  "ki": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "antiwindup": "torque",
+  "rate_ff": "left-neg",
+  "baseline_family": "backstepping",
+  "baseline_stats": {
+    "bw_scale": 3.0,
+    "wn": [
+      12.0,
+      12.0,
+      10.5
+    ],
+    "update_every_steps": 1
+  },
+  "baseline": "PD+ff",
+  "integral_final": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "integral_frozen_fraction": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "torque_policy": "model",
+  "torque_limits_Nm": [
+    0.000287412,
+    0.000287412,
+    0.00032347
+  ],
+  "qerr_mean_rad": 0.031989288857546705,
+  "qerr_max_rad": 0.10637657139267843,
+  "qerr_rmse_rad": 0.03473011720287604,
+  "tau_mean_Nm": 0.00012112402915999876,
+  "residual_mean_Nm": 0.0,
+  "saturation_fraction": 0.0,
+  "z_std_m": 0.009496359072092597,
+  "n_steps": 90000,
+  "logged_steps": 9000,
+  "log_every": 10,
+  "logged_dt": 0.005,
+  "nengo_version": "4.1.0",
+  "trace": "results\\baselines_2026-09-10\\tune\\pdff_noise\\bw3\\cf2_rotor_roll_classical\\trace.csv",
+  "neural_trace_full_rate": null,
+  "neural_trace_schema": null
+}

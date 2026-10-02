@@ -1,0 +1,2 @@
+experiment_id,dataset,architecture,cell,learning_mode,readout,seed,parameters,best_epoch,validation_accuracy,test_accuracy,test_loss,upcrossings_per_sample,occupancy_per_sample,no_event_neuron_fraction,minimum_crossing_speed,wall_seconds,device,status
+shd_wide_T20__dense__hyperlif__continuous__hybrid_vr__seed1,shd_wide_T20.h5,dense,hyperlif,continuous,hybrid_vr,1,9176,1,0.0,0.0625,3.533546209335327,5.125,49.875,0.6354166865348816,7.055997371673584,360.37199997901917,cpu,complete

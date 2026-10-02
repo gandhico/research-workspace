@@ -1,0 +1,121 @@
+\documentclass[journal]{IEEEtran}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+\title{HyperLIF Learning: Sparse Temporal State in Continuous-Reset Spiking Networks}
+
+\author{Gandhi Alexis Sinhue Contreras Torres, Steven Sandoval, and Luis Rodolfo Garcia Carrillo%
+\thanks{Proposal scaffold prepared on 2026-07-19. Replace author metadata and acknowledgments before submission.}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Spiking neural networks promise event-driven temporal computation, but standard leaky integrate-and-fire neurons expose only discontinuous threshold-reset events and often require surrogate gradients to train. HyperLIF augments the LIF membrane with a bounded continuous reset gate that preserves spike/reset semantics while exposing an internal state variable. This paper proposes a controlled cross-architecture study of HyperLIF and Adaptive HyperLIF in temporal learning. Across feedforward, convolutional, recurrent, delay, and residual spiking architectures, we evaluate whether the gate state improves temporal-task accuracy, readout interpretability, and spike efficiency under matched data, training, and seed budgets. The current evidence supports a disciplined claim: HyperLIF is not a generic leaderboard mechanism, but a sparse temporal-state mechanism whose gate is decodable, whose advantage grows with temporal content, and whose efficiency/readout trade can be tuned across architectures and frameworks.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Spiking neural networks, HyperLIF, Adaptive HyperLIF, surrogate gradients, temporal learning, event-based vision, sparse neural computation.
+\end{IEEEkeywords}
+
+\section{Introduction}
+The rejected TNNLS manuscript made the theory too central before the practical value was clear. This paper inverts the order. The reader first sees the computational question: when a spiking neuron exposes a continuous gate state $r(t)$, does that state improve temporal learning or sparse readout under controlled budgets?
+
+The central thesis is that HyperLIF contributes an interpretable temporal state absent in LIF. This state is useful as a readout, as an efficiency dial, and as a bridge to local learning and control. The contribution is empirical and mechanistic, not a claim that exact differentiability eliminates surrogate training.
+
+\section{Related Work and Positioning}
+This section must explicitly answer the TNNLS novelty critique.
+
+Required comparison table:
+\begin{itemize}
+  \item Smooth gated continuous RNNs: coRNN, UnICORNN, LEM.
+  \item Spiking neuron baselines: LIF, ALIF/LSNN, PLIF, GLIF or learnable-threshold LIF.
+  \item Continuous/hybrid spiking models: Izhikevich, spike response models, adaptive-threshold neurons.
+  \item Deep SNN training: surrogate-gradient LIF, SEW-ResNet, delay SNN, Spikformer if feasible.
+\end{itemize}
+
+The distinction to defend: HyperLIF is a spike/reset neuron with measurable event rate, readout sparsity, and a continuous gate variable, not merely a smooth RNN cell.
+
+\section{Model}
+Present only the equations needed to understand the experiments:
+\begin{align}
+\tau_m \dot{v} &= -v + J - G(r, J)(v-v_{\mathrm{reset}}),\\
+\tau_r \dot{r} &= \sigma(\alpha(v-(v_{\mathrm{th}}-\gamma r))) - r.
+\end{align}
+Adaptive HyperLIF uses an input-dependent reset conductance $G(r,J) = (G_0+\beta |J|)r^2$. Full stability and Nengo implementation details are cited to the companion reference paper.
+
+\section{Experimental Design}
+Datasets should include the existing event and audio datasets used in the PyTorch benchmark: N-MNIST as the near-static control, DVS-Gesture, SHD, SSC, and any available full-data cache variants.
+
+Architectures:
+\begin{itemize}
+  \item feedforward SNN;
+  \item convolutional SNN;
+  \item recurrent SNN;
+  \item learnable-delay SNN;
+  \item residual/deep convres SNN as a stress test and limitation case.
+\end{itemize}
+
+Neuron/readout roster:
+\begin{itemize}
+  \item LIF, PLIF, ALIF/LSNN, HyperLIF, Adaptive HyperLIF;
+  \item HyperLIF variants: $\theta_{\mathrm{event}}=0.95$, origin, dynamic reset;
+  \item readouts: membrane, spike count, gate, and hybrid gate/membrane/event readouts.
+\end{itemize}
+
+\section{Results Plan}
+\subsection{Temporal-Specific Learning Gain}
+Report mean test accuracy over seeds. The safe claim is that HyperLIF gains are largest on temporal datasets and collapse toward small gains on N-MNIST.
+
+\subsection{Gate as Decodable State}
+Show that LIF gate-only readout is structurally blind while HyperLIF gate readout carries task signal.
+
+\subsection{Accuracy-Spike Efficiency Dial}
+Report accuracy versus events per sample. Include Pareto plots and identify operating points, not only best accuracy.
+
+\subsection{Architecture Transfer}
+Use the existing architecture-transfer heatmap. Claim transfer across practical architectures; bound the deep convres result honestly if it remains a controlled negative. The current SHD-wide architecture shortlist supports a nuanced baseline claim: HyperLIF leads the recurrent cell, ALIF slightly leads the delay cell, and both are materially above LIF/PLIF under the selected readouts.
+
+\subsection{Learning Rule Robustness}
+Present the Julia/APEX gate-eligibility result as an annealed eligibility story: HyperLIF gives a physically meaningful surrogate-temperature path, not a surrogate-free miracle.
+
+\subsection{Cross-Framework Reproducibility}
+This section now has calibrated cross-framework evidence. The HDF5 data gate, APEX topology gate, APEX engine import, CUDA availability check, adapter-backed loader smoke, bounded APEX train/eval smoke, and multi-seed tuning pass on byte-identical caches. The safe claim is that tuned APEX HyperLIF/NSA with stronger gate feedback reproduces a small advantage over matched dense LIF; the older default APEX gate setting does not.
+
+\section{Figures and Tables}
+\begin{table}[t]
+\centering
+\caption{Required main-paper artifacts before submission.}
+\begin{tabular}{lll}
+\toprule
+Artifact & Status & Source \\
+\midrule
+Temporal gain table & Exists, polish & 07 / 08 results \\
+Gate readout figure & Exists, polish & 07 figures \\
+Efficiency Pareto & Exists, polish & 08 architecture results \\
+Architecture heatmap & Exists & 08 paper backbone \\
+APEX parity table & Tuned 5-seed APEX comparison passed & Julia HDF5/APEX adapter, tuning grid, and summary CSV \\
+Baseline comparison & FF + SHD-wide arch shortlist passed & Final table scope pending \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Submission Checklist}
+\begin{itemize}
+  \item Run the expanded PLIF and ALIF/LSNN baseline matrix after smoke validation.
+  \item Integrate the tuned APEX GPU validation table; the default-gamma negative result must be framed as calibration evidence, not hidden.
+  \item Decide whether the SHD-wide \texttt{rsnn}/\texttt{delay} shortlist is sufficient for reviewer response or whether full-grid PLIF/ALIF tables are required.
+  \item Report mean, standard deviation or confidence intervals, paired tests, and failure counts.
+  \item Remove unsafe claims about old TNNLS benchmark numbers.
+  \item Convert this proposal into full IEEEtran Overleaf source.
+\end{itemize}
+
+\section{Conclusion}
+This paper should be submitted first after paired statistics, bibliography verification, and advisor-level copyediting are complete. The first IEEEtran source package now exists and builds. Current readiness: approximately 94 percent.
+
+\end{document}

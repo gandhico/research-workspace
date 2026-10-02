@@ -1,0 +1,234 @@
+{
+  "schema": 2,
+  "experiment": "final_robustness_gating_2026-09-20/izhikevich_comparison_A3",
+  "platform": "x2",
+  "model_interface": "rotor4",
+  "mission": "hardstep",
+  "duration_s": 45.0,
+  "dt_s": 0.0005,
+  "controller": "nengo-izhikevich-pes",
+  "controller_backend": "Nengo built-in PES with Izhikevich neuron (archived neuron-family augmentor)",
+  "baseline": {
+    "name": "PD + desired-rate feedforward",
+    "implementation": "AdvancedBaseline(backstepping, no model feedforward)",
+    "rho": 3.0,
+    "base_wn_rad_s": [
+      4.0,
+      4.0,
+      3.5
+    ],
+    "effective_wn_rad_s": [
+      12.0,
+      12.0,
+      10.5
+    ],
+    "zeta": 0.95,
+    "reference_rate_convention": "left-neg",
+    "model_feedforward": false,
+    "shared_by_classical_and_cmg": true,
+    "stats": {
+      "bw_scale": 3.0,
+      "wn": [
+        12.0,
+        12.0,
+        10.5
+      ],
+      "update_every_steps": 1
+    }
+  },
+  "cmg_pes": {
+    "beta": 0.5,
+    "learning_rate_direct_equivalent": 0.0008,
+    "nengo_pes_learning_rate": 0.22534113645761325,
+    "k_error": 8.0,
+    "k_rate": 0.0,
+    "pes_learning_active_every_step": true,
+    "max_native_vs_reconstructed_command_error_Nm": 0.0
+  },
+  "output_gate": {
+    "mode": "torque-saturation-opposition",
+    "location": "after decoder/residual scaling and before outer torque-box clip",
+    "learning_semantics": "output-only; PES target/error/update are never masked",
+    "epsilon_fraction_of_axis_limit": 0.0,
+    "epsilon_Nm": 1e-12,
+    "load_threshold_fraction_of_axis_limit": 1.0,
+    "loaded_threshold_Nm": [
+      0.7285355381124109,
+      0.4376208392440796,
+      0.2541169811310755
+    ],
+    "blocked_fraction_any_axis": 0.1981,
+    "blocked_fraction_per_axis": [
+      0.07815555555555556,
+      0.04791111111111111,
+      0.10073333333333333
+    ],
+    "blocked_share_of_loaded_per_axis": [
+      0.4325155260407059,
+      0.4036697247706422,
+      0.26115512026501514
+    ]
+  },
+  "noise": {
+    "attitude_std_rad_per_rotation_vector_component": 0.02,
+    "rate_std_rad_s_per_axis": 0.05,
+    "seed": 2,
+    "generator": "numpy.random.default_rng / PCG64",
+    "primary_metric_uses_true_state": true
+  },
+  "disturbance": {
+    "amplitude_Nm": 0.0,
+    "schedule": "continuous",
+    "warmup_s": 5.0,
+    "on_s": 5.0,
+    "off_s": 5.0,
+    "raised_cosine_ramp_s": 0.25
+  },
+  "actuation": {
+    "torque_policy": "model",
+    "torque_limits_Nm": [
+      0.7285355381134109,
+      0.43762083924507955,
+      0.2541169811320755
+    ],
+    "actuator_scale": 1.0,
+    "baseline_loaded_fraction_per_axis": [
+      0.1807,
+      0.11868888888888889,
+      0.38572222222222224
+    ],
+    "torque_box_saturation_fraction_any_axis": 0.4759555555555556,
+    "torque_box_saturation_fraction_per_axis": [
+      0.20145555555555555,
+      0.14466666666666667,
+      0.42583333333333334
+    ],
+    "rotor_saturation_fraction_any_rotor": 0.11831111111111112,
+    "rotor_saturation_fraction_per_rotor": [
+      0.042555555555555555,
+      0.01971111111111111,
+      0.036566666666666664,
+      0.02652222222222222
+    ],
+    "allocation_torque_error_normalized_rms": 0.060036568522897404
+  },
+  "metrics": {
+    "qerr_true_mean_rad": 0.27407012515334234,
+    "qerr_true_max_rad": 1.950142188968407,
+    "qerr_true_rmse_rad": 0.547775587013056,
+    "qerr_feedback_mean_rad": 0.28740068825737203,
+    "qerr_feedback_max_rad": 1.9923339292915514,
+    "qerr_feedback_rmse_rad": 0.548921334785821,
+    "qerr_mean_rad": 0.27407012515334234,
+    "raw_residual_normalized_rms": 0.40793085620324154,
+    "gated_residual_normalized_rms": 0.3893768779391232,
+    "realized_residual_normalized_rms": 0.3396092286538546,
+    "tau0_normalized_rms": 0.5713317956479387,
+    "tau_command_normalized_rms": 0.6342553605560898,
+    "tau_realized_normalized_rms": 0.6202239537100676,
+    "z_std_m": 0.2395670213654888
+  },
+  "hardstep": {
+    "definition": {
+      "step_period_s": 2.0,
+      "first_step_s": 1.0,
+      "slew_window_s": 0.5,
+      "settled_window_s": 0.5,
+      "settling_threshold_deg": 5.0,
+      "settling_hold_s": 0.1
+    },
+    "step_onsets_s": [
+      1.0,
+      3.0,
+      5.0,
+      7.0,
+      9.0,
+      11.0,
+      13.0,
+      15.0,
+      17.0,
+      19.0,
+      21.0,
+      23.0,
+      25.0,
+      27.0,
+      29.0,
+      31.0,
+      33.0,
+      35.0,
+      37.0,
+      39.0,
+      41.0,
+      43.0
+    ],
+    "n_complete_steps": 22,
+    "whole_mean_rad": 0.27407012515334234,
+    "whole_mean_deg": 15.70306146190878,
+    "slew_mean_rad": 0.9659568749558394,
+    "slew_mean_deg": 55.345252126615804,
+    "settled_mean_rad": 0.008942185996476488,
+    "settled_mean_deg": 0.5123495172190892,
+    "settling_time_5deg_s_per_step": [
+      0.5549999999998843,
+      1.5580000000001935,
+      0.6644999999995802,
+      0.4769999999985757,
+      0.5825000000002198,
+      0.6255000000027167,
+      0.6040000000051347,
+      0.46450000000740843,
+      0.5830000000043718,
+      0.6104999999996465,
+      0.6199999999949632,
+      0.4674999999906575,
+      0.5869999999857178,
+      0.6339999999809471,
+      0.6184999999763221,
+      0.4709999999720047,
+      0.5864999999783436,
+      0.6309999999881057,
+      0.5999999999975074,
+      0.47100000000644116,
+      0.5850000000165352,
+      0.6440000000263666
+    ],
+    "settling_time_5deg_s_mean": 0.6199999999968928
+  },
+  "disturbance_phase_metrics_true_state": {
+    "active_definition": "disturbance_gain >= 0.5",
+    "quiet_definition": "disturbance_gain == 0 after warmup",
+    "warmup": {
+      "mean_rad": 0.2641586711473778,
+      "mean_deg": 15.135176978528978,
+      "max_rad": 1.945589204702192,
+      "max_deg": 111.47405009564999,
+      "sample_fraction": 0.11112222222222222
+    },
+    "active": {
+      "mean_rad": 0.27407012515334234,
+      "mean_deg": 15.70306146190878,
+      "max_rad": 1.950142188968407,
+      "max_deg": 111.73491687829356,
+      "sample_fraction": 1.0
+    },
+    "quiet": {
+      "mean_rad": null,
+      "mean_deg": null,
+      "max_rad": null,
+      "max_deg": null,
+      "sample_fraction": 0.0
+    }
+  },
+  "n_steps": 90000,
+  "logged_steps": 9000,
+  "log_every": 10,
+  "logged_dt_s": 0.005,
+  "nengo_version": "4.1.0",
+  "files": {
+    "trace": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_robustness_gating_2026-09-20\\results\\izh_a3\\noise\\x2\\hardstep\\izh_pes_gated_b0p5\\noise_realistic__load_1\\seed_002\\trace.csv",
+    "neural_trace_full_rate": null,
+    "neural_trace_schema": null
+  },
+  "run_id": "8562b2e423a1a413ddad",
+  "configuration_sha256": "3d4dbd0ddd3b1dfb49f2c4fdb869cc4034b0ed2233d94a8a1fe609085ee38335"
+}

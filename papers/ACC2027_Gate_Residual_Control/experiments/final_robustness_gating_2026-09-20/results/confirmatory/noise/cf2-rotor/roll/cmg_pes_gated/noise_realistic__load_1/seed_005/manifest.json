@@ -1,0 +1,82 @@
+{
+  "schema": 2,
+  "created_utc": "2026-09-21T04:13:40.932307+00:00",
+  "platform": "cf2-rotor",
+  "controller": "nengo-nef-pes",
+  "model": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\models\\cf2_rotor_design\\scene.xml",
+  "model_sha256": "410e0975d066abb1ad726415250c78948c0f25b2f99f3b73746c161603dfdaf6",
+  "git_commit": "67e7e03f1dba9ee394b84324096222e8ff5344c5",
+  "python": "3.13.11",
+  "mujoco": "3.12.0",
+  "numpy": "2.5.2",
+  "arguments": {
+    "platform": "cf2-rotor",
+    "controller": "nengo-nef-pes",
+    "mission": "roll",
+    "duration": 45.0,
+    "dt": 0.0005,
+    "beta": 0.5,
+    "learning_rate": 0.0008,
+    "k_error": 8.0,
+    "k_rate": 0.0,
+    "torque_policy": "model",
+    "actuator_scale": 1.5,
+    "initial_angle_deg": 0.0,
+    "attitude_noise_std": 0.02,
+    "rate_noise_std": 0.05,
+    "seed": 5,
+    "disturbance_torque": 0.0,
+    "disturbance_schedule": "continuous",
+    "disturbance_warmup": 5.0,
+    "disturbance_on": 5.0,
+    "disturbance_off": 5.0,
+    "disturbance_ramp": 0.25,
+    "output_gate": "torque-saturation-opposition",
+    "gate_load_threshold": 1.0,
+    "gate_epsilon_fraction": 0.0,
+    "gate_epsilon_nm": 1e-12,
+    "hardstep_slew_window": 0.5,
+    "hardstep_settled_window": 0.5,
+    "log_every": 10,
+    "save_neural_archive": false,
+    "output": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_robustness_gating_2026-09-20\\results\\confirmatory\\noise\\cf2-rotor\\roll\\cmg_pes_gated\\noise_realistic__load_1\\seed_005",
+    "baseline": "backstepping",
+    "bw_scale": 3.0,
+    "rate_ff": "left-neg",
+    "no_model_ff": true,
+    "baseline_rate_hz": 0.0
+  },
+  "run_id": "e2277243e9854460c524",
+  "configuration_sha256": "a930b232dd192e6e04cb0f0bb42acc95b532ea13227f6a69f703bae6ab7faa64",
+  "source_sha256": {
+    "runner": "e4f076565dc658017b78e40dbc5e384d052f5d54be0914fbd33ffcdb6538a292",
+    "baseline_runner": "3c12f663e4034fd94308f5d6293afaeda4ee2ad94cd590b57574b3b168b278e6",
+    "nengo_cmg": "fbfd069d78d4040e738a8df702acb35a08b5141e34a7cdb70c9d4e954d782562",
+    "gate_model": "ea6d7853fff724d2a6c6fd15afb9a18cf7f9cdae19ce6f04bcf4a5e2300a5e53",
+    "quaternion_and_reference": "31620612f184a22f15971b1a7d15548ff2997b09a093254ab71ddb289e502c5e",
+    "platform_interface": "50af6d1f6de51788f727074c57b90ff85a3dc2a8688b91cdc49ee50623a123d9",
+    "mujoco_model": "410e0975d066abb1ad726415250c78948c0f25b2f99f3b73746c161603dfdaf6"
+  },
+  "noise_sequence_sha256": "01538072973240e1b31a9f3cf35ce06a37e712d832ccd96f0af125dc707f8715",
+  "output_sha256": {
+    "trace.csv": "2e14e248e68045d670da252b7ce3ecccdd2721faae8a25ec835f052c09edca19",
+    "summary.json": "ce97e6a3c2e3f7cc1ba673df31f8f3ea7eb79ee1f81487507f17f1a9c5e525bc"
+  },
+  "derived": {
+    "body_inertia_kgm2": [
+      2.3951e-05,
+      2.3951e-05,
+      3.2347e-05
+    ],
+    "torque_limits_Nm": [
+      0.000287412,
+      0.000287412,
+      0.00032347
+    ],
+    "baseline_effective_wn_rad_s": [
+      12.0,
+      12.0,
+      10.5
+    ]
+  }
+}

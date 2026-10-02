@@ -1,0 +1,14 @@
+{
+  "platform": "x2-6dof-cascade",
+  "controller": "classical",
+  "mission": "waypoint_step",
+  "duration": 15.0,
+  "dt": 0.0005,
+  "pos_err_mean_m": 0.4064900055046161,
+  "pos_err_max_m": 2.435289460690067,
+  "qerr_mean_rad": 0.13851565178100128,
+  "qerr_max_rad": 1.1034830661926738,
+  "pos_ff": "fd",
+  "actuator_scale": 1.0,
+  "authority_scale": 1.0
+}

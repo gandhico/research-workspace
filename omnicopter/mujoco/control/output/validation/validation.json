@@ -1,0 +1,222 @@
+{
+  "allocator": {
+    "random_bounded_requests": 150,
+    "worst_KKT_violation": 1.8829382497642655e-13,
+    "wrench_column_checks": 40,
+    "worst_generalized_force_error": 4.440892098500626e-16
+  },
+  "acceptance": {
+    "last_2s_position_error_less_than_m": 0.005,
+    "last_2s_attitude_error_less_than_deg": 0.2,
+    "no_contacts": true,
+    "maximum_abs_thrust_N": 10
+  },
+  "cases": [
+    {
+      "name": "equilibrium",
+      "dt_s": 0.002,
+      "duration_s": 10,
+      "offset_m": null,
+      "rotation_vector_deg": null,
+      "impulse_at_2s": false,
+      "peak_position_error_m": 3.947877716964423e-16,
+      "last_2s_max_position_error_m": 3.697624779468403e-16,
+      "last_2s_max_attitude_error_deg": 4.854103614550433e-14,
+      "peak_abs_thrust_N": 5.362484965746217,
+      "steps_with_contacts": 0,
+      "saturated_steps": 0,
+      "passed": true
+    },
+    {
+      "name": "demo",
+      "dt_s": 0.002,
+      "duration_s": 10,
+      "offset_m": null,
+      "rotation_vector_deg": null,
+      "impulse_at_2s": false,
+      "peak_position_error_m": 0.1972308292331602,
+      "last_2s_max_position_error_m": 2.138523045995921e-07,
+      "last_2s_max_attitude_error_deg": 4.70218060112339e-12,
+      "peak_abs_thrust_N": 6.544280770938948,
+      "steps_with_contacts": 0,
+      "saturated_steps": 0,
+      "passed": true
+    },
+    {
+      "name": "impulse",
+      "dt_s": 0.002,
+      "duration_s": 10,
+      "offset_m": null,
+      "rotation_vector_deg": null,
+      "impulse_at_2s": true,
+      "peak_position_error_m": 0.0765424043855792,
+      "last_2s_max_position_error_m": 7.764769849419977e-06,
+      "last_2s_max_attitude_error_deg": 4.380462565141e-09,
+      "peak_abs_thrust_N": 5.9703335826294595,
+      "steps_with_contacts": 0,
+      "saturated_steps": 0,
+      "passed": true
+    },
+    {
+      "name": "larger_displacement",
+      "dt_s": 0.002,
+      "duration_s": 10,
+      "offset_m": [
+        0.3,
+        -0.2,
+        -0.3
+      ],
+      "rotation_vector_deg": [
+        20,
+        -15,
+        10
+      ],
+      "impulse_at_2s": false,
+      "peak_position_error_m": 0.469041575982343,
+      "last_2s_max_position_error_m": 5.088236830120889e-07,
+      "last_2s_max_attitude_error_deg": 1.564168430199501e-11,
+      "peak_abs_thrust_N": 8.833901004159616,
+      "steps_with_contacts": 0,
+      "saturated_steps": 0,
+      "passed": true
+    },
+    {
+      "name": "half_timestep",
+      "dt_s": 0.001,
+      "duration_s": 10,
+      "offset_m": [
+        0.1,
+        -0.08,
+        -0.15
+      ],
+      "rotation_vector_deg": [
+        6,
+        -4,
+        3
+      ],
+      "impulse_at_2s": false,
+      "peak_position_error_m": 0.1972308292331602,
+      "last_2s_max_position_error_m": 2.2189816902474887e-07,
+      "last_2s_max_attitude_error_deg": 5.409074687006177e-12,
+      "peak_abs_thrust_N": 6.544280770938948,
+      "steps_with_contacts": 0,
+      "saturated_steps": 0,
+      "passed": true
+    },
+    {
+      "name": "axis_0_-1",
+      "dt_s": 0.002,
+      "duration_s": 10,
+      "offset_m": null,
+      "rotation_vector_deg": [
+        -15,
+        0,
+        0
+      ],
+      "impulse_at_2s": false,
+      "peak_position_error_m": 0.00012668059904293667,
+      "last_2s_max_position_error_m": 3.5571786173298647e-10,
+      "last_2s_max_attitude_error_deg": 8.662750849324843e-12,
+      "peak_abs_thrust_N": 5.827042469827347,
+      "steps_with_contacts": 0,
+      "saturated_steps": 0,
+      "passed": true
+    },
+    {
+      "name": "axis_0_+1",
+      "dt_s": 0.002,
+      "duration_s": 10,
+      "offset_m": null,
+      "rotation_vector_deg": [
+        15,
+        0,
+        0
+      ],
+      "impulse_at_2s": false,
+      "peak_position_error_m": 0.00012668059904281714,
+      "last_2s_max_position_error_m": 3.557177078236418e-10,
+      "last_2s_max_attitude_error_deg": 8.69068985846727e-12,
+      "peak_abs_thrust_N": 5.827661356933129,
+      "steps_with_contacts": 0,
+      "saturated_steps": 0,
+      "passed": true
+    },
+    {
+      "name": "axis_1_-1",
+      "dt_s": 0.002,
+      "duration_s": 10,
+      "offset_m": null,
+      "rotation_vector_deg": [
+        0,
+        -15,
+        0
+      ],
+      "impulse_at_2s": false,
+      "peak_position_error_m": 0.0003454261307146797,
+      "last_2s_max_position_error_m": 9.699516148354601e-10,
+      "last_2s_max_attitude_error_deg": 8.759307528796757e-12,
+      "peak_abs_thrust_N": 7.544246394455872,
+      "steps_with_contacts": 0,
+      "saturated_steps": 0,
+      "passed": true
+    },
+    {
+      "name": "axis_1_+1",
+      "dt_s": 0.002,
+      "duration_s": 10,
+      "offset_m": null,
+      "rotation_vector_deg": [
+        0,
+        15,
+        0
+      ],
+      "impulse_at_2s": false,
+      "peak_position_error_m": 0.00034542613071451573,
+      "last_2s_max_position_error_m": 9.699530314718068e-10,
+      "last_2s_max_attitude_error_deg": 8.651168905586369e-12,
+      "peak_abs_thrust_N": 7.659299210872825,
+      "steps_with_contacts": 0,
+      "saturated_steps": 0,
+      "passed": true
+    },
+    {
+      "name": "axis_2_-1",
+      "dt_s": 0.002,
+      "duration_s": 10,
+      "offset_m": null,
+      "rotation_vector_deg": [
+        0,
+        0,
+        -15
+      ],
+      "impulse_at_2s": false,
+      "peak_position_error_m": 0.00033730526783506943,
+      "last_2s_max_position_error_m": 9.471497046620235e-10,
+      "last_2s_max_attitude_error_deg": 8.644418832953782e-12,
+      "peak_abs_thrust_N": 7.611242772602214,
+      "steps_with_contacts": 0,
+      "saturated_steps": 0,
+      "passed": true
+    },
+    {
+      "name": "axis_2_+1",
+      "dt_s": 0.002,
+      "duration_s": 10,
+      "offset_m": null,
+      "rotation_vector_deg": [
+        0,
+        0,
+        15
+      ],
+      "impulse_at_2s": false,
+      "peak_position_error_m": 0.0003373052678347263,
+      "last_2s_max_position_error_m": 9.471487024788746e-10,
+      "last_2s_max_attitude_error_deg": 8.709941764812356e-12,
+      "peak_abs_thrust_N": 7.589868430781642,
+      "steps_with_contacts": 0,
+      "saturated_steps": 0,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

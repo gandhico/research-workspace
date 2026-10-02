@@ -1,0 +1,544 @@
+{
+  "status": "passed",
+  "scope": "canonical direct-Nengo physical matched pairs",
+  "runs": [
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hover_none_armed_20260901_192613",
+      "controller": "pd",
+      "mission": "hover",
+      "duration_s": 8.0,
+      "reference_scale": 1.0,
+      "angle_err_mean_deg": 0.11574391087003004,
+      "angle_err_max_deg": 0.22407800596843322,
+      "deadline_miss_fraction": 0.0,
+      "max_encoder_step_deg_ypr": [
+        0.04394531250000144,
+        0.0439453125,
+        0.0439453125
+      ],
+      "motor_written_min_V": 0.0,
+      "motor_written_max_V": 5.6590432606954275,
+      "hardware_samples": 1600,
+      "neural_samples": 0,
+      "neural_arrays": 0,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    },
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hover_none_armed_20260901_192626",
+      "controller": "nengo-pes",
+      "mission": "hover",
+      "duration_s": 8.0,
+      "reference_scale": 1.0,
+      "angle_err_mean_deg": 0.04586288610449695,
+      "angle_err_max_deg": 0.07611551400449251,
+      "deadline_miss_fraction": 0.004375,
+      "max_encoder_step_deg_ypr": [
+        0.04394531250000144,
+        0.0439453125,
+        0.0439453125
+      ],
+      "motor_written_min_V": 0.0,
+      "motor_written_max_V": 6.206491000074299,
+      "hardware_samples": 1600,
+      "neural_samples": 16000,
+      "neural_arrays": 28,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    },
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_roll_none_armed_20260901_192641",
+      "controller": "pd",
+      "mission": "roll",
+      "duration_s": 8.0,
+      "reference_scale": 1.0,
+      "angle_err_mean_deg": 5.498422485221941,
+      "angle_err_max_deg": 8.150376806979418,
+      "deadline_miss_fraction": 0.0,
+      "max_encoder_step_deg_ypr": [
+        0.04394531250000144,
+        0.0439453125,
+        0.043945312500001776
+      ],
+      "motor_written_min_V": 0.0,
+      "motor_written_max_V": 8.011754588693696,
+      "hardware_samples": 1600,
+      "neural_samples": 0,
+      "neural_arrays": 0,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    },
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_roll_none_armed_20260901_192654",
+      "controller": "nengo-pes",
+      "mission": "roll",
+      "duration_s": 8.0,
+      "reference_scale": 1.0,
+      "angle_err_mean_deg": 5.192375787525512,
+      "angle_err_max_deg": 9.079259388262289,
+      "deadline_miss_fraction": 0.005,
+      "max_encoder_step_deg_ypr": [
+        0.04394531250000144,
+        0.0439453125,
+        0.043945312500001776
+      ],
+      "motor_written_min_V": 0.0,
+      "motor_written_max_V": 8.107326066626928,
+      "hardware_samples": 1600,
+      "neural_samples": 16000,
+      "neural_arrays": 28,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    },
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_full3_none_armed_20260901_192715",
+      "controller": "pd",
+      "mission": "full3",
+      "duration_s": 12.0,
+      "reference_scale": 0.5,
+      "angle_err_mean_deg": 11.281852046382259,
+      "angle_err_max_deg": 17.004825481352718,
+      "deadline_miss_fraction": 0.0,
+      "max_encoder_step_deg_ypr": [
+        0.08789062500000355,
+        0.08789062500000089,
+        0.08789062500000044
+      ],
+      "motor_written_min_V": 0.0,
+      "motor_written_max_V": 9.784274268755961,
+      "hardware_samples": 2400,
+      "neural_samples": 0,
+      "neural_arrays": 0,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    },
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_full3_none_armed_20260901_192733",
+      "controller": "nengo-pes",
+      "mission": "full3",
+      "duration_s": 12.0,
+      "reference_scale": 0.5,
+      "angle_err_mean_deg": 11.644070637822693,
+      "angle_err_max_deg": 17.075225026971523,
+      "deadline_miss_fraction": 0.0025,
+      "max_encoder_step_deg_ypr": [
+        0.08789062500000355,
+        0.08789062500000089,
+        0.08789062500000044
+      ],
+      "motor_written_min_V": 0.0,
+      "motor_written_max_V": 9.990201149491558,
+      "hardware_samples": 2400,
+      "neural_samples": 24000,
+      "neural_arrays": 28,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    },
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hard45_none_armed_20260901_192812",
+      "controller": "pd",
+      "mission": "hard45",
+      "duration_s": 12.0,
+      "reference_scale": 0.4,
+      "angle_err_mean_deg": 9.742856942681437,
+      "angle_err_max_deg": 14.9189603202949,
+      "deadline_miss_fraction": 0.0,
+      "max_encoder_step_deg_ypr": [
+        0.08789062500000355,
+        0.08789062500000022,
+        0.1318359375
+      ],
+      "motor_written_min_V": 0.0,
+      "motor_written_max_V": 8.947852142687918,
+      "hardware_samples": 2400,
+      "neural_samples": 0,
+      "neural_arrays": 0,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    },
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hard45_none_armed_20260901_192844",
+      "controller": "nengo-pes",
+      "mission": "hard45",
+      "duration_s": 12.0,
+      "reference_scale": 0.4,
+      "angle_err_mean_deg": 9.688825764437812,
+      "angle_err_max_deg": 15.722001911812173,
+      "deadline_miss_fraction": 0.007083333333333333,
+      "max_encoder_step_deg_ypr": [
+        0.13183593750000133,
+        0.08789062500000044,
+        0.1318359374999991
+      ],
+      "motor_written_min_V": 0.0,
+      "motor_written_max_V": 9.643695630318726,
+      "hardware_samples": 2400,
+      "neural_samples": 24000,
+      "neural_arrays": 28,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    },
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_hardstep_none_armed_20260901_192904",
+      "controller": "pd",
+      "mission": "hardstep",
+      "duration_s": 12.0,
+      "reference_scale": 0.35,
+      "angle_err_mean_deg": 13.626145554791664,
+      "angle_err_max_deg": 33.671458128088425,
+      "deadline_miss_fraction": 0.0,
+      "max_encoder_step_deg_ypr": [
+        0.17578125000000266,
+        0.13183593750000044,
+        0.21972656250000022
+      ],
+      "motor_written_min_V": 0.0,
+      "motor_written_max_V": 24.0,
+      "hardware_samples": 2400,
+      "neural_samples": 0,
+      "neural_arrays": 0,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    },
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_hardstep_none_armed_20260901_192922",
+      "controller": "nengo-pes",
+      "mission": "hardstep",
+      "duration_s": 12.0,
+      "reference_scale": 0.35,
+      "angle_err_mean_deg": 13.4968849671379,
+      "angle_err_max_deg": 34.36697973399632,
+      "deadline_miss_fraction": 0.0004166666666666667,
+      "max_encoder_step_deg_ypr": [
+        0.21972656249999822,
+        0.2197265625,
+        0.1757812500000009
+      ],
+      "motor_written_min_V": 0.0,
+      "motor_written_max_V": 24.0,
+      "hardware_samples": 2400,
+      "neural_samples": 24000,
+      "neural_arrays": 28,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    },
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\pd_yaw360_none_armed_20260901_193849",
+      "controller": "pd",
+      "mission": "yaw360",
+      "duration_s": 30.0,
+      "reference_scale": 0.3,
+      "angle_err_mean_deg": 2.731469307947362,
+      "angle_err_max_deg": 3.6946939380495145,
+      "deadline_miss_fraction": 0.0,
+      "max_encoder_step_deg_ypr": [
+        0.04394531250004263,
+        0.0439453125,
+        0.04394531250000011
+      ],
+      "motor_written_min_V": 2.0,
+      "motor_written_max_V": 11.007495515629262,
+      "hardware_samples": 6000,
+      "neural_samples": 0,
+      "neural_arrays": 0,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    },
+    {
+      "run_directory": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\DIRECT_NENGO_FINAL_2026-09-01\\nengo-pes_yaw360_none_armed_20260901_193929",
+      "controller": "nengo-pes",
+      "mission": "yaw360",
+      "duration_s": 30.0,
+      "reference_scale": 0.3,
+      "angle_err_mean_deg": 2.9604391545964943,
+      "angle_err_max_deg": 3.889551371199382,
+      "deadline_miss_fraction": 0.005,
+      "max_encoder_step_deg_ypr": [
+        0.04394531250004263,
+        0.04394531250000011,
+        0.043945312500000444
+      ],
+      "motor_written_min_V": 2.0,
+      "motor_written_max_V": 12.745195221927943,
+      "hardware_samples": 6000,
+      "neural_samples": 60000,
+      "neural_arrays": 28,
+      "checks": {
+        "summary_completed": true,
+        "empty_abort_reason": true,
+        "row_count_matches_summary": true,
+        "row_count_matches_duration": true,
+        "all_numeric_trace_values_finite": true,
+        "written_motor_voltages_nonnegative": true,
+        "written_motor_voltages_at_or_below_24V": true,
+        "summary_mean_reproduced": true,
+        "summary_max_reproduced": true,
+        "encoder_step_below_recorded_guard": true,
+        "neural_archive_expected_presence": true,
+        "neural_archive_finite_and_10x_rate": true
+      },
+      "passed": true
+    }
+  ],
+  "pair_configuration_integrity": [
+    {
+      "mission_label": "hover",
+      "fields": {
+        "mission": true,
+        "duration": true,
+        "reference_scale": true,
+        "hardstep_transition_s": true,
+        "allocation_policy": true,
+        "motor_floor_volts": true,
+        "max_abs_pitch_deg": true,
+        "max_abs_roll_deg": true,
+        "max_encoder_step_deg": true,
+        "disturbance": true
+      },
+      "passed": true
+    },
+    {
+      "mission_label": "roll",
+      "fields": {
+        "mission": true,
+        "duration": true,
+        "reference_scale": true,
+        "hardstep_transition_s": true,
+        "allocation_policy": true,
+        "motor_floor_volts": true,
+        "max_abs_pitch_deg": true,
+        "max_abs_roll_deg": true,
+        "max_encoder_step_deg": true,
+        "disturbance": true
+      },
+      "passed": true
+    },
+    {
+      "mission_label": "full3",
+      "fields": {
+        "mission": true,
+        "duration": true,
+        "reference_scale": true,
+        "hardstep_transition_s": true,
+        "allocation_policy": true,
+        "motor_floor_volts": true,
+        "max_abs_pitch_deg": true,
+        "max_abs_roll_deg": true,
+        "max_encoder_step_deg": true,
+        "disturbance": true
+      },
+      "passed": true
+    },
+    {
+      "mission_label": "hard45",
+      "fields": {
+        "mission": true,
+        "duration": true,
+        "reference_scale": true,
+        "hardstep_transition_s": true,
+        "allocation_policy": true,
+        "motor_floor_volts": true,
+        "max_abs_pitch_deg": true,
+        "max_abs_roll_deg": true,
+        "max_encoder_step_deg": true,
+        "disturbance": true
+      },
+      "passed": true
+    },
+    {
+      "mission_label": "hardstep",
+      "fields": {
+        "mission": true,
+        "duration": true,
+        "reference_scale": true,
+        "hardstep_transition_s": true,
+        "allocation_policy": true,
+        "motor_floor_volts": true,
+        "max_abs_pitch_deg": true,
+        "max_abs_roll_deg": true,
+        "max_encoder_step_deg": true,
+        "disturbance": true
+      },
+      "passed": true
+    },
+    {
+      "mission_label": "yaw360-reduced-range",
+      "fields": {
+        "mission": true,
+        "duration": true,
+        "reference_scale": true,
+        "hardstep_transition_s": true,
+        "allocation_policy": true,
+        "motor_floor_volts": true,
+        "max_abs_pitch_deg": true,
+        "max_abs_roll_deg": true,
+        "max_encoder_step_deg": true,
+        "disturbance": true
+      },
+      "passed": true
+    }
+  ],
+  "full_scale_yaw360_safety_aborts": [
+    {
+      "run": "pd_yaw360_none_armed_20260901_193059",
+      "duration_s": 30.0,
+      "reference_scale": 1.0,
+      "samples_before_abort": 3231,
+      "abort_reason": "roll safety limit exceeded: 20.127 deg",
+      "mean_error_until_abort_deg": 7.847906785853335,
+      "max_error_until_abort_deg": 22.891284384330472
+    },
+    {
+      "run": "pd_yaw360_none_armed_20260901_193741",
+      "duration_s": 50.0,
+      "reference_scale": 1.0,
+      "samples_before_abort": 4905,
+      "abort_reason": "roll safety limit exceeded: -20.127 deg",
+      "mean_error_until_abort_deg": 5.77850203693102,
+      "max_error_until_abort_deg": 29.566700907024227
+    }
+  ]
+}

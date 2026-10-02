@@ -1,0 +1,34 @@
+{
+  "mode": "replay",
+  "source": "..\\hw_logs\\20260927_193307_shadow_hw.csv",
+  "dt": 0.009999999999999787,
+  "adapt": true,
+  "sigma_snap": 0.5,
+  "estimator_bandwidth_hz": 1.4632386301741298,
+  "samples": 3000,
+  "duration_s": 29.990000000000002,
+  "all_finite": true,
+  "u_lisic_abs_p50": 339.7469949667294,
+  "u_lisic_abs_p95": 1563.0377808011556,
+  "u_lisic_abs_max": 4918.933885195496,
+  "u_lisic_abs_p95_after_2s": 1600.8886239764774,
+  "lisic_saturated_frac": 0.0,
+  "shadow_bound_hit_frac": 0.0,
+  "s_abs_max": 11.898124646916038,
+  "h_hat_range": [
+    1.2252326959872983,
+    7.936397878946228
+  ],
+  "f_hat_abs_max": 0.03313692656260929,
+  "w_norm_max": 1.5001362080456295,
+  "meas_minus_baseline_abs_max": 0.015434078581258837,
+  "ref_model_minus_baseline_abs_max_after_2s": 0.00317036299191642,
+  "estimator_minus_meas_abs_max": 0.0039192614928152125,
+  "s_term_rms_after_2s": {
+    "s_e3": 0.6858645617694066,
+    "s_e2": 1.9063010536370197,
+    "s_e1": 1.2679475834006761,
+    "s_e0": 1.0726443931154839
+  },
+  "log": "C:\\Research\\qarm\\hw_logs\\20260927_193411_shadow_replay_adapt_snap0.5.csv"
+}

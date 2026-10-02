@@ -1,0 +1,696 @@
+{
+  "schema": 1,
+  "duration_s": 45.0,
+  "dt_s": 0.0005,
+  "beta": 0.5,
+  "learning_rate": 0.0008,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "platform_actuator_scale": {
+    "x2": 1.0,
+    "cf2-rotor": 1.5
+  },
+  "missions": [
+    "roll",
+    "full3",
+    "hard45",
+    "hardstep",
+    "yaw360"
+  ],
+  "controllers": [
+    "classical",
+    "nengo-cmg-fixed",
+    "nengo-nef-pes",
+    "nengo-lif-fixed",
+    "nengo-lif-pes",
+    "nengo-alif-fixed",
+    "nengo-alif-pes",
+    "nengo-izhikevich-fixed",
+    "nengo-izhikevich-pes",
+    "nengo-lifrate-fixed",
+    "nengo-lifrate-pes"
+  ],
+  "full_neural_archive": true,
+  "runs": [
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "controller": "classical",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "controller": "nengo-cmg-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "controller": "nengo-nef-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "controller": "nengo-lif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "controller": "nengo-lif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "controller": "nengo-alif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "controller": "nengo-alif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "controller": "nengo-izhikevich-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "controller": "nengo-izhikevich-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "controller": "nengo-lifrate-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "controller": "nengo-lifrate-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "controller": "classical",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "controller": "nengo-cmg-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "controller": "nengo-nef-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "controller": "nengo-lif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "controller": "nengo-lif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "controller": "nengo-alif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "controller": "nengo-alif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "controller": "nengo-izhikevich-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "controller": "nengo-izhikevich-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "controller": "nengo-lifrate-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "controller": "nengo-lifrate-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "controller": "classical",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "controller": "nengo-cmg-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "controller": "nengo-nef-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "controller": "nengo-lif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "controller": "nengo-lif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "controller": "nengo-alif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "controller": "nengo-alif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "controller": "nengo-izhikevich-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "controller": "nengo-izhikevich-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "controller": "nengo-lifrate-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "controller": "nengo-lifrate-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "controller": "classical",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "controller": "nengo-cmg-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "controller": "nengo-nef-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "controller": "nengo-lif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "controller": "nengo-lif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "controller": "nengo-alif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "controller": "nengo-alif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "controller": "nengo-izhikevich-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "controller": "nengo-izhikevich-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "controller": "nengo-lifrate-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "controller": "nengo-lifrate-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "controller": "classical",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "controller": "nengo-cmg-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "controller": "nengo-nef-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "controller": "nengo-lif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "controller": "nengo-lif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "controller": "nengo-alif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "controller": "nengo-alif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "controller": "nengo-izhikevich-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "controller": "nengo-izhikevich-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "controller": "nengo-lifrate-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "controller": "nengo-lifrate-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "controller": "classical",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "controller": "nengo-cmg-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "controller": "nengo-nef-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "controller": "nengo-lif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "controller": "nengo-lif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "controller": "nengo-alif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "controller": "nengo-alif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "controller": "nengo-izhikevich-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "controller": "nengo-izhikevich-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "controller": "nengo-lifrate-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "controller": "nengo-lifrate-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "controller": "classical",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "controller": "nengo-cmg-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "controller": "nengo-nef-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "controller": "nengo-lif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "controller": "nengo-lif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "controller": "nengo-alif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "controller": "nengo-alif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "controller": "nengo-izhikevich-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "controller": "nengo-izhikevich-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "controller": "nengo-lifrate-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "controller": "nengo-lifrate-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "controller": "classical",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "controller": "nengo-cmg-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "controller": "nengo-nef-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "controller": "nengo-lif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "controller": "nengo-lif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "controller": "nengo-alif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "controller": "nengo-alif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "controller": "nengo-izhikevich-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "controller": "nengo-izhikevich-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "controller": "nengo-lifrate-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "controller": "nengo-lifrate-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "controller": "classical",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "controller": "nengo-cmg-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "controller": "nengo-nef-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "controller": "nengo-lif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "controller": "nengo-lif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "controller": "nengo-alif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "controller": "nengo-alif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "controller": "nengo-izhikevich-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "controller": "nengo-izhikevich-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "controller": "nengo-lifrate-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "controller": "nengo-lifrate-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "controller": "classical",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "controller": "nengo-cmg-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "controller": "nengo-nef-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "controller": "nengo-lif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "controller": "nengo-lif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "controller": "nengo-alif-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "controller": "nengo-alif-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "controller": "nengo-izhikevich-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "controller": "nengo-izhikevich-pes",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "controller": "nengo-lifrate-fixed",
+      "status": "existing"
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "controller": "nengo-lifrate-pes",
+      "status": "existing"
+    }
+  ]
+}

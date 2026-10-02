@@ -1,0 +1,19 @@
+parameter_id,hardware_revision,value,unit,standard_uncertainty,method,conditions,source_file_sha256,date_utc,operator,status
+mass,UNASSIGNED,,kg,,calibrated_scale,,,,,planned
+com_x,UNASSIGNED,,m,,multi-point suspension,,,,,planned
+com_y,UNASSIGNED,,m,,multi-point suspension,,,,,planned
+com_z,UNASSIGNED,,m,,multi-point suspension,,,,,planned
+inertia_xx,UNASSIGNED,,kg*m^2,,bifilar/trifilar pendulum or CAD reconciliation,,,,,planned
+inertia_yy,UNASSIGNED,,kg*m^2,,bifilar/trifilar pendulum or CAD reconciliation,,,,,planned
+inertia_zz,UNASSIGNED,,kg*m^2,,bifilar/trifilar pendulum or CAD reconciliation,,,,,planned
+motor_1_thrust_curve,UNASSIGNED,,N versus command,,bidirectional load-cell sweep,,,,,planned
+motor_2_thrust_curve,UNASSIGNED,,N versus command,,bidirectional load-cell sweep,,,,,planned
+motor_3_thrust_curve,UNASSIGNED,,N versus command,,bidirectional load-cell sweep,,,,,planned
+motor_4_thrust_curve,UNASSIGNED,,N versus command,,bidirectional load-cell sweep,,,,,planned
+motor_5_thrust_curve,UNASSIGNED,,N versus command,,bidirectional load-cell sweep,,,,,planned
+motor_6_thrust_curve,UNASSIGNED,,N versus command,,bidirectional load-cell sweep,,,,,planned
+motor_7_thrust_curve,UNASSIGNED,,N versus command,,bidirectional load-cell sweep,,,,,planned
+motor_8_thrust_curve,UNASSIGNED,,N versus command,,bidirectional load-cell sweep,,,,,planned
+imu_to_body_rotation,UNASSIGNED,,quaternion,,multi-pose static alignment,,,,,planned
+imu_to_body_translation,UNASSIGNED,,m,,survey/CAD measurement,,,,,planned
+control_transport_delay,UNASSIGNED,,s,,timestamped command-response identification,,,,,planned

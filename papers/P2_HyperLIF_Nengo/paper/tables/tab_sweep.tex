@@ -1,0 +1,19 @@
+\begin{table*}[t]
+\centering
+\caption{Steady-state response at representative constant currents (from \texttt{03\_current\_sweep.csv}). The fixed-gain HyperLIF firing rate collapses to zero and its mean voltage latches above threshold once $J$ exceeds the analytical depolarization-block onset $J_{\mathrm{DB}}=2.4$, whereas Adaptive HyperLIF sustains spiking with a bounded mean voltage.}
+\label{tab:sweep}
+\begin{tabular}{cccccc}
+\toprule
+& \multicolumn{3}{c}{Firing rate (Hz)} & \multicolumn{2}{c}{Mean voltage} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-6}
+$J$ & LIF & HyperLIF & Adaptive & HyperLIF & Adaptive \\
+\midrule
+1 & 0.0 & 0.0 & 0.0 & 0.906 & 0.906 \\
+1.5 & 42.2 & 71.1 & 0.0 & 0.908 & 0.903 \\
+2 & 62.2 & 71.1 & 102.2 & 0.917 & 0.910 \\
+2.4 & 80.0 & 0.0 & 117.8 & 0.840 & 0.912 \\
+3 & 100.0 & 0.0 & 135.6 & 1.000 & 0.913 \\
+4 & 128.9 & 0.0 & 0.0 & 1.333 & 0.910 \\
+\bottomrule
+\end{tabular}
+\end{table*}

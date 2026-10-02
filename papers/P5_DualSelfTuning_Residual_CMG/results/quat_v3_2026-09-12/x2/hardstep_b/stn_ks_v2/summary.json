@@ -1,0 +1,125 @@
+{
+ "platform": "x2",
+ "mission": "hardstep_b",
+ "controller": "stn_ks_v2",
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "z_min_m": 0.12875423523729704,
+ "allocation": "apa",
+ "alpha_mean": 1.0,
+ "alpha_min": 1.0,
+ "torque_scaled_fraction": 0.0,
+ "s_hat_mean": null,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "ki_factor": 0.05,
+ "tuner": null,
+ "stn": {
+  "bounded": true,
+  "mu_p": 5e-05,
+  "mu_i": 5e-05,
+  "mu_d": 5e-05,
+  "e_ref": 0.1,
+  "w_ref": 1.0,
+  "xi_ref": 0.1,
+  "tau_syn": 0.05,
+  "kappa_s": 1.0,
+  "sens_learning_rate": 0.0008,
+  "sens_leak": 1e-06,
+  "du_deadband": 0.001,
+  "m_min": 0.5,
+  "m_max": 1.5,
+  "leak_m": 5e-05,
+  "w_max": 6.0,
+  "known_sign": true,
+  "v2_gating": true,
+  "e_gate": 0.25,
+  "retreat_tau": 1.0,
+  "dither_id": false,
+  "dither_amp": 0.02,
+  "dither_freq": [
+   9.0,
+   11.0,
+   13.0
+  ],
+  "tau_demod": 0.5
+ },
+ "qerr_mean_rad": 0.3831298093476215,
+ "qerr_rmse_rad": 0.6534913898441824,
+ "qerr_max_rad": 2.263522930282326,
+ "saturation_fraction": 0.0,
+ "residual_rms_Nm": 0.0,
+ "torque_limits_Nm": [
+  0.7285355381134109,
+  0.43762083924507955,
+  0.2541169811320755
+ ],
+ "multiplier_mean": [
+  1.0841104838985944,
+  1.1940297772911483,
+  1.116225307835929,
+  0.802886461045529,
+  0.9184282626773115,
+  0.786329893806455,
+  1.0000097653216726,
+  1.0000031925454882,
+  1.0002561939698815
+ ],
+ "multiplier_min": [
+  1.0,
+  1.0,
+  1.0,
+  0.5,
+  0.708995570139532,
+  0.5,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_max": [
+  1.1141588275058472,
+  1.2846866249277713,
+  1.2015848998905803,
+  1.026485026701159,
+  1.0370574609773913,
+  1.0408438328652523,
+  1.000162717879691,
+  1.0000727029440648,
+  1.0030161410450258
+ ],
+ "integral_frozen_fraction": [
+  0.019422222222222223,
+  0.0,
+  0.02761111111111111
+ ],
+ "WS_final_fro": null,
+ "WR_final_fro": null,
+ "yhat_mean": [
+  1.0,
+  1.0,
+  1.0
+ ],
+ "yhat_negative_fraction": 0.0,
+ "stn_valid_fraction": [
+  0.9573222222222222,
+  0.8987111111111111,
+  0.9767888888888889
+ ],
+ "stn_blocked_fraction": [
+  0.019422222222222223,
+  0.0,
+  0.02761111111111111
+ ],
+ "wall_s": 31.386945500002184,
+ "hashes": {
+  "run_dual.py": "85d402bed03eeb0b",
+  "dual_controller.py": "6899a3ba06bfbce0",
+  "gra_control/gate.py": "ea6d7853fff724d2",
+  "gra_control/platforms/drone.py": "50af6d1f6de51788",
+  "gra_control/math3d.py": "31620612f184a22f",
+  "model": "d932ffbe9f0d1fa4"
+ }
+}

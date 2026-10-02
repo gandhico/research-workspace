@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "summary": {
+    "cases": 243,
+    "pulse_starts_s": [
+      7.0,
+      10.0,
+      13.0,
+      16.0,
+      19.0,
+      22.0
+    ],
+    "pulse_duration_s": 0.2,
+    "pulse_amplitude": 5e-05,
+    "maximum_sent_command": 4.879668081557571e-05,
+    "maximum_sent_slew": 4.168197904935322e-05,
+    "maximum_roll_deg": 0.0012135991502053372,
+    "maximum_final_5s_p_deg_s": 2.9973888124110998e-06,
+    "sent_limit_exceeded_samples": 0
+  },
+  "pass": true,
+  "claim_boundary": "offline repeated-waveform command/safety audit only"
+}

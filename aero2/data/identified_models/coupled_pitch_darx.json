@@ -1,0 +1,28 @@
+{
+  "case": "Coupled pitch",
+  "output": "theta",
+  "inputs": [
+    "u_common",
+    "u_diff"
+  ],
+  "na": 1,
+  "nb": 1,
+  "nk": 1,
+  "sample_time_s": 0.011200145007515072,
+  "downsample": 2,
+  "constant_c": -2.5285871096811612e-05,
+  "denominator_z_minus_1": [
+    1.0,
+    -1.0000130086147316
+  ],
+  "numerators_z_minus_1": {
+    "u_common": [
+      -0.00032625412639322726
+    ],
+    "u_diff": [
+      2.5688990197281214e-06
+    ]
+  },
+  "cond_ztz": 2006.943284295316,
+  "rank": 4
+}

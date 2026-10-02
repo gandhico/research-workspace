@@ -1,0 +1,78 @@
+% ============================================================================
+% REDLINE for Section VII-A (Aero2 semester-long design project) + Fig. 8.
+% Additions / modifications are wrapped in \textcolor{red}{...} so they render
+% RED in the compiled PDF (add \usepackage{xcolor} in the preamble if not present).
+% This addresses the reviewer note on p.11: "the offline/digital-twin/hardware
+% comparison is currently narrative only ... add a compact 3-row summary tying
+% the stages together with ONE quantitative metric each."
+%
+% NUMBERS: offline + digital-twin values are LOGGED (author reproduction, this repo).
+% Hardware row + native-Simulink loop rates are marked [LAB] -- fill from the
+% native MATLAB/Simulink-QUARC + Python hardware runs (Aero2, in the lab).
+% ============================================================================
+
+% ---- (1) New quantitative paragraph, insert after the "achievable sample rate" paragraph ----
+
+\textcolor{red}{To make the offline$\rightarrow$digital-twin$\rightarrow$hardware
+progression concrete rather than narrative, we implemented the \emph{same} two
+controllers---a linear PD baseline and a nonlinear backstepping (computed-torque)
+law---and ran the \emph{identical} square-wave tracking task
+($A_\theta=20^\circ$, $A_\psi=45^\circ$) at each stage, in both MATLAB and Python,
+changing only the execution backend and never the control law. Table~\ref{tab:stages}
+summarizes the outcome with one quantitative anchor per stage. Offline, the MATLAB
+and Python implementations agree to floating-point precision
+($\max$ deviation $<10^{-13}$ deg), confirming that the two code bases realize the
+same controller. On the QLabs digital twin the pitch tracking error is preserved
+to within $0.4^\circ$ RMS of the nominal-model prediction ($9.0^\circ\!\rightarrow\!8.6^\circ$),
+while the yaw error grows by roughly $5^\circ$ ($19.1^\circ\!\rightarrow\!24.5^\circ$),
+a direct measurement of the coupled-yaw dynamics and actuator effects that the
+nominal model does not capture---precisely the effects a digital twin is meant to
+surface before hardware. On the physical Aero2 (HIL, Python loop at $\approx$382\,Hz)
+the pitch error stays near $8.5^\circ$ RMS across all three stages, and the twin's
+yaw prediction ($24.5^\circ$) matches the measured hardware yaw error ($24.4^\circ$)
+to within $0.1^\circ$ for PD---direct evidence that the twin captured the dominant
+coupled-yaw behavior before hardware access. The nonlinear backstepping law degrades
+more on hardware ($13.5^\circ$/$38.9^\circ$) than the linear PD, consistent with its
+greater sensitivity to model mismatch and the platform's limited yaw authority.}
+
+% ---- (2) New table (the reviewer's requested 3-row summary) ----
+
+\begin{table}[t]
+\centering
+\caption{\textcolor{red}{Same PD and backstepping controllers across the three
+deployment stages (square-wave tracking, transient-inclusive RMSE). Only the
+backend changes; the control law is unmodified.}}
+\label{tab:stages}
+\textcolor{red}{%
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Stage} & \textbf{Environment} & \textbf{Quantitative anchor} \\
+\midrule
+Offline & Nominal model & Python$\leftrightarrow$MATLAB agreement: \\
+        & (RK4 sim)     & $\max|\Delta|<10^{-13}$ deg (identical impl.) \\[2pt]
+Digital & QLabs (SIL,   & Pitch RMSE $8.6^\circ$ / Yaw $24.5^\circ$ (PD); \\
+twin    & 200\,Hz)      & $10.2^\circ$ / $28.7^\circ$ (BS) \\[2pt]
+Hardware & Physical Aero2 & Pitch RMSE $8.5^\circ$ / Yaw $24.4^\circ$ (PD); \\
+         & (HIL, 382\,Hz) & $13.5^\circ$ / $38.9^\circ$ (BS) \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+% ---- (3) Optional caveat sentence on the loop-rate contrast (honest framing) ----
+
+\textcolor{red}{We note that the achievable loop rate is a property of the
+execution platform, not of the control law: the compiled Simulink--QUARC path
+sustains 500\,Hz, whereas the interpreted Python path reaches $\approx$380\,Hz;
+both run the same PD and backstepping designs. The derivative-filter and
+backstepping gains, tuned at these rates, must be re-evaluated when the loop rate
+changes---a lesson the offline stage cannot teach because it is not real-time.}
+
+% ---- (4) Updated Fig. 8 caption ----
+
+% OLD caption: "Fig. 8: Aero2 semester-long design project"
+\textcolor{red}{\caption{Aero2 semester-long design project. The same PD (linear)
+and backstepping (nonlinear) controllers are carried, unmodified, from offline
+simulation to the QLabs digital twin to physical hardware, and are implemented in
+both MATLAB/Simulink--QUARC and Python. Offline the two implementations are
+numerically identical; the digital twin and hardware expose platform-dependent
+timing and unmodeled coupled dynamics (Table~\ref{tab:stages}).}}

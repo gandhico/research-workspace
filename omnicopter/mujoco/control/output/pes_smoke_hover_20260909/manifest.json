@@ -1,0 +1,53 @@
+{
+  "mujoco_version": "3.12.0",
+  "dt_s": 0.002,
+  "controller": "cmg-pes",
+  "baseline": "Geometric PD plus analytic velocity/acceleration feedforward; bounded 6x8 allocation",
+  "cmg_pes_parameters": {
+    "beta": 0.05,
+    "learning_rate": 0.0008,
+    "leak": 1e-06
+  },
+  "gains": {
+    "kp_position": 4.0,
+    "kd_position": 3.6,
+    "kp_attitude": 16.0,
+    "kd_attitude": 7.2
+  },
+  "rotation_convention": "Fixed world axes; q_ref = q_world_axis(angle) * q_XML_initial",
+  "model_xml_sha256": "6303b7b90a40c15c9da68f4ea1f0924b4f8f3fd7bb1ad670d77f3c232a136de6",
+  "mesh_sha256": "45a7e5498d0d08fed60c466b22478ac2269f39ab7c529cf65314d0a9dc64147b",
+  "hover_py_sha256": "7e70e40e3c75b4bebb57a7afd421ede8911cde6322ffa74f24fc13727615ba92",
+  "missions_py_sha256": "fcae1c55ce68dbd1dd3985b76bdeb182ce5b6cbecbc06dcbb6c079d5950d080d",
+  "gates": {
+    "peak_position_error_m": 0.12,
+    "peak_attitude_error_deg": 15.0,
+    "tail_position_error_m": 0.01,
+    "tail_attitude_error_deg": 0.5,
+    "saturation_fraction": 0.02,
+    "max_abs_input_N": 10.00000001,
+    "rotation_endpoint_error_deg": 5.0,
+    "rotation_progress_peak_error_deg": 20.0
+  },
+  "abort": {
+    "minimum_body_origin_z_m": 0.4,
+    "maximum_distance_from_start_m": 2.0,
+    "attitude_error_deg": 100.0,
+    "contact": true,
+    "nonfinite": true
+  },
+  "selected_missions": [
+    {
+      "name": "hover",
+      "stage": 0,
+      "kind": "hover",
+      "axis": 2,
+      "amplitude": 0.0,
+      "move_s": 4,
+      "hold_s": 2.0,
+      "settle_s": 8.0,
+      "kick_s": null,
+      "radius_m": 0.2
+    }
+  ]
+}

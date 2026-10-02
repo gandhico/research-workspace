@@ -1,0 +1,141 @@
+{
+  "status": "offline_candidate",
+  "sample_rate_hz": 35,
+  "state": [
+    "p_error_deg_s",
+    "total_roll_perturbation",
+    "previous_yoke_perturbation"
+  ],
+  "input": "next_yoke_perturbation",
+  "angle_feedback": 0.0,
+  "bryson_rate_scale_deg_s": 0.05,
+  "rate_scale_selection": "smallest audited candidate among 0.01/0.02/0.03/0.05/0.10 with zero raw saved-log replay saturation",
+  "A_discrete": [
+    [
+      0.40856088712084354,
+      3.557384691900809,
+      37.94550930146443
+    ],
+    [
+      0.0,
+      0.056094786671102355,
+      0.5983455357634198
+    ],
+    [
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "B_discrete": [
+    [
+      23.901200914035464
+    ],
+    [
+      0.37688720298045286
+    ],
+    [
+      1.0
+    ]
+  ],
+  "controllability_rank": 3,
+  "Q": [
+    [
+      399.99999999999994,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "R": [
+    [
+      25000000.0
+    ]
+  ],
+  "gain_K": [
+    0.0002943998507329812,
+    0.0027424434530730407,
+    0.02925278612522486
+  ],
+  "nominal_closed_loop_poles": [
+    [
+      0.36838506934627613,
+      0.0
+    ],
+    [
+      0.05894771649665299,
+      0.0
+    ],
+    [
+      7.70848591929944e-18,
+      0.0
+    ]
+  ],
+  "nominal_spectral_radius": 0.36838506934627613,
+  "limits": {
+    "command_abs": 0.0002,
+    "slew_per_35hz_sample": 5e-05
+  },
+  "uncertainty": {
+    "coefficient_scale_grid": [
+      0.75,
+      1,
+      1.25
+    ],
+    "cases": 243,
+    "worst_spectral_radius": 0.4935950826454184,
+    "unstable_cases": 0
+  },
+  "stress": [
+    {
+      "peak_command": 1.4719992536649062e-06,
+      "saturation_fraction": 0.0,
+      "final_5s_max_abs_p_deg_s": 4.1497077867963147e-231,
+      "final_5s_max_abs_total_roll": 7.136280139348522e-234
+    },
+    {
+      "peak_command": 2.9439985073298125e-06,
+      "saturation_fraction": 0.0,
+      "final_5s_max_abs_p_deg_s": 8.299415573592629e-231,
+      "final_5s_max_abs_total_roll": 1.4272560278697044e-233
+    },
+    {
+      "peak_command": 1.4719992536649062e-06,
+      "saturation_fraction": 0.0,
+      "final_5s_max_abs_p_deg_s": 4.1497077867963147e-231,
+      "final_5s_max_abs_total_roll": 7.136280139348522e-234
+    },
+    {
+      "peak_command": 2.9439985073298125e-06,
+      "saturation_fraction": 0.0,
+      "final_5s_max_abs_p_deg_s": 8.299415573592629e-231,
+      "final_5s_max_abs_total_roll": 1.4272560278697044e-233
+    }
+  ],
+  "saved_log_replay": [
+    {
+      "file": "rich_R3_roll_dualrate_pilot_20260712_193416.csv",
+      "peak_abs_command": 4.4783816683777396e-05,
+      "peak_abs_raw": 4.4783816683777396e-05,
+      "saturation_samples": 0,
+      "maximum_slew": 3.0412839670793866e-05
+    },
+    {
+      "file": "rich_R3_roll_dualrate_confirmation_20260712_194543.csv",
+      "peak_abs_command": 0.00013052416900371708,
+      "peak_abs_raw": 0.00013052416900371708,
+      "saturation_samples": 0,
+      "maximum_slew": 5e-05
+    }
+  ],
+  "claim_boundary": "offline rate-only candidate; no roll angle feedback and no flight validation"
+}

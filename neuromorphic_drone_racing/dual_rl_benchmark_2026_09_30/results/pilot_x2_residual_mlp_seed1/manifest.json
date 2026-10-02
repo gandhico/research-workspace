@@ -1,0 +1,30 @@
+{
+  "args": {
+    "arm": "residual",
+    "mode": "mlp",
+    "vehicle": "x2",
+    "train_scenario": "gust",
+    "seed": 1,
+    "episode_s": 12.0,
+    "rollouts": 10,
+    "samples": 600,
+    "ppo_epochs": 4,
+    "lr": 0.0002,
+    "log_std0": -1.6,
+    "sim_python": "C:\\Users\\gandhico\\AppData\\Local\\miniconda3\\envs\\hyperlif\\python.exe",
+    "out": "results\\pilot_x2_residual_mlp_seed1"
+  },
+  "source_hashes": {
+    "dual_env.py": "abe2d9a1dca2bdda9803f3599fce6b6f323fdc5e2cffed94ea493ceeb0ecb812",
+    "dual_worker.py": "7f9d0f5b4170820860fddc34c1e118f363a098c95fb2a473c1b0cd7d17cc1b02",
+    "train_dual.py": "1b0677f35ee970c2fe78f940c51c17d15900ec83275293bca55551bc3dfec8bf",
+    "train_split.py": "5f625c02b886b530dc468cd1cd92c7df49e1ef7d8bc894c00c0b8c870f6f2e5d",
+    "rollout_worker.py": "62fb9123658bb546a620e3d34866f8b98963dfdfd98b93f4ed22440bf2a228ec",
+    "policy_basis.py": "0c75545c10a1499d5506b8127891ec9dd98e4a4b68de207784931162d8a45c03",
+    "cmg_cells.py": "beb3637dea50ea796271fefd0da1bfd31f7c4063d02ddec32e7388420da2f190",
+    "racing_env.py": "91078b4ab03eceb448830800642c6145bf2ac1f83c1dac0e32af96882215450a"
+  },
+  "torch_version": "2.5.1+cu121",
+  "numpy_version": "2.4.6",
+  "policy_parameter_count": 8265
+}

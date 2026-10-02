@@ -1,0 +1,40 @@
+{
+  "claim_boundary": "Unmatched direct demonstrations; descriptive only.",
+  "runs": [
+    {
+      "controller": "DeePC",
+      "source": "logs/direct_deepc_20260810_150657.csv",
+      "rows": 1050,
+      "effective_hz": 35.00139763650356,
+      "maximum_gap_ms": 50.094067000827636,
+      "integral_abs_delta_p_deg": 0.019720188297610658,
+      "rms_delta_p_deg_s": 0.0007959435923535045,
+      "peak_abs_delta_p_deg_s": 0.004162738099694252,
+      "final_5s_max_abs_delta_p_deg_s": 0.0013110768049955368,
+      "peak_abs_command": 4.609358305654031e-05,
+      "maximum_command_slew": 2.1260182116392574e-05,
+      "control_energy": 5.122887758406314e-10,
+      "fallback_latched": false,
+      "axes_restored": true,
+      "runtime_ms_median": 4.01591100035148,
+      "runtime_ms_p95": 5.360862699762947,
+      "runtime_ms_max": 7.902884999566595
+    },
+    {
+      "controller": "LQR",
+      "source": "logs/direct_lqr_20260810_151244.csv",
+      "rows": 1050,
+      "effective_hz": 35.00399350768026,
+      "maximum_gap_ms": 42.23095099951024,
+      "integral_abs_delta_p_deg": 0.020252214982864048,
+      "rms_delta_p_deg_s": 0.0008626470779822107,
+      "peak_abs_delta_p_deg_s": 0.005621962482109666,
+      "final_5s_max_abs_delta_p_deg_s": 0.0014963510911911726,
+      "peak_abs_command": 4.669602564294201e-05,
+      "maximum_command_slew": 2.1705555648372406e-05,
+      "control_energy": 4.539369962967334e-10,
+      "fallback_latched": false,
+      "axes_restored": true
+    }
+  ]
+}

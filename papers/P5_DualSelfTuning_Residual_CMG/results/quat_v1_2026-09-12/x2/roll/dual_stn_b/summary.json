@@ -1,0 +1,108 @@
+{
+ "platform": "x2",
+ "mission": "roll",
+ "controller": "dual_stn_b",
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "ki_factor": 0.05,
+ "tuner": null,
+ "stn": {
+  "bounded": true,
+  "mu_p": 5e-05,
+  "mu_i": 5e-05,
+  "mu_d": 5e-05,
+  "e_ref": 0.1,
+  "w_ref": 1.0,
+  "xi_ref": 0.1,
+  "tau_syn": 0.05,
+  "kappa_s": 1.0,
+  "sens_learning_rate": 0.0008,
+  "sens_leak": 1e-06,
+  "du_deadband": 0.001,
+  "m_min": 0.5,
+  "m_max": 1.5,
+  "leak_m": 5e-05,
+  "w_max": 6.0,
+  "known_sign": false
+ },
+ "qerr_mean_rad": 0.04256242739545755,
+ "qerr_rmse_rad": 0.05083460595902279,
+ "qerr_max_rad": 0.07833779919295192,
+ "saturation_fraction": 0.0,
+ "residual_rms_Nm": 0.023653409477945097,
+ "torque_limits_Nm": [
+  0.7285355381134109,
+  0.43762083924507955,
+  0.2541169811320755
+ ],
+ "multiplier_mean": [
+  0.9732039829585347,
+  1.0,
+  1.0000000062566767,
+  0.9831748215593061,
+  1.0,
+  0.9999999994721976,
+  1.0135576818571161,
+  1.0,
+  0.9999999995616522
+ ],
+ "multiplier_min": [
+  0.9631883364757114,
+  1.0,
+  0.9999999934777826,
+  0.9770565666432421,
+  1.0,
+  0.9999999925451287,
+  0.9999967159337074,
+  1.0,
+  0.999999998702299
+ ],
+ "multiplier_max": [
+  1.0000070726752317,
+  1.0,
+  1.0000000130874143,
+  1.0000008568461423,
+  1.0,
+  1.0000000062823682,
+  1.0183962213390303,
+  1.0,
+  1.0000000001348488
+ ],
+ "integral_frozen_fraction": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "WS_final_fro": null,
+ "WR_final_fro": 2.2693169819531382,
+ "yhat_mean": [
+  -0.19721014868082376,
+  0.0,
+  0.007828181763711682
+ ],
+ "yhat_negative_fraction": 0.28852222222222224,
+ "stn_valid_fraction": [
+  0.8945444444444445,
+  0.0,
+  0.36406666666666665
+ ],
+ "stn_blocked_fraction": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "wall_s": 31.620850899998914,
+ "hashes": {
+  "run_dual.py": "9047af4026e5481f",
+  "dual_controller.py": "80aa7623b18146ae",
+  "gra_control/gate.py": "ea6d7853fff724d2",
+  "gra_control/platforms/drone.py": "50af6d1f6de51788",
+  "gra_control/math3d.py": "31620612f184a22f",
+  "model": "d932ffbe9f0d1fa4"
+ }
+}

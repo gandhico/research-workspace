@@ -1,0 +1,190 @@
+{
+  "format": "NumPy compressed archive",
+  "sample_rate_hz": 2000.0,
+  "axis_order": [
+    "yaw",
+    "pitch",
+    "roll"
+  ],
+  "unit_order": [
+    "+yaw",
+    "+pitch",
+    "+roll",
+    "-yaw",
+    "-pitch",
+    "-roll"
+  ],
+  "weight_shape": [
+    3,
+    6
+  ],
+  "signals": {
+    "t": {
+      "shape": [
+        28760
+      ],
+      "dtype": "float64"
+    },
+    "hardware_step": {
+      "shape": [
+        28760
+      ],
+      "dtype": "int64"
+    },
+    "substep": {
+      "shape": [
+        28760
+      ],
+      "dtype": "int64"
+    },
+    "baseline_tau_ypr": {
+      "shape": [
+        28760,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "target_ypr": {
+      "shape": [
+        28760,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "current": {
+      "shape": [
+        28760,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "voltage": {
+      "shape": [
+        28760,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate": {
+      "shape": [
+        28760,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "activity": {
+      "shape": [
+        28760,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "effective_threshold": {
+      "shape": [
+        28760,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate_argument": {
+      "shape": [
+        28760,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "gate_target": {
+      "shape": [
+        28760,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "conductance_gain": {
+      "shape": [
+        28760,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "conductance": {
+      "shape": [
+        28760,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "membrane_lambda": {
+      "shape": [
+        28760,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "membrane_drive": {
+      "shape": [
+        28760,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "decoded_raw": {
+      "shape": [
+        28760,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "decoded_clipped": {
+      "shape": [
+        28760,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "pes_error": {
+      "shape": [
+        28760,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "weights": {
+      "shape": [
+        28760,
+        3,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "weight_delta": {
+      "shape": [
+        28760,
+        3,
+        6
+      ],
+      "dtype": "float64"
+    },
+    "residual_torque_ypr": {
+      "shape": [
+        28760,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "disturbance_torque_ypr": {
+      "shape": [
+        28760,
+        3
+      ],
+      "dtype": "float64"
+    }
+  },
+  "semantics": {
+    "decoded_raw": "unbounded W@a",
+    "decoded_clipped": "clip(W@a,-1,1), used by PES and residual",
+    "weight_delta": "per-0.5-ms Nengo step change after PES and leak",
+    "gate_target": "sigmoid(alpha*(v-effective_threshold))",
+    "conductance": "conductance_gain*r^2"
+  }
+}

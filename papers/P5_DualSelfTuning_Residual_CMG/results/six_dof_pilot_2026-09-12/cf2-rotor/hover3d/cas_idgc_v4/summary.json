@@ -1,0 +1,81 @@
+{
+ "platform": "cf2-rotor",
+ "mission": "hover3d",
+ "controller": "cas_idgc_v4",
+ "duration": 15.0,
+ "dt": 0.0005,
+ "wn_att": [
+  24.0,
+  24.0,
+  20.4
+ ],
+ "wn_pos": [
+  2.25,
+  2.25,
+  2.7
+ ],
+ "beta": null,
+ "learning_rate": null,
+ "pos_err_mean_m": 1.3711369903036397e-06,
+ "pos_err_max_m": 2.676951048211964e-05,
+ "qerr_mean_rad": 5.28765083369692e-05,
+ "qerr_max_rad": 0.00018888856518774696,
+ "z_min_m": 0.9999999977707795,
+ "saturation_fraction": 0.0,
+ "residual_rms_Nm": 0.0,
+ "torque_limits_Nm": [
+  0.000287412,
+  0.000287412,
+  0.00032347
+ ],
+ "mp_final": [
+  1.9738620725798244,
+  1.3990148009461227,
+  1.1319637453801916
+ ],
+ "md_final": [
+  1.9738620725798244,
+  1.3990148009461227,
+  1.1319637453801916
+ ],
+ "mp_min": [
+  1.0,
+  1.0,
+  1.0
+ ],
+ "mp_max": [
+  1.9738620725798244,
+  1.3990148009461227,
+  1.1319637453801916
+ ],
+ "s_hat_last5s_mean": [
+  0.34350199834429773,
+  0.6006784342817643,
+  0.8305695126153904
+ ],
+ "kw_check_last5s_mean": null,
+ "idgc": {
+  "dither_amp": 0.02,
+  "dither_freq": [
+   9.0,
+   11.0,
+   13.0
+  ],
+  "tau_demod": 0.5,
+  "warmup_s": 3.0,
+  "tau_id": 5.0,
+  "m_lo": 0.33,
+  "m_hi": 3.0
+ },
+ "wall_s": 7.118288099998608,
+ "hashes": {
+  "pilot_6dof.py": "e5055a947a6c17de",
+  "dual_controller.py": "4786d16cc2f51140",
+  "run_6dof_cascade_ff.py": "71223b6f293eb9be",
+  "run_6dof_wrench.py": "467b29b1cfa0992c",
+  "gra_control/gate.py": "ea6d7853fff724d2",
+  "gra_control/math3d.py": "31620612f184a22f",
+  "gra_control/platforms/drone.py": "50af6d1f6de51788",
+  "model": "410e0975d066abb1"
+ }
+}

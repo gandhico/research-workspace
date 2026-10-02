@@ -1,0 +1,87 @@
+% Fig. 1 -- CMG-PES residual control architecture (picture only; no preamble).
+% For ACC2027.tex: \input{architectures/fig1_architecture_body.tex} inside figure* (e.g. \resizebox{0.95\textwidth}{!}{...}).
+% Requires arch_style.tex, \sat, \sgnp, \T, \bm and the TikZ libraries arrows.meta, positioning, fit, backgrounds, calc.
+\tikzset{
+  blk/.append style={font=\footnotesize,inner sep=3.5pt},
+  neuro/.append style={fill=blue!10,draw=black!65,thick},          % neuromorphic residual path: light blue
+  gatek/.style={blk,fill=orange!12,draw=orange!70!black,thick},     % saturation-aware gate: orange
+  plant/.append style={fill=blue!22,draw=blue!75!black,very thick}, % MuJoCo plant: strong blue
+  online/.style={draw=blue!60!black,thin,dash pattern=on 1.2pt off 1.2pt,rounded corners=4pt},
+}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  % ------------------------------------------------------------------ classical loop (top row)
+  \node[clas] (ref) at (2.6,1.75) {\textbf{Mission reference}\quad $q_{d,k},\ \bm\omega_{d,k}$};
+  \node[clas] (pd) at (2.6,0) {\textbf{Quaternion error and PD+ff}\\[1pt]
+      $q_{e,k}=q_{d,k}\otimes q_k^{-1}$\\
+      $\bm e_{q,k}=\sgnp(q_{e,0,k})\,\bm q_{e,v,k}$\\
+      $\bm u_{0,k}=\sat_{\bm\ell}\big(-K_q\bm e_{q,k}-K_\omega(\bm\omega_k-\bm\omega_{d,k})\big)$};
+  \node[clas] (add) at (9.9,0) {\textbf{Bounded torque addition}\\[1pt]
+      $\tilde{\bm\delta}_k=\beta\,\bm\ell\odot\tilde{\bm s}_k$\\
+      $\bm u_k=\sat_{\bm\ell}(\bm u_{0,k}+\tilde{\bm\delta}_k)$};
+  \node[clas] (alloc) at (14.6,0) {\textbf{Rotor allocation}\\\textbf{and force limits}\\[1pt]
+      $\bm f_{{\rm req},k}=B^{-1}[T_k,\bm u_k\T]\T$\\
+      $\bm f_{{\rm act},k}=\sat_{[\bm 0,\bm f_{\max}]}(\bm f_{{\rm req},k})$};
+  \node[plant] (plant) at (19.2,0) {\textbf{MuJoCo plant}\\\textbf{X2 / CF2}\\[1pt]
+      $[T_{{\rm act},k},\bm\tau_{{\rm act},k}\T]\T=B\bm f_{{\rm act},k}$\\rigid-body dynamics};
+  \node[clas] (height) at (19.2,-2.85) {\textbf{Height controller}\\[1pt]
+      $T_k=\sat_{[0,\,2.5Mg]}\big(\pi_z(z_k,\dot z_k,R_{33,k})\big)$\\$z_d=1$\,m};
+
+  \draw[sig] (ref) -- (pd);
+  \draw[sig] (pd) -- node[lbl,above,pos=0.62]{$\bm u_{0,k}$} coordinate[pos=0.22] (u0tap) (add);
+  \draw[sig] (add) -- node[lbl,above]{$\bm u_k$} (alloc);
+  \draw[sig] (alloc) -- node[lbl,above]{$\bm f_{{\rm act},k}$} (plant);
+  \draw[sig] (plant) -- node[lbl,right]{$z_k,\dot z_k,R_{33,k}$} (height);
+  \draw[sig] ($(height.north west)+(0.35,0)$) |- node[lbl,pos=0.3,left]{$T_k$} ($(alloc.east)+(0,-0.62)$);
+
+  % ------------------------------------------------------------------ CMG-PES residual path
+  \node[neuro] (enc) at (3.25,-3.55) {\textbf{Paired currents}\\[1pt]
+      $\bar{\bm u}_k=\bm u_{0,k}\oslash\bm\ell$\\
+      $\bm I^\pm_k=I_b\bm 1+I_g\max(\pm\bar{\bm u}_k,\bm 0)$};
+  \node[neuro] (cmg) at (7.75,-3.55) {\textbf{Six CMG units}\\[1pt]
+      $(\bm v_k,\bm r_k;\bm I_k)\mapsto(\bm v_k^+,\bm r_k^+)$\\
+      $\bm a_k=\sat_{[0,1]}(G\bm r_k^+)$};
+  \node[neuro] (dec) at (12.05,-3.55) {\textbf{Decoder and output bound}\\[1pt]
+      $\bm s_k=\sat_{[-1,1]}(W_k\bm a_k)$};
+  \node[gatek] (gate) at (11.7,-1.80) {\textbf{Saturation-aware gate}\\[1pt]
+      $\tilde s_{k,i}=0$ if $|u_{0,k,i}|\ge\ell_i$ and $s_{k,i}u_{0,k,i}<0$\\
+      else $\tilde s_{k,i}=s_{k,i}$ \ (output only; PES unmasked)};
+  \node[neuro] (tgt) at (3.4,-6.45) {\textbf{PES teaching target}\\[1pt]
+      $\bm y^*_k=\sat_{[-1,1]}(-k_e\bm e_{q,k}-k_\omega^*\bm\omega_k)$};
+  \node[neuro] (pes) at (9.15,-6.45) {\textbf{PES update, leak, and projection}\\[1pt]
+      $\bm\varepsilon_k=\bm y^*_k-\bm s_k$\\
+      $W_{k+1}=\Pi_{\mathcal W}\big[(1-\lambda_W)W_k+\eta\,\bm\varepsilon_k\bm a_k\T\big]$};
+  \node[neuro] (mem) at (14.3,-6.45) {\textbf{Decoder memory}\\[1pt]one-step delay\\$W_0=[I_3,\,-I_3]$};
+
+  % residual signals
+  \draw[sig] (pd.south-|enc) -- node[lbl,right]{$\bm u_{0,k}$} (enc.north);
+  \draw[sig] (enc) -- node[lbl,above]{$\bm I_k$} (cmg);
+  \draw[sig] (cmg) -- node[lbl,above]{$\bm a_k$} coordinate[pos=0.35] (atap) (dec);
+  \fill (atap) circle (1.4pt);
+  \draw[sig] (atap) -- node[lbl,right,pos=0.5]{$\bm a_k$} (atap|-pes.north);
+  \draw[sig] (dec.north-|gate.south) -- node[lbl,right]{$\bm s_k$} (gate.south);
+  \draw[sig] (gate.north-|add) -- node[lbl,right]{$\tilde{\bm s}_k$} (add.south);
+  \draw[sigd] (u0tap) |- node[lbl,pos=0.78,above]{$\bm u_{0,k}$: load test} (gate.west);
+  \fill (u0tap) circle (1.4pt);
+  \coordinate (sx) at ($(pes.north east)+(-0.45,0)$);
+  \draw[sig] (sx|-dec.south) -- node[lbl,right,pos=0.45]{$\bm s_k$ (pre-gate)} (sx);
+  \draw[sig] (tgt) -- node[lbl,above]{$\bm y^*_k$} (pes);
+  \draw[sig] (pes) -- node[lbl,above]{$W_{k+1}$} (mem);
+  \draw[sig] (mem.east) -- ++(0.55,0) |- node[lbl,pos=0.25,right]{$W_k$} (dec.east);
+  \draw[sig] (mem.south) -- ++(0,-0.55) -| node[lbl,pos=0.25,below]{$W_k$} (pes.south);
+
+  % PES teaching signal: the attitude error computed in the PD block and the measured rate
+  \coordinate (eqx) at ($(pd.south west)+(0.25,0)$);
+  \fill (eqx) circle (1.4pt);
+  \draw[sig] (eqx) -- node[lbl,fill=white,rotate=90,pos=0.42,above]{$\bm e_{q,k}$ (error block), $\bm\omega_k$ (measured)} (eqx|-tgt.west) -- (tgt.west);
+
+  % feedback: measured attitude and rate
+  \coordinate (fbx) at ($(height.east)+(0.35,0)$);
+  \draw[sig] (plant.east) -| (fbx|-0,-8.45) -| node[lbl,pos=0.06,above]{measured attitude and rate:\ $q_k=Q_k^{-1},\ \bm\omega_k$} (-0.75,0) -- (pd.west);
+
+  % neuromorphic online part: thin fine-dashed boundary (the gate is a classical interface, kept outside)
+  \coordinate (loopbot) at ($(mem.south)+(0,-0.95)$);
+  \begin{scope}[on background layer]
+    \node[online,inner sep=6pt,fit=(enc)(cmg)(dec)(tgt)(pes)(mem)(loopbot)] (rp) {};
+  \end{scope}
+  \node[note,anchor=south west,text=blue!60!black] at ($(rp.south west)+(0.12,0.08)$) {neuromorphic, learns online (CMG--PES)};
+\end{tikzpicture}

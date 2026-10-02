@@ -1,0 +1,20 @@
+{
+  "kind": "train",
+  "arm": "dual",
+  "mode": "mlp",
+  "vehicle": "x2",
+  "scenario": "gust",
+  "seed": 1,
+  "samples": 600,
+  "episodes": 1,
+  "return_sum": 115.16163048998672,
+  "gates": 4,
+  "collisions": 0,
+  "termination_reason": "time_limit",
+  "mean_position_error_m": 0.1924554789595001,
+  "max_position_error_m": 0.3374444116192426,
+  "mean_saturation": 0.05983333333333333,
+  "action_rms": 0.19480475401222194,
+  "gain_min": 0.872617206857385,
+  "gain_max": 1.1229352996052877
+}

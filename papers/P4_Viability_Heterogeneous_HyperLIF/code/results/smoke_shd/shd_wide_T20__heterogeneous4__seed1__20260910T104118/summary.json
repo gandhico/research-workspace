@@ -1,0 +1,95 @@
+{
+  "checkpoint": "C:\\Research\\papers\\P4_Viability_Heterogeneous_HyperLIF\\code\\results\\smoke_shd\\shd_wide_T20__heterogeneous4__seed1__20260910T104118\\checkpoint.jls",
+  "claim_boundary": "pipeline evidence only until matched baselines and paired seeds run",
+  "command_line": [
+    "--cache=C:\\Research\\papers\\P1_HyperLIF_Learning\\code\\hpc\\upload_data\\shd_wide_T20.h5",
+    "--smoke",
+    "--results-root=results\\smoke_shd"
+  ],
+  "dataset": {
+    "classes": 20,
+    "input_features": 700,
+    "path": "C:\\Research\\papers\\P1_HyperLIF_Learning\\code\\hpc\\upload_data\\shd_wide_T20.h5",
+    "sha256": "6e5eb592c7530184daf83ecdff54ef4db34a42a45551195898a1e1a557c74738",
+    "split_rule": "P1 class-stratified seeded cap and validation split",
+    "test_used": 40,
+    "time_steps": 20,
+    "train_used": 28,
+    "validation_used": 20
+  },
+  "finished_at_utc": "2026-09-10T10:41:19.016",
+  "model": {
+    "event_definition": "upward threshold crossing",
+    "family": "four-population heterogeneous HyperLIF",
+    "hidden_per_population": 3,
+    "learning_mode": "continuous",
+    "parameter_count": 9132,
+    "readout": "hybrid_vr logit ensemble",
+    "regimes": [
+      "subthreshold",
+      "sparse",
+      "regular",
+      "burst"
+    ],
+    "total_hidden": 12
+  },
+  "optimization": {
+    "best_epoch": 1,
+    "best_validation_accuracy": 0.05,
+    "epochs_completed": 1,
+    "epochs_requested": 1,
+    "seed": 1
+  },
+  "schema_version": 1,
+  "started_at_utc": "2026-09-10T10:40:13.866",
+  "status": "exploratory_complete",
+  "test": {
+    "accuracy": 0.025,
+    "loss": 3.158252716064453,
+    "mix_weights": [
+      0.24941104650497437,
+      0.25069281458854675,
+      0.2503569722175598,
+      0.24953918159008026
+    ],
+    "populations": [
+      {
+        "event_rate": 0.026666666939854623,
+        "gate_mean": 0.25364671647548676,
+        "no_event_fraction": 0.49166667461395264,
+        "occupancy_rate": 0.34583333134651184,
+        "standalone_accuracy": 0.05
+      },
+      {
+        "event_rate": 0.028750000149011613,
+        "gate_mean": 0.3585152506828308,
+        "no_event_fraction": 0.44166666865348814,
+        "occupancy_rate": 0.43291667103767395,
+        "standalone_accuracy": 0.075
+      },
+      {
+        "event_rate": 0.03625000044703484,
+        "gate_mean": 0.36103070974349977,
+        "no_event_fraction": 0.44166666865348814,
+        "occupancy_rate": 0.3991666674613953,
+        "standalone_accuracy": 0.075
+      },
+      {
+        "event_rate": 0.013333333935588599,
+        "gate_mean": 0.047520917281508444,
+        "no_event_fraction": 0.8333333373069763,
+        "occupancy_rate": 0.04583333320915699,
+        "standalone_accuracy": 0.05
+      }
+    ]
+  },
+  "trace": [
+    {
+      "epoch": 1,
+      "train_loss": 3.204472099031721,
+      "validation_accuracy": 0.05,
+      "validation_loss": 3.0970216751098634
+    }
+  ],
+  "wall_seconds": 65.15000009536743
+}

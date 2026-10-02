@@ -1,0 +1,31 @@
+{
+ "platform": "cf2-rotor",
+ "mission": "full3",
+ "controller": "cmg_gate",
+ "rho": 3.0,
+ "beta": 0.5,
+ "qerr_mean_rad": 0.0883754825307429,
+ "qerr_mean_deg": 5.063542161443704,
+ "t_settle_5deg_s": null,
+ "rotor_sat_fraction": 0.0,
+ "baseline_sat_fraction": [
+  0.0,
+  0.003266666666666667,
+  0.0
+ ],
+ "opposing_fraction": [
+  0.0,
+  1.1111111111111112e-05,
+  0.0
+ ],
+ "opposing_share_of_sat": [
+  0.0,
+  0.003401360544217687,
+  0.0
+ ],
+ "mean_torque_removed_frac_of_limit": [
+  0.0,
+  2.3005487668545325e-06,
+  0.0
+ ]
+}

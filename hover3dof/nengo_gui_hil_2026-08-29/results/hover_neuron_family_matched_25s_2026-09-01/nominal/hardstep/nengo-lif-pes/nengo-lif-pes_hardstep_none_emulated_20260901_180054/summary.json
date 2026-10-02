@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "platform": "quanser_3dof_hover_nengo_gui_hil",
+  "hardware": false,
+  "config": {
+    "io_mode": "emulated",
+    "armed": false,
+    "confirm_hardware_review": false,
+    "controller": "nengo-lif-pes",
+    "mission": "hardstep",
+    "duration": 25.0,
+    "stop_after": null,
+    "reference_scale": 0.7,
+    "hardstep_transition_s": 0.5,
+    "beta": 0.2,
+    "motor_residual_cap_volts": 0.2,
+    "learning_rate": 0.0002,
+    "k_error": 2.0,
+    "k_rate": 0.0,
+    "residual_slew_v_per_s": 1.0,
+    "allocation_policy": "stability-priority",
+    "motor_floor_volts": 2.0,
+    "max_abs_pitch_deg": 180.0,
+    "max_abs_roll_deg": 180.0,
+    "expected_raw_home_yaw_deg": null,
+    "raw_home_yaw_tolerance_deg": 5.0,
+    "max_consecutive_deadline_misses": 20,
+    "gui_heartbeat_timeout_s": 0.5,
+    "disturbance": "none",
+    "disturbance_scale": 0.0,
+    "emulation_realtime": false,
+    "output_root": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hover_neuron_family_matched_25s_2026-09-01\\nominal\\hardstep\\nengo-lif-pes"
+  },
+  "hardware_rate_hz": 200.0,
+  "neural_rate_hz": 2000.0,
+  "gui_rate_hz": 50.0,
+  "raw_home_ypr_deg": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "run_completed": true,
+  "abort_reason": "",
+  "n_steps_logged": 5000,
+  "angle_err_mean_deg": 23.387106221226837,
+  "angle_err_max_deg": 69.4898548816326,
+  "axis_error_mae_deg": {
+    "yaw": 14.946156543329154,
+    "pitch": 5.847031808474561,
+    "roll": 14.026730481162154
+  },
+  "qerr_mean_rad": 0.39118164168908415,
+  "qerr_max_rad": 1.1409444036383087,
+  "deadline_miss_fraction": 0.0006,
+  "neuron_family_metadata": {
+    "controller": "nengo-lif-pes",
+    "family": "lif",
+    "decoder_mode": "pes",
+    "hardware_qualified": false
+  },
+  "trace": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hover_neuron_family_matched_25s_2026-09-01\\nominal\\hardstep\\nengo-lif-pes\\nengo-lif-pes_hardstep_none_emulated_20260901_180054\\trace.csv",
+  "neural_trace_2khz": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hover_neuron_family_matched_25s_2026-09-01\\nominal\\hardstep\\nengo-lif-pes\\nengo-lif-pes_hardstep_none_emulated_20260901_180054\\neural_trace_2khz.npz",
+  "neural_trace_schema": "C:\\Research\\hover3dof\\nengo_gui_hil_2026-08-29\\results\\hover_neuron_family_matched_25s_2026-09-01\\nominal\\hardstep\\nengo-lif-pes\\nengo-lif-pes_hardstep_none_emulated_20260901_180054\\neural_trace_schema.json",
+  "neuron_columns": {
+    "membrane": "neuron_v_0..5",
+    "gate_or_auxiliary_state": "neuron_r_0..5",
+    "activity": "neuron_activity_0..5",
+    "current": "neuron_current_0..5",
+    "decoder": "decoder_w_0..17",
+    "derived_dynamics": "neuron_gate_target/effective_threshold/gate_argument/conductance_gain/conductance/membrane_lambda/membrane_drive_0..5",
+    "decoder_diagnostics": "decoder_raw/clipped/update_norm and decoder_dw_hardware"
+  }
+}

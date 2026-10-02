@@ -1,0 +1,28 @@
+% Standalone pages of the architecture figures used in the GitHub release (one figure per page).
+%   pdflatex release_figures.tex  ->  pdftoppm -png -r 220 release_figures.pdf fig
+\documentclass[border=10pt,tikz]{standalone}
+\usepackage{amsmath,amssymb,bm}
+\usepackage[obeyspaces,spaces]{url}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
+\newcommand{\T}{^{\mathsf T}}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\clip}{\operatorname{sat}}   % manuscript notation (2026-10-01): sat for every interval limit
+\newcommand{\sgnp}{\operatorname{sgn}_{+}}
+\newcommand{\code}[1]{\path{#1}}
+\newcommand{\Peq}[1]{P-(#1)}
+\renewcommand{\ref}[1]{1}
+\newif\ifwithbs \withbsfalse          % the recursive-backstepping extension stays out of the release
+\input{../../../paper/v15_2026-09-29_corrected/architectures/tikz/arch_style.tex}
+\input{../../../paper/controller_families_2026-10-01/figures/family_style.tex}
+\begin{document}
+% 1 CMG unit coupling topology (paper Fig. 2)
+\input{../../../paper/v15_2026-09-29_corrected/architectures/tikz/archB1c.tex}
+% 2-9 controller families
+\input{../../../paper/controller_families_2026-10-01/figures/fig_interface.tex}
+\input{../../../paper/controller_families_2026-10-01/figures/fig_pdff.tex}
+\input{../../../paper/controller_families_2026-10-01/figures/fig_pid.tex}
+\input{../../../paper/controller_families_2026-10-01/figures/fig_lqr.tex}
+\input{../../../paper/controller_families_2026-10-01/figures/fig_smc.tex}
+\input{../../../paper/controller_families_2026-10-01/figures/fig_mpc.tex}
+\input{../../../paper/controller_families_2026-10-01/figures/fig_nmpc.tex}
+\end{document}

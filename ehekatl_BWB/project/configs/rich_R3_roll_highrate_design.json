@@ -1,0 +1,20 @@
+{
+  "sample_rate_hz": 35.0,
+  "duration_s": 30.0,
+  "excitation_start_s": 5.0,
+  "excitation_duration_s": 20.0,
+  "ramp_s": 2.0,
+  "amplitude": 0.0002,
+  "frequencies_hz": [2.0, 4.0, 6.0, 8.0, 10.0],
+  "phases_rad": [0.0, 1.256637, 2.513274, 3.769911, 5.026548],
+  "nyquist_hz": 17.5,
+  "maximum_frequency_fraction_of_nyquist": 0.6,
+  "derivative_policy": "P_dot is audit-only; identification uses measured P, realized total roll, and distributed aileron directly.",
+  "response_bound_basis": {
+    "maximum_validated_frf_gain_deg_s_per_ratio": 128.5,
+    "unmodeled_high_frequency_gain_factor": 2.0,
+    "maximum_predicted_abs_p_deg_s": 0.0514
+  },
+  "unchanged_safety": {"maximum_abs_attitude_deg": 10.0, "maximum_abs_body_rate_deg_s": 20.0},
+  "status": "observe_only_gate_required"
+}

@@ -1,0 +1,61 @@
+{
+  "status": "candidate",
+  "method": "independent separate-reload moving-block residual bootstrap; deterministic seed 20260810",
+  "source_files": {
+    "lqr": "logs/rich_R3_roll_matched_lqr_20260712_203707.csv",
+    "deepc": "logs/rich_R3_roll_deepc_pilot_20260810_144136.csv"
+  },
+  "source_allocation": "LQR metric-design and DeePC design pilot only; no confirmation responses",
+  "virtual_experiments_per_count": 500,
+  "bootstrap_resamples_each": 500,
+  "required_power": 0.8,
+  "curve": [
+    {
+      "pulses_each_controller": 6,
+      "minimum_seconds_each_run_at_3s_spacing": 23,
+      "median_ratio": 0.6852042724722693,
+      "ratio_5_95_percentiles": [
+        0.3728808343340088,
+        1.2317710968200701
+      ],
+      "median_upper_95_bound": 1.1476483490296299,
+      "power_upper_bound_below_one": 0.348
+    },
+    {
+      "pulses_each_controller": 12,
+      "minimum_seconds_each_run_at_3s_spacing": 41,
+      "median_ratio": 0.6795482752432969,
+      "ratio_5_95_percentiles": [
+        0.40826883805599906,
+        1.1108408905290725
+      ],
+      "median_upper_95_bound": 1.0722599300241686,
+      "power_upper_bound_below_one": 0.408
+    },
+    {
+      "pulses_each_controller": 24,
+      "minimum_seconds_each_run_at_3s_spacing": 77,
+      "median_ratio": 0.6523363469118604,
+      "ratio_5_95_percentiles": [
+        0.4768967292922245,
+        0.9392134386513871
+      ],
+      "median_upper_95_bound": 0.940434607766399,
+      "power_upper_bound_below_one": 0.616
+    },
+    {
+      "pulses_each_controller": 48,
+      "minimum_seconds_each_run_at_3s_spacing": 149,
+      "median_ratio": 0.6493973299073681,
+      "ratio_5_95_percentiles": [
+        0.5061287285693757,
+        0.841279814327087
+      ],
+      "median_upper_95_bound": 0.8466732511977975,
+      "power_upper_bound_below_one": 0.852
+    }
+  ],
+  "minimum_qualified_count": 48,
+  "flight_authorized": false,
+  "claim_boundary": "Prospective separate-reload power only; design evidence may overestimate effect."
+}

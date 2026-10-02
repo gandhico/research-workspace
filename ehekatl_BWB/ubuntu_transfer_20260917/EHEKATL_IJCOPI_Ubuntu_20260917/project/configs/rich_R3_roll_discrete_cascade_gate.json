@@ -1,0 +1,10 @@
+{
+  "frozen_before_confirmation": true,
+  "required_confirmation_runs": 1,
+  "maximum_yoke_to_total_recursive_nrmse_ratio": 1.25,
+  "maximum_surface_to_p_recursive_nrmse_ratio": 1.25,
+  "maximum_total_to_surface_relative_rmse": 0.01,
+  "minimum_sent_to_yoke_lag1_correlation": 0.99,
+  "require_execution_timing_schedule_safety_pass": true,
+  "no_refit_or_reselection": true
+}

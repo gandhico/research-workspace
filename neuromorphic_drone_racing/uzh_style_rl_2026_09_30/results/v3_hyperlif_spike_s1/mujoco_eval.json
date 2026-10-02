@@ -1,0 +1,16 @@
+{
+ "run": "results\\v3_hyperlif_spike_s1",
+ "arm": "hyperlif_spike",
+ "gates_in_order": 3,
+ "collisions": 0,
+ "termination": "time_limit",
+ "lap_completed": false,
+ "lap_time_s": null,
+ "gate_times_s": [
+  1.12,
+  2.44,
+  3.82
+ ],
+ "mean_rotor_saturation": 0.6955500000000001,
+ "note": "full MuJoCo race world, frozen policy, perfect state, no learning during the flight"
+}

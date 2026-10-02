@@ -1,0 +1,54 @@
+{
+  "status": "independent_score_no_refit",
+  "validation_file": "rich_R3_roll_validation_01_20260712_185227.csv",
+  "frozen_training_file": "rich_R3_roll_training_01_20260712_184050.csv",
+  "model_name": "surface_aerodynamic",
+  "fields": [
+    "roll_deg",
+    "p_deg_s",
+    "beta_deg",
+    "tas_m_s",
+    "distributed_ail1_wing2l_deg"
+  ],
+  "delay_samples": 0,
+  "beta": [
+    -6.7143888441736275,
+    -3.8674184972715913,
+    73.70172585281617,
+    0.47134332165937487,
+    7.900878478647502
+  ],
+  "pdot_rmse": 0.024099812196139686,
+  "pdot_nrmse": 0.7279797678211719,
+  "training_pdot_nrmse": 0.6216109211738063,
+  "validation_to_training_pdot_nrmse_ratio": 1.1711180467140219,
+  "recursive_prediction": {
+    "1": {
+      "rate_rmse_deg_s": 0.0024148154743784136,
+      "rate_nrmse": 0.42253943447979997
+    },
+    "5": {
+      "rate_rmse_deg_s": 0.023787661612958037,
+      "rate_nrmse": 4.162315999786018
+    },
+    "10": {
+      "rate_rmse_deg_s": 0.054152057410049456,
+      "rate_nrmse": 9.475415391666623
+    },
+    "20": {
+      "rate_rmse_deg_s": 0.06079729007200166,
+      "rate_nrmse": 10.638184506226294
+    }
+  },
+  "recursive_mean_nrmse": 6.174613833039684,
+  "training_temporal_recursive_mean_nrmse": 0.7135224499956289,
+  "validation_to_training_recursive_ratio": 8.653706457417718,
+  "residual_lag1": 0.7718483151060306,
+  "frozen_gate_checks": {
+    "pdot_ratio": true,
+    "recursive_ratio": false,
+    "residual_lag1": true
+  },
+  "frozen_gate_pass": false,
+  "no_refit_or_reselection": true
+}

@@ -1,0 +1,121 @@
+\documentclass[journal]{IEEEtran}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+\title{Nengo-Compatible Reference Implementation and NEF Capability Analysis of HyperLIF Neurons}
+
+\author{Gandhi Alexis Sinhue Contreras Torres, Steven Sandoval, and Luis Rodolfo Garcia Carrillo%
+\thanks{Proposal scaffold prepared on 2026-07-19. Built from the existing Paper 3 IEEE manuscript and latest Nengo capability audit.}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper presents an equation-faithful implementation of HyperLIF and Adaptive HyperLIF neurons in Nengo and evaluates their use as custom Neural Engineering Framework neuron types. The contribution is not a new benchmark leaderboard result; it is a reference implementation and validation study. The implementation matches standalone Python stable stepping exactly, reproduces depolarization-block and fixed-point predictions, provides stable exponential integration, and exposes the continuous gate state as a probeable NEF variable. Recent capability experiments show that calibrated HyperLIF builds and runs across representation, dynamics, memory, online learning, and cognition tasks in NengoCore, with clear efficiency benefits and an honest learning-speed tradeoff. The paper also documents backend portability walls for accelerated and hardware backends, making the result useful for researchers implementing custom continuous-state neurons in the Nengo ecosystem.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Nengo, Neural Engineering Framework, HyperLIF, Adaptive HyperLIF, custom neuron types, neuromorphic computing, continuous reset.
+\end{IEEEkeywords}
+
+\section{Introduction}
+The purpose of this paper is to make HyperLIF trustworthy and reusable. The TNNLS reviewers correctly criticized heuristic theory and insufficient validation. This manuscript answers that critique with implementation parity, numerical stability, calibrated Nengo capability tests, and explicit limitation boundaries.
+
+\section{Scope}
+Included:
+\begin{itemize}
+  \item LIF, HyperLIF, and Adaptive HyperLIF mathematical definitions.
+  \item Exact standalone Python vs Nengo parity.
+  \item Depolarization-block and fixed-point validation.
+  \item Stable exponential stepping.
+  \item Gate-state decoding and readiness interpretation.
+  \item $\theta_{\mathrm{event}}$, origin-aware calibration, and rate-to-current operating-point selection.
+  \item NengoCore capability matrix and PES rate-matching tradeoff.
+  \item Backend portability audit.
+\end{itemize}
+
+Excluded:
+\begin{itemize}
+  \item Full PyTorch/Julia event-learning benchmarks, which belong to the learning paper.
+  \item Hardware speed/energy claims unless a backend kernel or mapping is implemented.
+  \item Strong biological plausibility claims.
+\end{itemize}
+
+\section{Reference Model and Numerical Update}
+State the HyperLIF and Adaptive HyperLIF equations and the stable update used by both standalone code and Nengo. The algorithmic result is that every equation is traceable to a code path.
+
+\section{Nengo Implementation}
+Describe the custom \texttt{NeuronType}, state variables, calibration logic, and event-threshold handling. Emphasize that the Nengo port calls the same stable stepping kernel as the standalone reference.
+
+\section{Validation Results}
+\subsection{Parity}
+Report zero voltage RMSE, zero gate RMSE, zero event mismatch, and zero maximum absolute difference for the step and stress protocols.
+
+\subsection{Depolarization Block}
+Report analytical onset and simulated agreement. Explain the fixed-gain high-voltage latch and the Adaptive HyperLIF bounded self-silencing behavior.
+
+\subsection{Numerical Stability}
+Compare explicit Euler and exponential stable update. The stable update is the Nengo default because it remains well behaved under larger time steps.
+
+\subsection{Readout Adaptation}
+Report $\theta_{\mathrm{event}}=0.95$ as a practical Nengo readout calibration, not a change in continuous reset dynamics.
+
+\section{NEF Capability Matrix}
+Use the latest matrix from \texttt{13\_hyperlif\_nengo\_capability\_matrix.csv}. Required result framing:
+\begin{itemize}
+  \item all nine NengoCore applications build and run;
+  \item calibrated HyperLIF runs at substantially lower firing rates than LIF;
+  \item HyperLIF is competitive or stronger on selected dynamics and memory tasks;
+  \item online PES learning is slower because sparse firing supplies fewer learning events;
+  \item rate matching recovers much of the PES gap but does not fully match high-rate LIF.
+  \item the three-seed candidate preflight completes 84/84 Nengo simulations with zero failures across seven core applications.
+\end{itemize}
+
+\section{Backend Portability}
+Document the empirical backend wall:
+\begin{itemize}
+  \item NengoCore runs.
+  \item NengoOCL rejects the custom neuron type without a custom kernel.
+  \item NengoLoihi rejects the continuous custom neuron at build validation.
+  \item NengoDL is blocked by ecosystem version constraints unless a compatible environment is built.
+\end{itemize}
+
+This is a limitation, but it is also useful engineering knowledge for custom continuous-state neuron models.
+
+\section{Figures and Tables}
+\begin{table}[t]
+\centering
+\caption{Core artifacts for the Nengo reference paper.}
+\begin{tabular}{lll}
+\toprule
+Artifact & Status & Source \\
+\midrule
+Equation-to-code map & Exists & MATH\_CODE\_MAP.md \\
+Parity table & Exists & 07\_parity\_metrics.csv \\
+DB/current sweep & Exists & 03\_*.csv \\
+Integration stability & Exists & 06\_*.csv \\
+Capability matrix & Exists, integrate & 13\_*.csv \\
+Backend probe & Exists, integrate & 14 probe \\
+PES rate curve & Exists, integrate & 15\_*.csv \\
+Seeded NEF candidate test & 3-seed preflight integrated & 17\_*.csv \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Submission Checklist}
+\begin{itemize}
+  \item Copyedit the active manuscript source \texttt{paper/main.tex}.
+  \item Decide whether to extend the completed three-seed preflight of \texttt{17\_capability\_seed\_sweep.py} to the five-seed paper run.
+  \item Add NEF ensemble tuning/decoder validation.
+  \item Verify every figure/table regenerates from scripts.
+  \item Build the final PDF and inspect all pages before Overleaf upload.
+\end{itemize}
+
+\section{Conclusion}
+This paper is close to submittable as a specialized, honest methods/reference paper. Current readiness: approximately 85 percent.
+
+\end{document}

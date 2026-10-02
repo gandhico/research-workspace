@@ -1,0 +1,96 @@
+﻿{
+  "is_valid": true,
+  "properties": {
+    "VENDOR_ID": 8671,
+    "PRODUCT_ID": 32,
+    "FIRMWARE_MAJOR_VERSION": 3,
+    "FIRMWARE_MINOR_VERSION": 3,
+    "FIRMWARE_BUILD": 0,
+    "FIRMWARE_REVISION": 0,
+    "MANUFACTURER": "Quanser",
+    "PRODUCT_NAME": "QARM_USB",
+    "MODEL_NAME": "2021",
+    "SERIAL_NUMBER": "QF0009012b11142b07",
+    "FIRMWARE_VERSION": "QFLEX 2 USB v1.3"
+  },
+  "timing": {
+    "samples": 100,
+    "rate_hz": 50.0,
+    "dt_mean_ms": 19.99994545452993,
+    "dt_std_ms": 0.0007274242161237855,
+    "dt_max_ms": 20.003500001621433,
+    "jitter_pct": 0.003637131000069933
+  },
+  "joints": {
+    "yaw": {
+      "pos_mean": -0.6815299755172234,
+      "pos_std": 0.000715740195801014,
+      "pos_deg": -39.04879120879122,
+      "within_doc_range": true,
+      "vel_mean": 0.0,
+      "vel_absmax": 0.0,
+      "temp_C": 29.89,
+      "pwm_mean": 0.011525423728813562,
+      "current_A": 0.023053300000000006,
+      "current_absmax_A": 0.03497,
+      "current_range_A": 4.4,
+      "all_finite": true
+    },
+    "shoulder": {
+      "pos_mean": -1.5584294223807655,
+      "pos_std": 0.0006019290065392629,
+      "pos_deg": -89.29142857142858,
+      "within_doc_range": true,
+      "vel_mean": 0.0,
+      "vel_absmax": 0.0,
+      "temp_C": 28.0,
+      "pwm_mean": 0.0010847457627118646,
+      "current_A": 0.0,
+      "current_absmax_A": 0.0,
+      "current_range_A": 8.8,
+      "all_finite": true
+    },
+    "elbow": {
+      "pos_mean": 1.4038891478657158,
+      "pos_std": 0.0007657955282661767,
+      "pos_deg": 80.43692307692308,
+      "within_doc_range": false,
+      "vel_mean": 0.0,
+      "vel_absmax": 0.0,
+      "temp_C": 28.74,
+      "pwm_mean": 0.0039548022598870055,
+      "current_A": 0.0,
+      "current_absmax_A": 0.0,
+      "current_range_A": 4.4,
+      "all_finite": true
+    },
+    "wrist": {
+      "pos_mean": 0.07596593517911131,
+      "pos_std": 0.00015266643334937324,
+      "pos_deg": 4.352527472527465,
+      "within_doc_range": true,
+      "vel_mean": 0.0,
+      "vel_absmax": 0.0,
+      "temp_C": 29.75,
+      "pwm_mean": -0.00015819209039548022,
+      "current_A": 0.0,
+      "current_absmax_A": 0.0,
+      "current_range_A": 2.3,
+      "all_finite": true
+    },
+    "gripper": {
+      "pos_mean": 0.08839285714285713,
+      "pos_std": 0.0,
+      "pos_deg": null,
+      "within_doc_range": true,
+      "vel_mean": 0.0,
+      "vel_absmax": 0.0,
+      "temp_C": 35.0,
+      "pwm_mean": 0.0,
+      "current_A": 0.04887730000000001,
+      "current_absmax_A": 0.07263,
+      "current_range_A": 1.4,
+      "all_finite": true
+    }
+  }
+}

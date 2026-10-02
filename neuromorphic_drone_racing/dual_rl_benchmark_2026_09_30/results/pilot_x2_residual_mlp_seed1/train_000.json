@@ -1,0 +1,20 @@
+{
+  "kind": "train",
+  "arm": "residual",
+  "mode": "mlp",
+  "vehicle": "x2",
+  "scenario": "gust",
+  "seed": 1,
+  "samples": 600,
+  "episodes": 1,
+  "return_sum": 115.25744610543771,
+  "gates": 4,
+  "collisions": 0,
+  "termination_reason": "time_limit",
+  "mean_position_error_m": 0.19140358308388938,
+  "max_position_error_m": 0.33557232552159033,
+  "mean_saturation": 0.06066666666666667,
+  "action_rms": 0.1911068876389099,
+  "gain_min": 1.0,
+  "gain_max": 1.0
+}

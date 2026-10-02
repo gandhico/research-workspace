@@ -1,0 +1,80 @@
+% Audited signal flow; dots mark branches; decoder memory breaks the learning loop.
+\begin{tikzpicture}[x=1mm,y=1mm,
+ box/.style={draw=black!85,rounded corners=1mm,align=center,font=\fontsize{11}{13}\selectfont,inner sep=2mm,minimum height=20mm},
+ fixed/.style={box,fill=black!3},neural/.style={box,fill=blue!5,line width=.7pt},
+ flow/.style={-{Latex[length=2mm,width=1.3mm]},line width=.65pt},
+ tag/.style={font=\fontsize{10}{11}\selectfont,fill=white,inner sep=.5mm},
+ branch/.style={circle,fill=black,inner sep=0pt,minimum size=1.3mm}]
+\node[fixed,text width=55mm,minimum height=28mm] (pd) at (0,0)
+ {\textbf{Quaternion error and PD}\\[1mm]
+ $q_{e,k}=q_{d,k}\otimes q_k^{-1}$\\
+ $\bm e_{q,k}=\sgnp(q_{e,0,k})\bm q_{e,v,k}$\\
+ $\bm u_{0,k}=\sat_{\bm\ell}(-K_q\bm e_{q,k}-K_\omega\bm\omega_k)$};
+\node[fixed,text width=55mm,minimum height=7mm] (ref) at (0,22)
+ {Mission reference $q_{d,k}$};
+\node[fixed,text width=43mm] (add) at (67,0)
+ {\textbf{Bounded torque addition}\\[1mm]
+ $\widetilde{\bm\delta}_k=\beta\bm\ell\odot\bm s_k$\\
+ $\bm u_k=\sat_{\bm\ell}(\bm u_{0,k}+\widetilde{\bm\delta}_k)$};
+\node[fixed,text width=47mm] (alloc) at (126,0)
+ {\textbf{Rotor allocation}\\\textbf{and force limits}\\[1mm]
+ $\bm f_{{\rm req},k}=B^{-1}[T_k,\bm u_k\T]\T$\\
+ $\bm f_{{\rm act},k}=\clip_{[\bm0,\bm f_{\max}]}(\bm f_{{\rm req},k})$};
+\node[fixed,text width=40mm,minimum height=23mm] (plant) at (189,0)
+ {\textbf{MuJoCo plant: X2 / CF2}\\[1mm]
+ $[T_{{\rm act},k},\bm\tau_{{\rm act},k}\T]\T$\\
+ $\qquad=B\bm f_{{\rm act},k}$\\rigid-body dynamics};
+\node[neural,text width=44mm] (enc) at (0,-37)
+ {\textbf{Paired currents}\\\textbf{and normalization}\\[1mm]
+ $\bar{\bm u}_k=\bm u_{0,k}\oslash\bm\ell$\\
+ $\bm I_k^\pm=I_b\bm1+I_g\max(\pm\bar{\bm u}_k,\bm0)$};
+\node[neural,text width=42mm,minimum height=22mm] (cmg) at (67,-37)
+ {\textbf{Six CMG units}\\[1mm]
+ $(\bm v_k,\bm r_k;\bm I_k)\mapsto(\bm v_k^+,\bm r_k^+)$\\
+ $\bm a_k=\clip_{[0,1]}(G\bm r_k^+)$};
+\node[neural,text width=43mm] (dec) at (126,-37)
+ {\textbf{Decoder and output bound}\\[1mm]
+ $\bm s_k=\clip_{[-1,1]}(W_k\bm a_k)$};
+\node[fixed,text width=39mm] (height) at (189,-37)
+ {\textbf{Fixed height controller}\\[1mm]
+ $T_k=\pi_z(z_k,\dot z_k,R_{33,k})$\\$z_d=1\ {\rm m}$};
+\node[neural,text width=45mm] (target) at (0,-74)
+ {\textbf{PES teaching target}\\[1mm]
+ $\bm y_k^*=\clip_{[-1,1]}$\\[-.5mm]
+ $\qquad(-k_e\bm e_{q,k}-k_\omega^*\bm\omega_k)$};
+\node[neural,text width=65mm,minimum height=25mm] (pes) at (72,-74)
+ {\textbf{PES update, leak, and projection}\\[1mm]
+ $\bm\varepsilon_k=\bm y_k^*-\bm s_k$\\
+ $W_{k+1}=\Pi_{\mathcal W}\!\left[(1-\lambda_W)W_k+\eta\bm\varepsilon_k\bm a_k\T\right]$};
+\node[neural,text width=31mm,minimum height=18mm] (mem) at (137,-80)
+ {\textbf{Decoder memory}\\one-step delay\\$W_0=[I_3,-I_3]$};
+\begin{scope}[on background layer]
+ \draw[dashed,rounded corners=2mm,draw=blue!45!black,line width=.5pt](-29,-24) rectangle (164,-103);
+\end{scope}
+\node[font=\fontsize{10}{11}\selectfont\itshape,align=left,anchor=north west] at (-26,-51) {CMG--PES\\residual path};
+\draw[flow] (ref.south)--(pd.north);
+\draw[flow] (pd.east)--node[tag,above]{$\bm u_{0,k}$}(add.west);
+\draw[flow] (add.east)--node[tag,above]{$\bm u_k$}(alloc.west);
+\draw[flow] (alloc.east)--node[tag,above]{$\bm f_{{\rm act},k}$}(plant.west);
+\draw[flow] (pd.south)--node[tag,right]{$\bm u_{0,k}$}(enc.north);
+\draw[flow] (enc.east)--node[tag,above]{$\bm I_k$}(cmg.west);
+\draw[flow] (cmg.east)--node[tag,above]{$\bm a_k$}(dec.west);
+\node[branch] (atap) at (96,-37) {};
+\draw[flow] (atap)--(96,-57)--(60,-57)--([xshift=-12mm]pes.north);
+\node[tag] at (96,-52) {$\bm a_k$};
+\draw[flow] (dec.north)--(126,-17)--node[tag,above]{$\bm s_k$}(67,-17)--(add.south);
+\draw[flow] (dec.south)--(126,-56)--(111,-56)--(111,-68)--([yshift=6mm]pes.east);
+\node[tag] at (118.5,-56) {$\bm s_k$};
+\draw[flow] ([yshift=-8mm]pd.west)--(-37,-8)--(-37,-74)--(target.west);
+\node[tag,rotate=90] at (-37,-42) {$\bm e_{q,k},\bm\omega_k$};
+\draw[flow] (target.east)--node[tag,above]{$\bm y_k^*$}(pes.west);
+\draw[flow] ([yshift=-6mm]pes.east)--node[tag,above]{$W_{k+1}$}(mem.west);
+\draw[flow] (mem.east)--(160,-80)--(160,-37)--(dec.east);
+\node[tag] at (160,-63) {$W_k$};
+\draw[flow] (mem.south)--(137,-96)--node[tag,below]{$W_k$}(70,-96)--([xshift=-2mm]pes.south);
+\draw[flow] (plant.south)--(height.north);
+\node[tag,anchor=west] at (191,-21) {$z_k,\dot z_k,R_{33,k}$};
+\draw[flow] ([xshift=-8mm]height.north)--(181,-17)--node[tag,above]{$T_k$}(135,-17)--([xshift=9mm]alloc.south);
+\draw[flow] (plant.east)--(221,0)--(221,-112)--(-48,-112)--(-48,6)--([yshift=6mm]pd.west);
+\node[tag] at (72,-112) {$q_k=Q_k^{-1},\quad\bm\omega_k$};
+\end{tikzpicture}

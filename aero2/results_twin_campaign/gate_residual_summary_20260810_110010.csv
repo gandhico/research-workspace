@@ -1,0 +1,11 @@
+app,label,duration_s,n,pitch_rms,pitch_sat_frac,realized_hz,tail_pitch_mae,tail_yaw_mae,yaw_rms,yaw_sat_frac
+reference_tracking,pd_baseline,17.9951,3600.0,0.1508,0.0378,199.999,0.0238,0.2814,0.427,0.0511
+reference_tracking,gate_res_fixed,17.9958,3600.0,0.1589,0.0297,199.9907,0.0224,0.2608,0.4178,0.0225
+reference_tracking,gate_res_adapt,17.9957,3600.0,0.1909,0.0286,199.9923,0.1767,0.6996,0.5521,0.0344
+reference_tracking,gate_gain_fixed,17.9958,3600.0,0.2503,0.4128,199.9911,0.3163,0.8173,0.6066,0.2844
+reference_tracking,gate_gain_adapt,17.9997,3601.0,0.2518,0.4132,200.0036,0.3185,0.8167,0.6087,0.2869
+regulation_disturbance,pd_baseline,19.9946,4000.0,0.051,0.0025,200.0035,0.0575,0.017,0.0967,0.0
+regulation_disturbance,gate_res_fixed,19.9955,4000.0,0.0377,0.008,199.9947,0.0383,0.0198,0.0773,0.0
+regulation_disturbance,gate_res_adapt,19.9999,4001.0,0.0364,0.004,200.0009,0.0363,0.0168,0.0766,0.0
+regulation_disturbance,gate_gain_fixed,19.9949,4000.0,0.0407,0.0013,200.0011,0.0418,0.0288,0.0298,0.0
+regulation_disturbance,gate_gain_adapt,19.9994,4001.0,0.0364,0.0,200.0063,0.0367,0.0137,0.0267,0.0

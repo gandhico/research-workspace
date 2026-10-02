@@ -1,0 +1,62 @@
+{
+ "platform": "cf2-rotor",
+ "mission": "hardstep",
+ "family": "lqr",
+ "arm": "res",
+ "controller": "lqr_res",
+ "allocation": "apa",
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "z_min_m": 0.01335140791320705,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "tuner": null,
+ "qerr_mean_rad": 2.190117815304631,
+ "qerr_rmse_rad": 2.3890513791035013,
+ "qerr_max_rad": 3.141546645223728,
+ "saturation_fraction": 0.8721555555555556,
+ "residual_rms_Nm": 4.312731961052856e-05,
+ "torque_limits_Nm": [
+  0.000287412,
+  0.000287412,
+  0.00032347
+ ],
+ "multiplier_mean": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_min": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_max": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "WS_final_fro": null,
+ "WR_final_fro": 2.355470988304896,
+ "wall_s": 147.6117327999964,
+ "hashes": {
+  "run_dual_v5.py": "79e7849d5b778c5b",
+  "dual_controller_v5.py": "1af5cd0c0a625f5b",
+  "dual_controller.py": "4786d16cc2f51140",
+  "run_dual.py": "024712601f975101",
+  "run_mujoco_nef_baselines.py": "3c12f663e4034fd9",
+  "model": "410e0975d066abb1"
+ }
+}

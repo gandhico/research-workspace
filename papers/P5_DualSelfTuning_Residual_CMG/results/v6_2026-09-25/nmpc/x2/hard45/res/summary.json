@@ -1,0 +1,64 @@
+{
+ "platform": "x2",
+ "mission": "hard45",
+ "family": "nmpc",
+ "arm": "res",
+ "controller": "nmpc_res",
+ "allocation": "apa",
+ "sat_gate_axes": true,
+ "gate_blocked_fraction": 0.0,
+ "duration_s": 45.0,
+ "dt_s": 0.0005,
+ "steps": 90000,
+ "diverged": false,
+ "z_min_m": 0.7241974774186516,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "tuner": null,
+ "qerr_mean_rad": 0.00912514835183154,
+ "qerr_rmse_rad": 0.025361074124309508,
+ "qerr_max_rad": 0.4087503434739925,
+ "saturation_fraction": 0.0,
+ "residual_rms_Nm": 0.016698012060242264,
+ "torque_limits_Nm": [
+  0.7285355381134109,
+  0.43762083924507955,
+  0.2541169811320755
+ ],
+ "multiplier_mean": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_min": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_max": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "WS_final_fro": null,
+ "WR_final_fro": 2.125535133314701,
+ "wall_s": 3035.304706499999,
+ "hashes": {
+  "run_dual_v5.py": "6c93217276417a3c",
+  "dual_controller_v5.py": "1af5cd0c0a625f5b",
+  "dual_controller.py": "4786d16cc2f51140",
+  "run_dual.py": "024712601f975101",
+  "run_mujoco_nef_baselines.py": "3c12f663e4034fd9",
+  "model": "d932ffbe9f0d1fa4"
+ }
+}
