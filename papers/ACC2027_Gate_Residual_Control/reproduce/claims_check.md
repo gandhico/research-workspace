@@ -72,4 +72,6 @@
 | 70 | VI-C ablation | gate folds v_on/v_off (Table I) | 0.888/-0.888 | 0.888/-0.888 | OK | `Table I parameters, closed form` |
 | 71 | VI-C ablation | gate releases after latching, ten primary runs | 0 | 0 | OK | `neuron_basis_decisive/results/strict_exact/*/cmg/neural_trace_full_rate.npz` |
 | 72 | VI-C reduced CMG | removed-term bounds alpha*gamma/G, c_max (1/s) | 1e-03, <2e-08 | 1e-03, <2e-08 | OK | `Table I parameters, closed form` |
-| 73 | VI-D | constant basis is a = 1 | 1 | 1 | OK | `neuron_basis_decisive/results/strict_exact/x2/hard45/constant-one` |
+| 73 | VI-C reduced CMG | fixed-PD X2 Hard45: CMG vs reduced (%) | 53.1 vs 38.6 | 53.1 vs 38.6 | OK | `baseline_restatement/master_table.csv; cmg_mechanism_controls/results/ladder/pd` |
+| 74 | VI-C reduced CMG | fixed PD: CMG ahead of reduced on Full3/Hard45/Hardstep, both platforms | True | True | OK | `baseline_restatement/master_table.csv; cmg_mechanism_controls/results/ladder/pd` |
+| 75 | VI-D | constant basis is a = 1 | 1 | 1 | OK | `neuron_basis_decisive/results/strict_exact/x2/hard45/constant-one` |

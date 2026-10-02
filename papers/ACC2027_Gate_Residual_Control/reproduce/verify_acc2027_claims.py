@@ -268,6 +268,14 @@ for p in (X, C):
 check("VI-C ablation", "gate releases after latching, ten primary runs", "0", str(rel), "neuron_basis_decisive/results/strict_exact/*/cmg/neural_trace_full_rate.npz")
 check("VI-C reduced CMG", "removed-term bounds alpha*gamma/G, c_max (1/s)", "1e-03, <2e-08",
       f"{ah * gam / Gr:.0e}, {'<2e-08' if (120 + 30 * 2.0) / Gr ** 2 < 2e-8 else 'FAIL'}", "Table I parameters, closed form")
+mt_ = {(r["platform"], r["mission"]): r for r in csv_rows(BR / "master_table.csv")}
+lad = lambda p, m: json.loads((MC / "results" / "ladder" / "pd" / f"{p.replace('-', '_')}_{m}_reduced_cmg" / "summary.json").read_text())["qerr_mean_rad"]
+pdr = lambda p, m, k: red(float(mt_[(p, m)]["PD"]), float(mt_[(p, m)][k]) if k else lad(p, m))
+check("VI-C reduced CMG", "fixed-PD X2 Hard45: CMG vs reduced (%)", "53.1 vs 38.6", f"{f1(pdr(X, 'hard45', 'CMG_on_PD'))} vs {f1(pdr(X, 'hard45', None))}",
+      "baseline_restatement/master_table.csv; cmg_mechanism_controls/results/ladder/pd")
+ahead = all(pdr(p, m, "CMG_on_PD") > pdr(p, m, None) for p in (X, C) for m in ("full3", "hard45", "hardstep"))
+check("VI-C reduced CMG", "fixed PD: CMG ahead of reduced on Full3/Hard45/Hardstep, both platforms", "True", str(ahead),
+      "baseline_restatement/master_table.csv; cmg_mechanism_controls/results/ladder/pd")
 a1 = np.load(SX / X / "hard45" / "constant-one" / "neural_trace_full_rate.npz")["activity"]
 check("VI-D", "constant basis is a = 1", "1", str(int(np.all(a1 == 1.0))), "neuron_basis_decisive/results/strict_exact/x2/hard45/constant-one")
 
