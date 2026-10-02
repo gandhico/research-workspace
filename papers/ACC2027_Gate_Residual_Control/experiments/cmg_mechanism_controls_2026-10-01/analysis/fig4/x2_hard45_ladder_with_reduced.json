@@ -1,0 +1,71 @@
+{
+  "platform": "x2",
+  "mission": "hard45",
+  "variant": "C",
+  "best_cmg": {
+    "lvl": 2,
+    "beta": 0.5,
+    "mean_mrad": 9.08033280131453
+  },
+  "runs": [
+    {
+      "family": "pd",
+      "level": 0,
+      "beta": null,
+      "mean_mrad": 294.0819591458115,
+      "mean_deg": 16.849655089993696,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_hard45_classical"
+    },
+    {
+      "family": "pd",
+      "level": 1,
+      "beta": null,
+      "mean_mrad": 71.01707899592121,
+      "mean_deg": 4.068978899813451,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\pid_baseline_2026-09-10\\rate_ff_select\\left-neg\\x2_hard45"
+    },
+    {
+      "family": "pd",
+      "level": 2,
+      "beta": null,
+      "mean_mrad": 10.53705119125009,
+      "mean_deg": 0.6037285617719266,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_robustness_gating_2026-09-20\\results\\confirmatory\\nominal\\x2\\hard45\\pdff_rho3\\nominal\\seed_001"
+    },
+    {
+      "family": "cmg",
+      "level": 0,
+      "beta": 0.5,
+      "mean_mrad": 138.00738916863207,
+      "mean_deg": 7.9072409409820885,
+      "rel_dev_from_paper_table": 2.868020011790094e-07,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_hard45_nengo_nef_pes"
+    },
+    {
+      "family": "cmg",
+      "level": 1,
+      "beta": 0.5,
+      "mean_mrad": 38.16879771865998,
+      "mean_deg": 2.186911018367782,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\pid_baseline_2026-09-10\\rate_ff_left_neg\\x2_hard45_nengo_nef_pes"
+    },
+    {
+      "family": "cmg",
+      "level": 2,
+      "beta": 0.5,
+      "mean_mrad": 9.08033280131453,
+      "mean_deg": 0.5202647460895264,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_robustness_gating_2026-09-20\\results\\confirmatory\\nominal\\x2\\hard45\\cmg_pes_gated\\load_1\\seed_001"
+    }
+  ],
+  "extra_trace": {
+    "label": "PD+ff rho=3 + reduced CMG, gated",
+    "mean_mrad": 5.744160665366918,
+    "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\confirm\\x2\\hard45\\lpf-logistic"
+  }
+}
