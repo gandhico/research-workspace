@@ -1,0 +1,66 @@
+{
+  "platform": "cf2-rotor",
+  "mission": "hardstep",
+  "variant": "C",
+  "best_cmg": {
+    "lvl": 2,
+    "beta": 0.2,
+    "mean_mrad": 263.64529231357454
+  },
+  "runs": [
+    {
+      "family": "pd",
+      "level": 0,
+      "beta": null,
+      "mean_mrad": 426.18235490000984,
+      "mean_deg": 24.418450238717163,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_hardstep_classical"
+    },
+    {
+      "family": "pd",
+      "level": 1,
+      "beta": null,
+      "mean_mrad": 425.927680250363,
+      "mean_deg": 24.403858456143425,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\pid_baseline_2026-09-10\\rate_ff_left_neg\\cf2_rotor_hardstep_classical"
+    },
+    {
+      "family": "pd",
+      "level": 2,
+      "beta": null,
+      "mean_mrad": 262.58790811105814,
+      "mean_deg": 15.045178885932708,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_robustness_gating_2026-09-20\\results\\confirmatory\\nominal\\cf2-rotor\\hardstep\\pdff_rho3\\nominal\\seed_001"
+    },
+    {
+      "family": "cmg",
+      "level": 0,
+      "beta": 0.5,
+      "mean_mrad": 385.3026877018268,
+      "mean_deg": 22.076217840361885,
+      "rel_dev_from_paper_table": null,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\ladder\\pd\\cf2_rotor_hardstep_reduced_cmg"
+    },
+    {
+      "family": "cmg",
+      "level": 1,
+      "beta": 0.5,
+      "mean_mrad": 385.08027019070613,
+      "mean_deg": 22.063474255684866,
+      "rel_dev_from_paper_table": null,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\ladder\\ff1\\cf2_rotor_hardstep_reduced_cmg"
+    },
+    {
+      "family": "cmg",
+      "level": 2,
+      "beta": 0.2,
+      "mean_mrad": 263.64529231357454,
+      "mean_deg": 15.105762538060704,
+      "rel_dev_from_paper_table": null,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\confirm\\cf2-rotor\\hardstep\\lpf-logistic"
+    }
+  ]
+}

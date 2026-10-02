@@ -1,0 +1,66 @@
+{
+  "platform": "x2",
+  "mission": "hardstep",
+  "variant": "C",
+  "best_cmg": {
+    "lvl": 2,
+    "beta": 0.5,
+    "mean_mrad": 267.44074152556345
+  },
+  "runs": [
+    {
+      "family": "pd",
+      "level": 0,
+      "beta": null,
+      "mean_mrad": 454.5280276959306,
+      "mean_deg": 26.042537657382216,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_hardstep_classical"
+    },
+    {
+      "family": "pd",
+      "level": 1,
+      "beta": null,
+      "mean_mrad": 454.7685274041854,
+      "mean_deg": 26.056317275639344,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\pid_baseline_2026-09-10\\rate_ff_left_neg\\x2_hardstep_classical"
+    },
+    {
+      "family": "pd",
+      "level": 2,
+      "beta": null,
+      "mean_mrad": 265.9121681785367,
+      "mean_deg": 15.235644957803107,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_robustness_gating_2026-09-20\\results\\confirmatory\\nominal\\x2\\hardstep\\pdff_rho3\\nominal\\seed_001"
+    },
+    {
+      "family": "cmg",
+      "level": 0,
+      "beta": 0.5,
+      "mean_mrad": 396.26258027232785,
+      "mean_deg": 22.70417342856838,
+      "rel_dev_from_paper_table": null,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\ladder\\pd\\x2_hardstep_reduced_cmg"
+    },
+    {
+      "family": "cmg",
+      "level": 1,
+      "beta": 0.5,
+      "mean_mrad": 396.0625585794837,
+      "mean_deg": 22.69271302975735,
+      "rel_dev_from_paper_table": null,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\ladder\\ff1\\x2_hardstep_reduced_cmg"
+    },
+    {
+      "family": "cmg",
+      "level": 2,
+      "beta": 0.5,
+      "mean_mrad": 267.44074152556345,
+      "mean_deg": 15.323225759263924,
+      "rel_dev_from_paper_table": null,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\confirm\\x2\\hardstep\\lpf-logistic"
+    }
+  ]
+}

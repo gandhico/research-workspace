@@ -1,0 +1,66 @@
+{
+  "platform": "cf2-rotor",
+  "mission": "full3",
+  "variant": "C",
+  "best_cmg": {
+    "lvl": 2,
+    "beta": 0.2,
+    "mean_mrad": 5.436548044641689
+  },
+  "runs": [
+    {
+      "family": "pd",
+      "level": 0,
+      "beta": null,
+      "mean_mrad": 288.38260245909447,
+      "mean_deg": 16.52310600590515,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_full3_classical"
+    },
+    {
+      "family": "pd",
+      "level": 1,
+      "beta": null,
+      "mean_mrad": 42.723871029357404,
+      "mean_deg": 2.4478974944434273,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\pid_baseline_2026-09-10\\rate_ff_left_neg\\cf2_rotor_full3_classical"
+    },
+    {
+      "family": "pd",
+      "level": 2,
+      "beta": null,
+      "mean_mrad": 7.056202273641308,
+      "mean_deg": 0.40429060967026254,
+      "rel_dev_from_paper_table": 0.0,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\final_robustness_gating_2026-09-20\\results\\confirmatory\\nominal\\cf2-rotor\\full3\\pdff_rho3\\nominal\\seed_001"
+    },
+    {
+      "family": "cmg",
+      "level": 0,
+      "beta": 0.5,
+      "mean_mrad": 154.5446612232412,
+      "mean_deg": 8.854756834370832,
+      "rel_dev_from_paper_table": null,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\ladder\\pd\\cf2_rotor_full3_reduced_cmg"
+    },
+    {
+      "family": "cmg",
+      "level": 1,
+      "beta": 0.5,
+      "mean_mrad": 11.170690315604167,
+      "mean_deg": 0.6400334093317803,
+      "rel_dev_from_paper_table": null,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\ladder\\ff1\\cf2_rotor_full3_reduced_cmg"
+    },
+    {
+      "family": "cmg",
+      "level": 2,
+      "beta": 0.2,
+      "mean_mrad": 5.436548044641689,
+      "mean_deg": 0.31149125807806904,
+      "rel_dev_from_paper_table": null,
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\confirm\\cf2-rotor\\full3\\lpf-logistic"
+    }
+  ]
+}
