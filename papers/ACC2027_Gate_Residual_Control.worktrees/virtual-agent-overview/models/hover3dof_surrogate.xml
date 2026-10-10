@@ -1,0 +1,13 @@
+<mujoco model="3dof hover attitude surrogate">
+  <option timestep="0.001" gravity="0 0 0" integrator="RK4"/>
+  <worldbody>
+    <body name="hover_body" pos="0 0 1">
+      <joint name="pivot" type="ball" damping="0.02"/>
+      <inertial pos="0 0 0" mass="1.2" diaginertia=".025 .025 .04"/>
+      <geom type="box" size=".25 .18 .03" rgba=".2 .5 .8 1"/>
+      <geom type="capsule" fromto="-.3 0 0 .3 0 0" size=".015"/>
+      <geom type="capsule" fromto="0 -.3 0 0 .3 0" size=".015"/>
+    </body>
+  </worldbody>
+</mujoco>
+

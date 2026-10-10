@@ -1,0 +1,13 @@
+<mujoco model="qcar planar lane surrogate">
+  <option timestep="0.002" gravity="0 0 0" integrator="RK4"/>
+  <worldbody>
+    <body name="qcar" pos="0 0 0">
+      <joint name="x" type="slide" axis="1 0 0" damping=".1"/>
+      <joint name="y" type="slide" axis="0 1 0" damping=".5"/>
+      <joint name="yaw" type="hinge" axis="0 0 1" damping=".08"/>
+      <inertial pos="0 0 0" mass="2.7" diaginertia=".04 .08 .10"/>
+      <geom type="box" size=".20 .10 .04" rgba=".8 .2 .2 1"/>
+    </body>
+  </worldbody>
+</mujoco>
+

@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\caption{Hard45 tracking with explicit rotor allocation. Lower is better. The
+CF2 result is a rotor-authority design study, not stock-hardware validation.}
+\label{tab:hard45_rotor}
+\begin{tabular}{lccc}
+\hline
+Platform / controller & $\bar\theta_e$ [rad] & Improvement & Rotor sat. \\
+\hline
+X2 classical & 0.294082 & -- & 0.00\% \\
+X2 CMG fixed decoder & 0.263890 & 10.27\% & 0.00\% \\
+X2 CMG--PES & \textbf{0.138007} & \textbf{53.07\%} & 0.00\% \\
+CF2-design classical & 0.285449 & -- & 0.00\% \\
+CF2-design CMG fixed decoder & 0.266050 & 6.80\% & 0.00\% \\
+CF2-design CMG--PES & \textbf{0.132319} & \textbf{53.65\%} & 0.00\% \\
+\hline
+\end{tabular}
+\end{table}

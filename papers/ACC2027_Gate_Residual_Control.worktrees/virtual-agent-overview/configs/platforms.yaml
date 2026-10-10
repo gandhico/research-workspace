@@ -1,0 +1,27 @@
+cf2:
+  simulation: mujoco-menagerie
+  interface: virtual_wrench_actuators
+  default_torque_policy: model
+  hardware_status: not_integrated
+cf2-rotor:
+  simulation: explicit_four_rotor_design_study
+  interface: four_rotor_actuators
+  default_torque_policy: inertia
+  hardware_status: assumptions_not_identified
+x2:
+  simulation: mujoco-menagerie
+  interface: four_rotor_actuators
+  default_torque_policy: inertia
+  hardware_status: not_available
+pendulum:
+  simulation: mujoco_integration_surrogate
+  digital_twin: Quanser_QLabs_existing_code
+  hardware: Qube_Servo_3_existing_code
+hover3dof:
+  simulation: mujoco_integration_surrogate
+  digital_twin: QUARC_Simulink_existing_model
+  hardware: Python_adapter_pending
+qcar:
+  simulation: mujoco_integration_surrogate
+  digital_twin: QLabs_existing_code
+  hardware: PAL_runner_existing_camera_HSV
