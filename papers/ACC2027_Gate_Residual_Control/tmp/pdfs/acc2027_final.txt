@@ -1,0 +1,1238 @@
+Online-Adaptive Neuromorphic Gate-State Residual
+Augmentation
+for Actuator-Constrained Quaternion Attitude Control
+Gandhi A. Contreras Torres et al.
+[TODO: Insert final author list, affiliations, and contact information]
+
+Working draft — August 27, 2026
+
+Abstract
+
+difficult to interpret, and confound learning performance
+with changes in effective feedback gain. This is particularly consequential for multirotor attitude control, where
+a requested body torque is useful only if it can be realized
+by nonnegative, bounded rotor commands.
+This work studies a different arrangement: a classical
+quaternion controller remains responsible for the nominal
+closed loop, while a low-dimensional neuromorphic dynamical system generates a bounded correction. The neuron
+model is HyperLIF, a leaky-integrate-and-fire-inspired continuous gate-state system with a state-dependent threshold and optional input-dependent conductance. The term
+neuromorphic is used here in a precise architectural sense:
+control demand is encoded as paired currents, processed by
+stateful neuron-inspired dynamics, and decoded through
+local online learning. The applied output is a continuous
+gate state rather than a counted spike train; no claim of
+event-only computation or neuromorphic-hardware energy
+efficiency is made.
+The principal contributions are:
+1. a baseline-preserving neuromorphic gate-state residual
+controller with explicit channel bounds and actuator
+allocation;
+2. a clean experimental separation between adaptive neuronal conductance and online PES decoder adaptation;
+3. a rotor-actuator-faithful Skydio X2 result with more
+than 50% nominal Hard45 error reduction and zero
+actuator saturation;
+4. a transparent Crazyflie authority study that separates
+an infeasible stock virtual-moment interface from a
+declared four-rotor propulsion design; and
+5. a cross-backend QLabs transfer experiment that documents safe bounded execution and a negative nominalperformance result rather than overstating generality.
+The current draft intentionally restricts its main performance claims to the multirotor simulations. QCar vision,
+physical 3DOF Hover control, and frozen- weight generalization are future experiments and are not presented as
+completed evidence.
+
+This paper presents an online-adaptive neuromorphic gatestate residual architecture for actuator-constrained quaternion attitude control. A classical quaternion proportional–
+derivative controller supplies a bounded stabilizing torque
+command. Positive/negative demand pairs drive continuous HyperLIF gate states, and a projected Prescribed
+Error Sensitivity (PES) rule adapts a linear decoder online. The decoded term is applied as a bounded additive residual, so the classical command is retained rather
+than attenuated or replaced. All canonical multirotor
+commands pass through the modeled actuator interface
+and, for rotor-actuated platforms, an explicit collectivethrust/body-moment mixer. In a 45-s MuJoCo Hard45
+attitude mission, the online residual reduces mean quaternion error on a Skydio X2 rotor-actuator model from
+0.2941 to 0.1380 (53.1%) with zero rotor saturation. In
+an explicitly labeled Crazyflie four-rotor authority design study with 1.5× nominal per-rotor thrust, it reduces
+the error from 0.2854 to 0.1323 (53.6%), also without
+saturation. The stock Crazyflie XML moment limits saturate for 99.88% of the mission and cannot support the
+same claim. Fixed and adaptive-conductance HyperLIF
+variants are numerically indistinguishable in the present
+amplified-gate regime, whereas online decoder adaptation
+accounts for the large improvement. A matched QUBE
+Servo 3 QLabs experiment further shows that the same
+controller code executes at 500 Hz with bounded voltage
+and zero reported faults, while providing nominal accuracy
+equivalent to LQR. These results motivate a transparent
+neuromorphic controller–actuator co-design methodology
+and identify the remaining robustness, frozen-weight, and
+hardware-validation requirements.
+
+1
+
+Introduction
+
+Learning-based control is attractive when unmodeled
+dynamics, disturbances, or operating-condition changes
+make a fixed controller conservative. However, a neural
+controller that directly replaces a classical law can obscure the stability backbone, make actuator feasibility
+1
+
+2
+
+Architecture and Signal Con- 3
+tract
+
+2.1
+
+Platform-independent controller contract
+
+3.1
+
+ℓ ∈ Rm
+>0 ,
+
+Pair-coded control demand
+
+The bounded baseline is
+
+Let m denote the number of bounded baseline control
+channels exposed to the augmentor. At sample k, the
+platform controller supplies
+u0,k ∈ Rm ,
+
+Neuromorphic
+Gate-State
+Residual Controller
+
+u0,k = satℓ (uraw
+0,k ),
+and its elementwise normalized demand is
+ūk = u0,k ⊘ ℓ ∈ [−1, 1]m .
+
+(1)
+
+Ik+ = Ib 1 + Ig max(ūk , 0),
+
+(5)
+
+Ik− = Ib 1 + Ig max(−ūk , 0),
+
+(6)
+
+T
+
+T
+
+Ik = [Ik+ , Ik− ]T ∈ R2m .
+
+(2)
+
+(7)
+
+The current implementation uses Ib = 0.75 and Ig = 1.25.
+Pair coding gives the decoder an explicit directional basis
+and initializes to an interpretable signed mapping.
+
+It returns the saturated command uk , applied residual
+δk = uk − u0,k , continuous gate state rk , and amplified
+activity ak .
+Table 1 makes the dimensional mapping explicit. Plant
+degrees of freedom (DOFs), controlled DOFs, residual
+channels, neurons, and physical actuators are not interchangeable quantities.
+
+3.2
+
+HyperLIF continuous gate dynamics
+
+For unit j, membrane state vj and gate state rj ∈ [0, 1]
+evolve as
+σ(αh [vj − (vth − γrj )]) − rj
+,
+τr
+vj − vrest
+Ij
+v̇j = −
++
+− cj (vj − vreset ),
+τ
+τ
+ṙj =
+
+2.2
+
+(4)
+
+Positive and negative demand are separated without discarding sign:
+
+where ℓi is the symmetric magnitude limit for channel
+i. The neuromorphic augmentor contains 2m HyperLIF
+units—one positive and one negative unit per control
+channel—and a decoder
+Wk ∈ Rm×2m .
+
+(3)
+
+End-to-end workflow
+
+Figure 1 shows one controller sample. The baseline path is
+always evaluated first. Neuromorphic processing operates
+on the bounded baseline demand, not directly on raw
+actuator commands. For the multirotors, collective thrust
+is computed separately by the vertical controller and is
+not decoded by the HyperLIF bank.
+The implemented order is:
+1. read the simulator or platform state;
+2. generate the reference and form the shortest-path state
+error;
+3. compute and saturate the classical command u0,k ;
+4. normalize u0,k and construct 2m pair currents;
+5. update HyperLIF gate and membrane states;
+6. amplify and clip the continuous gate activity;
+7. decode sk with the current weights Wk ;
+8. if online PES is enabled, compute the target and update
+Wk+1 ;
+9. form the current additive residual using the previously
+decoded sk ;
+10. saturate, allocate, and apply the actuator command;
+and
+11. advance the plant and log errors, commands, residuals,
+activity, saturation, parameters, model hash, and run
+configuration.
+This ordering is important: the current command is
+causal in Wk , while the learning update changes the
+subsequent command.
+
+(8)
+(9)
+
+where
+cj = (g0 + 1adapt g1 |Ij |) rj2 .
+
+(10)
+
+The state-dependent threshold vth − γrj produces positive
+feedback in the gate state, while cj adds a gate-dependent
+conductance. Fixed conductance sets 1adapt = 0; adaptive
+conductance sets it to one. This neuronal adaptation is
+distinct from decoder learning.
+Table 2 lists the code defaults. These are currently
+shared by all canonical platforms unless a runner explicitly
+overrides them.
+The numerical update is not a conventional spike/reset
+loop. First, forward Euler updates the gate:
+
+
+∆t
+rj,k+1 = clip[0,1] rj,k +
+(r̂j,k − rj,k ) ,
+(11)
+τr
+with
+r̂j,k = σ(αh [vj,k − (vth − γrj,k )]) .
+
+(12)
+
+Then, using rj,k+1 , the membrane equation is integrated
+exactly over the sample under a zero-order-hold current.
+Define
+2
+cj,k+1 = (g0 + 1adapt g1 |Ij,k |)rj,k+1
+,
+
+λj,k = τ
+
+−1
+
++ cj,k+1 ,
+
+dj,k = vrest /τ + Ij,k /τ + cj,k+1 vreset .
+2
+
+(13)
+(14)
+(15)
+
+Table 1: Platform, channel, and actuator mapping in the present code base.
+Platform/
+backend
+
+Plant
+nates
+
+Skydio X2
+MuJoCo
+
+/
+
+coordi-
+
+Controlled
+line output
+
+base-
+
+Residual
+channels m
+
+HyperLIF
+units 2m
+
+Actuator interface and
+status
+Four nonnegative rotorthrust actuators through
+a 4 × 4 mixer; canonical
+result
+Four declared rotorthrust
+actuators;
+design-study result
+One collective and three
+abstract moment actuators; arbitrary XML limits; authority boundary
+PAL
+QubeServo3,
+hardware=0; canonical
+QLabs transfer
+
+Body
+torque
+(τx , τy , τz ); vertical collective is
+classical
+Body
+torque
+(τx , τy , τz )
+
+3
+
+6
+
+CF2 rotor design / MuJoCo
+
+6 rigid-body
+DOF; position
+plus
+quaternion
+6 rigid-body
+DOF
+
+3
+
+6
+
+Stock CF2
+MuJoCo
+
+/
+
+6 rigid-body
+DOF
+
+Body
+torque
+(τx , τy , τz )
+
+3
+
+6
+
+QUBE / QLabs
+
+2 mechanical
+DOF
+(θ, α);
+four-state
+feedback
+3
+rotational
+DOF
+represented by a
+quaternion
+
+Motor voltage v
+during balance
+
+1
+
+2
+
+Body
+moment
+(τx , τy , τz )
+
+3
+
+6
+
+Steering-like yaw
+command δ
+
+1
+
+2
+
+Steering command
+
+1 proposed
+
+2 proposed
+
+3DOF Hover
+surrogate
+/
+MuJoCo
+
+QCar surrogate
+/ MuJoCo
+
+Planar
+(x, y, ψ)
+
+QCar hardware
+/ Jetson
+
+Vehicle
+cameraderived
+state
+
+plus
+lane
+
+bounded continuous gate signal. Spike events are not
+counted in the current controller.
+
+Table 2: Canonical HyperLIF and decoder defaults.
+Symbol/code field
+
+Value
+
+Meaning
+
+τ
+τr
+vrest
+vreset
+vth
+αh
+γ
+g0
+g1
+Ib
+Ig
+G
+Wmax
+
+0.05 s
+0.005 s
+0
+0
+1
+50
+2
+120
+30
+0.75
+1.25
+105
+6
+
+membrane time constant
+gate time constant
+resting state
+conductance reversal/reset
+nominal threshold
+sigmoid steepness
+gate-threshold coupling
+base conductance gain
+adaptive scaling
+pair-current bias
+pair-current demand gain
+post-gate amplification
+decoder projection bound
+
+Applied body moment
+in integration surrogate;
+physical
+four-motor
+adapter
+not
+implemented
+Forward force plus yaw
+moment surrogate; integration only
+Existing
+HSV+PID/
+SMC/NMPC
+runner;
+canonical
+HyperLIF/SNN connection
+not yet completed
+
+3.3
+
+Fixed decoder and bounded additive
+residual
+
+The decoder is initialized as
+W0 = [Im − Im ],
+
+(18)
+
+so each output initially subtracts its negative-demand unit
+from its positive- demand unit. The signed neural output
+is
+sk = clip[−1,1] (Wk ak ),
+(19)
+and is dimensionalized by the channel limits:
+uneural
+= sk ⊙ ℓ.
+k
+
+(20)
+
+The canonical additive architecture is
+
+The code applies
+vj,k+1 = vj,k e
+
+−λj,k ∆t
+
+
+dj,k
++
+1 − e−λj,k ∆t .
+λj,k
+
+(16)
+
+The continuous activity delivered to the decoder is
+ak = clip[0,1] (Grk+1 ).
+
+
+uk = satℓ u0,k + βuneural
+,
+k
+
+(21)
+
+δk = uk − u0,k .
+
+(22)
+
+Equation (21) preserves the baseline before final saturation. This differs from the historical neural-blending
+ablation,
+uk = (1 − β)u0,k + βuneural
+,
+(23)
+k
+
+(17)
+
+Although the dynamics are neuron inspired, ak is a
+3
+
+2m HyperLIF
+normalize
+state/error
+classical law
+reference
+ek , ωk
+→
+u0,k
+→ pair encode →
+gate states
+→
+qd or xd →
+
+baseline u0,k plus decoded sk
+
+bounded additive
+residual
+
+→
+
+ek , ω k , ak , s k
+
+99K
+
+→
+
+actuator limits
+and allocation
+
+projected PES
+update
+
+→
+
+99K
+
+decoder
+sk = Wk ak
+
+plant
+MuJoCo/QLabs/hardware
+
+→
+
+measured state
+at k + 1
+
+Wk+1 used by
+decoder at k + 1
+
+Measured plant state closes the physical feedback loop from the second row to the state/error block in the first row. Dashed arrows denote
+learning only.
+
+Figure 1: One-sample signal workflow. Solid arrows are the applied control path; dashed arrows are online learning.
+The decoder first produces sk from Wk , then PES updates Wk+1 ; the new weights affect the next sample, not the
+command already being applied.
+which changes the classical feedback gain even when the
+neural path is uninformative. The 50%+ historical Skydio
+reproduction uses the latter form and is not merged with
+the canonical actuator-faithful claims.
+
+4
+
+Quaternion Baseline and Actuator Connection
+
+4.1
+
+Quaternion error and body-torque
+baseline
+
+3.4
+
+Let q = [q0 , qvT ]T be the measured unit quaternion and qd
+the reference. The code forms
+
+Online PES decoder adaptation
+
+For the multirotors, the normalized learning target is
+yk∗ = clip[−1,1] (−ke eq,k − kω∗ ωk ),
+
+qe = qd ⊗ q −1
+
+(24)
+
+and selects the shortest path through
+eq = sgn(qe,0 ) vec(qe ).
+
+where eq is the shortest-path quaternion vector error.
+Define the decoder error
+εk = yk∗ − sk .
+
+(25)
+
+Kq = 2 diag(J ) ⊙ ωn2 ,
+
+(30)
+
+Kω = 2ζ diag(J ) ⊙ ωn .
+
+(31)
+
+The bounded classical body torque is
+
+(26)
+
+τ0,k = satτlim (−Kq ⊙ eq,k − Kω ⊙ ωk ).
+The outer product changes each output weight in proportion to output error and current presynaptic activity. Projection prevents unbounded decoder growth; leak
+weakly regularizes all weights. In the Hard45 experiments,
+η = 8 × 10−4 , ke = 8, and kω∗ = 0. The target therefore
+teaches the decoder an error-directed correction rather
+than a copy of the baseline torque.
+PES is “online” because Eq. (26) is evaluated at every control sample on the evaluation trajectory. It is
+not evidence of zero-shot generalization. Furthermore,
+the current implementation computes sk before updating
+Wk+1 ; the update first affects uk+1 .
+The QUBE target follows the verified voltage sign convention:
+
+
+αk
+α̇k
+yk∗ = clip[−1,1] ke ◦ + kd
+.
+20
+6 rad/s
+
+(29)
+
+With diagonal inertia J , natural frequencies ωn =
+[4, 4, 3.5]T rad/s, and damping ratio ζ = 0.95, the code
+uses elementwise gains
+
+The implemented projected PES-style update is
+
+Wk+1 = Π[−6,6] Wk + ηεk aT
+k − λW Wk .
+
+(28)
+
+(32)
+
+For the canonical multirotor controller, m = 3, u0 = τ0 ,
+and ℓ = τlim .
+
+4.2
+
+Vertical collective channel
+
+Attitude augmentation does not learn collective thrust.
+Let mq denote total vehicle mass, z altitude, vz vertical
+speed, and R33 the body vertical axis projection. The
+implementation uses
+
+
+mq (g + 6(1 − z) − 4vz )
+T = clip
+, 0, 2.5mq g . (33)
+max(R33 , 0.35)
+Thus the applied rotor allocation receives one classical
+collective channel and three baseline-plus-neural bodymoment channels.
+
+(27)
+
+4.3
+
+The same two-unit decoder machinery is used, but the
+platform state, baseline law, actuator units, and target
+definition are platform specific.
+
+Four-rotor allocation
+
+For rotor-actuated X2 and CF2-design models,
+
+T
+T τx τy τz = Bf ,
+4
+
+(34)
+
+where f = [f1 , f2 , f3 , f4 ]T and
+
+1
+1
+1
+ y1
+y
+y
+2
+3
+B=
+−x1 −x2 −x3
+κ1
+κ2
+κ3
+
+reaction coefficient 0.005 m. The paper configuration
+applies a 1.5× authority scale:
+
+
+
+1
+y4 
+.
+−x4 
+κ4
+
+(35)
+
+
+f = clip[fmin ,fmax ] B −1 [T, τ T ]T .
+
+(36)
+
+fmax = 0.13125 N/rotor,
+
+Rotor saturation is logged whenever any fi reaches either
+control bound. Consequently, a body-torque improvement
+cannot silently bypass actuator authority in the canonical
+rotor-path results.
+The stock CF2 XML is different. It exposes collective
+thrust and three abstract body-moment actuators. Their
+limits are described by the source model as arbitrary.
+They are useful for an authority-boundary experiment
+but not as identified motor limits.
+
+Models, Backends, and Fidelity
+Boundaries
+
+5.1
+
+Skydio X2 rotor model
+
+5.3
+
+QubeServo3(id=0, hardware=0, frequency=500,
+pendulum=1).
+PAL connects to the QLabs QUBE Servo 3 pendulum virtual card on port 18923. The runner reads arm/pendulum
+position and rate, motor current, amplifier-fault, and stall
+signals, and writes one motor voltage. Because PAL zeros
+encoders at construction, the runner first commands 0 V,
+detects rest from 1.5 s of position stability, records the
+hanging raw angle αh , and defines
+α = wrap(αraw − αh − π).
+
+(39)
+
+The tachometer is not used for rest detection because the
+twin exhibits an approximately 0.061 rad/s bias at rest.
+Energy swing-up is always classical. During captured
+balance, the state [θ, α, θ̇, α̇]T is controlled by
+v0 = sat5 V ([−1, 26.72, −0.8269, 2.214]x),
+
+Crazyflie stock model and rotorauthority design
+
+(40)
+
+and the one-channel neuromorphic residual is capped at
+0.35 V (β = 0.35/5 = 0.07). A finally block commands
+0 V, sets the LED red, disables the virtual amplifier, and
+closes the card. The runner hard-codes hardware=0; these
+are virtual-twin, not physical-hardware results.
+
+The stock Menagerie Crazyflie 2 model has mass 0.027 kg
+and diagonal inertia
+diag(J ) = [2.3951, 2.3951, 3.2347] × 10−5 kg m2 .
+
+QLabs QUBE virtual twin
+
+The canonical QUBE runner uses a Quanser-compatible
+Python 3.11 environment and constructs
+
+The X2 path loads the vendored MuJoCo Menagerie scene
+and addresses four actuators named thrust1–thrust4.
+Site positions and actuator yaw gears are read from the
+model at runtime to construct B. The neuromorphic
+residual acts only through the torque request that is
+mixed into these rotor commands. Plant disturbances,
+when enabled, are applied separately through MuJoCo’s
+external-force field and are never used to realize the control
+command.
+
+5.2
+
+(38)
+
+which gives modeled thrust-to-weight ratio Tmax /(mg) ≈
+1.98. This is a controller–actuator design study, not an
+identified Crazyflie 2.1 propulsion model. Stronger propellers alone are not assumed sufficient; motor, ESC,
+battery, thermal, yaw-drag, and structural constraints
+require hardware identification.
+
+The controller computes
+
+5
+
+Tmax = 0.525 N,
+
+(37)
+
+5.4
+
+Its XML exposes one body-thrust and three moment actuators with approximately 10−5 N m moment authority
+per axis. The historical learned runner imposed minimum limits [0.03, 0.03, 0.02] N m, which are respectively
+[3000, 3000, 2000] times the XML moment authority and
+[104.38, 104.38, 61.83] times the project’s inertia-derived
+limits. Those historical torque floors are not used for the
+canonical CF2 claim.
+The separate CF2 rotor-design model retains the
+Menagerie mass, inertia, geometry, and sensors, but replaces abstract moments with four explicit thrust actuators. The declared assumptions are a 92-mm motor
+diagonal, 32.5-mm projected X-arm coordinates, base
+maximum thrust 0.0875 N per rotor, and alternating yaw
+
+Integration surrogates and future
+hardware paths
+
+The MuJoCo pendulum, 3DOF Hover, and QCar XML
+files are integration surrogates. They verify that the common controller API, channel dimensions, saturation, and
+logging operate across different state spaces. They are
+not calibrated digital twins. The 3DOF Hover repository
+currently contains vendor MATLAB/Simulink/QUARC
+models but no reviewed Python HIL adapter. The QCar
+hardware repository contains a camera/HSV lane estimator and PID, SMC, image-space NMPC, and earlier
+HyperLIF-inspired controllers. The canonical gate-state
+code and temporal- contrast SNN perception module are
+not yet connected to the Jetson runner.
+5
+
+6
+
+Experimental Protocol
+
+6.1
+
+Missions and controller conditions
+
+The principal result uses the 45-s Hard45 reference
+ϕd (t) = 0.55 sin(0.75t) + 0.20 sin(2.10t + 0.40),
+
+(41)
+
+θd (t) = 0.45 sin(0.95t + π/3) + 0.18 sin(1.75t),
+
+(42)
+
+ψd (t) = 0.65 sin(0.55t + π) + 0.25 sin(1.35t + 0.20). (43)
+All angles are in radians. The integration step is ∆t =
+5 × 10−4 s. The compared conditions are:
+1. classical quaternion PD;
+2. fixed-conductance HyperLIF with fixed decoder;
+3. adaptive-conductance HyperLIF with fixed decoder;
+4. fixed-conductance HyperLIF with online PES decoder;
+and
+5. adaptive-conductance HyperLIF with online PES decoder.
+For the reported Hard45 residual runs, β = 0.5. All
+conditions use the same model, reference, integration step,
+baseline gains, torque policy, collective controller, mixer,
+and actuator limits within a platform.
+
+6.2
+
+Figure 2: Skydio X2 Hard45 quaternion-angle error. The
+online decoder adapts on the plotted evaluation trajectory.
+
+Metrics
+
+The instantaneous quaternion-angle error is
+e∠
+q (k) = 2 atan2(∥ vec(qe,k )∥, |qe,0,k |).
+
+(44)
+
+The headline metric is its sample mean. We additionally
+log maximum error, mean torque magnitude, residual
+norm, mean gate state, altitude variation, and actuator
+saturation fraction. The current composite score used in
+the project combines tracking and effort terms; [TODO:
+insert the exact score definition in the final paper or
+remove score claims from the abstract].
+The QUBE protocol accumulates exactly 20 s of actual
+balance for every controller, with a 90-s wall-time timeout,
+and compares the final 5 s. Three trials are run per
+controller. Capture time is logged but not treated as a
+matched metric because QLabs does not reset the arm
+state between processes.
+
+6.3
+
+Figure 3: CF2 rotor-authority sweep. The actuator multiplier is a declared design variable, not an identified
+stock-hardware coefficient.
+
+7
+
+Results
+
+7.1
+
+Skydio X2 rotor-actuator result
+
+Table 3 reports the validated nominal Hard45 result.
+Fixed and adaptive conductance produce identical values, while online PES reduces mean quaternion error by
+53.07% and the existing composite score by approximately
+52.04%. No compared X2 condition reaches a rotor bound.
+
+Robustness and generalization protocol
+
+The prepared five-seed robustness matrix adds a 10-degree
+initial attitude, sinusoidal plant disturbance torque, attitude and rate measurement noise, and seeds 1–5. A
+final submission must also include a frozen-weight protocol: train or adapt on one trajectory, freeze W , reset the
+plant, and evaluate on held-out frequencies, amplitudes,
+and initial conditions. Until that experiment is complete,
+the paper claims online adaptation on the evaluation trajectory rather than zero-shot generalization.
+
+7.2
+
+Crazyflie actuator-authority result
+
+The stock XML result is dominated by actuator saturation and cannot distinguish controller quality on Hard45.
+In contrast, the explicit four-rotor design at 1.5× authority has zero saturation and closely reproduces the X2
+online-PES improvement. This does not validate a specific hardware upgrade; it states the modeled authority
+required for the controller to realize its torque.
+6
+
+Table 3: Validated 45-s Hard45 results. Improvement is relative to the classical controller on the same platform.
+Platform
+
+Controller
+
+Mean quaternion error
+
+Improvement
+
+Composite score
+
+Saturation
+
+X2 rotor model
+
+Classical
+Fixed residual
+Adaptive residual
+Online PES, fixed conductance
+Online PES, adaptive conductance
+
+0.294082
+0.263890
+0.263890
+0.138007
+0.138007
+
+0.00%
+10.27%
+10.27%
+53.07%
+53.07%
+
+0.297747
+0.267175
+0.267175
+0.142785
+0.142785
+
+0.00%
+0.00%
+0.00%
+0.00%
+0.00%
+
+Stock CF2 XML
+
+Classical
+Fixed residual
+Adaptive residual
+
+2.458662
+2.516808
+2.517485
+
+0.00%
+−2.36%
+−2.39%
+
+2.672362
+2.730492
+2.731169
+
+99.88%
+99.89%
+99.89%
+
+CF2 rotor design, 1.5×
+
+Classical
+Fixed residual
+Adaptive residual
+Online PES, fixed conductance
+Online PES, adaptive conductance
+
+0.285449
+0.266050
+0.266050
+0.132319
+0.132319
+
+0.00%
+6.80%
+6.80%
+53.65%
+53.65%
+
+0.287104
+0.267663
+0.267663
+0.134444
+0.134444
+
+0.00%
+0.00%
+0.00%
+0.00%
+0.00%
+
+0.00307 rad, or 0.176 degrees per count, and the twin
+exhibits equilibrium limit-cycle branches near 1.06 and
+1.23 degrees RMS. This reinforces why repeated, resetcontrolled protocols are necessary before assigning small
+differences to a controller.
+
+Table 4: QUBE Servo 3 QLabs matched nominal result
+(n = 3).
+Controller
+LQR
+Fixed residual
+Adaptive residual
+Online PES fixed
+Online PES adaptive
+
+7.3
+
+Final-5-s RMS (deg)
+
+vs. LQR
+
+1.0581 ± 0.0012
+1.0590 ± 0.0020
+1.1170 ± 0.1003
+1.0566 ± 0.0011
+1.0570 ± 0.0015
+
+reference
+−0.08%
+−5.57%
++0.15%
++0.10%
+
+Conductance versus decoder adaptation
+
+8
+
+Discussion
+
+8.1
+
+What is genuinely neuromorphic?
+
+The architecture is neuromorphic because paired currents
+drive stateful nonlinear units whose gate and membrane
+variables obey neuron-inspired dynamics, and because
+a local activity/error outer product adapts the decoder
+online. It is not currently event driven end to end: sensors
+are sampled periodically, gate states are continuous, and
+MuJoCo/QLabs advance on conventional time steps. A
+future event-camera implementation could convert temporal visual contrast into sparse ON/OFF events and feed
+the same paired-channel principle, but such a result is
+outside the present evidence.
+
+The fixed/adaptive-conductance pairs are numerically
+identical on both rotor-actuated platforms. Mean onlinerun gate state is approximately 0.963; post-gate amplification therefore places much of the activity near clipping. In
+that regime, changing membrane conductance has little
+influence on the decoded basis. Online PES, however,
+changes W and produces the large improvement. The
+current evidence supports the statement “decoder adaptation matters under this parameterization,” not “adaptive HyperLIF conductance causes the improvement.” A
+gate-gain/current-bias sensitivity study is needed to characterize regimes where conductance adaptation remains
+observable.
+
+8.2
+7.4
+
+Matched QUBE QLabs transfer
+
+Table 4 reports the corrected matched experiment. All
+15 runs are balanced in the final 5 s with zero reported
+faults and stalls. Online-PES performance is practically
+equivalent to LQR. An earlier fixed-wall-time comparison appeared to show approximately 14% improvement,
+but unequal swing-up duration gave controllers different
+amounts of balance and learning time. Matching 20 s
+of actual balance removed the apparent advantage. The
+invalidated comparison is retained in the project audit
+but is not a result.
+QLabs encoder resolution is approximately 2π/2048 =
+
+Why online PES can improve the
+drones
+
+The fixed decoder begins as a directional signed mapping
+of the baseline demand. PES then reshapes that mapping
+according to tracking error, allowing cross-channel combinations of the six activities. Because W is 3 × 6, each
+output torque may learn from every positive/negative
+axis activity rather than only its own pair. This permits
+coupled residual structure while the final torque and rotor
+commands remain bounded. The improvement may include trajectory-specific compensation; frozen-weight holdout evaluation is required to distinguish learned reusable
+structure from online trajectory adaptation.
+7
+
+8.3
+
+Actuator feasibility is part of the
+claim
+
+controller. The exact environment and commands are
+documented in docs/EXECUTION AND CODE MAP.md and
+docs/PENDULUM QLABS INTEGRATION.md.
+
+A neural body torque is not a physical command until
+allocation maps it to feasible actuators. The X2 result
+is strong because the same rotor mixer and bounds are
+used for every controller and saturation remains zero. The
+stock CF2 result demonstrates the converse: when the
+actuator model is saturated almost continuously, comparing controllers is not meaningful. The enhanced CF2
+model therefore answers a co-design question—how much
+declared thrust authority is needed—rather than claiming
+that current stock hardware already achieves the result.
+
+8.4
+
+10
+
+An online-adaptive neuromorphic gate-state residual can
+improve aggressive quaternion attitude tracking while
+retaining a bounded classical control backbone and explicit actuator allocation. On the X2 rotor model and
+an explicitly labeled CF2 propulsion-authority design,
+online PES reduces nominal Hard45 quaternion error
+by approximately 53% without rotor saturation. The
+large improvement is associated with decoder adaptation,
+whereas adaptive HyperLIF conductance is a null ablation in the present amplified-gate regime. The stock CF2
+result shows that actuator authority must be evaluated
+together with the controller. A matched QLabs pendulum
+experiment demonstrates safe cross-backend execution
+but no nominal accuracy benefit. Full robustness, frozenweight hold-out, identified propulsion parameters, and
+carefully staged hardware experiments remain necessary
+before broader generalization claims.
+
+Limitations and prohibited interpretations
+
+The following limitations are explicit:
+ online PES learns on the evaluated trajectory; zero-shot
+and frozen- weight generalization are not yet shown;
+ the nominal X2/CF2 results are deterministic and require the prepared disturbance/noise/initial-condition
+matrix;
+ the CF2 rotor coefficients and 1.5× propulsion scale are
+design assumptions, not identified hardware parameters;
+ the QUBE experiment is a QLabs virtual twin, not
+physical hardware, and demonstrates safe equivalence
+rather than improved nominal accuracy;
+ the 3DOF Hover Python HIL adapter is not implemented; and
+ the QCar temporal-contrast SNN exists as an integration baseline but is not yet connected to physical
+steering.
+
+9
+
+Conclusion
+
+Acknowledgment
+[TODO: Add funding, laboratory, advisor, and equipment
+acknowledgments.]
+
+References
+[1] [TODO: Verified quaternion attitude-control reference.]
+
+Reproducibility and Execution
+Workflow
+
+[2] [TODO: Verified PES/Neural Engineering Framework
+reference.]
+
+The clean repository is
+
+[3] [TODO: Verified neuromorphic or HyperLIF methodological reference.]
+
+C:
+/Research/papers/ACC2027_Gate_Residual_Control.
+
+[4] [TODO: Verified MuJoCo reference.]
+
+Its Python 3.13 virtual environment contains
+MuJoCo 3.12 and the canonical gra control
+package.
+The
+principal
+launchers
+are
+run x2 paper matrix.ps1, run cf2 paper matrix.ps1,
+run cf2 authority sweep.ps1,
+and
+run robustness matrix.ps1.
+Each run writes a
+trace, summary, and manifest containing model and
+configuration provenance.
+The QUBE runner is
+C:/Research/pendulum/runners/twin_acc2027_gate_
+residual.py.
+It executes under the Quanser-compatible Python 3.11 environment, imports the same gra control.gate source,
+and records SHA-256 hashes of both the runner and
+8
+
+

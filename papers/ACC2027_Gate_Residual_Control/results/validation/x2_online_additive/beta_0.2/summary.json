@@ -1,0 +1,24 @@
+{
+  "platform": "x2",
+  "model_interface": "rotor4",
+  "controller": "online-pes",
+  "mission": "hard45",
+  "duration": 45.0,
+  "dt": 0.0005,
+  "beta": 0.2,
+  "learning_rate": 0.0008,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "torque_policy": "model",
+  "torque_limits_Nm": [
+    0.7285355381134109,
+    0.43762083924507955,
+    0.2541169811320755
+  ],
+  "qerr_mean_rad": 0.2058700677785734,
+  "qerr_max_rad": 0.4334794356637939,
+  "tau_mean_Nm": 0.037612468960872246,
+  "saturation_fraction": 0.0,
+  "z_std_m": 0.0736732869766961,
+  "trace": "results\\validation\\x2_online_additive\\beta_0.2\\trace.csv"
+}

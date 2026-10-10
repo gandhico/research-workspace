@@ -1,0 +1,15 @@
+{
+  "platform": "x2",
+  "controller": "classical",
+  "mission": "hardstep",
+  "duration": 45.0,
+  "dt": 0.0005,
+  "beta": 0.5,
+  "learning_rate": 0.0008,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "actuator_scale": 1.0,
+  "qerr_mean_rad": 0.4545280276959306,
+  "qerr_max_rad": 1.9665102699920791,
+  "trace": "results\\plots_data\\x2_hardstep_classical\\trace.csv"
+}

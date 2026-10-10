@@ -1,0 +1,20 @@
+{
+  "platform": "cf2",
+  "model_interface": "virtual_wrench",
+  "controller": "classical",
+  "mission": "hard45",
+  "duration": 45.0,
+  "dt": 0.001,
+  "torque_policy": "model",
+  "torque_limits_Nm": [
+    1e-05,
+    1e-05,
+    1e-05
+  ],
+  "qerr_mean_rad": 2.458662191547586,
+  "qerr_max_rad": 3.1415794701644617,
+  "tau_mean_Nm": 1.6968525115777922e-05,
+  "saturation_fraction": 0.998800026666074,
+  "z_std_m": 0.2787793557253089,
+  "trace": "results\\validation\\cf2_45s_model\\classical\\trace.csv"
+}

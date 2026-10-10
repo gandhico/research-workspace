@@ -1,0 +1,20 @@
+{
+  "platform": "x2",
+  "model_interface": "rotor4",
+  "controller": "online-pes",
+  "mission": "hard45",
+  "duration": 2.0,
+  "dt": 0.001,
+  "torque_policy": "model",
+  "torque_limits_Nm": [
+    0.7285355381134109,
+    0.43762083924507955,
+    0.2541169811320755
+  ],
+  "qerr_mean_rad": 0.2800984965551489,
+  "qerr_max_rad": 0.42772765488644465,
+  "tau_mean_Nm": 0.04366235438523451,
+  "saturation_fraction": 0.0,
+  "z_std_m": 0.0626670341633867,
+  "trace": "results\\validation\\x2_online-pes\\trace.csv"
+}

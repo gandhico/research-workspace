@@ -1,0 +1,25 @@
+{
+  "platform": "cf2-rotor",
+  "model_interface": "rotor4",
+  "controller": "fixed-residual",
+  "mission": "hard45",
+  "duration": 45.0,
+  "dt": 0.0005,
+  "beta": 0.5,
+  "learning_rate": 0.0008,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "actuator_scale": 1.5,
+  "torque_policy": "model",
+  "torque_limits_Nm": [
+    0.000287412,
+    0.000287412,
+    0.00032347
+  ],
+  "qerr_mean_rad": 0.2660495022669437,
+  "qerr_max_rad": 0.49605358879381334,
+  "tau_mean_Nm": 1.8608383825043047e-05,
+  "saturation_fraction": 0.0,
+  "z_std_m": 0.03226774219421187,
+  "trace": "results\\validation\\cf2_rotor_45s_scale15\\fixed-residual\\trace.csv"
+}

@@ -1,0 +1,4 @@
+This reproduces the historical Skydio learned NEURAL-BLENDING experiment.
+It uses xfrc_applied rather than the X2 rotor actuator path and adapts online on
+the evaluation trajectory. Do not label this result actuator-faithful residual
+augmentation. Use it as legacy evidence while the additive rotor-path matrix runs.

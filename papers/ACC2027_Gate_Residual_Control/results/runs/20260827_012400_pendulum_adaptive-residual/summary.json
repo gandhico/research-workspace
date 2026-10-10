@@ -1,0 +1,13 @@
+{
+  "platform": "pendulum",
+  "model_fidelity": "integration-surrogate",
+  "controller": "adaptive-residual",
+  "duration": 0.5,
+  "dt": 0.001,
+  "beta": 0.2,
+  "error_mean": 0.03068113306231522,
+  "error_max": 0.1,
+  "command_rms": 0.6462669716356746,
+  "residual_rms": 0.08029065764840278,
+  "trace": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\results\\runs\\20260827_012400_pendulum_adaptive-residual\\trace.csv"
+}

@@ -1,0 +1,25 @@
+{
+  "platform": "cf2-rotor",
+  "model_interface": "rotor4",
+  "controller": "classical",
+  "mission": "hard45",
+  "duration": 5.0,
+  "dt": 0.0005,
+  "beta": 0.5,
+  "learning_rate": 0.0008,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "actuator_scale": 1.25,
+  "torque_policy": "model",
+  "torque_limits_Nm": [
+    0.000287412,
+    0.000287412,
+    0.00032347
+  ],
+  "qerr_mean_rad": 0.2927204891395279,
+  "qerr_max_rad": 0.44849600749560886,
+  "tau_mean_Nm": 2.2725520378770412e-05,
+  "saturation_fraction": 0.0,
+  "z_std_m": 0.04286008705695263,
+  "trace": "results\\validation\\cf2_authority_sweep_5s\\scale_1.25\\classical\\trace.csv"
+}

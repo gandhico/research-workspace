@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "created_utc": "2026-08-27T07:32:40.476560+00:00",
+  "platform": "hover3dof",
+  "controller": "adaptive-residual",
+  "model": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\models\\hover3dof_surrogate.xml",
+  "model_sha256": "8c1a4b2084b7e165d1fa70c8a6d222b9ab8edcd130094e447b06342412c0b63b",
+  "git_commit": null,
+  "python": "3.13.11",
+  "mujoco": "3.12.0",
+  "numpy": "2.5.2",
+  "arguments": {
+    "platform": "hover3dof",
+    "controller": "adaptive-residual",
+    "duration": 0.5,
+    "dt": 0.001,
+    "beta": 0.2
+  }
+}

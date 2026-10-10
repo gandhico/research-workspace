@@ -1,0 +1,12 @@
+{
+  "platform": "hover3dof",
+  "model_fidelity": "integration-surrogate",
+  "controller": "adaptive-residual",
+  "duration": 5.0,
+  "dt": 0.001,
+  "error_mean": 0.04058264859055842,
+  "error_max": 0.20015977083305297,
+  "command_rms": 0.02221778387423753,
+  "residual_rms": 0.016074288561237358,
+  "trace": "results\\validation\\hover3dof_adaptive-residual\\trace.csv"
+}

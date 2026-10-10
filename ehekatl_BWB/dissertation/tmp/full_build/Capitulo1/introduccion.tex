@@ -1,0 +1,207 @@
+
+% this file is called up by thesis.tex
+% content in this file will be fed into the main document
+%----------------------- introduction file header -----------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Capítulo 1: Introducción- DEFINIR OBJETIVOS DE LA TESIS              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Introduction}
+
+%: ----------------------- HELP: latex document organisation
+% the commands below help you to subdivide and organise your thesis
+%    \chapter{}       = level 1, top level
+%    \section{}       = level 2
+%    \subsection{}    = level 3
+%    \subsubsection{} = level 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           Presentación y Motivación - Contexto del problema           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Context of the problem}
+%
+%
+The global commercial market forecast of different companies, such as Airbus, Boeing and Commercial Aircraft Corporation of China (COMAC), indicates robust aviation growth at an average annual rate of 4.5$\%$  over the next 20 years, \cite{CHEN2019}.
+
+On the other hand, the current consensus indicates that aviation contributes a 2-3$\%$ of the total carbon dioxide (CO2) emissions produced by anthropogenic emissions, \cite{CHEN2019}. However, the total effect on global warming is probably closer to a 3-5$\%$ when we talk about the effects of nitrogen oxides (NOx) from combustion. If everything goes as it has done so far, the impact of aviation emissions on climate change will grow as fast as commercial flights grow. \cite{CHEN2019}.
+
+According to the European Aviation Vision projection, the fuel efficiency of new aviation transports is expected to improve by 2050, while CO2 and NOx emissions will have to be reduced by $75 \%$ and $90 \%$, respectively, \cite{EU2011}. This ambitious target needs improvements in the technologies applied to current transport aircraft \cite{Chen2015}.
+%
+One of the keys to reducing polluting emissions is through the design of more efficient air vehicles, especially aircraft that reduce aerodynamic drag, their structural weight as well as improving the efficiency of their engines. 
+
+The conventional tube-wing configuration\footnote{Tube-and-Wing or TAW} has been optimized to the limit of its architecture, and although innovative technologies have made turbofan engines (such as the adoption of a higher by-pass ratio) and lighter and more resistant wing and fuselage structures (thanks to composite materials) it is very difficult that this configuration can meet the Europe Vision mentioned by 2050 with the objective of operating a neutral aviation of polluting emissions.
+
+
+An alternative design that has gained strength in recent years is the so-called Ala-Integrated aircraft\footnote{known in English as Blended Wing-Body and abbreviated BWB} which gives the appearance of a Wing-Flying\footnote{known in English as Flying-Wing and abbreviated FW}.
+%
+The wing-integrated aircraft with its geometry is characterized by reducing the induced and parasite drag. On the other hand, thanks to its smooth harmony between the wing and the fuselage, the wing-integrated aircraft reduces the interference drag and reduces the friction drag with less frontal area and total but similar volumetric capacity for payload; increasing the lifting/drag ratio with its total lifting geometry. 
+
+The configuration of wing-integrated aircraft or BWB is a promise that has the potential to simultaneously meet all relevant metrics for highly efficient new generation aircraft. However, although the BWB model is more aerodynamically efficient and reduces structural weight due to the reduction of the total area, this concept brings with it important challenges in stability and control. 
+
+This thesis project focuses on the design of the EHEKATL BWB aircraft and the design of its flight control system\footnote{Flight Control System or FCS}. Adaptable Backstepping and Backstepping-based controllers are designed to control longitudinal and lateral-directional dynamics, since BWB aircraft by nature have an inherent tendency to instability and disturbance sensitivity.
+
+%Aunadas a los retos de control característicos de BWB, que se abordan explícitamente en la sección de %planteamiento del problema, se suman el reto de control global, donde las condiciones de operación %son altamente cambiantes y el diseño de los controladores actuales aplica bajo condiciones de vuelo %específicas. La Inteligencia Artificial en integración con técnicas de control adaptables han dado %resultados para controladores robustos y con múltiples entradas y salidas. Este tipo de controladores %se desarolla a partir del modelado de las ecuaciones de movimiento de la aeronave, por lo que las %variables aerodinámicas son características de la aeronave para cada condición de vuelo. La %determinación de estas variables es a través de un exhaustivo análisis aerodinámico, por lo que %aproximar las funciones generadas por estos parámetros aerodinámicos a través de Redes Neuronales %Artificiales es extremadamente funcional. 
+%Otra técnica de Inteligencia Artificial aplicada en este proyecto es el Aprendizaje Reforzado %(\textit{Reinforcement Learning ó RL}), este nos permite controlar la aeronave de una manera %innovadora en contraste con las técnicas de control clásicas basadas en sistemas dinámicos lineales o %no lineales. En RL el algoritmo aprende a controlar la aeronave para cumplir la misión de vuelo %asignada a través del minimización/maximización de la función valor, que recompensa a las acciones %que cumplen con el objetivo y penaliza a las que no,a través de simulaciones computacionales llamadas %entrenamiento. A través de este aprendizaje adquirido con el entrenamiento, que se compone de las %iteraciones de las entradas de control y su relación con los estados de la aeronave. Este método está %en estudio para sus futuras aplicaciones, puesto que podríamos no conocer el sistema dinámico en lo %absoluto y hacer que el algoritmo aprenda a través de los entrenamientos de un sistema físico. 
+%La última técnica de Inteligencia Airtificial es la visión artificial con Redes Neuronales %Convolucionales (\textit{Convolutional Neural Networks o CNN}). Esta nos permite a través del %tratamiento de imágenes tomar decisiones de control. El algoritmo puede identificar y clasificar %distintos objetos, por lo que las aplicaciones pueden expandirse con amplia variedad, como misiones %de vuelo de aterrizaje, seguimiento, reconocimiento, exploración, seguridad, entre otras. 
+%La contribución de este trabajo de tesis es el diseño y control inteligente de una aeronave de Ala-%Integrada para garantizar el éxito en misiones de vuelo asignadas. Para alcanzar este propósito es %necesaria la sinergía de diversas áreas de estudio y herramientas, seccionadas en este trabajo de %tesis como: Diseño y Aerodinámica, Modelado, Sistema de Control de Vuelo y Sistema de Control de %Vuelo Inteligente. El capítulo de aplicaciones integra y enfoca la sinergía de todas ellas con un %objetivo común. 
+%Esta unión de disciplinas da vida a un proyecto único que dislumbra las potencialidades de la %Inteligencia Artificial aplicada en el sector aeroespacial. Cada capítulo ofrece cierta contribución, %y de forma general ofrecemos una guía para el diseño y el control inteligente de innovadoras %aeronaves autónomas para diversas aplicaciones. 
+%Otra aplicación potencial en BWB es el transporte de cargo.
+%Una principal ventaja en una aplicación de cargo es que la cabina no necesita estar completamente %presurizada como en una cabina de pasajeros, donde el diseño de la cabina es un reto debido a la %diferencia de presiones con el aire exterior. Un vehículo BWB autónomo no tendría este problema de %inicio. Además, el volumen de carga útil podría ser más accesible para carga/descarga en una %configuración BWB. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           Planteamiento del problema               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Background and motivation}
+
+The main challenge with the BWB aircraft model is in the stabilization and control area. Designing a wing-integrated by aerodynamic optimization without stability considerations would bring with it a degraded practice. Thus, an optimal multidisciplinary design is needed where in addition to the principles of aerodynamic design (maximizing lifting and minimizing drag) moment coefficients that ensure stability and control are considered. 
+
+BWB unlike TAW, lacks impeneage, where horizontal and vertical stabilizers are usually located with aerodynamic control surfaces\footnote{Aerodynamic Control Surfaces or ACS} This absence reassigns new functions to the ACS, for example, steering rudders for the yawing moment can be implemented on the fins at the wing tips or in vertical stabilizers in the center of the body. However, if both stabilizers are adopted, aerodynamic efficiency could be compromised. Thus, correctly dimensioning the use of vertical stabilizers is essential for the synergy between aerodynamic efficiency and the assurance of stability and control.
+
+In BWB and FW the lifts for the pitching are located on the trailing edge, where we also have the spoilers for the time of plowing. This generates that the arm moment of the lifts is shorter than in a TAW model and comes in the possibility of lacking the necessary power at low speeds or adverse conditions, which would put at risk the passengers and crew, or compromising the mission and integrity of the aircraft in the case of an unmanned BWB vehicle. To compensate for the short moment of pitching there is a greater range of deflection and a greater number of control inputs. A conventional TAW model normally has a pair of lifts and wingers. Instead in a BWB we could have from a pair to two or three pairs of each.
+ 
+On the other hand, the trailing edge houses elevators and ailerons. The difference between the lift or wing function of an ACS on the trailing edge is the deflection relative to its torque, that is, taking the central root rope as the geometric center of the aircraft, by semi-ala we have the equidistant pair of each ACS. By the pitching moment the elevators rotate in the same direction and magnitude, such that we have nose up if the elevator goes up and vice versa. 
+%
+For the moment of rolling the deflection is done in the opposite direction of the pair, that is, to turn to the right the wing of the right wing goes up and its left pair goes down. Normally in BWB we call \textbf{elelevon}  We can also have this quality in steering-heading rudders when moving in the same direction or opposite in form V stabilizers. 
+%
+According to the above, the magnitude at which each ACS moves is also fundamental in BWB, since this could generate coupled moments. That is, the two or three moments depending on the direction and magnitude of each, which makes the design of the FCS significantly complex. 
+
+The ACS generates the moment of pitching, wiggle and yawing due to the speed of the air flow that passes over them, and this is possible thanks to the speed of the aircraft generated by the thrust of the engines. Therefore, we can conclude that the force of the ACS depends on the air flow and therefore the speed of the aircraft. A control technology that has had a great impact on the military aircraft and rockets is the thrust-vector control (\textit{TVC}). Through an articulated nozzle we can direct the thrust vector to generate the desired moments. It is possible to have a TVC for pitching, wiping and yawing. The great advantage of the TVC over the ACS is that it does not depend on the air flow, and therefore, they could provide BWB with the power necessary for maneuverability and control at low speeds or adverse situations. 
+
+Systems with more control inputs than degrees of freedom are known as over-acted.\footnote{Control Allocation or CA} is the precise control technique for BWB where we have multiple actuators or control inputs (elevons and/or rudders-lifts) that need to be coordinated to achieve the required aircraft behavior during the flight. The goal of CA is to find the optimal configuration of control inputs (contribution of each ACS or TVC) to meet system requirements taking into account the physical limitations of the system. 
+
+The method of Direct Assignment Control has shown the lowest errors with the lowest deflection of ACS in aircraft. In the most recent developments of AC, Artificial Neuronal Networks were used (\textit{ANN}) and Enhanced Learning (\textit{RL}) to optimise the CA problem in aircraft control, \cite{Yann2016}. 
+
+\medskip
+
+\textbf{Problem of interest}\\
+In the framework of this thesis project, the aerodynamic design of a wing-integrated aircraft called EHEKATL BWB is proposed in order to design controllers capable of compensating for the variation of parameters in a flight mission. In particular, the implementation of the FCS is proposed by Backstepping-based controllers considering mainly that the system parameters are known. Finally, controllers based on Adaptable Backstepping are designed assuming that some parameters are unknown. Asymptotic stability in closed loop is guaranteed for both cases. 
+
+Much of the aerodynamic design of the wing-integrated aircraft is based on XFLR5 software, where the aerodynamic behavior of the wing and wing profiles is obtained, which are parametrizated in AIRFOIL MAKER to finally design the complete aircraft in PLANE MAKER. These tools can be considered rapid prototyping for aircraft design and simulation. They provide accurate aerodynamic analysis in order to evaluate flight missions in reliable environments. 
+
+%se plantea la implementación del FCS por Backstepping en situaciones donde se disponen de los parámetros del sistema, y la aplicación de la técnica Adaptive Backstepping en escenarios en los que los parámetros del sistema permanecen desconocidos. Esta dualidad en la metodología de diseño de controladores proporciona una flexibilidad notable, permitiendo abordar distintas configuraciones y escenarios de operación. Además, tanto el FCS por Backstepping como el Adaptive Backstepping demuestran su capacidad para abordar las no linealidades inherentes al modelo dinámico, lo que se traduce en resultados que se asemejan de manera significativa al comportamiento del sistema físico real. Este enfoque no solo asegura un diseño más robusto y garantiza la estabilidad en lazo cerrado, sino que también sienta las bases para un control más preciso y efectivo de las aeronaves BWB.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           Objetivos               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Objectives}
+
+The specific objectives in the design and control of EHEKATL BWB are:
+
+\begin{itemize}
+\item[O1] Design the geometry of the EHEKATL BWB aircraft by selecting reflex wing profiles to provide pitch stability and configure the main design variables in BWB aircraft (sweep angle, dihedral, incidence and directional stabilizers) to ensure pitch stability, smoothing and yawing using XFLR5 software that allows aerodynamic and stability analysis through obtaining stability and control parameters. The EHEKATL BWB aircraft has eight ACS on the trailing edge and two vertical stabilizers with steering rudder.  
+\item[O2]  Design the reflex wing profiles selected for EHEKATL BWB in AIRFOIL MAKER and then design the complete geometry of EHEKATL BWB in MAKER PLANE considering engines, landing gear, ACS and cabin instruments. 
+\item[O3] Model the movement of EHEKATL BWB as a dynamic system based on non-linear Newtonian mechanics considering a pair of motors above the central body, four ACS as elevators, four ACS as alerons and two ACS as steering rudders; in addition, decouple dynamics in longitudinal mode and lateral-directional mode for FCS applications. 
+\item[O4] Design the FCS by Backstepping when system parameters are set and design the FCS by Adaptable Backstepping when system parameters are unknown; develop the Backstepping and Adaptable Backstepping control algorithms in the PYTHON programming language for test simulations. 
+\item[O5] Perform quasi-real simulations of EHEKATL BWB design in MAKER PLANE in the X-PLANE flight simulator environment with the Backstepping FCS application using a connection with PYTHON to control the longitudinal and lateral-directional dynamics, and achieve the success of the flight mission by means of closed loop stability. 
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                  Hipótesis y suposiciones        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Scenarios and assumptions}
+
+To address the design and control of EHEKATL BWB, the following assumptions are established:
+\begin{itemize}
+    \item The wing-integrated aircraft is considered as a rigid body.
+    \item The earth is considered flat and approaches an inertial reference system.
+    \item The force of gravity is considered constant and perpendicular to the surface of the earth. 
+    \item The aircraft is symmetrical with respect to the x-z plane.
+    \item The mass of the aircraft remains constant. 
+    \item From its initial state and during its movement, the position and altitude of the aircraft are known from the inertial reference system.
+    \item XFLR5 simulation results are reliable [\cite{Durmus2019}, \cite{Rajesh2020}] as a first approximation. 
+    \item Simulation results in X-PLANE are quasi-real [\cite{Litt2022}, \cite{Thang2016}] from the design of the wing-integrated aircraft in PLANE MAKER and AIRFOIL MAKER.
+    \item Communication between X-PLANE and PYTHON takes place without significant latency or loss of information.
+\end{itemize}
+
+%\textbf{Diseño de la aeronave EHEKATL BWB}\\
+%El software XFLR5 es ampliamente reconocido en la industria aeroespacial por su capacidad para realizar análisis aerodinámicos detallados y precisos. Además, AIRFOIL MAKER y PLANE MAKER, al ser herramientas específicas para el diseño y simulación de aeronaves, se espera que proporcionen un entorno confiable y completo para la concepción y evaluación de la aeronave EHEKATL BWB. Esta hipótesis se basa en la confianza que la comunidad académica y de ingeniería ha depositado en estos software como herramientas confiables para el diseño de aeronaves.
+
+%La suposición fundamental es que los datos generados por XFLR5, AIRFOIL MAKER y PLANE MAKER reflejan con precisión las condiciones de vuelo y el comportamiento aerodinámico de la aeronave EHEKATL BWB en el mundo real. Esto implica que las aproximaciones y simplificaciones utilizadas en estos software están en línea con las condiciones reales a las que se enfrentará la aeronave. 
+
+%La principal pregunta de investigación que deriva del diseño de la aeronave de EHEKATL BWB es ¿Cuáles son las variables de diseño de importancia para garantizar la estabilidad longitudinal, lateral y direccional en una aeronave de ala-integrada, y cuál es el régimen de velocidad que debe considerarse para evitar la inestabilidad y sensibilidad a perturbaciones a bajas velocidades?
+
+\medskip
+
+%\textbf{Modelo dinámico y diseño de controladores con PYTHON}\\
+%Se parte del supuesto de que el modelo dinámico desarrollado es una representación precisa del comportamiento de la aeronave EHEKATL BWB. Esto implica que el modelo es capaz de capturar tanto las características estáticas como dinámicas de la aeronave bajo diversas condiciones de vuelo y perturbaciones, lo que es esencial para el diseño y ajuste de los controladores.
+
+%En cuanto a los FCS, se supone que los algoritmos de Backstepping y Adaptive Backstepping implementados en PYTHON están correctamente formulados y ajustados para adaptarse a las peculiaridades del modelo dinámico. Esto incluye la correcta selección de parámetros y la configuración de los controladores para garantizar un desempeño eficaz en términos de estabilidad y respuesta a las perturbaciones.
+
+%\medskip
+
+%\textbf{Simulaciones de control en X-PLANE con conexión PYTHON}\\
+%La hipótesis subyacente es que la conexión establecida entre X-PLANE y PYTHON es capaz de proporcionar una comunicación fluida y en tiempo real entre el simulador y los controles diseñados. Esto significa que los comandos generados por los controladores en PYTHON pueden ser transmitidos de manera efectiva a X-PLANE y que las respuestas de la aeronave en el simulador se retroalimentan de vuelta a PYTHON de manera precisa y en tiempo real.
+
+%Se asume que la comunicación entre X-PLANE y PYTHON se lleva a cabo sin latencias significativas ni pérdida de información, lo que es crucial para la evaluación precisa del desempeño de los controladores. Además, se parte del supuesto de que las condiciones de simulación en X-PLANE proporcionan una representación confiable del vuelo de la aeronave EHEKATL BWB, lo que incluye factores como las condiciones atmosféricas y las características de vuelo específicas de la aeronave.
+
+ %La implementación de una aeronave de ala integrada requiere observación exhaustiva del desempeño aerodinámico (relación levantamiento-arrastre), la estabilidad (estática y dinámica) y el sistema de control de vuelo (lazo cerrado) durante la misión de vuelo (despegue, ascenso, crucero, descenso y aterrizaje).
+
+ %La combinación de un diseño aerodinámico apropiado y un sistema de control de vuelo eficiente resultará en mejoras significativas en términos de desempeño aerodinámico, rendimiento de vuelo-combustible y capacidad de carga en comparación con las configuraciones convencionales de aeronaves de ala-fija.
+
+%Esta hipótesis sugiere que al diseñar y controlar una aeronave de ala integrada, se obtendrán beneficios notables en comparación con los diseños tradicionales. Estos beneficios pueden incluir una mayor eficiencia aerodinámica, lo que se traduce en una menor resistencia al avance y un menor consumo de combustible. Además, se espera un mejor rendimiento de vuelo en términos de maniobrabilidad y estabilidad, abriendo una mayor gama de aplicaciones (comercial, cargo, seguridad-militar, reconocimiento, entre otras). 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                            Resultados                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+
+According to the above, the objective of this thesis is to design the geometry of a wing-integrated aircraft, implement reflex profiles in the central body and outer wing, and symmetrical profiles in the vertical stabilizers; develop the dynamic model and finally design controllers based on Backstepping. Eight ACS are assigned at the trailing edge and two vertical stabilizers with steering rudder.
+
+It is important to mention that the design of the wing-integrated aircraft presented in this thesis work is its own, and the atmospheric conditions are considered according to the altitude of Tolcayuca, Hidalgo State, location of the Metropolitan Polytechnic University of Hidalgo (UPMH).
+
+The main results are aligned with the specific objectives, and are shown below: 
+\begin{itemize}
+    \item[R1] \textbf{Design of the geometry of the EHEKATL BWB integrated wing aircraft.} Implementation of the MH78 and MH80 réflex wing profiles and guarantee of the stability in pitching. Configuration of the main design variables: sweep angle 63$^\circ$ on the central and body sweep of 54$^\circ$ in the outer wing, dihedral of 3$^\circ$, zero incidence and directional stabiliser pair with an area of 0.11$m^2$ each, achieve the guarantee of stability in pitching, rolling and yawing, considering a span of 2.4m and a length of 1.65m with a reference area of 1.4 m.$m^2$. The aerodynamic analysis in XFLR5 guarantees static stability through the coefficients of the pitching moments $C_m$ with respect to the angle of attack $\alpha$ (negative slope), and of the roll coefficients $C_l$ (negative pending) and yaw $C_n$ (positive slope) with respect to the sideslip angle $\beta$. Eight ACS on the trailing edge and two vertical stabilizers with the geometry of the NACA 0009 profile and steering rudders control the aircraft.
+    \item[R2] \textbf{Design of the EHEKATL BWB aircraft in AIRFOIL MAKER and PLANE MAKER.} I design the MH78 and MH80 reflex wing profiles for the EHEKATL BWB aircraft using AIRFOIL MAKER. Complete geometry in MAKER PLANE, considering key elements such as engines, landing gear, ACS and cabin instruments.
+    \item[R3] \textbf{Dynamic modeling of the EHEKATL BWB aircraft.} Dynamic model of the aircraft EHEKATL BWB based on non-linear Newtonian mechanics. It contemplates a pair of motors on the central body, eight ACS for lifting and rolling control, and two ACS for yawing control. The decoupling of the dynamics in its longitudinal and lateral-directional mode, both nonlinear.
+    \item[R4] \textbf{Design and implementation of FCS by Backstepping and Adaptive Backstepping in PYTHON.} Flight controller design based on the techniques of Adaptable Backstepping and Backstepping. Backstepping and Backstepping Control Algorithms Adaptable in the Python language and simulations in the SPYDER environment of the ANACONDA suite. 
+    \item[R5] \textbf{Simulation of the EHEKATL BWB aircraft and application of the FCS in X-PLANE.} Quasi-real simulation of the EHEKATL BWB aircraft in the X-PLANE flight simulator environment via the Backstepping FCS for longitudinal and lateral-directional dynamics under specific flight conditions. 
+\end{itemize}
+
+\subsection{Contributions}
+As a result of this thesis work, the article was presented:\\ \textbf{Adaptive Backstepping Control for the Longitudinal Flight of a Blended Wing Body Aircraft} in the
+\textit{2022 19th International Conference on Electrical Engineering, Computing Science and Automatic Control (CCE) Mexico City, Mexico. November 9-11, 2022}. 
+
+
+
+%Los resultados principales de este trabajo de tesis son:
+%\begin{itemize}
+    %\item Propuesta de diseño de EHEKATL BWB aeronave no tripulada 
+    %\item Análisis de estabilidad aerodinámica con XFLR5
+    %\item Modelo dinámico de EHEKATL BWB
+    %\item Sistemas de control de vuelo para los modelos dinámicos lineales y no lineales; con simulaciones basadas en modelo en PYTHON
+    %\item Simulaciones de Prueba en X-PLANE con interfaz PYTHON
+%\end{itemize}
+
+%El diseño propuesto de EHEKATL BWB se seleccionó después de un exhaustivo análisis iterativo.
+%El desempeño aerodinámico lo podemos evaluar con la razón de las fuerzas aerodinámicas de lift y arrastre. 
+%EHEKATL BWB mostró un rango de 15-27 en $CL/CD$ con pruebas de vuelo a velocidades Mach entre 0.05 - 0.1.
+%Se garantizo la estabilidad estática longitudinal, lateral y direccional del diseño propuesto a través de un análisis de los coeficientes de momento de cabeceo, roll y  yaw; respecto a los ángulos aerodinámicos de ataque y derrape. 
+%Se hicieron pruebas de vuelo para diferentes modos longitudinales y laterales-direccionales que imitan una situación física similar a las fases de la misión de vuelo.
+%Los resultados de las simulaciones basadas en modelo en PYTHON muestran un excelente seguimiento de las señales de aeronave para comandos de referencia deseados y de acuerdo con las leyes de control y adaptación y la sintonización de sus ganancias. 
+%Las simulaciones de prueba con X-PLANE sirvieron para validar los resultados del diseño aerodinámico de EHEKATL BWB obtenidos con XFLR5 y para observar en el comportamiento de la aeronave en tiempo real respecto al comando de referencia y la respuesta del sistema de control de vuelo. Se realizó una nueva sintonización para los controladores de PYTHON con X-PLANE y obtuvimos resultados satisfactorios en el desempeño de la misión y la estabilidad de la aeronave. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   Estructura de tesis                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Organization of the thesis}
+
+This work is structured into seven chapters, which are described below:
+
+\textbf{Chapter 1: Introduction}: In this chapter, the overall and general context of the project is established. The relevance of the research is outlined and the objectives and scope of the study are presented.
+
+\textbf{Chapter 2: Background}: This chapter addresses the fundamentals and evolution of wing-integrated aircraft design, with a focus on scale models developed by leading aerospace industries such as BOEING and AIRBUS. It highlights the importance of understanding the historical trajectory to contextualize the development of wing-integrated aircraft.
+
+\textbf{Chapter 3: EHEKATL BWB aircraft design}: This chapter presents the proposal of the EHEKATL BWB aircraft. The geometric design and aerodynamic analysis are carried out with XFLR5 software, allowing the acquisition of critical parameters for the stability and control of the aircraft. In addition, it focuses on the design of the aircraft in the environment of the X-PLANE flight simulator through its extensions: Airfoil Maker and Plane Maker.
+
+\textbf{Chapter 4. Dynamic modelling}: The dynamic model of the aircraft is based on the equations of motion of a rigid body according to Newton’s laws. The mathematical developments of the equations that govern the dynamics and kinematics of the aircraft are shown, the equations are also decoupled in their longitudinal and lateral-directional nonlinear dynamics.
+
+\textbf{Chapter 5: Controller Design}: In this chapter, the design of the Adaptable Backstepping and Backstepping controllers and the test simulations of the controllers with PYTHON are further developed. A comparative analysis between the controllers is included, highlighting their specific advantages and applications.
+
+\textbf{Chapter 6. Flight simulations in X-PLANE}: This chapter focuses on flight simulations with the X-PLANE simulator with the implementation of the control algorithms in PYTHON. It details the interaction between the FCS Backstepping and the flight simulator, demonstrating how the proposed control strategies translate into outstanding performance of the EHEKATL BWB in various flight conditions.
+
+\textbf{Chapter 7. Conclusions and perspectives}: This chapter provides a synthesis of the results obtained and their implications in the context of research. It reflects on the challenges overcome and lessons learned. It also projects future lines of research and technological development in the aerospace field.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

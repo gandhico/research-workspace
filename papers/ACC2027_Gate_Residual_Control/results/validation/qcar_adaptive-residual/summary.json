@@ -1,0 +1,12 @@
+{
+  "platform": "qcar",
+  "model_fidelity": "integration-surrogate",
+  "controller": "adaptive-residual",
+  "duration": 5.0,
+  "dt": 0.001,
+  "error_mean": 0.12358834310468841,
+  "error_max": 0.2,
+  "command_rms": 0.069688745004743,
+  "residual_rms": 0.015040946785416448,
+  "trace": "results\\validation\\qcar_adaptive-residual\\trace.csv"
+}

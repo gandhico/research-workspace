@@ -1,0 +1,20 @@
+{
+  "platform": "x2",
+  "model_interface": "rotor4",
+  "controller": "legacy-blend",
+  "mission": "hard45",
+  "duration": 2.0,
+  "dt": 0.001,
+  "torque_policy": "model",
+  "torque_limits_Nm": [
+    0.7285355381134109,
+    0.43762083924507955,
+    0.2541169811320755
+  ],
+  "qerr_mean_rad": 0.2813834827691199,
+  "qerr_max_rad": 0.43234982937230576,
+  "tau_mean_Nm": 0.04498247950694175,
+  "saturation_fraction": 0.0,
+  "z_std_m": 0.06409259017026957,
+  "trace": "results\\validation\\x2_legacy-blend\\trace.csv"
+}

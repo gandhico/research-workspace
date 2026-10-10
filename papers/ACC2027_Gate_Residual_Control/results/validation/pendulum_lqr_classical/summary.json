@@ -1,0 +1,12 @@
+{
+  "platform": "pendulum",
+  "model_fidelity": "integration-surrogate",
+  "controller": "classical",
+  "duration": 5.0,
+  "dt": 0.001,
+  "error_mean": 0.006204993707061814,
+  "error_max": 0.1,
+  "command_rms": 0.20635709604650246,
+  "residual_rms": 0.0,
+  "trace": "results\\validation\\pendulum_lqr_classical\\trace.csv"
+}

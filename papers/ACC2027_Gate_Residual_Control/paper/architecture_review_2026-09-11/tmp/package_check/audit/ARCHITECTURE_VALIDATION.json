@@ -1,0 +1,23 @@
+{
+  "scope": "Independent arithmetic reconstruction of the direct CMG-PES step; no plant simulation or hardware",
+  "steps_checked": 6144,
+  "projection_exercised_steps": 2681,
+  "maximum_absolute_discrepancy": {
+    "gate": 1.1102230246251565e-16,
+    "membrane": 1.1102230246251565e-16,
+    "activity": 9.992007221626409e-16,
+    "weights": 8.881784197001252e-16,
+    "command": 6.106226635438361e-16,
+    "residual": 6.106226635438361e-16
+  },
+  "source_sha256": {
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\src\\gra_control\\gate.py": "ea6d7853fff724d2a6c6fd15afb9a18cf7f9cdae19ce6f04bcf4a5e2300a5e53",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\run_mujoco_nef.py": "10e50c274010aa9769dd73787a0ce5dfe6e9294bc7bc91f70b36dc2012bc73d4",
+    "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\nengo_cmg.py": "fbfd069d78d4040e738a8df702acb35a08b5141e34a7cdb70c9d4e954d782562"
+  },
+  "not_claimed": [
+    "new mission performance",
+    "backend weight-sequence equivalence",
+    "closed-loop stability proof"
+  ]
+}

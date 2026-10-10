@@ -1,0 +1,15 @@
+{
+  "platform": "x2",
+  "controller": "classical",
+  "mission": "hover",
+  "duration": 45.0,
+  "dt": 0.0005,
+  "beta": 0.5,
+  "learning_rate": 0.0008,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "actuator_scale": 1.0,
+  "qerr_mean_rad": 2.774424303842024e-16,
+  "qerr_max_rad": 3.2936879960376427e-16,
+  "trace": "results\\plots_data\\x2_hover_classical\\trace.csv"
+}

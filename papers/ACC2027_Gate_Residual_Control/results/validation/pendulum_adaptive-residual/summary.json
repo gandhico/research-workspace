@@ -1,0 +1,12 @@
+{
+  "platform": "pendulum",
+  "model_fidelity": "integration-surrogate",
+  "controller": "adaptive-residual",
+  "duration": 5.0,
+  "dt": 0.001,
+  "error_mean": 1.5596242748904567,
+  "error_max": 2.93624305295809,
+  "command_rms": 4.11896334364147,
+  "residual_rms": 0.23587783106426136,
+  "trace": "results\\validation\\pendulum_adaptive-residual\\trace.csv"
+}

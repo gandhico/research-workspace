@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "created_utc": "2026-08-27T21:58:15.641150+00:00",
+  "platform": "qcar",
+  "controller": "adaptive-residual",
+  "model": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\models\\qcar_surrogate.xml",
+  "model_sha256": "e9f90e7a8500545aeff305474bc7222b367123731c5ecb508ef58f158626c9e2",
+  "git_commit": null,
+  "python": "3.13.11",
+  "mujoco": "3.12.0",
+  "numpy": "2.5.2",
+  "arguments": {
+    "platform": "qcar",
+    "controller": "adaptive-residual",
+    "duration": 0.5,
+    "dt": 0.001,
+    "beta": 0.2
+  }
+}

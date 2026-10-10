@@ -1,0 +1,20 @@
+{
+  "platform": "cf2",
+  "model_interface": "virtual_wrench",
+  "controller": "adaptive-residual",
+  "mission": "hard45",
+  "duration": 45.0,
+  "dt": 0.001,
+  "torque_policy": "model",
+  "torque_limits_Nm": [
+    1e-05,
+    1e-05,
+    1e-05
+  ],
+  "qerr_mean_rad": 2.5174854665725075,
+  "qerr_max_rad": 3.141588946387417,
+  "tau_mean_Nm": 1.694937172524183e-05,
+  "saturation_fraction": 0.9988889135796982,
+  "z_std_m": 0.27811288358605923,
+  "trace": "results\\validation\\cf2_45s_model\\adaptive-residual\\trace.csv"
+}

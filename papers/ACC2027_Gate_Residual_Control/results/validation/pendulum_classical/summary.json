@@ -1,0 +1,12 @@
+{
+  "platform": "pendulum",
+  "model_fidelity": "integration-surrogate",
+  "controller": "classical",
+  "duration": 5.0,
+  "dt": 0.001,
+  "error_mean": 1.6449013483155184,
+  "error_max": 2.9282741605785443,
+  "command_rms": 4.205561659732274,
+  "residual_rms": 0.0,
+  "trace": "results\\validation\\pendulum_classical\\trace.csv"
+}

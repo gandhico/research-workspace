@@ -1,0 +1,30 @@
+{
+  "platform": "x2",
+  "model_interface": "rotor4",
+  "controller": "classical",
+  "mission": "hover",
+  "duration": 0.05,
+  "dt": 0.001,
+  "beta": 0.2,
+  "learning_rate": 0.0008,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "actuator_scale": 1.0,
+  "initial_angle_deg": 0.0,
+  "disturbance_torque_Nm": 0.0,
+  "attitude_noise_std_rad": 0.0,
+  "rate_noise_std_rad_s": 0.0,
+  "seed": 1,
+  "torque_policy": "model",
+  "torque_limits_Nm": [
+    0.7285355381134109,
+    0.43762083924507955,
+    0.2541169811320755
+  ],
+  "qerr_mean_rad": 3.711420227792263e-18,
+  "qerr_max_rad": 1.0480047623745558e-17,
+  "tau_mean_Nm": 9.303543780660786e-17,
+  "saturation_fraction": 0.0,
+  "z_std_m": 0.0,
+  "trace": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\tmp\\verification\\x2_classical\\trace.csv"
+}

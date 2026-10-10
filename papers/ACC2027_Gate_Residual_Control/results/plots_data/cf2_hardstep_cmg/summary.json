@@ -1,0 +1,15 @@
+{
+  "platform": "cf2-rotor",
+  "controller": "online-pes-adaptive",
+  "mission": "hardstep",
+  "duration": 45.0,
+  "dt": 0.0005,
+  "beta": 0.5,
+  "learning_rate": 0.0008,
+  "k_error": 8.0,
+  "k_rate": 0.0,
+  "actuator_scale": 1.5,
+  "qerr_mean_rad": 0.3478861316016082,
+  "qerr_max_rad": 1.9437365821130446,
+  "trace": "results\\plots_data\\cf2_hardstep_cmg\\trace.csv"
+}

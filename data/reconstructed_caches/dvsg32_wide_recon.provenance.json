@@ -1,0 +1,43 @@
+{
+  "generated_at_utc": "2026-09-10T22:20:07.317567+00:00",
+  "status": "reconstruction_from_recovered_source",
+  "note": "NOT the original cache binary; no original .pt survives to diff against",
+  "source": {
+    "path": "D:\\NMSU_backups\\Backup\\00_Research_\\Neural_Networks_and_Learning\\01_Adaptive_HyperLIF\\01_code\\SNN_NSA_2\\data\\dvs_gesture_32x32.h5",
+    "sha256": "f5430e82b3bcbc3e906f728f4438dc83235924c140ffa5b598c97e387a825a4a",
+    "bytes": 359808448
+  },
+  "selection": {
+    "script_replicated": "extract_h5.py native-split branch",
+    "train_per_class": 100,
+    "test_per_class": 40,
+    "seed": 0,
+    "rng": "numpy.random.default_rng (PCG64)"
+  },
+  "shapes": {
+    "train": [
+      1080,
+      30,
+      2048
+    ],
+    "test": [
+      280,
+      30,
+      2048
+    ],
+    "n_classes": 11
+  },
+  "checksums": {
+    "sum_X_train": 195602688.0,
+    "implied_raw_pt_bytes": 334233600,
+    "implied_raw_pt_mib": 318.8,
+    "expected_manifest_mib": 319.0,
+    "manifest_size_agrees": true
+  },
+  "output": {
+    "path": "C:\\Research\\data\\reconstructed_caches\\dvsg32_wide_recon.h5",
+    "bytes": 44479470,
+    "sha256": "a6703c610d2826448ac7291ccae956a36841de62289354f7457a31e1a6e04212",
+    "format": "X_train/y_train/X_test/y_test, gzip-4, matches export_hdf5.py"
+  }
+}

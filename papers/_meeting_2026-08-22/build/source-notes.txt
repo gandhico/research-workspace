@@ -1,0 +1,24 @@
+Communication job: By the end, a neuromorphic-hardware researcher should understand why HyperLIF's continuous reset gate is useful as both a learning state and a bounded control signal, and should see the validated MuJoCo evidence and its limits.
+
+Primary local sources:
+- C:\Research\papers\P1_HyperLIF_Learning\main.tex
+- C:\Research\papers\P1_HyperLIF_Learning\FIGURE_TABLE_MAP.md
+- C:\Research\papers\P1_HyperLIF_Learning\figures\fig1_best_per_neuron.png
+- C:\Research\papers\P1_HyperLIF_Learning\figures\fig2_structural_blindness.png
+- C:\Research\papers\P1_HyperLIF_Learning\figures\fig5_efficiency_pareto.png
+- C:\Research\papers\P2_HyperLIF_Nengo\RESULTS_AUDIT.md
+- C:\Research\papers\P3_Gate_Residual\fixed_adaptive\docs\2026_07_05_results_params_runners.md
+- C:\Research\papers\P3_Gate_Residual\learned\docs\full_results_dossier.md
+- C:\Research\papers\P3_Gate_Residual\learned\code\experiments\controller_benchmarks\learned_gate_results.json
+- C:\Research\papers\P3_Gate_Residual\learned\code\experiments\controller_benchmarks\learned_gate_skydio.json
+- C:\Research\papers\P3_Gate_Residual\learned\code\experiments\controller_benchmarks\learned_gate_hardstep.json
+- D:\NMSU_backups\Backup\02_Research\00_Code_Ecosystem\neuromorphic-robotics-control\results\julia_neurons\paper_lif_izhikevich_scale\
+- D:\NMSU_backups\Backup\02_Research\00_Code_Ecosystem\neuromorphic-robotics-control\third_party\mujoco_menagerie\
+
+Canonical control metric: J = qerr_mean + 0.02*tau_mean + 0.20*sat_fraction + 0.05*z_std; lower is better.
+
+Claim boundaries:
+- Fixed gate gains are real, but diagnosed as near-silent residual / selective half-PD detuning.
+- Adaptive HyperLIF and HyperLIF are numerically identical in gate mode for the reported control conditions.
+- Learned online PES/e-prop results are MuJoCo simulation results; Aero2/static-quad hardware validation is pending.
+- Aggressive learned target wins smooth Hard45 but diverges on Hardstep; damping restores robustness.

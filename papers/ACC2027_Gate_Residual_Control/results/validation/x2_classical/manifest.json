@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "created_utc": "2026-08-27T07:14:20.148948+00:00",
+  "platform": "x2",
+  "controller": "classical",
+  "model": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\third_party\\mujoco_menagerie\\skydio_x2\\scene.xml",
+  "model_sha256": "d932ffbe9f0d1fa4bcfe5746d4cfc0c5652960f00223fdaf2ffd6aff6b217c97",
+  "git_commit": null,
+  "python": "3.13.11",
+  "mujoco": "3.12.0",
+  "numpy": "2.5.2",
+  "arguments": {
+    "platform": "x2",
+    "controller": "classical",
+    "mission": "hard45",
+    "duration": 2.0,
+    "dt": 0.001,
+    "beta": 0.2,
+    "torque_policy": "model"
+  },
+  "derived": {
+    "body_inertia_kgm2": [
+      0.060711294842784244,
+      0.0364684032704233,
+      0.025411698113207547
+    ],
+    "torque_limits_Nm": [
+      0.7285355381134109,
+      0.43762083924507955,
+      0.2541169811320755
+    ]
+  }
+}

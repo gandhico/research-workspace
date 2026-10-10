@@ -1,0 +1,55 @@
+{
+  "quad": "skydio_x2",
+  "mission": "hard45",
+  "controller": "classical",
+  "sim_time": 45.0,
+  "dt": 0.0005,
+  "z_ref": 1.0,
+  "seed": 1,
+  "blend": 0.2,
+  "activity_mode": "voltage",
+  "direct_scale": "paper",
+  "gate_gain": 1.0,
+  "residual_blend": 0.1,
+  "u_scale": null,
+  "n_neurons": 400,
+  "radius": 1.5,
+  "synapse": 0.002,
+  "viewer": false,
+  "viewer_sync_every": 20,
+  "viewer_follow": false,
+  "viewer_distance": 3.0,
+  "viewer_elevation": -20.0,
+  "viewer_azimuth": 90.0,
+  "realtime": false,
+  "dashboard": false,
+  "dashboard_update_every": 100,
+  "dashboard_window": 10.0,
+  "save_csv": true,
+  "save_figures": false,
+  "save_npz": false,
+  "no_save": false,
+  "output_dir": null,
+  "quad_mass": 1.325,
+  "quad_inertia": [
+    0.060711294842784244,
+    0.0364684032704233,
+    0.025411698113207547
+  ],
+  "actuator_mode": "rotor4",
+  "kq": [
+    1.9427614349690958,
+    1.1669889046535455,
+    0.6225866037735849
+  ],
+  "kw": [
+    0.46140584080516023,
+    0.27715986485521704,
+    0.1689877924528302
+  ],
+  "tau_limit": [
+    0.7285355381134109,
+    0.43762083924507955,
+    0.2541169811320755
+  ]
+}

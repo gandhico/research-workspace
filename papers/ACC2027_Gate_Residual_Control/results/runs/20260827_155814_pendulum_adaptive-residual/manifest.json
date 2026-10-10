@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "created_utc": "2026-08-27T21:58:14.777867+00:00",
+  "platform": "pendulum",
+  "controller": "adaptive-residual",
+  "model": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\models\\pendulum_surrogate.xml",
+  "model_sha256": "8e2a692d08fadf0973a93e9d3c53a8fc0ccccfaddcb0fe219bed3c5f78026eb3",
+  "git_commit": null,
+  "python": "3.13.11",
+  "mujoco": "3.12.0",
+  "numpy": "2.5.2",
+  "arguments": {
+    "platform": "pendulum",
+    "controller": "adaptive-residual",
+    "duration": 0.5,
+    "dt": 0.001,
+    "beta": 0.2
+  }
+}
