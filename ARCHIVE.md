@@ -47,3 +47,17 @@ The ACC2027 public release (code + reproduction package) is its own private repo
 3. `conda env create -f environments\conda_hyperlif.yml`; per project:
    `python -m venv .venv && .venv\Scripts\pip install -r ..\environments\pip_<project>.txt`
 4. Copy the data you need back from `D:\NMSU_backups\laptop_2026-10-01\research_full\<project>\`.
+
+## Local cleanup log — 2026-10-10
+
+All code & text in `C:\Research` was verified identical to this repository (git blob SHA-1, fresh clone, 0 missing,
+0 different) before deleting, on the laptop only:
+
+- every project `.venv`, `__pycache__`, `.pytest_cache`, `node_modules` → rebuild from `environments/`
+  (`pip_<path with __>.txt`, `npm_<path>.txt`): `python -m venv .venv` then `.venv\Scripts\pip install -r <file>`
+- `papers/ACC2027_Gate_Residual_Control/.git` (46 commits, all one snapshot identical to the files here)
+- third-party clones (UAV_Nengo, hmirh qcar repos, menagerie copies in P3 and ACC share/review) → re-clone per the table
+  above; qcar edits are in `_patches/`. `ACC2027.../third_party/mujoco_menagerie` (plain model files) was kept.
+
+Authored non-code files (slides, documents, CAD, licenses) were copied to NMSU OneDrive `Research-Authored-Files/`.
+Reports: `C:\Research\_inventory\` (inventory, verification, deletion log).
