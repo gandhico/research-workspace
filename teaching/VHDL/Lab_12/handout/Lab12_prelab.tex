@@ -1,0 +1,116 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 12}\\[2pt]
+{\large CPU Integration}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points. \textbf{Bring
+your printed control table} --- you will need it during the lab, and Question 2
+uses it.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- Hand-compute the trace}
+
+Fill in the first six cycles of the program by hand, from the ROM listing and
+your control table. Do not simulate first --- the point is that you can predict
+the machine.
+
+\begin{center}
+\small
+\begin{tabular}{clllll}
+\toprule
+cyc & PC & instruction & ALU result & register written & next PC \\
+\midrule
+0 & \code{0x00} & \code{LUI r1, 11} & \rule{2.2cm}{0.4pt} & \rule{2.4cm}{0.4pt} & \rule{1.6cm}{0.4pt} \\[6pt]
+1 & \code{0x04} & \rule{2.6cm}{0.4pt} & \rule{2.2cm}{0.4pt} & \rule{2.4cm}{0.4pt} & \rule{1.6cm}{0.4pt} \\[6pt]
+2 & \code{0x08} & \rule{2.6cm}{0.4pt} & \rule{2.2cm}{0.4pt} & \rule{2.4cm}{0.4pt} & \rule{1.6cm}{0.4pt} \\[6pt]
+3 & \code{0x0C} & \rule{2.6cm}{0.4pt} & \rule{2.2cm}{0.4pt} & \rule{2.4cm}{0.4pt} & \rule{1.6cm}{0.4pt} \\[6pt]
+4 & \code{0x10} & \rule{2.6cm}{0.4pt} & \rule{2.2cm}{0.4pt} & \rule{2.4cm}{0.4pt} & \rule{1.6cm}{0.4pt} \\[6pt]
+5 & \code{0x14} & \rule{2.6cm}{0.4pt} & \rule{2.2cm}{0.4pt} & \rule{2.4cm}{0.4pt} & \rule{1.6cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} The loop body is four instructions and runs a fixed number of
+times, plus a partial final pass. Work out the total instruction count.
+
+\vspace{4pt}
+loop passes $=$ \rule{2cm}{0.4pt} \hfill total instructions $=$ \rule{2cm}{0.4pt}
+\hfill CPI $=$ \rule{1.5cm}{0.4pt}
+\vspace{6pt}
+
+\answerbox{1.6cm}
+
+\section*{Question 2 --- The register file connections}
+
+The register file has two read ports. One is wired to the \code{rs} field and
+one to \code{rt}. Getting them the wrong way round still lets \emph{three} of
+the four instruction types work.
+
+\textbf{(a)} For each instruction, say which register must arrive on
+\code{Aout} and which on \code{Bout}, and why.
+
+\begin{center}
+\begin{tabular}{lp{4.2cm}p{6.4cm}}
+\toprule
+instruction & \code{Aout} / \code{Bout} & why \\
+\midrule
+\code{ADDI rt, rs, imm} & \rule{4cm}{0.4pt} & \rule{6.2cm}{0.4pt} \\[7pt]
+\code{SLL rd, rt, sa} & \rule{4cm}{0.4pt} & \rule{6.2cm}{0.4pt} \\[7pt]
+\code{SW rt, off(rs)} & \rule{4cm}{0.4pt} & \rule{6.2cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} Conclude: \code{Asel} $=$ \rule{2.5cm}{0.4pt} \quad and \quad
+\code{Bsel} $=$ \rule{2.5cm}{0.4pt}
+
+\textbf{(c)} If you swapped them, which single instruction in this program would
+break first, and what would the symptom be in the trace?
+
+\answerbox{2.0cm}
+
+\section*{Question 3 --- The debugging method}
+
+Your CPU runs and the final stored word is wrong.
+
+\textbf{(a)} Write down the four checks, in order, and say what each one tells
+you if it fails.
+
+\answerbox{4.2cm}
+
+\textbf{(b)} Suppose checks 1, 2 and 3 all pass. What have you learned, and
+where must the fault be?
+
+\answerbox{1.8cm}
+
+\textbf{(c)} Why is it worth doing the checks in order even when you are already
+fairly sure what is wrong?
+
+\answerbox{1.6cm}
+
+\vfill
+{\small\emph{Question 1 is the one that matters this week.} You cannot debug a
+machine you cannot predict --- and this lab is entirely debugging.}
+
+\end{document}

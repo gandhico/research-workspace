@@ -1,0 +1,533 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 0 --- Solution}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+\hr
+
+This is the worked solution for all four Lab 0 exercises. Use it to check your own
+work and to back-fill \code{lab00.tex} in your Overleaf project. Every derivation
+here is written in the exact form your reports are expected to use.
+
+\vspace{6pt}
+\hr
+
+\section*{Exercise 1 --- Majority of three}
+
+\subsection*{1.1 Specification}
+
+$Y = 1$ when at least two of the three inputs $A$, $B$, $C$ are $1$.
+
+\subsection*{1.2 Truth table --- Type E (exhaustive)}
+
+Three binary inputs, so $2^3 = 8$ rows. Every row is listed; nothing is inferred.
+
+\begin{center}
+\begin{tabular}{c|ccc|c|l}
+\toprule
+\# & $A$ & $B$ & $C$ & $Y$ & minterm \\
+\midrule
+0 & 0 & 0 & 0 & 0 & \\
+1 & 0 & 0 & 1 & 0 & \\
+2 & 0 & 1 & 0 & 0 & \\
+3 & 0 & 1 & 1 & \textbf{1} & $m_3 = \bar{A}BC$ \\
+4 & 1 & 0 & 0 & 0 & \\
+5 & 1 & 0 & 1 & \textbf{1} & $m_5 = A\bar{B}C$ \\
+6 & 1 & 1 & 0 & \textbf{1} & $m_6 = AB\bar{C}$ \\
+7 & 1 & 1 & 1 & \textbf{1} & $m_7 = ABC$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Four rows out of eight are $1$. That is a useful sanity check before you simplify:
+majority-of-three is symmetric, so the function must be true exactly half the time.
+
+\subsection*{1.3 Boolean derivation}
+
+\textbf{(1) Canonical --- read straight off the table.}
+\[
+Y = \sum m(3,5,6,7) = \bar{A}BC + A\bar{B}C + AB\bar{C} + ABC
+\]
+
+\textbf{(2) Simplified.} The trick is that $m_7 = ABC$ is adjacent to each of the
+other three minterms. By the \textbf{idempotent law} ($X = X + X + X$) we may write
+it three times without changing the function:
+\begin{align*}
+Y &= \bar{A}BC + A\bar{B}C + AB\bar{C} + \underbrace{ABC + ABC + ABC}_{\text{idempotent law}} \\
+  &= (\bar{A}BC + ABC) + (A\bar{B}C + ABC) + (AB\bar{C} + ABC) \\
+  &= BC(\bar{A} + A) + AC(\bar{B} + B) + AB(\bar{C} + C) && \text{\small distributive law} \\
+  &= BC \cdot 1 + AC \cdot 1 + AB \cdot 1 && \text{\small complement law} \\[2pt]
+Y &= \boxed{AB + AC + BC}
+\end{align*}
+
+Four three-input terms became three two-input terms: 3 AND2 gates and 1 OR3 gate.
+
+\textbf{(3) VHDL.}
+\begin{lstlisting}
+Y <= (A and B) or (A and C) or (B and C);
+\end{lstlisting}
+
+\subsection*{1.4 Code}
+
+\begin{lstlisting}
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity majority3 is
+    port ( A, B, C : in  std_logic;
+           Y       : out std_logic );
+end entity majority3;
+
+architecture behavioral of majority3 is
+begin
+    Y <= (A and B) or (A and C) or (B and C);
+end architecture behavioral;
+\end{lstlisting}
+
+\subsection*{1.5 Testbench --- coverage argument}
+
+Three inputs, eight combinations, and the design is purely combinational: an
+exhaustive testbench is both possible and cheap, so \textbf{exhaustive is the
+correct choice}. Anything less would need an argument; this needs none.
+
+\begin{lstlisting}
+check : process
+    variable expect : std_logic;
+begin
+    for i in 0 to 7 loop
+        (A, B, C) <= std_logic_vector(to_unsigned(i, 3));
+        wait for 10 ns;
+        -- expected: 1 when the number of set bits >= 2
+        if i = 3 or i = 5 or i = 6 or i = 7 then
+            expect := '1';
+        else
+            expect := '0';
+        end if;
+        assert Y = expect
+            report "row " & integer'image(i) & ": Y wrong"
+            severity error;
+    end loop;
+    report "majority3: 8/8 checks complete" severity note;
+    wait;
+end process check;
+\end{lstlisting}
+
+Note the \code{report} on the last line. A testbench that prints nothing on success
+is indistinguishable from a testbench that did not run.
+
+\subsection*{1.6 Where this reappears}
+
+Hold this result. You derive it a second time in Exercise 4 without meaning to.
+
+\vspace{4pt}\hr
+
+\section*{Exercise 2 --- 2-to-1 multiplexer}
+
+\subsection*{2.1 Specification}
+
+$Y = D_0$ when $S = 0$; \quad $Y = D_1$ when $S = 1$.
+
+\subsection*{2.2 Truth table --- two ways}
+
+\textbf{Type E (exhaustive).} Three inputs, eight rows:
+
+\begin{center}
+\begin{tabular}{c|ccc|c|l}
+\toprule
+\# & $S$ & $D_1$ & $D_0$ & $Y$ & minterm \\
+\midrule
+0 & 0 & 0 & 0 & 0 & \\
+1 & 0 & 0 & 1 & \textbf{1} & $m_1 = \bar{S}\bar{D_1}D_0$ \\
+2 & 0 & 1 & 0 & 0 & \\
+3 & 0 & 1 & 1 & \textbf{1} & $m_3 = \bar{S}D_1D_0$ \\
+4 & 1 & 0 & 0 & 0 & \\
+5 & 1 & 0 & 1 & 0 & \\
+6 & 1 & 1 & 0 & \textbf{1} & $m_6 = SD_1\bar{D_0}$ \\
+7 & 1 & 1 & 1 & \textbf{1} & $m_7 = SD_1D_0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Type C (compressed).} The same function, written by naming a \emph{source}
+instead of a value:
+
+\begin{center}
+\begin{tabular}{c|c|c|l}
+\toprule
+\# & $S$ & $Y$ & \\
+\midrule
+0 & 0 & $D_0$ & pass the low input \\
+1 & 1 & $D_1$ & pass the high input \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Two rows say everything eight rows said. This is not laziness --- it is the only
+form that survives. In Lab 3 the same multiplexer is 32 bits wide, and the
+exhaustive table would have $2^{65}$ rows. \textbf{Type C is how you write a table
+for a datapath.}
+
+\subsection*{2.3 Boolean derivation}
+
+\textbf{(1) Canonical.}
+\[
+Y = \sum m(1,3,6,7) = \bar{S}\bar{D_1}D_0 + \bar{S}D_1D_0 + SD_1\bar{D_0} + SD_1D_0
+\]
+
+\textbf{(2) Simplified} --- factor the two pairs, then apply the complement law:
+\begin{align*}
+Y &= \bar{S}D_0(\bar{D_1} + D_1) + SD_1(\bar{D_0} + D_0) && \text{\small distributive law} \\
+  &= \bar{S}D_0 \cdot 1 + SD_1 \cdot 1 && \text{\small complement law} \\[2pt]
+Y &= \boxed{\bar{S}\,D_0 + S\,D_1}
+\end{align*}
+
+Read the answer aloud: ``$D_0$ gets through when $S$ is low, $D_1$ gets through when
+$S$ is high.'' The algebra reproduced the specification exactly. That is the check.
+
+\textbf{(3) VHDL.}
+\begin{lstlisting}
+Y <= D0 when S = '0' else D1;
+\end{lstlisting}
+
+The \code{when/else} form and the Boolean form synthesise to the same logic. Write
+whichever states your intent more clearly --- here, the \code{when/else}, because
+the specification was written as a choice, not as a formula.
+
+\subsection*{2.4 Testbench --- coverage argument}
+
+Exhaustive again: 8 vectors. But note what you are really testing --- for each value
+of $S$, that $Y$ tracks the selected input \emph{and ignores the other one}. Rows 2
+and 5 are the important ones: in each, the unselected input is $1$ and $Y$ must
+still be $0$. A mux that ORs its inputs passes rows 0, 3 and 7 and fails exactly
+those two.
+
+\vspace{4pt}\hr
+
+\section*{Exercise 3 --- 2-to-4 decoder with enable}
+
+\subsection*{3.1 Specification}
+
+When $E = 1$, exactly one of $D_3 \ldots D_0$ is high --- the one selected by the
+two address bits $A_1 A_0$. When $E = 0$, all outputs are low.
+
+\subsection*{3.2 Truth table --- Type E with a don't-care row}
+
+\begin{center}
+\begin{tabular}{c|ccc|cccc|l}
+\toprule
+\# & $E$ & $A_1$ & $A_0$ & $D_3$ & $D_2$ & $D_1$ & $D_0$ & note \\
+\midrule
+0 & 0 & -- & -- & 0 & 0 & 0 & 0 & disabled; address irrelevant \\
+1 & 1 & 0 & 0 & 0 & 0 & 0 & \textbf{1} & \\
+2 & 1 & 0 & 1 & 0 & 0 & \textbf{1} & 0 & \\
+3 & 1 & 1 & 0 & 0 & \textbf{1} & 0 & 0 & \\
+4 & 1 & 1 & 1 & \textbf{1} & 0 & 0 & 0 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Five rows, not eight, because row 0 uses don't-cares to collapse four rows into one.
+That is legitimate \emph{and} it is a claim: it asserts the address genuinely cannot
+affect the output when disabled. Your simulation has to confirm it.
+
+Rows 1--4 each have exactly one $1$. That pattern is called \textbf{one-hot}, and it
+is the single most useful encoding in this course.
+
+\subsection*{3.3 Boolean derivation}
+
+One equation per output --- four outputs, four equations. Each is a single minterm
+of the address, gated by the enable:
+
+\begin{align*}
+D_0 &= E \cdot \bar{A_1}\bar{A_0} \\
+D_1 &= E \cdot \bar{A_1}A_0 \\
+D_2 &= E \cdot A_1\bar{A_0} \\
+D_3 &= E \cdot A_1A_0
+\end{align*}
+
+Nothing simplifies, and nothing should: each output is already a single product
+term. Written compactly,
+\[
+D_k = E \cdot m_k(A_1, A_0)
+\]
+
+\textbf{This is the whole idea of a decoder: it computes all four minterms of its
+address at once.} It is why a decoder is the standard way to turn an address into a
+select signal --- and it is exactly the mechanism you build in Lab 6, where a 5-bit
+address is decoded into 32 register write-enables.
+
+\textbf{VHDL.}
+\begin{lstlisting}
+D(0) <= E and (not A1) and (not A0);
+D(1) <= E and (not A1) and      A0;
+D(2) <= E and      A1  and (not A0);
+D(3) <= E and      A1  and      A0;
+\end{lstlisting}
+
+\subsection*{3.4 The bug in the behavioural version}
+
+The version shown in class was:
+
+\begin{lstlisting}
+A <= A1 & A0;
+with A select D <= "0001" when "00",
+                   "0010" when "01",
+                   "0100" when "10",
+                   "1000" when "11",
+                   "0000" when others;
+\end{lstlisting}
+
+\textbf{The enable is never used.} \code{E} is declared in the entity and then
+ignored, so this circuit implements row~0 of the truth table incorrectly: with
+$E = 0$ it still asserts an output. The \code{"0000" when others} branch looks like
+it handles the disabled case, but it does not --- it handles metavalues
+(\code{'U'}, \code{'X'}) on the address, which is a different thing entirely.
+
+The structural version in the same folder \emph{does} use \code{E}. So two
+architectures of nominally the same circuit disagree.
+
+\textbf{How to catch this, in order of speed:}
+
+\begin{enumerate}[leftmargin=2em,itemsep=1pt]
+\item \textbf{Analysis \& Elaboration} --- Quartus warns that input port \code{E} is
+stuck at, or never used. Read your warnings.
+\item \textbf{RTL Viewer} --- \code{E} appears as a pin with nothing attached to it.
+This is the single clearest picture of the bug, and it takes ten seconds.
+\item \textbf{Simulation} --- only if your testbench actually drives $E = 0$. If you
+tested only the enabled rows, everything passes. That is why row 0 is in the table.
+\end{enumerate}
+
+\textbf{The corrected behavioural architecture:}
+
+\begin{lstlisting}
+process (E, A1, A0)
+    variable Asel : std_logic_vector(1 downto 0);
+begin
+    Asel := A1 & A0;
+    if E = '0' then
+        D <= "0000";
+    else
+        case Asel is
+            when "00"   => D <= "0001";
+            when "01"   => D <= "0010";
+            when "10"   => D <= "0100";
+            when "11"   => D <= "1000";
+            when others => D <= "0000";
+        end case;
+    end if;
+end process;
+\end{lstlisting}
+
+\subsection*{3.5 The lesson}
+
+Your testbench cannot find a bug in a case you never drive, and the RTL Viewer shows
+you the circuit you actually described rather than the one you meant to describe.
+Both of those facts cost you nothing today. In Lab 10 --- sixteen control outputs,
+one row per instruction --- they are the difference between an afternoon and a week.
+
+\vspace{4pt}\hr
+
+\section*{Exercise 4 --- Full adder}
+
+\subsection*{4.1 Specification}
+
+Add three bits: $A$, $B$, and a carry in $C_{in}$. Produce a sum bit and a carry out.
+The two outputs together encode the arithmetic sum: $C_{out}\,Sum = A + B + C_{in}$
+as a 2-bit number.
+
+\subsection*{4.2 Truth table --- Type E}
+
+\begin{center}
+\begin{tabular}{c|ccc|cc|c}
+\toprule
+\# & $A$ & $B$ & $C_{in}$ & $Sum$ & $C_{out}$ & $A{+}B{+}C_{in}$ \\
+\midrule
+0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1 & \textbf{1} & 0 & 1 \\
+2 & 0 & 1 & 0 & \textbf{1} & 0 & 1 \\
+3 & 0 & 1 & 1 & 0 & \textbf{1} & 2 \\
+4 & 1 & 0 & 0 & \textbf{1} & 0 & 1 \\
+5 & 1 & 0 & 1 & 0 & \textbf{1} & 2 \\
+6 & 1 & 1 & 0 & 0 & \textbf{1} & 2 \\
+7 & 1 & 1 & 1 & \textbf{1} & \textbf{1} & 3 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The right-hand column is the check: read $C_{out}Sum$ as a two-bit binary number and
+it must equal the count of ones in the input. Row 7: $C_{out}Sum = 11_2 = 3$. \checkmark
+
+\subsection*{4.3 Derivation --- $Sum$}
+
+\textbf{(1) Canonical.}
+\[
+Sum = \sum m(1,2,4,7) = \bar{A}\bar{B}C_{in} + \bar{A}B\bar{C_{in}} + A\bar{B}\bar{C_{in}} + ABC_{in}
+\]
+
+\textbf{(2) Simplified --- and here the K-map refuses.} Plot $\sum m(1,2,4,7)$ and
+you get a checkerboard: no two 1-cells are adjacent, so \textbf{no grouping of size
+two or larger exists}. The minimal sum-of-products form \emph{is} the canonical
+form: four three-input AND gates. Sum-of-products is the wrong tool for this
+function.
+
+Factor by $C_{in}$ instead:
+\begin{align*}
+Sum &= C_{in}(\bar{A}\bar{B} + AB) + \bar{C_{in}}(\bar{A}B + A\bar{B}) && \text{\small distributive law} \\
+    &= C_{in}\cdot\overline{(A \oplus B)} + \bar{C_{in}}\cdot(A \oplus B) && \text{\small definition of XOR and XNOR} \\[2pt]
+Sum &= \boxed{A \oplus B \oplus C_{in}}
+\end{align*}
+
+The last step is the definition of XOR applied to the two operands $(A \oplus B)$ and
+$C_{in}$: the expression is ``one or the other but not both''.
+
+\textbf{The lesson:} not every function has a small sum-of-products form. Parity ---
+which is what $Sum$ is --- is the classic example. When a K-map gives you a
+checkerboard, stop trying to group and reach for XOR.
+
+\textbf{(3) VHDL.}
+\begin{lstlisting}
+Sum <= A xor B xor Cin;
+\end{lstlisting}
+
+\subsection*{4.4 Derivation --- $C_{out}$}
+
+\textbf{(1) Canonical.}
+\[
+C_{out} = \sum m(3,5,6,7) = \bar{A}BC_{in} + A\bar{B}C_{in} + AB\bar{C_{in}} + ABC_{in}
+\]
+
+\textbf{Look at that.} It is $\sum m(3,5,6,7)$ --- \emph{the same minterm set as
+Exercise 1}, with $C_{in}$ playing the role of $C$. The derivation is therefore the
+one you already did, and the answer is:
+\[
+C_{out} = \boxed{AB + AC_{in} + BC_{in}}
+\]
+
+\textbf{$C_{out}$ is the majority function.} And it must be: a carry is produced
+exactly when at least two of the three input bits are $1$. The first circuit you
+built this semester is the carry logic of an adder.
+
+\textbf{(3) VHDL.}
+\begin{lstlisting}
+Cout <= (A and B) or (A and Cin) or (B and Cin);
+\end{lstlisting}
+
+\subsection*{4.5 The structural architecture}
+
+The same entity, built from two half adders and an OR gate.
+
+Half adder: $S = A \oplus B$, \quad $C = A \cdot B$.
+
+\begin{lstlisting}
+architecture structural of full_adder is
+    signal S1, C1, C2 : std_logic;
+begin
+    HA1 : entity work.half_adder
+        port map ( A => A,  B => B,   S => S1,  C => C1 );
+    HA2 : entity work.half_adder
+        port map ( A => S1, B => Cin, S => Sum, C => C2 );
+    Cout <= C1 or C2;
+end architecture structural;
+\end{lstlisting}
+
+Note \textbf{named association} in both \code{port map}s --- \code{A => A} rather
+than positional order. Use it everywhere, all semester. Positional port maps are the
+single most common source of silently-wrong structural designs, and they get worse
+as components grow: the register file in Lab 6 has seven ports.
+
+\subsection*{4.6 Proving the two architectures agree}
+
+The structural version produces
+\[
+C_{out} = C_1 + C_2 = AB + (A \oplus B)C_{in}
+\]
+which does not \emph{look} like $AB + AC_{in} + BC_{in}$. Expand the behavioural
+form to see that it is:
+\begin{align*}
+AB + AC_{in} + BC_{in}
+&= AB + AC_{in}(B + \bar{B}) + BC_{in}(A + \bar{A}) && \text{\small complement law, backwards} \\
+&= AB + ABC_{in} + A\bar{B}C_{in} + ABC_{in} + \bar{A}BC_{in} \\
+&= AB(1 + C_{in} + C_{in}) + A\bar{B}C_{in} + \bar{A}BC_{in} && \text{\small distributive law} \\
+&= AB + A\bar{B}C_{in} + \bar{A}BC_{in} && \text{\small annulment: } 1 + X = 1\\
+&= AB + (A\bar{B} + \bar{A}B)C_{in} \\
+&= AB + (A \oplus B)\,C_{in} \qquad\checkmark
+\end{align*}
+
+Equal. The structural version reuses the $A \oplus B$ term it already needed for the
+sum, so it costs one fewer gate --- which is why real adders are built this way.
+
+\textbf{But do not take the proof's word for it.} Instantiate both architectures in
+one testbench, drive both from the same stimulus, and assert they agree on all eight
+vectors:
+
+\begin{lstlisting}
+assert (Sum_beh = Sum_str) and (Cout_beh = Cout_str)
+    report "row " & integer'image(i) & ": architectures disagree"
+    severity error;
+\end{lstlisting}
+
+That one line is a habit worth forming now. It is how you will check every dual
+implementation for the rest of the course.
+
+\subsection*{4.7 Where this goes}
+
+Chain 32 full adders carry-to-carry and you have the 32-bit adder inside the ALU you
+build in Lab 5. The carry out of bit 31 is what tells you the result overflowed.
+
+\vspace{6pt}\hr
+
+\section*{Summary --- the four results}
+
+\begin{center}
+\begin{tabular}{clll}
+\toprule
+& circuit & result & reappears in \\
+\midrule
+1 & majority-of-3 & $Y = AB + AC + BC$ & Ex.\ 4, as $C_{out}$ \\
+2 & 2:1 mux & $Y = \bar{S}D_0 + SD_1$ & Lab 3, 32 bits wide \\
+3 & 2-to-4 decoder & $D_k = E \cdot m_k$ & Lab 6, register file writes \\
+4 & full adder & $Sum = A \oplus B \oplus C_{in}$ & Lab 5, ALU \\
+  &             & $C_{out} = AB + AC_{in} + BC_{in}$ & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Four circuits, and three of them are inside the processor you finish in December.
+
+\vspace{4pt}
+\hr
+{\small \textbf{Three things to carry forward.} A K-map checkerboard means reach for
+XOR. Named association in every \code{port map}. And open the RTL Viewer before you
+compile --- Exercise 3's bug was visible there in ten seconds.}
+
+\end{document}

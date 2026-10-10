@@ -1,0 +1,70 @@
+# ------------------------------------------------------------------------------
+# EE 362 - Computer Organization Laboratory
+# Lab 12 - Quartus project settings (starter)
+#
+# STEP 1: replace anything in components/ with your own version from the
+# earlier labs. The reference copies are there so nobody is blocked; using one
+# costs you nothing on this lab.
+#
+# Top level is CPU. Expect:
+#   * ONE pin - SysClk - plus the observation ports. Compare with the ALU in
+#     Lab 5, which needed 108 pins as a top level. Wide blocks live INSIDE.
+#   * registers for the PC (32), the IR (32+32), and the register file (~1024)
+#   * block memory for the ROM and RAM
+#
+# This is the only design all semester that reports every evidence source
+# meaningfully. Collect E1 through E7.
+# ------------------------------------------------------------------------------
+
+set_global_assignment -name FAMILY "Cyclone V"
+set_global_assignment -name DEVICE 5CSEMA4U23C6
+set_global_assignment -name TOP_LEVEL_ENTITY CPU
+set_global_assignment -name LAST_QUARTUS_VERSION "25.1std.0 Lite Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+
+# --- Device operating conditions (defaults, do not change) --------------------
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+
+# --- Simulation: Questa, VHDL -------------------------------------------------
+# This is what makes Tools > Run Simulation Tool > RTL Simulation work.
+set_global_assignment -name EDA_SIMULATION_TOOL "Questa Altera FPGA (VHDL)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+
+# Run the testbench automatically from Quartus.
+set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH tb_Lab12 -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_NAME tb_Lab12 -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id tb_Lab12
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tb_Lab12 -section_id tb_Lab12
+set_global_assignment -name EDA_TEST_BENCH_FILE tb_Lab12.vhd -section_id tb_Lab12
+
+# --- Design files -------------------------------------------------------------
+set_global_assignment -name VHDL_FILE CPU_Pkg.vhd
+set_global_assignment -name VHDL_FILE ALU_Pkg.vhd
+set_global_assignment -name VHDL_FILE NIAG_Pkg.vhd
+set_global_assignment -name VHDL_FILE components/Mux2.vhd
+set_global_assignment -name VHDL_FILE components/Mux3.vhd
+set_global_assignment -name VHDL_FILE components/ImmedXtnd.vhd
+set_global_assignment -name VHDL_FILE components/TriBuffer.vhd
+set_global_assignment -name VHDL_FILE components/ALUsftMUX.vhd
+set_global_assignment -name VHDL_FILE components/ALU.vhd
+set_global_assignment -name VHDL_FILE components/RegFile.vhd
+set_global_assignment -name VHDL_FILE components/NIAG_NSA.vhd
+set_global_assignment -name VHDL_FILE components/NIAG_Rel.vhd
+set_global_assignment -name VHDL_FILE components/NIAG_Reg.vhd
+set_global_assignment -name VHDL_FILE components/NIAG_Abslt.vhd
+set_global_assignment -name VHDL_FILE components/NIAG_Cond.vhd
+set_global_assignment -name VHDL_FILE components/NIAG_MUX.vhd
+set_global_assignment -name VHDL_FILE components/NIAG.vhd
+set_global_assignment -name VHDL_FILE components/ROM.vhd
+set_global_assignment -name VHDL_FILE components/RAM.vhd
+set_global_assignment -name VHDL_FILE components/Decoder.vhd
+set_global_assignment -name VHDL_FILE CPU.vhd
+set_global_assignment -name VHDL_FILE tb_Lab12.vhd
+
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -1,0 +1,278 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 5 --- Guided Examples: Solution}\\[2pt]
+{\itshape Ex 1 one function unit \quad$\cdot$\quad Ex 2 what an ALU is \quad$\cdot$\quad Ex 3 the three shifts}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+\hr
+
+\begin{center}
+\begin{tabular}{clll}
+\toprule
+& circuit & new idea & feeds the assignment as \\
+\midrule
+1 & \code{alu\_add} & one function unit \textbf{plus flags} & the template all 16 operations copy \\
+2 & \code{alu\_mini} & an ALU is \textbf{parallel units $+$ a mux} & why your \code{case} \emph{is} the mux \\
+3 & \code{shift\_demo} & the \textbf{type} decides the fill & \code{SRL} vs \code{SRA} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}\hr
+
+\section*{Example 1 --- One function unit, complete}
+
+Read this one carefully and the other fifteen operations become one line each.
+
+\subsection*{1.1 The arithmetic, and why \code{unsigned} is used for both}
+
+\begin{lstlisting}
+result <= std_logic_vector( unsigned(Ain) + unsigned(Bin) );
+\end{lstlisting}
+
+\code{std\_logic\_vector} is a bag of bits with no numeric meaning, so you cannot
+add two of them. Convert, add, convert back.
+
+\begin{quote}
+\textbf{We add as \code{unsigned} even when the values are signed, and that is
+correct.} Two's complement addition is \textbf{bit-identical} whether you call the
+operands signed or unsigned. Only the \emph{interpretation} of the result differs
+--- and interpreting the result is what the flags are for.
+\end{quote}
+
+This is worth stating aloud because it is the one place where the type does
+\emph{not} matter. In Example 3 the type is everything.
+
+\subsection*{1.2 The flags}
+
+\begin{align*}
+\text{Zero} &= \overline{R_{31} + R_{30} + \cdots + R_0} && \text{a 32-input NOR: 1 only when every bit is 0}\\
+\text{Neg}  &= R_{31} && \text{in two's complement the top bit \emph{is} the sign}
+\end{align*}
+
+\begin{lstlisting}
+Zero <= '1' when result = (result'range => '0') else '0';
+Neg  <= result(31);
+\end{lstlisting}
+
+\textbf{\code{Neg} is a wire, not a gate.} Nothing is computed. Students often
+expect a comparison here; there is none to make.
+
+Note \code{(result'range => '0')}: an all-zeros aggregate shaped like
+\code{result}. It works at any width without being rewritten, and it is how you
+compare a vector against zero.
+
+\subsection*{1.3 Carry out, and why you must widen first}
+
+Adding two 32-bit numbers can produce 33 bits. To see the 33rd, \textbf{widen the
+operands before adding}:
+
+\begin{lstlisting}
+sum33 <= unsigned('0' & Ain) + unsigned('0' & Bin);   -- 33 bits wide
+Cout  <= sum33(32);
+\end{lstlisting}
+
+Add at 32 bits and the extra bit is simply lost --- there is nowhere for it to go.
+This is the same idea as Lab 4's extension: \textbf{make room first, then
+compute.}
+
+\vspace{4pt}\hr
+
+\section*{Example 2 --- What an ALU actually is}
+
+\begin{quote}
+\textbf{An ALU is every function computed at once, and a multiplexer that picks
+one.}
+\end{quote}
+
+All the units run in parallel, all the time, on the same inputs. The function code
+does not tell the hardware what to compute --- it tells the \textbf{multiplexer}
+which already-computed answer to forward. There is no ``choosing'' and then
+``doing''; the doing already happened.
+
+\textbf{So the only new structure in this lab is one you built in Lab 3.}
+
+\subsection*{2.1 Two units and a mux, written structurally}
+
+\begin{lstlisting}
+U_ADD : entity work.alu_add port map (Ain => Ain, Bin => Bin, Rout => add_result, ...);
+U_AND : entity work.alu_and port map (Ain => Ain, Bin => Bin, Rout => and_result);
+
+result <= add_result when Func = '0' else and_result;    -- the multiplexer
+\end{lstlisting}
+
+\subsection*{2.2 The \code{case} \emph{is} the multiplexer}
+
+At sixteen operations, writing sixteen entities and a 16-to-1 mux by hand is
+pointless typing, so the assignment uses a \code{case}. That changes the spelling,
+not the hardware:
+
+\begin{quote}
+\textbf{Open the RTL Viewer after the assignment and the synthesiser draws a
+multiplexer.} A \code{case} is how you spell a mux when there are too many inputs
+to wire by hand.
+\end{quote}
+
+\subsection*{2.3 The flag trap this example is built to prevent}
+
+The adder computes its own \code{Zero} and \code{Neg}, and the example
+\textbf{deliberately ignores them}:
+
+\begin{lstlisting}
+signal add_z, add_n, add_c : std_logic;   -- computed, then not used
+...
+Zero <= '1' when result = (result'range => '0') else '0';   -- on the SELECTED result
+\end{lstlisting}
+
+\begin{quote}
+\textbf{Flags must describe the selected result, not one unit's result.} Compute
+them \emph{after} the multiplexer, never inside a \code{case} branch.
+\end{quote}
+
+Concretely: \code{AND} of \code{0x0F0F0F0F} and \code{0xF0F0F0F0} is zero, so
+\code{Zero} must be 1 --- but the adder's sum is \code{0xFFFFFFFF}, so a flag
+taken from the adder reads 0. Nothing about the arithmetic is wrong; only the flag
+is. In Lab 8 that broken flag becomes a branch that goes the wrong way.
+
+\vspace{4pt}\hr
+
+\section*{Example 3 --- The three shifts, and the one everybody gets wrong}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& vacated bits filled with & correct when the value is \\
+\midrule
+\code{SLL} (= \code{SLA}) & \code{'0'} on the right & always --- there is only one sensible answer \\
+\code{SRL} & \code{'0'} on the left & \textbf{unsigned} \\
+\code{SRA} & \textbf{copies of the sign bit} & \textbf{signed} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Left shifts have only one sensible answer}, which is why \code{SLA} and
+\code{SLL} are the same operation and the reference ALU handles them in one
+branch.
+
+\subsection*{3.1 Why \code{SRA} exists}
+
+Shifting right by one should divide by two. Take $-8 =$ \code{0xFFFFFFF8}:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& result & as a number \\
+\midrule
+\code{SRL} by 1 & \code{0x7FFFFFFC} & $+2\,147\,483\,644$ \quad --- $-8/2$ is not two billion \\
+\code{SRA} by 1 & \code{0xFFFFFFFC} & $-4$ \quad --- correct \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Filling with \code{'0'} destroys the sign; filling with the sign bit preserves it.
+\textbf{It is Lab 4's sign extension, applied while shifting.}
+
+\subsection*{3.2 The bug this example exists to prevent}
+
+\begin{lstlisting}
+shift_right( unsigned(X), n )   -- this is SRL
+shift_right(   signed(X), n )   -- this is SRA
+\end{lstlisting}
+
+\begin{quote}
+\textbf{The operator name is the same. The type decides the behaviour.}
+\end{quote}
+
+So writing \code{SRA} with \code{unsigned()} silently gives you \code{SRL}. It
+compiles, it runs, and \textbf{it is wrong only for negative operands} --- which
+most casual test vectors do not include. Test with a negative number or you will
+not find it.
+
+\subsection*{3.3 The shift amount}
+
+\begin{lstlisting}
+signal amount : natural range 0 to 31;
+amount <= to_integer(unsigned(Shft));
+\end{lstlisting}
+
+Five bits hold $0 \ldots 31$, exactly the useful range for a 32-bit shift:
+nothing wasted, nothing out of range. The conversion is Lab 4's chain again ---
+you cannot shift by a vector, because the amount must be an integer.
+
+\textbf{And note which operand is shifted:} in this ALU shifts act on \code{Ain},
+with the amount arriving on the separate \code{Shft} port. Assuming the amount
+comes from \code{Bin} passes a home-made testbench and breaks the CPU in Lab 12.
+
+\vspace{4pt}\hr
+
+\section*{Into the assignment}
+
+The reference ALU is these three examples at full size:
+
+\begin{lstlisting}
+when ALU_FUNC_SLL | ALU_FUNC_SLA =>
+    result <= std_logic_vector(shift_left(unsigned(Ain), amount));
+when ALU_FUNC_SRL =>
+    result <= std_logic_vector(shift_right(unsigned(Ain), amount));
+when ALU_FUNC_SRA =>
+    result <= std_logic_vector(shift_right(signed(Ain), amount));   -- signed!
+when ALU_FUNC_SOLS =>
+    if signed(Ain) < signed(Bin) then result <= x"00000001";
+    else result <= x"00000000"; end if;
+when others =>
+    result <= (others => '0');            -- assigns, so no latch
+\end{lstlisting}
+
+Four things to check in your own version:
+
+\begin{enumerate}[leftmargin=2em,itemsep=2pt]
+\item \textbf{\code{SRA} uses \code{signed()}, \code{SRL} uses \code{unsigned()}.}
+Same operator, different fill.
+\item \textbf{\code{SOLS} and \code{SOLU} use the \code{numeric\_std} comparison},
+which is overflow-correct. Doing this in raw gates is the hard part of an ALU:
+the hardware equation is $\text{SOLS} = R_{31} \oplus V$ with $R = A - B$, and
+getting $V$ right is exactly what the library saves you.
+\item \textbf{Flags are computed after the \code{case}}, on \code{result}, never
+inside a branch.
+\item \textbf{\code{when others} assigns}, so the process stays combinational ---
+Lab 3's latch trap at sixteen times the scale.
+\end{enumerate}
+
+\vspace{6pt}
+\hr
+{\small \textbf{Forward.} The ALU is the widest component you will build and it
+sets the CPU's critical path --- in Lab 12 the whole machine's $F_{max}$ is close
+to this one block's. \code{Zero} and \code{Neg} leave here and become every
+conditional branch in Lab 8.}
+
+\end{document}

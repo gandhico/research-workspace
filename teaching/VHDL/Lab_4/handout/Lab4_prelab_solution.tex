@@ -1,0 +1,230 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 4: Solution}\\[2pt]
+{\large Datapath Support Components}\\[4pt]
+Fall 2026 \quad$\cdot$\quad 5 points \quad$\cdot$\quad TA marking guide
+\end{center}
+\hr
+
+{\small Marking: Q1 = 2 points, Q2 = 1 point, Q3 = 2 points.}
+
+\vspace{4pt}\hr
+
+\section*{Question 1 --- Extension by hand (2 points)}
+
+\subsection*{(a) The four results}
+
+\begin{center}
+\begin{tabular}{c|ccc|l|l}
+\toprule
+\# & \code{Immed16} & \code{Xsel} & \code{Xlsft} & \code{Xtnd32} & as a number \\
+\midrule
+0 & \code{0x8000} & 0 (zero) & 0 (none) & \code{0x00008000} & $+32768$ \\
+1 & \code{0x8000} & 1 (sign) & 0 (none) & \code{0xFFFF8000} & $-32768$ \\
+2 & \code{0x0002} & 1 (sign) & 1 ($\times 4$) & \code{0x00000008} & $2 \times 4 = 8$ \\
+3 & \code{0xFFFF} & 1 (sign) & 1 ($\times 4$) & \code{0xFFFFFFFC} & $-1 \times 4 = -4$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{How each one is obtained:}
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item Row 0: pad the top 16 bits with \code{0}.
+\item Row 1: bit 15 of \code{0x8000} is \code{1}, so the top 16 bits become all
+\code{1}s.
+\item Row 2: bit 15 of \code{0x0002} is \code{0}, so sign-extension pads zeros;
+shifting left by two multiplies by four.
+\item Row 3: \code{0xFFFF} sign-extends to \code{0xFFFFFFFF} ($-1$), and shifting
+left by two gives \code{0xFFFFFFFC} ($-4$).
+\end{itemize}
+
+\textbf{The last column is the check worth teaching:} sign-extension followed by
+$\times 4$ still multiplies the \emph{value} by four, negatives included. If a
+student's row 3 is not $-4$, their shift dropped or duplicated a bit.
+
+\textbf{Common errors:} row 1 written as \code{0x0000FFFF} (they extended the
+wrong end); row 3 written as \code{0x3FFFFFFF} (they shifted \emph{right}); rows
+2--3 shifted by one instead of two.
+
+\subsection*{(b) Same input, two different answers}
+
+\begin{quote}
+\textbf{Model answer:} Nothing in the 16 bits themselves decides it. The
+\textbf{instruction} decides --- the opcode says whether that immediate is a
+signed number or an unsigned bit pattern, and the decoder sets \code{Xsel}
+accordingly.
+\end{quote}
+
+\textbf{This is the point of the whole question.} The bits carry no meaning on
+their own; meaning is supplied by the instruction that uses them. In Lab 10 the
+student writes the decoder that sets this bit, so the answer given here is the one
+they will need again.
+
+\subsection*{(c) Why \code{ADDI} sign-extends and \code{LUI} zero-extends}
+
+\begin{quote}
+\textbf{Model answer:} \code{ADDI}'s immediate is a \textbf{signed number} that
+gets added to a register, so its value must survive widening ---
+\code{ADDI r1,r1,-1} has to actually subtract one, which requires the top bits to
+become \code{1}s. \code{LUI}'s immediate is a \textbf{bit pattern} to be placed in
+the register, not a magnitude, so there is no sign to preserve and the remaining
+bits are filled with zeros.
+\end{quote}
+
+Full credit needs the contrast \emph{number} versus \emph{bit pattern}. Accept a
+student who says ``\code{ADDI} must handle negative offsets''.
+
+\textbf{Consequence worth saying aloud:} get this backwards and the CPU's loop
+counter counts the wrong way in Lab 12 --- and the ALU, the register file and the
+memory will all be innocent.
+
+\vspace{4pt}\hr
+
+\section*{Question 2 --- Interface and resolution (1 point)}
+
+\subsection*{The entity}
+
+\begin{lstlisting}
+entity ImmedXtnd is
+    port (
+        Immed16 : in  std_logic_vector(15 downto 0);
+        Xsel    : in  std_logic;                       -- 0 = zero, 1 = sign
+        Xlsft   : in  std_logic;                       -- 1 = shift left by 2
+        Xtnd32  : out std_logic_vector(31 downto 0)
+    );
+end entity ImmedXtnd;
+\end{lstlisting}
+
+Check the widths: input 16, output 32, and \textbf{two single-bit controls}.
+
+\subsection*{The resolution table}
+
+\begin{center}
+\begin{tabular}{c||ccc}
+\toprule
+& \code{0} & \code{1} & \code{Z} \\
+\midrule
+\code{0} & \code{0} & \textbf{\code{X}} & \code{0} \\
+\code{1} & \textbf{\code{X}} & \code{1} & \code{1} \\
+\code{Z} & \code{0} & \code{1} & \code{Z} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Read it as three rules:
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item two drivers \textbf{agreeing} give that value;
+\item one driving and one at \code{'Z'} gives the driven value --- \textbf{this is
+how a bus works};
+\item two drivers \textbf{disagreeing} give \code{'X'}.
+\end{itemize}
+
+\begin{quote}
+\textbf{Therefore \code{'X'} in a waveform never means the simulator is confused.}
+It means two things drove one wire and disagreed. From Lab 9 onward that is the
+fastest diagnosis available.
+\end{quote}
+
+\subsection*{The one sentence: why not a Boolean equation?}
+
+\begin{quote}
+\textbf{Model answer:} Because the output range is $\{0, 1, Z\}$ and Boolean
+algebra only has $\{0, 1\}$. \code{'Z'} is not a value --- it is the
+\emph{absence} of a driver --- so there is no AND/OR/NOT expression that produces
+it.
+\end{quote}
+
+Accept also: ``the value on the wire depends on the \emph{other} drivers, so it is
+not a function of this component's inputs alone.'' That is a deeper answer and
+deserves a comment in the margin.
+
+\vspace{4pt}\hr
+
+\section*{Question 3 --- Test plan (2 points)}
+
+\subsection*{Model vector list}
+
+\begin{center}
+\small
+\begin{tabular}{c>{\raggedright\arraybackslash}p{5.6cm}>{\raggedright\arraybackslash}p{7.0cm}}
+\toprule
+\# & Inputs & What it proves \\
+\midrule
+1 & \code{0x8000}, \code{Xsel}=0, \code{Xlsft}=0 & zero-extension of a value whose top bit is 1 \\
+2 & \code{0x8000}, \code{Xsel}=1, \code{Xlsft}=0 & \textbf{sign-extension}: same input, different answer \\
+3 & \code{0x7FFF}, \code{Xsel}=1 & sign-extension of a \emph{positive} value pads zeros, not ones \\
+4 & \code{0xFFFF}, \code{Xsel}=1, \code{Xlsft}=1 & extend \textbf{then} shift, in that order: \code{0xFFFFFFFC} \\
+5 & bus: one buffer \code{Sel}=1, the other \code{Sel}=0 & the enabled driver owns the wire; the other is \code{'Z'} \\
+6 & bus: both \code{Sel}=0 & the wire floats: all \code{'Z'}, driven by nobody \\
+7 & bus: both \code{Sel}=1 with \emph{different} data & \textbf{contention}: the wire shows \code{'X'} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Six vectors earn full credit. Vectors 2 and 7 are the ones that must appear.
+
+\subsection*{The order-of-operations trap}
+
+Vector 4 is worth a sentence at the bench. \textbf{Extension happens first, then
+the shift.} Shifting first and extending afterwards gives a different answer, and
+both orders look reasonable in a sentence of English. The specification's table
+settles it, which is why the table is written before the code.
+
+\subsection*{Contention is resolved \emph{per bit}}
+
+Worth telling strong students: if two drivers put \code{0xAAAAAAAA} and
+\code{0xBBBBBBBB} on the same bus, the result is \textbf{not} all \code{'X'}. The
+patterns agree on some bits and disagree on others, so the wire shows \code{'X'}
+only where they differ. A test that checks for ``all X'' would fail on a correct
+simulator. Check the bits that actually conflict.
+
+\subsection*{The closing question: \code{0x0001} extends the same either way}
+
+\begin{quote}
+\textbf{Model answer:} A test value must be able to \emph{distinguish} the cases.
+\code{0x0001} has a top bit of \code{0}, so sign- and zero-extension give the same
+answer and the vector cannot fail --- it proves nothing about \code{Xsel}. Choose
+values where the two behaviours differ, which here means \textbf{bit 15 set}.
+\end{quote}
+
+\textbf{This generalises, and it is the real lesson of the pre-lab:} a vector that
+cannot fail is not a test. The same reasoning is why Lab 3's data patterns must
+differ between inputs, and why Lab 2's toggle vector must move \code{D} between
+edges.
+
+\vspace{6pt}
+\hr
+{\small \textbf{At the bench:} any student whose Q1(a) row 1 is \code{0x0000FFFF}
+or whose row 3 shifted right will build an \code{ImmedXtnd} that passes their own
+testbench and breaks Lab 12. Correct it before they start.}
+
+\end{document}

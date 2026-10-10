@@ -1,0 +1,270 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.15}
+
+\definecolor{good}{RGB}{0,110,60}
+\definecolor{bad}{RGB}{150,30,30}
+\newcommand{\yes}{\textcolor{good}{\textbf{Write this}}}
+\newcommand{\no}{\textcolor{bad}{\textbf{Not this}}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries How to Write the Lab Report}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+\hr
+
+This guide was written \emph{after} reading your Lab 0 and Lab 1 reports. Every
+example below is taken from real submissions this term. Nothing here is a matter of
+taste --- each rule corresponds directly to points on the rubric.
+
+\section*{1. Where the points actually are}
+
+\begin{center}
+\begin{tabular}{lrl}
+\toprule
+Component & Pts & What it is really asking \\
+\midrule
+Pre-lab & 5 & Did you arrive with a design in your head? \\
+Compiles cleanly, warnings explained & 25 & \textbf{Show me the Quartus output.} \\
+Testbench and vectors, coverage justified & 20 & \textbf{Why is this set of vectors enough?} \\
+Simulation results match the specification & 20 & \textbf{Show me the waveform, and read it to me.} \\
+Report chapter quality & 15 & Tables, derivations, structure. \\
+In-lab demonstration & 15 & Can you explain your own design? \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Notice that 65 of the 100 points are evidence, not prose.} The most common
+way to lose marks this term was not being wrong --- it was being \emph{unsupported}.
+Four reports in Lab 1 contained no figures at all; they were the four lowest scores,
+and in at least one case the student clearly understood the material completely.
+
+\begin{quote}
+\textbf{The rule behind everything in this guide:} a claim without evidence is
+worth nothing, and evidence without a sentence interpreting it is worth almost
+nothing.
+\end{quote}
+
+\section*{2. The rule that costs the most marks: captions}
+
+A figure caption must say \textbf{what the figure proves}. Not what it is.
+
+\vspace{4pt}
+\no
+\begin{quote}
+\emph{Figure 1: Plot from ModelSim.}\\
+\emph{Figure 4: Majority of 4.}\\
+\emph{Figure 1.4: tb\_voting4.}
+\end{quote}
+
+\yes\ --- all three of these are from your classmates' reports this term:
+\begin{quote}
+\emph{``With \code{En} low from 20\,ns to 40\,ns, \code{D} and \code{D8} change at
+30\,ns while \code{Q} and \code{Q8} keep their values --- the latch is holding.''}
+
+\emph{``\code{Y} is high only in the windows 30--40\,ns and 50--80\,ns, which are
+rows 3, 5, 6 and 7 of Table 1.2.''}
+
+\emph{``\code{AA} then \code{55} flip every bit, so a \code{generate} with a stuck
+index would be visible here.''}
+\end{quote}
+
+The test: \textbf{cover the figure and read only the caption.} If the caption still
+tells the reader what was proved, it is a good caption.
+
+\textbf{Crop your screenshots.} A full-screen capture of Questa with the signals
+two millimetres tall proves nothing. Crop to the interval that matters and, if your
+tool allows it, put the cursors on it.
+
+\section*{3. Tables: number the rows, then cite them}
+
+\begin{center}
+\begin{tabular}{c|ccc|c|l}
+\toprule
+\# & \code{Clr} & \code{En} & \code{D} & $Q^{+}$ & note \\
+\midrule
+0 & 1 & -- & -- & \textbf{0} & asynchronous clear, dominates \\
+1 & 0 & 0 & -- & $\mathbf{Q}$ & hold --- the memory row \\
+2 & 0 & 1 & 0 & \textbf{0} & transparent \\
+3 & 0 & 1 & 1 & \textbf{1} & transparent \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Then write ``row 1'' in the prose, never ``the case where the enable is low and the
+data does not matter''. Numbered rows let your Discussion, your coverage argument
+and your figure captions all point at the same thing.
+
+Every table and figure needs a number and a caption, and must be \textbf{referred to
+by number} in the text. If nothing in your text says ``Table 2'', the table is
+decoration.
+
+\section*{4. Derivations: three lines, and name the law}
+
+\begin{align*}
+\text{(1) canonical} \quad & Y = \textstyle\sum m(3,5,6,7) = \bar{A}BC + A\bar{B}C + AB\bar{C} + ABC \\
+\text{(2) simplified} \quad & Y = AB + AC + BC
+   \qquad \textbf{[idempotent, distributive, complement laws]} \\
+\text{(3) VHDL} \quad & \code{Y <= (A and B) or (A and C) or (B and C);}
+\end{align*}
+
+\no\ ``The equation simplifies to $AB + AC + BC$.''\\
+\yes\ the three lines above, with the law named at step (2).
+
+``It simplified'' is an assertion, not a derivation. About half of the Lab 0 reports
+lost these marks, and recovering them takes one extra line of writing.
+
+\section*{5. The coverage argument: the question nobody answered}
+
+You cannot test everything. The rubric does not ask you to --- it asks you to
+explain \textbf{why your vectors are enough}. The strongest form is:
+
+\begin{quote}
+\textbf{For each vector, name the wrong design it would catch.}
+\end{quote}
+
+\yes\ --- again, from real reports this term:
+\begin{quote}
+\emph{``All 8 rows are tested. The expected value counts the asserted inputs
+instead of re-using $AB+AC+BC$, so a mistake in the algebra would not be hidden.''}
+
+\emph{``Each select value is exercised with both values of the selected input
+\textbf{and} both values of the unselected input, to prove the unselected input has
+no influence.''}
+
+\emph{``The disabled row is applied first, because a testbench that only drives
+$E = 1$ cannot detect a decoder that ignores its enable.''}
+\end{quote}
+
+\textbf{A vector that cannot fail is not a test.} If two inputs carry the same
+pattern, or every immediate is positive, or the latch is never closed while the data
+changes, then the corresponding bug survives your entire testbench.
+
+And make the testbench \textbf{self-checking}: \code{assert} statements, a counted
+error total, and one \code{PASS}/\code{FAILED} line at the end. Looking at a
+waveform and deciding it seems right only tests whether the output matches what you
+already expected.
+
+\section*{6. The Discussion: one real problem}
+
+This section is required, it is graded, and the summary version loses marks.
+
+\no\ \emph{``This lab went quite well. Each simulation matched the truth table
+perfectly.''} \quad \emph{``The lab required only minor debugging.''}
+
+\yes\ three sentences: \textbf{what broke}, \textbf{how you found it}, \textbf{what
+it taught you}. Real examples from this term:
+
+\begin{quote}
+\emph{``The project could not find its own top level: Error (12007). The file
+compiled, so the VHDL was not the problem --- the entity is \code{trans\_latch} with
+an underscore and the top-level setting said \code{translatch}. Quartus matches the
+name exactly.''}
+
+\emph{``The first waveform looked correct, but all activity ended at 30\,ns.
+Comparing the run against the requirements showed the testbench never proved clear
+while holding or clear while transparent. I expanded it to eight checked vectors.''}
+
+\emph{``The hold vector still passed, which made the bug harder to notice, because
+the latch looked like it was holding when it was really just never updating.''}
+
+\emph{``A missing \code{end if;} --- I used the reported line number and looked
+slightly \emph{above} it, because the compiler reports where it gave up, not where
+the mistake is.''}
+\end{quote}
+
+Every one of those is worth full marks. Note that none of them is about being
+clever; they are about being specific.
+
+\section*{7. The evidence set}
+
+Each lab specification names the evidence to collect. Collect it \emph{during} the
+session --- you cannot reconstruct a waveform at midnight.
+
+\begin{center}
+\begin{tabular}{ll>{\raggedright\arraybackslash}p{8.0cm}}
+\toprule
+E1 & Flow Summary + Messages & 0 errors; warnings sorted into fix / explain / ignore \\
+E2 & RTL Viewer & did the tool understand what I wrote? \\
+E7 & Waveform + transcript & does it behave, and can I prove it? \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Read the numbers, do not just paste them.} ``Total registers: 0, as expected
+for combinational logic'' is worth marks. A screenshot of the same number with no
+sentence is not. In Lab 1 the right reading is the opposite: the latch report
+\emph{should} list your latches, and 0 registers is still correct because a latch is
+not a register.
+
+\section*{8. Professional practice: the cheap marks}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+\item \textbf{Your name on the title page.} Four reports this term had no name
+anywhere. If I cannot tell whose work it is, I cannot grade it --- and I cannot give
+you your pre-lab points either.
+\item \textbf{A real filename:} \code{Lastname\_Lab1.pdf}. Not
+\code{Notes\_260928\_220655.PDF}, not \code{Lab1 (1).pdf}.
+\item \textbf{No placeholders.} \code{PASTE SCREENSHOT HERE}, \code{Insert value},
+and \code{Placeholder: the Quartus RTL Viewer screenshot} all appeared in submitted
+PDFs this term. That is an automatic deduction, and it is pure waste --- the work
+was usually done.
+\item \textbf{Delete the instructions.} If your report contains the words
+``Recommended screenshot'' or a submission checklist, you submitted the worksheet
+instead of the report.
+\item \textbf{Code as text, not as a photograph.} Use
+\code{\textbackslash lstinputlisting} so the code in the report is the code you
+compiled. Pasted screenshots of code drift out of date the moment you fix a bug.
+\item \textbf{Declare AI assistance} if you used it, as several of you did
+correctly. Stating that a tool helped with document structure while the analysis is
+your own is exactly the right professional habit.
+\item \textbf{The template is a template, not a submission.} The model chapter that
+ships in the Overleaf project is there to show the standard. Replace it with your
+own work.
+\end{itemize}
+
+\section*{9. Before you submit --- tick every box}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{15.4cm}}
+\toprule
+$\square$\; My name is on the title page, and the filename has my name in it. \\
+$\square$\; Every table has numbered rows and is cited by number in the text. \\
+$\square$\; Every derivation has three lines and names its law. \\
+$\square$\; \textbf{Every figure has one sentence saying what it proves.} \\
+$\square$\; Screenshots are cropped to the part that matters and are legible. \\
+$\square$\; The testbench is self-checking and the transcript is shown. \\
+$\square$\; The coverage argument says which wrong design each vector catches. \\
+$\square$\; E1, E2 and E7 are present, and each number is read in words. \\
+$\square$\; The Discussion names one real problem, how I found it, what it taught. \\
+$\square$\; No placeholders, no instruction text, no unfilled table cells. \\
+$\square$\; The code in the report is included from the files I actually compiled. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{6pt}
+\hr
+{\small \textbf{One sentence to remember.} A lab report is not a record of what you
+did --- it is the \emph{argument} that your design is correct, and every figure,
+table and number in it is there as evidence for that argument. Anything that is not
+evidence is decoration, and decoration is worth zero.}
+
+\end{document}

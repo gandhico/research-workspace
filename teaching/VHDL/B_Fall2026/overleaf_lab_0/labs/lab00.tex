@@ -1,0 +1,442 @@
+% =============================================================================
+%  Lab 0 - VHDL Fundamentals   *** EXAMPLE CHAPTER: Examples 1, 2 and 3 ***
+%
+%  Read this once, then write your own chapters in the same shape:
+%    - every truth table has numbered rows
+%    - every simplification names the law it uses
+%    - code is included from code/ with \vhdlfile, never pasted
+%    - every figure has a caption that says what it PROVES
+%    - the Discussion describes a real mistake and what it taught
+% =============================================================================
+
+\chapter{Lab 0 --- VHDL Fundamentals}
+
+\section{Objective}
+
+Learn the structure of a VHDL design --- an \texttt{entity} that declares the
+interface and an \texttt{architecture} that implements it --- by building and
+verifying three small combinational circuits. Each circuit introduces one new way
+of writing hardware:
+
+\begin{table}[H]
+\centering
+\caption{The three circuits and what each one introduces.}
+\label{tab:lab00-plan}
+\begin{tabular}{cll}
+\toprule
+Ex. & circuit & new VHDL construct \\
+\midrule
+1 & \texttt{majority3} --- majority of three & concurrent Boolean assignment \\
+2 & \texttt{mux2} --- 2-to-1 multiplexer & conditional assignment \texttt{when}/\texttt{else} \\
+3 & \texttt{decoder2to4} --- 2-to-4 decoder with enable & vectors, \texttt{process}, \texttt{if}, \texttt{case} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Every circuit is also verified with a self-checking testbench and a waveform, so
+that correctness is proved by assertions rather than judged by eye.
+
+% -----------------------------------------------------------------------------
+\section{Specification}
+
+\subsection{Example 1 --- \texttt{majority3}}
+
+The output $Y$ is \texttt{1} when at least two of the three inputs $A$, $B$, $C$
+are \texttt{1}. Three inputs give $2^3 = 8$ combinations, so the table is written
+exhaustively (Table~\ref{tab:lab00-maj}).
+
+\begin{table}[H]
+\centering
+\caption{Exhaustive truth table for \texttt{majority3}.}
+\label{tab:lab00-maj}
+\begin{tabular}{c|ccc|c|l}
+\toprule
+\# & $A$ & $B$ & $C$ & $Y$ & minterm \\
+\midrule
+0 & 0 & 0 & 0 & 0 & \\
+1 & 0 & 0 & 1 & 0 & \\
+2 & 0 & 1 & 0 & 0 & \\
+3 & 0 & 1 & 1 & 1 & $m_3 = \overline{A}BC$ \\
+4 & 1 & 0 & 0 & 0 & \\
+5 & 1 & 0 & 1 & 1 & $m_5 = A\overline{B}C$ \\
+6 & 1 & 1 & 0 & 1 & $m_6 = AB\overline{C}$ \\
+7 & 1 & 1 & 1 & 1 & $m_7 = ABC$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Boolean derivation.}
+\begin{align*}
+\text{(1) canonical} \quad
+  Y &= \textstyle\sum m(3,5,6,7) = \overline{A}BC + A\overline{B}C + AB\overline{C} + ABC \\[4pt]
+\text{(2) simplified} \quad
+  Y &= \overline{A}BC + A\overline{B}C + AB\overline{C} + ABC + ABC + ABC
+     && \text{idempotent law: } X = X + X \\
+  &= (\overline{A}+A)BC + A(\overline{B}+B)C + AB(\overline{C}+C)
+     && \text{distributive law} \\
+  &= BC + AC + AB
+     && \text{complement law: } X + \overline{X} = 1 \\[4pt]
+\text{(3) VHDL} \quad
+  & \texttt{Y <= (A and B) or (A and C) or (B and C);}
+\end{align*}
+
+$Y$ does not appear on the right-hand side of its own equation: the circuit has no
+memory, and its output depends only on the present inputs.
+
+\subsection{Example 2 --- \texttt{mux2}}
+
+The output $Y$ copies $D_0$ when the select input $S$ is \texttt{0}, and copies
+$D_1$ when $S$ is \texttt{1}. Table~\ref{tab:lab00-muxE} lists all eight
+combinations; Table~\ref{tab:lab00-muxC} states the same behaviour in compressed
+form, naming the \emph{source} of the output instead of its value.
+
+\begin{table}[H]
+\centering
+\begin{minipage}{0.52\linewidth}
+\centering
+\caption{Exhaustive table for \texttt{mux2}.}
+\label{tab:lab00-muxE}
+\begin{tabular}{c|ccc|c}
+\toprule
+\# & $S$ & $D_1$ & $D_0$ & $Y$ \\
+\midrule
+0 & 0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1 & 1 \\
+2 & 0 & 1 & 0 & 0 \\
+3 & 0 & 1 & 1 & 1 \\
+4 & 1 & 0 & 0 & 0 \\
+5 & 1 & 0 & 1 & 0 \\
+6 & 1 & 1 & 0 & 1 \\
+7 & 1 & 1 & 1 & 1 \\
+\bottomrule
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{0.44\linewidth}
+\centering
+\caption{Compressed table for \texttt{mux2}.}
+\label{tab:lab00-muxC}
+\begin{tabular}{c|c|c}
+\toprule
+\# & $S$ & $Y$ \\
+\midrule
+0 & 0 & $D_0$ \\
+1 & 1 & $D_1$ \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{table}
+
+\paragraph{Boolean derivation.}
+\begin{align*}
+\text{(1) canonical} \quad
+  Y &= \textstyle\sum m(1,3,6,7)
+     = \overline{S}\,\overline{D_1}D_0 + \overline{S}D_1D_0 + SD_1\overline{D_0} + SD_1D_0 \\[4pt]
+\text{(2) simplified} \quad
+  Y &= \overline{S}D_0(\overline{D_1} + D_1) + SD_1(\overline{D_0} + D_0)
+     && \text{distributive law} \\
+  &= \overline{S}D_0 + SD_1
+     && \text{complement law} \\[4pt]
+\text{(3) VHDL} \quad
+  & \texttt{Y <= D0 when S = '0' else D1;}
+\end{align*}
+
+Read aloud, the simplified equation is the specification itself: $D_0$ passes when
+$S$ is low, $D_1$ passes when $S$ is high.
+
+\subsection{Example 3 --- \texttt{decoder2to4}}
+
+When the enable $E$ is \texttt{1}, exactly one of the four outputs $D_3 \dots D_0$
+is \texttt{1}: the one whose index equals the binary address $A_1A_0$. When $E$ is
+\texttt{0}, all outputs are \texttt{0}. Row~0 of Table~\ref{tab:lab00-dec} uses
+don't-cares (--) to state that the address has no effect while the decoder is
+disabled.
+
+\begin{table}[H]
+\centering
+\caption{Truth table for \texttt{decoder2to4}. Rows 1--4 are one-hot.}
+\label{tab:lab00-dec}
+\begin{tabular}{c|ccc|cccc|l}
+\toprule
+\# & $E$ & $A_1$ & $A_0$ & $D_3$ & $D_2$ & $D_1$ & $D_0$ & note \\
+\midrule
+0 & 0 & -- & -- & 0 & 0 & 0 & 0 & disabled \\
+1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & \\
+2 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & \\
+3 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & \\
+4 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Boolean equations.} There is one equation per output. Each output is a
+single product term --- one minterm of the address, gated by the enable --- so
+nothing simplifies further:
+\begin{align*}
+D_0 &= E\,\overline{A_1}\,\overline{A_0} &
+D_1 &= E\,\overline{A_1}\,A_0 &
+D_2 &= E\,A_1\,\overline{A_0} &
+D_3 &= E\,A_1\,A_0
+\end{align*}
+or, compactly, $D_k = E \cdot m_k(A_1, A_0)$.
+
+% -----------------------------------------------------------------------------
+\section{Design}
+
+The same circuit can be described in three views. Each view is useful for a
+different purpose, and part of designing is choosing which one to write.
+
+\begin{table}[H]
+\centering
+\caption{Three views of one design.}
+\label{tab:lab00-views}
+\small
+\begin{tabular}{l>{\raggedright\arraybackslash}p{6.2cm}>{\raggedright\arraybackslash}p{4.8cm}}
+\toprule
+view & what you write & best when \\
+\midrule
+behavioural & \emph{what} the output is (equation, condition, case) & the specification is a rule \\
+structural  & \emph{how} it is wired: one signal or component per block & you reuse parts or care about the wiring \\
+schematic   & a drawing of gates and wires & explaining and checking the structure \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Quartus accepts the first two as VHDL and produces the third automatically in the
+RTL Viewer. Comparing your own schematic with the RTL Viewer is the fastest way to
+check that the tool understood the design the way you intended.
+
+\subsection{Example 1 --- three views of \texttt{majority3}}
+
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Behavioural:} the simplified equation written as one concurrent
+assignment, \texttt{Y <= (A and B) or (A and C) or (B and C);}
+\item \textbf{Structural (gate level):} one internal signal per gate --- three AND
+outputs \texttt{AB\_s}, \texttt{AC\_s}, \texttt{BC\_s}, then one OR.
+\item \textbf{Schematic:} Figure~\ref{fig:lab00-maj-sch}. Each product term of the
+equation is one AND gate; the sum is the OR gate.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\input{figures/majority3_schematic}
+\caption{Schematic view of \texttt{majority3}: three 2-input AND gates, one per
+product term of $Y = AB + AC + BC$, feeding a 3-input OR gate. A dot marks a
+connection; lines that cross without a dot are not connected.}
+\label{fig:lab00-maj-sch}
+\end{figure}
+
+\textbf{Chosen view: behavioural.} The simplified equation maps directly onto one
+line of VHDL. The structural version adds three internal signals without changing
+the synthesised hardware, so it is written only to show the correspondence between
+the equation, the code and the schematic.
+
+\subsection{Example 2 --- \texttt{mux2}}
+
+The specification is a \emph{choice} (``if $S$ is 0, pass $D_0$''), so the
+behavioural \texttt{when}/\texttt{else} form states it most directly. The equation
+$Y = \overline{S}D_0 + SD_1$ gives the schematic in Figure~\ref{fig:lab00-mux-sch}:
+an inverter produces $\overline{S}$, and each AND gate lets one data input through.
+
+\begin{figure}[H]
+\centering
+\input{figures/mux2_schematic}
+\caption{Schematic view of \texttt{mux2}. Exactly one AND gate is enabled for any
+value of $S$, so exactly one data input reaches $Y$.}
+\label{fig:lab00-mux-sch}
+\end{figure}
+
+\subsection{Example 3 --- four ways to write \texttt{decoder2to4}}
+
+The decoder is the first circuit with a vector output, and it can be written in at
+least four equivalent forms:
+
+\begin{table}[H]
+\centering
+\caption{Four VHDL forms of the same decoder.}
+\label{tab:lab00-decforms}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{6.4cm}>{\raggedright\arraybackslash}p{4.4cm}}
+\toprule
+form & VHDL construct & enable handled by \\
+\midrule
+(a) Boolean equations & four concurrent assignments \texttt{D(k) <= E and \dots} & the \texttt{E} term in each product \\
+(b) selected assignment & \texttt{with A select D <= \dots} & must be added explicitly \\
+(c) process with \texttt{if}/\texttt{case} & \texttt{if E = '0' \dots else case A is \dots} & the \texttt{if}, before the \texttt{case} \\
+(d) process with default & \texttt{D <= "0000"; if E = '1' then case \dots} & the default assignment \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Form (a) is the schematic written as text (Figure~\ref{fig:lab00-dec-sch}): two
+inverters produce $\overline{A_1}$ and $\overline{A_0}$, and each 3-input AND gate
+computes one minterm gated by $E$.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/decoder2to4_schematic}
+\caption{Schematic view of \texttt{decoder2to4}. $E$ enters every AND gate, so when
+$E = 0$ all four outputs are forced to 0 regardless of the address.}
+\label{fig:lab00-dec-sch}
+\end{figure}
+
+\textbf{Chosen form: (c).} The specification has a priority --- \emph{first} check
+the enable, \emph{then} decode the address --- and the \texttt{if} followed by a
+\texttt{case} states that priority in the same order. Form (b) is shorter but has no
+natural place for the enable; Section~\ref{sec:lab00-discussion} describes what
+happened when the first version used it.
+
+A \texttt{process} does not by itself mean sequential hardware. This process
+describes combinational logic because it has no clock and \texttt{D} receives a
+value on every path through it.
+
+% -----------------------------------------------------------------------------
+\section{Implementation}
+
+\vhdlfile{code/lab00/majority3.vhd}{\texttt{majority3} --- majority of three (behavioural)}
+
+\vhdlfile{code/lab00/mux2.vhd}{\texttt{mux2} --- 2-to-1 multiplexer (behavioural)}
+
+\vhdlfile{code/lab00/decoder2to4.vhd}{\texttt{decoder2to4} --- 2-to-4 decoder with enable, corrected version (form c)}
+
+% -----------------------------------------------------------------------------
+\section{Verification}
+
+All three testbenches follow the same pattern: the testbench entity has no ports,
+it instantiates the design under test with named association, applies one vector
+every 10\,ns, \emph{checks} the output after each wait, and prints a single
+\texttt{PASS} or \texttt{FAILED} verdict at the end.
+
+\paragraph{Coverage argument.}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{\texttt{majority3}:} all 8 rows of Table~\ref{tab:lab00-maj} are
+applied, stored in the testbench as a constant table. Exhaustive testing leaves no
+untested input combination.
+\item \textbf{\texttt{mux2}:} 4 vectors, two for each value of $S$. In every vector
+$D_0 \neq D_1$, so the output is only correct if the multiplexer selected the right
+input; a circuit that ignored $S$ or ORed its inputs would fail.
+\item \textbf{\texttt{decoder2to4}:} all 5 rows of Table~\ref{tab:lab00-dec}. Row~0
+($E = 0$) is applied first, because the enable is part of the specification and a
+testbench that only drives $E = 1$ cannot detect a decoder that ignores it.
+\end{itemize}
+
+\vhdlfile{code/lab00/majority3_tb.vhd}{\texttt{majority3\_tb} --- exhaustive, table-driven}
+
+\vhdlfile{code/lab00/mux2_tb.vhd}{\texttt{mux2\_tb} --- four vectors with a \texttt{check} procedure}
+
+\vhdlfile{code/lab00/decoder2to4_tb.vhd}{\texttt{decoder2to4\_tb} --- all five table rows, disabled row first}
+
+% -----------------------------------------------------------------------------
+\section{Results}
+
+\subsection{Compilation}
+
+All designs compiled with 0 errors on device \texttt{5CSEMA4U23C6}
+(Table~\ref{tab:lab00-quartus}).
+
+\begin{table}[H]
+\centering
+\caption{Quartus results. Pin counts equal inputs plus outputs; no design contains
+a register, as expected for combinational logic.}
+\label{tab:lab00-quartus}
+\begin{tabular}{lcccc}
+\toprule
+& \texttt{majority3} & \texttt{mux2} & \texttt{decoder2to4} v1 & \texttt{decoder2to4} \\
+\midrule
+pins (in / out) & 4 (3 / 1) & 4 (3 / 1) & 7 (3 / 4) & 7 (3 / 4) \\
+logic (ALMs)    & 1 & 1 & 3 & 3 \\
+registers       & 0 & 0 & 0 & 0 \\
+design warning  & none & none & \textbf{15610} & none \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three messages appear for every design and are expected, not errors:
+\textit{Critical Warning 169085} (no pin locations --- there is no board this
+semester), \textit{Critical Warning 332012} (no timing constraints file) and
+\textit{Warning 332068} (no clocks). A combinational circuit has no clock, so the
+Timing Analyzer reports no $F_{max}$.
+
+The first version of the decoder produced one additional warning, which is the bug
+discussed in Section~\ref{sec:lab00-discussion}:
+\begin{lstlisting}[language={},numbers=none,caption={}]
+Warning (21074): Design contains 1 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "E"
+\end{lstlisting}
+
+\subsection{Simulation}
+
+Each vector occupies one 10\,ns window, so row $i$ of a table is visible between
+$10i$ and $10i+10$\,ns. Each waveform figure shows the signal rows of the Questa
+screenshot directly above its time axis; the empty area between them is not shown.
+
+\wavefig{figures/majority3_waveform.png}{408bp}{447bp}{\texttt{majority3\_tb} waveform. $Y$ is
+high only in the windows 30--40\,ns and 50--80\,ns, which are rows 3, 5, 6 and 7 of
+Table~\ref{tab:lab00-maj}: the output is 1 exactly when two or more inputs are 1.
+The run ends at 80\,ns, confirming all 8 rows were applied.}{fig:lab00-maj-wave}
+
+\wavefig{figures/2t1_multiplexer_waveform.png}{407bp}{445bp}{\texttt{mux2\_tb} waveform. In
+0--10\,ns and 20--30\,ns ($S=0$) $Y$ equals $D_0$ (0, then 1); in 10--20\,ns and
+30--40\,ns ($S=1$) $Y$ equals $D_1$ (1, then 0). Because $D_0 \neq D_1$ in every
+window, $Y$ changing with $S$ proves the select input chooses the
+source.}{fig:lab00-mux-wave}
+
+\wavefig{figures/decoder_waveform.png}{408bp}{446bp}{\texttt{decoder2to4\_tb} waveform of the
+\emph{first} version (\texttt{D} shown in hexadecimal). In 10--50\,ns the outputs
+step through 1, 2, 4, 8 --- one-hot, rows 1--4 correct. In 0--10\,ns, however,
+$E = 0$ and $D = 1$ (\texttt{0001}): row~0 of Table~\ref{tab:lab00-dec} is violated,
+because this version ignores the enable.}{fig:lab00-dec-wave}
+
+\begin{table}[H]
+\centering
+\caption{Simulation transcripts (Questa).}
+\label{tab:lab00-transcripts}
+\begin{tabular}{lll}
+\toprule
+testbench & design & transcript verdict \\
+\midrule
+\texttt{majority3\_tb}   & \texttt{majority3}      & \texttt{PASS - majority3: all 8 rows correct} (80\,ns) \\
+\texttt{mux2\_tb}        & \texttt{mux2}           & \texttt{PASS - mux2: all 4 vectors correct} (40\,ns) \\
+\texttt{decoder2to4\_tb} & first version  & \texttt{FAIL: row 0: E=0 must disable every output} (10\,ns) \\
+\texttt{decoder2to4\_tb} & corrected      & \texttt{PASS - decoder2to4: all 5 rows correct} (50\,ns) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The corrected decoder differs from Figure~\ref{fig:lab00-dec-wave} only in the
+0--10\,ns window, where $D$ is now \texttt{0000}.
+
+% -----------------------------------------------------------------------------
+\section{Discussion}
+\label{sec:lab00-discussion}
+
+\paragraph{The decoder ignored its enable.} The first version of the decoder used a
+selected signal assignment:
+
+\vhdlfile{code/lab00/decoder2to4_v1.vhd}{First version of \texttt{decoder2to4} --- \texttt{E} is declared but never used}
+
+It lists all four addresses correctly, and rows 1--4 of the waveform were right.
+But \texttt{E} appears only in the entity: the architecture never reads it, so the
+circuit decodes the address whether or not it is enabled. The final
+\texttt{"0000" when others} line looks as if it handles the disabled case, but it
+does not --- it only covers address values such as \texttt{'U'} or \texttt{'X'},
+which exist in simulation and not in hardware.
+
+The bug was visible in three independent places:
+\begin{enumerate}[leftmargin=1.8em]
+\item \textbf{Quartus messages:} \textit{Warning 15610: No output dependent on input
+pin "E"} --- the tool reported that an input drives nothing.
+\item \textbf{Waveform:} $D = \texttt{0001}$ while $E = 0$ in the first 10\,ns
+(Figure~\ref{fig:lab00-dec-wave}).
+\item \textbf{Assertion:} the row-0 check failed at 10\,ns.
+\end{enumerate}
+
+It was fixed by rewriting the architecture as form~(c): test \texttt{E} first, then
+decode the address with a \texttt{case}. After the change the Quartus warning
+disappeared and the testbench reported \texttt{PASS}.
+
+\paragraph{What this taught.} A testbench can only find a bug in a row it actually
+applies. If the testbench had started with $E = 1$, all of its checks would have
+passed and the broken decoder would have looked verified. Every row of the truth
+table --- including the ``boring'' disabled row --- must become a vector. And the
+warnings in the Messages window are part of the evidence: this one described the
+bug exactly, before any simulation was run.

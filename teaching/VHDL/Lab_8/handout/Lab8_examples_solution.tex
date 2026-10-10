@@ -1,0 +1,276 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 8 --- Guided Examples: Solution}\\[2pt]
+{\itshape Ex 1 absolute targets \quad$\cdot$\quad Ex 2 the condition equations \quad$\cdot$\quad Ex 3 two decisions, not one}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+\hr
+
+\begin{center}
+\small
+\begin{tabular}{cl>{\raggedright\arraybackslash}p{6.0cm}>{\raggedright\arraybackslash}p{3.8cm}}
+\toprule
+& circuit & new idea & feeds the assignment as \\
+\midrule
+1 & \code{absolute\_target} & a jump target is \textbf{wiring}, not arithmetic & \code{NIAG\_Abslt} \\
+2 & \code{branch\_conditions} & six conditions from \textbf{two flags} & \code{NIAG\_Cond} \\
+3 & \code{pc\_select} & \code{Sel} and \code{Cond} are \textbf{separate} & \code{NIAG\_MUX} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}\hr
+
+\section*{Example 1 --- The absolute target is pure wiring}
+
+\begin{lstlisting}
+Abslt <= NSA(31 downto 28) & Index & "00";
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+bits & source & why \\
+\midrule
+4 & \code{NSA(31..28)} & \textbf{inherited} --- the instruction cannot supply them \\
+26 & \code{Index} & all the room the encoding has \\
+2 & \code{"00"} & instructions are word-aligned \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{There is no adder in this component.} Concatenation is free: it is a
+renaming of wires, and it costs zero logic in the Fitter report.
+
+\subsection*{Worked example from the Lab 12 program}
+
+\code{J 0x08} at \code{0x14}, encoded \code{0x08000002}:
+\code{NSA} $=$ \code{0x18}, top four bits \code{0000}, \code{Index} $= 2$, so
+\code{Abslt} $=$ \code{0x00000008}.
+
+\subsection*{The consequence: a jump cannot leave its region}
+
+Because the top four bits are inherited, a \code{J} reaches only addresses in the
+\textbf{same 256\,MB region} ($2^{28}$ bytes) as \code{NSA}. To go further you
+need \code{JR}, whose address comes from a register and therefore supplies all 32
+bits.
+
+\vspace{4pt}\hr
+
+\section*{Example 2 --- Six conditions from two flags}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+code & meaning & Taken \\
+\midrule
+\code{NONE} & always & $1$ \\
+\code{EQ} & $=0$ & $Z$ \\
+\code{NEQ} & $\neq 0$ & $\overline{Z}$ \\
+\code{GTZ} & $>0$ & $\overline{N}\cdot\overline{Z}$ \\
+\code{GEZ} & $\geq 0$ & $\overline{N}$ \\
+\code{LTZ} & $<0$ & $N$ \\
+\code{LEZ} & $\leq 0$ & $N + Z$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{Every conditional branch in the machine is one or two gates over the ALU's
+two flags.} That is the whole conditional-control-flow mechanism.
+\end{quote}
+
+\subsection*{2.1 The complement pairs}
+
+\[
+\code{GTZ} \leftrightarrow \code{LEZ} \qquad
+\code{GEZ} \leftrightarrow \code{LTZ} \qquad
+\code{EQ}  \leftrightarrow \code{NEQ}
+\]
+
+By De Morgan,
+$\overline{\code{GTZ}} = \overline{\overline{N}\cdot\overline{Z}} = N + Z = \code{LEZ}$.
+So seven conditions do not cost seven circuits --- three gates and their
+complements cover everything, and \code{Cond} merely selects which reaches the
+output.
+
+\subsection*{2.2 The two that need both flags}
+
+\code{GTZ} and \code{LEZ} are the only conditions requiring \emph{both} $N$ and
+$Z$, and they are where the mistakes happen:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+wrong version & agrees with correct except & symptom \\
+\midrule
+\code{GTZ} $= \overline{N}$ & at $N{=}0, Z{=}1$ (result exactly zero) & branches when the value is zero \\
+\code{LEZ} $= N$ & at $N{=}0, Z{=}1$ & \textbf{fails to branch at zero} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{The second one is the Lab 12 killer:} the reference program's loop ends
+with \code{BLEZ}, so a \code{LEZ} that forgets $+Z$ runs the loop past its exit
+and the CPU never terminates. Test $N{=}0, Z{=}1$ explicitly --- it is one vector.
+
+\subsection*{2.3 Why the default is \emph{not taken}}
+
+\begin{lstlisting}
+'0' when others;        -- an unknown condition code does NOT branch
+\end{lstlisting}
+
+\begin{quote}
+\textbf{A CPU that takes a branch it does not understand runs away; one that
+ignores it merely does the wrong thing slowly.} Between two failures, choose the
+one you can debug.
+\end{quote}
+
+That is a safety argument, and it is the same reasoning as \code{CTRL\_DEFAULT} in
+Lab 10: unknown input, harmless behaviour.
+
+\vspace{4pt}\hr
+
+\section*{Example 3 --- Two decisions, not one}
+
+Students routinely try to merge these into a single control signal. They are
+genuinely two separate questions:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\code{NIAG\_sel} & \textbf{which} address is the candidate? (\code{NSA} / \code{REL} / \code{REG} / \code{ABS}) \\
+\code{NIAG\_cond} & is a \textbf{relative} branch actually taken? (from the ALU flags) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\code{Sel} & $PC^{+}$ \\
+\midrule
+\code{NSA} & \code{NSA} \hfill unconditional \\
+\code{REL} & \textbf{\code{Taken} ? \code{Rel} : \code{NSA}} \hfill \textbf{conditional} \\
+\code{REG} & \code{RegAddr} \hfill unconditional \\
+\code{ABS} & \code{Abslt} \hfill unconditional \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{3.1 The structure: a gate in front of a mux}
+
+\begin{lstlisting}
+rel_or_nsa <= Rel when Taken = '1' else NSA;     -- 2-to-1: the Taken gate
+
+with Sel select
+    NextPC <= NSA        when NIAG_SEL_NSA,
+              rel_or_nsa when NIAG_SEL_REL,       -- only this path is conditional
+              RegAddr    when NIAG_SEL_REG,
+              Abslt      when NIAG_SEL_ABS,
+              NSA        when others;             -- safe default
+\end{lstlisting}
+
+\textbf{This is your Lab 3 work again:} a 2-to-1 multiplexer feeding a 4-to-1
+multiplexer. Nothing new is being built --- which is worth saying, because the
+component is called ``next instruction address generation'' and sounds like it
+should be hard.
+
+\subsection*{3.2 Why not-taken falls back to \code{NSA}}
+
+A branch that is not taken is not a special state. It means ``carry on to the next
+instruction'' --- which is exactly \code{NSA}.
+
+\begin{quote}
+\textbf{That is why there is no fifth select code for ``branch not taken''.} The
+fall-back is already there.
+\end{quote}
+
+\subsection*{3.3 Why jumps are unconditional by construction}
+
+There is no conditional \code{J} in this instruction set. A jump's condition would
+have to come from the same flags --- and that is what branches are for.
+
+\begin{quote}
+\textbf{A design decision, not a limitation:} conditional control flow uses
+relative addressing because conditions are usually local, and unconditional
+transfers use absolute addressing because they usually are not.
+\end{quote}
+
+\subsection*{3.4 The vector pair that proves you got it right}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+vectors & expected & proves \\
+\midrule
+\code{Sel}=\code{REL}, \code{Taken} $0 \to 1$ & \code{NSA}, then \code{Rel} & the branch path \emph{is} conditional \\
+\code{Sel}=\code{ABS}, \code{Taken} $0 \to 1$ & \code{Abslt} both times & the jump path is \emph{not} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+If both pairs behave the same way, \code{Sel} and \code{Cond} have been merged
+somewhere.
+
+\vspace{4pt}\hr
+
+\section*{Into the assignment}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+component & what it does & storage? \\
+\midrule
+\code{NIAG\_Abslt} & concatenation & no \\
+\code{NIAG\_Cond} & six equations over $Z$, $N$ & no \\
+\code{NIAG\_MUX} & \code{Taken} gate $+$ 4-to-1 select & no \\
+\code{NIAG} & wires the whole unit together, including Lab 7's parts & \textbf{one register: the PC} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{The whole address-generation unit contains exactly one storage element.}
+Everything else is combinational, because the next address must be ready
+\emph{within} the cycle that computes it. Check it in the Fitter report: with
+\code{NIAG} as top level the register count is \textbf{32} --- the program counter
+and nothing else.
+
+\vspace{6pt}
+\hr
+{\small \textbf{Forward.} In Lab 10 the decoder sets \code{NIAG\_sel} and
+\code{NIAG\_cond} for each instruction: \code{J} sets \code{ABS}, \code{BLEZ} sets
+\code{REL} with \code{LEZ}, and everything else sets \code{NSA}. This unit does
+not change again.}
+
+\end{document}

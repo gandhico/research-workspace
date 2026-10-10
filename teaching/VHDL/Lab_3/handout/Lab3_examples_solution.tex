@@ -1,0 +1,269 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 3 --- Guided Examples: Solution}\\[2pt]
+{\itshape Ex 1 three coding styles \quad$\cdot$\quad Ex 2 the compressed table \quad$\cdot$\quad Ex 3 the latch trap}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+\hr
+
+\begin{center}
+\begin{tabular}{clll}
+\toprule
+& circuit & new idea & feeds the assignment as \\
+\midrule
+1 & \code{mux2\_*} (three styles) & one function, three ways to say it & \code{Mux2} \\
+2 & \code{mux4} & Type C tables and \code{generic} width & \code{Mux3}, \code{CPUMuxes} \\
+3 & \code{mux3\_good} / \code{mux3\_bad} & \textbf{the inferred-latch trap} & row 3 of your \code{Mux3} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Quartus numbers below were measured with Quartus Prime Lite 25.1std on device
+\code{5CSEMA4U23C6}.
+
+\vspace{4pt}\hr
+
+\section*{Example 1 --- One multiplexer, three coding styles}
+
+\[
+Y = \overline{Sel}\cdot A + Sel\cdot B
+\]
+
+\begin{center}
+\small
+\begin{tabular}{l>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{6.2cm}}
+\toprule
+style & VHDL & reads as, and when to use it \\
+\midrule
+conditional & \code{Y <= B when Sel = '1' else A;}
+  & a \textbf{priority chain}: use it when the choices really are prioritised \\
+selected & \code{with Sel select Y <= A when '0', \dots}
+  & a \textbf{table}: parallel and exhaustive --- usually clearest for datapaths \\
+\code{case} in a process & \code{case Sel is when '0' => \dots}
+  & the same table, \textbf{sequentially}; needed once the logic is more than one assignment \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{All three synthesise to the same hardware.} Pick the one that makes the
+intent obvious. The course uses selected assignment for plain datapath muxes and
+\code{case} from Lab 10 onward, where each selector value sets sixteen outputs.
+
+\subsection*{The two details that matter more than the style}
+
+\textbf{(a) \code{when others} is not optional.} \code{std\_logic} has nine
+values, not two. A selected assignment or a \code{case} must cover them, so both
+styles end with \code{others}:
+
+\begin{lstlisting}
+with Sel select
+    Y <= A when '0',
+         B when '1',
+         A when others;      -- 'X', 'Z', 'U' ... must be covered
+\end{lstlisting}
+
+\textbf{(b) The process style is combinational only if the sensitivity list is
+complete} --- \code{process (A, B, Sel)}, every signal the process reads. That is
+Lab 1's rule again, and it applies because there is no clock here.
+
+\textbf{Connect the two facts:} a \code{case} that covers every value \emph{and} a
+complete sensitivity list is what keeps a process combinational. Example 3 breaks
+the first of those.
+
+\vspace{4pt}\hr
+
+\section*{Example 2 --- The compressed table, and the generic}
+
+\subsection*{2.1 Four rows for 34 inputs}
+
+\begin{center}
+\begin{tabular}{c|c|c|l}
+\toprule
+\# & \code{Sel} & $Y$ & \\
+\midrule
+0 & \code{00} & $A$ & \\
+1 & \code{01} & $B$ & \\
+2 & \code{10} & $C$ & \\
+3 & \code{11} & $D$ & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Four 8-bit buses plus a 2-bit selector is 34 inputs, so an exhaustive table would
+need $2^{34} \approx 17$ billion rows. The Type C table has four, because the
+output column names a \textbf{source} rather than a value.
+
+\begin{quote}
+\textbf{This is the only reason datapath design is possible at all.} Type E tables
+survive while you have four inputs or fewer; everything after Lab 3 is Type C.
+\end{quote}
+
+Per bit: $Y_i = \overline{S_1}\,\overline{S_0}A_i + \overline{S_1}S_0 B_i
++ S_1\overline{S_0}C_i + S_1 S_0 D_i$.
+
+\subsection*{2.2 Driving \code{'X'} on an impossible selector}
+
+\begin{lstlisting}
+with Sel select
+    Y <= A when "00",
+         B when "01",
+         C when "10",
+         D when "11",
+         (others => 'X') when others;   -- 'U','X','Z' on the selector
+\end{lstlisting}
+
+All four \emph{real} selector values are covered, so \code{others} can only be
+reached by a metavalue. Driving \code{'X'} there is deliberate: if a selector ever
+goes undefined in a later lab, the \code{'X'} propagates through the datapath and
+you see it immediately. Quietly picking one of the inputs instead would hide the
+fault.
+
+\textbf{Contrast with your \code{Mux3}:} there, \code{"11"} is a \emph{real}
+selector value with a defined answer (zeros), and \code{others} still catches
+metavalues. Two different jobs, two different defaults.
+
+\vspace{4pt}\hr
+
+\section*{Example 3 --- The inferred-latch trap}
+
+\subsection*{3.1 The one difference}
+
+\begin{lstlisting}
+-- GOOD: a case, which must cover every value
+case Sel is
+    when "00"   => Y <= A;
+    when "01"   => Y <= B;
+    when "10"   => Y <= C;
+    when others => Y <= (others => '0');    -- defined default
+end case;
+
+-- BAD: an if/elsif chain with no final else
+if    Sel = "00" then Y <= A;
+elsif Sel = "01" then Y <= B;
+elsif Sel = "10" then Y <= C;
+end if;
+-- Sel = "11" assigns nothing, so Y holds its previous value
+\end{lstlisting}
+
+\begin{quote}
+\emph{``No assignment happens, so the output keeps its previous value.''}
+\end{quote}
+
+You have read that sentence before --- it is Lab 1's latch, word for word.
+\textbf{In Lab 1 it was the feature. Here it is a bug.} You wanted combinational
+logic and you described something with memory in it.
+
+\subsection*{3.2 The evidence, measured}
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+& \code{mux3\_good} & \code{mux3\_bad} \\
+\midrule
+Inferred latches & \textbf{0} & \textbf{8} \quad (one per output bit) \\
+Total registers & 0 & 0 \\
+Pins & 34 & 34 \\
+Warning & none & \code{10631} --- inferring latch(es) for \code{"Y"} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Eight latches, because the output is eight bits wide.} A 32-bit version
+would report 32. That number is the fastest check you have: \textbf{a multiplexer
+must report zero storage elements.}
+
+How to see it three ways, in increasing cost:
+\begin{enumerate}[leftmargin=2em,itemsep=1pt]
+\item \textbf{Messages:} Warning 10631 names the signal and the line.
+\item \textbf{RTL Viewer:} a latch symbol sits in \code{Y}'s path. The good
+version has none.
+\item \textbf{Simulation:} drive \code{Sel = "11"} and watch \code{Y\_bad} hold
+the previous value while \code{Y\_good} takes its default.
+\end{enumerate}
+
+\subsection*{3.3 Why a \code{case} cannot make this mistake}
+
+VHDL requires a \code{case} to cover \emph{every} possible value of its selector,
+and \code{std\_logic\_vector(1 downto 0)} has $9^2 = 81$ of them. So a \code{case}
+without \code{when others} is a \textbf{compile error, not a latch}.
+
+\begin{quote}
+\textbf{The rule to take away:} prefer \code{case} with \code{when others} for
+selection logic, and the language refuses to let you build this bug. It is the
+\code{if}/\code{elsif} chain with no final \code{else} that slips through.
+\end{quote}
+
+\subsection*{3.4 Simulation detail worth pointing out}
+
+The broken output is only wrong \emph{sometimes}, and that is what makes the bug
+dangerous. At \code{Sel = "11"} it holds whatever it last drove --- so if the
+preceding vector happened to leave zeros there, it produces the right answer by
+luck. \textbf{Change the data while \code{Sel} stays at \code{"11"}} and the
+defect is unambiguous: the inputs move, the output does not.
+
+\vspace{4pt}\hr
+
+\section*{Into the assignment}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+example & becomes \\
+\midrule
+Ex 1 & \code{Mux2}: any of the three styles, generic width \\
+Ex 2 & the Type C habit and \code{generic map} at 32 and 5 bits \\
+Ex 3 & \code{Mux3} \textbf{with row 3 defined}, then \code{CPUMuxes} built from them \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The reference \code{Mux3} uses a \code{case} for exactly the reason above:
+
+\begin{lstlisting}
+when "11"   => Y <= (others => '0');   -- row 3: a real value, defined as zero
+when others => Y <= (others => 'X');   -- metavalues on the selector
+\end{lstlisting}
+
+Measured for the 32-bit \code{Mux3}: \textbf{0 registers, 0 latches, 130 pins}
+($3 \times 32$ data in, 2 select, 32 out). \textbf{The register count is a
+correctness check}, not a cost figure --- if it is not zero, you have built
+Example 3's bug.
+
+\vspace{6pt}
+\hr
+{\small \textbf{Forward.} These multiplexers are the first components the CPU
+uses directly: \code{CPUMuxes} in Lab 12 selects the ALU's operands, the register
+file's write data and the next instruction address. Every one of them is a Type C
+table with a defined default.}
+
+\end{document}

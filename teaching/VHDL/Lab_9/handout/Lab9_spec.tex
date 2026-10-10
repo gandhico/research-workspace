@@ -1,0 +1,239 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 9 --- Memory: ROM and RAM}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Build the instruction and data memories --- and meet the actual program your
+processor will run.
+
+\begin{quote}
+\emph{Memory is an array with an address decoder and a bus discipline.}
+\end{quote}
+
+\section*{2. The program}
+
+This is what your CPU executes in Lab 12. It is preloaded into your ROM.
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+addr & bytes & instruction & meaning \\
+\midrule
+\code{0x00} & \code{3C 01 00 0B} & \code{LUI  r1, 11} & $r_1 \leftarrow 11$ (loop counter) \\
+\code{0x04} & \code{3C 02 00 01} & \code{LUI  r2, 1} & $r_2 \leftarrow 1$ (accumulator) \\
+\code{0x08} & \code{20 21 FF FF} & \code{ADDI r1, r1, -1} & loop top: count down \\
+\code{0x0C} & \code{18 20 00 02} & \code{BLEZ r1, +2} & exit when $r_1 \leq 0$, to \code{0x18} \\
+\code{0x10} & \code{00 02 10 40} & \code{SLL  r2, r2, 1} & $r_2 \leftarrow r_2 \times 2$ \\
+\code{0x14} & \code{08 00 00 02} & \code{J    0x08} & back to the loop top \\
+\code{0x18} & \code{AC 02 00 00} & \code{SW   r2, 0(r0)} & store the result at address 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Ten passes through the loop, doubling each time. $2^{10} = 1024 =
+\code{0x400}$, stored at memory address 0.
+
+\textbf{Your CPU computes $2^{10}$.} That is the sentence at the end of Lab 12,
+and every component you have built since Lab 1 exists to make those seven
+instructions run.
+
+\textbf{Note on \code{LUI}:} this CPU treats it as a plain zero-extended
+immediate load, not a shifted upper load. A deliberate simplification of the
+real MIPS instruction --- documented so you know the difference when you read
+the actual ISA.
+
+\section*{3. Background}
+
+\subsection*{Bytes into words}
+
+Memory is byte-addressed; instructions are 32 bits. Fetching one instruction
+means reading four consecutive bytes and assembling them:
+
+\[
+\code{Data}(31..24) = M[A],\quad
+\code{Data}(23..16) = M[A{+}1],\quad
+\code{Data}(15..8) = M[A{+}2],\quad
+\code{Data}(7..0) = M[A{+}3]
+\]
+
+Most significant byte at the \emph{lowest} address: \textbf{big-endian}.
+
+\textbf{Endianness is a decision, not a fact.} Neither convention is more
+correct, but they are not compatible --- the same bytes decode to different
+instructions. Example 3 shows the bytes \code{20 21 FF FF} decoding as
+\code{ADDI r1,r1,-1} big-endian and as opcode \code{111111}, which is not an
+instruction at all, little-endian. \emph{Same memory, different machine.}
+
+This CPU is big-endian. \textbf{Say so in your report.} A memory whose byte
+order is undocumented is a memory nobody else can use --- including you, in six
+weeks, debugging Lab 12 at midnight.
+
+\subsection*{ROM: combinational, and read-only for a reason}
+
+Present an address, the data appears. No clock. The contents are a
+\code{constant}, fixed at synthesis time --- which is what makes it read-only,
+and is exactly what you want of instruction memory: a running program cannot
+overwrite itself by accident.
+
+\subsection*{RAM: the bus discipline}
+
+\begin{center}
+\begin{tabular}{cccc@{\hskip 8pt}||@{\hskip 8pt}ll}
+\toprule
+\# & \code{en} & \code{rw} & \code{Strb} & Data bus & memory at $\downarrow$ \\
+\midrule
+0 & 0 & --- & --- & \code{Z...Z} & hold \\
+1 & 1 & 1 & --- & $M[A]$ word & hold \quad (read) \\
+2 & 1 & 0 & 0 & \code{Z...Z} & hold \\
+3 & 1 & 0 & 1 & \code{Z} (driven in) & $M[A..A{+}3] \leftarrow$ \code{Data} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Check the polarity twice: \code{rw = '1'} is READ.}
+
+\[
+\text{DataDrive} = \code{en} \cdot \code{rw}
+\qquad\qquad
+\text{Write} = \code{en} \cdot \overline{\code{rw}} \cdot \code{Strb}
+\quad\text{at the falling edge}
+\]
+
+\textbf{The bus is shared --- this is Lab 4 for real.} On a read the RAM drives
+it; on a write the register file drives it, through the \code{TriBuffer} you
+built in Lab 4. Exactly one driver at a time. When this memory is not driving it
+must \emph{release} the bus to \code{'Z'}; driving \code{'0'} instead fights the
+other driver and gives \code{'X'} across all 32 bits.
+
+\textbf{Why writes happen on the falling edge.} In the Lab 12 CPU the
+instruction register loads on the \emph{rising} edge and memory writes on the
+\emph{falling} edge. That gives address and data half a clock period to settle
+before anything is committed. Two-phase timing --- and it is the reason the
+machine works. Get this edge wrong and Lab 12 stores the right value at the
+wrong moment, which looks like random corruption.
+
+\section*{4. Guided examples}
+
+\begin{description}[leftmargin=2.4em,style=nextline,itemsep=2pt]
+\item[Example 1 --- \code{rom\_small}] Sixteen bytes, four instructions. Read
+them, then disassemble by hand.
+\item[Example 2 --- \code{ram\_small}] The full bus discipline, with the
+testbench acting as the second driver.
+\item[Example 3 --- \code{endian\_demo}] The same bytes under both conventions,
+and what each one decodes to.
+\end{description}
+
+\section*{5. Assignment}
+
+\begin{enumerate}[leftmargin=2em,itemsep=3pt]
+\item \textbf{\code{ROM}} --- 512 bytes, combinational, big-endian, preloaded
+(the program is given to you complete; do not change it).
+\item \textbf{\code{RAM}} --- 512 bytes, the table above, on a shared
+\code{inout} bus.
+\end{enumerate}
+
+\textbf{Guard the address range.} \code{Addr} is 32 bits and the memory has 512
+bytes. Reading $M[\text{base}{+}3]$ when base is near 511 is an out-of-range
+error that stops the simulation dead. Reduce the address, then guard the top.
+Say in your report what you chose to return for an out-of-range read.
+
+\subsection*{Testbench}
+
+\textbf{At least six checked vectors}, including all of: all seven instructions
+read out of the ROM and checked word by word; a write then read-back; the bus at
+\code{'Z'} with nothing enabled; the bus at \code{'Z'} while \code{en='1'} and
+\code{rw='0'} (the RAM must not drive during a write); a falling edge with
+\code{Strb='0'} writing nothing; and two adjacent word addresses that do not
+overlap.
+
+\section*{6. Evidence to collect (E1, E2, E4, E7)}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& Source & What it must show \\
+\midrule
+E1 & Flow Summary + Messages & 0 errors; warnings sorted \\
+E2 & RTL Viewer & the memory array and the bus driver \\
+E4 & Resource Utilisation & \textbf{block memory bits}, not registers \\
+E7 & Waveform + transcript & the bus at \code{Z}, driven by the RAM, driven by the other side \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{E4 is the interesting number this week.} A 512-byte memory is 4096 bits.
+Look at whether the Fitter used block memory or logic --- and say which, and why
+that is the sensible choice for something this size.
+
+\section*{7. Report --- \code{lab09.tex}}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Specification:} the RAM table, the two equations, and the ROM
+contents table with \textbf{your own hand disassembly} of all seven words.
+\item \textbf{Design:} state the endianness convention; explain why the ROM is
+combinational and the RAM writes on the falling edge; say what an out-of-range
+read returns and why.
+\item \textbf{Results:} the annotated bus waveform showing all three states.
+\item \textbf{Discussion:} required.
+\end{itemize}
+
+\section*{8. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Testbench and test vectors, coverage justified & 20 \\
+Simulation results match the specification & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{9. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{\code{rw} polarity backwards.} \code{'1'} is read. Check twice.
+\item \textbf{Driving \code{'0'} instead of \code{'Z'}.} Fights the other
+driver; the whole bus goes \code{'X'}.
+\item \textbf{Writing on the rising edge.} Works in isolation, breaks Lab 12's
+two-phase timing.
+\item \textbf{Byte order reversed.} The program decodes as garbage. Example 3.
+\item \textbf{Out-of-range index.} Stops the simulation with an error that
+points at the array, not at the address.
+\item \textbf{ROM and RAM disagreeing on endianness.} Stores and loads then do
+not round-trip.
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small You now have every component of the datapath. The next two weeks build
+the control unit that drives them, and then you run the program above.}
+
+\end{document}

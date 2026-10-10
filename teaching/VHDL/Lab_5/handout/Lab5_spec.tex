@@ -1,0 +1,278 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 5 --- Arithmetic Logic Unit}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Build the ALU: sixteen operations and a multiplexer.
+
+\begin{quote}
+\emph{An ALU is a multiplexer over function units --- and you already built the
+multiplexer.}
+\end{quote}
+
+This is the largest component so far, and the difficulty has moved. Labs 1--4
+were about learning VHDL. From here the language is known and the difficulty is
+in the \emph{specification}.
+
+\section*{2. Background}
+
+\subsection*{An ALU does not choose, then compute}
+
+Every function unit runs in parallel, all the time, on the same inputs. The
+function code does not tell the hardware what to calculate --- it tells a
+multiplexer which already-calculated answer to forward.
+
+Example 2 wires two units and a 2-to-1 mux structurally so you can see it. At
+sixteen operations that becomes pointless typing, so you write a \code{case}
+instead. \textbf{The \code{case} is still the multiplexer}: check the RTL Viewer
+afterwards and you will find one drawn.
+
+\subsection*{Flags describe the selected result}
+
+\code{Zero} and \code{Neg} must be computed \emph{after} the multiplexer, on the
+final result. If you take the adder's flags directly, an \code{AND} that produces
+zero will report \code{Zero = '0'} --- and in Lab 8 that becomes a branch taken
+when it should not be.
+
+\[
+\text{Zero} = \overline{R_{31} + R_{30} + \cdots + R_0}
+\qquad\qquad
+\text{Neg} = R_{31}
+\]
+
+\code{Neg} needs no computation at all: in two's complement the top bit
+\emph{is} the sign. These two signals are the entire input to conditional
+branching in Lab 8.
+
+\subsection*{The shift that everybody gets wrong}
+
+Shifting right by one should divide by two. Take $-8 = \code{0xFFFFFFF8}$:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& result & as a number \\
+\midrule
+\code{SRL} by 1 & \code{0x7FFFFFFC} & $+2147483644$ \quad wrong \\
+\code{SRA} by 1 & \code{0xFFFFFFFC} & $-4$ \quad correct \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Filling with \code{'0'} destroys the sign; filling with the sign bit preserves
+it. In VHDL the \emph{type} decides which happens:
+
+\begin{center}
+\code{shift\_right(unsigned(X), n)} is SRL \qquad
+\code{shift\_right(signed(X), n)} is SRA
+\end{center}
+
+Same operator name. So an \code{SRA} written with \code{unsigned()} compiles,
+runs, and is wrong \emph{only for negative numbers} --- which most casual test
+vectors do not include.
+
+\subsection*{Set on less than, and why the obvious answer is wrong}
+
+The naive hardware answer is ``subtract and look at the sign bit''. That fails
+when the subtraction overflows, because then the sign bit lies. The correct
+equation is
+
+\[
+\text{SOLS} = R_{31} \oplus V \qquad \text{where } R = \code{Ain} - \code{Bin}
+\text{ and } V \text{ is signed overflow}
+\]
+
+You do not have to build that by hand: \code{numeric\_std}'s comparison
+operators are already overflow-correct, so \code{if signed(Ain) < signed(Bin)}
+synthesises to exactly this. \textbf{Use the operator, and explain the equation
+in your report.} Knowing why the naive version fails is the point.
+
+\code{SOLS} and \code{SOLU} give different answers on the same bits:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\code{Ain = 0xFFFFFFFF}, \code{Bin = 0x00000001} & interpretation & result \\
+\midrule
+\code{SOLS} & $-1 < 1$ & \textbf{1} \\
+\code{SOLU} & $4294967295 < 1$ & \textbf{0} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{3. Guided examples}
+
+\begin{description}[leftmargin=2.4em,style=nextline,itemsep=2pt]
+\item[Example 1 --- \code{alu\_add}] One complete function unit with flags and
+carry out. This is the template the other fifteen copy.
+\item[Example 2 --- \code{alu\_mini}] Two units and a mux, structurally. Shows
+what an ALU is, and why flags go after the mux.
+\item[Example 3 --- \code{shift\_demo}] \code{SLL}, \code{SRL} and \code{SRA}
+side by side on negative values.
+\end{description}
+
+\section*{4. Assignment}
+
+Complete \code{ALU.vhd}. \code{ADD} and \code{AND} are given as templates.
+Function codes come from \code{ALU\_Pkg.vhd}, which is provided complete ---
+\textbf{use the named constants, never the raw bit patterns}. A typo in a name
+is a compile error; a typo in \code{"01001"} is a wrong answer you will hunt for
+twenty minutes.
+
+\subsection*{Where to spend your time}
+
+Ten of these are one line each. Do them first, in five minutes, and get the
+wrapper compiling. Then spend the session on the four that are actually
+interesting.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+one line each & needs thought & given \\
+\midrule
+\code{SUB}, \code{NEG}, \code{NAND}, \code{OR}, & \code{SRA} & \code{ADD} \\
+\code{NOR}, \code{XOR}, \code{XNOR}, \code{NOT}, & \code{SOLS}, \code{SOLU} & \code{AND} \\
+\code{SLL}, \code{SLA}, \code{SRL} & the flags & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\code{NOT} operates on \code{Bin}, not \code{Ain}. \code{SLA} and \code{SLL} are
+the same operation --- a left shift has only one sensible answer.
+
+\subsection*{Testbench}
+
+Complete \code{tb\_Lab5.vhd}. The \code{op} procedure applies and checks one
+operation per line; use it. \textbf{At least three checked vectors per
+operation}, and your set must include all of:
+
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item \code{SRA} on a \textbf{negative} value. An \code{SRA} written as an
+\code{SRL} passes every positive-value test you could write.
+\item \code{SOLS} and \code{SOLU} on \emph{the same} operand pair
+(\code{0xFFFFFFFF}, \code{0x00000001}). If your two answers match, one is wrong.
+\item a zero result produced by something other than the adder, proving your
+\code{Zero} flag follows the selected result.
+\item \code{SUB} producing a negative result, to exercise \code{Neg}.
+\item one unimplemented function code, proving \code{when others} gives a
+defined value rather than a latch.
+\end{itemize}
+
+\textbf{Note:} the supplied testbench already contains one failing vector
+(\code{SUB}). That is deliberate --- a testbench should be red until the design
+is right.
+
+\subsection*{Coverage argument for arithmetic}
+
+You cannot test $2^{64}$ operand pairs, and ``exhaustive on the selector''
+does not apply here. For arithmetic the argument is \textbf{boundaries}:
+
+\begin{quote}
+zero, one, the largest positive (\code{0x7FFFFFFF}), the most negative
+(\code{0x80000000}), and $-1$ (\code{0xFFFFFFFF})
+\end{quote}
+
+Arithmetic bugs live at boundaries, not in the middle. An adder that works for
+$3+4$ and fails at \code{0x7FFFFFFF} $+\,1$ is the normal kind of broken.
+
+\section*{5. Evidence to collect (E1, E2, E4, E6, E7)}
+
+\textbf{Two new ones this week.} The ALU is the first design big enough for
+resource and timing numbers to mean anything.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& Source & What it must show \\
+\midrule
+E1 & Flow Summary + Messages & 0 errors, no latch warning \\
+E2 & RTL Viewer & \textbf{a multiplexer} --- the \code{case}, drawn \\
+E4 & Resource Utilisation & ALM count; \textbf{registers must be 0} \\
+E6 & Timing Analyzer & Fmax on the Slow 1100mV 85C model \\
+E7 & Waveform + transcript & \code{SRA} and \code{SRL} side by side \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For E6, also find the critical path (\code{Reports $\to$ Custom Reports $\to$
+Report Timing}) and say which operation it runs through. It will not be the
+logic gates.
+
+\section*{6. Report --- \code{lab05.tex}}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Specification:} the function table with each code and one worked
+example per operation.
+\item \textbf{Design:} why the \code{case} is a multiplexer; why the flags are
+computed after it; and the \code{SOLS} $= R_{31} \oplus V$ equation with an
+explanation of why the naive version fails.
+\item \textbf{Results:} E4 and E6 numbers, each with a sentence. What dominates
+the area? Where does the critical path run, and why is that unsurprising?
+\item \textbf{Discussion:} required.
+\end{itemize}
+
+\section*{7. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Testbench and test vectors, coverage justified & 20 \\
+Simulation results match the specification & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{8. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{\code{SRA} written with \code{unsigned()}.} Compiles, runs, wrong
+only for negatives.
+\item \textbf{Shifting by a vector.} \code{Shft} is bits; you need
+\code{to\_integer(unsigned(Shft))}. Convert once into a signal, not inline
+sixteen times.
+\item \textbf{Flags taken from one operation.} They must describe the selected
+result.
+\item \textbf{Raw bit patterns instead of the package constants.} You will
+mistype one, and it will look like a hardware bug.
+\item \textbf{Comparing \code{std\_logic\_vector} directly.} Cast to
+\code{signed} or \code{unsigned} first --- otherwise you are comparing bit
+patterns, not numbers.
+\item \textbf{Missing \code{when others}.} Sixteen inferred latches.
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small This ALU goes inside your CPU in Lab 12, driven by the decoder you write
+in Labs 10 and 11. Its \code{Shft} port is fed by the \code{ALUsftMUX} you built
+last week, and its \code{Zero} and \code{Neg} flags become every conditional
+branch in Lab 8. Keep your files.}
+
+\end{document}

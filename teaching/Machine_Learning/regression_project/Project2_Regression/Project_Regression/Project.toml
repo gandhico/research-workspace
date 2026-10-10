@@ -1,0 +1,30 @@
+name = "Project_Regression"
+uuid = "385a8786-d128-46a1-9789-b0c1ac699f03"
+version = "0.1.0"
+authors = ["Nathan W Marlin <nwmarlin@nmsu.edu>"]
+
+[deps]
+Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Pandoc = "f853b5e0-b243-11e9-0043-7da5023c5ee7"
+PlotThemes = "ccf2f8ad-2431-5c83-bf29-c5338b663b6a"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
+Weave = "44d3d7a6-8a23-5bf8-98c5-b353f8df5ec9"
+
+[compat]
+Colors = "0.13.1"
+LinearAlgebra = "1.12.0"
+Pandoc = "0.4.5"
+PlotThemes = "3.3.0"
+Plots = "1.41.7"
+Polynomials = "4.1.3"
+Random = "1.11.0"
+Revise = "3.17.0"
+Statistics = "1.11.5"
+StatsBase = "0.34.13"
+Weave = "0.10.12"

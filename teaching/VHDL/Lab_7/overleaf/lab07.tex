@@ -1,0 +1,98 @@
+% =============================================================================
+%  Lab 7 - Next Instruction Address Generation I
+% =============================================================================
+
+\chapter{Lab 7 --- Next Instruction Address Generation I}
+
+\section{Objective}
+% Two or three sentences, your own words.
+
+\section{Specification}
+
+\begin{table}[htbp]
+\centering
+\caption{Transition table (Type T) for \texttt{NIAG\_Reg}, the program counter.}
+\label{tab:lab07-truth}
+\begin{tabular}{cccl||l}
+\toprule
+\# & \texttt{Rst} & \texttt{Strb} & \texttt{Clk} & $PC^{+}$ \\
+\midrule
+0 & 1 & --- & --- & \texttt{RESET\_VEC} (asynchronous) \\
+1 & 0 & --- & not $\uparrow$ & $PC$ --- hold \\
+2 & 0 & 0 & $\uparrow$ & $PC$ --- edge, not loading (a stall) \\
+3 & 0 & 1 & $\uparrow$ & \texttt{NextPC} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{align*}
+PC^{+} &= \overline{\texttt{Rst}} \cdot \left( \texttt{Strb}\cdot\texttt{NextPC} + \overline{\texttt{Strb}}\cdot PC \right) \\
+\texttt{NSA} &= PC + 4 \\
+\texttt{Rel} &= \texttt{NSA} + \texttt{Xtnd32}
+\end{align*}
+
+% ONE SENTENCE, required: compare the PC equation with your Lab 2 register
+% equation. What actually changed?
+
+\section{Design}
+% Answer all three:
+%   (a) Why is the branch base PC+4 and not PC? Answer as a trade-off, not a
+%       rule - what would the assembler have to do if the base were PC?
+%   (b) Why is the branch offset shifted left by two? How much branch range
+%       does that buy, and what makes it safe?
+%   (c) Did you write NIAG_Reg out, or instantiate your Lab 2 RegN? If you
+%       reused RegN, how did you handle the reset VALUE (RESET_VEC) rather
+%       than reset-to-zero?
+
+\section{Implementation}
+
+\vhdlfile{code/lab07/NIAG_NSA.vhd}{\texttt{NIAG\_NSA} --- next sequential address}
+
+\vhdlfile{code/lab07/NIAG_Rel.vhd}{\texttt{NIAG\_Rel} --- PC-relative branch target}
+
+\vhdlfile{code/lab07/NIAG_Reg.vhd}{\texttt{NIAG\_Reg} --- the program counter}
+
+\section{Verification}
+
+\subsection*{Hand-computed arithmetic}
+% REQUIRED. Do this BEFORE simulating, for at least one FORWARD and one
+% BACKWARD branch. Show all three steps each time, then put the simulated
+% value beside it.
+
+\begin{table}[htbp]
+\centering
+\caption{Branch targets: computed by hand, then by the hardware.}
+\label{tab:lab07-hand}
+\begin{tabular}{llllll}
+\toprule
+$PC$ & immediate & \texttt{NSA} & offset & target (by hand) & target (simulated) \\
+\midrule
+\texttt{0x0000000C} & \texttt{0x0002} & & & & \\
+ & & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Test vectors and coverage}
+% The coverage argument here is DIRECTIONS AND BOUNDARIES:
+%   forward, backward, zero offset, largest positive, most negative.
+% Say explicitly which bug an all-positive test set would fail to detect.
+
+\section{Results}
+% Evidence: E1, E2, E4, E7.
+
+\figplaceholder{the waveform showing a forward branch target and a backward
+branch target, both annotated with their computed values}
+
+\figplaceholder{the RTL Viewer, showing the PC register and the two adders}
+
+% E4: register count. Expect 32 - one per PC bit. NIAG_NSA and NIAG_Rel are
+%     pure adders and should contain no storage at all. Say so.
+
+\section{Discussion}
+% REQUIRED. One bug, how you found it, what it cost.
+%
+% Good honest topic if you need one: did your first branch target come out
+% wrong? Was it off by a FACTOR (forgot the shift) or off by a CONSTANT (used
+% PC as the base)? How did you tell which - and would you have noticed the
+% second one if the first had not happened?

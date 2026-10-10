@@ -1,0 +1,107 @@
+% =============================================================================
+%  Lab 0 - VHDL Fundamentals   *** MODEL CHAPTER ***
+%
+%  This chapter is written out in full as an example of the standard expected.
+%  Read it once. Then back-fill your own Lab 0 work in the same shape.
+%
+%  Notice what it does: every table has numbered rows, every equation names its
+%  simplification law, every figure has a sentence saying what it proves, and
+%  the Discussion describes a real mistake.
+% =============================================================================
+
+\chapter{Lab 0 --- VHDL Fundamentals}
+
+\section{Objective}
+
+Introduce the structure of a VHDL design --- the \texttt{entity} that declares an
+interface and the \texttt{architecture} that implements it --- and verify a small
+combinational circuit by simulation rather than by inspection. The circuit used
+here is a majority-of-three detector.
+
+\section{Specification}
+
+The output $Y$ is asserted when at least two of the three inputs are asserted.
+With three binary inputs the table is small enough to enumerate completely, so it
+is given exhaustively (Type E).
+
+\begin{table}[htbp]
+\centering
+\caption{Exhaustive truth table (Type E) for \texttt{majority3}.}
+\label{tab:lab00-truth}
+\begin{tabular}{cccc||cl}
+\toprule
+\# & $A$ & $B$ & $C$ & $Y$ & minterm \\
+\midrule
+0 & 0 & 0 & 0 & 0 & \\
+1 & 0 & 0 & 1 & 0 & \\
+2 & 0 & 1 & 0 & 0 & \\
+3 & 0 & 1 & 1 & 1 & $m_3$ \\
+4 & 1 & 0 & 0 & 0 & \\
+5 & 1 & 0 & 1 & 1 & $m_5$ \\
+6 & 1 & 1 & 0 & 1 & $m_6$ \\
+7 & 1 & 1 & 1 & 1 & $m_7$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Boolean derivation}
+
+\begin{align*}
+\text{(1) canonical} \quad & Y = \textstyle\sum m(3,5,6,7)
+   = \overline{A}BC + A\overline{B}C + AB\overline{C} + ABC \\
+\text{(2) simplified} \quad & Y = AB + AC + BC
+   \qquad \text{[$ABC$ is adjacent to each of the other three minterms, so each}\\
+   & \qquad\qquad\qquad\qquad\quad\ \text{pair combines and the $C$, $B$, $A$ literals drop out]}\\
+\text{(3) VHDL} \quad & \texttt{Y <= (A and B) or (A and C) or (B and C);}
+\end{align*}
+
+Note that $Y$ does not appear on the right-hand side of its own equation. This
+circuit has no memory: its output depends only on the inputs present at that
+instant.
+
+\section{Design}
+
+The entity declares four ports: three \texttt{std\_logic} inputs and one
+\texttt{std\_logic} output. A behavioural architecture is appropriate here
+because the simplified equation maps directly onto a single concurrent signal
+assignment; describing it structurally as three AND gates and an OR gate would
+add three component declarations without changing the synthesised result.
+
+\section{Implementation}
+
+\vhdlfile{code/lab00/majority3.vhd}{\texttt{majority3} --- majority-of-three detector}
+
+\section{Verification}
+
+All eight input combinations were applied. When a truth table is small enough to
+enumerate exhaustively, exhaustive testing is the coverage argument: no input
+combination exists that was not checked, so no untested behaviour can remain.
+
+The testbench is driven from an array of vectors rather than from hand-written
+blocks, so that the test data and the truth table are visibly the same object.
+
+\section{Results}
+
+\figplaceholder{the RTL Viewer output for \texttt{majority3}}
+% Example of the sentence required with each figure:
+% "The RTL Viewer shows two levels of combinational logic and no storage
+%  elements, confirming the design is purely combinational as specified."
+
+\figplaceholder{the Questa waveform showing all eight input combinations}
+% "Y is high only during rows 3, 5, 6 and 7, matching Table 1."
+
+Compilation completed with 0 errors and 0 warnings. The simulation transcript
+reported \texttt{PASS --- majority3: all 8 rows correct}, so every assertion in
+the testbench held.
+
+\section{Discussion}
+
+The first version of the testbench applied all eight vectors but checked none of
+them: the assignments were present and the \texttt{assert} statements were not.
+The waveform looked correct, so the design appeared to be verified when in fact
+nothing had been verified at all.
+
+The lesson generalises, and is the reason every testbench in this report is
+self-checking: \emph{a waveform is evidence, an assertion is proof}. Looking at a
+waveform and deciding it seems right is not verification, because it only tests
+whether the output matches what the person looking at it already expected.

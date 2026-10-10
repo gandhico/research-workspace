@@ -1,0 +1,110 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 3}\\[2pt]
+{\large Multiplexers}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points, about twenty
+minutes, on paper.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- Paper first}
+
+A 32-bit 3-to-1 multiplexer has 98 inputs.
+
+\textbf{(a)} How many rows would an exhaustive (Type E) truth table need? Write
+the expression, you do not need to evaluate it.
+
+\answerbox{1.2cm}
+
+\textbf{(b)} Write the complete Type C table for it. Four rows. Remember that
+\code{Sel = "11"} needs a \emph{defined} answer, not a blank.
+
+\begin{center}
+\begin{tabular}{clc@{\hskip 8pt}||@{\hskip 8pt}l@{\hskip 20pt}l}
+\toprule
+\# & \code{Sel1} & \code{Sel0} & $Y$ & note \\
+\midrule
+0 & 0 & 0 & \rule{2.2cm}{0.4pt} & \rule{4.5cm}{0.4pt} \\[4pt]
+1 & 0 & 1 & \rule{2.2cm}{0.4pt} & \rule{4.5cm}{0.4pt} \\[4pt]
+2 & 1 & 0 & \rule{2.2cm}{0.4pt} & \rule{4.5cm}{0.4pt} \\[4pt]
+3 & 1 & 1 & \rule{2.2cm}{0.4pt} & \rule{4.5cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(c)} Write the canonical equation for $Y_i$, then factor $\overline{S_1}$
+out of the first two terms. Name the law you used.
+
+\answerbox{2.6cm}
+
+\textbf{One sentence:} look at your factored form. What familiar component is the
+bracketed sub-expression?
+
+\answerbox{1.2cm}
+
+\section*{Question 2 --- Interface}
+
+Write the VHDL \code{entity} for \code{Mux3}, including its \code{generic}.
+Interface only.
+
+\answerbox{4.4cm}
+
+\section*{Question 3 --- Test plan}
+
+You cannot test $2^{98}$ input combinations. State the coverage argument you will
+use instead, then list the vectors.
+
+\begin{center}
+\begin{tabular}{@{}c@{\hskip 8pt}p{4.4cm}@{\hskip 8pt}p{8.2cm}@{}}
+\toprule
+\# & \code{Sel}, and the data on A / B / C & What this vector proves \\
+\midrule
+1 & \rule{4.2cm}{0.4pt} & \rule{8cm}{0.4pt} \\[8pt]
+2 & \rule{4.2cm}{0.4pt} & \rule{8cm}{0.4pt} \\[8pt]
+3 & \rule{4.2cm}{0.4pt} & \rule{8cm}{0.4pt} \\[8pt]
+4 & \rule{4.2cm}{0.4pt} & \rule{8cm}{0.4pt} \\[8pt]
+5 & \rule{4.2cm}{0.4pt} & \rule{8cm}{0.4pt} \\[8pt]
+6 & \rule{4.2cm}{0.4pt} & \rule{8cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Then answer both, in one or two sentences each:}
+
+\textbf{(a)} Suppose someone hands you a ``multiplexer'' that ignores its selector
+completely and always outputs \code{A}. Which of your vectors catches it? If none
+do, fix your table before you come to lab.
+
+\answerbox{1.8cm}
+
+\textbf{(b)} Suppose someone forgets row 3, so the output latches. Which of your
+vectors catches \emph{that}?
+
+\answerbox{1.8cm}
+
+\vfill
+{\small\emph{Question 3 is the one that matters.} It is the same question as
+Section 5 of your lab report.}
+
+\end{document}

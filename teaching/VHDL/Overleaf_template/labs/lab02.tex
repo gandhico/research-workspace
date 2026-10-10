@@ -1,0 +1,105 @@
+% =============================================================================
+%  Lab 2 - Master-Slave Flip-Flop and the N-Bit Register
+%  Seven sections. Delete the guidance comments as you fill each one in.
+% =============================================================================
+
+\chapter{Lab 2 --- Master--Slave Flip-Flop and the N-Bit Register}
+
+\section{Objective}
+% Two or three sentences, your own words.
+
+\section{Specification}
+
+\begin{table}[htbp]
+\centering
+\caption{Transition table (Type T) for \texttt{RegN}.}
+\label{tab:lab02-truth}
+\begin{tabular}{clll||ll}
+\toprule
+\# & \texttt{Rst} & \texttt{Ld} & \texttt{Clk} & $Q^{+}$ & note \\
+\midrule
+0 & 1 & -- & -- & \textbf{0} & asynchronous reset \\
+1 & 0 & -- & not $\uparrow$ & \textbf{Q} & hold between edges \\
+2 & 0 & 0 & $\uparrow$ & \textbf{Q} & edge, not loading \\
+3 & 0 & 1 & $\uparrow$ & \textbf{D} & load \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{The two latch equations}
+
+\begin{align*}
+\text{master} \quad & Q_m^{+} = \overline{Clr}\cdot\left( \overline{Clk}\cdot D + Clk\cdot Q_m \right)\\
+\text{slave}  \quad & Q^{+}   = \overline{Clr}\cdot\left( Clk\cdot Q_m + \overline{Clk}\cdot Q \right)
+\end{align*}
+
+% One sentence: why can Q only change at the rising edge? Argue it from the two
+% equations above, not from the phrase "because it is edge-triggered".
+
+\subsection*{The register equation}
+
+\begin{align*}
+\text{(1) canonical} \quad & Q_i^{+} = \overline{Rst}\cdot\left( Ld\cdot D_i + \overline{Ld}\cdot Q_i \right)\\
+\text{(2) observation} \quad & \text{[\emph{state which Lab 1 signal became which}]}\\
+\text{(3) VHDL} \quad & \text{see Listing~\ref{lst:code/lab02/RegN.vhd}}
+\end{align*}
+
+\section{Design}
+% Two things to answer here:
+%   (a) Why does the structural flip-flop exist at all, given that the
+%       behavioural one is what you would actually ship?
+%   (b) THE SENSITIVITY LIST. Why is RegN's list (Clk, Rst) and not
+%       (Clk, Rst, Ld, D)? Take Ld and D one at a time and say why each is
+%       absent. This is a graded question.
+
+\section{Implementation}
+
+\vhdlfile{code/lab02/MSFlipFlop.vhd}{\texttt{MSFlipFlop} --- structural, from two transparent latches}
+
+\vhdlfile{code/lab02/RegN.vhd}{\texttt{RegN} --- N-bit register with load enable and asynchronous reset}
+
+\section{Verification}
+% Your vectors, then the coverage argument. For this lab the argument has a
+% specific shape: which of your vectors would a TRANSPARENT LATCH fail?
+% That vector is the one proving the design is edge-triggered.
+
+\begin{table}[htbp]
+\centering
+\caption{Test vectors. Note \emph{when} each stimulus changes, relative to the clock.}
+\label{tab:lab02-vectors}
+\begin{tabular}{clllll}
+\toprule
+\# & when & \texttt{Rst} & \texttt{Ld} & \texttt{D} & expected $Q$ / what it proves \\
+\midrule
+1 & & & & & \\
+2 & & & & & \\
+3 & & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Results}
+% Evidence: E1, E2, E7.
+
+\figplaceholder{the waveform: \texttt{D} toggling three times inside one clock
+period while \texttt{Q} moves once --- annotate both}
+% \resultfig{figs/lab02/waveform.png}
+%   {Between t = ... and t = ..., D changes three times and Q does not move;
+%    Q changes only at the rising edge at t = ..., taking the last value D held.}
+%   {fig:lab02-wave}
+
+\figplaceholder{RTL Viewer, \emph{structural} version --- two latches and an inverter}
+
+\figplaceholder{RTL Viewer, \emph{behavioural} version --- one flip-flop primitive}
+
+% One sentence on why the two pictures differ despite identical behaviour.
+
+% E4: the Fitter's register count for RegN (top level, N = 32).
+%     State the number. It must be 32. Say why that is a correctness check
+%     and not merely a cost figure.
+
+\section{Discussion}
+% REQUIRED. One bug, how you found it, what it cost.
+% If your sensitivity list bit you, that is the bug to write about: say which
+% checks failed, and how the pattern of failures told you which signal was
+% missing.

@@ -1,0 +1,203 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 3: Solution}\\[2pt]
+{\large Multiplexers}\\[4pt]
+Fall 2026 \quad$\cdot$\quad 5 points \quad$\cdot$\quad TA marking guide
+\end{center}
+\hr
+
+{\small Marking: Q1 = 2 points, Q2 = 1 point, Q3 = 2 points.}
+
+\vspace{4pt}\hr
+
+\section*{Question 1 --- Why the table must be compressed (2 points)}
+
+\subsection*{(a) How many rows would a Type E table need?}
+
+\[
+2^{98} \approx 3.2 \times 10^{29} \text{ rows}
+\]
+
+Full credit for the \textbf{expression} $2^{98}$ --- they were told not to
+evaluate it. Accept $2^{32+32+32+2}$. The count comes from three 32-bit data
+inputs plus a 2-bit selector: $3 \times 32 + 2 = 98$.
+
+\textbf{The point of the question:} exhaustive tables die at about four inputs.
+Everything in this course from now on uses Type C.
+
+\subsection*{(b) The Type C table}
+
+\begin{center}
+\begin{tabular}{c|cc|c|l}
+\toprule
+\# & \code{Sel1} & \code{Sel0} & $Y$ & note \\
+\midrule
+0 & 0 & 0 & $A$ & \\
+1 & 0 & 1 & $B$ & \\
+2 & 1 & 0 & $C$ & \\
+3 & 1 & 1 & \textbf{0} & \textbf{unused selector, defined as zero} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Row 3 must be filled in.} Any \emph{defined} answer earns the mark
+provided the student says what it is --- zeros is what the course uses, and is
+what \code{Mux3} implements. A blank, a dash, or ``don't care'' earns
+\textbf{zero for this part}, and is worth a sentence at the bench: a don't-care
+here is exactly how Example 3's latch happens.
+
+Note the output column names a \textbf{source} ($A$, $B$, $C$), not a value. That
+is what makes four rows enough for 98 inputs.
+
+\subsection*{(c) Canonical equation, then factor}
+
+\begin{align*}
+\text{canonical} \quad Y_i &= \overline{S_1}\,\overline{S_0}\cdot A_i
+   + \overline{S_1}S_0\cdot B_i + S_1\overline{S_0}\cdot C_i + S_1 S_0 \cdot 0 \\
+   &= \overline{S_1}\,\overline{S_0}\cdot A_i + \overline{S_1}S_0\cdot B_i + S_1\overline{S_0}\cdot C_i \\[4pt]
+\text{factored} \quad Y_i &= \overline{S_1}\cdot\left( \overline{S_0}\cdot A_i + S_0\cdot B_i \right)
+   + S_1\overline{S_0}\cdot C_i
+   \qquad \textbf{[distributive law]}
+\end{align*}
+
+Row 3 contributes \emph{no product term}, because its output is 0 --- students
+should say so rather than silently dropping it.
+
+\subsection*{The one sentence}
+
+\begin{quote}
+\textbf{Model answer:} The bracketed sub-expression
+$\overline{S_0}A_i + S_0 B_i$ is a \textbf{2-to-1 multiplexer} selected by $S_0$.
+\end{quote}
+
+So a 3-to-1 multiplexer is a 2-to-1 multiplexer feeding another selection stage:
+\textbf{a mux tree}. That is the same structure as Lab 0's practice problem, and
+it is how wide multiplexers are actually built. Full credit needs the words
+``2-to-1 multiplexer''.
+
+\vspace{4pt}\hr
+
+\section*{Question 2 --- The entity (1 point)}
+
+\begin{lstlisting}
+entity Mux3 is
+    generic ( W : positive := 32 );
+    port (
+        A   : in  std_logic_vector(W - 1 downto 0);
+        B   : in  std_logic_vector(W - 1 downto 0);
+        C   : in  std_logic_vector(W - 1 downto 0);
+        Sel : in  std_logic_vector(1 downto 0);
+        Y   : out std_logic_vector(W - 1 downto 0)
+    );
+end entity Mux3;
+\end{lstlisting}
+
+Required: \code{generic} before \code{port}; the three data ports and \code{Y}
+sized by \code{W}; and \textbf{\code{Sel} fixed at 2 bits} --- it is not scaled by
+the generic.
+
+\textbf{The common mistake} is \code{Sel : in std\_logic\_vector(W - 1 downto 0)}.
+Ask the student how many bits are needed to choose between three things. This is
+the same narrow-control / wide-data pattern as Labs 1 and 2.
+
+\vspace{4pt}\hr
+
+\section*{Question 3 --- The test plan (2 points)}
+
+\subsection*{The coverage argument}
+
+\begin{quote}
+\textbf{Model answer:} Exhaustive testing is impossible ($2^{98}$ rows), so
+instead test \textbf{every row of the Type C table} --- all four selector values
+--- and for each one use data patterns that are \emph{different on every input},
+so that the output can only be correct if the right source was selected. Then add
+one vector at a different generic width to show the parameterisation works.
+\end{quote}
+
+\textbf{The key idea to look for:} the data values must differ between A, B and C.
+If a student writes vectors where two inputs carry the same pattern, those
+vectors cannot distinguish a correct mux from one that picked the wrong input.
+
+\subsection*{Model vector list}
+
+\begin{center}
+\small
+\begin{tabular}{c>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{7.2cm}}
+\toprule
+\# & \code{Sel}, data on A / B / C & What it proves \\
+\midrule
+1 & \code{"00"}, A=\code{AAAA...}, B=\code{BBBB...}, C=\code{CCCC...} & row 0: $Y = A$, and it is not B or C \\
+2 & \code{"01"}, same distinct data & row 1: $Y = B$ \\
+3 & \code{"10"}, same distinct data & row 2: $Y = C$ \\
+4 & \code{"11"}, same distinct data & \textbf{row 3}: $Y$ is the defined default (zeros), \emph{not} a held value \\
+5 & change A, B and C while \code{Sel} stays \code{"11"} & the output does not follow the data: it is still the default \\
+6 & repeat rows 0--2 at \textbf{W = 5} & the generic works at another width \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Accept six vectors in any order. \textbf{Vector 4 must be present.}
+
+\subsection*{(a) A ``multiplexer'' that ignores \code{Sel} and always outputs A}
+
+\begin{quote}
+\textbf{Model answer:} Vectors 2 and 3 catch it --- with \code{Sel = "01"} the
+output would still be A, which the check rejects. They only catch it
+\emph{because} A, B and C carry different data.
+\end{quote}
+
+If a student answers ``none of them'', their data patterns are identical across
+inputs and the plan needs fixing before the session. That is exactly why the
+question is asked.
+
+\subsection*{(b) Someone forgets row 3, so the output latches}
+
+\begin{quote}
+\textbf{Model answer:} Vector 4, and more strongly vector 5. With \code{Sel} at
+\code{"11"} a latching design holds whatever it output last, so the value depends
+on the \emph{previous} vector rather than on the inputs. Vector 5 makes that
+visible: the data changes and the output does not.
+\end{quote}
+
+\textbf{The subtlety worth one minute at the board:} a latched output can
+accidentally equal the expected default. If the vector before row 3 left zeros on
+the output, a broken design passes vector 4 by luck. That is why vector 5 ---
+\emph{change the inputs while the selector stays at \code{"11"}} --- is the
+reliable check, and why the order of vectors matters.
+
+\vspace{6pt}
+\hr
+{\small \textbf{At the bench:} the students who filled row 3 with a blank in Q1(b)
+are the ones who will hit the Example 3 latch in their own \code{Mux3}. Mark that
+part first and warn them.}
+
+\end{document}

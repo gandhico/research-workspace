@@ -1,0 +1,478 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 1 --- Solution}\\[2pt]
+{\itshape The Transparent Latch}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+\hr
+
+Worked solution for \code{TransLatch} and \code{TransLatch8}. Read it after you
+have made your own attempt run --- the two bugs in Section 5 are the ones this lab
+was built to give you, and reading about them is a poor substitute for hitting them.
+
+\vspace{4pt}\hr
+
+\section*{1. Specification}
+
+A one-bit storage element:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \code{Clr}\;=\;1 forces \code{Q} to 0 \textbf{immediately}, whatever else is
+happening. Asynchronous: it waits for nothing.
+\item \code{Clr}\;=\;0, \code{En}\;=\;1: the latch is \textbf{transparent}. \code{Q}
+follows \code{D} continuously, not on an edge.
+\item \code{Clr}\;=\;0, \code{En}\;=\;0: the latch \textbf{holds}. \code{Q} keeps
+the value it had when \code{En} went low, and \code{D} is ignored.
+\end{itemize}
+
+The third bullet is the entire lab. It is the first circuit in this course whose
+output depends on something other than its present inputs.
+
+\section*{2. Truth table --- Type T (transition)}
+
+A combinational table maps inputs to outputs. A \textbf{transition table} maps
+inputs \emph{and the present state} to the \emph{next} state. The column is written
+$Q^{+}$, read ``Q next''.
+
+\begin{center}
+\begin{tabular}{c|ccc|c|l}
+\toprule
+\# & \code{Clr} & \code{En} & \code{D} & $Q^{+}$ & note \\
+\midrule
+0 & 1 & -- & -- & \textbf{0} & asynchronous clear --- dominates everything \\
+1 & 0 & 0 & -- & $\mathbf{Q}$ & \textbf{hold} --- the memory row \\
+2 & 0 & 1 & 0 & \textbf{0} & transparent \\
+3 & 0 & 1 & 1 & \textbf{1} & transparent \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Three things to notice, because each one is a rule you will use for the rest of the
+course.
+
+\textbf{Row 1 has $Q$ in the output column.} Not 0, not 1 --- $Q$, the value it
+already had. \textbf{Any output column containing $Q$ means the design has memory.}
+That is the signature you look for, and from Lab 2 onwards you will be reading it
+rather than writing it.
+
+\textbf{Row 0 comes first, and its don't-cares are a priority claim.} Writing
+\code{--} under \code{En} and \code{D} asserts that when \code{Clr} is high, nothing
+else can change the outcome. Row 0 is listed above rows 2 and 3 because in a table
+with overlapping rows, \textbf{the first matching row wins}. Your VHDL must encode
+that same priority --- and it does so by testing \code{Clr} first.
+
+\textbf{Rows 2 and 3 could be compressed to one row reading $Q^{+} = D$.} They are
+written out because at four rows it costs nothing, and because seeing $D$ appear in
+the output column next to $Q$ makes the contrast between ``pass'' and ``hold''
+visible at a glance.
+
+\section*{3. Boolean derivation}
+
+\textbf{(1) Canonical --- read straight off the table.} Take the rows where
+$Q^{+}$ can be 1, and write the product of conditions that reaches each:
+
+\[
+Q^{+} = \underbrace{\overline{\code{Clr}} \cdot \code{En} \cdot D}_{\text{row 3: pass a 1}}
+\;+\;
+\underbrace{\overline{\code{Clr}} \cdot \overline{\code{En}} \cdot Q}_{\text{row 1: hold a 1}}
+\]
+
+Row 0 contributes nothing (its output is 0) and row 2 contributes nothing (its
+output is 0). Row 1 is the unusual one: its term contains $Q$, the output itself.
+\textbf{That feedback is the memory.} An equation whose right-hand side mentions its
+own left-hand side is not a mistake here --- it is the definition of state.
+
+\textbf{(2) Simplified --- factor out $\overline{\code{Clr}}$:}
+\[
+Q^{+} = \boxed{\overline{\code{Clr}} \cdot \left( \code{En} \cdot D + \overline{\code{En}} \cdot Q \right)}
+\qquad \textbf{[distributive law]}
+\]
+
+Now read what the parenthesis is: $\code{En}\cdot D + \overline{\code{En}}\cdot Q$ is
+exactly the 2-to-1 multiplexer from Lab 0 Exercise 2, with $\code{En}$ as the select,
+$D$ as one input --- and $Q$, the latch's own output, as the other.
+
+\begin{quote}
+\textbf{A transparent latch is a multiplexer with its output fed back to one of its
+inputs.} That is all it is. When \code{En} selects $D$, new data flows in; when
+\code{En} selects $Q$, the old value circulates and sustains itself.
+\end{quote}
+
+The $\overline{\code{Clr}}$ factored outside the parenthesis is the priority from
+row 0, made structural: an AND gate on the output that can force 0 regardless of
+what the multiplexer chose.
+
+\textbf{(3) VHDL.}
+\begin{lstlisting}
+process (Clr, En, D)
+begin
+    if Clr = '1' then
+        Q <= '0';        -- row 0: asynchronous clear wins
+    elsif En = '1' then
+        Q <= D;          -- rows 2, 3: transparent
+    end if;
+    -- row 1 (hold) is the deliberately missing else
+end process;
+\end{lstlisting}
+
+\subsection*{3.1 The missing \code{else} --- read this twice}
+
+There is no \code{else}. That is not an omission; it is the implementation of row 1.
+
+The VHDL rule is:
+\begin{quote}
+\textbf{In a process, a signal that is not assigned on some path keeps its previous
+value.}
+\end{quote}
+
+When \code{Clr} = 0 and \code{En} = 0, neither branch executes, \code{Q} is never
+assigned, and so \code{Q} holds. Synthesis reads that requirement --- ``this signal
+must remember its value'' --- and gives you a latch. Which is exactly what you
+asked for.
+
+Everywhere else in your career this is a bug with a name: an \textbf{inferred
+latch}, the thing your synthesis tool warns you about when you forget a branch in a
+combinational \code{case}. \textbf{Lab 1 is the one time all semester you want it.}
+Lab 3 is the first time you do not, and by then you will recognise the warning
+because you deliberately caused it here.
+
+\section*{4. TransLatch8 --- the same equation, subscripted}
+
+\[
+Q_i^{+} = \overline{\code{Clr}} \cdot \left( \code{En} \cdot D_i + \overline{\code{En}} \cdot Q_i \right)
+\qquad i = 0 \ldots 7
+\]
+
+Eight independent copies of the same circuit, sharing two control signals. \code{Clr}
+and \code{En} stay \textbf{one bit wide} --- they are broadcast to all eight bits.
+
+\begin{quote}
+\textbf{Control signals are narrow; datapaths are wide.} This is the structural
+pattern of the entire course. In Lab 5 the ALU is 32 bits wide with a 4-bit function
+code. In Lab 12 the CPU is 32 bits wide with a 16-field control record. It starts
+here, at 8 and 1.
+\end{quote}
+
+The code changes in exactly two places: the port types, and the cleared value.
+
+\begin{lstlisting}
+process (Clr, En, D)
+begin
+    if Clr = '1' then
+        Q <= (others => '0');   -- row 0
+    elsif En = '1' then
+        Q <= D;                 -- rows 2, 3
+    end if;
+    -- row 1 (hold): no else
+end process;
+\end{lstlisting}
+
+\code{Q <= '0';} would not compile --- \code{'0'} is a single bit and \code{Q} is a
+vector. \code{(others => '0')} means ``every element gets \code{'0'}'' and is
+width-independent: the identical line works at 8 bits, at 32, and at 1024. Use it
+from now on, and never write \code{"00000000"}.
+
+\section*{5. The two bugs this lab is built around}
+
+\subsection*{5.1 The incomplete sensitivity list}
+
+The starter file gives you \code{process (En)}. It compiles without an error. It
+simulates \textbf{wrong}.
+
+A process wakes up only when a signal in its sensitivity list changes. With only
+\code{En} listed, changing \code{D} while the latch is transparent does not wake the
+process, so \code{Q} does not follow \code{D} --- and changing \code{Clr} does
+nothing at all until \code{En} happens to move. You get a circuit that is
+transparent only at the instant \code{En} changes, which is not a latch and is not
+anything.
+
+\textbf{The rule: a process's sensitivity list must name every signal the process
+reads.} Here that is \code{Clr}, \code{En} and \code{D}. Not \code{Q} --- \code{Q}
+is written, not read.
+
+\textbf{How the failure looks in simulation:} the \emph{first} check fails, with
+\code{Q = 'U'}. Vector 1 raises \code{Clr} while \code{En} does not change, so the
+process never wakes and nothing has ever been assigned. It looks as though no code was
+written at all. Measured against the reference testbench, the 1-bit latch fails checks
+1, 3, 6, 7 and 9: vector 3 because \code{D} changes while \code{En} is already high,
+and the clear checks because a change of \code{Clr} alone wakes nothing.
+
+\textbf{Which signal is missing is named by which checks fail:} clear checks failing
+means \code{Clr} is missing; the ``tracks a change of D'' check failing means \code{D}
+is missing. Note that on the 1-bit latch the hold checks (4 and 5) still \emph{pass} ---
+a value that is stuck looks exactly like a value that is held. A test can pass for the
+wrong reason. (The 8-bit latch also fails 4 and 5, because its data changed while
+\code{En} stayed high and the stale value is what it holds.)
+
+\textbf{How to see it without simulating:} Quartus reports it, once per missing
+signal:
+\begin{lstlisting}
+Warning (10492): VHDL Process Statement warning at TransLatch.vhd(33): signal "Clr"
+  is read inside the Process Statement but isn't in the Process Statement's
+  sensitivity list
+\end{lstlisting}
+and then builds the complete latch anyway (verified: 1 inferred latch, 0 registers).
+\textbf{Note what that means --- the synthesised hardware is correct and the
+simulation is wrong.} They disagree.
+
+\textbf{This depends on the \code{Clr} branch.} Remove it, as in Example 3, and the
+same missing name makes Quartus build a \emph{flip-flop} clocked by \code{En}, with no
+warning at all. The examples solution handout, Section 3.4, has both cases measured. That divergence,
+where your simulation and your chip do different things, is the most expensive class
+of bug in digital design, and you have now met it in week one on a four-row table.
+
+\subsection*{5.2 Writing the \code{else}}
+
+The other half of the class writes:
+
+\begin{lstlisting}
+    if Clr = '1' then  Q <= '0';
+    elsif En = '1' then  Q <= D;
+    else  Q <= '0';        -- <-- WRONG
+    end if;
+\end{lstlisting}
+
+This is complete, warning-free, and not a latch. It is a combinational AND gate:
+$Q = \overline{\code{Clr}} \cdot \code{En} \cdot D$. Row 1 of the table now reads 0
+instead of $Q$.
+
+\textbf{How it fails:} only at the two checks made while the latch is closed and
+holding a 1: vector 4 (``value captured before closing'') and vector 5 (the hold
+vector). Every check made with the latch open, or after a clear, still passes. A
+design that passes eight of ten checks and fails exactly the ones that define the
+component is a much better lesson than one that fails everywhere.
+
+\section*{6. The testbench --- why these ten vectors}
+
+Ten vectors, each checked on both the 1-bit and the 8-bit latch: 20 assertions.
+
+\begin{center}
+\begin{tabular}{clll}
+\toprule
+\# & what it drives & covers & catches \\
+\midrule
+1 & \code{Clr}=1 with \code{D}=1 & row 0 & \textbf{\code{Clr} missing from list} (\code{'U'}) \\
+2 & transparent, \code{D}=1 & row 3 & \\
+3 & change \code{D}, still open & rows 2/3 & \textbf{\code{D} missing from list} \\
+4 & load, then close \code{En} & rows 3$\to$1 & \textbf{the written \code{else}} \\
+5 & change \code{D} while closed & \textbf{row 1} & \textbf{the written \code{else}}, a wire \\
+6 & \code{Clr}=1 while closed & row 0 over row 1 & clear gated by \code{En} \\
+7 & release \code{Clr}, still closed & row 1 & a clear that ``un-clears'' \\
+8 & reopen \code{En} & rows 1$\to$3 & \\
+9 & \code{Clr}=1 while transparent & row 0 over row 3 & priority written backwards \\
+10 & release \code{Clr}, still open & row 3 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{The coverage argument} --- this is what your report's Section 5 must contain,
+in your own words:
+
+\begin{quote}
+All four table rows are exercised. Both entries into the hold state are tested
+(vector 4 from transparent, vector 7 from cleared), and the hold is verified by
+changing \code{D} underneath it (vector 5) rather than merely by leaving it alone ---
+a latch stuck at its value would pass a passive check. The clear is asserted from
+each of the other two states (vector 6 from hold, vector 9 from transparent) because
+row 0's don't-cares claim it dominates both, and a claim in the table must be a
+check in the testbench. The 8-bit checks use \code{A5}, \code{5A} and \code{3C},
+which are bitwise complements and rotations of each other, so a swapped or
+sign-extended bit ordering produces a visibly wrong value rather than an accidental
+match.
+\end{quote}
+
+Note vectors 5 and 7 together. They apply \textbf{identical inputs} ---
+\code{Clr}=0, \code{En}=0, \code{D}=0 --- yet expect \code{Q}=1 at vector 5 and
+\code{Q}=0 at vector 7. No combinational circuit can give two different outputs for
+the same inputs, so \textbf{this pair is the proof that the design has memory}, and
+the coverage argument has to name it.
+
+\textbf{Expected transcript on success:}
+\begin{lstlisting}
+# ** Note: PASS - TransLatch: all 20 checks passed.
+\end{lstlisting}
+
+If you see no \code{PASS} line and no \code{FAIL} lines, your simulation did not run
+the process --- check that the top-level entity for simulation is \code{tb\_TransLatch}
+and not \code{TransLatch}.
+
+\section*{7. Quartus --- what to do, and what to read}
+
+The project is supplied. \code{Lab1.qpf} already sets family Cyclone~V, device
+\code{5CSEMA4U23C6}, simulator \code{Questa Altera FPGA (VHDL)}, and the testbench
+\code{tb\_TransLatch}. \textbf{Open it, do not create a new one.}
+
+\begin{enumerate}[leftmargin=2em,itemsep=2pt]
+\item \code{File $\rightarrow$ Open Project} $\rightarrow$ \code{Lab1.qpf}
+\item Edit \code{TransLatch.vhd}: fix the sensitivity list, implement the table.
+\item \code{Processing $\rightarrow$ Start $\rightarrow$ Start Analysis \& Elaboration}
+\item \code{Tools $\rightarrow$ Netlist Viewers $\rightarrow$ RTL Viewer}
+\item \code{Processing $\rightarrow$ Start Compilation} \quad(Ctrl+L)
+\item \code{Tools $\rightarrow$ Run Simulation Tool $\rightarrow$ RTL Simulation}
+\item Repeat 2--6 for \code{TransLatch8}: \code{Project $\rightarrow$ Set as
+Top-Level Entity} with \code{TransLatch8.vhd} open, then recompile.
+\end{enumerate}
+
+\subsection*{Evidence --- and what it should say}
+
+Full descriptions of each source are in the \emph{Quartus Results Guide}. What
+matters for \emph{this} design:
+
+\vspace{4pt}
+\textbf{E1 --- Flow Summary / Messages.}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Total registers} & \textbf{0} \\
+Total pins & 4 (\code{TransLatch}) \quad / \quad 18 (\code{TransLatch8}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Zero registers is the correct and expected result}, and it is the single most
+informative number in this report. A latch is not a register --- there is no clock
+anywhere in this design. If your report says ``8 registers'', you built a flip-flop,
+which is Lab 2.
+
+Pin count: 18 for the 8-bit version --- 8 in, 8 out, plus \code{En} and \code{Clr}.
+The two control bits serve all eight data bits, which is that narrow/wide pattern
+showing up as an actual number for the first time.
+
+\vspace{4pt}
+\textbf{E2 --- RTL Viewer.} Look for the \textbf{feedback loop}: the output of the
+selection logic routed back to its own input. You are looking at Section~3's
+equation drawn as a picture --- a multiplexer eating its own output, with
+\code{Clr} gating the result. If you see no loop, you wrote the \code{else}.
+
+\vspace{4pt}
+\textbf{E3 --- Technology Map Viewer, and the latch report.} Open the Compilation
+Report and find \textbf{Analysis \& Synthesis $\rightarrow$ User-Specified and
+Inferred Latches}. For \code{TransLatch8} the reference build reports:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Latch Name & Latch Enable Signal & Free of Timing Hazards \\
+\midrule
+\code{Q[0]\$latch} & \code{En} & yes \\
+\multicolumn{3}{c}{\ldots\ through \ldots} \\
+\code{Q[7]\$latch} & \code{En} & yes \\
+\midrule
+\multicolumn{3}{l}{Number of user-specified and inferred latches = \textbf{8}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Three things to take from that table, and all three belong in your report:
+
+\begin{enumerate}[leftmargin=2em,itemsep=1pt]
+\item \textbf{Eight latches for eight bits.} One storage element per bit, exactly as
+the subscripted equation predicted.
+\item \textbf{The enable signal is \code{En}} --- Quartus worked out on its own which
+signal controls the storage, and it agrees with your table. If it names something
+else, your priority order is wrong.
+\item \textbf{``Free of timing hazards: yes''} means the tool checked for a glitch on
+the enable path that could corrupt the stored value, and found none.
+\end{enumerate}
+
+\textbf{This report exists to warn you.} Ninety-nine times out of a hundred, latches
+appear here because someone forgot a branch. This is the one lab where finding your
+component listed means you got it right --- and having seen it deliberately, you will
+recognise it instantly when it is accidental.
+
+\vspace{4pt}
+\textbf{E4 --- Resource utilisation.} Around 5 ALMs for the 8-bit version, under 1\%
+of the device. The absolute number is uninteresting; the \emph{ratio} is not. Record
+it, because you will build the same table for every lab and in Lab 12 you will be
+able to say which component actually costs anything. (Spoiler for December: it is the
+register file, and it is not close.)
+
+\vspace{4pt}
+\textbf{E5 --- Pin-Out file.} Skim it. Nothing is pin-constrained this semester, so
+the fitter placed everything itself; the file's purpose in Lab 1 is to show you it
+exists and what it looks like.
+
+\vspace{4pt}
+\textbf{E6 --- Timing Analyzer.} With no \code{.sdc} file, Quartus \textbf{invents a
+clock} on the latch enable and reports no $F_{max}$:
+\begin{lstlisting}
+Info (332105): create_clock -period 1.000 -name En En
+Info (332140): No fmax paths to report
+\end{lstlisting}
+There is no $F_{max}$ because there are no setup or hold paths: nothing travels from
+one storage element to another. The only check left is \emph{minimum pulse width}
+on \code{En} against that invented 1~ns (1~GHz) period. It may pass or fail: the
+reference \code{TransLatch8} build fails it by 38~ps at the fast corner and prints
+\code{Critical Warning (332148): Timing requirements not met}.
+
+\textbf{That warning is not a design error.} It is a check against a clock nobody
+specified. In your report, say that the enable was treated as a 1~ns clock by
+default, that the design has no register-to-register path and so no $F_{max}$, and
+that a meaningful timing number needs a real clock and a constraint. Both arrive in
+Lab 2.
+
+\vspace{4pt}
+\textbf{E7 --- Questa.} The waveform, plus the transcript line proving the checks
+ran. On the waveform, find and annotate one specific place: \textbf{the interval
+where \code{En} is low, \code{D} changes, and \code{Q} does not.} A screenshot with
+that interval marked is worth more than three paragraphs of description, and it is
+the picture your Discussion section should be built around.
+
+\section*{8. Report checklist --- \code{lab01.tex}}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item Table T with rows numbered, and $Q$ (not 0) in row 1's output column
+\item The three-line derivation, with \textbf{distributive law} named at step 2
+\item One sentence identifying the parenthesis as a 2:1 multiplexer with feedback ---
+tie it back to Lab 0 Exercise 2 explicitly
+\item Both files via \code{\textbackslash lstinputlisting}, never pasted
+\item Coverage argument naming \textbf{vectors 5 and 7}: same inputs, different
+expected outputs, so only memory can pass both
+\item Evidence: Flow Summary showing \textbf{0 registers}, the inferred-latch table,
+the RTL Viewer feedback path, the annotated waveform interval
+\item Two sentences on the Timing Analyzer: the invented 1~ns clock on \code{En}, and
+why there is no $F_{max}$
+\item Discussion: which of the two bugs you hit, which vector caught it, and how long
+it took you to find. \textbf{Be honest here} --- it is graded on the quality of the
+account, not on having got it right first time.
+\end{itemize}
+
+\vspace{6pt}
+\hr
+{\small \textbf{Forward.} Lab 2 wires two of these in series on opposite clock
+phases, and the pair becomes a master--slave flip-flop --- edge-triggered storage,
+and the first $F_{max}$ number of the semester. Lab 6 instantiates 1024 of them as a
+register file. The transparent latch is the only storage primitive in this course;
+everything after this is built from it.}
+
+\end{document}

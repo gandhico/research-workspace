@@ -1,0 +1,538 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 0 --- Student Practice Exercises: Solution}\\[2pt]
+{\itshape P1 Voting Circuit \quad$\cdot$\quad P2 4-to-1 Multiplexer \quad$\cdot$\quad P3 3-to-8 Decoder}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+\hr
+
+\textbf{Read this first.} Each of these three problems is a class example with one
+more input. That is not a coincidence and it is not padding. In every case the
+efficient solution is not a bigger truth table --- it is to \textbf{build the larger
+circuit out of the smaller one you already have}.
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+& class example & practice problem & built from \\
+\midrule
+P1 & majority of 3 & majority of 4 & \code{majority3} + \code{mux2} \\
+P2 & 2-to-1 mux & 4-to-1 mux & three \code{mux2} \\
+P3 & 2-to-4 decoder & 3-to-8 decoder & two \code{decoder2to4} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+That table is the method of the whole course in miniature. The processor you finish
+in December is not a bigger truth table either --- it is seventeen components.
+
+\vspace{4pt}\hr
+
+\section*{P1 --- 4-Input Voting Circuit}
+
+\subsection*{Specification}
+
+Inputs $A,B,C,D$; output $Y = 1$ when \textbf{at least three} of the four are $1$.
+
+With four voters, ``at least three'' is a strict majority --- so this is the
+majority function again, one input wider.
+
+\subsection*{Truth table --- Type E, 16 rows}
+
+\begin{center}
+\begin{tabular}{c|cccc|c|c}
+\toprule
+\# & $A$ & $B$ & $C$ & $D$ & ones & $Y$ \\
+\midrule
+0  & 0&0&0&0 & 0 & 0 \\
+1  & 0&0&0&1 & 1 & 0 \\
+2  & 0&0&1&0 & 1 & 0 \\
+3  & 0&0&1&1 & 2 & 0 \\
+4  & 0&1&0&0 & 1 & 0 \\
+5  & 0&1&0&1 & 2 & 0 \\
+6  & 0&1&1&0 & 2 & 0 \\
+7  & 0&1&1&1 & 3 & \textbf{1} \\
+8  & 1&0&0&0 & 1 & 0 \\
+9  & 1&0&0&1 & 2 & 0 \\
+10 & 1&0&1&0 & 2 & 0 \\
+11 & 1&0&1&1 & 3 & \textbf{1} \\
+12 & 1&1&0&0 & 2 & 0 \\
+13 & 1&1&0&1 & 3 & \textbf{1} \\
+14 & 1&1&1&0 & 3 & \textbf{1} \\
+15 & 1&1&1&1 & 4 & \textbf{1} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The ``ones'' column is not decoration --- it is the specification restated
+numerically, and it makes the table self-checking. Add it to any table whose
+specification is a counting condition.
+
+Five of sixteen rows are $1$. Sanity check: that is $\binom{4}{3} + \binom{4}{4}
+= 4 + 1 = 5$. \checkmark
+
+\subsection*{Boolean derivation}
+
+\textbf{(1) Canonical.}
+\[
+Y = \sum m(7,11,13,14,15) = \bar{A}BCD + A\bar{B}CD + AB\bar{C}D + ABC\bar{D} + ABCD
+\]
+
+\textbf{(2) Simplified.} Exactly the manoeuvre from Example 1, one input wider:
+$m_{15} = ABCD$ is adjacent to each of the other four minterms, so by the
+\textbf{idempotent law} write it four times:
+
+\begin{align*}
+Y &= \bar{A}BCD + A\bar{B}CD + AB\bar{C}D + ABC\bar{D}
+     + \underbrace{ABCD + ABCD + ABCD + ABCD}_{\text{idempotent law}} \\
+  &= (\bar{A}BCD + ABCD) + (A\bar{B}CD + ABCD) \\
+  &\qquad + (AB\bar{C}D + ABCD) + (ABC\bar{D} + ABCD) \\
+  &= BCD(\bar{A}+A) + ACD(\bar{B}+B) + ABD(\bar{C}+C) + ABC(\bar{D}+D) && \text{\small distributive law} \\[2pt]
+Y &= \boxed{ABC + ABD + ACD + BCD} && \text{\small complement law}
+\end{align*}
+
+\textbf{This is minimal.} On a 4-variable K-map, each of $m_7, m_{11}, m_{13},
+m_{14}$ is adjacent \emph{only} to $m_{15}$, so every group has size 2 and no
+larger grouping exists. All four resulting prime implicants are essential.
+Cost: 4 AND3 + 1 OR4.
+
+\subsection*{The pattern --- worth more than the answer}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+function & result & terms \\
+\midrule
+at least 2 of 3 & $AB + AC + BC$ & $\binom{3}{2} = 3$ \\
+at least 3 of 4 & $ABC + ABD + ACD + BCD$ & $\binom{4}{3} = 4$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{``At least $k$ of $n$'' is the OR of all $\binom{n}{k}$ products of $k$
+variables.}
+\end{quote}
+
+Derive it once, then \emph{write down} the answer for any $n$ and $k$ without
+touching a K-map. Note the cost, though: ``at least 5 of 9'' would be
+$\binom{9}{5} = 126$ terms. Recognising that a formula explodes is itself a design
+result --- at that size you stop using gates and build an adder tree instead.
+
+\subsection*{Behavioural architecture}
+
+\begin{lstlisting}
+Y <= (A and B and C) or (A and B and D) or
+     (A and C and D) or (B and C and D);
+\end{lstlisting}
+
+\subsection*{Structural architecture --- reuse both class components}
+
+Split the problem on $D$'s vote:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item If $D = 1$, we already have one yes --- we need only \textbf{2 more from
+$A,B,C$}. That is \code{majority3}.
+\item If $D = 0$, we need \textbf{all three} of $A,B,C$.
+\end{itemize}
+
+\[
+Y = D \cdot \mathrm{Maj3}(A,B,C) \;+\; \bar{D} \cdot ABC
+\]
+
+Read the right-hand side: it is a \textbf{2-to-1 multiplexer selected by $D$}, with
+\code{majority3} on one input and an AND3 on the other. Both parts came out of Lab 0
+class examples, unmodified.
+
+\begin{lstlisting}
+architecture structural of voting4 is
+    signal maj3, allABC : std_logic;
+begin
+    U_MAJ : entity work.majority3
+        port map ( A => A, B => B, C => C, Y => maj3 );
+
+    allABC <= A and B and C;
+
+    U_MUX : entity work.mux2
+        port map ( D0 => allABC, D1 => maj3, S => D, Y => Y );
+end architecture structural;
+\end{lstlisting}
+
+\textbf{Proving the two agree.} Expand the structural form:
+\begin{align*}
+D(AB + AC + BC) + \bar{D}ABC
+  &= ABD + ACD + BCD + ABC\bar{D} \\
+\intertext{and expand the behavioural form's $ABC$ term by the complement law:}
+ABC + ABD + ACD + BCD
+  &= ABC(D + \bar{D}) + ABD + ACD + BCD \\
+  &= \underbrace{ABCD}_{\text{absorbed into } ABD} + ABC\bar{D} + ABD + ACD + BCD \\
+  &= ABD + ACD + BCD + ABC\bar{D} \qquad\checkmark && \text{\small absorption}
+\end{align*}
+
+Equal. \textbf{But the proof is not the verification} --- the testbench asserts
+both architectures on all 16 vectors.
+
+\subsection*{Testbench and result}
+
+Four inputs, combinational: exhaustive, 16 vectors. Compute the expectation by
+counting ones rather than typing a 16-entry literal table --- \textbf{a hand-typed
+expected-value table can contain the same mistake as the design}.
+
+\begin{lstlisting}
+ones := 0;
+for k in 0 to 3 loop
+    if v(k) = '1' then ones := ones + 1; end if;
+end loop;
+if ones >= 3 then want := '1'; else want := '0'; end if;
+\end{lstlisting}
+
+Three checks per vector: behavioural vs.\ expected, structural vs.\ expected, and
+the two against each other.
+
+\begin{lstlisting}
+# ** Note: PASS - voting4: 48 checks passed (16 vectors x 3).
+\end{lstlisting}
+
+\vspace{4pt}\hr
+
+\section*{P2 --- 4-to-1 Multiplexer}
+
+\subsection*{Truth table --- Type C}
+
+Six inputs would give a 64-row exhaustive table. Do not write it. Write this:
+
+\begin{center}
+\begin{tabular}{c|cc|c}
+\toprule
+\# & $S_1$ & $S_0$ & $Y$ \\
+\midrule
+0 & 0 & 0 & $D_0$ \\
+1 & 0 & 1 & $D_1$ \\
+2 & 1 & 0 & $D_2$ \\
+3 & 1 & 1 & $D_3$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Four rows for a six-input circuit, because the output column names a
+\textbf{source} rather than a value. This is the form that survives when the mux is
+32 bits wide in Lab 3.
+
+\subsection*{Boolean derivation}
+
+\[
+Y = \bar{S_1}\bar{S_0}D_0 + \bar{S_1}S_0 D_1 + S_1\bar{S_0}D_2 + S_1 S_0 D_3
+\qquad\text{or}\qquad
+\boxed{Y = \sum_{k=0}^{3} m_k(S_1,S_0)\cdot D_k}
+\]
+
+Nothing simplifies, and nothing should --- but \emph{look at the coefficients}. The
+four products $m_k(S_1,S_0)$ are precisely the four outputs of the 2-to-4 decoder
+from class Example 3.
+
+\begin{quote}
+\textbf{A multiplexer is a decoder AND-ed with the data inputs, then OR-ed
+together.} P2 and P3 are the same circuit seen from two directions: the decoder
+produces the one-hot select, the mux consumes it.
+\end{quote}
+
+That relationship is why a large multiplexer and a large decoder cost roughly the
+same, and it is worth one sentence in your report.
+
+\subsection*{Two architectures, and a real trade-off}
+
+\textbf{Behavioural --- flat select.} Two gate levels: AND3s in parallel, one OR4.
+
+\begin{lstlisting}
+S <= S1 & S0;
+with S select
+    Y <= D0   when "00",
+         D1   when "01",
+         D2   when "10",
+         D3   when "11",
+         'X'  when others;
+\end{lstlisting}
+
+\code{'X' when others} covers metavalues on the \emph{select}, not a fifth case ---
+\code{"00"} through \code{"11"} already exhaust the two-bit space. Getting that
+distinction right is the same trap that hid the enable bug in Example 3.
+
+\textbf{Structural --- a mux tree.} $S_0$ chooses within each pair, $S_1$ chooses
+between the pairs:
+
+\begin{lstlisting}
+U0 : entity work.mux2 port map ( D0 => D0, D1 => D1, S => S0, Y => L0 );
+U1 : entity work.mux2 port map ( D0 => D2, D1 => D3, S => S0, Y => L1 );
+U2 : entity work.mux2 port map ( D0 => L0, D1 => L1, S => S1, Y => Y  );
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& flat & tree \\
+\midrule
+depth & 2 gate levels & 2 mux levels ($\approx$ 4 gate levels) \\
+fan-in & one OR4 & nothing wider than 2 \\
+scaling to $2^n$ & one OR of width $2^n$ & $n$ levels, all narrow \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Flat is faster here; the tree is what scales.} At 4 inputs the flat form
+wins and you should use it. At 32 inputs the flat form needs a 32-input OR gate,
+which no FPGA has --- the tool builds a tree anyway, and you have merely lost
+control of how. Lab 3 is where this stops being hypothetical.
+
+\subsection*{Testbench --- the important design decision}
+
+64 vectors: \textbf{all 16 data patterns for each of the 4 select values.}
+
+Sweeping every data pattern per select --- rather than just toggling the selected
+input --- is what proves the mux \textbf{ignores the three inputs it did not
+select}. That is the property most likely to be wrong and least likely to be tested.
+A mux that ORs its inputs together passes any test where the unselected inputs
+happen to be $0$.
+
+\begin{lstlisting}
+want := dv(s);      -- the selected input, whatever value it currently holds
+\end{lstlisting}
+
+One line, and it is the entire expected-value model. Compare it with typing a
+64-row table.
+
+\begin{lstlisting}
+# ** Note: PASS - mux4: 192 checks passed (64 vectors x 3).
+\end{lstlisting}
+
+\vspace{4pt}\hr
+
+\section*{P3 --- 3-to-8 Decoder with Enable}
+
+\subsection*{Truth table --- Type E with a don't-care row}
+
+\begin{center}
+\begin{tabular}{c|cccc|cccccccc}
+\toprule
+\# & $E$ & $A_2$ & $A_1$ & $A_0$ & $D_7$ & $D_6$ & $D_5$ & $D_4$ & $D_3$ & $D_2$ & $D_1$ & $D_0$ \\
+\midrule
+0 & 0 & -- & -- & -- & 0&0&0&0&0&0&0&0 \\
+1 & 1 & 0&0&0 & 0&0&0&0&0&0&0&\textbf{1} \\
+2 & 1 & 0&0&1 & 0&0&0&0&0&0&\textbf{1}&0 \\
+3 & 1 & 0&1&0 & 0&0&0&0&0&\textbf{1}&0&0 \\
+4 & 1 & 0&1&1 & 0&0&0&0&\textbf{1}&0&0&0 \\
+5 & 1 & 1&0&0 & 0&0&0&\textbf{1}&0&0&0&0 \\
+6 & 1 & 1&0&1 & 0&0&\textbf{1}&0&0&0&0&0 \\
+7 & 1 & 1&1&0 & 0&\textbf{1}&0&0&0&0&0&0 \\
+8 & 1 & 1&1&1 & \textbf{1}&0&0&0&0&0&0&0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Nine rows, not sixteen: row 0's don't-cares collapse eight rows into one. That is a
+\textbf{claim} --- that the address genuinely cannot reach the outputs when
+disabled --- and the testbench has to prove it.
+
+\subsection*{Boolean equations}
+
+\[
+D_k = E \cdot m_k(A_2,A_1,A_0), \qquad k = 0 \ldots 7
+\]
+
+Written out: $D_0 = E\bar{A_2}\bar{A_1}\bar{A_0}$, $D_1 = E\bar{A_2}\bar{A_1}A_0$,
+\ldots, $D_7 = EA_2A_1A_0$. Eight equations, one per output; nothing simplifies,
+because each is already a single product term.
+
+\subsection*{Structural architecture --- the one that matters}
+
+Build it from two \code{decoder2to4}. The key move:
+
+\begin{quote}
+\textbf{$A_2$ does not go into the sub-decoders. It splits the ENABLE.}
+\end{quote}
+
+\begin{lstlisting}
+Elo <= E and (not A2);      -- lower half active when A2 = '0'
+Ehi <= E and      A2;       -- upper half active when A2 = '1'
+
+ULO : entity work.decoder2to4
+    port map ( E => Elo, A1 => A1, A0 => A0, D => D(3 downto 0) );
+
+UHI : entity work.decoder2to4
+    port map ( E => Ehi, A1 => A1, A0 => A0, D => D(7 downto 4) );
+\end{lstlisting}
+
+Each sub-decoder sees only the low two address bits. The high bit decides
+\emph{which sub-decoder is allowed to fire at all}, so exactly one output is high
+across the pair --- one-hot is preserved by construction.
+
+Check it against the table: $E=1$, $A_2A_1A_0 = 101$. Then \code{Ehi} = 1, the upper
+decoder decodes $A_1A_0 = 01$ and drives its own output 1, which is \code{D(5)}.
+Table row 6 says $D_5$. \checkmark
+
+\textbf{Why this is the important one.} It composes without limit. A 4-to-16
+decoder is two of these; a 5-to-32 decoder is two 4-to-16s. \textbf{5-to-32 is
+exactly what the register file needs in Lab 6} to turn a 5-bit register number into
+32 write-enables. You have now built the mechanism; Lab 6 only widens it.
+
+\subsection*{Testbench --- and the bug it is aimed at}
+
+16 vectors: 8 addresses $\times$ $E \in \{0,1\}$. \textbf{The expectation is
+computed, not typed:}
+
+\begin{lstlisting}
+if ev = 0 then
+    want := (others => '0');
+else
+    want := std_logic_vector(shift_left(to_unsigned(1, 8), a));
+end if;
+\end{lstlisting}
+
+``One, shifted left by the address'' \emph{is} the definition of a decoder, stated
+in one line. It cannot drift out of step with the specification the way a typed
+table can.
+
+Plus a \textbf{one-hot invariant} --- count the set bits and require exactly one
+when enabled, zero when not. An invariant catches faults a value comparison can
+miss, and it is the first time in this course you will write a check that is not a
+lookup.
+
+\textbf{And the point of the whole exercise:} the eight vectors with $E = 0$. The
+behavioural decoder shown in class ignored its enable entirely, and \emph{a
+testbench that only drives $E = 1$ passes it}. Row 0 of the table made a claim; these
+eight vectors are what turn that claim into evidence.
+
+\begin{lstlisting}
+# ** Note: PASS - decoder3to8: 48 checks passed (16 vectors x 3).
+\end{lstlisting}
+
+\vspace{4pt}\hr
+
+\section*{Quartus results --- interpreting all three}
+
+Synthesised for Cyclone V, device \code{5CSEMA4U23C6}:
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+& \code{voting4} & \code{mux4} & \code{decoder3to8} \\
+\midrule
+Total pins & 5 & 7 & 12 \\
+\quad in / out & 4 / 1 & 6 / 1 & 4 / 8 \\
+Logic utilisation (ALMs) & 1 & 2 & 5 \\
+\textbf{Total registers} & \textbf{0} & \textbf{0} & \textbf{0} \\
+Block memory bits & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+All three are under 1\% of the device's 15{,}880 ALMs. The absolute numbers are
+uninteresting; the \emph{ordering} is not. \code{voting4} fits in a
+\textbf{single ALM} --- it is one function of four inputs, and a Cyclone V adaptive
+logic module can implement any function of up to six. All that Boolean simplification
+work bought exactly nothing in hardware here, because the tool would have fitted the
+canonical five-minterm form into the same one ALM. \textbf{Simplification is for your
+understanding and your report; the fitter does its own.} It starts to matter for real
+in Lab 5, where the ALU is too big to absorb.
+
+\code{decoder3to8} costs the most (5 ALMs) despite having the fewest distinct input
+combinations, because \textbf{ALM cost tracks outputs, not inputs} --- eight outputs
+need eight functions, and one ALM can produce at most two.
+
+\textbf{Zero registers, in all three.} All three circuits are purely combinational
+--- output depends only on present inputs, nothing is stored, and there is no clock
+anywhere. If your Flow Summary shows a register or a latch, you have accidentally
+described memory: check for a \code{process} with an incomplete \code{if} or
+\code{case}. That is the Lab 1 mechanism appearing where you did not want it.
+
+\textbf{Pin counts are the shape of the circuit.} \code{decoder3to8} is the only one
+of the three with more outputs than inputs --- 4 in, 8 out --- because a decoder's
+job is precisely to expand a compact code into one wire per case. \code{mux4} is the
+opposite: 6 in, 1 out, collapsing many wires to one. \textbf{Muxes narrow, decoders
+widen}, and you will use them in exactly those roles for the rest of the semester.
+
+\textbf{Timing Analyzer: \code{No clocks defined in design}, no $F_{max}$ --- and
+that is correct.}
+$F_{max}$ answers ``how fast can I clock this?'' and none of these has a clock.
+Report the combinational propagation delay if you want a number, but do not report a
+missing $F_{max}$ as a failure. The first real $F_{max}$ of the course arrives in
+Lab 2.
+
+\textbf{RTL Viewer.} Compare the two architectures of each design deliberately ---
+this is the most instructive ten minutes in the whole practice set:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \code{voting4} --- behavioural shows four AND3s into an OR4; structural shows
+the \code{majority3} block and a mux. \emph{Different pictures, same function.}
+\item \code{mux4} --- flat vs.\ the two-level tree. You can \textbf{see} the depth
+difference that the trade-off table describes.
+\item \code{decoder3to8} --- structural shows two \code{decoder2to4} blocks with the
+enable split. Confirm $A_2$ really does not enter either sub-block.
+\end{itemize}
+
+Then note what Quartus does about it: after optimisation the two architectures
+usually map to \emph{identical} logic. \textbf{Your structural choice is about how
+the design is written, understood, and reused --- not about what reaches the
+silicon.} That is the honest lesson, and it is the reason the rest of this course
+builds structurally even when behavioural would fit.
+
+\section*{Files}
+
+All under \code{Lab\_0/practice/solution/}, all verified in Questa:
+
+\begin{center}
+\begin{tabular}{llc}
+\toprule
+design & testbench & result \\
+\midrule
+\code{voting4.vhd} (2 arch.) & \code{tb\_voting4.vhd} & PASS 48 \\
+\code{mux4.vhd} (2 arch.) & \code{tb\_mux4.vhd} & PASS 192 \\
+\code{decoder3to8.vhd} (2 arch.) & \code{tb\_decoder3to8.vhd} & PASS 48 \\
+\midrule
+\multicolumn{2}{l}{shared: \code{majority3.vhd}, \code{mux2.vhd}, \code{decoder2to4.vhd}} & \textbf{288} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\code{decoder2to4.vhd} here is the \textbf{corrected} version --- it gates on
+\code{E}. The file shown in class did not.
+
+\vspace{6pt}
+\hr
+{\small \textbf{One thing to take from all three.} Not one of these problems was
+solved by writing a bigger truth table. P1 split on one input and reused a
+3-input component; P2 was a tree of 2-input components; P3 was two half-sized
+decoders with the enable split. \textbf{Composition, not enumeration} --- that is
+the only technique that still works in December, when the thing being built is a
+processor.}
+
+\end{document}

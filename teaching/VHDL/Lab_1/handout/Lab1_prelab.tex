@@ -1,0 +1,105 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 1}\\[2pt]
+{\large Design Flow and the Transparent Latch}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points. About twenty
+minutes of work, on paper, before you open Quartus. The purpose is not to test
+you --- it is to make sure you arrive with a design already in your head, so the
+two hours at the bench are spent building instead of thinking.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- Paper first}
+
+Complete the transition table for a 1-bit transparent latch with an asynchronous
+clear. Use \code{--} for \emph{don't care} and \textbf{Q} to mean \emph{hold the
+previous value}.
+
+\begin{center}
+\begin{tabular}{clll@{\hskip 8pt}||@{\hskip 8pt}l@{\hskip 20pt}l}
+\toprule
+\# & \code{Clr} & \code{En} & \code{D} & $Q^{+}$ & note \\
+\midrule
+0 & 1 & -- & -- & \rule{2.2cm}{0.4pt} & \rule{4.5cm}{0.4pt} \\[4pt]
+1 & 0 & 0 & -- & \rule{2.2cm}{0.4pt} & \rule{4.5cm}{0.4pt} \\[4pt]
+2 & 0 & 1 & 0 & \rule{2.2cm}{0.4pt} & \rule{4.5cm}{0.4pt} \\[4pt]
+3 & 0 & 1 & 1 & \rule{2.2cm}{0.4pt} & \rule{4.5cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Now write the characteristic equation for $Q^{+}$ in terms of
+\code{Clr}, \code{En}, \code{D} and \code{Q}:
+
+\answerbox{2.0cm}
+
+\textbf{One sentence:} which term in your equation is the one that makes this
+circuit \emph{memory} rather than combinational logic, and why?
+
+\answerbox{1.6cm}
+
+\section*{Question 2 --- Interface}
+
+Write the VHDL \code{entity} declaration for \code{TransLatch} --- the interface
+only, no architecture. Get the port names, directions and types right.
+
+\answerbox{4.2cm}
+
+Now the same for \code{TransLatch8}. \textbf{Before you write it:} which ports
+change width, and which stay one bit wide?
+
+\answerbox{4.2cm}
+
+\section*{Question 3 --- Test plan}
+
+List the minimum set of input vectors that would convince \emph{you} that a
+\code{TransLatch} implementation is correct. For each one, say what it proves.
+
+\begin{center}
+\begin{tabular}{@{}c@{\hskip 8pt}p{5.2cm}@{\hskip 8pt}p{7.6cm}@{}}
+\toprule
+\# & Inputs (\code{Clr}, \code{En}, \code{D}) & What this vector proves \\
+\midrule
+1 & \rule{5cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+2 & \rule{5cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+3 & \rule{5cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+4 & \rule{5cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+5 & \rule{5cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+6 & \rule{5cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Then answer this, in one or two sentences:} why is your set
+\emph{sufficient}? That is, what would a wrong implementation have to do in order
+to pass all of your vectors and still be wrong?
+
+\answerbox{2.2cm}
+
+\vfill
+{\small\emph{Question 3 is the one that matters.} It is the same question as
+Section 5 of your lab report, and it is the difference between testing a design
+and merely running it.}
+
+\end{document}

@@ -1,0 +1,107 @@
+% =============================================================================
+%  Lab 1 - Design Flow and the Transparent Latch
+%
+%  Seven sections. Same seven every week. Do not add, remove or reorder them.
+%  Delete the guidance comments as you fill each section in.
+% =============================================================================
+
+\chapter{Lab 1 --- Design Flow and the Transparent Latch}
+
+\section{Objective}
+% Two or three sentences, in your own words. What did this lab ask you to build,
+% and what idea was it teaching? Do not copy the handout.
+
+\section{Specification}
+% The required behaviour as a TABLE, not as prose. Number every row, so that
+% your Discussion section can refer to "row 3" instead of describing it.
+
+\begin{table}[htbp]
+\centering
+\caption{Transition table (Type T) for \texttt{TransLatch}.}
+\label{tab:lab01-truth}
+\begin{tabular}{clll||ll}
+\toprule
+\# & \texttt{Clr} & \texttt{En} & \texttt{D} & $Q^{+}$ & note \\
+\midrule
+0 & 1 & -- & -- & \textbf{0} & asynchronous clear \\
+1 & 0 & 0 & -- & \textbf{Q} & hold --- the memory row \\
+2 & 0 & 1 & 0 & \textbf{0} & transparent \\
+3 & 0 & 1 & 1 & \textbf{1} & transparent \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Boolean derivation}
+% Three lines. Line (2) must NAME the law or K-map grouping you used.
+% "It simplified" is not an answer.
+
+\begin{align*}
+\text{(1) canonical} \quad & Q^{+} = \overline{Clr}\cdot En \cdot D \;+\; \overline{Clr}\cdot\overline{En}\cdot Q \\
+\text{(2) factored}  \quad & Q^{+} = \overline{Clr}\cdot\left( En\cdot D + \overline{En}\cdot Q \right)
+   \qquad \text{[\emph{name the law here}]} \\
+\text{(3) VHDL}      \quad & \text{see Listing~\ref{lst:code/lab01/TransLatch.vhd}}
+\end{align*}
+
+% One sentence: which term makes this memory rather than combinational logic?
+
+\section{Design}
+% The entity interface, and WHY you chose this architecture style.
+% For this lab: why is a process with an if-statement the right description,
+% and what does the deliberately missing 'else' mean in hardware?
+
+\section{Implementation}
+% Include the REAL .vhd file. Never paste code into this document.
+% Upload your sources into code/lab01/ in this Overleaf project.
+
+\vhdlfile{code/lab01/TransLatch.vhd}{\texttt{TransLatch} --- 1-bit transparent latch with asynchronous clear}
+
+% \vhdlfile{code/lab01/TransLatch8.vhd}{\texttt{TransLatch8} --- 8-bit version}
+
+\section{Verification}
+% Your test vectors as a table, then the COVERAGE ARGUMENT: why is this set
+% sufficient? What would a wrong design have to do to pass all of them?
+
+\begin{table}[htbp]
+\centering
+\caption{Test vectors applied to \texttt{TransLatch}.}
+\label{tab:lab01-vectors}
+\begin{tabular}{clllll}
+\toprule
+\# & \texttt{Clr} & \texttt{En} & \texttt{D} & expected $Q$ & what it proves \\
+\midrule
+1 &   &   &   &   & \\
+2 &   &   &   &   & \\
+3 &   &   &   &   & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% \vhdlfile{code/lab01/tb_TransLatch.vhd}{Self-checking testbench}
+
+\section{Results}
+% Evidence set for this lab: E1, E2, E7.
+% EVERY figure needs one sentence saying what it PROVES. A figure with no
+% sentence earns zero. Replace each \figplaceholder with \resultfig.
+
+\figplaceholder{the RTL Viewer output}
+% \resultfig{figs/lab01/rtl.png}
+%   {The RTL Viewer shows a single latch primitive and no other storage,
+%    confirming the design matches Table~\ref{tab:lab01-truth}.}
+%   {fig:lab01-rtl}
+
+\figplaceholder{the Questa waveform, with the hold interval annotated}
+% \resultfig{figs/lab01/waveform.png}
+%   {Between t = ... and t = ..., D changes while En is low and Q does not
+%    follow, which is row 1 of Table~\ref{tab:lab01-truth}.}
+%   {fig:lab01-wave}
+
+% E1: state the error and warning counts, and sort every warning into
+%     fix / explain / ignore.
+
+\section{Discussion}
+% REQUIRED. One bug you hit, how you found it, and what it cost you.
+% "Everything worked first try" scores zero. If you genuinely had no bug,
+% write about something that surprised you in the RTL Viewer or the waveform.
+%
+% One line linking this lab to lecture, e.g.:
+% "This is the storage element behind the register discussed in Homework 1."

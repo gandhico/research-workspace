@@ -1,0 +1,266 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 4 --- Guided Examples: Solution}\\[2pt]
+{\itshape Ex 1 tri-state and \code{'Z'} \quad$\cdot$\quad Ex 2 sign vs zero extension \quad$\cdot$\quad Ex 3 the conversion chain}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+\hr
+
+\begin{center}
+\begin{tabular}{clll}
+\toprule
+& circuit & new idea & feeds the assignment as \\
+\midrule
+1 & \code{tristate\_buf} & \code{'Z'}: a signal with \textbf{no driver} & \code{TriBuffer} \\
+2 & \code{extend\_demo} & widening depends on what bits \textbf{mean} & \code{ImmedXtnd} \\
+3 & \code{convert\_demo} & \code{std\_logic\_vector} $\to$ number $\to$ integer & \code{ALUsftMUX}, Lab 5 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}\hr
+
+\section*{Example 1 --- The third state}
+
+\subsection*{1.1 Not a Boolean function}
+
+\begin{center}
+\begin{tabular}{c|c|l}
+\toprule
+\# & \code{Sel} & $Y$ \\
+\midrule
+0 & 0 & \code{'Z'} \quad not driving \\
+1 & 1 & $A$ \quad driving \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}
+Y <= A when Sel = '1' else 'Z';
+\end{lstlisting}
+
+Everything built so far obeyed Boolean algebra: every signal was \code{'0'} or
+\code{'1'}. This one does not.
+
+\begin{quote}
+\textbf{\code{'Z'} is not a value. It is the absence of a value} --- ``I am not
+driving this wire at all.'' The output range is $\{0,1,Z\}$, and Boolean algebra
+has only $\{0,1\}$, so no AND/OR/NOT expression can describe this component.
+\end{quote}
+
+\subsection*{1.2 Why \code{std\_logic} is a \emph{resolved} type}
+
+If two drivers touch one wire, something must decide what the wire reads.
+\code{std\_logic} carries a \textbf{resolution function} that combines all
+drivers:
+
+\begin{center}
+\begin{tabular}{c||ccc}
+\toprule
+& \code{0} & \code{1} & \code{Z} \\
+\midrule
+\code{0} & \code{0} & \textbf{\code{X}} & \code{0} \\
+\code{1} & \textbf{\code{X}} & \code{1} & \code{1} \\
+\code{Z} & \code{0} & \code{1} & \code{Z} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item two drivers \textbf{agreeing} $\rightarrow$ that value;
+\item one driving, one at \code{'Z'} $\rightarrow$ the driven value ---
+\textbf{this is how a bus works};
+\item two drivers \textbf{disagreeing} $\rightarrow$ \code{'X'}.
+\end{itemize}
+
+\begin{quote}
+\textbf{So \code{'X'} in your waveform never means the simulator is confused. It
+means two things drove one wire and disagreed.} In Labs 9 and 12 that is the
+fastest diagnosis you own.
+\end{quote}
+
+\subsection*{1.3 Two things students get wrong here}
+
+\textbf{(a) Contention is resolved per bit.} Put \code{0xAAAAAAAA} and
+\code{0xBBBBBBBB} on the same 32-bit bus and the result is \textbf{not} all
+\code{'X'}. Those patterns agree on some bits and disagree on others, so only the
+conflicting bits go \code{'X'}. A check written as ``expect all X'' fails against
+a correct simulator.
+
+\textbf{(b) A floating bus is not zero.} With every driver disabled the wire is
+all \code{'Z'}, not \code{0x00000000}. Reading a float gives \code{'Z'}, and any
+arithmetic on it produces \code{'X'}.
+
+\vspace{4pt}\hr
+
+\section*{Example 2 --- Widening is two different operations}
+
+\begin{center}
+\small
+\begin{tabular}{l>{\raggedright\arraybackslash}p{5.6cm}>{\raggedright\arraybackslash}p{5.6cm}}
+\toprule
+& what it does & when it is right \\
+\midrule
+\textbf{zero extension} & pad the top with \code{'0'} & the bits are \textbf{unsigned}, or a pattern \\
+\textbf{sign extension} & pad the top with copies of the top bit & the bits are a \textbf{two's complement number} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+With a 4-bit input \code{0x8}: zero-extended it is \code{0x08} $= 8$;
+sign-extended it is \code{0xF8} $= -8$. \textbf{Same input, different answers, and
+neither is ``more correct''} --- the instruction decides.
+
+\begin{lstlisting}
+Yzero <= (7 downto 4 => '0')   & I;    -- top bits are zeros
+Ysign <= (7 downto 4 => I(3))  & I;    -- top bits are copies of the sign bit
+\end{lstlisting}
+
+\textbf{The aggregate \code{(others => I(3))} is the idiom to learn.} It means
+``every remaining element gets a copy of bit 3'' and works at any width without
+being rewritten --- far better than typing \code{I(3) \& I(3) \& I(3) \& I(3)}.
+
+\subsection*{Why this decides whether your CPU works}
+
+\code{ADDI} sign-extends: its immediate is a signed offset, and
+\code{ADDI r1,r1,-1} must actually subtract one. \code{LUI} zero-extends in this
+CPU: its immediate is a bit pattern, not a number. \textbf{Get it backwards and
+the Lab 12 loop counter counts the wrong way}, while the ALU and register file
+both behave perfectly.
+
+\vspace{4pt}\hr
+
+\section*{Example 3 --- The conversion chain}
+
+\code{std\_logic\_vector} is a \textbf{bag of bits}. It has no numeric meaning, so
+VHDL will not add two of them --- it does not know whether you meant signed or
+unsigned. You have to say.
+
+\begin{center}
+\code{std\_logic\_vector} $\longrightarrow$ \code{unsigned} / \code{signed}
+$\longrightarrow$ \code{integer}
+\end{center}
+
+\begin{lstlisting}
+to_integer(unsigned(Slv))                  -- bits as unsigned, then an integer
+to_integer(  signed(Slv))                  -- bits as two's complement
+std_logic_vector(to_unsigned(N, W))        -- and back again, at width W
+\end{lstlisting}
+
+Read it inside out: \code{unsigned(Slv)} \emph{reinterprets} the bits;
+\code{to\_integer()} then converts.
+
+\subsection*{Why you cannot avoid it}
+
+\textbf{You cannot index a vector with a vector.} \code{Data(Shamt)} is
+meaningless --- array indices are integers. So a shift amount, a register number
+or a memory address arriving as bits must be converted first:
+
+\begin{lstlisting}
+signal amount : natural range 0 to 7;
+...
+amount <= to_integer(unsigned(Shamt));           -- convert ONCE
+Bit0   <= Data(amount);                          -- index needs an integer
+Shift  <= std_logic_vector(shift_left(unsigned(Data), amount));
+\end{lstlisting}
+
+\textbf{Convert once into a named signal, then use it.} Burying the conversion
+inside a larger expression is where the unreadable errors come from.
+
+\subsection*{The library rule, and why it is absolute}
+
+\begin{lstlisting}
+use ieee.numeric_std.all;        -- yes, always
+-- NEVER: std_logic_arith, std_logic_unsigned, std_logic_signed
+\end{lstlisting}
+
+Those three are not IEEE standard, they conflict with each other, and mixing them
+produces errors that read as though the compiler has lost its mind --- typically
+``no feasible entries for operator'' on a line that is obviously fine.
+
+\vspace{4pt}\hr
+
+\section*{Into the assignment}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+example & becomes \\
+\midrule
+Ex 1 & \code{TriBuffer}: \code{Dout <= Din when Sel = '1' else (others => 'Z');} \\
+Ex 2 & \code{ImmedXtnd}: extend by \code{Xsel}, \textbf{then} shift by \code{Xlsft} \\
+Ex 3 & \code{ALUsftMUX}, and every index you write from Lab 5 onward \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\code{ImmedXtnd} is built in \textbf{two visible steps} for a reason:
+
+\begin{lstlisting}
+extended <= (31 downto 16 => Immed16(15)) & Immed16 when Xsel = '1'
+       else (31 downto 16 => '0')         & Immed16;
+
+Xtnd32   <= extended(29 downto 0) & "00" when Xlsft = '1'
+       else extended;
+\end{lstlisting}
+
+\textbf{Extend first, then shift.} Both branches of both assignments produce a
+value, so there is no latch --- compare Lab 3, Example 3. And the RTL Viewer shows
+the two stages separately, which makes the order visible rather than a claim.
+
+\begin{center}
+\begin{tabular}{c|ccc|l}
+\toprule
+\# & \code{Xsel} & \code{Xlsft} & \code{Immed16} & \code{Xtnd32} \\
+\midrule
+0 & 0 & 0 & \code{0x8000} & \code{0x00008000} \\
+1 & 1 & 0 & \code{0x8000} & \code{0xFFFF8000} \\
+2 & 1 & 1 & \code{0x0002} & \code{0x00000008} \\
+3 & 1 & 1 & \code{0xFFFF} & \code{0xFFFFFFFC} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Check row 3 as a number: $-1 \times 4 = -4 =$ \code{0xFFFFFFFC}. \textbf{Sign
+extension followed by $\times 4$ still multiplies the value by four}, negatives
+included --- that is the arithmetic sanity check for this component.
+
+\vspace{6pt}
+\hr
+{\small \textbf{Forward.} \code{TriBuffer} is what lets the register file and the
+memory share one data bus in Lab 12; \code{ImmedXtnd} is what makes \code{ADDI},
+\code{LUI}, \code{LW}, \code{SW} and the branches agree about what their
+immediates mean; and the conversion chain appears in every component that indexes
+anything.}
+
+\end{document}

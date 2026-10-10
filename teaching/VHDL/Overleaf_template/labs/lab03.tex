@@ -1,0 +1,108 @@
+% =============================================================================
+%  Lab 3 - Multiplexers
+%  Seven sections. Delete the guidance comments as you fill each one in.
+% =============================================================================
+
+\chapter{Lab 3 --- Multiplexers}
+
+\section{Objective}
+% Two or three sentences, your own words.
+
+\section{Specification}
+
+\begin{table}[htbp]
+\centering
+\caption{Compressed table (Type C) for \texttt{Mux3}. Rows name a \emph{source},
+not a value.}
+\label{tab:lab03-truth}
+\begin{tabular}{clc||ll}
+\toprule
+\# & \texttt{Sel1} & \texttt{Sel0} & $Y$ & note \\
+\midrule
+0 & 0 & 0 & \textbf{A} & \\
+1 & 0 & 1 & \textbf{B} & \\
+2 & 1 & 0 & \textbf{C} & \\
+3 & 1 & 1 & \textbf{0} & defined default \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ONE SENTENCE, required: why is this table Type C and not Type E? Give the
+% number of rows an exhaustive table would need.
+
+\subsection*{Boolean derivation}
+
+\begin{align*}
+\text{(1) canonical} \quad & Y_i = \overline{S_1}\,\overline{S_0}\,A_i + \overline{S_1}S_0\,B_i + S_1\overline{S_0}\,C_i + S_1 S_0 \cdot 0 \\
+\text{(2) factored}  \quad & Y_i = \overline{S_1}\left( \overline{S_0}A_i + S_0 B_i \right) + S_1\overline{S_0}\,C_i
+   \qquad \text{[\emph{name the law here}]} \\
+\text{(3) VHDL} \quad & \text{see Listing~\ref{lst:code/lab03/Mux3.vhd}}
+\end{align*}
+
+% ONE SENTENCE, required: what familiar component is the bracketed
+% sub-expression in line (2), and what does that tell you about the relationship
+% between factoring an equation and decomposing a circuit?
+
+\section{Design}
+% Answer both:
+%   (a) Which coding style did you use for Mux2 - when/else, with/select, or
+%       case - and WHY? This is the graded question, not the syntax.
+%   (b) Why does using 'case' with 'when others' make the Example 3 latch
+%       impossible, while an if/elsif chain does not?
+
+\section{Implementation}
+
+\vhdlfile{code/lab03/Mux3.vhd}{\texttt{Mux3} --- generic-width 3-to-1 multiplexer}
+
+\vhdlfile{code/lab03/CPUMuxes.vhd}{\texttt{CPUMuxes} --- the four multiplexers instantiated at CPU widths}
+
+\section{Verification}
+% Vectors, then the coverage argument. For a Type C table the argument has a
+% fixed shape: exhaustive on the SELECTOR, distinct patterns on the DATA.
+
+\begin{table}[htbp]
+\centering
+\caption{Test vectors. Note the data patterns are all distinct.}
+\label{tab:lab03-vectors}
+\begin{tabular}{cllll}
+\toprule
+\# & \texttt{Sel} & A / B / C & expected $Y$ & what wrong design this rules out \\
+\midrule
+1 & & & & \\
+2 & & & & \\
+3 & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Answer both, one sentence each:
+%   (a) Which vector catches a "multiplexer" that ignores its selector and
+%       always returns A?
+%   (b) Which vector catches a missing row 3, i.e. an inferred latch?
+
+\section{Results}
+% Evidence: E1, E2, E7.
+
+\figplaceholder{the annotated CPU block diagram, with your four multiplexers
+circled and labelled with what each one selects --- make this full page}
+% \resultfig{figs/lab03/cpu_diagram_annotated.png}
+%   {The four multiplexers built in this lab, shown in position on the datapath:
+%    DselMUX selects ..., ALUinMUX selects ..., DinMUX selects ...}
+%   {fig:lab03-diagram}
+
+\figplaceholder{the RTL Viewer for \texttt{MUX3x32}}
+% Required sentence: state that there are NO storage elements, and why that
+% matters for a design that is supposed to be combinational.
+
+\figplaceholder{the Questa waveform covering all four selector values}
+
+% E1: state the error and warning counts. Say explicitly that there is no
+%     inferred-latch warning.
+% E4: state the register count for MUX3x32. It must be ZERO. Say why a non-zero
+%     count would mean the design is wrong, not merely expensive.
+
+\section{Discussion}
+% REQUIRED. One bug, how you found it, what it cost.
+% Good candidate: if you hit the inferred latch, describe how you noticed - the
+% warning, the RTL Viewer, or the waveform holding a stale value - and which of
+% those three told you fastest.

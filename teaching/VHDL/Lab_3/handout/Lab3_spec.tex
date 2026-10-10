@@ -1,0 +1,231 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 3 --- Multiplexers}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Build the component that lets a control signal steer a datapath, and learn the
+kind of specification table that makes wide designs possible at all.
+
+\begin{quote}
+\emph{A multiplexer is how one control bit steers thirty-two bits of data.}
+\end{quote}
+
+\section*{2. Background: why the table shrinks}
+
+A 32-bit 3-to-1 multiplexer has 98 inputs. An exhaustive truth table would need
+$2^{98}$ rows --- more rows than there are atoms in your body. You are not going
+to write that table, and you do not need to.
+
+\textbf{Type C, a compressed table}, enumerates only the \emph{control} inputs and
+names a \emph{source} for the data:
+
+\begin{center}
+\begin{tabular}{clc@{\hskip 8pt}||@{\hskip 8pt}ll}
+\toprule
+\# & \code{Sel1} & \code{Sel0} & $Y$ & note \\
+\midrule
+0 & 0 & 0 & \textbf{A} & \\
+1 & 0 & 1 & \textbf{B} & \\
+2 & 1 & 0 & \textbf{C} & \\
+3 & 1 & 1 & \textbf{0} & \emph{defined default} --- a decision, not an accident \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Four rows. Complete specification. Rows say \emph{``Y = B''}, naming a source, not
+a value. This is not a shortcut --- it is the reason datapath design is possible,
+and you will use Type C tables for the rest of the course. Type E (exhaustive)
+survives only while you have four inputs or fewer.
+
+\subsection*{Equations}
+
+\begin{align*}
+\text{(1) canonical} \quad & Y_i = \overline{S_1}\,\overline{S_0}\,A_i + \overline{S_1}S_0\,B_i + S_1\overline{S_0}\,C_i + S_1S_0\cdot 0\\
+& \qquad\qquad \text{row 3 outputs zero, so it contributes no product term}\\
+\text{(2) factored} \quad & Y_i = \overline{S_1}\left( \overline{S_0}A_i + S_0 B_i \right) + S_1\overline{S_0}\,C_i
+  \qquad \text{[distributive law, factoring $\overline{S_1}$]}\\
+\text{(3) VHDL} \quad & \text{see \S4}
+\end{align*}
+
+\textbf{Look at what equation (2) is.} The bracket is a 2-to-1 multiplexer
+choosing $A$ or $B$. The whole expression is a second 2-to-1 multiplexer choosing
+between that result and $C$. You factored an equation and a \emph{circuit
+structure} came out.
+
+Factoring algebra and splitting a design into sub-blocks are the same operation.
+This is the first place in the course you can see that, and it stays true all the
+way to the CPU.
+
+\section*{3. Guided examples}
+
+\begin{description}[leftmargin=2.4em,style=nextline,itemsep=2pt]
+\item[Example 1 --- three styles] The same 2-to-1 multiplexer written with
+\code{when/else}, with \code{with/select}, and with \code{case} in a process.
+One testbench asserts all three agree on every vector. Unlike Lab 2, the RTL
+Viewer pictures are the same too --- here the difference is purely how the source
+reads to a human.
+\item[Example 2 --- \code{mux4}] A 4-to-1, 8 bits wide, generic. Four rows
+specifying a function of 34 inputs.
+\item[Example 3 --- the latch trap] Two 3-to-1 multiplexers, one of which leaves
+\code{Sel = "11"} unassigned. Watch its output \emph{hold the previous value}
+instead of taking a default, then find the latch in the RTL Viewer.
+\end{description}
+
+\textbf{Example 3 is the important one.} ``No assignment happens, so the output
+keeps its previous value'' is Lab 1's latch, word for word. In Lab 1 that was the
+feature. Here it is a bug: you wanted combinational logic and you described
+something with memory in it.
+
+\section*{4. Assignment}
+
+\begin{enumerate}[leftmargin=2em,itemsep=3pt]
+\item \textbf{\code{Mux2}} --- 2-to-1, generic width. Any of the three styles is
+acceptable; say in your report \emph{why} you picked yours. That is the graded
+part, not the syntax.
+
+\item \textbf{\code{Mux3}} --- 3-to-1, generic width, \textbf{including row 3}.
+
+Use a \code{case} with \code{when others}, not an \code{if/elsif} chain. VHDL
+forces a \code{case} to cover every possible selector value, so the language
+itself prevents the Example 3 mistake. An \code{if/elsif} chain will happily let
+you forget.
+
+\item \textbf{\code{CPUMuxes}} --- the four multiplexers the CPU needs, built by
+instantiating your generic entities at the right widths.
+\code{MUX2x5} is done for you as a worked example; write the other three the same
+way.
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+entity & width & sel & role on the CPU block diagram \\
+\midrule
+\code{MUX2x5}  & 5  & 1 & \code{DselMUX} --- register write-destination select \\
+\code{MUX3x5}  & 5  & 2 & (spare 5-bit selector) \\
+\code{MUX2x32} & 32 & 1 & \code{ALUinMUX} --- ALU A-input: register or immediate \\
+\code{MUX3x32} & 32 & 2 & \code{DinMUX} --- write data: ALU / memory / return \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\item \textbf{Testbench} --- complete \code{tb\_Lab3.vhd}. \textbf{At least six
+checked vectors}, including all of:
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item every selector value on \code{MUX3x32}, \textbf{including \code{"11"}};
+\item a \textbf{no-latch check}: hold the selector, change the selected input,
+and prove the output moves immediately. A latched output would keep the old
+value --- and a latch is exactly what you get if you forget row 3;
+\item at least one check on a 5-bit mux, proving the generic works at a width
+other than 32.
+\end{itemize}
+\end{enumerate}
+
+\subsection*{Coverage argument for a Type C table}
+
+You cannot test $2^{98}$ combinations and you do not need to. The argument is:
+
+\begin{quote}
+\textbf{exhaustive on the selector, distinct patterns on the data.}
+\end{quote}
+
+``Distinct'' matters. If \code{A}, \code{B} and \code{C} all carry the same value,
+a multiplexer that ignores its selector entirely and always returns \code{A}
+passes every check. Give each input a value only it has --- \code{x"AAAAAAA1"},
+\code{x"BBBBBBB2"}, \code{x"CCCCCCC3"} --- and a wrong selection cannot hide.
+
+\section*{5. Evidence to collect (E1, E2, E7)}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& Source & What it must show \\
+\midrule
+E1 & Flow Summary + Messages & 0 errors; \textbf{no inferred-latch warning} \\
+E2 & RTL Viewer & multiplexers and \emph{no storage elements} \\
+E7 & Questa waveform + transcript & every selector value, 0 assertion failures \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The top-level entity is \code{MUX3x32}. \textbf{Its register count must be zero.}
+Any storage element at all means you inferred a latch --- go back to Example 3.
+
+\section*{6. Report --- \code{lab03.tex}}
+
+All seven sections. Specifically:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Specification:} the Type C table, and one sentence on why it is
+Type C and not Type E.
+\item \textbf{Design:} the factored equation, the law named, and the observation
+that factoring produced a multiplexer \emph{tree}. Also: which coding style you
+chose and why.
+\item \textbf{Results:} an \textbf{annotated copy of the CPU block diagram} with
+your four multiplexers circled and labelled. Full page. This is the first time
+you see the whole datapath, and from Lab 7 onward you will be reading it
+constantly.
+\item \textbf{Discussion:} required. One bug, how you found it.
+\end{itemize}
+
+\section*{7. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Testbench and test vectors, coverage justified & 20 \\
+Simulation results match the specification & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{8. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Forgetting row 3.} You get a latch, a warning you did not read, and
+a design that remembers things it should not.
+\item \textbf{Missing \code{when others}.} \code{std\_logic} has nine values, not
+two. The compiler will refuse the file --- which is the language doing you a
+favour.
+\item \textbf{\code{generic map} / \code{port map} order.} \code{generic map}
+first, no semicolon between them.
+\item \textbf{Identical test data on every input.} A mux that ignores its
+selector passes. Use distinct patterns.
+\item \textbf{Width mismatch in \code{port map}.} Usually a forgotten
+\code{generic map}, reported at a confusing place.
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small Every one of these four multiplexers is instantiated inside your CPU in
+Lab 12. When you wire the datapath together, you will be connecting components
+you wrote today.}
+
+\end{document}

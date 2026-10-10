@@ -1,0 +1,356 @@
+\section{Basic operations and linear convolution (2.4--2.15)}
+
+\Prob{2.4\quad Input--output relations for the four structures of Figure P2.1}
+
+\textbf{(a)} Let $v[n]$ be the signal at the node immediately to the right of the input adder.
+The left half is a transposed feedback section: the upper delay feeds the input adder, and the
+input of that delay is the sum of $-d_1v[n]$ and the output of the lower delay, whose input is
+$-d_2v[n]$. With the two state variables $s_1,s_2$,
+\[
+s_1[n]=-d_1v[n-1]+s_2[n-1],\qquad s_2[n]=-d_2v[n-1],\qquad v[n]=x[n]+s_1[n],
+\]
+so that
+\[
+v[n]=x[n]-d_1v[n-1]-d_2v[n-2].
+\]
+The right half taps $v[n]$ through $p_0,p_1,p_2$ into a transposed feed-forward chain, giving
+$y[n]=p_0v[n]+p_1v[n-1]+p_2v[n-2]$. Eliminating $v$ (in the $z$-domain,
+$V(z)=X(z)/(1+d_1z^{-1}+d_2z^{-2})$ and $Y(z)=(p_0+p_1z^{-1}+p_2z^{-2})V(z)$):
+\[
+\boxed{\;y[n]+d_1\,y[n-1]+d_2\,y[n-2]=p_0\,x[n]+p_1\,x[n-1]+p_2\,x[n-2].\;}
+\]
+
+\textbf{(b)} Here the feed-forward chain acts directly on $x[n]$ and the feedback chain
+directly on $y[n]$:
+\[
+y[n]=\bigl(p_0x[n]+p_1x[n-1]+p_2x[n-2]\bigr)+\bigl(-d_1y[n-1]-d_2y[n-2]\bigr),
+\]
+that is,
+\[
+\boxed{\;y[n]+d_1y[n-1]+d_2y[n-2]=p_0x[n]+p_1x[n-1]+p_2x[n-2].\;}
+\]
+\textbf{Structures (a) and (b) realize the same difference equation}; they are two
+realizations of
+$H(z)=\dfrac{p_0+p_1z^{-1}+p_2z^{-2}}{1+d_1z^{-1}+d_2z^{-2}}$.
+
+\textbf{(c)} A gain $h[0]$ followed by three identical second-order feed-forward sections.
+Section $i$ adds to its own input that input delayed once (weight $\beta_{1i}$) and delayed
+twice (weight $\beta_{2i}$), so it has transfer function $1+\beta_{1i}z^{-1}+\beta_{2i}z^{-2}$.
+Hence
+\[
+\boxed{\;Y(z)=h[0]\prod_{i=1}^{3}\bigl(1+\beta_{1i}z^{-1}+\beta_{2i}z^{-2}\bigr)X(z),\;}
+\]
+equivalently, in the time domain,
+\[
+y[n]=h[0]\;x[n]\circledast g_1[n]\circledast g_2[n]\circledast g_3[n],\qquad
+g_i[n]=\delta[n]+\beta_{1i}\delta[n-1]+\beta_{2i}\delta[n-2].
+\]
+This is a \emph{cascade} realization of a length-7 FIR filter.
+
+\textbf{(d)} The upper delay line produces $x[n],x[n-1],x[n-2],x[n-3]$; the sample $x[n-3]$ is
+then fed into the lower delay line, which runs right-to-left and produces
+$x[n-4],x[n-5],x[n-6]$. The three adders pair taps symmetrically about $x[n-3]$, and only
+$x[n-3]$ is unpaired, so
+\[
+\boxed{\;
+\begin{aligned}
+y[n]=\;&h[0]\bigl(x[n]+x[n-6]\bigr)+h[1]\bigl(x[n-1]+x[n-5]\bigr)\\
+      &+h[2]\bigl(x[n-2]+x[n-4]\bigr)+h[3]\,x[n-3].
+\end{aligned}\;}
+\]
+This is the 4-multiplier realization of a length-7 \emph{symmetric} (Type-I linear-phase)
+FIR filter: 6 delays and 4 multipliers instead of 7.
+
+\Prob{2.5\quad The convolution of a length-$M$ with a length-$N$ sequence has length $M+N-1$}
+
+Take $x[n]$ nonzero only for $0\le n\le M-1$ and $h[n]$ only for $0\le n\le N-1$ (shifting
+either sequence only shifts the result, it does not change its length). In
+\[
+y[n]=\sum_{k}x[k]h[n-k]
+\]
+a summand can be nonzero only if some $k$ satisfies simultaneously
+\[
+0\le k\le M-1 \qquad\text{and}\qquad 0\le n-k\le N-1 .
+\]
+Adding the two smallest admissible values gives $n\ge 0$; adding the two largest gives
+$n\le (M-1)+(N-1)=M+N-2$. Outside that window the two index intervals do not overlap and
+$y[n]=0$. The end samples
+\[
+y[0]=x[0]h[0]\ne 0,\qquad y[M+N-2]=x[M-1]h[N-1]\ne 0
+\]
+are nonzero, because the first and last samples of a length-$M$ (length-$N$) sequence are
+nonzero by definition. Hence the support is exactly $0\le n\le M+N-2$ and
+\[
+\boxed{\;\text{length}(y)=(M+N-2)-0+1=M+N-1.\;}
+\]
+
+\Prob{2.6\quad Length of $x[n]\circledast y[n]\circledast w[n]$}
+
+Apply Problem 2.5 twice. $x\circledast y$ has length $N+M-1$; convolving that with $w$
+(length $L$) gives
+\[
+\boxed{\;(N+M-1)+L-1=N+M+L-2 .\;}
+\]
+Since all three sequences start at $n=0$, the result is defined for $0\le n\le N+M+L-3$.
+
+\Prob{2.7\quad Show that $x_1[n]\circledast x_2[n]=x_3[n]\circledast x_4[n]$}
+
+The clean route is the polynomial ($z$-domain) one. With
+$\{x_1[n]\}=\{1,0,1,0,\dots,1\}$ (15 samples: ones at the even indices $0,2,\dots,14$) and
+$\{x_2[n]\}=\{1,1\}$,
+\[
+X_1(z)=\sum_{m=0}^{7}z^{-2m}=\frac{1-z^{-16}}{1-z^{-2}},\qquad X_2(z)=1+z^{-1},
+\]
+\[
+X_1(z)X_2(z)=\frac{(1-z^{-16})(1+z^{-1})}{(1-z^{-1})(1+z^{-1})}
+            =\frac{1-z^{-16}}{1-z^{-1}}=\sum_{n=0}^{15}z^{-n}.
+\]
+Hence
+\[
+\boxed{\;x_1[n]\circledast x_2[n]=\{\underbrace{1,1,\dots,1}_{16}\},\qquad 0\le n\le 15.\;}
+\]
+For the second pair, $\{x_3[n]\}=\{1,1,0,0,0,0,0,0,1,1\}$ gives
+\[
+X_3(z)=1+z^{-1}+z^{-8}+z^{-9}=(1+z^{-1})(1+z^{-8}).
+\]
+Using the standard factorization
+\[
+\frac{1-z^{-16}}{1-z^{-1}}=(1+z^{-1})(1+z^{-2})(1+z^{-4})(1+z^{-8}),
+\]
+the identity $X_3X_4=X_1X_2$ forces
+\[
+X_4(z)=(1+z^{-2})(1+z^{-4})=1+z^{-2}+z^{-4}+z^{-6}
+\;\Longleftrightarrow\;
+\boxed{\;\{x_4[n]\}=\{1,\,0,\,1,\,0,\,1,\,0,\,1\}.\;}
+\]
+With this $x_4$ the required equality holds, both sides being 16 consecutive ones.
+
+\smallskip
+\Mis The scanned page lists $\{x_4[n]\}=\{1,1,0,0,0,1,1\}$, i.e.\
+$X_4(z)=(1+z^{-1})(1+z^{-5})$. With \emph{that} $x_4$,
+\[
+x_3[n]\circledast x_4[n]=\{1,2,1,0,0,1,2,1,1,2,1,0,0,1,2,1\}\;\ne\;x_1[n]\circledast x_2[n],
+\]
+so the stated identity is false as printed. The intended sequence is
+$\{1,0,1,0,1,0,1\}$ (checked numerically in \texttt{hw1\_p207.m}).
+
+\Prob{2.8\quad Linear convolution of each sequence with itself}
+
+\textbf{(a)} $x_1[n]=\{1,-1,1\}$, $-1\le n\le 1$. Here $X_1(z)=z-1+z^{-1}$, so
+$X_1^2(z)=z^{2}-2z+3-2z^{-1}+z^{-2}$:
+\[
+\boxed{\;x_1\circledast x_1=\{1,\,-2,\,3,\,-2,\,1\},\qquad -2\le n\le 2.\;}
+\]
+
+\textbf{(b)} $x_2[n]=\{1,-1,0,1,-1\}$ starting at $n=0$. Note
+$X_2(z)=(1-z^{-1})(1+z^{-3})$, hence
+$X_2^2(z)=(1-2z^{-1}+z^{-2})(1+2z^{-3}+z^{-6})$:
+\[
+\boxed{\;x_2\circledast x_2=\{1,\,-2,\,1,\,2,\,-4,\,2,\,1,\,-2,\,1\},\qquad 0\le n\le 8.\;}
+\]
+\Mis The page states the range $0\le n\le 5$ but lists only five samples; it should read
+$0\le n\le 4$. (Appending a trailing zero to make six samples changes none of the values
+above, only the nominal length.)
+
+\textbf{(c)} $x_3[n]=\{-1,2,0,-2,1\}$, $-3\le n\le 1$:
+\[
+\boxed{\;x_3\circledast x_3=\{1,\,-4,\,4,\,4,\,-10,\,4,\,4,\,-4,\,1\},\qquad -6\le n\le 2.\;}
+\]
+Consistency check: $x_3[n]$ is antisymmetric about $n=-1$, so $x_3\circledast x_3$ must be
+symmetric about $n=-2$ --- and it is.
+
+\Prob{2.9\quad Convolutions of the Problem-2.3 sequences}
+
+The starting index of a linear convolution is the sum of the starting indices, and the length
+is the sum of the lengths minus one (Problem 2.5). All three sequences have length 7, so each
+result has length 13.
+
+\textbf{(a)} $u[n]=x[n]\circledast y[n]$, starting index $-1+(-3)=-4$:
+\[
+\boxed{\;\{u[n]\}=\{-15,\,17,\,14,\,-14,\,1,\,-41,\,49,\,5,\,-23,\,37,\,-20,\,14,\,-24\},\quad -4\le n\le 8.\;}
+\]
+
+\textbf{(b)} $v[n]=x[n]\circledast w[n]$, starting index $-1+3=2$:
+\[
+\boxed{\;\{v[n]\}=\{-3,\,13,\,-22,\,5,\,26,\,-40,\,42,\,-22,\,-25,\,31,\,-8,\,21,\,-18\},\quad 2\le n\le 14.\;}
+\]
+
+\textbf{(c)} $g[n]=w[n]\circledast y[n]$, starting index $3+(-3)=0$:
+\[
+\boxed{\;\{g[n]\}=\{5,\,-14,\,17,\,1,\,-2,\,32,\,-63,\,29,\,-41,\,-14,\,54,\,-52,\,48\},\quad 0\le n\le 12.\;}
+\]
+Check: $\sum_n u[n]=\bigl(\sum_n x[n]\bigr)\bigl(\sum_n y[n]\bigr)=(0)(9)=0$, and the thirteen
+values of $u[n]$ do sum to zero. Likewise $\sum_n v[n]=(0)(0)=0$ and
+$\sum_n g[n]=(0)(9)=0$.
+
+\Prob{2.10\quad $v[n]=x_1[n-N_1]\circledast x_2[n-N_2]$ in terms of $y[n]=x_1[n]\circledast x_2[n]$}
+
+\[
+v[n]=\sum_{k}x_1[k-N_1]\,x_2[n-k-N_2]
+     \;\overset{m=k-N_1}{=}\;\sum_{m}x_1[m]\,x_2\bigl((n-N_1-N_2)-m\bigr),
+\]
+which is $y[\cdot]$ evaluated at $n-N_1-N_2$:
+\[
+\boxed{\;v[n]=y[n-N_1-N_2].\;}
+\]
+Equivalently, in the $z$-domain each shift contributes a factor $z^{-N_i}$, so
+$V(z)=z^{-(N_1+N_2)}Y(z)$: convolution turns individual delays into one accumulated delay.
+
+\Prob{2.11\quad Three-fold version of Problem 2.10}
+
+The same substitution applied to each factor (or multiplying the three delay factors
+$z^{-N_1}z^{-N_2}z^{-N_3}$) gives
+\[
+\boxed{\;h[n]=g[n-N_1-N_2-N_3].\;}
+\]
+
+\Prob{2.12\quad Lengths and index ranges}
+
+The given sequences have
+\[
+\begin{aligned}
+h[n]:&\;-M\le n\le N &&\Rightarrow\; \text{length } N+M+1,\\
+g[n]:&\;\phantom{-}K\le n\le N &&\Rightarrow\; \text{length } N-K+1,\\
+w[n]:&\;-L\le n\le -R &&\Rightarrow\; \text{length } L-R+1 .
+\end{aligned}
+\]
+For a convolution the index range runs from the sum of the lower limits to the sum of the
+upper limits, and the length is the sum of the lengths minus one:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}llll@{}}
+\toprule
+& sequence & length & range of $n$\\
+\midrule
+(a) & $y_1=h\circledast h$ & $2(N+M)+1$ & $-2M\le n\le 2N$\\
+(b) & $y_2=g\circledast g$ & $2(N-K)+1$ & $2K\le n\le 2N$\\
+(c) & $y_3=w\circledast w$ & $2(L-R)+1$ & $-2L\le n\le -2R$\\
+(d) & $y_4=h\circledast g$ & $2N+M-K+1$ & $K-M\le n\le 2N$\\
+(e) & $y_5=h\circledast w$ & $N+M+L-R+1$ & $-M-L\le n\le N-R$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The hypotheses $K<N$ and $L>R$ guarantee that $g$ and $w$ have length at least 2.
+
+\Prob{2.13\quad $y[-1]$ without computing the convolution sum}
+
+$\{x[n]\}=\{2,-3,4,1\}$ for $-1\le n\le 2$ and $\{h[n]\}=\{-3,5,-6,4\}$ for $-2\le n\le 1$.
+In
+\[
+y[-1]=\sum_k x[k]\,h[-1-k]
+\]
+the summand is nonzero only when $-1\le k\le 2$ \emph{and} $-2\le -1-k\le 1$, i.e.\
+$-2\le k\le 1$. The intersection is $k\in\{-1,0,1\}$, so only three products are needed:
+\[
+y[-1]=x[-1]h[0]+x[0]h[-1]+x[1]h[-2]=(2)(-6)+(-3)(5)+(4)(-3)=-12-15-12 .
+\]
+\[
+\boxed{\;y[-1]=-39.\;}
+\]
+(The full convolution is $\{-6,\,19,\,-39,\,43,\,-31,\,10,\,4\}$ for $-3\le n\le 3$; its third
+sample is indeed $-39$.)
+
+\Prob{2.14\quad Largest positive sample of $y[n]=x[n]\circledast h[n]$ for two ramps}
+
+Here $x[n]=n$ for $0\le n\le N-1$ and $h[n]=n$ for $0\le n\le N-3$, so
+\[
+y[n]=\sum_{k=a(n)}^{b(n)}k\,(n-k),\qquad a(n)=\max(0,\,n-N+3),\quad b(n)=\min(N-1,\,n),
+\]
+defined for $0\le n\le 2N-4$ (length $2N-3$).
+
+\textbf{Closed form.} Using $\sum_{k=a}^{b}k=\tfrac{b(b+1)-(a-1)a}{2}$ and
+$\sum_{k=a}^{b}k^{2}=\tfrac{b(b+1)(2b+1)-(a-1)a(2a-1)}{6}$,
+\[
+y[n]=n\cdot\frac{b(b+1)-(a-1)a}{2}-\frac{b(b+1)(2b+1)-(a-1)a(2a-1)}{6}.
+\]
+In particular, in the initial region $0\le n\le N-3$ (where $a=0,\;b=n$),
+\[
+y[n]=n\cdot\frac{n(n+1)}{2}-\frac{n(n+1)(2n+1)}{6}=\frac{n^{3}-n}{6},
+\]
+which is strictly increasing --- so the maximum lies in the trailing region.
+
+\textbf{Location of the maximum, without evaluating the sum.} For $n\ge N-2$ we have
+$b=N-1$ and $a=n-N+3$; the forward difference telescopes to
+\[
+\Delta y[n]=y[n+1]-y[n]=\sum_{k=n-N+4}^{N-1}k\;-\;(n-N+3)(N-3).
+\]
+The first term decreases in $n$ and the second increases, so $\Delta y[n]$ changes sign
+exactly once: $y[n]$ is unimodal. Setting $\Delta y=0$ with $m\triangleq n-N+3$,
+\[
+\frac{(N-1)N-m(m+1)}{2}=m(N-3)
+\;\Longrightarrow\;
+m^{2}+(2N-5)\,m-N(N-1)=0,
+\]
+\[
+\boxed{\;m^\star=\frac{5-2N+\sqrt{8N^{2}-24N+25}}{2},\qquad
+n_{\max}=\bigl\lceil\, m^\star\,\bigr\rceil+N-3 .\;}
+\]
+The corresponding value is $y[n_{\max}]$ from the closed form above. For large $N$,
+$m^\star\to(\sqrt2-1)N$ and therefore $n_{\max}\approx\sqrt{2}\,N$: the peak sits at about
+$71\%$ of the total length $2N-4$, not at the midpoint --- a consequence of the ramps
+weighting the late samples most heavily.
+
+\textbf{Examples} (confirmed by direct convolution in \texttt{hw1\_p214.m}):
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+$N$ & $m^\star$ & $n_{\max}$ & $y[n_{\max}]$\\
+\midrule
+$5$ & $2.6235$ & $5$ & $10$\\
+$6$ & $3.0000$ & $6$ & $22$ \ \ (tie with $n=7$)\\
+$8$ & $3.7871$ & $9$ & $72$\\
+$10$ & $4.5934$ & $12$ & $165$\\
+$15$ & $6.6377$ & $19$ & $672$\\
+$20$ & $8.6963$ & $26$ & $1738$\\
+\bottomrule
+\end{tabular}
+\end{center}
+When $m^\star$ happens to be an integer (as for $N=6$) the difference $\Delta y$ vanishes
+exactly and the maximum is attained at two adjacent indices.
+
+\Prob{2.15\quad Recovering $x[n]$ from $y[n]=h[n]\circledast x[n]$ (deconvolution)}
+
+Because both sequences are causal, the convolution sum can be solved recursively for
+$x[n]$ (polynomial long division of $Y(z)$ by $H(z)$):
+\[
+x[0]=\frac{y[0]}{h[0]},\qquad
+x[n]=\frac{1}{h[0]}\Bigl(y[n]-\sum_{k=1}^{n}h[k]\,x[n-k]\Bigr),\quad n\ge 1 .
+\]
+Also, $\text{length}(x)=\text{length}(y)-\text{length}(h)+1$.
+
+\textbf{(a)} $\{y\}=\{2,5,-5,0,12,10,3\}$ (length 7), $\{h\}=\{2,-3,1,3\}$ (length 4)
+$\Rightarrow$ $x$ has length 4:
+\[
+\begin{aligned}
+x[0]&=2/2=1,\\
+x[1]&=\tfrac12\bigl(5-(-3)(1)\bigr)=4,\\
+x[2]&=\tfrac12\bigl(-5-(-3)(4)-(1)(1)\bigr)=3,\\
+x[3]&=\tfrac12\bigl(0-(-3)(3)-(1)(4)-(3)(1)\bigr)=1 .
+\end{aligned}
+\qquad
+\boxed{\{x[n]\}=\{1,\,4,\,3,\,1\}}
+\]
+
+\textbf{(b)} $\{y\}=\{0,-15,-7,9,-4,2\}$, $\{h\}=\{5,-1,1\}$ $\Rightarrow$ $x$ has length 4:
+\[
+\begin{aligned}
+x[0]&=0/5=0,\\
+x[1]&=\tfrac15\bigl(-15-(-1)(0)\bigr)=-3,\\
+x[2]&=\tfrac15\bigl(-7-(-1)(-3)-(1)(0)\bigr)=-2,\\
+x[3]&=\tfrac15\bigl(9-(-1)(-2)-(1)(-3)\bigr)=2 .
+\end{aligned}
+\qquad
+\boxed{\{x[n]\}=\{0,\,-3,\,-2,\,2\}}
+\]
+The two trailing samples of $y$ act as a consistency check:
+$y[4]=h[1]x[3]+h[2]x[2]=(-1)(2)+(1)(-2)=-4$ and $y[5]=h[2]x[3]=2$. \checkmark
+
+\textbf{(c)} $\{y\}=\{6,8,-12,-11,14,-22,-12,3,-18\}$ (length 9), $\{h\}=\{-3,2,2,0,3\}$
+(length 5) $\Rightarrow$ $x$ has length 5:
+\[
+\boxed{\{x[n]\}=\{-2,\,-4,\,0,\,1,\,-6\}}
+\]
+Verification of the last sample: the tail of $h\circledast x$ is $h[4]x[4]=3\cdot(-6)=-18$,
+matching $y[8]$.

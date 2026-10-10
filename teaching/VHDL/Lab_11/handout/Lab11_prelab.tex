@@ -1,0 +1,98 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 11}\\[2pt]
+{\large Instruction Decoder II}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points, about twenty
+minutes, on paper.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- The four new rows}
+
+Fill in only the signals that differ from \code{CTRL\_DEFAULT}.
+
+\begin{center}
+\small
+\begin{tabular}{lllllll}
+\toprule
+instr & \code{ALU\_Asel} & \code{IR\_Xlsft} & \code{DM\_en} & \code{DM\_rw} & \code{RF\_strb} & \code{RF\_oe} \\
+\midrule
+\code{LW}   & \rule{1.6cm}{0.4pt} & \rule{1.4cm}{0.4pt} & \rule{1.4cm}{0.4pt} & \rule{1.2cm}{0.4pt} & \rule{1.6cm}{0.4pt} & \rule{1.4cm}{0.4pt} \\[6pt]
+\code{SW}   & \rule{1.6cm}{0.4pt} & \rule{1.4cm}{0.4pt} & \rule{1.4cm}{0.4pt} & \rule{1.2cm}{0.4pt} & \rule{1.6cm}{0.4pt} & \rule{1.4cm}{0.4pt} \\[6pt]
+\code{BLEZ} & \rule{1.6cm}{0.4pt} & \rule{1.4cm}{0.4pt} & \rule{1.4cm}{0.4pt} & \rule{1.2cm}{0.4pt} & \rule{1.6cm}{0.4pt} & \rule{1.4cm}{0.4pt} \\[6pt]
+\code{J}    & \rule{1.6cm}{0.4pt} & \rule{1.4cm}{0.4pt} & \rule{1.4cm}{0.4pt} & \rule{1.2cm}{0.4pt} & \rule{1.6cm}{0.4pt} & \rule{1.4cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} \code{SW} is the only instruction with \code{RF\_oe = DRIVE}.
+Explain what would physically happen on the memory data bus if it were left at
+\code{HiZ}, and what would end up stored.
+
+\answerbox{2.2cm}
+
+\textbf{(c)} \code{SW}, \code{BLEZ} and \code{J} all have
+\code{RF\_strb = HOLD}. State the general rule in one sentence: which
+instructions strobe the register file, and which do not?
+
+\answerbox{1.6cm}
+
+\section*{Question 2 --- Reading the completed table}
+
+\textbf{(a)} \code{ALU\_Asel = IMMED} for \code{ADDI}, \code{LUI}, \code{LW} and
+\code{SW}. Those four look unrelated. What do they actually have in common, and
+what does that tell you about the hardware?
+
+\answerbox{2.4cm}
+
+\textbf{(b)} \code{BLEZ} sets \code{ALU\_func = ADD} even though a branch does
+not compute a value anybody keeps. Why does the ALU run at all?
+
+\answerbox{2.0cm}
+
+\section*{Question 3 --- Don't cares, and testing}
+
+A classmate implements \code{IR\_Xsel} as ``SIGN for everything except
+\code{LUI}''. You implemented it as ``SIGN for \code{ADDI}, \code{LW},
+\code{SW}, \code{BLEZ}''.
+
+\textbf{(a)} On which instructions do your two designs give different answers?
+
+\answerbox{1.4cm}
+
+\textbf{(b)} Is either of you wrong? Justify your answer in terms of which
+instructions actually read the extender output.
+
+\answerbox{2.2cm}
+
+\textbf{(c)} Your testbench checks \code{IR\_Xsel} for all eight instructions,
+including \code{ADD}. What is wrong with that, and what should it check instead?
+
+\answerbox{2.2cm}
+
+\vfill
+{\small\emph{Question 3 is the one that matters.} It is the same question as
+Section 5 of your lab report.}
+
+\end{document}

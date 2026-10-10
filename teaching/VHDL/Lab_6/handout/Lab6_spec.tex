@@ -1,0 +1,252 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 6 --- Register File}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Build the processor's 32 general-purpose registers: two combinational read
+ports, one clocked write port, and register 0 permanently zero.
+
+\begin{quote}
+\emph{Thirty-two copies of your Lab 2 register, plus address decoding.}
+\end{quote}
+
+\textbf{This is a lighter week than the ALU.} Do not be intimidated by ``32
+registers''.
+
+\section*{2. Background}
+
+\subsection*{Three components you already own}
+
+A register file is not a new kind of thing. It is:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+an address \textbf{decoder} & Lab 0 & which register does this address mean? \\
+an array of \textbf{registers} & Lab 2 & each cell is your \code{RegN} \\
+two \textbf{multiplexers} & Lab 3 & which register reaches each read port? \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Write those three equations down and the rest is assembly.
+
+\subsection*{Specification --- Table C}
+
+\begin{center}
+\begin{tabular}{ccl@{\hskip 8pt}||@{\hskip 8pt}l}
+\toprule
+\# & \code{Strb} & \code{Dsel} & effect at the rising edge \\
+\midrule
+0 & 0 & --- & no write \\
+1 & 1 & \code{"00000"} & \textbf{no write} --- register 0 is hardwired \\
+2 & 1 & $k \neq 0$ & $R_k \leftarrow \code{Din}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Reads are combinational and always valid:
+$\code{Aout} = R[\code{Asel}]$, $\code{Bout} = R[\code{Bsel}]$, with
+$R_0 \equiv 0$.
+
+\subsection*{Equations}
+
+\begin{align*}
+\text{address minterm} \quad & m_k(S) = 1 \text{ iff } S = k
+  && \text{(a 5-to-32 decoder)}\\
+\text{write enable} \quad & \mathit{We}_k = \code{Strb} \cdot m_k(\code{Dsel}) \cdot [k \neq 0] \\
+\text{storage} \quad & R_k^{+} = \mathit{We}_k \cdot \code{Din} + \overline{\mathit{We}_k} \cdot R_k
+  && \text{(Lab 2, thirty-two times)}\\
+\text{read port A} \quad & \code{Aout} = \sum_{k} m_k(\code{Asel}) \cdot R_k
+  && \text{(a 32-to-1 mux)}
+\end{align*}
+
+\textbf{The $[k \neq 0]$ term is the entire mechanism of ``hardwired to zero''.}
+Not a convention that software politely follows --- one extra AND condition, and
+\code{\$0} becomes physically unwritable.
+
+\subsection*{Why a permanent zero exists}
+
+It makes the instruction set smaller. Several instructions come free:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\code{move rd, rs} & is \code{ADD rd, rs, \$0} \\
+\code{clear rd} & is \code{ADD rd, \$0, \$0} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Your Lab 12 program relies on it: \code{SW r2, 0(r0)} computes its address as
+$r_0 + 0 = 0$, with no special ``absolute address'' instruction needed.
+
+\subsection*{Why two reads and one write}
+
+Look at any R-type instruction: \code{ADD rd, rs, rt}. Two source registers
+read, one destination written. The register file's shape is dictated by the
+instruction format --- the ISA and the register file were designed against each
+other.
+
+Read ports are cheap: a read port is a multiplexer over storage that already
+exists, and any number of readers can look at a register at once. Write ports
+are not: two writers might target the same register in the same cycle, which
+needs arbitration and a decision about what ``both wrote'' means. That is a new
+correctness problem, not one more mux.
+
+\subsection*{Read-during-write --- a decision you must be able to state}
+
+If a read port addresses the register being written on the same edge, does it
+see the old value or the new one?
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{READ-OLD} & what you get naturally: clocked write, combinational read \\
+\textbf{READ-NEW} & needs an extra comparator and mux per read port (a bypass) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Yours will be READ-OLD unless you deliberately build the bypass, and that is
+correct for this CPU: in Lab 12 the register file is read at the start of a
+cycle and written at the end of it.
+
+\textbf{You must state which behaviour your design has in your report.}
+``I do not know'' is not an acceptable answer about your own design.
+
+\section*{3. Guided examples}
+
+\begin{description}[leftmargin=2.4em,style=nextline,itemsep=2pt]
+\item[Example 1 --- \code{regfile\_small}] $4 \times 8$, one read port. Small
+enough to watch every register change in the waveform.
+\item[Example 2 --- \code{regfile\_two\_ports}] The same file with a second read
+port. The difference is two lines; compare the E4 numbers to see the cost.
+\item[Example 3 --- \code{read\_during\_write}] Register 0, and the
+read-during-write case, both asserted rather than assumed.
+\end{description}
+
+\section*{4. Assignment}
+
+Complete \code{RegFile.vhd}: $32 \times 32$, ports \code{Asel}, \code{Bsel},
+\code{Dsel}, \code{Din}, \code{Strb}, \code{clk}, \code{Aout}, \code{Bout}.
+
+\textbf{Port names are fixed.} They come from the original EE 362 CPU library,
+and the CPU in Lab 12 instantiates this entity by these exact names. Do not
+rename them.
+
+Block the write to register 0 \emph{and} force its read to zero. Either alone
+would work; with both, a mistake in one place still cannot produce a non-zero
+\code{\$0}.
+
+\subsection*{Testbench}
+
+Complete \code{tb\_Lab6.vhd}. The \code{wr} procedure makes a write one line.
+\textbf{At least six checked vectors}, and your set must include all of:
+
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item write a register, read it back on \textbf{both} ports;
+\item \textbf{try to write register 0}, then prove it still reads zero --- this
+is the point of the lab;
+\item a \textbf{read-during-write} case, checked \emph{before} and \emph{after}
+the edge;
+\item an edge with \code{Strb = '0'}, proving nothing is written;
+\item a read that changes with \textbf{no clock edge}, proving reads are
+combinational;
+\item register 31, the boundary of the address range.
+\end{itemize}
+
+The supplied testbench already contains one failing vector. That is deliberate.
+
+\section*{5. Evidence to collect (E1, E2, E4, E6, E7)}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& Source & What it must show \\
+\midrule
+E1 & Flow Summary + Messages & 0 errors; warnings sorted \\
+E2 & RTL Viewer & storage, and the read multiplexers \\
+E4 & Resource Utilisation & \textbf{about 1024 registers} \\
+E6 & Timing Analyzer & Fmax, and where the path runs \\
+E7 & Waveform + transcript & register 0 refusing a write \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{This is the first design that SHOULD have registers.} Roughly 1024
+($32 \times 32$). That number is a correctness check: far fewer usually means
+the Fitter inferred block memory instead of flip-flops. Say which happened and
+how you can tell.
+
+\section*{6. Report --- \code{lab06.tex}}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Specification:} Table C and the four equations.
+\item \textbf{Design:} where the decoder, the registers and the multiplexers
+are in your code; and \textbf{which read-during-write behaviour you built}.
+\item \textbf{Results:} the register count, with a sentence on what it tells you.
+\item \textbf{Discussion:} required. Must also answer: \emph{why is having a
+permanently-zero register worth spending one of only 32 addresses on?}
+\end{itemize}
+
+\section*{7. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Testbench and test vectors, coverage justified & 20 \\
+Simulation results match the specification & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{8. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Register 0 writable.} The most common miss, and it silently
+corrupts Lab 12.
+\item \textbf{Reads inside the clocked process.} Then reads become clocked, the
+CPU cannot get its operands during a cycle, and Lab 12 fails in a way that is
+very hard to see.
+\item \textbf{Indexing with a vector.} \code{regs(Asel)} is meaningless ---
+\code{to\_integer(unsigned(Asel))}.
+\item \textbf{Off-by-one on the array range.} 32 registers is \code{0 to 31}.
+\item \textbf{Renamed ports.} Lab 12 will not connect.
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small This register file goes inside your CPU in Lab 12, addressed by the
+instruction fields your decoder extracts in Labs 10--11, feeding the ALU you
+built last week. Keep your files.}
+
+\end{document}

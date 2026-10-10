@@ -1,0 +1,194 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Final Lab --- Demonstration and Extension}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Mon 11/30 / Tue 12/1, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. What happens today}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+3:45--4:15 & \textbf{Demonstrations} & $\sim$4 minutes each, two questions from a fixed bank \\
+4:15--5:25 & \textbf{Extension work} & one track, chosen below \\
+5:25--5:45 & \textbf{Submission and close} & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Full report due end of finals week.} Today is the last session; the report
+is finished afterwards.
+
+\section*{2. The demonstration}
+
+Show your CPU running the program. Four minutes. Then two questions, drawn from
+this bank --- the same two for everyone in your section, so it is fair:
+
+\begin{enumerate}[leftmargin=2em,itemsep=2pt]
+\item Point at any cycle in your waveform and tell me what is executing.
+\item Which component gave you the most trouble, and how did you find the bug?
+\item If I asked you to add one instruction, what would you change, and in what
+order?
+\item Where is your critical path, and what would you do to make this run faster?
+\end{enumerate}
+
+\textbf{If your CPU is not running}, come to office hours before today, or take
+the reference CPU and demonstrate that. Nobody should reach this session without a
+working machine to show --- and using the reference costs you nothing on the
+demonstration, only on Lab 12, where the grade already stands.
+
+\section*{3. The extension --- pick exactly one}
+
+\begin{center}
+\begin{tabular}{llp{6.2cm}}
+\toprule
+& track & best for \\
+\midrule
+\textbf{A} & New instruction & a clean, certain finish \\
+\textbf{B} & Performance measurement & people who like measuring things \\
+\textbf{C} & Pipeline and hazards & strong students; extends the 10/14 lecture \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Track A --- add an instruction, end to end}
+
+Add \code{ORI} to your CPU: decoder row, testbench vector, and a supplied test
+program that actually runs it.
+
+\code{ORI rt, rs, imm} computes $rt \leftarrow rs \mathbin{\mathrm{OR}}
+\mathrm{zeroext}(imm)$. Opcode \code{001101}. It mirrors \code{ADDI} exactly
+except for the operation and the extension --- \code{ORI}'s immediate is a
+\emph{bit pattern}, so it zero-extends, the same argument as \code{LUI} in Lab 4.
+
+The supplied program uses \textbf{two} \code{ORI}s in a row on purpose: one alone
+would pass even if you had implemented it as ``copy the immediate'', which is what
+happens when you clone the \code{LUI} row without thinking.
+
+\textbf{The harder variant, if you want it:} add \code{SUB} (\code{SPECIAL},
+func \code{100010}) instead. You will discover something the eight-instruction set
+hid from you --- \code{SUB} is not commutative, and your datapath's operand
+routing was fixed by instructions that were. Work out what your CPU's \code{SUB}
+actually computes, and document the deviation from real MIPS. \emph{That
+discovery is worth more than the instruction.}
+
+\subsection*{Track B --- measure what the processor did}
+
+Instantiate \code{PerfCounters} in your CPU and measure the \textbf{instruction
+mix}: ALU operations, loads, stores, control flow.
+
+Your CPU executes one instruction per cycle, so CPI is 1 and measuring it tells
+you nothing. \textbf{The mix is the interesting number}, because it is a property
+of the \emph{program} and it lets you answer questions about hardware you have not
+built:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item if loads and stores took 3 cycles instead of 1, what would CPI become?
+\item if every control-flow instruction cost 2 extra cycles, what would it become?
+\end{itemize}
+
+This program is roughly half control flow and almost no memory. Work out which
+hypothetical hurts more, and why --- that is Amdahl's law measured rather than
+quoted.
+
+The four classes must be \textbf{mutually exclusive and exhaustive}: the testbench
+checks that they sum to the cycle count, and a classification with a hole in it
+fails.
+
+\subsection*{Track C --- one pipeline stage, and everything it breaks}
+
+\begin{quote}
+\textbf{A working pipelined CPU is NOT required. Breaking it correctly and
+explaining precisely why is full credit.}
+\end{quote}
+
+That is the actual grading rule, not encouragement. Read it again before you
+decide.
+
+Insert one pipeline register between fetch and execute. Make \emph{arithmetic}
+instructions work on the supplied straight-line program. Then document every way
+the pipeline is now wrong:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item the \textbf{control hazard} --- the PC is updated in stage 2, so a wrong
+instruction is already fetched after every branch. This is why real MIPS has a
+branch delay slot;
+\item the \textbf{data hazard} --- \code{ADDI r1,r1,-1} followed immediately by
+\code{BLEZ r1} reads \code{r1} while it is still being written;
+\item the \textbf{structural hazard} --- and why this design does \emph{not} have
+one, which is the reason Harvard architectures exist;
+\item what the pipeline register holds at reset, and why all-zeros is harmless.
+\end{itemize}
+
+For each hazard that is present, give a \textbf{concrete instruction pair from the
+Lab 12 program} that triggers it, one named real-world fix, and one sentence on
+what that fix costs.
+
+\textbf{No credit} for a pipeline that ``works'' because the test program has no
+branches and no adjacent dependencies. That is not a working pipeline; it is an
+untested one.
+
+\section*{4. Finishing the report}
+
+The final submission adds, on top of your twelve chapters:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item an \textbf{executive summary} of the CPU --- one page, what it is and what
+it does;
+\item a \textbf{resource and timing summary} across all the labs: one table, the
+ALM and register counts and Fmax of each component;
+\item the \textbf{extension chapter} for your chosen track;
+\item a \textbf{reflection} chapter --- \emph{what I would design differently};
+\item the \textbf{Response to feedback} section for Checkpoint 4;
+\item a complete \textbf{code appendix}.
+\end{itemize}
+
+\textbf{Keep this project.} It is a genuine portfolio piece: a processor designed
+from gates up, verified at every stage, with the evidence to prove it. It is the
+most convincing thing you can put in front of someone who asks whether you can
+actually design hardware.
+
+\section*{5. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Demonstration: the CPU runs, and you can explain it & 30 \\
+Extension: the work itself & 30 \\
+Extension: the write-up and analysis & 20 \\
+Final report completeness (summary, tables, reflection, appendix) & 20 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For Track C, the 30 points of ``the work itself'' are for the \textbf{hazard
+analysis}, not for a functioning pipeline.
+
+\vspace{10pt}
+\hr
+{\small Three months ago you wrote a four-row truth table for a latch. Every week
+since, the same loop: specification, truth table, equations, VHDL, simulation,
+check. Nothing was ever added to the method --- you did the same thing thirteen
+times at increasing scale, and at the end of it there is a processor. That is
+engineering, and it is the actual thing you are taking away from this course.}
+
+\end{document}

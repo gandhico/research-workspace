@@ -1,0 +1,509 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[letterpaper,margin=2.2cm]{geometry}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.9ex}
+\setcounter{secnumdepth}{0}
+
+\definecolor{boxbg}{RGB}{242,246,251}
+\definecolor{rulebg}{RGB}{248,245,238}
+\newmdenv[backgroundcolor=boxbg,linewidth=0.7pt,linecolor=black!55,
+          innertopmargin=5pt,innerbottommargin=5pt,skipabove=5pt,skipbelow=5pt]{ans}
+\newmdenv[backgroundcolor=rulebg,linewidth=0pt,
+          innertopmargin=4pt,innerbottommargin=4pt,skipabove=4pt,skipbelow=4pt]{rules}
+
+\newcommand{\prob}[2]{\vspace{2ex}\noindent\rule{\linewidth}{1pt}\\[0.4ex]
+  {\large\bfseries Problem #1}\quad{\itshape #2}\par\vspace{0.6ex}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\ROC}{\textrm{ROC}}
+
+\title{\vspace{-1.6cm}\bfseries EE 545 Digital Signal Processing II\\[0.3ex]
+       \large Homework 6 --- Worked Solutions\\[0.3ex]
+       \normalsize Mitra, \emph{Digital Signal Processing: A Computer-Based Approach}, 4th ed., Chapter 6}
+\author{Gandhi Alexis Sinhue Contreras Torres}
+\date{\today}
+
+\begin{document}
+\maketitle
+\vspace{-1.1cm}
+
+\section{Where each rule comes from in the book}
+
+Every step below cites one of these. Page numbers are the printed book pages of Chapter~6.
+
+\begin{tabularx}{\linewidth}{@{}llX@{}}
+\toprule
+\textbf{Reference} & \textbf{Page} & \textbf{What it gives} \\
+\midrule
+\S6.1 Definition & 277 & $X(z)=\sum_n x[n]z^{-n}$; convergence of the Laurent series \\
+Table 6.1 & 281 & standard pairs: $\delta[n]$, $\mu[n]$, $\alpha^n\mu[n]$, $n\alpha^n\mu[n]$, $(n{+}1)\alpha^n\mu[n]$ \\
+\S6.2, Eq. (6.13) & 281 & rational form $G(z)=P(z)/D(z)$ in $z^{-1}$ \\
+\S6.3 & 283 & ROC of a rational $z$-transform; annulus bounded by pole magnitudes \\
+\S6.3 & 284 & \emph{right-sided}: ROC is an exterior; causal ($x[n]{=}0,n{<}0$) includes $z=\infty$ \\
+\S6.3 & 285 & \emph{left-sided}: ROC is an interior; anticausal ($x[n]{=}0,n{>}0$) includes $z=0$ \\
+\S6.4.2 & 290 & inverse by table look-up \\
+\S6.4.3 & 291 & inverse by partial-fraction expansion \\
+\S6.4.5 & 295 & inverse via long division / power-series expansion \\
+\S6.5, Table 6.2 & 297 & properties: linearity, time-shifting, time-reversal, differentiation of $G(z)$, convolution \\
+\S6.7.2 & 309 & transfer function from a constant-coefficient difference equation \\
+\S6.7.3 & 312 & frequency response $H(e^{j\omega})=H(z)|_{z=e^{j\omega}}$ (needs ROC $\supseteq$ unit circle) \\
+\S6.7.5 & 315 & BIBO stability $\iff$ ROC contains the unit circle; causal+stable $\iff$ all poles inside \\
+\bottomrule
+\end{tabularx}
+
+\medskip
+\begin{rules}
+\textbf{Two facts used constantly.}\quad
+(1) The geometric series $\sum_{k\ge 0}a^k=\frac{1}{1-a}$ converges \emph{iff} $|a|<1$ --- this is what
+\emph{produces} every ROC below.
+(2) The Laurent expansion of $X(z)$ on its ROC is unique, so \emph{matching coefficients of $z^{-n}$ is a
+valid inverse transform} (\S6.4.5, p.~295).
+\end{rules}
+
+\prob{6.8}{Regions of convergence}
+
+\begin{rules}
+\textbf{Rules.} Definition (\S6.1, p.~277); geometric series converges iff $|a|<1$;
+ROC shapes (\S6.3, pp.~284--285): right-sided $\Rightarrow$ exterior, $z=\infty$ included only if
+causal; left-sided $\Rightarrow$ interior, $z=0$ included only if anticausal.
+Part (b) uses \textbf{Linearity} (Table 6.2, p.~297): the ROC of $\alpha g+\beta h$ \emph{includes}
+$R_g\cap R_h$.
+\end{rules}
+
+\textbf{(a)(i)} $x_1[n]=(0.2)^n\mu[n+1]$, nonzero for $n\ge-1$. Split off the one anticausal sample:
+\[
+X_1(z)=\sum_{n=-1}^{\infty}(0.2)^n z^{-n}
+      =\underbrace{(0.2)^{-1}z}_{n=-1}+\sum_{n=0}^{\infty}(0.2z^{-1})^n
+      =5z+\frac{1}{1-0.2z^{-1}}.
+\]
+The sum needs $|0.2z^{-1}|<1\Rightarrow|z|>0.2$; the term $5z$ blows up only at $z=\infty$.
+\begin{ans}$\ROC:\ 0.2<|z|<\infty$ \quad($\infty$ excluded because of the sample at $n=-1$)\end{ans}
+
+\textbf{(a)(ii)} $x_2[n]=(0.6)^n\mu[n-2]$, nonzero for $n\ge2$, \emph{causal}:
+\[
+X_2(z)=\sum_{n=2}^{\infty}(0.6z^{-1})^n=\frac{(0.6z^{-1})^2}{1-0.6z^{-1}},\qquad |0.6z^{-1}|<1 .
+\]
+\begin{ans}$\ROC:\ |z|>0.6$ \quad(includes $z=\infty$, since $x_2[n]=0$ for $n<0$)\end{ans}
+
+\textbf{(a)(iv)} $x_4[n]=(-0.5)^n\mu[-n-3]$, nonzero for $n\le-3$, \emph{anticausal}. Put $m=-n\ (m\ge3)$:
+\[
+X_4(z)=\sum_{m=3}^{\infty}(-0.5)^{-m}z^{m}=\sum_{m=3}^{\infty}(-2z)^m=\frac{(-2z)^3}{1+2z},
+\qquad |-2z|<1 .
+\]
+\begin{ans}$\ROC:\ |z|<0.5$ \quad(includes $z=0$, since $x_4[n]=0$ for $n>0$)\end{ans}
+
+\textbf{(b)} Intersect. The poles $0.2,0.6,0.5$ are distinct, so there is no pole--zero cancellation
+and the ROC equals the intersection.
+
+\begin{tabularx}{\linewidth}{@{}llX@{}}
+\toprule
+ & \textbf{intersection} & \textbf{result} \\
+\midrule
+(i) $y_1=x_1+x_2$   & $(0.2<|z|<\infty)\cap(|z|>0.6)$ & $0.6<|z|<\infty$ \\
+(iii) $y_3=x_1+x_4$ & $(0.2<|z|<\infty)\cap(|z|<0.5)$ & $0.2<|z|<0.5$ \ (two-sided) \\
+(v) $y_5=x_2+x_4$   & $(|z|>0.6)\cap(|z|<0.5)$        & \textbf{empty} \\
+\bottomrule
+\end{tabularx}
+
+\begin{ans}
+(i) $0.6<|z|<\infty$ \qquad (iii) $0.2<|z|<0.5$ \qquad
+(v) $0.6>0.5$, the two ROCs do not overlap: \textbf{the $z$-transform of $y_5[n]$ does not exist.}
+\end{ans}
+
+\prob{6.11}{$z$-transforms by repeated differentiation}
+
+\begin{rules}
+\textbf{Rules.} Base pair $\alpha^n\mu[n]\leftrightarrow 1/(1-\alpha z^{-1})$, $|z|>|\alpha|$
+(Table 6.1, p.~281). \textbf{Differentiation of $G(z)$} (Table 6.2, p.~297):
+$n\,g[n]\leftrightarrow -z\,dG/dz$, same ROC.
+\end{rules}
+
+\textbf{The substitution that removes all the mess.} Let $u=\alpha z^{-1}$. Then
+$du/dz=-\alpha z^{-2}=-u/z$, so
+\[
+-z\frac{d}{dz}=-z\Big(\frac{du}{dz}\Big)\frac{d}{du}=-z\Big(\!-\frac{u}{z}\Big)\frac{d}{du}
+= u\frac{d}{du}.
+\]
+So \emph{``multiply by $n$'' is exactly ``apply $u\,d/du$''}. Starting from $G_0=1/(1-u)$:
+\[
+\alpha^n\mu[n]\leftrightarrow\frac{1}{1-u},\qquad
+n\alpha^n\mu[n]\leftrightarrow u\frac{d}{du}\frac{1}{1-u}=\frac{u}{(1-u)^2}
+\quad\text{(matches Table 6.1).}
+\]
+
+\textbf{(a)} $y_1[n]=n^2\alpha^n\mu[n]$:
+\[
+\frac{d}{du}\Big[u(1-u)^{-2}\Big]=(1-u)^{-2}+2u(1-u)^{-3}=\frac{(1-u)+2u}{(1-u)^3}=\frac{1+u}{(1-u)^3}.
+\]
+\begin{ans}$\displaystyle Y_1(z)=\frac{\alpha z^{-1}\,(1+\alpha z^{-1})}{(1-\alpha z^{-1})^{3}},\qquad |z|>|\alpha|$\end{ans}
+
+\textbf{(b)} $y_2[n]=n^3\alpha^n\mu[n]$:
+\[
+\frac{d}{du}\Big[(u+u^2)(1-u)^{-3}\Big]
+=\frac{(1+2u)(1-u)+3(u+u^2)}{(1-u)^4}
+=\frac{1+u-2u^2+3u+3u^2}{(1-u)^4}=\frac{1+4u+u^2}{(1-u)^4}.
+\]
+\begin{ans}$\displaystyle Y_2(z)=\frac{\alpha z^{-1}\,(1+4\alpha z^{-1}+\alpha^2z^{-2})}{(1-\alpha z^{-1})^{4}},\qquad |z|>|\alpha|$\end{ans}
+
+\textbf{(c)} $y_3[n]=\frac{(n+1)(n+2)}{2}\alpha^n\mu[n]$. Differentiate the geometric series twice in $u$:
+\[
+\frac{1}{1-u}=\sum_{n\ge0}u^n
+\;\xrightarrow{\ d/du\ }\;
+\frac{1}{(1-u)^2}=\sum_{n\ge0}(n+1)u^n
+\;\xrightarrow{\ d/du\ }\;
+\frac{2}{(1-u)^3}=\sum_{n\ge0}(n+1)(n+2)u^n .
+\]
+\begin{ans}$\displaystyle Y_3(z)=\frac{1}{(1-\alpha z^{-1})^{3}},\qquad |z|>|\alpha|$\end{ans}
+The middle step is the Table 6.1 pair $(n+1)\alpha^n\mu[n]\leftrightarrow(1-\alpha z^{-1})^{-2}$; this is
+the $k=3$ member of $1/(1-u)^k=\sum_n\binom{n+k-1}{k-1}u^n$.
+
+\prob{6.14}{$z$-transform of the cross-correlation}
+
+\begin{rules}
+\textbf{Rules.} \textbf{Time-reversal} $g[-n]\leftrightarrow G(1/z)$ with ROC $1/R_g$, and
+\textbf{Convolution} $g\circledast h\leftrightarrow G(z)H(z)$ with ROC $\supseteq R_g\cap R_h$
+(both Table 6.2, p.~297). Inverse by \textbf{partial fractions} (\S6.4.3, p.~291).
+\end{rules}
+
+\textbf{Step 1 --- the correlation is a convolution.} Let $\tilde y[n]=y[-n]$. Then
+\[
+(x\circledast\tilde y)[\ell]=\sum_n x[n]\,\tilde y[\ell-n]=\sum_n x[n]\,y[n-\ell]=r_{xy}[\ell].
+\]
+
+\textbf{Step 2 --- transform.} Convolution gives $R_{xy}(z)=X(z)\tilde Y(z)$; time-reversal gives
+$\tilde Y(z)=Y(1/z)$ with ROC $1/R_y$.
+\begin{ans}
+$R_{xy}(z)=X(z)\,Y(1/z)$, \quad $\ROC\supseteq R_x\cap(1/R_y)$. \\
+If $R_y=\{r_1<|z|<r_2\}$ then $1/R_y=\{1/r_2<|z|<1/r_1\}$.
+\end{ans}
+
+\textbf{Step 3 --- autocorrelation of $x[n]=\alpha^n\mu[n]$, $0<|\alpha|<1$.}
+\[
+X(z)=\frac{1}{1-\alpha z^{-1}}\ (|z|>|\alpha|),\qquad
+X(1/z)=\frac{1}{1-\alpha z}\ (|z|<1/|\alpha|),
+\]
+\[
+R_{xx}(z)=\frac{1}{(1-\alpha z^{-1})(1-\alpha z)},\qquad |\alpha|<|z|<\tfrac{1}{|\alpha|}.
+\]
+Since $|\alpha|<1$, this annulus \emph{contains the unit circle}: the DTFT exists, consistent with
+$x[n]$ having finite energy.
+
+\textbf{Step 4 --- inverse.} Clear $z^{-1}$ using $1-\alpha z^{-1}=(z-\alpha)/z$, then expand
+$R_{xx}(z)/z$ so that every term returns as $z/(z-p)$:
+\[
+R_{xx}(z)=\frac{z}{(z-\alpha)(1-\alpha z)},\qquad
+\frac{R_{xx}(z)}{z}=\frac{1}{(z-\alpha)(1-\alpha z)}
+=\frac{1/(1-\alpha^2)}{z-\alpha}-\frac{1/(1-\alpha^2)}{z-1/\alpha}.
+\]
+Assign each term to the correct side of the annulus $|\alpha|<|z|<1/|\alpha|$:
+\[
+\frac{z}{z-\alpha}\ \ (|z|>|\alpha|)\ \rightarrow\ \alpha^n\mu[n],
+\qquad
+-\frac{z}{z-1/\alpha}\ \ (|z|<1/|\alpha|)\ \rightarrow\ +\alpha^{-n}\mu[-n-1].
+\]
+\begin{ans}
+$\displaystyle r_{xx}[\ell]=\frac{1}{1-\alpha^{2}}\Big(\alpha^{\ell}\mu[\ell]+\alpha^{-\ell}\mu[-\ell-1]\Big)
+=\frac{\alpha^{|\ell|}}{1-\alpha^{2}}$ \ for all $\ell$.
+\end{ans}
+\emph{Checks.} $\ell=0$: $\sum_n\alpha^{2n}=1/(1-\alpha^2)$ \checkmark.\quad
+$\ell=1$: $\sum_{n\ge1}\alpha^n\alpha^{n-1}=\alpha/(1-\alpha^2)$ \checkmark.\quad
+Even in $\ell$, as required for real $x[n]$. (Same result as HW1 Problem 2.53(a).)
+
+\prob{6.23}{$z$-transform of the Fibonacci sequence}
+
+\begin{rules}
+\textbf{Rules.} \textbf{Linearity} and \textbf{Time-shifting} $g[n-n_0]\leftrightarrow z^{-n_0}G(z)$
+(Table 6.2, p.~297); causal $\Rightarrow$ ROC is the exterior of the outermost pole (\S6.3, p.~284);
+inverse by \textbf{partial fractions} (\S6.4.3, p.~291).
+\end{rules}
+
+From Problem 4.39: $f[n]=f[n-1]+f[n-2]$ for $n\ge2$, with $f[0]=0$, $f[1]=1$, and $f[n]=0$ for $n<0$.
+
+\textbf{Step 1 --- one equation valid for every $n$.} The recursion alone does not carry the initial
+conditions, so drive it with an impulse:
+\[
+f[n]=f[n-1]+f[n-2]+\delta[n-1].
+\]
+Check: $n{=}0\Rightarrow 0=0+0+0$ \checkmark;\ \ $n{=}1\Rightarrow f[1]=f[0]+f[-1]+1=1$ \checkmark;\ \\
+$n\ge2\Rightarrow\delta[n-1]=0$, original recursion \checkmark.
+
+\textbf{Step 2 --- transform.}
+\[
+F(z)=z^{-1}F(z)+z^{-2}F(z)+z^{-1}
+\;\Longrightarrow\;
+F(z)\big[1-z^{-1}-z^{-2}\big]=z^{-1}.
+\]
+\begin{ans}
+$\displaystyle F(z)=\frac{z^{-1}}{1-z^{-1}-z^{-2}},\qquad
+\ROC:\ |z|>\varphi=\tfrac{1+\sqrt5}{2}\approx1.618$
+\end{ans}
+Poles from $z^2-z-1=0$: $\varphi=\frac{1+\sqrt5}{2}$ (golden ratio), $\psi=\frac{1-\sqrt5}{2}\approx-0.618$.
+Causal $\Rightarrow$ exterior of the outermost pole.
+
+\emph{Note.} The ROC \emph{excludes} the unit circle, so $f[n]$ has no DTFT --- correct, since the
+Fibonacci numbers grow without bound.
+
+\textbf{Step 3 --- inverse.} Since $\varphi+\psi=1$ and $\varphi\psi=-1$,
+$1-z^{-1}-z^{-2}=(1-\varphi z^{-1})(1-\psi z^{-1})$. Writing
+$z^{-1}=A(1-\psi z^{-1})+B(1-\varphi z^{-1})$:
+\[
+\text{constant: } A+B=0,\qquad
+z^{-1}\text{ term: } -A\psi-B\varphi=1
+\;\Rightarrow\;A(\varphi-\psi)=A\sqrt5=1 .
+\]
+\begin{ans}
+$\displaystyle f[n]=\frac{1}{\sqrt5}\Big(\varphi^{\,n}-\psi^{\,n}\Big)\mu[n]$
+\qquad (\textbf{Binet's formula})
+\end{ans}
+Verified against the recursion through $n=10$: $0,1,1,2,3,5,8,13,21,34,55$ \checkmark.
+
+\prob{6.30}{Inverse transforms of logarithms}
+
+\begin{rules}
+\textbf{Rule.} \textbf{Power-series / long-division method} (\S6.4.5, p.~295): the Laurent expansion on
+the ROC is unique, so the coefficients of $z^{-n}$ \emph{are} $x[n]$. Series used:
+$\log(1-w)=-\sum_{k\ge1}w^k/k$, valid for $|w|<1$.
+\end{rules}
+
+\textbf{(a)} $X_1(z)=\log(1-\alpha z^{-1})$, ROC $|z|>|\alpha|$ --- which is exactly $|\alpha z^{-1}|<1$,
+so the series is legal on the whole ROC:
+\[
+X_1(z)=-\sum_{n=1}^{\infty}\frac{(\alpha z^{-1})^n}{n}=-\sum_{n=1}^{\infty}\frac{\alpha^n}{n}z^{-n}.
+\]
+\begin{ans}$\displaystyle x_1[n]=-\frac{\alpha^{n}}{n}\,\mu[n-1]$\end{ans}
+
+\emph{Independent check via Differentiation of $G(z)$ (Table 6.2).}
+$\dfrac{dX_1}{dz}=\dfrac{\alpha z^{-2}}{1-\alpha z^{-1}}$, so
+\[
+n\,x_1[n]\ \leftrightarrow\ -z\frac{dX_1}{dz}=\frac{-\alpha z^{-1}}{1-\alpha z^{-1}}
+=-\sum_{n\ge1}\alpha^n z^{-n}
+\;\Rightarrow\; n\,x_1[n]=-\alpha^n\mu[n-1]\;\Rightarrow\;x_1[n]=-\frac{\alpha^n}{n}\mu[n-1].\ \checkmark
+\]
+
+\textbf{(b)} $X_2(z)=\log\!\big(\tfrac{\alpha-z^{-1}}{\alpha}\big)$, ROC $|z|>1/|\alpha|$.
+Simplify the argument first --- that is the whole trick:
+\[
+\frac{\alpha-z^{-1}}{\alpha}=1-\frac{1}{\alpha}z^{-1},
+\]
+so this is part (a) with $\alpha\rightarrow 1/\alpha$, and the stated ROC is exactly the matching
+convergence condition.
+\begin{ans}$\displaystyle x_2[n]=-\frac{\alpha^{-n}}{n}\,\mu[n-1]$\end{ans}
+
+\prob{6.31}{$p_0/d_0$ equals the sum of the residues}
+
+\begin{rules}
+\textbf{Rules.} Eq. (6.13) (\S6.2, p.~281) for the rational form; \textbf{partial-fraction expansion}
+with simple poles (\S6.4.3, p.~291).
+\end{rules}
+
+\textbf{Given} $G(z)$ as in Eq. (6.13), with $M<N$ and all poles simple:
+\[
+G(z)=\frac{p_0+p_1z^{-1}+\dots+p_Mz^{-M}}{d_0+d_1z^{-1}+\dots+d_Nz^{-N}} .
+\]
+
+\textbf{What each assumption buys.}
+\begin{itemize}[nosep,leftmargin=1.4em]
+\item $M<N$ $\Rightarrow$ the expansion has \emph{no polynomial (FIR) part};
+\item simple poles $\Rightarrow$ every term is first order, one residue each;
+\item $d_0\neq0$ $\Rightarrow$ $G(\infty)$ is finite.
+\end{itemize}
+So the partial-fraction expansion is exactly
+$\displaystyle G(z)=\sum_{\ell=1}^{N}\frac{\rho_\ell}{1-\lambda_\ell z^{-1}}$.
+
+\textbf{The single move:} evaluate both expressions at $z^{-1}=0$, i.e.\ let $z\to\infty$.
+\[
+\text{from Eq. (6.13):}\quad G(\infty)=\frac{p_0}{d_0},
+\qquad\qquad
+\text{from the expansion:}\quad G(\infty)=\sum_{\ell=1}^{N}\frac{\rho_\ell}{1-0}=\sum_{\ell=1}^{N}\rho_\ell .
+\]
+\begin{ans}$\displaystyle \frac{p_0}{d_0}=\sum_{\ell=1}^{N}\rho_\ell \qquad\blacksquare$\end{ans}
+
+\prob{6.47}{Difference equation $\rightarrow$ $H(z)$, $h[n]$, $s[n]$}
+
+\begin{rules}
+\textbf{Rules.} \textbf{Transfer function from a difference equation} (\S6.7.2, p.~309) via
+\textbf{Linearity} + \textbf{Time-shifting} (Table 6.2, p.~297), zero initial conditions;
+inverse by \textbf{partial fractions} (\S6.4.3, p.~291); step response via the
+\textbf{Convolution} theorem with $\mu[n]\leftrightarrow 1/(1-z^{-1})$ (Table 6.1, p.~281).
+\end{rules}
+
+\textbf{Given} $y[n]=0.4\,y[n-1]+0.05\,y[n-2]+3\,x[n]$, causal LTI.
+
+\textbf{(a) Transfer function.}
+\[
+Y(z)=0.4z^{-1}Y(z)+0.05z^{-2}Y(z)+3X(z)
+\;\Longrightarrow\;
+Y(z)\big[1-0.4z^{-1}-0.05z^{-2}\big]=3X(z).
+\]
+Factor by multiplying through by $z^2$: $z^2-0.4z-0.05=0$, so
+\[
+z=\frac{0.4\pm\sqrt{0.16+0.20}}{2}=\frac{0.4\pm0.6}{2}\;\Longrightarrow\; z=0.5,\ -0.1 .
+\]
+\begin{ans}
+$\displaystyle H(z)=\frac{3}{1-0.4z^{-1}-0.05z^{-2}}
+=\frac{3}{(1-0.5z^{-1})(1+0.1z^{-1})},\qquad \ROC:\ |z|>0.5$
+\end{ans}
+Both poles lie inside the unit circle, so the system is causal \emph{and} stable (\S6.7.5, p.~315).
+
+\textbf{(b) Impulse response.} Residues:
+\[
+A=\frac{3}{1+0.1z^{-1}}\bigg|_{z=0.5\,(z^{-1}=2)}=\frac{3}{1.2}=2.5,
+\qquad
+B=\frac{3}{1-0.5z^{-1}}\bigg|_{z=-0.1\,(z^{-1}=-10)}=\frac{3}{6}=0.5 .
+\]
+\begin{ans}$h[n]=\big[\,2.5\,(0.5)^n+0.5\,(-0.1)^n\,\big]\mu[n]$\end{ans}
+\emph{Checks.} $h[0]=3$ (equals $H(\infty)$);\quad $h[1]=1.25-0.05=1.2=0.4\times3$ (recursion).
+
+\textbf{(c) Step response.} $S(z)=H(z)/(1-z^{-1})$, ROC $|z|>1$:
+\[
+S(z)=\frac{3}{(1-z^{-1})(1-0.5z^{-1})(1+0.1z^{-1})} .
+\]
+\[
+\begin{array}{llll}
+z=1   &(z^{-1}=1)  &:& 3/\big[(1-0.5)(1+0.1)\big]=3/0.55=60/11\\[0.3ex]
+z=0.5 &(z^{-1}=2)  &:& 3/\big[(1-2)(1+0.2)\big]=-2.5\\[0.3ex]
+z=-0.1&(z^{-1}=-10)&:& 3/\big[(1+10)(1+5)\big]=3/66=1/22
+\end{array}
+\]
+\begin{ans}$\displaystyle s[n]=\Big[\tfrac{60}{11}-2.5\,(0.5)^n+\tfrac{1}{22}(-0.1)^n\Big]\mu[n]$\end{ans}
+\emph{Checks.} $s[0]=\frac{60}{11}-2.5+\frac1{22}=3=h[0]$;\quad
+$s[\infty]=\frac{60}{11}\approx5.4545=H(1)=3/0.55$ (dc gain).
+
+\prob{6.59}{Length-4 FIR from three frequency samples}
+
+\begin{rules}
+\textbf{Rules.} \textbf{Frequency response from the transfer function} (\S6.7.3, p.~312):
+$H(e^{j\omega})=H(z)\big|_{z=e^{j\omega}}$. For a \emph{real} $h[n]$ the DTFT is
+\textbf{conjugate symmetric}: $H(e^{-j\omega})=H^{*}(e^{j\omega})$.
+\end{rules}
+
+\textbf{Given} real $h[n]$, $n=0..3$; $H(e^{j0})=2$, $H(e^{j\pi/2})=7-j3$, $H(e^{j\pi})=0$, with
+$H(e^{j\omega})=h_0+h_1e^{-j\omega}+h_2e^{-j2\omega}+h_3e^{-j3\omega}$.
+
+\textbf{Why three samples fix four unknowns.} Conjugate symmetry makes $H$ \emph{real} at
+$\omega=0$ and $\omega=\pi$, so each gives one real equation; $\omega=\pi/2$ gives two (real and
+imaginary). Four equations, four unknowns.
+\[
+\begin{array}{lll}
+\omega=0:\ e^{-jk\cdot0}=1      &\Rightarrow& h_0+h_1+h_2+h_3=2 \quad(1)\\[0.3ex]
+\omega=\pi:\ e^{-jk\pi}=(-1)^k  &\Rightarrow& h_0-h_1+h_2-h_3=0 \quad(2)\\[0.3ex]
+\omega=\pi/2:\ e^{-jk\pi/2}=1,-j,-1,j &\Rightarrow& (h_0-h_2)+j(h_3-h_1)=7-j3
+\end{array}
+\]
+Separating real and imaginary parts (legal because $h[n]$ is real):
+$h_0-h_2=7$ (3), $h_1-h_3=3$ (4). Then
+$(1)+(2)\Rightarrow h_0+h_2=1$ (5) and $(1)-(2)\Rightarrow h_1+h_3=1$ (6), so
+(3)\&(5) give $h_0=4,\ h_2=-3$ and (4)\&(6) give $h_1=2,\ h_3=-1$.
+\begin{ans}$H(z)=4+2z^{-1}-3z^{-2}-z^{-3}$\end{ans}
+\emph{Verification.}\quad
+$\omega=0:\ 4+2-3-1=2$;\quad
+$\omega=\pi:\ 4-2-3+1=0$;\quad
+$\omega=\pi/2:\ 4-2j+3-j=7-j3$.
+
+\prob{6.81}{ROCs, stability, causality, and the form of $h[n]$}
+
+\begin{rules}
+\textbf{Rules.} ROC of a rational transform is an annulus bounded by pole magnitudes (\S6.3, p.~283);
+the \textbf{frequency response exists iff the ROC contains the unit circle} (\S6.7.3, p.~312);
+\textbf{BIBO stability $\iff$ ROC contains the unit circle}, and a causal system has the ROC exterior
+to the outermost pole (\S6.7.5, p.~315).
+\end{rules}
+
+\[
+H(z)=\frac{3(z+1.8)(z-4)}{(z+0.3)(z-0.6)(z+5)}
+\qquad
+\begin{array}{l}
+\text{zeros: } z=-1.8,\ 4\\
+\text{poles: } z=-0.3,\ 0.6,\ -5 \ \Rightarrow\ |p|=0.3,\,0.6,\,5
+\end{array}
+\]
+Four possible ROCs, bounded by the pole magnitudes:
+\[
+R_1:|z|<0.3\ \text{(anticausal)};\quad R_2:0.3<|z|<0.6;\quad
+\boxed{R_3:0.6<|z|<5};\quad R_4:|z|>5\ \text{(causal)}
+\]
+
+\textbf{(a) Does $H(e^{j\omega})$ exist?} It exists iff the ROC contains the unit circle. Since
+$0.6<1<5$, only $R_3$ qualifies.
+\begin{ans}
+\textbf{Yes --- but only for $\ROC=\{0.6<|z|<5\}$.} For $R_1$, $R_2$ and $R_4$ it does not exist.
+\end{ans}
+
+\textbf{(b) Stable? Causal?}
+\[
+\text{stable}\iff \ROC \ni \text{unit circle}\Rightarrow \ROC=R_3\ \text{(unique)};
+\qquad
+\text{causal}\iff \ROC=R_4:|z|>5 .
+\]
+Incompatible, since $R_4$ excludes $|z|=1$.
+\begin{ans}
+The system \textbf{can} be stable --- uniquely with $\ROC=0.6<|z|<5$. If stable it is
+\textbf{necessarily non-causal} (two-sided). A causal \emph{and} stable system needs every pole
+strictly inside the unit circle, but $|-5|=5>1$.
+\end{ans}
+
+\textbf{(c) Form of $h[n]$ for $\ROC=0.6<|z|<5$, without inverting.}
+Poles with $|\lambda|\le0.6$ ($\lambda=-0.3,\ 0.6$) sit inside the inner radius $\Rightarrow$
+right-sided terms; the pole at $\lambda=-5$ sits outside the outer radius $\Rightarrow$ left-sided
+term. Expanding $H(z)/z$ adds a pole at $z=0$ whose residue is
+$H(0)=\frac{3(1.8)(-4)}{(0.3)(-0.6)(5)}=\frac{-21.6}{-0.9}=24$, contributing a $\delta[n]$.
+\begin{ans}
+$h[n]=A_0\delta[n]+\big[A_1(-0.3)^n+A_2(0.6)^n\big]\mu[n]\;-\;A_3(-5)^n\mu[-n-1]$\\[0.4ex]
+from $H(z)=A_0+A_1\frac{z}{z+0.3}+A_2\frac{z}{z-0.6}+A_3\frac{z}{z+5}$: two decaying causal
+exponentials, one anticausal term, plus an impulse at $n=0$.
+\end{ans}
+For checking only (not asked): $A_0=24$, $A_1=-\frac{2150}{141}\approx-15.25$,
+$A_2=-\frac{170}{21}\approx-8.10$, $A_3=-\frac{216}{329}\approx-0.657$, and
+$A_0+A_1+A_2+A_3=0$ because $H(\infty)=0$.
+
+\emph{Consistency check.} As $n\to+\infty$, $(-0.3)^n,(0.6)^n\to0$; as $n\to-\infty$, $(-5)^n\to0$
+too, since $|(-5)^n|=5^{\,n}\to0$. So $h[n]$ decays in \emph{both} directions $\Rightarrow$
+absolutely summable $\Rightarrow$ stable, exactly as part (b) predicted.
+
+\vspace{2ex}\noindent\rule{\linewidth}{1pt}
+\section{Answer summary}
+
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+\textbf{Problem} & \textbf{Answer} \\
+\midrule
+6.8a(i)  & $0.2<|z|<\infty$ \\
+6.8a(ii) & $|z|>0.6$ \\
+6.8a(iv) & $|z|<0.5$ \\
+6.8b(i)  & $0.6<|z|<\infty$ \\
+6.8b(iii)& $0.2<|z|<0.5$ \\
+6.8b(v)  & empty intersection --- the $z$-transform does not exist \\
+6.11(a)  & $\alpha z^{-1}(1+\alpha z^{-1})/(1-\alpha z^{-1})^3$ \\
+6.11(b)  & $\alpha z^{-1}(1+4\alpha z^{-1}+\alpha^2z^{-2})/(1-\alpha z^{-1})^4$ \\
+6.11(c)  & $1/(1-\alpha z^{-1})^3$ \\
+6.14     & $R_{xy}(z)=X(z)Y(1/z)$;\ \ $r_{xx}[\ell]=\alpha^{|\ell|}/(1-\alpha^2)$ \\
+6.23     & $F(z)=z^{-1}/(1-z^{-1}-z^{-2})$, $|z|>\varphi$;\ \ $f[n]=(\varphi^n-\psi^n)/\sqrt5$ \\
+6.30(a)  & $-(\alpha^n/n)\mu[n-1]$ \\
+6.30(b)  & $-(\alpha^{-n}/n)\mu[n-1]$ \\
+6.31     & $p_0/d_0=\sum_\ell\rho_\ell$ (evaluate at $z\to\infty$) \\
+6.47     & $H=\frac{3}{(1-0.5z^{-1})(1+0.1z^{-1})}$;\ $h=[2.5(0.5)^n+0.5(-0.1)^n]\mu$;\ $s=[\frac{60}{11}-2.5(0.5)^n+\frac1{22}(-0.1)^n]\mu$ \\
+6.59     & $H(z)=4+2z^{-1}-3z^{-2}-z^{-3}$ \\
+6.81     & exists only for $0.6<|z|<5$; stable \emph{or} causal, never both; $h=\delta+$ 2 causal $+$ 1 anticausal \\
+\bottomrule
+\end{tabularx}
+
+\vspace{1ex}
+\begin{rules}
+\textbf{Source note.} The scanned assignment and the electronic 4th-edition \texttt{Chapter6.pdf}
+\emph{diverge} in the later problems: electronic 6.47 is the FIR frequency-sample problem,
+electronic 6.82 is this 6.14, and electronic 6.83 is this 6.81. Everything above follows the
+\textbf{scanned assignment}, with each numeric value re-read at 320~dpi; all closed forms were
+verified numerically.
+\end{rules}
+
+\end{document}

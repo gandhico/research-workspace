@@ -1,0 +1,55 @@
+Library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+LIBRARY EE_212_NIAG;
+use EE_212_NIAG.NIAG_Pkg.all;
+
+LIBRARY EE_212_DECODER;
+use EE_212_Decoder.DecodeLogic_Pkg.all;
+use IEEE.NUMERIC_STD.all;
+
+LIBRARY EE_212_ALU;
+use EE_212_ALU.ALU_pkg.all;
+
+
+
+Entity NIAG is
+
+PORT(
+		TARGET : IN STD_LOGIC_VECTOR(25 Downto 0);
+		Immed  : IN STD_LOGIC_VECTOR(31 Downto 0);
+		Reg    : IN STD_LOGIC_VECTOR(31 Downto 0);
+		Xshft  : IN STD_LOGIC;
+		PCin   : IN STD_LOGIC_VECTOR(31 Downto 0);
+		Cond   : IN STD_LOGIC_VECTOR(2  Downto 0);
+		Sel    : IN STD_LOGIC_VECTOR(1  Downto 0);
+		Stat   : STAT_SIGNL_REC;
+		MemAdrs: OUT STD_LOGIC_VECTOR(31 Downto 0);
+		RtnAdrs: OUT STD_LOGIC_VECTOR(31 Downto 0));
+
+
+END ENTITY;
+
+ARCHITECTURE BEHAVIORAL of NIAG is
+
+
+SIGNAL NSA  : STD_LOGIC_VECTOR(31 Downto 0):=x"00000000";
+SIGNAL AbsltAdrs: STD_LOGIC_VECTOR(31 Downto 0);
+SIGNAL RelAdrs: STD_LOGIC_VECTOR(31 Downto 0);
+SIGNAL RegAdrs: STD_LOGIC_VECTOR(31 Downto 0);
+
+
+
+BEGIN
+
+	NIAG_NSA_LABEL: NIAG_NSA PORT MAP(PCin, NSA);
+	NIAG_ABSLT_LABEL: NIAG_ABSLT PORT MAP(Target, NSA, AbsltAdrs);
+	NIAG_REG_LABEL: NIAG_REG PORT MAP(Reg, RegAdrs);
+	NIAG_REL_LABEL: NIAG_REL PORT MAP(Immed, Xshft, NSA, RelAdrs);
+	NIAG_RTN_LABEL: NIAG_RTN PORT MAP(PCin, RtnAdrs);
+	NIAG_RTN_MUX: NIAG_MUX PORT MAP(NSA, AbsltAdrs, RelAdrs, RegAdrs, Cond, Sel, Stat, MemAdrs);
+	
+	
+
+
+END ARCHITECTURE;

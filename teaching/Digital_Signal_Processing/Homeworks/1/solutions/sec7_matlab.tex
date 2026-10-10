@@ -1,0 +1,229 @@
+\section{\textsc{Matlab} Exercises M2.1--M2.10}
+
+All scripts live in the \texttt{matlab/} folder next to this document and run
+unmodified on MATLAB R2019b or later (no toolboxes required --- only
+\texttt{conv}, \texttt{rand}, \texttt{rat}, \texttt{lcm} and plotting).
+The book's numbered ``Programs'' are not reproduced verbatim; each script contains a
+self-contained local function that does the same job, named after the program it replaces
+(\texttt{prog\_expseq} for Program 2\_2, \texttt{prog\_corr} for Program 2\_5).
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Exercise & Script & What it produces\\
+\midrule
+M2.1  & \texttt{hw1\_M2\_01.m} & symmetric parts; verifies Example 2.11\\
+M2.2  & \texttt{hw1\_M2\_02.m} & Figures 2.23, 2.24; $-2.7e^{(-0.4+j\pi/6)n}$\\
+M2.3  & \texttt{hw1\_M2\_03.m} & periodic sequences of Problem 2.39(b)--(e)\\
+M2.4  & \texttt{hw1\_M2\_04.m} & sinusoid generator; Figure 2.22; Problem 2.40\\
+M2.5  & \texttt{hw1\_M2\_05.m} & verifies Example 2.15\\
+M2.6  & \texttt{hw1\_M2\_06.m} & Figure 2.28 (sampling ambiguity)\\
+M2.7  & \texttt{hw1\_M2\_07.m} & Eq.\ (2.65): identical sampled signals\\
+M2.8  & \texttt{hw1\_M2\_08.m} & correlations of Problem 2.52\\
+M2.9  & \texttt{hw1\_M2\_09.m} & autocorrelation of a noise-corrupted signal\\
+M2.10 & \texttt{hw1\_M2\_10.m} & autocorrelation of $\alpha^{n}\mu[n]$\\
+\midrule
+--- & \texttt{hw1\_verify\_all.m} & checks every numerical answer above\\
+--- & \texttt{hw1\_p207.m}, \texttt{hw1\_p214.m} & standalone checks for 2.7 and 2.14\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\Prob{M2.1\quad Conjugate-symmetric and conjugate-antisymmetric parts}
+
+The program forms $x^*[-n]$ by \texttt{conj(fliplr(x))} and then
+$x_{\mathrm{cs}}=\tfrac12(x+x^*[-n])$, $x_{\mathrm{ca}}=\tfrac12(x-x^*[-n])$.
+Applied to the Example-2.11 sequence
+\[
+\{g[n]\}=\{0,\;1+j4,\;-2+j3,\;4-j2,\;-5-j6,\;-j2,\;3\},\qquad -3\le n\le 3,
+\]
+it reproduces the printed results exactly:
+\[
+\begin{aligned}
+\{g_{\mathrm{cs}}[n]\}&=\{1.5,\;0.5+j3,\;-3.5+j4.5,\;4,\;-3.5-j4.5,\;0.5-j3,\;1.5\},\\
+\{g_{\mathrm{ca}}[n]\}&=\{-1.5,\;0.5+j,\;1.5-j1.5,\;-j2,\;-1.5-j1.5,\;-0.5+j,\;1.5\}.
+\end{aligned}
+\]
+The script additionally checks the three defining identities numerically:
+$g_{\mathrm{cs}}[n]=g^*_{\mathrm{cs}}[-n]$, $g_{\mathrm{ca}}[n]=-g^*_{\mathrm{ca}}[-n]$ and
+$g_{\mathrm{cs}}+g_{\mathrm{ca}}=g$.
+
+\lstinputlisting[firstline=8,lastline=33,firstnumber=8]{matlab/hw1_M2_01.m}
+
+\Prob{M2.2\quad Exponential sequences via ``Program 2\_2''}
+
+\textbf{(a)} \texttt{prog\_expseq(K,c,L)} generates $x[n]=K e^{cn}$, $0\le n\le L-1$; a real
+$c$ gives a real exponential and a complex $c$ a complex one. Setting
+$K=1,\;c=-\tfrac1{12}+j\tfrac{\pi}{6}$ reproduces Figure 2.23 (a decaying complex exponential:
+real and imaginary parts are damped sinusoids in quadrature), and $K=0.2,\;c=\ln 1.2$ and
+$K=20,\;c=\ln 0.9$ reproduce the growing and decaying real exponentials of Figure 2.24.
+
+\textbf{(b)} For $x[n]=-2.7\,e^{(-0.4+j\pi/6)n}$, $0\le n\le 82$: the envelope is
+$2.7e^{-0.4n}$, so the sequence collapses very quickly ---
+$|x[0]|=2.7$ but $|x[20]|=2.7e^{-8}\approx 9.1\times10^{-4}$ and
+$|x[82]|\approx 1.7\times10^{-14}$. The interesting behaviour is confined to roughly the first
+20 samples; plotting all 83 is dominated by a flat line at zero. The real and imaginary parts
+oscillate with period $2\pi/(\pi/6)=12$ samples inside that decaying envelope.
+
+\Prob{M2.3\quad Periodic sequences of Problem 2.39(b)--(e)}
+
+The script generates three periods of each sequence, draws vertical markers one theoretical
+period apart, and independently \emph{measures} the period by searching for the smallest $N$
+with $x[n+N]=x[n]$ over a long stretch. Measured and theoretical values agree:
+\[
+\begin{array}{lcc}
+\text{sequence} & N_{\text{theory}} & N_{\text{measured}}\\\hline
+\text{2.39(b)}\ \cos(0.6\pi n+0.3\pi) & 10 & 10\\
+\text{2.39(c)}\ \cos(\pi n/8)+\sin(\pi n/5) & 80 & 80\\
+\text{2.39(d)}\ 6\sin(0.15\pi n)-\cos(0.12\pi n+0.1\pi) & 200 & 200\\
+\text{2.39(e)}\ \sin(0.1\pi n+0.75\pi)-3\cos(0.8\pi n+0.2\pi)+\cos(1.3\pi n) & 20 & 20
+\end{array}
+\]
+
+\Prob{M2.4\quad Sinusoidal-sequence generator; Figure 2.22 and Problem 2.40}
+
+\textbf{(a)} \texttt{gensin(L,A,w0,phi)} returns $A\sin(\omega_o n+\phi)$ for $0\le n\le L-1$.
+Running \texttt{hw1\_M2\_04('ask')} prompts for $L$, $A$, $\omega_o$ and $\phi$ exactly as the
+exercise specifies. Since $1.5\cos(\omega_o n)=1.5\sin(\omega_o n+\pi/2)$, the same generator
+reproduces the whole family of Figure 2.22 for
+\[
+\omega_o=0,\;0.1\pi,\;0.2\pi,\;0.8\pi,\;0.9\pi,\;\pi,\;1.1\pi,\;1.2\pi .
+\]
+The script verifies numerically the folding property visible in that figure:
+\[
+\omega_o=1.2\pi\ \text{and}\ 0.8\pi\ \text{give identical samples},\qquad
+\omega_o=1.1\pi\ \text{and}\ 0.9\pi\ \text{likewise},
+\]
+because $\cos\bigl((2\pi-\omega)n\bigr)=\cos(\omega n)$. The apparent frequency therefore
+\emph{decreases} again past $\omega_o=\pi$.
+
+\textbf{(b)} For the frequencies of Problem 2.40 the period read off the plot matches the
+theoretical $N=2\pi r/\omega_o$:
+\[
+\begin{array}{lcccccc}
+\omega_o & 0.3\pi & 0.48\pi & 0.45\pi & 0.525\pi & 0.75\pi & 0.75\pi\\\hline
+N & 20 & 25 & 40 & 80 & 8 & 8
+\end{array}
+\]
+
+\Prob{M2.5\quad Verify Example 2.15}
+
+Example 2.15 in this printing determines the fundamental period of a \emph{sum} of sinusoids,
+\[
+\tilde{x}[n]=3\cos(1.3\pi n)-4\sin(0.5\pi n+0.5).
+\]
+Component periods: $1.3\pi N_a=2\pi r_a$ gives $N_a=20$ ($r_a=13$); $0.5\pi N_b=2\pi r_b$ gives
+$N_b=4$ ($r_b=1$); hence $N=\mathrm{LCM}(20,4)=20$. The script recomputes $N_a$, $N_b$ with
+\texttt{rat}, forms the LCM, and independently measures the period of the sum --- all three
+agree at $N=20$. It also confirms the aliasing remark that
+$\cos(1.3\pi n)\equiv\cos(0.7\pi n)$.
+
+\smallskip
+\emph{Note.} Example numbering differs slightly between printings of the 4th edition. If your
+copy numbers the \emph{sampling-ambiguity} example as 2.15, that result is verified instead by
+\texttt{hw1\_M2\_06.m} (next item), which reproduces Figure 2.28.
+
+\Prob{M2.6\quad Continuous-time sinusoid and its samples; verify Figure 2.28}
+
+The script plots $g_1(t)=\cos(6\pi t)$, $g_2(t)=\cos(14\pi t)$, $g_3(t)=\cos(26\pi t)$ (3, 7 and
+13\,Hz) on a dense time grid, uses \texttt{hold on} to overlay the samples taken at
+$T=0.1$\,s, and confirms numerically that
+\[
+g_1[n]=g_2[n]=g_3[n]=\cos(0.6\pi n)
+\]
+to machine precision. The reason is pure frequency folding:
+\[
+\begin{aligned}
+\cos(1.4\pi n)&=\cos\bigl((2\pi-0.6\pi)n\bigr)=\cos(0.6\pi n),\\
+\cos(2.6\pi n)&=\cos\bigl((2\pi+0.6\pi)n\bigr)=\cos(0.6\pi n).
+\end{aligned}
+\]
+The script then sweeps $f=10k\pm3$ Hz for $k=0,\dots,4$ and shows that \emph{every} one of
+\[
+3,\;7,\;13,\;17,\;23,\;27,\;33,\;37,\;43\ \text{Hz}
+\]
+produces the identical sequence at a 10\,Hz sampling rate.
+
+\Prob{M2.7\quad The family of Eq.\ (2.65) yields identical sampled signals}
+
+Using the generator of M2.6, the script overlays
+\[
+x_{a,k}(t)=A\cos\bigl(\pm(\Omega_o t+\phi)+k\Omega_T t\bigr),\qquad k=0,\pm1,2,
+\]
+for $A=1.3$, $\phi=0.7$, $\Omega_o=2\pi\cdot 3$ rad/s and $T=0.05$\,s
+($\Omega_T=2\pi\cdot20$ rad/s). The curves are visibly different functions of $t$, yet the
+maximum sample discrepancy $\max_n|x_{a,k}(nT)-x[n]|$ is at the $10^{-15}$ level for every
+$k$ and for both signs. This is Eq.\ (2.66):
+\[
+x_{a,k}(nT)=A\cos\bigl((\Omega_o+k\Omega_T)nT+\phi\bigr)
+           =A\cos(\Omega_o nT+\phi+2\pi kn)=A\cos(\omega_o n+\phi),
+\]
+since $kn$ is an integer; the minus sign is absorbed because cosine is even. Aliased
+frequencies here are $3,23,43,-17,\dots$\,Hz.
+
+\Prob{M2.8\quad Correlations of Problem 2.52 via ``Program 2\_5''}
+
+\texttt{prog\_corr(x,nx,y,ny)} computes $r_{xy}[\ell]=\sum_n x[n]y[n-\ell]$ as
+\texttt{conv(x, fliplr(y))} and returns the lag axis
+$\ell = n_x-(n_y+L_y-1),\dots,n_x+L_x-1-n_y$.
+
+\textbf{Yes --- the results agree exactly with Problem 2.52}, sample for sample, for all five
+sequences $r_{xx}$, $r_{yy}$, $r_{ww}$, $r_{xy}$, $r_{xw}$. The script additionally confirms
+the structural properties:
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item each autocorrelation is even and attains its maximum at $\ell=0$;
+\item $r_{xx}[0]=\mathcal{E}_x=64$, $r_{yy}[0]=\mathcal{E}_y=139$,
+      $r_{ww}[0]=\mathcal{E}_w=88$;
+\item the cross-correlations are \emph{not} even, but $r_{xy}[\ell]=r_{yx}[-\ell]$.
+\end{itemize}
+
+\lstinputlisting[firstline=56,lastline=64,firstnumber=56]{matlab/hw1_M2_08.m}
+
+\Prob{M2.9\quad Autocorrelation of a noise-corrupted signal}
+
+The clean signal is $x[n]=\cos(2\pi n/8)$, $0\le n\le 95$, and the corrupted signal is
+$s[n]=x[n]+a\bigl(\texttt{rand}-\tfrac12\bigr)$ with uniform noise on
+$[-a/2,\,a/2]$.
+
+Writing $s=x+d$ with $d$ independent of $x$,
+\[
+r_{ss}[\ell]=r_{xx}[\ell]+r_{dd}[\ell]+r_{xd}[\ell]+r_{dx}[\ell]
+\;\approx\; r_{xx}[\ell]+\sigma_d^{2}L\,\delta[\ell],
+\]
+because white noise is uncorrelated with itself at every nonzero lag and uncorrelated with
+$x$ at all lags. The noise therefore contributes energy \emph{only} at $\ell=0$:
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item $r_{ss}[\ell]$ always peaks at $\ell=0$, and the peak grows as $a^{2}$;
+\item the periodic side lobes of $r_{xx}$ survive, so the underlying period $N=8$ can still be
+      read off the secondary maxima even when the waveform itself is unrecognizable in the
+      time domain.
+\end{itemize}
+The script tabulates $r_{ss}[0]$ and $\max_{\ell\ne0}|r_{ss}[\ell]|$ for
+$a=0,0.5,1,2,4,8$, showing the ratio increasing monotonically with the noise level.
+This is exactly the mechanism behind Figure 2.31 in the text.
+
+\Prob{M2.10\quad Autocorrelation of $x[n]=\alpha^{n}\mu[n]$}
+
+Truncating at $L=200$ samples (where $\alpha^{200}$ is already below $10^{-19}$ for both
+values of $\alpha$), the computed autocorrelation matches the closed form of Problem 2.53(a)
+to better than $10^{-12}$:
+\[
+r_{xx}[\ell]=\frac{\alpha^{|\ell|}}{1-\alpha^{2}} .
+\]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+$\alpha$ & $r_{xx}[0]=\dfrac{1}{1-\alpha^{2}}$ & $r_{xx}[5]=\dfrac{\alpha^{5}}{1-\alpha^{2}}$\\
+\midrule
+$0.6$ & $1.5625$ & $0.1215$\\
+$0.8$ & $2.7778$ & $0.9102$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Both sequences are even and peak at $\ell=0$. The autocorrelation decays at exactly the same
+geometric rate $\alpha$ as the sequence itself, so the slower-decaying $\alpha=0.8$ case gives
+both a larger peak and a visibly wider correlation --- the time-domain signature of a narrower
+bandwidth.

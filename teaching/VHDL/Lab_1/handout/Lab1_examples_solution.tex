@@ -1,0 +1,640 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+\newcommand{\ok}{\checkmark}
+\newcommand{\bad}{\textbf{FAIL}}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 1 --- Guided Examples: Solution}\\[2pt]
+{\itshape Example 1 Majority-of-3 \quad$\cdot$\quad Example 2 Transparent Latch \quad$\cdot$\quad Example 3 Sensitivity List}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+\hr
+
+Three examples, and each one has exactly one job:
+
+\begin{center}
+\begin{tabular}{clll}
+\toprule
+& circuit & new idea & feeds the assignment as \\
+\midrule
+1 & \code{majority3} & the \textbf{tool flow} and the \textbf{testbench} & the check-and-report pattern \\
+2 & \code{trans\_latch} & \textbf{memory}: $Q$ on the right-hand side & \code{TransLatch} minus \code{Clr} \\
+3 & \code{trans\_latch\_bad} & \textbf{one missing name} & the bug planted in your starter \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Every result quoted below --- transcripts, warnings, register counts, timing --- was
+measured with Quartus Prime Lite 25.1std and Questa on device \code{5CSEMA4U23C6}.
+Nothing is paraphrased from memory.
+
+\vspace{4pt}\hr
+
+\section*{0. What to enter in Quartus --- once, for all three}
+
+Each example folder has its own \code{.qpf}. Open it (\code{File $\rightarrow$ Open
+Project}) and confirm these settings before compiling --- a wrong top-level entity
+is the most common reason ``nothing happens''.
+
+\begin{center}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}p{7.2cm}>{\raggedright\arraybackslash}p{5.6cm}}
+\toprule
+setting & where & value \\
+\midrule
+Family / device & \code{Assignments $\rightarrow$ Device} & Cyclone V, \code{5CSEMA4U23C6} \\
+Top-level entity & \code{Assignments $\rightarrow$ Settings $\rightarrow$ General} & the \textbf{design}, never the testbench \\
+Files & \code{Project $\rightarrow$ Add/Remove Files} & design \emph{and} testbench \code{.vhd} \\
+Simulator & \code{Settings $\rightarrow$ EDA Tool Settings $\rightarrow$ Simulation} & \code{Questa Altera FPGA (VHDL)} \\
+Test bench & same page $\rightarrow$ \code{Compile test bench} $\rightarrow$ \code{Test Benches\ldots} $\rightarrow$ \code{New} & test bench name and top-level module = the testbench entity \\
+\bottomrule
+\end{tabular}
+\normalsize
+\end{center}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+example & top-level entity & test bench entity \\
+\midrule
+1 & \code{majority3} & \code{majority3\_tb} \\
+2 & \code{trans\_latch} & \code{trans\_latch\_tb} \\
+3 & \code{trans\_latch\_bad} & \code{sensitivity\_compare\_tb} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Why the testbench is in the file list but is not the top level.} Quartus
+analyses every file in the list but only synthesises what sits underneath the
+top-level entity. The testbench contains \code{wait for 10 ns}, which has no hardware
+meaning; as long as it is not the top level, it is parsed and then ignored. Make it
+the top level and synthesis fails.
+
+\textbf{The flow, every time:}
+\begin{enumerate}[leftmargin=2em,itemsep=1pt]
+\item \code{Processing $\rightarrow$ Start $\rightarrow$ Start Analysis \& Elaboration} --- syntax, seconds
+\item \code{Tools $\rightarrow$ Netlist Viewers $\rightarrow$ RTL Viewer} --- \emph{did I describe what I meant?}
+\item \code{Processing $\rightarrow$ Start Compilation} (Ctrl+L) --- then \textbf{read the Messages}
+\item \code{Tools $\rightarrow$ Run Simulation Tool $\rightarrow$ RTL Simulation} --- does it behave?
+\end{enumerate}
+
+\vspace{4pt}\hr
+
+\section*{Example 1 --- Majority of three: learning the flow}
+
+\subsection*{1.1 Why an old circuit}
+
+You derived this circuit in Lab 0. That is deliberate: \textbf{never learn a tool and
+a circuit at the same time.} If something fails today, the circuit is already known
+to be right, so the problem is in how you drove the tool. You have exactly one unknown.
+
+\subsection*{1.2 Specification, table, equation}
+
+$Y = 1$ when at least two of $A,B,C$ are $1$.
+
+\begin{center}
+\begin{tabular}{c|ccc|c|l}
+\toprule
+\# & $A$ & $B$ & $C$ & $Y$ & \\
+\midrule
+0 & 0&0&0 & 0 & \\
+1 & 0&0&1 & 0 & \\
+2 & 0&1&0 & 0 & \\
+3 & 0&1&1 & \textbf{1} & $m_3$ \\
+4 & 1&0&0 & 0 & \\
+5 & 1&0&1 & \textbf{1} & $m_5$ \\
+6 & 1&1&0 & \textbf{1} & $m_6$ \\
+7 & 1&1&1 & \textbf{1} & $m_7$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{align*}
+\text{(1)}\quad Y &= \textstyle\sum m(3,5,6,7) = \bar{A}BC + A\bar{B}C + AB\bar{C} + ABC \\
+\text{(2)}\quad Y &= AB + AC + BC
+  && \text{\small idempotent, distributive, complement} \\
+\text{(3)}\quad & \code{Y <= (A and B) or (A and C) or (B and C);}
+\end{align*}
+
+The testbench file's header abbreviates step (2) as ``each pair absorbs $ABC$''.
+In your report, name the laws as above --- the full derivation is in the Lab 0
+solution, Exercise 1.
+
+\subsection*{1.3 Anatomy of the design file}
+
+\begin{lstlisting}
+library ieee;                       -- where the standard packages live
+use ieee.std_logic_1164.all;        -- gives std_logic and and/or/not
+
+entity majority3 is                 -- the INTERFACE: what the block looks like outside
+    port ( A, B, C : in  std_logic;
+           Y       : out std_logic );
+end majority3;
+
+architecture behavioral of majority3 is   -- the IMPLEMENTATION: what is inside
+begin
+    Y <= (A and B) or (A and C) or (B and C);
+end architecture behavioral;
+\end{lstlisting}
+
+\textbf{Entity = the pins. Architecture = the wiring.} One entity can have several
+architectures (Lab 0 had behavioural and structural for the full adder); the entity
+is the contract they all honour.
+
+\code{<=} outside a process is a \textbf{concurrent} assignment: it is not a line
+that runs once, it is a wire that is always true. Change \code{A} at any time and
+\code{Y} follows.
+
+\subsection*{1.4 Anatomy of the testbench --- the pattern for the whole semester}
+
+\begin{lstlisting}
+entity majority3_tb is              -- 1. NO PORTS: a closed world
+end entity majority3_tb;
+
+architecture test of majority3_tb is
+    signal A, B, C : std_logic := '0';
+    signal Y       : std_logic;
+
+    type vector_t is record  a, b, c, y : std_logic;  end record;
+    type vector_array is array (natural range <>) of vector_t;
+    constant VECTORS : vector_array := (      -- 2. THE TRUTH TABLE, AS DATA
+        ('0','0','0','0'), ('0','0','1','0'), ('0','1','0','0'), ('0','1','1','1'),
+        ('1','0','0','0'), ('1','0','1','1'), ('1','1','0','1'), ('1','1','1','1') );
+begin
+    DUT : entity work.majority3                -- 3. INSTANTIATE, named association
+        port map (A => A, B => B, C => C, Y => Y);
+
+    stimulus : process
+        variable errors : natural := 0;
+    begin
+        for i in VECTORS'range loop
+            A <= VECTORS(i).a;  B <= VECTORS(i).b;  C <= VECTORS(i).c;
+            wait for 10 ns;                    -- 4. LET THE CIRCUIT RESPOND
+            if Y /= VECTORS(i).y then          -- 5. CHECK, don't eyeball
+                report "FAIL: row " & integer'image(i) severity error;
+                errors := errors + 1;
+            end if;
+        end loop;
+        if errors = 0 then                     -- 6. VERDICT, always printed
+            report "PASS - majority3: all 8 rows correct." severity note;
+        end if;
+        wait;                                  -- 7. STOP, or it loops forever
+    end process stimulus;
+end architecture test;
+\end{lstlisting}
+
+Four things in there are not obvious, and each one bites someone every semester:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+\item \textbf{Why \code{wait for 10 ns} comes before the check.} A signal assignment
+inside a process does not take effect until the process suspends. Check \code{Y} on
+the line right after \code{A <= \ldots} and you are reading the \emph{previous}
+vector's answer. The wait is what lets the new inputs arrive.
+\item \textbf{Why the table is a \code{constant}.} Eight literal rows, copied straight
+from Section 1.2 and indexed by row number, so a failure message names the
+\emph{table row}. Reports say ``row 5 failed'', which you can look up; they never
+say ``something went wrong around 50 ns''. By Lab 11 this table has 8 rows and 14
+columns and it is still the same loop.
+\item \textbf{Why the final \code{wait;}.} A process without a sensitivity list
+restarts from the top when it reaches the end. Without the last \code{wait}, the
+testbench reruns forever and the simulation never stops.
+\item \textbf{Why \code{PASS} is printed.} A testbench that prints nothing on success
+looks exactly like one that never ran.
+\end{itemize}
+
+\subsection*{1.5 Result}
+
+\begin{lstlisting}
+# ** Note: PASS - majority3: all 8 rows correct.
+#    Time: 80 ns  Iteration: 0  Instance: /majority3_tb
+# Errors: 0, Warnings: 0
+\end{lstlisting}
+
+\textbf{Read the time as a check:} 80~ns = 8 vectors $\times$ 10~ns. If your run ends
+anywhere else, your loop did not cover the table.
+
+\subsection*{1.6 Quartus evidence}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Total pins & 4 \quad (3 in, 1 out) \\
+Total registers & \textbf{0} \\
+Logic utilisation & 1 ALM \\
+Timing Analyzer & \code{Warning (332068): No clocks defined in design.} \\
+& \code{Info (332140): No fmax paths to report} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+All three lines are \textbf{correct results}, not problems. Zero registers because
+nothing is stored; one ALM because any function of up to six inputs fits in one; and
+no $F_{max}$ because there is no clock to measure a frequency against. You will also
+see \code{Critical Warning (332012)} saying no \code{.sdc} constraints file exists ---
+true, harmless, and expected until a design has a clock.
+
+\textbf{RTL Viewer:} three AND gates into one OR. It should look like the equation.
+If it does, the tool understood you.
+
+\vspace{4pt}\hr
+
+\section*{Example 2 --- The transparent latch: memory}
+
+\subsection*{2.1 Specification and table --- Type T}
+
+\code{En} = 1: \code{Q} follows \code{D}. \quad \code{En} = 0: \code{Q} keeps its
+value and ignores \code{D}.
+
+\begin{center}
+\begin{tabular}{c|cc|c|l}
+\toprule
+\# & \code{En} & \code{D} & $Q^{+}$ & \\
+\midrule
+0 & 0 & -- & $\mathbf{Q}$ & \textbf{hold} --- the memory row \\
+1 & 1 & 0 & 0 & transparent \\
+2 & 1 & 1 & 1 & transparent \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Row 0 has $Q$ in the output column. \textbf{That is the signature of memory}: the
+next value depends on the present value.
+
+\subsection*{2.2 Boolean equation}
+
+\textbf{(1) Canonical}, taking the rows where $Q^{+}$ can be 1:
+\[
+Q^{+} = \underbrace{\code{En}\cdot D}_{\text{row 2}} \;+\; \underbrace{\overline{\code{En}}\cdot Q}_{\text{row 0 holding a 1}}
+\]
+
+Nothing simplifies. But read it: this is \textbf{exactly the Lab 0 multiplexer}
+$\bar{S}D_0 + SD_1$, with $S = \code{En}$, $D_1 = D$ and $D_0 = Q$.
+
+\begin{quote}
+\textbf{A latch is a 2-to-1 multiplexer whose output is wired back to one of its own
+inputs.} Select $D$ and new data flows in; select $Q$ and the old value circulates.
+\end{quote}
+
+Lab 0 had no output on the right-hand side of any equation. This one does, and that
+single feedback path is the whole difference between logic and memory.
+
+\textbf{(2) VHDL:}
+\begin{lstlisting}
+process (En, D)            -- every signal the process READS
+begin
+    if En = '1' then
+        Q <= D;            -- rows 1, 2
+    end if;                -- no else: row 0
+end process;
+\end{lstlisting}
+
+\textbf{The missing \code{else} is row 0.} In a process, a signal not assigned on
+some path keeps its previous value. When \code{En = '0'} nothing assigns \code{Q}, so
+\code{Q} holds --- and synthesis builds storage to make that true.
+
+\subsection*{2.3 The testbench, as a timeline}
+
+The testbench adds one new tool: a \code{check} procedure, so the comparison and the
+error message are written once and called four times.
+
+\begin{center}
+\begin{tabular}{r|cc|c|l}
+\toprule
+$t$ (ns) & \code{En} & \code{D} & \code{Q} checked & what it proves \\
+\midrule
+0  & 1 & 0 & & open, with 0 \\
+10 & 1 & \textbf{1} & 0 at $t{=}10$ \ok & check 1: row 1 \\
+20 & \textbf{0} & 1 & 1 at $t{=}20$ \ok & check 2: row 2 --- and \textbf{close} \\
+30 & 0 & \textbf{0} & & change \code{D} \emph{while closed} \\
+40 & \textbf{1} & 0 & \textbf{1} at $t{=}40$ \ok & check 3: \textbf{row 0, the hold} \\
+50 & & & 0 at $t{=}50$ \ok & check 4: reopening catches up \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}
+# ** Note: PASS - trans_latch: all checks passed.
+#    Time: 50 ns  Iteration: 0  Instance: /trans_latch_tb
+# Errors: 0, Warnings: 0
+\end{lstlisting}
+
+\textbf{Two details in that timeline are design decisions:}
+
+\textbf{Check 3 changes \code{D} after closing, not before.} Leaving \code{D}
+unchanged would prove nothing --- a plain wire holds a value that nobody changes.
+The hold is only demonstrated by moving the input underneath it.
+
+\textbf{\code{En} falls at 20~ns and \code{D} changes at 30~ns --- never at the same
+instant.} In simulation a simultaneous change resolves cleanly either way. In
+hardware, data changing at the same moment the latch closes is a race that can store
+either value. Separate them by a full step, and keep that habit when clocks arrive in
+Lab 2.
+
+\subsection*{2.4 What each check catches --- measured}
+
+Example 2's testbench was run against three wrong designs:
+
+\begin{center}
+\begin{tabular}{lcccc|l}
+\toprule
+design under test & chk 1 & chk 2 & chk 3 & chk 4 & transcript \\
+\midrule
+correct latch & \ok & \ok & \ok & \ok & \code{PASS} \\
+wire: \code{Q <= D;} & \ok & \ok & \bad & \ok & 1 failed \\
+AND gate: \code{Q <= En and D;} & \ok & \ok & \bad & \ok & 1 failed \\
+broken sensitivity list (Example 3) & \ok & \bad & \bad & \ok & 2 failed \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Look at the wire and the AND gate:} they pass three checks out of four, and
+the only one that catches them is the hold check. Neither has any memory, and every
+other vector is satisfiable without memory. \textbf{Delete check 3 and a piece of
+wire passes your testbench.} That is why the assignment's rubric looks for your hold
+vector before anything else.
+
+The AND gate is not hypothetical: it is exactly what you get by adding
+\code{else Q <= '0';} to the process. It is complete, warning-free, and not a latch.
+
+\subsection*{2.5 Quartus evidence}
+
+\textbf{Messages.} One warning, and it is the one you want:
+\begin{lstlisting}
+Warning (10631): VHDL Process Statement warning at trans_latch.vhd(35):
+  inferring latch(es) for signal or variable "Q", which holds its previous
+  value in one or more paths through the process
+\end{lstlisting}
+
+This is the ``inferred latch'' warning. In almost every other design you write it
+means you forgot a branch. \textbf{Here it confirms the design is right} --- and
+having caused it on purpose, you will recognise it instantly when it is an accident
+in Lab 3.
+
+\textbf{Inferred-latch table} (Compilation Report $\rightarrow$ Analysis \& Synthesis):
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Latch name & Latch enable signal & Free of timing hazards \\
+\midrule
+\code{Q\$latch} & \code{En} & yes \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Quartus worked out on its own that \code{En} controls the storage. It agrees with
+your table.
+
+\textbf{Flow summary and netlist.}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Total pins & 3 \\
+Total registers & \textbf{0} \quad --- a latch is not a register \\
+Post-synthesis netlist & 1 LUT with \textbf{3 data inputs} \\
+Timing Analyzer & clock \code{En} derived; min.\ pulse width slack $+0.365$~ns \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{The Timing Analyzer invents a clock --- read this before you panic.} With no
+\code{.sdc} constraints file, Quartus looks for anything that controls storage and
+assumes it is a clock with a 1.000~ns period:
+\begin{lstlisting}
+Info (332105): create_clock -period 1.000 -name En En
+Info (332140): No fmax paths to report
+\end{lstlisting}
+That is a 1~GHz requirement nobody asked for. There are \textbf{no setup or hold
+paths} (nothing goes from one storage element to another), so there is \textbf{no
+$F_{max}$}. The one check left is \emph{minimum pulse width}: can \code{En} stay high
+long enough at 1~GHz? Here it can, by 0.365~ns.
+
+On another build it may not. The 8-bit reference \code{TransLatch8} misses it by
+38~ps at the fast corner and prints \code{Critical Warning (332148): Timing
+requirements not met}. \textbf{Against an invented 1~ns clock, that warning means
+nothing.} Report it honestly and say why; a meaningful timing number needs a real
+clock and a real constraint, and both arrive in Lab 2.
+
+\textbf{Three data inputs for a circuit with two inputs.} The third LUT input is
+\code{Q} itself, fed back. You are reading the feedback term $\overline{\code{En}}\cdot Q$
+straight out of the netlist statistics.
+
+\textbf{RTL Viewer:} a latch symbol with \code{D} on its data pin and \code{En} on
+its enable. No loop of gates --- Quartus draws the primitive, not the multiplexer.
+
+\vspace{4pt}\hr
+
+\section*{Example 3 --- One missing name}
+
+\subsection*{3.1 The only difference}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\code{trans\_latch} (Example 2) & \code{trans\_latch\_bad} \\
+\midrule
+\code{process (En, D)} & \code{process (En)} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The process body is identical. \textbf{Rule: the sensitivity list must name every
+signal the process reads.} This process reads \code{En} and \code{D}.
+
+\subsection*{3.2 Simulation --- the side-by-side testbench}
+
+Both latches receive the same stimulus:
+
+\begin{center}
+\begin{tabular}{r|cc|cc|l}
+\toprule
+$t$ (ns) & \code{En} & \code{D} & \code{Q\_good} & \code{Q\_bad} & \\
+\midrule
+0  & \textbf{1} & 0 & 0 & 0 & \code{En} changed: \textbf{both} processes wake \\
+10 & 1 & \textbf{1} & \textbf{1} & \textbf{0} & only \code{D} changed: \textbf{only the good process wakes} \\
+20 & 1 & 1 & 1 & 0 & assertions evaluated \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}
+# ** Error: EXPECTED FAILURE: the broken latch did not follow D.
+#           One missing name in a sensitivity list caused this.
+#    Time: 20 ns  Iteration: 0  Instance: /sensitivity_compare_tb
+# Errors: 1, Warnings: 0
+\end{lstlisting}
+
+\textbf{Exactly one error, and it is the intended one.} If you see two, the
+\emph{good} latch is also broken --- go back to Example 2.
+
+\textbf{Waveform:} look between 10 and 20~ns. \code{D} rises, \code{Q\_good} rises
+with it, \code{Q\_bad} stays low. (The comment at the top of
+\code{sensitivity\_compare\_tb.vhd} says \code{D} changes at 20~ns; it changes at
+10~ns and is checked at 20~ns.)
+
+\subsection*{3.3 What the broken design actually is}
+
+Trace the broken process. It runs only when \code{En} changes. When it runs, it
+copies \code{D} only if \code{En} is now \code{'1'}. So \code{Q} is updated
+\textbf{only at the instant \code{En} goes from 0 to 1}, and holds at every other
+time.
+
+\begin{quote}
+\textbf{That is not a broken latch. It is a flip-flop clocked by the rising edge of
+\code{En}.} One missing name changed which kind of storage you described.
+\end{quote}
+
+You build a flip-flop on purpose in Lab 2 --- with \code{rising\_edge(clk)}, which
+says so explicitly. Example 3 builds one by accident.
+
+\subsection*{3.4 Synthesis --- the part most textbooks get wrong}
+
+The usual story is that synthesis ignores the sensitivity list, builds the correct
+latch, and prints a warning. \textbf{For this exact code, Quartus 25.1 does not do
+that.} Measured:
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+& \code{trans\_latch} & \code{trans\_latch\_bad} \\
+\midrule
+Warnings & \code{10631} (latch inferred) & \textbf{none} \\
+Inferred latches & 1 & 0 \\
+Total registers & 0 & \textbf{1} \\
+Netlist & 1 LUT & \textbf{1 flip-flop} (\code{arriav\_ff}) \\
+Min.\ pulse width on \code{En} & $+0.365$~ns & $\mathbf{-0.394}$~ns, \code{332148} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Both designs get the same invented 1~ns clock on \code{En}. The flip-flop fails the
+pulse-width check and the latch passes it --- a faint but real sign in the timing
+report that the two storage elements are different primitives.
+
+A process that wakes only on \code{En} and then tests \code{En = '1'} matches an old
+flip-flop template that synthesis tools recognise, so Quartus reads the sensitivity
+list as part of the clock description and builds a \textbf{flip-flop, silently}.
+Simulation and hardware \emph{agree} --- and both are wrong.
+
+\textbf{Now compare your assignment's starter}, which has the same missing names but
+a \code{Clr} branch in front. The \code{Clr} test breaks the flip-flop template, so
+Quartus falls back to ignoring the list:
+
+\begin{center}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{6.2cm}>{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}p{4.6cm}}
+\toprule
+code shape & Quartus says & result \\
+\midrule
+\code{process (En)}, \code{if En='1'} \newline (Example 3)
+  & nothing
+  & flip-flop in sim \emph{and} hardware \\
+\code{process (En)}, \code{if Clr \ldots elsif En} \newline (your starter)
+  & \code{10492} (\code{Clr}), \code{10492} (\code{D}), \code{10631}
+  & latch in hardware, broken simulation \\
+\code{process (En, D)}, \code{if Clr \ldots elsif En} \newline (check-off question 2)
+  & \code{10492} (\code{Clr}), \code{10631}
+  & latch in hardware, simulation misses the clear \\
+\code{process (Clr, En, D)} \newline (correct)
+  & \code{10631} only
+  & latch in both \\
+\bottomrule
+\end{tabular}
+\normalsize
+\end{center}
+
+Warning 10492 reads:
+\begin{lstlisting}
+Warning (10492): VHDL Process Statement warning at TransLatch.vhd(33): signal "Clr"
+  is read inside the Process Statement but isn't in the Process Statement's
+  sensitivity list
+\end{lstlisting}
+
+\textbf{The same bug produces two different failures depending on the shape of the
+code around it.} In rows 2 and 3 you tested a different circuit from the one you
+built --- the simulation/synthesis mismatch. In row 1 there is no mismatch at all,
+and no warning, and the design is still wrong.
+
+\subsection*{3.5 What caught it --- and why the course asks for all the evidence}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+evidence source & Example 3 (flip-flop) & starter (mismatch) \\
+\midrule
+self-checking testbench & \textbf{caught} (1 error) & \textbf{caught} \\
+Messages / warnings & silent & \textbf{caught} (10492) \\
+Flow Summary: registers & \textbf{caught} (1, expected 0) & silent (0) \\
+RTL Viewer & \textbf{caught} (flip-flop symbol, \code{En} on clock) & silent (latch) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+No single source catches both. The testbench catches both only because it contains a
+vector that changes \code{D} while \code{En} is already high. \textbf{That is the
+argument for reading every piece of evidence every time}: each one is blind to
+something another one sees.
+
+\textbf{Two habits from this example:}
+\begin{enumerate}[leftmargin=2em,itemsep=1pt]
+\item \textbf{Silence is not correctness.} The correct latch prints a warning. The
+broken one prints nothing.
+\item \textbf{Know the number you expect before you open the report.} ``Registers: 0''
+is a prediction you make from your table. When the report says 1, you have found a
+bug without running a single vector.
+\end{enumerate}
+
+\vspace{4pt}\hr
+
+\section*{Summary --- the three examples in Quartus}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+& \code{majority3} & \code{trans\_latch} & \code{trans\_latch\_bad} \\
+\midrule
+pins & 4 & 3 & 3 \\
+registers & 0 & 0 & \textbf{1} \\
+inferred latches & 0 & 1 & 0 \\
+warnings (design) & none & 10631 & none \\
+Timing Analyzer & no clocks & \code{En} derived, passes & \code{En} derived, \textbf{fails} \\
+simulation & PASS, 80 ns & PASS, 50 ns & 1 expected error \\
+what it is & logic & latch & \textbf{flip-flop on \code{En}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Into the assignment:} \code{TransLatch} is Example 2 with an asynchronous
+clear added in front --- which is precisely what changes Example 3's silent flip-flop
+into the warned, mismatched latch your starter will give you. Fix the sensitivity
+list to \code{(Clr, En, D)}, keep the missing \code{else}, and keep a hold vector
+that moves \code{D} underneath a closed latch.
+
+\end{document}

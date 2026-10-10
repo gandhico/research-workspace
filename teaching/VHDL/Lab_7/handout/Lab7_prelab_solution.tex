@@ -1,0 +1,224 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 7: Solution}\\[2pt]
+{\large Next Instruction Address Generation I}\\[4pt]
+Fall 2026 \quad$\cdot$\quad 5 points \quad$\cdot$\quad TA marking guide
+\end{center}
+\hr
+
+{\small Marking: Q1 = 2 points, Q2 = 1 point, Q3 = 2 points. Q1 is pure
+arithmetic --- mark it exactly, because every wrong answer here becomes a CPU
+that jumps to the wrong place in Lab 12.}
+
+\vspace{4pt}\hr
+
+\section*{Question 1 --- Branch arithmetic (2 points)}
+
+\subsection*{The three steps, every time}
+
+\[
+\code{NSA} = PC + 4
+\qquad
+\text{offset} = \text{sign-extend}(\code{Immed16}) \times 4
+\qquad
+\text{target} = \code{NSA} + \text{offset}
+\]
+
+\subsection*{(a) \code{BLEZ r1, +2} at \code{0x0000000C}, encoding \code{0x18200002}}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+step & value & working \\
+\midrule
+\code{NSA} & \code{0x00000010} & $\code{0x0C} + 4$ \\
+offset & \code{0x00000008} & \code{Immed16} $=$ \code{0x0002}, positive, $2 \times 4 = 8$ \\
+\textbf{target} & \textbf{\code{0x00000018}} & $\code{0x10} + \code{0x08}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{(b) Backward branch: $PC = \code{0x30}$, \code{Immed16} $=$ \code{0xFFFC}}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+step & value & working \\
+\midrule
+\code{NSA} & \code{0x00000034} & $\code{0x30} + 4$ \\
+offset & \code{0xFFFFFFF0} & \code{0xFFFC} sign-extends to $-4$; $-4 \times 4 = -16$ \\
+\textbf{target} & \textbf{\code{0x00000024}} & $\code{0x34} - \code{0x10}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{The teaching point:} nothing special was done for the negative case. The
+offset was sign-extended, shifted, and \emph{added}. \textbf{Two's complement
+addition handles backward branches with no extra hardware} --- there is no
+subtractor anywhere in the branch path.
+
+\subsection*{(c) The two mistakes}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+mistake & computed target & what it looks like \\
+\midrule
+forgot the $\times 4$ shift & \code{0x10} $+$ \code{2} $=$ \textbf{\code{0x12}} & an \textbf{unaligned} address \\
+used $PC$ instead of $PC+4$ & \code{0x0C} $+$ \code{8} $=$ \textbf{\code{0x14}} & a \textbf{valid} instruction address, off by one instruction \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{Model answer for ``which is harder to notice'':} the $PC$-versus-$PC+4$
+mistake. It produces a properly aligned address that points at a real
+instruction, so the machine keeps running and simply executes the wrong one ---
+the program computes a wrong answer with no obvious symptom. The missing shift
+gives \code{0x12}, which is not a multiple of four; the instruction memory index
+is then wrong in an obvious way and the failure is immediate and loud.
+\end{quote}
+
+Full credit needs \emph{both} numbers and the argument that a plausible-looking
+address is more dangerous than an impossible one.
+
+\vspace{4pt}\hr
+
+\section*{Question 2 --- Interface and reuse (1 point)}
+
+\subsection*{(a) The entity}
+
+\begin{lstlisting}
+entity NIAG_Reg is
+    generic (
+        RESET_VEC : natural := 0          -- where the machine starts
+    );
+    port (
+        NextPC : in  std_logic_vector(31 downto 0);
+        Strb   : in  std_logic;           -- load enable
+        Rst    : in  std_logic;           -- asynchronous
+        clk    : in  std_logic;
+        PC     : out std_logic_vector(31 downto 0)
+    );
+end entity NIAG_Reg;
+\end{lstlisting}
+
+The generic must be there, and it must be usable as a \emph{value}, not a width.
+That is the only structural difference from \code{RegN}.
+
+\subsection*{(b) The equation, and what changed}
+
+\[
+PC^{+} = \overline{\code{Rst}} \cdot \left( \code{Strb} \cdot \code{NextPC}
+   + \overline{\code{Strb}} \cdot PC \right)
+\]
+
+\begin{quote}
+\textbf{Model answer:} It is exactly Lab 2's register equation with
+\code{Ld} renamed \code{Strb}. \textbf{The only real change is the reset value:}
+\code{RegN} resets to zero, the program counter resets to the address where the
+machine starts.
+\end{quote}
+
+Full credit needs ``same equation, different reset value''. A student who writes
+$PC^{+} = PC + 4$ has confused the \textbf{register} with the \textbf{adder} that
+feeds it --- worth correcting immediately, because keeping those two separate is
+the whole structure of this lab.
+
+\vspace{4pt}\hr
+
+\section*{Question 3 --- Test plan (2 points)}
+
+\subsection*{Model vector list}
+
+\begin{center}
+\small
+\begin{tabular}{c>{\raggedright\arraybackslash}p{5.2cm}>{\raggedright\arraybackslash}p{7.4cm}}
+\toprule
+\# & inputs & what it proves \\
+\midrule
+1 & \code{Rst} = 1 & the PC loads the reset vector, not zero (unless they coincide) \\
+2 & \code{Strb} = 1, one edge & the PC takes \code{NextPC} \\
+3 & \code{Strb} = 0, one edge & the PC \textbf{holds}: an edge alone does not advance it \\
+4 & \code{PC} = \code{0x0C}, read \code{NSA} & $\code{NSA} = PC+4$, and it is \textbf{combinational} \\
+5 & forward branch, \code{Immed16} = \code{0x0002} & offset shifted by 2 and added to \code{NSA} \\
+6 & \textbf{backward} branch, \code{Immed16} = \code{0xFFFC} & \textbf{sign extension works}: target is \emph{below} \code{NSA} \\
+7 & \code{Immed16} = \code{0x0000} & the degenerate branch: target $=$ \code{NSA} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Six vectors earn full credit. \textbf{Vector 6 is the one that must appear.}
+
+\subsection*{(a) If every offset is positive}
+
+\begin{quote}
+\textbf{Model answer:} You could not detect a \textbf{zero-extended} immediate
+where sign extension was required. For positive offsets the two are identical, so
+every vector passes; the design then jumps forward by an enormous amount on the
+first backward branch.
+\end{quote}
+
+\textbf{This is the same lesson as Lab 4:} a test value must be able to
+distinguish the cases. And it matters here more than anywhere, because
+\textbf{every loop in the Lab 12 program ends with a backward branch} --- a CPU
+with this bug runs straight past the end of its loop.
+
+\subsection*{(b) Proving \code{NSA} is combinational}
+
+\begin{quote}
+\textbf{Model answer:} Change \code{PC} \emph{between} clock edges and check that
+\code{NSA} changes immediately, with no edge in between --- for example, drive
+\code{PC} to \code{0x0C}, wait, observe \code{0x10}; then drive \code{0x10}, wait,
+observe \code{0x14}, all within one clock phase.
+\end{quote}
+
+\begin{quote}
+\textbf{What would go wrong if \code{NSA} were clocked:} the next address would
+arrive one cycle late. The CPU needs \code{NSA} \emph{during} the same cycle in
+which it fetches, because the adder's result must be ready at the edge that loads
+the PC. A registered \code{NSA} would make the machine compute the next address
+from the \emph{previous} PC --- it would execute every instruction twice, or skip
+every other one, depending on the timing.
+\end{quote}
+
+\textbf{The structural rule behind the whole lab:} the program counter is the only
+storage element here. \code{NSA} and \code{Rel} are pure arithmetic and must stay
+combinational.
+
+\vspace{6pt}
+\hr
+{\small \textbf{At the bench:} check Q1(b) first. A student whose backward target
+is above \code{NSA}, or who wrote \code{0x44}, has either dropped the sign
+extension or added instead of letting two's complement do the work.}
+
+\end{document}

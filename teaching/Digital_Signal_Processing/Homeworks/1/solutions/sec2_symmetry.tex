@@ -1,0 +1,451 @@
+\section{Circular shifts, symmetry, boundedness (2.16--2.30)}
+
+\Prob{2.16\quad Circular shifts of $\{x[n]\}=\{2,-5,6,-3,4,-4,0,-7,8\}$, $-5\le n\le 3$}
+
+The sequence has length $N=9$; index it by its $9$-periodic extension $\tilde{x}[n]$, so that
+$\tilde{x}[n]=\tilde{x}[n+9]$ and
+\[
+\begin{array}{r|rrrrrrrrr}
+n & -5 & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3\\\hline
+x[n] & 2 & -5 & 6 & -3 & 4 & -4 & 0 & -7 & 8
+\end{array}
+\]
+A left circular shift by $M$ gives $y[n]=\tilde{x}[n+M]$; a right circular shift by $M$ gives
+$z[n]=\tilde{x}[n-M]$. Since the sequence is $9$-periodic, only $M\bmod 9$ matters.
+
+\textbf{(a)} Left shift by $12$ ($12\equiv 3\bmod 9$):
+\[
+y[-3]=\tilde{x}[-3+12]=\tilde{x}[9]=\tilde{x}[9-9]=\tilde{x}[0]=x[0].
+\]
+\[
+\boxed{\;y[-3]=-4.\;}
+\]
+
+\textbf{(b)} Right shift by $15$ ($15\equiv 6\bmod 9$):
+\[
+z[2]=\tilde{x}[2-15]=\tilde{x}[-13]=\tilde{x}[-13+9]=\tilde{x}[-4]=x[-4].
+\]
+\[
+\boxed{\;z[2]=-5.\;}
+\]
+
+\Prob{2.17\quad Circular shifts of $\{g[n]\}=\{-3,0,4,9,2,0,-2,5\}$, $-4\le n\le 3$}
+
+Now $N=8$:
+\[
+\begin{array}{r|rrrrrrrr}
+n & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3\\\hline
+g[n] & -3 & 0 & 4 & 9 & 2 & 0 & -2 & 5
+\end{array}
+\]
+
+\textbf{(a)} Right circular shift by 5: $h[n]=\tilde{g}[n-5]$. Reducing each argument
+mod~8 into $[-4,3]$:
+\[
+\begin{array}{r|rrrrrrrr}
+n & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3\\
+n-5 \ (\mathrm{mod}\ 8) & -1 & 0 & 1 & 2 & 3 & -4 & -3 & -2\\\hline
+h[n] & 9 & 2 & 0 & -2 & 5 & -3 & 0 & 4
+\end{array}
+\]
+\[
+\boxed{\;\{h[n]\}=\{9,\,2,\,0,\,-2,\,5,\,-3,\,0,\,4\},\qquad -4\le n\le 3.\;}
+\]
+
+\textbf{(b)} Left circular shift by 4: $w[n]=\tilde{g}[n+4]$ (for $N=8$, a left shift by 4 and
+a right shift by 4 coincide):
+\[
+\begin{array}{r|rrrrrrrr}
+n & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3\\
+n+4 \ (\mathrm{mod}\ 8) & 0 & 1 & 2 & 3 & -4 & -3 & -2 & -1\\\hline
+w[n] & 2 & 0 & -2 & 5 & -3 & 0 & 4 & 9
+\end{array}
+\]
+\[
+\boxed{\;\{w[n]\}=\{2,\,0,\,-2,\,5,\,-3,\,0,\,4,\,9\},\qquad -4\le n\le 3.\;}
+\]
+
+\Prob{2.18\quad $\mathcal{P}_x=\mathcal{P}_{x_{\mathrm{ev}}}+\mathcal{P}_{x_{\mathrm{od}}}$ for real $x[n]$}
+
+Write $x[n]=x_{\mathrm{ev}}[n]+x_{\mathrm{od}}[n]$. Then
+\[
+x^2[n]=x_{\mathrm{ev}}^2[n]+x_{\mathrm{od}}^2[n]+2\,x_{\mathrm{ev}}[n]\,x_{\mathrm{od}}[n].
+\]
+The cross term is the product of an even and an odd sequence, hence \emph{odd}:
+\[
+c[n]\triangleq x_{\mathrm{ev}}[n]x_{\mathrm{od}}[n]
+\;\Longrightarrow\;
+c[-n]=x_{\mathrm{ev}}[n]\bigl(-x_{\mathrm{od}}[n]\bigr)=-c[n].
+\]
+Every finite symmetric sum of an odd sequence vanishes,
+$\sum_{n=-K}^{K}c[n]=0$ (the $n$ and $-n$ terms cancel and $c[0]=0$). Therefore, for every $K$,
+\[
+\frac{1}{2K+1}\sum_{n=-K}^{K}x^{2}[n]
+=\frac{1}{2K+1}\sum_{n=-K}^{K}x_{\mathrm{ev}}^{2}[n]
++\frac{1}{2K+1}\sum_{n=-K}^{K}x_{\mathrm{od}}^{2}[n],
+\]
+and letting $K\to\infty$,
+\[
+\boxed{\;\mathcal{P}_x=\mathcal{P}_{x_{\mathrm{ev}}}+\mathcal{P}_{x_{\mathrm{od}}} .\;}
+\]
+(The same argument with $\sum_{n=-\infty}^{\infty}$ in place of the average gives the
+corresponding energy identity.)
+
+\Prob{2.19\quad Energy of $x[n]=\sin(2\pi k n/N)$, $0\le n\le N-1$}
+
+Using $\sin^{2}\theta=\tfrac12(1-\cos 2\theta)$,
+\[
+\mathcal{E}_x=\sum_{n=0}^{N-1}\sin^{2}\!\Bigl(\frac{2\pi kn}{N}\Bigr)
+=\frac{N}{2}-\frac12\sum_{n=0}^{N-1}\cos\!\Bigl(\frac{4\pi kn}{N}\Bigr).
+\]
+The remaining sum is the real part of a geometric sum of $e^{j4\pi kn/N}$:
+\[
+\sum_{n=0}^{N-1}e^{j2\pi(2k)n/N}=
+\begin{cases}
+N, & 2k/N\in\mathbb{Z},\\[2pt]
+\dfrac{1-e^{j2\pi(2k)}}{1-e^{j4\pi k/N}}=0, & \text{otherwise.}
+\end{cases}
+\]
+Hence
+\[
+\boxed{\;
+\mathcal{E}_x=
+\begin{cases}
+\dfrac{N}{2}, & \dfrac{2k}{N}\ \text{not an integer},\\[8pt]
+0, & \dfrac{2k}{N}\ \text{an integer}.
+\end{cases}\;}
+\]
+The second case is not a surprise: if $2k/N=m\in\mathbb{Z}$ then
+$x[n]=\sin(\pi m n)\equiv 0$ for all integer $n$. In every non-degenerate case the energy is
+$N/2$, i.e.\ the average power over one period is $1/2$, as expected for a unit-amplitude
+sinusoid.
+
+\Prob{2.20\quad Even and odd parts of $x[n]$, $y[n]$, $w[n]$ of Problem 2.3}
+
+With $x_{\mathrm{ev}}[n]=\tfrac12(x[n]+x[-n])$ and $x_{\mathrm{od}}[n]=\tfrac12(x[n]-x[-n])$,
+each part is supported on the symmetric hull of the original support.
+
+\textbf{$x[n]$}, support $-1\le n\le 5$ $\Rightarrow$ parts on $-5\le n\le 5$:
+\[
+\begin{array}{r|rrrrrrrrrrr}
+n & -5 & -4 & -3 & -2 & -1 & 0 & 1 & 2 & 3 & 4 & 5\\\hline
+x[n] & 0&0&0&0&3&-4&-2&5&0&1&-3\\
+x_{\mathrm{ev}}[n] & -1.5&0.5&0&2.5&0.5&-4&0.5&2.5&0&0.5&-1.5\\
+x_{\mathrm{od}}[n] & 1.5&-0.5&0&-2.5&2.5&0&-2.5&2.5&0&0.5&-1.5
+\end{array}
+\]
+One checks $x_{\mathrm{ev}}[-n]=x_{\mathrm{ev}}[n]$ and $x_{\mathrm{od}}[-n]=-x_{\mathrm{od}}[n]$
+throughout, and $x_{\mathrm{ev}}[n]+x_{\mathrm{od}}[n]=x[n]$ sample by sample.
+
+\textbf{$y[n]$}, support $-3\le n\le 3$ (already symmetric):
+\[
+\begin{array}{r|rrrrrrr}
+n & -3 & -2 & -1 & 0 & 1 & 2 & 3\\\hline
+y[n] & -5&-1&0&3&6&-2&8\\
+y_{\mathrm{ev}}[n] & 1.5&-1.5&3&3&3&-1.5&1.5\\
+y_{\mathrm{od}}[n] & -6.5&0.5&-3&0&3&-0.5&6.5
+\end{array}
+\]
+
+\textbf{$w[n]$}, support $3\le n\le 9$ $\Rightarrow$ parts on $-9\le n\le 9$. Since
+$w[n]=0$ for $n\le 2$, on the positive side $w_{\mathrm{ev}}[n]=w_{\mathrm{od}}[n]=\tfrac12 w[n]$
+for $n\ge 3$, and the negative side is the (anti)symmetric mirror image:
+\[
+\begin{array}{r|rrrrrrr}
+n & 3 & 4 & 5 & 6 & 7 & 8 & 9\\\hline
+w[n] & -1&3&-4&0&1&-5&6\\
+w_{\mathrm{ev}}[n] & -0.5&1.5&-2&0&0.5&-2.5&3\\
+w_{\mathrm{od}}[n] & -0.5&1.5&-2&0&0.5&-2.5&3
+\end{array}
+\qquad
+\begin{array}{r|r}
+n<0 & \\\hline
+w_{\mathrm{ev}}[-n] & =\ \ w_{\mathrm{ev}}[n]\\
+w_{\mathrm{od}}[-n] & =-w_{\mathrm{od}}[n]
+\end{array}
+\]
+so $w_{\mathrm{ev}}[n]=0$ and $w_{\mathrm{od}}[n]=0$ for $-2\le n\le 2$.
+
+\Prob{2.21\quad Conjugate-symmetric and conjugate-antisymmetric parts}
+
+\textbf{(a)} $\{x_1[n]\}=\{-1+j3,\;2-j7,\;4-j5,\;3+j5,\;-2-j\}$, $-2\le n\le 2$.
+First form $x_1^*[-n]$ by time-reversing and conjugating:
+\[
+\{x_1^*[-n]\}=\{-2+j,\;3-j5,\;4+j5,\;2+j7,\;-1-j3\},\qquad -2\le n\le 2 .
+\]
+Then $x_{\mathrm{cs}}=\tfrac12(x_1+x_1^*[-n])$ and $x_{\mathrm{ca}}=\tfrac12(x_1-x_1^*[-n])$:
+\[
+\boxed{
+\begin{aligned}
+\{x_{1,\mathrm{cs}}[n]\}&=\{-1.5+j2,\;\;2.5-j6,\;\;4,\;\;2.5+j6,\;\;-1.5-j2\},\\
+\{x_{1,\mathrm{ca}}[n]\}&=\{0.5+j,\;\;-0.5-j,\;\;-j5,\;\;0.5-j,\;\;-0.5+j\},
+\end{aligned}\qquad -2\le n\le 2 .}
+\]
+Checks: $x_{\mathrm{cs}}[0]=4$ is real, $x_{\mathrm{ca}}[0]=-j5$ is purely imaginary, and
+$x_{\mathrm{cs}}[n]+x_{\mathrm{ca}}[n]=x_1[n]$ sample by sample.
+
+\textbf{(b)} $x_2[n]=e^{j2\pi n/5}+e^{j\pi n/3}$. Conjugating and reversing,
+\[
+x_2^*[-n]=\overline{e^{-j2\pi n/5}}+\overline{e^{-j\pi n/3}}=e^{j2\pi n/5}+e^{j\pi n/3}=x_2[n].
+\]
+Hence $x_2[n]$ is \emph{already} conjugate symmetric:
+\[
+\boxed{\;x_{2,\mathrm{cs}}[n]=x_2[n]=e^{j2\pi n/5}+e^{j\pi n/3},\qquad x_{2,\mathrm{ca}}[n]=0.\;}
+\]
+(This is the general fact that $e^{j\omega n}$ is conjugate symmetric for real $\omega$.)
+
+\textbf{(c)} $x_3[n]=j\cos(2\pi n/7)-\sin(2\pi n/4)$. Reversing,
+$x_3[-n]=j\cos(2\pi n/7)+\sin(2\pi n/4)$, and conjugating,
+\[
+x_3^*[-n]=-j\cos(2\pi n/7)+\sin(2\pi n/4)=-x_3[n].
+\]
+Hence $x_3[n]$ is purely conjugate antisymmetric:
+\[
+\boxed{\;x_{3,\mathrm{cs}}[n]=0,\qquad x_{3,\mathrm{ca}}[n]=x_3[n]=j\cos(2\pi n/7)-\sin(2\pi n/4).\;}
+\]
+(Indeed $j\times$\,(even real) is conjugate antisymmetric, and so is an odd real sequence.)
+
+\Prob{2.22\quad Products of conjugate-symmetric / antisymmetric sequences}
+
+Given $x[n]=x^*[-n]$ (conjugate symmetric) and $y[n]=-y^*[-n]$ (conjugate antisymmetric).
+
+\textbf{(a)} $g[n]=x[n]x[n]$:
+$g^*[-n]=\bigl(x^*[-n]\bigr)^2=\bigl(x[n]\bigr)^2=g[n]$.
+$\Rightarrow$ \boxed{\text{conjugate symmetric}}
+
+\textbf{(b)} $u[n]=x[n]y[n]$:
+$u^*[-n]=x^*[-n]\,y^*[-n]=x[n]\cdot\bigl(-y[n]\bigr)=-u[n]$.
+$\Rightarrow$ \boxed{\text{conjugate antisymmetric}}
+
+\textbf{(c)} $v[n]=y[n]y[n]$:
+$v^*[-n]=\bigl(y^*[-n]\bigr)^2=\bigl(-y[n]\bigr)^2=v[n]$.
+$\Rightarrow$ \boxed{\text{conjugate symmetric}}
+
+The pattern is the familiar parity rule:
+\[
+\text{sym}\times\text{sym}=\text{sym},\qquad
+\text{sym}\times\text{antisym}=\text{antisym},\qquad
+\text{antisym}\times\text{antisym}=\text{sym}.
+\]
+
+\Prob{2.23\quad Is an absolutely summable sequence bounded?}
+
+\textbf{Yes.} Suppose $\sum_{n=-\infty}^{\infty}|x[n]|=S<\infty$. For \emph{any} particular
+index $n_0$, the single term $|x[n_0]|$ is one of the nonnegative terms of the sum, so
+\[
+|x[n_0]|\le\sum_{n}|x[n]|=S<\infty\qquad\text{for every }n_0 .
+\]
+Thus $|x[n]|\le S$ for all $n$: the sequence is bounded (indeed by its own $L_1$ norm).
+
+The converse is \textbf{false}: $x[n]=\mu[n]$ is bounded by 1 but
+$\sum_n|\mu[n]|=\infty$. So $\{$absolutely summable$\}\subsetneq\{$bounded$\}$.
+(A further consequence: absolute summability also forces $x[n]\to 0$ as $|n|\to\infty$.)
+
+\Prob{2.24\quad Recovering a causal sequence from its symmetric parts}
+
+\textbf{(a)} Let $x[n]$ be real and causal, $x[n]=0$ for $n<0$. Then
+\[
+x_{\mathrm{ev}}[n]=\tfrac12\bigl(x[n]+x[-n]\bigr)=
+\begin{cases}
+\tfrac12 x[n], & n>0,\\
+x[0], & n=0,\\
+\tfrac12 x[-n], & n<0,
+\end{cases}
+\qquad
+x_{\mathrm{od}}[n]=
+\begin{cases}
+\tfrac12 x[n], & n>0,\\
+0, & n=0,\\
+-\tfrac12 x[-n], & n<0 .
+\end{cases}
+\]
+From the even part, \emph{both} the $n>0$ samples and $x[0]$ are available:
+\[
+\boxed{\;x[n]=2\,x_{\mathrm{ev}}[n]\,\mu[n-1]+x_{\mathrm{ev}}[0]\,\delta[n]\quad\text{for all }n\ge 0 .\;}
+\]
+From the odd part only $n>0$ can be recovered, because $x_{\mathrm{od}}[0]=0$ carries no
+information about $x[0]$:
+\[
+\boxed{\;x[n]=2\,x_{\mathrm{od}}[n]\quad\text{for }n>0,\qquad x[0]\ \text{is lost.}\;}
+\]
+
+\textbf{(b)} Let $y[n]$ be complex and causal. For $n>0$,
+\[
+y_{\mathrm{cs}}[n]=\tfrac12 y[n],\qquad y_{\mathrm{ca}}[n]=\tfrac12 y[n],
+\]
+so in both cases $y[n]=2y_{\mathrm{cs}}[n]=2y_{\mathrm{ca}}[n]$ for $n>0$. The whole question
+is what happens at $n=0$:
+\[
+y_{\mathrm{cs}}[0]=\tfrac12\bigl(y[0]+y^*[0]\bigr)=\operatorname{Re}\{y[0]\},\qquad
+y_{\mathrm{ca}}[0]=\tfrac12\bigl(y[0]-y^*[0]\bigr)=j\operatorname{Im}\{y[0]\}.
+\]
+Therefore:
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item From $y_{\mathrm{ca}}[n]$ one recovers $y[n]$ for $n>0$ and only
+      $\operatorname{Im}\{y[0]\}$. \textbf{$y[n]$ cannot be fully recovered} --- the real part
+      of $y[0]$ is lost.
+\item From $y_{\mathrm{cs}}[n]$ one recovers $y[n]$ for $n>0$ and only
+      $\operatorname{Re}\{y[0]\}$. \textbf{$y[n]$ cannot be fully recovered} either --- the
+      imaginary part of $y[0]$ is lost.
+\end{itemize}
+Full recovery is possible only in the special cases $\operatorname{Re}\{y[0]\}=0$
+(then $y_{\mathrm{ca}}$ suffices) or $\operatorname{Im}\{y[0]\}=0$ (then $y_{\mathrm{cs}}$
+suffices). This is the complex analogue of part~(a).
+
+\Prob{2.25\quad The $N$-periodic extension of an absolutely summable sequence is $N$-periodic}
+
+Let $\displaystyle \tilde{y}[n]=\sum_{k=-\infty}^{\infty}x[n+kN]$ with $\sum_n|x[n]|<\infty$.
+
+\emph{Convergence.} For each $n$ the terms $x[n+kN]$, $k\in\mathbb{Z}$, are distinct samples of
+$x$, so
+\[
+\sum_{k}\bigl|x[n+kN]\bigr|\;\le\;\sum_{m}|x[m]|<\infty,
+\]
+i.e.\ the defining series converges absolutely and $\tilde y[n]$ is well defined and bounded.
+
+\emph{Periodicity.} Replacing $n$ by $n+N$ and re-indexing with $m=k+1$,
+\[
+\tilde{y}[n+N]=\sum_{k=-\infty}^{\infty}x[n+N+kN]
+             =\sum_{k=-\infty}^{\infty}x\bigl[n+(k+1)N\bigr]
+             =\sum_{m=-\infty}^{\infty}x[n+mN]=\tilde{y}[n].
+\]
+The re-indexing is legitimate precisely because the sum converges absolutely. Hence
+\[
+\boxed{\;\tilde{y}[n+N]=\tilde{y}[n]\ \ \text{for all }n:\ \tilde{y}[n]\ \text{is periodic with period }N.\;}
+\]
+
+\Prob{2.26\quad Verify $\displaystyle \mu[n]=\sum_{m=0}^{\infty}\delta[n-m]=\sum_{k=-\infty}^{n}\delta[k]$}
+
+\emph{First form.} $\delta[n-m]=1$ exactly when $m=n$ and is $0$ otherwise. In
+$\sum_{m=0}^{\infty}\delta[n-m]$ the index runs over $m\ge 0$, so
+\begin{itemize}[leftmargin=1.4em,itemsep=0pt]
+\item if $n\ge 0$, the single term $m=n$ lies in the range and contributes 1, all others 0
+      $\Rightarrow$ the sum is $1$;
+\item if $n<0$, no admissible $m\ge0$ equals $n$ $\Rightarrow$ the sum is $0$.
+\end{itemize}
+That is exactly $\mu[n]$.
+
+\emph{Second form.} Substituting $k=n-m$ (so $m\ge0 \Leftrightarrow k\le n$) converts the first
+sum into $\sum_{k=-\infty}^{n}\delta[k]$. Directly: this sum contains the term $k=0$ if and
+only if $n\ge0$, giving $1$ for $n\ge0$ and $0$ for $n<0$, i.e.\ $\mu[n]$ again.
+
+\emph{Consistency with Eq.\ (2.47b).} Differencing,
+$\mu[n]-\mu[n-1]=\sum_{k\le n}\delta[k]-\sum_{k\le n-1}\delta[k]=\delta[n]$. \checkmark
+
+\Prob{2.27\quad Even and odd parts of four real sequences}
+
+Throughout, $x_{\mathrm{ev}}[n]=\tfrac12(x[n]+x[-n])$, $x_{\mathrm{od}}[n]=\tfrac12(x[n]-x[-n])$.
+
+\textbf{(a)} $x_1[n]=\mu[n-3]$ ($=1$ for $n\ge 3$). Then $x_1[-n]=\mu[-n-3]$ ($=1$ for
+$n\le -3$). The two supports are disjoint, so
+\[
+\boxed{\;
+x_{1,\mathrm{ev}}[n]=\tfrac12\bigl(\mu[n-3]+\mu[-n-3]\bigr)=
+\begin{cases}\tfrac12,&|n|\ge 3\\ 0,&|n|\le 2\end{cases}
+\qquad
+x_{1,\mathrm{od}}[n]=
+\begin{cases}\ \ \tfrac12,& n\ge 3\\ 0,&|n|\le 2\\ -\tfrac12,& n\le -3 .\end{cases}\;}
+\]
+
+\textbf{(b)} $x_2[n]=\alpha^{n}\mu[n-1]$ (support $n\ge1$); $x_2[-n]=\alpha^{-n}\mu[-n-1]$
+(support $n\le-1$). Disjoint supports again, and $x_2[0]=0$:
+\[
+\boxed{\;
+x_{2,\mathrm{ev}}[n]=\begin{cases}\tfrac12\alpha^{\,n},& n\ge1\\ 0,& n=0\\ \tfrac12\alpha^{-n},& n\le-1\end{cases}
+=\tfrac12\alpha^{|n|}\bigl(1-\delta[n]\bigr),
+\qquad
+x_{2,\mathrm{od}}[n]=\begin{cases}\ \ \tfrac12\alpha^{\,n},& n\ge1\\ 0,& n=0\\ -\tfrac12\alpha^{-n},& n\le-1 .\end{cases}\;}
+\]
+
+\textbf{(c)} $x_3[n]=n\alpha^{n}\mu[n+1]$, which is nonzero for $n\ge -1$, with
+$x_3[-1]=-\alpha^{-1}$, $x_3[0]=0$, $x_3[n]=n\alpha^n$ for $n\ge1$.
+Its reversal is $x_3[-n]=-n\alpha^{-n}\mu[1-n]$, nonzero for $n\le 1$. The supports
+\emph{overlap} on $n\in\{-1,0,1\}$, so treat that window separately:
+\[
+\boxed{
+\begin{aligned}
+x_{3,\mathrm{ev}}[n]&=\tfrac12\bigl(n\alpha^{n}\mu[n+1]-n\alpha^{-n}\mu[1-n]\bigr)
+=\begin{cases}
+\tfrac12 n\alpha^{n}, & n\ge 2,\\[2pt]
+\tfrac12(\alpha-\alpha^{-1}), & n=\pm 1,\\[2pt]
+0, & n=0,\\[2pt]
+-\tfrac12 n\alpha^{-n}, & n\le -2,
+\end{cases}\\[6pt]
+x_{3,\mathrm{od}}[n]&=\tfrac12\bigl(n\alpha^{n}\mu[n+1]+n\alpha^{-n}\mu[1-n]\bigr)
+=\begin{cases}
+\tfrac12 n\alpha^{n}, & n\ge 2,\\[2pt]
+\pm\tfrac12(\alpha+\alpha^{-1}), & n=\pm1,\\[2pt]
+0, & n=0,\\[2pt]
+\tfrac12 n\alpha^{-n}, & n\le -2 .
+\end{cases}
+\end{aligned}}
+\]
+(Check: $x_{3,\mathrm{ev}}[1]+x_{3,\mathrm{od}}[1]=\tfrac12(\alpha-\alpha^{-1})+\tfrac12(\alpha+\alpha^{-1})=\alpha=x_3[1]$ \checkmark, and
+$x_{3,\mathrm{ev}}[-1]+x_{3,\mathrm{od}}[-1]=\tfrac12(\alpha-\alpha^{-1})-\tfrac12(\alpha+\alpha^{-1})=-\alpha^{-1}=x_3[-1]$ \checkmark.)
+
+\textbf{(d)} $x_4[n]=\alpha^{|n|}$ satisfies $x_4[-n]=x_4[n]$: it is already even.
+\[
+\boxed{\;x_{4,\mathrm{ev}}[n]=\alpha^{|n|},\qquad x_{4,\mathrm{od}}[n]=0 .\;}
+\]
+
+\Prob{2.28\quad Which sequences are bounded?}
+
+A sequence is bounded if $|x[n]|\le B<\infty$ for all $n$.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.45}
+\begin{tabular}{@{}clll@{}}
+\toprule
+& sequence & bounded? & reason / bound\\
+\midrule
+(a) & $x[n]=A\alpha^{|n|},\ |\alpha|<1$ & \textbf{yes} & $|x[n]|=|A|\,|\alpha|^{|n|}\le |A|$\\
+(b) & $h[n]=\dfrac{1}{2^{n}}\mu[n]$ & \textbf{yes} & $0<2^{-n}\le 1$ for $n\ge 0$; bound $1$\\
+(c) & $y[n]=\alpha^{n}\mu[n-1],\ |\alpha|<1$ & \textbf{yes} & $|y[n]|\le|\alpha|$ for $n\ge1$\\
+(d) & $g[n]=4n\,e^{j\omega_o n}\mu[n]$ & \textbf{no} & $|g[n]|=4n\to\infty$\\
+(e) & $w[n]=3\cos\bigl((\omega_o)^{2}n\bigr)$ & \textbf{yes} & $|w[n]|\le 3$ for any real $\omega_o$\\
+(f) & $v[n]=\Bigl(1-\dfrac{1}{n^{2}}\Bigr)\mu[n-1]$ & \textbf{yes} & $0\le v[n]<1$ for $n\ge1$ ($v[1]=0$, $v[n]\uparrow1$)\\
+\bottomrule
+\end{tabular}
+\end{center}
+Only (d) is unbounded: the linear factor $n$ overwhelms the unit-modulus exponential.
+
+\Prob{2.29\quad $x[n]=\dfrac{(-1)^{n+1}}{n}\mu[n-1]$ is not absolutely summable}
+
+The absolute sum is the harmonic series,
+\[
+\sum_{n=-\infty}^{\infty}|x[n]|=\sum_{n=1}^{\infty}\frac{1}{n}=\infty ,
+\]
+which diverges (e.g.\ by grouping $\tfrac12+(\tfrac13+\tfrac14)+(\tfrac15+\cdots+\tfrac18)+\cdots$,
+each bracket exceeding $\tfrac12$). Hence $x[n]$ is \emph{not} absolutely summable.
+
+Nevertheless the (non-absolute) sum converges: by the alternating series test the partial sums
+of $\sum(-1)^{n+1}/n$ are monotone-bracketing with terms $\to0$, and the value follows from
+$\ln(1+t)=\sum_{n\ge1}(-1)^{n+1}t^{n}/n$ at $t=1$:
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}=\ln 2 .
+\]
+This is the standard example of a \emph{conditionally} convergent sequence: summable but not
+absolutely summable.
+
+\Prob{2.30\quad Absolute summability, $|\alpha|<1$}
+
+Write $\rho=|\alpha|<1$ and use the three standard sums
+\[
+\sum_{n=1}^{\infty}\rho^{n}=\frac{\rho}{1-\rho},\qquad
+\sum_{n=1}^{\infty}n\rho^{n}=\frac{\rho}{(1-\rho)^{2}},\qquad
+\sum_{n=1}^{\infty}n^{2}\rho^{n}=\frac{\rho(1+\rho)}{(1-\rho)^{3}} .
+\]
+(The last two follow from the first by applying $\rho\frac{d}{d\rho}$ once and twice.)
+
+\textbf{(a)} $x_1[n]=\alpha^{n}\mu[n-1]$:
+$\displaystyle\sum_{n}|x_1[n]|=\sum_{n=1}^{\infty}\rho^{n}=\frac{\rho}{1-\rho}<\infty$. \checkmark
+
+\textbf{(b)} $x_2[n]=n\alpha^{n}\mu[n-1]$:
+$\displaystyle\sum_{n}|x_2[n]|=\sum_{n=1}^{\infty}n\rho^{n}=\frac{\rho}{(1-\rho)^{2}}<\infty$. \checkmark
+
+\textbf{(c)} $x_3[n]=n^{2}\alpha^{n}\mu[n-1]$:
+$\displaystyle\sum_{n}|x_3[n]|=\sum_{n=1}^{\infty}n^{2}\rho^{n}=\frac{\rho(1+\rho)}{(1-\rho)^{3}}<\infty$. \checkmark
+
+All three are finite because a geometric decay $\rho^{n}$ beats any polynomial growth
+$n^{p}$; formally, the ratio test gives $\lim_{n\to\infty}\bigl|x[n+1]/x[n]\bigr|=\rho<1$ in
+each case.

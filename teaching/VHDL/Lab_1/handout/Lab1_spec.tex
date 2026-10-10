@@ -1,0 +1,196 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 1 --- Design Flow and the Transparent Latch}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Run the complete Quartus and Questa design flow without help, and build the first
+circuit in this course that can \emph{remember} something.
+
+By the end of this session you will be able to state, and defend, one sentence:
+
+\begin{quote}
+\emph{An equation whose output appears on its own right-hand side is memory.}
+\end{quote}
+
+\section*{2. Background: what makes a latch different}
+
+Every circuit in Lab 0 was \textbf{combinational}: the output depended only on the
+inputs present at that moment. A transparent latch is different. When its enable
+is high it behaves like a wire --- it is \emph{transparent}. When the enable goes
+low it \emph{holds} whatever value it had, and stops listening to its data input.
+
+That holding behaviour is memory, and in Boolean terms it shows up as the output
+appearing on both sides of its own equation.
+
+\subsection*{Specification --- Table T (transition table)}
+
+\begin{center}
+\begin{tabular}{clll@{\hskip 8pt}||@{\hskip 8pt}ll}
+\toprule
+\# & \code{Clr} & \code{En} & \code{D} & $Q^{+}$ & note \\
+\midrule
+0 & 1 & -- & -- & \textbf{0} & asynchronous clear, dominates everything \\
+1 & 0 & 0 & -- & \textbf{Q} & hold \quad$\leftarrow$\; \emph{the memory row} \\
+2 & 0 & 1 & 0 & \textbf{0} & transparent \\
+3 & 0 & 1 & 1 & \textbf{1} & transparent \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\code{--} means \emph{don't care}. \; $Q^{+}$ means \emph{the next value of Q}. \;
+A \textbf{Q} in the output column means \emph{hold the value you already had}.
+
+\subsection*{Equations}
+
+You must reproduce this derivation, in three lines, in your report:
+
+\begin{align*}
+\text{(1) canonical} \quad & Q^{+} = \overline{Clr}\cdot En\cdot D \;+\; \overline{Clr}\cdot\overline{En}\cdot Q\\
+\text{(2) factored} \quad & Q^{+} = \overline{Clr}\cdot\left( En\cdot D + \overline{En}\cdot Q \right) \qquad \text{[distributive law]}\\
+\text{(3) VHDL} \quad & \text{the \code{if} statement you are about to write}
+\end{align*}
+
+Look at the $Q$ on the right-hand side of line (1). Nothing you wrote in Lab 0 had
+that. It is the entire difference between combinational logic and memory.
+
+\textbf{Asynchronous} means \code{Clr} takes effect the instant it is asserted. It
+does not wait for \code{En} and it does not wait for a clock --- there is no clock
+in this circuit. That is why \code{Clr} is tested \emph{first}: in an
+\code{if\,/\,elsif} chain, the first true condition wins.
+
+\section*{3. Guided examples (we do these together)}
+
+\begin{description}[leftmargin=2.4em,style=nextline,itemsep=2pt]
+\item[Example 1 --- \code{majority3}] A circuit you already trust, from Lab 0. You
+will build its Quartus project \emph{by hand} and walk the entire flow. Never learn
+a tool and a circuit at the same time: when something breaks you will not know
+which one is wrong.
+\item[Example 2 --- \code{trans\_latch}] The transparent latch without the clear
+input, plus the testbench pattern used for the rest of the semester.
+\item[Example 3 --- \code{trans\_latch\_bad}] The same latch with one signal
+missing from its sensitivity list. It \emph{simulates} wrong and \emph{synthesises}
+right. Watch this one carefully --- it is the most expensive class of bug in HDL
+design, and it costs one missing word.
+\end{description}
+
+\section*{4. Assignment}
+
+Start from the files in \code{assignment/}. Open \code{Lab1.qpf} in Quartus.
+
+\begin{enumerate}[leftmargin=2em,itemsep=3pt]
+\item \textbf{\code{TransLatch}} --- complete the skeleton. A 1-bit transparent
+latch with asynchronous clear, implementing Table T exactly.
+
+\item \textbf{\code{TransLatch8}} --- the same behaviour, 8 bits wide. The control
+signals \code{Clr} and \code{En} stay \emph{one bit each} and are shared by all
+eight storage elements. Note the pattern: \emph{control signals are narrow, data
+paths are wide}. That is true for the rest of this course.
+
+\item \textbf{Testbench} --- complete \code{tb\_TransLatch.vhd}. It already
+compiles and runs as supplied; it simply does not check enough yet.
+\textbf{At least six checked vectors}, and they must include all of:
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item the \textbf{hold vector}: with \code{En\,=\,'0'}, change \code{D} and prove
+\code{Q} does \emph{not} follow. \emph{Without this vector you have not tested that
+your design is memory at all --- a plain piece of wire passes every other test you
+could write.}
+\item clear asserted while the latch is transparent;
+\item clear asserted while the latch is holding;
+\item at least one \code{TransLatch8} vector using a pattern that is neither
+all-zeros nor all-ones (for example \code{x"A5"}), so that a stuck bit is visible.
+\end{itemize}
+\end{enumerate}
+
+\textbf{Note on the two sensitivity lists in the skeletons.} They are incomplete on
+purpose. The files compile as given, and simulate incorrectly --- exactly like
+Example 3. Fixing them is part of the assignment.
+
+\section*{5. Evidence to collect (E1, E2, E7)}
+
+See the \emph{Reading Your Results} handout for how to interpret each one.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& Source & What it must show \\
+\midrule
+E1 & Flow Summary + Messages & 0 errors; every warning sorted and explained \\
+E2 & RTL Viewer & a latch, and nothing you did not intend \\
+E7 & Questa waveform + transcript & the hold interval, and 0 assertion failures \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{6. Report --- \code{lab01.tex} in your Overleaf project}
+
+All seven sections. Specifically for this lab:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Specification:} Table T, reproduced, with numbered rows.
+\item \textbf{Design:} the three-line derivation, with the law named on line (2).
+\item \textbf{Verification:} your vector table, and one sentence justifying why
+that set of vectors is sufficient.
+\item \textbf{Results:} RTL Viewer figure and the waveform, with the hold interval
+annotated. \emph{Every figure needs one sentence saying what it proves.} A figure
+with no sentence earns zero.
+\item \textbf{Discussion:} one bug you hit and how you found it. This section is
+required. ``Everything worked first try'' scores zero.
+\end{itemize}
+
+\section*{7. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Testbench and test vectors, coverage justified & 20 \\
+Simulation results match the specification & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{8. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Incomplete sensitivity list.} Simulates wrong, synthesises right.
+\item \textbf{\code{=} versus \code{<=}.} \code{if En = '1'} is a comparison;
+\code{Q <= D} is a signal assignment. Same symbols, different jobs.
+\item \textbf{Expecting edge behaviour.} A latch is level-sensitive. It has no
+clock and no edge. That arrives next week.
+\item \textbf{Clearing a vector with \code{'0'}.} Use \code{(others => '0')}.
+\item \textbf{Project path.} Short, local, no spaces. Not in OneDrive.
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small This latch is the storage primitive for the entire semester. Lab 2 builds a
+flip-flop from two of them; Lab 6 builds 1024. Keep your files.}
+
+\end{document}

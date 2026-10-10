@@ -1,0 +1,99 @@
+% =============================================================================
+%  Lab 10 - Instruction Decoder I
+% =============================================================================
+
+\chapter{Lab 10 --- Instruction Decoder I}
+
+\section{Objective}
+% Two or three sentences, your own words.
+
+\section{Specification}
+
+\subsection*{Your four rows of the control table}
+% Only the DIFFERENCES from CTRL_DEFAULT. Write "--" where the default stands.
+
+\begin{table}[htbp]
+\centering
+\caption{Control table, part 1. Differences from \texttt{CTRL\_DEFAULT} only.}
+\label{tab:lab10-ctrl}
+\small
+\begin{tabular}{llllllll}
+\toprule
+instr & opcode/func & \texttt{ALU\_func} & \texttt{ALU\_Asel} & \texttt{ALU\_Ssel} & \texttt{IR\_Xsel} & \texttt{RF\_strb} & \texttt{RF\_Wsel} \\
+\midrule
+\texttt{ADD}  & \texttt{000000}/\texttt{100000} & & & & & & \\
+\texttt{SLL}  & \texttt{000000}/\texttt{000000} & & & & & & \\
+\texttt{ADDI} & \texttt{001000} & & & & & & \\
+\texttt{LUI}  & \texttt{001111} & & & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{The safe default}
+% State the values CTRL_DEFAULT gives to RF_strb, DM_en, DM_strb, RF_oe and
+% NIAG_sel, and say in one sentence why those particular values are the SAFE
+% ones for an instruction the decoder does not recognise.
+
+\section{Design}
+% Answer all three:
+%   (a) Why must CTRL_DEFAULT be assigned BEFORE the case statement? What
+%       exactly does the synthesiser build if you do not, and what would the
+%       symptom be in Lab 12?
+%   (b) Why must the SPECIAL opcode be decoded on BOTH the opcode and the func
+%       field? What happens if you check only the opcode?
+%   (c) ADD and SLL leave IR_Xsel and IR_Xlsft at their defaults. Is that a
+%       mistake? Explain what a DON'T CARE is and why leaving them alone is
+%       correct here.
+
+\section{Implementation}
+
+\vhdlfile{code/lab10/Decoder.vhd}{\texttt{Decoder} --- instruction decoder, part 1}
+
+\section{Verification}
+% Vectors, then the coverage argument.
+%
+% A decoder's coverage argument is different again: the input space is the
+% instruction encoding, and the interesting subset is
+%     one representative per implemented instruction
+%   + one unimplemented opcode
+%   + one unimplemented func within SPECIAL
+%   + at least one SEQUENCE, to detect latches.
+% State that, and say why the sequence test is the one a single-instruction
+% testbench cannot make.
+
+\begin{table}[htbp]
+\centering
+\caption{Test vectors.}
+\label{tab:lab10-vectors}
+\begin{tabular}{cllp{5.4cm}}
+\toprule
+\# & instruction & encoding & what it proves \\
+\midrule
+1 & & & \\
+2 & & & \\
+3 & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Results}
+% Evidence: E1, E2, E4, E7.
+
+\figplaceholder{the RTL Viewer for \texttt{Decoder} --- combinational logic and
+NO storage elements}
+
+% E1: state the error and warning counts, and say EXPLICITLY that there is no
+%     inferred-latch warning.
+% E4: the register count. It MUST be zero. Say why any non-zero count would mean
+%     the design is wrong rather than merely expensive - and name the specific
+%     bug it would indicate.
+% E7: quote the transcript line showing every check passing, including the
+%     order-dependence test.
+
+\section{Discussion}
+% REQUIRED. One bug, how you found it, what it cost.
+%
+% Then answer this explicitly:
+%     You have now met "no assignment means hold the previous value" three
+%     times: Lab 1, Lab 3 and Lab 10. In which of those did you WANT that
+%     behaviour, and what makes this one the most dangerous of the three?

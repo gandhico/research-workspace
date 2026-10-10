@@ -1,0 +1,227 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 2 --- Master--Slave Flip-Flop and the N-Bit Register}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Build an edge-triggered flip-flop out of two level-sensitive latches, and see
+where edge behaviour actually comes from. Then parameterise a register so that
+one entity serves every width the CPU needs.
+
+\begin{quote}
+\emph{Two latches with opposite enables make an edge.}
+\end{quote}
+
+\section*{2. Background}
+
+Last week's latch was \emph{level}-sensitive: while \code{En} was high it behaved
+like a wire. That is a problem for a processor, because a value that changes
+whenever its input changes cannot be used to hold state across a clock cycle ---
+it would race around the datapath uncontrolled.
+
+An \emph{edge}-triggered flip-flop fixes this. But nobody designs an ``edge''.
+It falls out of two latches wired in opposition:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& master (\code{En = not Clk}) & slave (\code{En = Clk}) \\
+\midrule
+\code{Clk = '0'} & transparent, follows \code{D} & holding \\
+\code{Clk = '1'} & holding & transparent, copies the master \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+While the clock is low the master tracks \code{D}. The instant the clock rises,
+the master freezes on whatever \code{D} was, and the slave opens and copies it.
+So the output can only ever change at the rising edge. That is what
+``edge-triggered'' means --- derived, not asserted.
+
+\subsection*{Equations}
+
+Each latch is last week's equation with a different enable:
+
+\begin{align*}
+\text{master} \quad & Q_m^{+} = \overline{Clr}\cdot\left( \overline{Clk}\cdot D + Clk\cdot Q_m \right)\\
+\text{slave}  \quad & Q^{+}   = \overline{Clr}\cdot\left( Clk\cdot Q_m + \overline{Clk}\cdot Q \right)
+\end{align*}
+
+\subsection*{Specification --- Table T, the register}
+
+\begin{center}
+\begin{tabular}{clll@{\hskip 8pt}||@{\hskip 8pt}ll}
+\toprule
+\# & \code{Rst} & \code{Ld} & \code{Clk} & $Q^{+}$ & note \\
+\midrule
+0 & 1 & -- & -- & \textbf{0} & asynchronous reset, dominates \\
+1 & 0 & -- & not $\uparrow$ & \textbf{Q} & hold between edges \\
+2 & 0 & 0 & $\uparrow$ & \textbf{Q} & edge arrives, but not loading \\
+3 & 0 & 1 & $\uparrow$ & \textbf{D} & load \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{align*}
+\text{(1) canonical} \quad & Q_i^{+} = \overline{Rst}\cdot\left( Ld\cdot D_i + \overline{Ld}\cdot Q_i \right)\\
+\text{(2) observation} \quad & \text{identical to Lab 1 with } En \to Ld,\; Clr \to Rst
+  \quad \text{[same circuit, new names]}\\
+\text{(3) VHDL} \quad & \text{nested \code{if}, see \S4}
+\end{align*}
+
+\section*{3. Guided examples}
+
+\begin{description}[leftmargin=2.4em,style=nextline,itemsep=2pt]
+\item[Example 1 --- \code{ms\_flipflop}] The flip-flop built structurally from
+two Lab 1 latches. Watch \code{D} toggle three times inside one clock period
+while \code{Q} moves once.
+\item[Example 2 --- \code{dff}] The same flip-flop written behaviourally as
+\code{if rising\_edge(Clk)}. One testbench drives both and asserts they agree.
+Identical in the waveform, completely different in the RTL Viewer.
+\item[Example 3 --- \code{reg\_n}] One register entity instantiated at 4 bits and
+at 12 bits, from a single \code{generic}.
+\end{description}
+
+\section*{4. Assignment}
+
+\textbf{Step 1, before anything else:} overwrite \code{TransLatch.vhd} in the
+\code{assignment} folder with \emph{your own completed version from Lab 1}. The
+copy shipped in the project is the empty Lab 1 skeleton --- it is there only so
+the project compiles when you open it. This is the first week your work
+accumulates; by Lab 12 you will instantiate eleven of your own components at once.
+
+\begin{enumerate}[leftmargin=2em,itemsep=3pt]
+\item \textbf{\code{MSFlipFlop}} --- structural, from two \code{TransLatch}
+instances. Positive-edge triggered, with an asynchronous clear that reaches
+\emph{both} latches.
+
+\emph{Why both:} clear only the slave and the master still holds the old value,
+which it pushes back in at the very next rising edge --- the clear appears to
+undo itself one cycle later. Worth trying deliberately once it works.
+
+\item \textbf{\code{RegN}} --- behavioural, with a \code{generic} width
+(default 32), a load enable and an asynchronous reset. Structure:
+
+\begin{quote}\ttfamily\small
+if Rst = '1' then \dots\\
+elsif rising\_edge(Clk) then\\
+\hspace*{1em}if Ld = '1' then \dots\ end if;\\
+end if;
+\end{quote}
+
+Put \code{Ld} in a \emph{nested} \code{if}, not as \code{and Ld = '1'} on the
+\code{elsif}. Both simulate identically; the nested form is the idiom every
+synthesiser recognises, and it keeps the edge test as the only condition on the
+\code{elsif}.
+
+\item \textbf{Testbench} --- complete \code{tb\_Lab2.vhd}. \textbf{At least six
+checked vectors}, and they must include all of:
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item the \textbf{edge vector}: toggle \code{D} several times \emph{between} two
+rising edges and prove \code{Q} moves only once. \emph{Without this you have not
+shown the design is edge-triggered rather than transparent.}
+\item asynchronous reset asserted \textbf{between} edges, not on one. If your
+reset only acts when the clock happens to move, it is not asynchronous.
+\item an edge with \code{Ld = '0'}, proving the register holds;
+\item a 32-bit pattern that is neither all-zeros nor all-ones.
+\end{itemize}
+\end{enumerate}
+
+\textbf{Note on the sensitivity list in \code{RegN}.} As supplied it is
+incomplete, and the file still compiles. A clocked process does \emph{not} follow
+last week's rule: it needs the clock and any \emph{asynchronous} control, and
+nothing else. Work out which signals belong there and justify it in your report.
+
+\section*{5. Evidence to collect (E1, E2, E7)}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& Source & What it must show \\
+\midrule
+E1 & Flow Summary + Messages & 0 errors; warnings sorted and explained \\
+E2 & RTL Viewer & \emph{both} versions: two latches vs one flip-flop \\
+E7 & Questa waveform + transcript & \code{D} toggling, \code{Q} moving once \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The top-level entity is \code{RegN}, so the Fitter reports the register count for
+a 32-bit register. \textbf{It must be 32.} A different number means you have
+inferred something you did not intend --- that count is a correctness check, not
+just a cost.
+
+\section*{6. Report --- \code{lab02.tex}}
+
+All seven sections. Specifically:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Specification:} Table T, plus both latch equations.
+\item \textbf{Design:} why the structural version exists at all, given that the
+behavioural one is what you would actually ship. Answer the sensitivity-list
+question here.
+\item \textbf{Results:} the waveform showing \code{D} toggling three times in one
+period while \code{Q} moves once, annotated. Both RTL Viewer pictures, side by
+side, with one sentence on why they differ.
+\item \textbf{Discussion:} required. One bug, how you found it.
+\end{itemize}
+
+\section*{7. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Testbench and test vectors, coverage justified & 20 \\
+Simulation results match the specification & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{8. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Clock process with no \code{wait}.} The simulation hangs at time
+zero and looks frozen. It is not frozen; it is looping.
+\item \textbf{Changing \code{D} exactly on a rising edge.} That is a setup-time
+violation, and the result is meaningless. Change stimulus after falling edges.
+\item \textbf{\code{generic map} and \code{port map} order.} \code{generic map}
+comes first, and there is \emph{no} semicolon between the two.
+\item \textbf{Forgetting \code{generic map} entirely.} You silently get the
+default width, and the width mismatch error points somewhere else.
+\item \textbf{Clearing only the slave.} The clear undoes itself one cycle later.
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small \code{RegN} is the most reused component in this course. Lab 6 makes 32 of
+them into the register file; Lab 7 makes one of them the program counter; Lab 12
+puts both inside your CPU. Write it carefully and keep it.}
+
+\end{document}

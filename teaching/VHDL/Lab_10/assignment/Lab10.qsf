@@ -1,0 +1,45 @@
+# ------------------------------------------------------------------------------
+# EE 362 - Computer Organization Laboratory
+# Lab 10 - Quartus project settings (starter)
+#
+# Top level is Decoder. It is pure combinational logic, so expect ZERO
+# registers.
+#
+# *** IF THE FITTER REPORTS ANY REGISTERS OR ANY LATCHES, YOU HAVE THE BUG
+#     FROM EXAMPLE 3. *** Go back and assign CTRL_DEFAULT before the case.
+# The Messages panel will also say "inferred latch" - read it.
+# ------------------------------------------------------------------------------
+
+set_global_assignment -name FAMILY "Cyclone V"
+set_global_assignment -name DEVICE 5CSEMA4U23C6
+set_global_assignment -name TOP_LEVEL_ENTITY Decoder
+set_global_assignment -name LAST_QUARTUS_VERSION "25.1std.0 Lite Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+
+# --- Device operating conditions (defaults, do not change) --------------------
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+
+# --- Simulation: Questa, VHDL -------------------------------------------------
+# This is what makes Tools > Run Simulation Tool > RTL Simulation work.
+set_global_assignment -name EDA_SIMULATION_TOOL "Questa Altera FPGA (VHDL)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+
+# Run the testbench automatically from Quartus.
+set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH tb_Lab10 -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_NAME tb_Lab10 -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id tb_Lab10
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tb_Lab10 -section_id tb_Lab10
+set_global_assignment -name EDA_TEST_BENCH_FILE tb_Lab10.vhd -section_id tb_Lab10
+
+# --- Design files -------------------------------------------------------------
+set_global_assignment -name VHDL_FILE CPU_Pkg.vhd
+set_global_assignment -name VHDL_FILE Decoder.vhd
+set_global_assignment -name VHDL_FILE tb_Lab10.vhd
+
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

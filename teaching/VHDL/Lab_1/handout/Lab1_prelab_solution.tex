@@ -1,0 +1,199 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 1: Solution}\\[2pt]
+{\large Design Flow and the Transparent Latch}\\[4pt]
+Fall 2026 \quad$\cdot$\quad 5 points \quad$\cdot$\quad TA marking guide
+\end{center}
+\hr
+
+{\small Marking: Q1 = 2 points, Q2 = 1 point, Q3 = 2 points. Mark Q3 first --- it
+predicts who will finish the lab.}
+
+\vspace{4pt}\hr
+
+\section*{Question 1 --- The table and the equation (2 points)}
+
+\subsection*{The table}
+
+\begin{center}
+\begin{tabular}{c|ccc|c|l}
+\toprule
+\# & \code{Clr} & \code{En} & \code{D} & $Q^{+}$ & note \\
+\midrule
+0 & 1 & -- & -- & \textbf{0} & asynchronous clear, dominates everything \\
+1 & 0 & 0 & -- & $\mathbf{Q}$ & \textbf{hold} --- the memory row \\
+2 & 0 & 1 & 0 & \textbf{0} & transparent \\
+3 & 0 & 1 & 1 & \textbf{1} & transparent \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Full credit needs \emph{Q} in row 1}, not \code{0}, not \code{D}, not a
+dash. Writing \code{0} there is the single most common mistake and it is worth
+stopping on: it turns the latch into an AND gate.
+
+\subsection*{The equation}
+
+\[
+Q^{+} = \overline{\code{Clr}}\cdot\code{En}\cdot D \;+\; \overline{\code{Clr}}\cdot\overline{\code{En}}\cdot Q
+\qquad\text{or factored}\qquad
+Q^{+} = \overline{\code{Clr}}\cdot\left( \code{En}\cdot D + \overline{\code{En}}\cdot Q \right)
+\]
+
+Accept either form. If they factored, they should be able to name the
+\textbf{distributive law}.
+
+\subsection*{The one sentence}
+
+\begin{quote}
+\textbf{Model answer:} The term $\overline{\code{En}}\cdot Q$. It contains
+\code{Q}, the circuit's own output, so the next value depends on the present
+value. A circuit whose output feeds back into its own equation must store that
+output, and that is memory.
+\end{quote}
+
+\textbf{Full credit} requires naming the $\overline{\code{En}}\cdot Q$ term
+\emph{and} saying that $Q$ appearing on the right-hand side is what makes it
+memory. \textbf{Half credit:} ``the hold row'' --- correct but it does not connect
+the table to the equation. \textbf{No credit:} naming $\code{En}\cdot D$.
+
+\vspace{4pt}\hr
+
+\section*{Question 2 --- The two entities (1 point)}
+
+\begin{lstlisting}
+entity TransLatch is
+    port (
+        D   : in  std_logic;
+        En  : in  std_logic;
+        Clr : in  std_logic;
+        Q   : out std_logic
+    );
+end entity TransLatch;
+
+entity TransLatch8 is
+    port (
+        D   : in  std_logic_vector(7 downto 0);   -- widened
+        En  : in  std_logic;                      -- still 1 bit
+        Clr : in  std_logic;                      -- still 1 bit
+        Q   : out std_logic_vector(7 downto 0)    -- widened
+    );
+end entity TransLatch8;
+\end{lstlisting}
+
+\subsection*{``Which ports change width?''}
+
+\begin{quote}
+\textbf{Model answer:} Only the data ports \code{D} and \code{Q}. The control
+ports \code{En} and \code{Clr} stay one bit wide, because one enable and one clear
+are shared by all eight storage elements.
+\end{quote}
+
+\textbf{This is the whole point of the question.} A student who widens \code{En}
+or \code{Clr} to 8 bits has not yet seen the pattern that runs through the entire
+course: \textbf{control signals are narrow, datapaths are wide.} It costs 30
+seconds to correct now and saves confusion in Lab 5 and Lab 12.
+
+Also check: \code{7 downto 0}, not \code{0 to 7} and not \code{8 downto 0}.
+Directions \code{in}/\code{out} correct. No semicolon after the last port.
+
+\vspace{4pt}\hr
+
+\section*{Question 3 --- The test plan (2 points)}
+
+\subsection*{Model answer}
+
+\begin{center}
+\small
+\begin{tabular}{c>{\raggedright\arraybackslash}p{4.8cm}>{\raggedright\arraybackslash}p{8.0cm}}
+\toprule
+\# & Inputs (\code{Clr}, \code{En}, \code{D}) & What it proves \\
+\midrule
+1 & 1, --, 1 & Clear dominates even with \code{D} high (row 0). \\
+2 & 0, 1, 1 & Transparent: \code{Q} follows a 1 (row 3). \\
+3 & 0, 1, 0 & Transparent: \code{Q} follows a change of \code{D} (row 2). \\
+4 & load 1, then \code{En}$\to$0 & The value is captured as the latch closes. \\
+5 & 0, 0, 0 \textbf{after holding a 1} & \textbf{The hold vector.} \code{D} changed underneath a closed latch and \code{Q} did not move (row 1). \\
+6 & 1, 0, -- (clear while closed) & The clear is asynchronous: it does not need \code{En}. \\
+7 & 0, 0, 0 \textbf{after the clear} & Releasing \code{Clr} does not restore the old value. \\
+8 & 1, 1, 1 (clear while transparent) & Clear beats transparency --- row 0 outranks row 3. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Six vectors are enough for full credit. \textbf{Vector 5 must be present in some
+form}; vectors 6 and 8 together (clear from both states) are what row 0's
+don't-cares actually claim.
+
+\subsection*{The sufficiency argument}
+
+\begin{quote}
+\textbf{Model answer:} Every row of the table is exercised, and the hold row is
+tested by \emph{changing} \code{D} while the latch is closed rather than leaving
+it alone --- a design with no memory at all would pass a passive check. The clear
+is asserted from both the holding state and the transparent state, because the
+don't-cares in row 0 claim it dominates both.
+\end{quote}
+
+\textbf{The strongest answer}, worth pointing out to whoever writes it:
+\begin{quote}
+Vectors 5 and 7 apply \textbf{identical inputs} (\code{Clr}=0, \code{En}=0,
+\code{D}=0) and expect \emph{different} outputs: 1 in vector 5, 0 in vector 7. No
+combinational circuit can produce two different outputs from the same inputs, so
+that pair alone proves the design has memory.
+\end{quote}
+
+\subsection*{``What would a wrong implementation have to do to pass and still be wrong?''}
+
+Two answers deserve full credit:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+\item \textbf{A plain wire} (\code{Q <= D;}) passes every vector where the latch
+happens to be open. It fails only the hold vector.
+\item \textbf{An AND gate} ($Q = \overline{\code{Clr}}\cdot\code{En}\cdot D$,
+which is what you get by writing \code{else Q <= '0';}) also passes everything
+except the checks made while the latch is closed and holding a 1.
+\end{itemize}
+
+Measured against the reference testbench, that second design fails exactly two of
+ten checks --- the capture-then-close check and the hold check. \textbf{A design
+that passes eight of ten checks and fails only the ones that define the component
+is the normal outcome}, which is why the plan must name the hold vector
+explicitly.
+
+\vspace{6pt}
+\hr
+{\small \textbf{At the bench:} if a student's Q3 has no vector that changes
+\code{D} while \code{En} is low, hand it back before they start building. They
+will otherwise write a testbench that a piece of wire passes.}
+
+\end{document}

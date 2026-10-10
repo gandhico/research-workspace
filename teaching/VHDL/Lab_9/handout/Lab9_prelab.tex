@@ -1,0 +1,122 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 9}\\[2pt]
+{\large Memory: ROM and RAM}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points, about twenty
+minutes, on paper. Bring the instruction-format sheet.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- Disassemble the program}
+
+These are the first four words of the program your CPU runs in Lab 12. Assemble
+each from its bytes (big-endian), then decode it.
+
+\begin{center}
+\begin{tabular}{lll@{\hskip 6pt}||@{\hskip 6pt}l@{\hskip 10pt}l}
+\toprule
+addr & bytes & & 32-bit word & instruction \\
+\midrule
+\code{0x00} & \code{3C 01 00 0B} & & \rule{2.8cm}{0.4pt} & \rule{4cm}{0.4pt} \\[5pt]
+\code{0x08} & \code{20 21 FF FF} & & \rule{2.8cm}{0.4pt} & \rule{4cm}{0.4pt} \\[5pt]
+\code{0x14} & \code{08 00 00 02} & & \rule{2.8cm}{0.4pt} & \rule{4cm}{0.4pt} \\[5pt]
+\code{0x18} & \code{AC 02 00 00} & & \rule{2.8cm}{0.4pt} & \rule{4cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} Take the bytes at \code{0x08} and assemble them the \emph{other}
+way round (little-endian). What 32-bit word do you get, and what is its opcode
+field? Is that a valid instruction in this ISA?
+
+\answerbox{2.0cm}
+
+\textbf{(c)} In one sentence: why does a program compiled for one byte order
+crash on a machine with the other?
+
+\answerbox{1.4cm}
+
+\section*{Question 2 --- The bus}
+
+\textbf{(a)} Complete the RAM control table. \textbf{Careful: \code{rw = '1'} is
+READ.}
+
+\begin{center}
+\begin{tabular}{cccc@{\hskip 8pt}||@{\hskip 8pt}l@{\hskip 14pt}l}
+\toprule
+\# & \code{en} & \code{rw} & \code{Strb} & Data bus & memory \\
+\midrule
+0 & 0 & --- & --- & \rule{2.6cm}{0.4pt} & \rule{3.4cm}{0.4pt} \\[5pt]
+1 & 1 & 1 & --- & \rule{2.6cm}{0.4pt} & \rule{3.4cm}{0.4pt} \\[5pt]
+2 & 1 & 0 & 0 & \rule{2.6cm}{0.4pt} & \rule{3.4cm}{0.4pt} \\[5pt]
+3 & 1 & 0 & 1 & \rule{2.6cm}{0.4pt} & \rule{3.4cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} Write the two equations:
+
+\vspace{4pt}
+DataDrive $=$ \rule{6cm}{0.4pt} \hfill Write $=$ \rule{6cm}{0.4pt}
+\vspace{8pt}
+
+\textbf{(c)} During a store, the RAM must \emph{not} drive the data bus even
+though it is enabled. Who drives it instead, and what would happen if both did?
+
+\answerbox{2.0cm}
+
+\section*{Question 3 --- Test plan}
+
+\begin{center}
+\begin{tabular}{@{}c@{\hskip 8pt}p{5.0cm}@{\hskip 8pt}p{7.6cm}@{}}
+\toprule
+\# & what you do & what it proves \\
+\midrule
+1 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+2 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+3 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+4 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+5 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+6 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Then answer both:}
+
+\textbf{(a)} A classmate tests their memory only by storing \code{0xAABBBBAA}
+and reading it back. Why can that test not detect a byte-order error?
+
+\answerbox{1.6cm}
+
+\textbf{(b)} Your ROM has 512 bytes and the address input is 32 bits. What
+happens if someone reads address \code{0x000001FF}, and how will you handle it?
+
+\answerbox{2.0cm}
+
+\vfill
+{\small\emph{Question 3 is the one that matters.} It is the same question as
+Section 5 of your lab report.}
+
+\end{document}

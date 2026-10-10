@@ -1,0 +1,322 @@
+% ACC2027 v15 -> Overleaf: every changed block, copied verbatim from ACC2027_v15.tex
+% (except block 13, the Table II file, which was not uploaded).
+% Search each ACTION line in Overleaf and paste the block below it.
+% Unchanged: Sec. II-A, II-C, III-A equations, III-B, the gate, Props. 1-2, Sec. IV, V,
+%            VI-A paragraphs 2-4, VI-E noise paragraphs.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 0. PREAMBLE (only if your Overleaf preamble lacks these lines)
+% ACTION: Paste after \author{...} if missing. Float-spacing lines are what let v15 fit.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{etoolbox}
+\apptocmd{\thebibliography}{\itemsep=-1pt\relax}{}{}
+% [v11] Layout only: tighter float separation and fuller float pages. Template fonts unchanged.
+\setlength{\textfloatsep}{6pt plus 2pt minus 2pt}
+\setlength{\floatsep}{5pt plus 2pt minus 2pt}
+\setlength{\intextsep}{5pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{6pt plus 2pt minus 2pt}
+\setlength{\dblfloatsep}{5pt plus 2pt minus 2pt}
+\setlength{\abovecaptionskip}{3pt}
+\setlength{\belowcaptionskip}{0pt}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.5}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.8}
+\renewcommand{\dbltopfraction}{0.92}
+\renewcommand{\dblfloatpagefraction}{0.8}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1. ABSTRACT
+% ACTION: REPLACE the whole abstract.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+Quadrotor attitude controllers must track time-varying references within coupled rotor-force limits despite modeling uncertainty, measurement noise, and disturbances. We present an online neuromorphic residual: six continuous membrane-gate (CMG) units generate temporal features and eighteen decoder weights adapt online through prescribed error sensitivity (PES). The bounded correction augments a saturated quaternion PD controller before rotor-force allocation, with explicit authority bounds, exact recovery of the baseline when disabled, and a saturation-aware gate that stops it from opposing an axis already at its torque limit. Against a bandwidth-tuned PD with desired-rate feedforward, the gated residual lowers geometric-mean attitude error by $37.3\%$ on X2 and $22.4\%$ on CF2 noise-free, and burst-phase error under repeated torque disturbances by $14\%$ and $6\%$. Under sensor noise it keeps $4$--$11\%$ on the multi-axis missions and is neutral or slightly negative where the baseline is already at the noise floor. The gate cuts the X2 loss on abrupt Hardstep commands from $17\%$ to $2\%$ but cannot make it a gain; on CF2, rotor-level saturation under noise limits the usable authority. The same architecture attaches unmodified to LQR, backstepping, sliding-mode, and model-predictive baselines, improving tracking for every family and platform tested. On the same tuned PD+ff baseline an Izhikevich basis raises the geometric-mean error by $19.0\%$ (X2) and $5.5\%$ (CF2) at about twice the realized effort of CMG; ablations point to persistent activity with online decoder adaptation, not conductance modulation, as the principal mechanism.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2a. INTRODUCTION, paragraph 2
+% ACTION: REPLACE the paragraph "Residual learning has been combined..." (adds [8] garciaalcantara2024snnuas; moves the "However..." sentence).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Residual learning has been combined with classical controllers in robotics \cite{johannink2019}, including geometric $\mathcal L_1$ quadrotor augmentation \cite{wu2025l1quad}. Brain-inspired UAS controllers likewise combine model-based feedback with learned terms \cite{rubioscola2023limbic,rubioscola2021mambo}. Neuromorphic platforms support stateful adaptive corrections through the Neural Engineering Framework and online decoder learning \cite{eliasmith2004neuraleng,bekolay2014nengo}, commonly using the local prescribed-error-sensitivity (PES) rule \cite{voelker2015pes}. NEF-based spiking controllers have been designed for quadrotor dynamics with fixed, not online-adapted, weights \cite{garciaalcantara2024snnuas}. Self-tuning spiking PID control has been demonstrated for a quadrotor \cite{olivares2026selftuning}. However, continuous membrane--gate features for actuator-aware quaternion residual control, and the separate roles of neuron dynamics and decoder learning, remain insufficiently characterized.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2b. INTRODUCTION, contributions paragraph
+% ACTION: REPLACE the paragraph "We study a bounded online neuromorphic residual...".
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We study a bounded online neuromorphic residual for quaternion attitude tracking with individual rotor-force saturation: a quaternion proportional-derivative (PD) controller supplies the torque request, six continuous coupled membrane-gate (CMG) units generate temporal features, and an eighteen-parameter decoder adapts online through PES before the same rotor-force allocation. The contributions are: (i) a fully specified CMG--PES residual architecture with paired-current encoding, continuous state dynamics, online decoder adaptation, bounded readout, and exact baseline recovery at zero residual authority, see Figure \ref{fig:arch}; (ii) a controlled mechanism study separating conductance modulation, decoder learning, residual authority, and neuron family; (iii) a saturation-aware output gate that stops the residual from opposing an axis already at its torque limit; and (iv) a two-platform, five-mission simulation study against fixed and bandwidth-tuned classical baselines, with measurement-noise and repeated-disturbance tests. The strongest comparison uses PD with desired-rate feedforward and bandwidth scaling selected from the baseline sweep.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2c. INTRODUCTION, roadmap
+% ACTION: REPLACE the 4-sentence "The remainder of this paper is organized as follows..." paragraph.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Section~\ref{sec:problem} states the problem, Section~\ref{sec:main} the controller and its bounded-interface result (delimited and proved in Sections~\ref{sec:discussion}--\ref{sec:proofs}), Section~\ref{sec:application} the numerical experiments, and Section~\ref{sec:conclusion} concludes. Code, model files, and run archives accompany the submission as a reproducibility package.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 3. SEC II-B, paragraph after eq. (12)
+% ACTION: REPLACE from "Here $g$ is the gravitational acceleration." to "...provided to the residual."
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Here $g$ is the gravitational acceleration. The height loop reads altitude and vertical velocity; the denominator compensates tilt.
+The guard $0.35$ limits tilt compensation to about $\arccos(0.35)\approx69.5^\circ$, and the upper bound does
+not supersede individual rotor limits. The residual has no direct collective
+output but can affect height through attitude, tilt compensation, and
+saturation.
+The feedback variables used by the attitude and height loops are $q$, $\bm\omega$, $z$, and $\dot z$. In the nominal simulations they are read directly from the model; Sec.~\ref{sec:noise} perturbs the measured attitude and rate before they enter the controller. No additional state or plant output is provided to the residual path.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 4. FIG. 1 (architecture)
+% ACTION: REPLACE only the \caption{...}; the image is unchanged.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.78\textwidth,trim=0 10mm 0 0,clip]{architectures/architecture_standalone.pdf}
+    \caption{CMG--PES neuromorphic residual control architecture with online PES decoder learning. The classical feedback, collective-thrust, allocation, and plant interfaces are retained; only the bounded decoder output augments the requested attitude torque, after the saturation-aware gate \eqref{eq:gate} masks any component that opposes a saturated baseline axis.}
+    \label{fig:arch}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 5. SEC III-A, CMG unit topology figure (old Fig. 2)
+% ACTION: WRAP your existing figure in \iffalse ... \fi (or delete it). Text around it is unchanged.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [v13] CMG unit coupling-topology figure moved out of the flow to meet the page limit; its content is in
+% the sentence below.  Restore by deleting the \iffalse/\fi pair and the sentence.
+\iffalse
+\begin{figure}[t]
+\centering
+\resizebox{0.74\columnwidth}{!}{\input{architectures/tikz/archB1c.tex}}
+\caption{Coupling topology of one CMG unit, cf.~\eqref{eq:cmg}. The
+membrane sets the gate target; the gate acts back twice, shifting its own
+threshold through $\gamma$ and shunting the membrane through
+$c_j\propto r_j^2$ ($\chi=1$ makes that shunt input dependent). The
+dynamics are continuous: no spike, no reset, and only $a_j$ leaves the
+unit.}
+\label{fig:cmgunit}
+\end{figure}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 6a. SEC VI-A, vehicle photo strip (old Fig. 3)
+% ACTION: WRAP your existing figure* in \iffalse ... \fi (or delete it).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [v13] Vehicle-photo strip removed from the flow to meet the page limit: it carried no technical
+% content and was never referenced in the text.  Restore by deleting the \iffalse/\fi pair.
+\iffalse
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.72\textwidth]{figures/01_mujoco_missions/fig2_drones_only.pdf}
+\caption{Vehicles and simulation models. Left: CF2 hardware and MuJoCo model. Centre: X2 hardware and MuJoCo model. Right: both geometries at relative scale. Axis triads are body-fixed.}
+\label{fig:models}
+\end{figure*}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 6b. SEC VI-A, first paragraph
+% ACTION: REPLACE. Changes: "MuJoCo 3.12.0" -> "MuJoCo"; DELETE the line "Code: [will be released on acceptance / ...]".
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We evaluate in MuJoCo rigid-body simulation with site-applied actuator wrenches
+\cite{todorov2012mujoco}, using two Menagerie-derived multirotors (CF2, X2)
+\cite{menagerieModels}. The attitude loop commands body torque and the height loop
+collective thrust. For CF2 we expose four rotor-force channels and use the clipped
+inverse allocator \eqref{eq:mixer}. Table~\ref{tab:models} lists simulation parameters and
+spec-context values; the CF2 $1.5\times$ scale increases a model limit, not measured
+hardware capability. Both models omit motor/RPM/battery states and validated rotor
+aerodynamics; feedback uses \texttt{qpos}/\texttt{qvel}, with noise only in Sec.~\ref{sec:noise}. The controllers run in Nengo~4.1.0 (a custom \texttt{NeuronType} with direct current injection; its teaching graph adds a one-step latency), and a direct NumPy realization agrees to $2.013\times10^{-6}$ relative mean error over ten cases, which is tested numerical agreement, not formal equivalence.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 6c. TABLE I
+% ACTION: MOVE + REPLACE: delete Table I from its old position (it sat inside Sec. VI-A / next to old Fig. 3) and paste it here, right after the paragraph above. Only the caption gained the last sentence with the two new citations.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[t]
+\centering
+\caption{Model/interface parameters (top) and canonical CMG--PES settings (bottom). Neural quantities are normalized model variables; learning coefficients are per step. Mass matches published specs \cite{bitcrazeCF20Specs,skydioX2ESpecs}; other limits/parameters are simulation values.}
+\label{tab:models}\label{tab:parameters}
+\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{0.93}
+\footnotesize
+\begin{tabular}{@{}p{0.40\linewidth}p{0.27\linewidth}p{0.25\linewidth}@{}}
+\toprule
+Parameter & CF2 rotor model & X2 model\\
+\midrule
+Mass $M$ (kg) & $0.027$ & $1.325$\\
+Rotor $|p_x|,|p_y|$ (m) & $0.0325,0.0325$ & $0.14,0.18$\\
+Reaction magnitude $|\kappa_i|$ (m) & $0.005$ & $0.0201$\\
+Rotor force limit (N) & $.0875\to.13125$ & $13$\\
+$\bm j_{\rm tune}$ ($10^{-5}$ kg\,m$^2$) & $(2.3951,\allowbreak2.3951,\allowbreak3.2347)$ & ---\\
+$\bm j_{\rm tune}$ ($10^{-2}$ kg\,m$^2$) & --- & $(6.0711,\allowbreak3.6468,\allowbreak2.5412)$\\
+Rigid-body integrator & RK4 & Euler\\
+\bottomrule
+\end{tabular}
+\par\medskip
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}ll@{\hspace{6pt}}ll@{}}
+\toprule
+CMG--PES & Value & & Value\\\midrule
+$h$, duration & $0.0005$ s, $45$ s & $\alpha_h,\gamma,g_0,g_1$ & $50,2,120,30$\\
+$\tau,\tau_r$ & $0.05$ s, $0.005$ s & $I_b,I_g,G$ & $0.75,1.25,10^5$\\
+$v_{\rm rest},v_{\rm reset},v_{\rm th}$ & $0,0,1$ & $\beta_{\rm X2},\beta_{\rm CF2};\eta$ & $.5,.2;\,8\times10^{-4}$\\
+$v_{j,0},r_{j,0},\chi$ & $0,0,1$ & $\lambda_W,W_{\max},k_e,k^*_\omega$ & $10^{-6},6,8,0$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 7. SEC VI-B, Comparison with Classical Baselines (whole subsection)
+% ACTION: REPLACE the whole subsection up to "\subsection{Mechanism Ablation}". Changes: new opening sentence; Fig.~4 -> Fig.~\ref{fig:tracking}; new Portability paragraph; new Fig. 2 (upload figures/final/x2_hard45_attitude_rho3_compact.pdf). DELETE old Fig. 4 (CF2 Hard45 six-row ladder) entirely.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Comparison with Classical Baselines}
+\label{sec:baselines}
+The fixed PD law in \eqref{eq:pd} damps absolute rate, so moving references can contain a velocity-lag contribution. We therefore use the desired-rate feedforward law \eqref{eq:pdff} as the stronger comparison and sweep $\bm\omega_n\mapsto\rho\bm\omega_n$ over $\rho\in[0.75,8]$. The best mission-mean occurs at $\rho=3$ on both airframes; CF2 becomes rotor-limited beyond approximately $\rho=4$. This bandwidth-tuned PD+feedforward controller is the primary baseline.\looseness=-1
+
+At $\rho=3$, the gated CMG--PES residual ($\beta=.5$ on X2, $.2$ on CF2) reduces the geometric-mean error from $4.54\times10^{-3}$ to $2.85\times10^{-3}$ rad on X2 ($37.3\%$) and from $3.77\times10^{-3}$ to $2.92\times10^{-3}$ rad on CF2 ($22.4\%$). It improves Roll, Full3, Hard45 (Fig.~\ref{fig:tracking}), and Yaw360 on both vehicles; Hardstep is the only mission that does not improve (Sec.~\ref{sec:failure}). The geometric mean is dominated by Roll and Yaw360, where PD+ff errors are already below $0.6$ mrad; on Full3 and Hard45 the reductions are $12$--$14\%$ (X2) and $5$--$7\%$ (CF2). Without the gate, CF2 admits only $\beta=.05$ and the reduction is $6.5\%$ (Table~\ref{tab:all}, ungated row). Against the original fixed PD law (Table~\ref{tab:all}, which also gives the $\rho=1$ ladder), the residual lowers mean quaternion-angle error in all ten nominal cases by $17.3$--$60.6\%$, so the apparent margin shrinks as the classical baseline is strengthened.
+
+\paragraph{Portability across control families} The residual attaches unmodified to five families beyond PD+ff, by replacing only the nominal law $\bm u_0$ in \eqref{eq:residual}: LQR, backstepping, sliding-mode control (SMC), unconstrained model-predictive control (MPC), and nonlinear MPC (NMPC), each at the same bandwidth scaling and gate settings, plus a PID variant with rotor-level conditional-integration anti-windup. The gated residual improves the geometric mean for every family on both platforms, with no exceptions: LQR $31.1\%$/$22.4\%$ (X2/CF2), PID+ff $36.7\%$/$22.4\%$, SMC $43.8\%$/$26.6\%$, MPC $33.4\%$/$22.7\%$, and NMPC $31.9\%$/$21.7\%$. SMC gains the most specifically on Hardstep, where its own baseline is weaker; LQR and MPC each show a large \emph{baseline} error on CF2 Hardstep from the linear-quadratic family's small torque margin there, unrelated to the residual. This is an interface-portability result, not a claim that the residual is tuned for each family; a full per-family study is future work.
+
+\input{tables/table_all_restructured}
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/final/x2_hard45_attitude_rho3_compact.pdf}
+\caption{X2 Hard45 at $\rho=3$: PD+feedforward versus CMG--PES over the 45-s run (mean error $10.54\to9.08$ mrad, Table~\ref{tab:all}). Pitch and yaw are as indistinguishable from the reference as roll; the $0.4$-rad initial transient decays below $25$ mrad within $0.44$ s and is off the axis.}
+\label{fig:tracking}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 8. SEC VI-C, Mechanism Ablation (whole subsection)
+% ACTION: REPLACE. Changes: "Fixed versus adaptive decoder" now ends "...yields only modest reductions"; DELETE the paragraph "A matched-effort non-neural residual (e.g., a filtered-P ...) was not run in this campaign. Equation (30) shows that under near-constant activity ... left to future work."
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mechanism Ablation}
+\label{sec:ablation}
+
+We ablate decoder adaptation (PES) and conductance modulation ($\chi$). With decoder mode held fixed, toggling $\chi$ (retaining the base shunt $g_0r_j^2$) is numerically indistinguishable. The reason is structural: $\chi$ enters only through $c_j\propto r_j^2$, which is $2\times10^{-9}\,\mathrm{s}^{-1}$ at rest against a leak of $\tau^{-1}=20\,\mathrm{s}^{-1}$; after a gate latches (below) it only moves the membrane fixed point ($0.107\to0.092$ at $I_j=I_b$), which the saturated activity hides from the readout.
+
+\emph{Fixed versus adaptive decoder.} Holding $W_k=W_0$ keeps CMG dynamics but limits the readout to the paired difference $\bm a^+-\bm a^-$, and yields only modest reductions (Table~\ref{tab:all}).
+
+\emph{Gate/activity regime.} At $I_j=I_b$, $v_j\approx0.75<v_{\rm th}$ and $r_j\approx\sigma(-12.5)\approx3.7\times10^{-6}$, i.e., a small but nonzero logistic tail. Once $r_j\ge1/2$, Proposition~\ref{prop:bounded} implies $b_{j,k}\ge1/2$ in \eqref{eq:gate_step}, so opened gates latch; with $G=10^5$ the resting activity is $a_j\approx0.37$ and latched units saturate at $a_j=1$.
+
+When activity is effectively constant ($\bm a_k\approx\bar{\bm a}$) and projection is inactive, the PES update reduces to the recursion for $\bm z_k=W_k\bar{\bm a}$
+\begin{equation}
+ \bm z_{k+1}=(1-\lambda_W)\bm z_k
+ +\eta\|\bar{\bm a}\|^2[\bm y_k^*-\clip_{[-1,1]}(\bm z_k)],
+ \label{eq:constantbasis}
+\end{equation}
+a leaky first-order filter of the teaching target (Proposition~\ref{prop:pes}), i.e., lagged proportional action with corner $9.60$ rad/s. Hard45's highest instantaneous frequency is $2.1$ rad/s \cite{sandoval2018instantaneous}, below that corner. These ablations indicate that decoder adaptation is the dominant lever in the tested regime: the CMG dynamics provide a bounded graded/latched basis on which PES shapes the correction.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 9. SEC VI-D, Neuron-Family Comparison (whole subsection)
+% ACTION: REPLACE. Changes: first sentence; Izhikevich paragraph rewritten; new paragraph "Non-neural and conventional alternatives".
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Neuron-Family Comparison}
+\label{sec:family}
+
+The Nengo benchmark isolates the basis choice, holding one actuator interface fixed across two models, five missions, and eleven controllers (PD plus fixed/PES variants of CMG, LIF, ALIF, Izhikevich \cite{izhikevich2003}, and LIFRate); only the neuron dynamics and native-state-to-activity map differ. Across the full matrix (figure omitted) two patterns hold. First, PES is the dominant lever in every family: fixed decoders rarely match their PES counterparts, extending Sec.~\ref{sec:ablation} to every basis. Second, persistent activity is necessary but not sufficient. Proposition~\ref{prop:pes} explains the flat rows: a silent basis stalls the update. LIF, ALIF and LIFRate units are active in at most $0.1\%$ of unit-samples, whereas CMG (resting at $a_j\approx0.37$) and Izhikevich are active in ${\ge}99.9\%$.
+
+Izhikevich--PES leads on the fixed-PD baseline (Table~\ref{tab:all}, last block) but not on the tuned one: under the primary protocol it is positive but below CMG on Full3 and Hard45 ($+5.9/+4.5\%$ vs.\ CMG's $+12.4/+13.8\%$ on X2), while its residual sits on a $\pm\beta\ell$ rail in $35$--$48\%$ of samples whatever the mission, so its effort is about twice CMG's rather than comparable. On Roll and Yaw360, where the baseline is already near the noise floor, the residual raises the geometric-mean error to $1.19\times$ (X2) and $1.06\times$ (CF2) the baseline's; CMG's own effort tracks the baseline error by construction (Sec.~\ref{sec:ablation}), Izhikevich's does not.
+
+\paragraph{Non-neural and conventional alternatives} The same protocol, held fixed, finds no match for CMG among either family: a threshold-tuned LIFRate basis, selected on a held-out mission split, reaches $+15.8\%/+11.4\%$ (X2/CF2); two bases with no neuron dynamics at all -- a static paired-current encoding and a constant basis -- reach $+11.7\%/+4.7\%$ and $+10.2\%/+4.2\%$. Every alternative tested, neural or not, remains well short of CMG's $+37.3\%/+22.4\%$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 10. SEC VI-E, disturbance paragraph
+% ACTION: REPLACE from "An equilibrium test applies..." to "...change only slightly." (noise paragraphs above it are unchanged).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\label{sec:disturbance}
+An equilibrium test applies $\bm\tau_{\rm d}=d_b\varrho(t)[\sin(1.31t+.2),\allowbreak .8\sin(1.73t+1.1),\allowbreak.6\sin(2.17t+2)]\T$ in body axes, $\varrho$ alternating 5-s on/off intervals after 5 s of quiet with 0.25-s raised-cosine ramps, $d_b=.15$ N\,m on X2 and $.00015$ N\,m on CF2 (a selected scaling), and also $0.5\times$ and $2\times$ those values. Against PD+ff at $\rho=3$ the residual lowers the burst-phase mean error from $1.61^\circ$ to $1.38^\circ$ ($14.4\%$) on X2 and from $2.27^\circ$ to $2.14^\circ$ ($5.9\%$) on CF2, and by $24.0/13.3\%$ (X2) and $6.5/4.7\%$ (CF2) at $0.5\times/2\times$; hover never saturates, so the gate is inert. Quiet-phase error, already below $0.1^\circ$, falls by $14.7\%$ (X2) and $19.8\%$ (CF2) at the nominal amplitude but rises on X2 at $0.5\times$ ($0.021^\circ\to0.036^\circ$). For CF2 it is $13.7\%$ at $\beta=.5$ and $1.5\%$ ungated at $\beta=.05$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 11. SEC VI-F, Saturation-Aware Gating on Hardstep (whole subsection)
+% ACTION: REPLACE. New Fig. 3 (upload figures/final/x2_hardstep_gate_zoom.pdf); paragraph split in two around it.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Saturation-Aware Gating on Hardstep}
+\label{sec:failure}
+Hardstep commands $63^\circ$--$111^\circ$ attitude changes every $2$ s, and $97$--$99\%$ of its mean error accumulates during slew. At $\rho=3$ the ungated residual degrades it by $17.0\%$ on X2 and, at $\beta=.5$, diverges on CF2 (mean error $136^\circ$, rotors at a bound in $92\%$ of samples). Because the reference is piecewise constant, the latched decoder acts as the first-order filter \eqref{eq:constantbasis} and lags a $12$ rad/s baseline; on a saturated axis that lag can only oppose $\bm u_0$ (Sec.~\ref{sec:main}). At $\beta=.5$ the gate \eqref{eq:gate} blocks the residual in $20.5\%$ (X2) and $15.5\%$ (CF2) of Hardstep samples and in at most $0.04\%$ elsewhere, so the other eight cells differ from the ungated residual by at most $0.1\%$. It cuts the X2 loss from $17.0\%$ to $2.0\%$ and, noise-free, removes the CF2 divergence at $\beta=.5$ ($-1.2\%$ on Hardstep, $36.5\%$ geometric mean).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/final/x2_hardstep_gate_zoom.pdf}
+\caption{X2 Hardstep, one step at $t=11$ s: attitude error (log axis, dotted line: $5^\circ$ band) and yaw torque against the box $\pm\ell_z$ (dashed). Shading marks where the gate blocks the residual. Ungated, the residual pulls the command off the box during braking; gated, it follows PD+ff into the box and leaves it later.}
+\label{fig:hardstep}
+\end{figure}
+
+The gate does not make the residual beat the baseline here, and Fig.~\ref{fig:hardstep} shows why. The gated residual helps while braking ($0.25$--$0.75$ s after a step; $-0.13^\circ$ of the X2 $45$-s mean) but leaves a larger tail once the baseline has left its box ($+0.40^\circ$ over $0.75$--$1.5$ s), because the decoder still holds the slew-phase correction, with the $9.6$ rad/s corner of Sec.~\ref{sec:ablation}. That tail occurs on an unsaturated axis, so no rule conditioned on saturation can remove it. An X2-only exploratory screen of twelve gate configurations (load thresholds $.001$--$1$, with and without freezing the decoder on gated axes) ranged from $-2.1\%$ to $+0.3\%$: at the limit the gate blocks $79\%$ of samples and recovers the baseline's settled error, but parity, not gain, is its ceiling here.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 12. SEC VII, Conclusions (whole section)
+% ACTION: REPLACE both paragraphs.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions and Future Work}
+\label{sec:conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Six continuous CMG units with an eighteen-parameter PES-adapted decoder form a bounded residual that augments a quaternion PD controller without changing its sensing, collective-thrust, allocation, or actuator interface. The interface bounds and exact zero-authority recovery hold independently of the learned weights, and the saturation-aware gate preserves both. In the numerical study, the gated residual lowers geometric-mean error against the bandwidth-tuned PD+feedforward baseline by $37.3\%$ on X2 and $22.4\%$ on CF2 noise-free, lowers burst-phase error under repeated torque disturbances, and keeps its benefit under sensor noise only where the baseline error exceeds the noise floor; the ablations identify online decoder adaptation and persistent activity (necessary, but not sufficient for low effort) as the principal mechanisms in the tested regime. Three limitations remain. On Hardstep the gate restores near-parity but cannot remove the settling-tail lag of the latched decoder, which occurs on an unsaturated axis. On CF2 under noise, rotor-level saturation defeats a gate defined on the torque box and caps the usable authority at $\beta=.2$. And the noise-free geometric mean overstates the practical benefit, being dominated by missions whose baseline error is already near the noise floor.\looseness=-1
+
+The present results are simulation based and do not provide a closed-loop stability certificate for the reported tracking experiments. Future work will add decoder-side lag compensation and an allocation-aware gate; evaluate under model mismatch; sweep the activity gain $G$ and conductance modulation $\chi$ more systematically; test retention with frozen weights and held-out missions; extend the wrapper, already confirmed across five classical control families in the plane, to 6-DOF; and validate the method on hardware.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 13. TABLE II (tables/table_all_restructured.tex)
+% ACTION: See sub-blocks (a)-(d). If you have the v15 table file from Claude Code, upload it instead of editing by hand.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lives in tables/table_all_restructured.tex (not in the uploaded .tex).
+% Column layout below is a best guess: label & 6 X2 cols & 6 CF2 cols.
+% Match it to your existing \multicolumn width and \emph{} style for the geo column.
+
+% (a) CAPTION -> REPLACE
+\caption{Mean $q$-error ($10^{-3}$\,rad, 45\,s). $\Delta$: reduction over the block baseline [\%]. Effort: RMS residual / per-axis bound. Closing column: geometric mean (error rows), arithmetic mean (effort rows).}
+
+% (b) Blocks "Primary baseline rho=3", "Baseline ladder rho=1", "Original fixed PD": UNCHANGED.
+
+% (c) Izhikevich block -> REPLACE ENTIRELY (old "realistic noise" row is gone; all numbers new)
+\multicolumn{13}{@{}l}{\emph{Strongest rival basis (Izhikevich): reduction and realized effort}}\\
+\;$\Delta$, Izhikevich--PES, $\rho=3$ [\%]       & -49.0 & 5.9 & 4.5 & -1.1 & -76.6 & \emph{-19.0} & 0.1 & 1.4 & 0.8 & -0.5 & -32.9 & \emph{-5.5}\\
+\;$\Delta$, Izhikevich--PES, fixed PD [\%]       & 39.6 & 37.5 & 32.2 & 6.6 & 46.6 & \emph{33.8} & 33.7 & 38.9 & 32.2 & diverges$^\S$ & 41.5 & --\\
+\;$\Delta$, Izhikevich fixed dec., fixed PD [\%] & 4.6 & 4.9 & 4.6 & 0.7 & 0.2 & \emph{3.0} & 5.6 & 5.8 & 4.0 & -2.2 & -2.2 & \emph{2.3}\\
+\;effort, CMG--PES, $\rho=3$                    & 0.003 & 0.023 & 0.023 & 0.109 & 0.001 & \emph{0.032} & 0.005 & 0.010 & 0.012 & 0.049 & $<$0.001 & \emph{0.015}\\
+\;effort, Izhikevich--PES, $\rho=3$             & 0.053 & 0.051 & 0.053 & 0.106 & 0.052 & \emph{0.063} & 0.012 & 0.021 & 0.021 & 0.047 & 0.012 & \emph{0.023}\\
+
+% (d) FOOTNOTE -> REPLACE
+LIF/ALIF/LIFRate stay within $0.1\%$ of fixed PD outside Hardstep. $\rho=3$ rows are gated \eqref{eq:gate} with $\beta=.5$ (X2), $.2$ (CF2); $^\ddagger$ungated, $\beta=.5,.05$ (the $\rho=1$ and fixed-PD rows are ungated). $^\dagger$Hardstep commands $63$--$111^\circ$ steps every $2$\,s; $97$--$99\%$ of its mean error is slew (Sec.~\ref{sec:failure}). $^\S$CF2 Hardstep under the fixed-PD baseline sustains near-$180^\circ$ tracking loss ($2.45$\,rad mean, $t$=3--44\,s); excluded from the geometric mean rather than averaged in.
+% DELETED from old footnote: "Noise rows: true-attitude error, seed means, same noise stream for both arms (levels: Sec. VI-E). Izhikevich rho=3 rows: gated, one run per cell (noise: seeds 1-3; 33 runs in all); single-run scatter is 1.4% ... not interpreted."
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 14. BIBLIOGRAPHY (references_ACC2027.bib)
+% ACTION: ADD these three entries.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add to references_ACC2027.bib. Keys match the \cite{} calls in v15.
+% All other references keep their keys; IEEEtran renumbers them automatically.
+
+@inproceedings{garciaalcantara2024snnuas,
+  author    = {Garc{\'\i}a Alc{\'a}ntara, O. A. and Chavez Arana, D. and Espinoza, E. S. and Rubio Scola, I. and Garcia Carrillo, L. R. and Sornborger, A. T.},
+  title     = {Spiking Neural Network-Based Control of an Unmanned Aerial System Implemented on a Customized Neural Flight Simulation Environment},
+  booktitle = {2024 American Control Conference (ACC)},
+  year      = {2024},
+  pages     = {3125--3129}
+}
+
+@misc{bitcrazeCF20Specs,
+  author       = {{Bitcraze AB}},
+  title        = {Crazyflie 2.0: Mechanical and Flight Specifications},
+  howpublished = {\url{https://store.bitcraze.io/products/crazyflie-2-0}},
+  note         = {Accessed Sep. 5, 2026}
+}
+
+@misc{skydioX2ESpecs,
+  author       = {{Skydio}},
+  title        = {Skydio {X2E} Datasheet},
+  howpublished = {\url{https://pages.skydio.com/rs/784-TUF-591/images/skydio-x2e-datasheet-x2-pg.pdf}},
+  note         = {Aircraft specifications; accessed Sep. 5, 2026}
+}
+
+% Also required by line 63 (\bstctlcite{IEEEexample:BSTcontrol}); skip if already in your .bib:
+@IEEEtranBSTCTL{IEEEexample:BSTcontrol,
+  CTLuse_forced_etal       = "yes",
+  CTLmax_names_forced_etal = "6",
+  CTLnames_show_etal       = "1"
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 15. FILES TO UPLOAD
+% ACTION: Upload / check.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Upload to Overleaf (from the Claude Code project):
+%   figures/final/x2_hard45_attitude_rho3_compact.pdf   (new Fig. 2, \label{fig:tracking})
+%   figures/final/x2_hardstep_gate_zoom.pdf             (new Fig. 3, \label{fig:hardstep})
+%   tables/table_all_restructured.tex                   (if you use it instead of block 13)
+% Remove any \ref to the old figures: fig:cmgunit, fig:models, and the old CF2 Hard45 ladder figure.

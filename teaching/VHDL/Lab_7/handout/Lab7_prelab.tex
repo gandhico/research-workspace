@@ -1,0 +1,122 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 7}\\[2pt]
+{\large Next Instruction Address Generation I}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points, about twenty
+minutes, on paper. \textbf{Bring a calculator or do the hex by hand} --- this
+one is arithmetic.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- Paper first}
+
+Here is a real instruction from the program your CPU will run in Lab 12:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+address & encoding & instruction \\
+\midrule
+\code{0x0000000C} & \code{0x18200002} & \code{BLEZ r1, +2} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(a)} Compute the branch target. Show all three steps.
+
+\vspace{4pt}
+\code{NSA} $= $ \rule{4cm}{0.4pt} \hfill
+offset $= $ \rule{4cm}{0.4pt} \hfill
+target $= $ \rule{4cm}{0.4pt}
+\vspace{8pt}
+
+\textbf{(b)} Now the same for a \emph{backward} branch: $PC = \code{0x30}$,
+immediate $= \code{0xFFFC}$.
+
+\vspace{4pt}
+\code{NSA} $= $ \rule{4cm}{0.4pt} \hfill
+offset $= $ \rule{4cm}{0.4pt} \hfill
+target $= $ \rule{4cm}{0.4pt}
+\vspace{8pt}
+
+\textbf{(c)} Two students get part (a) wrong. One forgets the shift by two; the
+other uses $PC$ instead of $PC+4$ as the base. What target does each of them
+compute, and which of the two mistakes would be harder to notice? Why?
+
+\answerbox{2.6cm}
+
+\section*{Question 2 --- Interface and reuse}
+
+\textbf{(a)} Write the VHDL \code{entity} for \code{NIAG\_Reg}, the program
+counter. Include the \code{generic} for the reset vector.
+
+\answerbox{4.0cm}
+
+\textbf{(b)} Write the characteristic equation for $PC^{+}$:
+
+\vspace{6pt}
+$PC^{+} = $ \rule{10cm}{0.4pt}
+\vspace{8pt}
+
+Compare it with your Lab 2 register equation. In one sentence: what actually
+changed?
+
+\answerbox{1.4cm}
+
+\section*{Question 3 --- Test plan}
+
+\begin{center}
+\begin{tabular}{@{}c@{\hskip 8pt}p{5.0cm}@{\hskip 8pt}p{7.6cm}@{}}
+\toprule
+\# & inputs & what it proves \\
+\midrule
+1 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+2 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+3 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+4 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+5 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+6 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Then answer both:}
+
+\textbf{(a)} Suppose every branch offset in your test set is positive. Which
+specific bug would you then be unable to detect?
+
+\answerbox{1.6cm}
+
+\textbf{(b)} \code{NSA} is combinational --- it changes as soon as \code{PC}
+does, with no clock edge. Describe a vector that would prove this, and say what
+would go wrong in the CPU if \code{NSA} were computed inside a clocked process
+instead.
+
+\answerbox{2.2cm}
+
+\vfill
+{\small\emph{Question 3 is the one that matters.} It is the same question as
+Section 5 of your lab report.}
+
+\end{document}

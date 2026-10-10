@@ -1,0 +1,270 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 8 --- Next Instruction Address Generation II}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Complete the address generator: jumps, register jumps, return addresses, the
+five-way PC selection, and every conditional branch the machine has.
+
+\begin{quote}
+\emph{Branch conditions are Boolean equations over the ALU flags.}
+\end{quote}
+
+After today the entire address side of the processor is finished, and it is your
+first integration exercise: six components, no new logic.
+
+\section*{2. Background}
+
+\subsection*{Absolute jump targets: four bits you do not get to choose}
+
+\[
+\code{Abslt} = \underbrace{\code{NSA}(31..28)}_{\text{4 bits inherited}} \;\&\;
+\underbrace{\code{Index}(25..0)}_{\text{26 bits encoded}} \;\&\;
+\underbrace{\code{"00"}}_{\text{always zero}}
+\]
+
+$4 + 26 + 2 = 32$. Pure wiring --- no adder, no arithmetic.
+
+\textbf{The real instruction} from the Lab 12 program:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\code{0x14} & \code{0x08000002} & \code{J 0x08} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\[
+\code{NSA} = \code{0x18},\quad \text{top 4 bits} = \code{0x0},\quad
+\code{Abslt} = \code{0x0}\,\&\,\code{0x0000002}\,\&\,\code{"00"} = \code{0x00000008}
+\]
+
+\code{0x08} is the \code{ADDI} at the top of the loop. \emph{This jump is what
+makes the loop a loop.}
+
+\textbf{The consequence:} the top four bits are inherited, not encoded, so a
+jump \emph{cannot leave its $2^{28}$ byte $=$ 256 MB region}. That is not a bug
+--- it is what you get for spending 26 bits instead of 32. To reach further you
+need \code{JR}, which takes a full 32-bit address out of a register.
+
+\subsection*{Every conditional branch, in six equations}
+
+This is the payoff for the ALU flags from Lab 5. The ALU gives you exactly two
+facts: \code{Zero} and \code{Neg}. From those:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+code & meaning & Taken $=$ \\
+\midrule
+\code{NIAG\_COND\_NONE} & always & $1$ \\
+\code{NIAG\_COND\_EQ}   & $= 0$ & $Z$ \\
+\code{NIAG\_COND\_NEQ}  & $\neq 0$ & $\overline{Z}$ \\
+\code{NIAG\_COND\_GTZ}  & $> 0$ & $\overline{N}\cdot\overline{Z}$ \\
+\code{NIAG\_COND\_GEZ}  & $\geq 0$ & $\overline{N}$ \\
+\code{NIAG\_COND\_LTZ}  & $< 0$ & $N$ \\
+\code{NIAG\_COND\_LEZ}  & $\leq 0$ & $N + Z$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Six one-line Boolean equations, and that is the entire conditional-branch
+capability of the processor.}
+
+Notice the complement pairs: \code{GTZ}/\code{LEZ}, \code{GEZ}/\code{LTZ},
+\code{EQ}/\code{NEQ}. The hardware is \emph{smaller} than the instruction list
+suggests --- which is why you read the control table rather than the manual. The
+manual lists what a programmer may write; the table shows what the hardware
+actually does.
+
+\subsection*{Two decisions, not one}
+
+Students routinely try to merge these, and it does not work:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\code{Sel} & \emph{which} address is the candidate? \\
+\code{Cond} & is a \emph{relative} branch actually used? \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+and only the relative path is conditional:
+
+\begin{center}
+\begin{tabular}{cl@{\hskip 8pt}||@{\hskip 8pt}ll}
+\toprule
+\# & \code{Sel} & \code{NextPC} & \\
+\midrule
+0 & \code{NIAG\_SEL\_NSA} & \code{NSA} & unconditional \\
+1 & \code{NIAG\_SEL\_REL} & \code{Taken ? Rel : NSA} & \textbf{conditional} \\
+2 & \code{NIAG\_SEL\_REG} & \code{RegAddr} & unconditional \\
+3 & \code{NIAG\_SEL\_ABS} & \code{Abslt} & unconditional \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Why not-taken falls back to NSA:} a branch that is not taken is not a
+special state --- it means ``carry on to the next instruction'', which is
+exactly \code{NSA}. That is why there is no fifth select code.
+
+\textbf{Why jumps are unconditional by construction:} there is no conditional
+\code{J}. Conditional control flow uses relative addressing, because conditions
+are usually local. A design decision, not a limitation.
+
+\subsection*{The return address}
+
+\code{Rtn} is simply \code{NSA}. When \code{JAL} executes, the address to come
+back to is the instruction after the call --- exactly $PC+4$. No hardware: a
+wire with a different name, and naming it is what makes the datapath readable.
+
+\section*{3. Guided examples}
+
+\begin{description}[leftmargin=2.4em,style=nextline,itemsep=2pt]
+\item[Example 1 --- \code{absolute\_target}] The real \code{J} above, plus the
+same index from two different regions, showing a jump confined to its region.
+\item[Example 2 --- \code{branch\_conditions}] All seven conditions, exhaustive
+over both flags (28 cases), plus a check that the complement pairs really are
+complements.
+\item[Example 3 --- \code{pc\_select}] The same \code{Sel} code with
+\code{Taken} high and low --- the pair that makes conditional execution exist.
+\end{description}
+
+\section*{4. Assignment}
+
+\textbf{Step 1: copy your own Lab 4 \code{ImmedXtnd} and Lab 7
+\code{NIAG\_NSA}, \code{NIAG\_Rel}, \code{NIAG\_Reg} into this folder}, replacing
+the empty skeletons.
+
+\begin{enumerate}[leftmargin=2em,itemsep=3pt]
+\item \textbf{\code{NIAG\_Abslt}} --- one concatenation.
+\item \textbf{\code{NIAG\_Cond}} --- the seven rows above. Use a
+\code{with\,/\,select}: it is a table, so use a table construct. \code{when
+others} must give \emph{not taken} --- a CPU that takes a branch it does not
+understand runs away; one that ignores it merely does the wrong thing slowly.
+\item \textbf{\code{NIAG\_MUX}} --- two stages: a \code{Taken} gate (2-to-1)
+feeding the selection (4-to-1). This is Lab 3 again.
+\item \textbf{\code{NIAG}} --- the top level. Six components, no new logic.
+\end{enumerate}
+
+\subsection*{Integration rules --- these matter more than the logic}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Named association in every \code{port map}.} Always. Positional
+association across six components is how you spend an hour finding a swapped
+pair of signals --- and Lab 12 has twelve.
+\item Declare an internal signal for \emph{every} wire between components.
+\item You cannot read an \code{out} port. Drive \code{PC} and \code{NSA} from
+internal signals.
+\item Wire it in the order of the block diagram, then read it back against the
+diagram \emph{once}, before simulating.
+\end{itemize}
+
+\subsection*{Testbench}
+
+Complete \code{tb\_Lab8.vhd}. \textbf{Required: one scripted sequence} walking
+the PC through all of the following in a single continuous run --- that waveform
+is your report's centrepiece figure.
+
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item sequential execution;
+\item a \textbf{not-taken} conditional branch, falling back to \code{NSA};
+\item a \textbf{taken} one with the \emph{same} \code{Sel} code;
+\item the real \code{J}: at \code{0x14}, index 2, target \code{0x08};
+\item a register jump to a full 32-bit address, then a \code{J} from there
+showing it stays in \emph{that} region;
+\item \code{Strb = '0'} at an edge: the PC holds;
+\item a \textbf{backward} relative branch;
+\item at least three \code{NIAG\_COND\_*} codes, including \textbf{\code{GTZ}
+with \code{Zero='1'}} --- which must \emph{not} be taken, because zero is not
+greater than zero.
+\end{itemize}
+
+\section*{5. Evidence to collect (E1, E2, E4, E7)}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& Source & What it must show \\
+\midrule
+E1 & Flow Summary + Messages & 0 errors; warnings sorted \\
+E2 & RTL Viewer & six blocks, wired as the diagram \\
+E4 & Resource Utilisation & \textbf{32 registers} (the PC) and no others \\
+E7 & Waveform + transcript & the full scripted sequence, annotated \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{6. Report --- \code{lab08.tex}}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Specification:} the \code{Sel} table and \textbf{all six condition
+equations}, with the complement pairs pointed out.
+\item \textbf{Design:} why \code{Sel} and \code{Cond} are two separate control
+fields; and the 256 MB jump-range trade-off in your own words.
+\item \textbf{Results:} the annotated scripted-sequence waveform, with each
+transition labelled by which source the PC took.
+\item \textbf{Discussion:} required.
+\end{itemize}
+
+\section*{7. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Testbench and test vectors, coverage justified & 20 \\
+Simulation results match the specification & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{8. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{\code{GTZ} taken when the result is zero.} $\overline{N}$ alone is
+\code{GEZ}, not \code{GTZ}. You need $\overline{N}\cdot\overline{Z}$.
+\item \textbf{Gating the jump paths with \code{Taken}.} Only the relative path
+is conditional.
+\item \textbf{Not-taken producing something other than \code{NSA}.}
+\item \textbf{Positional \code{port map}.} Six components is where this starts
+costing real time.
+\item \textbf{Reading an \code{out} port.} Illegal. Use an internal signal.
+\item \textbf{Wrong slice in \code{Abslt}.} It is \code{NSA(31 downto 28)}, the
+\emph{top} four bits.
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small The address side of your processor is now complete. Next week: memory,
+and the actual program your CPU will run.}
+
+\end{document}

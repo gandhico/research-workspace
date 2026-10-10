@@ -1,0 +1,118 @@
+% =============================================================================
+%  Lab 4 - Datapath Support Components
+% =============================================================================
+
+\chapter{Lab 4 --- Datapath Support Components}
+
+\section{Objective}
+% Two or three sentences, your own words.
+
+\section{Specification}
+
+\begin{table}[htbp]
+\centering
+\caption{Compressed table (Type C) for \texttt{ImmedXtnd}.
+$x^{n}$ means bit $x$ repeated $n$ times.}
+\label{tab:lab04-truth}
+\begin{tabular}{ccc||ll}
+\toprule
+\# & \texttt{Xsel} & \texttt{Xlsft} & \texttt{Xtnd32} & used by \\
+\midrule
+0 & 0 & 0 & $0^{16}\,\&\,I$ & \texttt{LUI} \\
+1 & 1 & 0 & $I_{15}^{16}\,\&\,I$ & \texttt{ADDI}, \texttt{LW}, \texttt{SW} \\
+2 & 1 & 1 & $I_{15}^{14}\,\&\,I\,\&\,\texttt{"00"}$ & \texttt{BLEZ} \\
+3 & 0 & 1 & $0^{14}\,\&\,I\,\&\,\texttt{"00"}$ & unused, but defined \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{\texttt{std\_logic} resolution for two drivers on one wire.}
+\label{tab:lab04-resolution}
+\begin{tabular}{c||ccc}
+\toprule
+ & \texttt{0} & \texttt{1} & \texttt{Z} \\
+\midrule
+\texttt{0} & 0 & \textbf{X} & 0 \\
+\texttt{1} & \textbf{X} & 1 & 1 \\
+\texttt{Z} & 0 & 1 & Z \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Equations}
+
+\begin{align*}
+\text{no shift:} \quad & \texttt{Xtnd32}_i = I_i && i = 0\ldots15 \\
+                       & \texttt{Xtnd32}_i = \texttt{Xsel}\cdot I_{15} && i = 16\ldots31 \\
+\text{with $\times4$:} \quad & \texttt{Xtnd32}_i = E_{i-2}, \quad \texttt{Xtnd32}_1 = \texttt{Xtnd32}_0 = 0
+\end{align*}
+
+% ONE SENTENCE, required: why can the TriBuffer's behaviour NOT be written as a
+% Boolean equation in AND, OR and NOT? Refer to its output range.
+
+\section{Design}
+% Answer all three:
+%   (a) Why did you build ImmedXtnd in two stages (extend, then shift) rather
+%       than as one expression? What does the RTL Viewer show?
+%   (b) Did you write ALUsftMUX directly, or instantiate your Lab 3 Mux2 with
+%       W => 5? Justify the choice. Reusing a tested component is usually the
+%       better engineering answer - say whether you agree.
+%   (c) What does 'Z' mean physically, and what does 'X' tell you when you see
+%       it in a waveform?
+
+\section{Implementation}
+
+\vhdlfile{code/lab04/ImmedXtnd.vhd}{\texttt{ImmedXtnd} --- 16 to 32 bit immediate extension}
+
+\vhdlfile{code/lab04/TriBuffer.vhd}{\texttt{TriBuffer} --- 32-bit tri-state buffer}
+
+\section{Verification}
+% Vectors, then the coverage argument.
+% The argument for this lab has a specific shape and you must state it:
+%   TEST WHERE THE IMPLEMENTATIONS DISAGREE, NOT WHERE THEY AGREE.
+% An immediate of 0x0001 gives the same answer either way and proves nothing.
+
+\begin{table}[htbp]
+\centering
+\caption{Test vectors for \texttt{ImmedXtnd} and the shared bus.}
+\label{tab:lab04-vectors}
+\begin{tabular}{cllll}
+\toprule
+\# & inputs & expected & what it proves & what it rules out \\
+\midrule
+1 & & & & \\
+2 & & & & \\
+3 & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Results}
+% Evidence: E1, E2, E7.
+
+\figplaceholder{the waveform showing the shared bus in all three states ---
+floating at \texttt{Z}, driven by one buffer, and in contention at \texttt{X}}
+% \resultfig{figs/lab04/bus.png}
+%   {From t = ... the bus floats at 'Z' with no driver enabled; from t = ... it
+%    reads driver A; from t = ... both drivers are enabled with data differing
+%    in every bit, so every bit resolves to 'X'.}
+%   {fig:lab04-bus}
+
+\figplaceholder{the RTL Viewer for \texttt{ImmedXtnd}, showing the extend stage
+and the shift stage separately}
+
+% E1: error and warning counts. State explicitly that there is no
+%     inferred-latch warning.
+% E4: register count for ImmedXtnd. Must be ZERO - it is combinational.
+
+\section{Discussion}
+% REQUIRED, and it must answer this question explicitly:
+%
+%     Why does ADDI sign-extend its immediate but LUI zero-extend its own?
+%
+% Answer in terms of what the bits MEAN in each instruction, then say what would
+% go wrong in the Lab 12 test program if ADDI zero-extended instead.
+%
+% Then the usual: one bug you hit, how you found it, what it cost.

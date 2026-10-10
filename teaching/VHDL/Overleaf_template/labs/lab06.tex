@@ -1,0 +1,104 @@
+% =============================================================================
+%  Lab 6 - Register File
+% =============================================================================
+
+\chapter{Lab 6 --- Register File}
+
+\section{Objective}
+% Two or three sentences, your own words.
+
+\section{Specification}
+
+\begin{table}[htbp]
+\centering
+\caption{Compressed table (Type C) for the \texttt{RegFile} write port.}
+\label{tab:lab06-truth}
+\begin{tabular}{ccl||l}
+\toprule
+\# & \texttt{Strb} & \texttt{Dsel} & effect at the rising edge \\
+\midrule
+0 & 0 & --- & no write \\
+1 & 1 & \texttt{"00000"} & \textbf{no write} --- register 0 is hardwired \\
+2 & 1 & $k \neq 0$ & $R_k \leftarrow \texttt{Din}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Reads are combinational and always valid:
+$\texttt{Aout} = R[\texttt{Asel}]$, $\texttt{Bout} = R[\texttt{Bsel}]$,
+with $R_0 \equiv 0$.
+
+\subsection*{Equations}
+
+\begin{align*}
+\text{address minterm} \quad & m_k(S) = 1 \text{ iff } S = k \\
+\text{write enable}    \quad & \mathit{We}_k = \texttt{Strb} \cdot m_k(\texttt{Dsel}) \cdot [k \neq 0] \\
+\text{storage}         \quad & R_k^{+} = \mathit{We}_k \cdot \texttt{Din} + \overline{\mathit{We}_k} \cdot R_k \\
+\text{read port A}     \quad & \texttt{Aout} = \sum_{k} m_k(\texttt{Asel}) \cdot R_k
+\end{align*}
+
+% ONE SENTENCE, required: circle or name the term that makes register 0
+% unwritable, and say what "hardwired to zero" means in hardware terms.
+
+\section{Design}
+% Answer all three:
+%   (a) A register file is three components you already built. Name them, say
+%       which lab each came from, and point at the lines of your code where
+%       each one lives.
+%   (b) Which read-during-write behaviour did you build - READ-OLD or READ-NEW?
+%       How does your testbench demonstrate it? Both are valid designs; the
+%       failure would be not knowing which one you have.
+%   (c) Why are the read ports OUTSIDE the clocked process? What would break in
+%       Lab 12 if they were inside it?
+
+\section{Implementation}
+
+\vhdlfile{code/lab06/RegFile.vhd}{\texttt{RegFile} --- 32 $\times$ 32, two read ports, one write port}
+
+\section{Verification}
+% Vectors, then the coverage argument.
+%
+% You cannot test 32 registers x 2^32 values. The argument is ADDRESS-SPACE
+% BOUNDARIES plus the special case:
+%     register 0 (the special one), register 31 (the top), one in the middle
+% State that in your own words.
+
+\begin{table}[htbp]
+\centering
+\caption{Test vectors.}
+\label{tab:lab06-vectors}
+\begin{tabular}{clllp{4.6cm}}
+\toprule
+\# & action & address & expected & what wrong design this catches \\
+\midrule
+1 & & & & \\
+2 & & & & \\
+3 & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Results}
+% Evidence: E1, E2, E4, E6, E7.
+
+\figplaceholder{the waveform showing an attempted write to register 0, and
+register 0 still reading zero afterwards}
+% Required sentence: state that Strb was asserted with Dsel = 0 and that the
+% stored value did not change, and name the mechanism that prevented it.
+
+\figplaceholder{the RTL Viewer, showing the storage array and the read multiplexers}
+
+% E4: the register count. THIS IS THE FIRST DESIGN THAT SHOULD HAVE REGISTERS.
+%     Expect around 1024 (32 x 32). Quote your number and explain it. A much
+%     lower count usually means the Fitter inferred block memory instead of
+%     flip-flops - say which happened to you and how you can tell.
+% E6: Fmax, and one sentence on where the path runs.
+
+\section{Discussion}
+% REQUIRED. One bug, how you found it, what it cost.
+%
+% Then answer this explicitly:
+%     Register 0 holds nothing and can never be changed, yet it occupies one of
+%     only 32 register addresses. Why is that a good trade?
+% Give at least one instruction that becomes unnecessary because $0 exists, and
+% point at where the Lab 12 test program relies on it.

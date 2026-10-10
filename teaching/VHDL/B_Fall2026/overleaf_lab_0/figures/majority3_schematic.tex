@@ -1,0 +1,25 @@
+% Schematic view of majority3: Y = AB + AC + BC
+% Vertical lines are input buses; a dot marks a connection, a crossing without
+% a dot is not connected.
+\begin{circuitikz}
+  \coordinate (A) at (-3.0, 2.3);
+  \coordinate (B) at (-2.3, 2.3);
+  \coordinate (C) at (-1.6, 2.3);
+  \node[and port] (g1) at (0, 1.5) {};
+  \node[and port] (g2) at (0, 0)   {};
+  \node[and port] (g3) at (0,-1.5) {};
+  \node[or port, number inputs=3] (g4) at (3.2, 0) {};
+  \draw (A) node[above] {$A$} -- (A |- 0,-2.2);
+  \draw (B) node[above] {$B$} -- (B |- 0,-2.2);
+  \draw (C) node[above] {$C$} -- (C |- 0,-2.2);
+  \draw (g1.in 1) -- (g1.in 1 -| A) node[circ] {};
+  \draw (g1.in 2) -- (g1.in 2 -| B) node[circ] {};
+  \draw (g2.in 1) -- (g2.in 1 -| A) node[circ] {};
+  \draw (g2.in 2) -- (g2.in 2 -| C) node[circ] {};
+  \draw (g3.in 1) -- (g3.in 1 -| B) node[circ] {};
+  \draw (g3.in 2) -- (g3.in 2 -| C) node[circ] {};
+  \draw (g1.out) node[above right] {\small $AB$} -| (g4.in 1);
+  \draw (g2.out) node[above right] {\small $AC$} -- (g4.in 2);
+  \draw (g3.out) node[below right] {\small $BC$} -| (g4.in 3);
+  \draw (g4.out) -- ++(0.5,0) node[right] {$Y$};
+\end{circuitikz}

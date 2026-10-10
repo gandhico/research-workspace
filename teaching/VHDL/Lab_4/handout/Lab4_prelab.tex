@@ -1,0 +1,113 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 4}\\[2pt]
+{\large Datapath Support Components}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points, about twenty
+minutes, on paper.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- Paper first}
+
+\textbf{(a)} Fill in the 32-bit result for each case. Write your answers in hex.
+
+\begin{center}
+\begin{tabular}{clll@{\hskip 8pt}||@{\hskip 8pt}l}
+\toprule
+\# & \code{Immed16} & \code{Xsel} & \code{Xlsft} & \code{Xtnd32} \\
+\midrule
+0 & \code{0x8000} & 0 (zero) & 0 (none) & \rule{4cm}{0.4pt} \\[5pt]
+1 & \code{0x8000} & 1 (sign) & 0 (none) & \rule{4cm}{0.4pt} \\[5pt]
+2 & \code{0x0002} & 1 (sign) & 1 ($\times4$) & \rule{4cm}{0.4pt} \\[5pt]
+3 & \code{0xFFFF} & 1 (sign) & 1 ($\times4$) & \rule{4cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} Rows 0 and 1 have the same input and different answers. In one
+sentence: what information decides which one is correct?
+
+\answerbox{1.4cm}
+
+\textbf{(c)} \code{ADDI} sign-extends its immediate; \code{LUI} zero-extends its
+own. Why? Answer in terms of what the bits \emph{mean} in each case.
+
+\answerbox{1.8cm}
+
+\section*{Question 2 --- Interface}
+
+Write the VHDL \code{entity} for \code{ImmedXtnd}. Interface only.
+
+\answerbox{4.0cm}
+
+Now complete this resolution table for two drivers on one \code{std\_logic} wire:
+
+\begin{center}
+\begin{tabular}{c||ccc}
+\toprule
+& \code{0} & \code{1} & \code{Z} \\
+\midrule
+\code{0} & \rule{1.2cm}{0.4pt} & \rule{1.2cm}{0.4pt} & \rule{1.2cm}{0.4pt} \\[5pt]
+\code{1} & \rule{1.2cm}{0.4pt} & \rule{1.2cm}{0.4pt} & \rule{1.2cm}{0.4pt} \\[5pt]
+\code{Z} & \rule{1.2cm}{0.4pt} & \rule{1.2cm}{0.4pt} & \rule{1.2cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{One sentence:} why can a tri-state buffer's behaviour \emph{not} be
+written as a Boolean equation in AND, OR and NOT?
+
+\answerbox{1.4cm}
+
+\section*{Question 3 --- Test plan}
+
+List the vectors you would use to convince yourself an \code{ImmedXtnd} is
+correct, and the vectors you would use for a shared bus.
+
+\begin{center}
+\begin{tabular}{@{}c@{\hskip 8pt}p{5.0cm}@{\hskip 8pt}p{7.6cm}@{}}
+\toprule
+\# & Inputs & What this vector proves \\
+\midrule
+1 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+2 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+3 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+4 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+5 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+6 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Then answer, in one or two sentences:} an immediate of \code{0x0001}
+gives the same answer whether you sign-extend or zero-extend it. What does that
+tell you about choosing test values in general?
+
+\answerbox{2.0cm}
+
+\vfill
+{\small\emph{Question 3 is the one that matters.} It is the same question as
+Section 5 of your lab report.}
+
+\end{document}

@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<HTML lang = "en">
+<HEAD>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>DSP Homework 4</title>
+  
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: { equationNumbers: { autoNumber: "AMS" } }
+    });
+  </script>
+
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+  
+<style>
+pre.hljl {
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 5px;
+    overflow-x: auto;
+    color: rgb(68,68,68); background-color: rgb(251,251,251); }
+pre.hljl > span.hljl-t { }
+pre.hljl > span.hljl-w { }
+pre.hljl > span.hljl-e { }
+pre.hljl > span.hljl-eB { }
+pre.hljl > span.hljl-o { }
+pre.hljl > span.hljl-k { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kc { color: rgb(59,151,46); font-style: italic; }
+pre.hljl > span.hljl-kd { color: rgb(214,102,97); font-style: italic; }
+pre.hljl > span.hljl-kn { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kp { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kr { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kt { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-n { }
+pre.hljl > span.hljl-na { }
+pre.hljl > span.hljl-nb { }
+pre.hljl > span.hljl-nbp { }
+pre.hljl > span.hljl-nc { }
+pre.hljl > span.hljl-ncB { }
+pre.hljl > span.hljl-nd { color: rgb(214,102,97); }
+pre.hljl > span.hljl-ne { }
+pre.hljl > span.hljl-neB { }
+pre.hljl > span.hljl-nf { color: rgb(66,102,213); }
+pre.hljl > span.hljl-nfm { color: rgb(66,102,213); }
+pre.hljl > span.hljl-np { }
+pre.hljl > span.hljl-nl { }
+pre.hljl > span.hljl-nn { }
+pre.hljl > span.hljl-no { }
+pre.hljl > span.hljl-nt { }
+pre.hljl > span.hljl-nv { }
+pre.hljl > span.hljl-nvc { }
+pre.hljl > span.hljl-nvg { }
+pre.hljl > span.hljl-nvi { }
+pre.hljl > span.hljl-nvm { }
+pre.hljl > span.hljl-l { }
+pre.hljl > span.hljl-ld { color: rgb(148,91,176); font-style: italic; }
+pre.hljl > span.hljl-s { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sa { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sb { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sc { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sd { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdC { color: rgb(201,61,57); }
+pre.hljl > span.hljl-se { color: rgb(59,151,46); }
+pre.hljl > span.hljl-sh { color: rgb(201,61,57); }
+pre.hljl > span.hljl-si { }
+pre.hljl > span.hljl-so { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sr { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ss { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ssB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-nB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nbB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nfB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nh { color: rgb(59,151,46); }
+pre.hljl > span.hljl-ni { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nil { color: rgb(59,151,46); }
+pre.hljl > span.hljl-noB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-oB { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-ow { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-p { }
+pre.hljl > span.hljl-c { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-ch { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cm { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cp { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cpB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cs { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-csB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-g { }
+pre.hljl > span.hljl-gd { }
+pre.hljl > span.hljl-ge { }
+pre.hljl > span.hljl-geB { }
+pre.hljl > span.hljl-gh { }
+pre.hljl > span.hljl-gi { }
+pre.hljl > span.hljl-go { }
+pre.hljl > span.hljl-gp { }
+pre.hljl > span.hljl-gs { }
+pre.hljl > span.hljl-gsB { }
+pre.hljl > span.hljl-gt { }
+</style>
+
+
+
+  <style type="text/css">
+  @font-face {
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-style: normal;
+  font-weight: 600;
+}
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+body {
+  margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+[hidden],
+template {
+  display: none;
+}
+a:active,
+a:hover {
+  outline: 0;
+}
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+b,
+strong {
+  font-weight: bold;
+}
+dfn {
+  font-style: italic;
+}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+mark {
+  background: #ff0;
+  color: #000;
+}
+small {
+  font-size: 80%;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+img {
+  border: 0;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+figure {
+  margin: 1em 40px;
+}
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+pre {
+  overflow: auto;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+button {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+input {
+  line-height: normal;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+textarea {
+  overflow: auto;
+}
+optgroup {
+  font-weight: bold;
+}
+table {
+  font-family: monospace, monospace;
+  font-size : 0.8em;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+thead th {
+    border-bottom: 1px solid black;
+    background-color: white;
+}
+tr:nth-child(odd){
+  background-color: rgb(248,248,248);
+}
+
+
+/*
+* Skeleton V2.0.4
+* Copyright 2014, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 12/29/2014
+*/
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box; }
+.column,
+.columns {
+  width: 100%;
+  float: left;
+  box-sizing: border-box; }
+@media (min-width: 400px) {
+  .container {
+    width: 85%;
+    padding: 0; }
+}
+@media (min-width: 550px) {
+  .container {
+    width: 80%; }
+  .column,
+  .columns {
+    margin-left: 4%; }
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0; }
+
+  .one.column,
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
+  .three.columns                  { width: 22%;            }
+  .four.columns                   { width: 30.6666666667%; }
+  .five.columns                   { width: 39.3333333333%; }
+  .six.columns                    { width: 48%;            }
+  .seven.columns                  { width: 56.6666666667%; }
+  .eight.columns                  { width: 65.3333333333%; }
+  .nine.columns                   { width: 74.0%;          }
+  .ten.columns                    { width: 82.6666666667%; }
+  .eleven.columns                 { width: 91.3333333333%; }
+  .twelve.columns                 { width: 100%; margin-left: 0; }
+
+  .one-third.column               { width: 30.6666666667%; }
+  .two-thirds.column              { width: 65.3333333333%; }
+
+  .one-half.column                { width: 48%; }
+
+  /* Offsets */
+  .offset-by-one.column,
+  .offset-by-one.columns          { margin-left: 8.66666666667%; }
+  .offset-by-two.column,
+  .offset-by-two.columns          { margin-left: 17.3333333333%; }
+  .offset-by-three.column,
+  .offset-by-three.columns        { margin-left: 26%;            }
+  .offset-by-four.column,
+  .offset-by-four.columns         { margin-left: 34.6666666667%; }
+  .offset-by-five.column,
+  .offset-by-five.columns         { margin-left: 43.3333333333%; }
+  .offset-by-six.column,
+  .offset-by-six.columns          { margin-left: 52%;            }
+  .offset-by-seven.column,
+  .offset-by-seven.columns        { margin-left: 60.6666666667%; }
+  .offset-by-eight.column,
+  .offset-by-eight.columns        { margin-left: 69.3333333333%; }
+  .offset-by-nine.column,
+  .offset-by-nine.columns         { margin-left: 78.0%;          }
+  .offset-by-ten.column,
+  .offset-by-ten.columns          { margin-left: 86.6666666667%; }
+  .offset-by-eleven.column,
+  .offset-by-eleven.columns       { margin-left: 95.3333333333%; }
+
+  .offset-by-one-third.column,
+  .offset-by-one-third.columns    { margin-left: 34.6666666667%; }
+  .offset-by-two-thirds.column,
+  .offset-by-two-thirds.columns   { margin-left: 69.3333333333%; }
+
+  .offset-by-one-half.column,
+  .offset-by-one-half.columns     { margin-left: 52%; }
+
+}
+html {
+  font-size: 62.5%; }
+body {
+  font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+  line-height: 1.6;
+  font-weight: 400;
+  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222; }
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 300; }
+h1 { font-size: 3.6rem; line-height: 1.2;  letter-spacing: -.1rem;}
+h2 { font-size: 3.4rem; line-height: 1.25; letter-spacing: -.1rem; }
+h3 { font-size: 3.2rem; line-height: 1.3;  letter-spacing: -.1rem; }
+h4 { font-size: 2.8rem; line-height: 1.35; letter-spacing: -.08rem; }
+h5 { font-size: 2.4rem; line-height: 1.5;  letter-spacing: -.05rem; }
+h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
+
+p {
+  margin-top: 0; }
+a {
+  color: #1EAEDB; }
+a:hover {
+  color: #0FA0CE; }
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: #555;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box; }
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: #333;
+  border-color: #888;
+  outline: 0; }
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  color: #FFF;
+  background-color: #33C3F0;
+  border-color: #33C3F0; }
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  color: #FFF;
+  background-color: #1EAEDB;
+  border-color: #1EAEDB; }
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  height: 38px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box; }
+/* Removes awkward default styles on some inputs for iOS */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none; }
+textarea {
+  min-height: 65px;
+  padding-top: 6px;
+  padding-bottom: 6px; }
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid #33C3F0;
+  outline: 0; }
+label,
+legend {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600; }
+fieldset {
+  padding: 0;
+  border-width: 0; }
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline; }
+label > .label-body {
+  display: inline-block;
+  margin-left: .5rem;
+  font-weight: normal; }
+ul {
+  list-style: circle; }
+ol {
+  list-style: decimal; }
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin: 1.5rem 0 1.5rem 3rem;
+  font-size: 90%; }
+li > p {margin : 0;}
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #E1E1E1; }
+th:first-child,
+td:first-child {
+  padding-left: 0; }
+th:last-child,
+td:last-child {
+  padding-right: 0; }
+button,
+.button {
+  margin-bottom: 1rem; }
+input,
+textarea,
+select,
+fieldset {
+  margin-bottom: 1.5rem; }
+pre,
+blockquote,
+dl,
+figure,
+table,
+p,
+ul,
+ol,
+form {
+  margin-bottom: 1.0rem; }
+.u-full-width {
+  width: 100%;
+  box-sizing: border-box; }
+.u-max-full-width {
+  max-width: 100%;
+  box-sizing: border-box; }
+.u-pull-right {
+  float: right; }
+.u-pull-left {
+  float: left; }
+hr {
+  margin-top: 3rem;
+  margin-bottom: 3.5rem;
+  border-width: 0;
+  border-top: 1px solid #E1E1E1; }
+.container:after,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both; }
+
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  word-break: break-all;
+  word-wrap: break-word;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre.hljl {
+  margin: 0 0 10px;
+  display: block;
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding : 5px;
+}
+
+pre.output {
+  background: #ffffff;
+}
+
+pre.code {
+  background: #ffffff;
+}
+
+pre.julia-error {
+  color : red
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+
+@media (min-width: 400px) {}
+@media (min-width: 550px) {}
+@media (min-width: 750px) {}
+@media (min-width: 1000px) {}
+@media (min-width: 1200px) {}
+
+h1.title {margin-top : 20px}
+img {max-width : 100%}
+div.title {text-align: center;}
+
+  </style>
+</HEAD>
+
+<BODY>
+  <div class ="container">
+    <div class = "row">
+      <div class = "col-md-12 twelve columns">
+        <div class="title">
+          <h1 class="title">DSP Homework 4</h1>
+          <h5>Gandhi Alexis Sinhue Contreras Torres</h5>
+          <h5>09/26/2026</h5>
+        </div>
+
+        <h1>Homework 4</h1>
+<p>This document contains the solutions for DSP Homework 4. For each problem, the analytical derivation is followed by the  corresponding MATLAB and Julia implementation when applicable.</p>
+<h2>5.11 | The DFT applied four times</h2>
+<p>Let <span class="math">$x[n]$</span> be a length-N sequence with <span class="math">$X[k]$</span> denoting its N-point DFT.  We represent the DFT operation as <span class="math">$X[k]=F\{x[n]\}$</span>.  Determine the sequence <span class="math">$y[n]$</span> obtained by applying the DFT operation 4 times to <span class="math">$x[n]$</span>, i.e., <span class="math">$y[n] = F\{F\{F\{F\{x[n]\}\}\}\}$</span>.</p>
+<p><img src="figures/5_11.png" alt="Hand solution, Problem 5.11" /></p>
+<h2>5.13 | Decimation in frequency</h2>
+<p>Consider a length-<span class="math">$N$</span> sequence <span class="math">$x[n]$</span>, <span class="math">$0 \le n \le N-1$</span>, with <span class="math">$N$</span> even. Define two length-<span class="math">$\frac{N}{2}$</span> sequences given by</p>
+<p class="math">\[
+g[n] = \left(x[n] + x\left[n+\frac{N}{2}\right]\right), \qquad
+h[n] = \left(x[n] - x\left[n+\frac{N}{2}\right]\right) W_N^n, \qquad
+0 \le n \le \frac{N}{2}-1.
+\]</p>
+<p><img src="figures/5_13.png" alt="Hand solution, Problem 5.13" /></p>
+<h2>5.18 | Zero-padding does not add info</h2>
+<p>Let <span class="math">$Y[k]$</span> denote the <span class="math">$MN$</span>-point DFT of a length-<span class="math">$N$</span> sequence <span class="math">$x[n]$</span> appended with <span class="math">$(M-1)N$</span> zeros. Show that the <span class="math">$N$</span>-point DFT <span class="math">$X[k]$</span> can be simply obtained from <span class="math">$Y[k]$</span> as follows:</p>
+<p class="math">\[
+X[k] = Y[kM], \qquad 0 \le k \le N-1.
+\]</p>
+<p><img src="figures/5_18.png" alt="Hand solution, Problem 5.18" /></p>
+<h2>5.20 | Zero interpolation in time</h2>
+<p>&#40;a&#41; Consider a length-<span class="math">$N$</span> sequence <span class="math">$x[n]$</span>, <span class="math">$0 \le n \le N-1$</span>, with an <span class="math">$N$</span>-point DFT <span class="math">$X[k]$</span>, <span class="math">$0 \le k \le N-1$</span>. Define a sequence <span class="math">$y[n]$</span> of length <span class="math">$LN$</span>, <span class="math">$0 \le n \le LN-1$</span>, given by</p>
+<p class="math">\[
+y[n] =
+\begin{cases}
+x[n/L], & n = 0, L, 2L, \ldots, (N-1)L, \\
+0, & \text{otherwise},
+\end{cases}
+\tag{5.202}
+\]</p>
+<p>where <span class="math">$L$</span> is a positive integer. Express the <span class="math">$NL$</span>-point DFT <span class="math">$Y[k]$</span> of <span class="math">$y[n]$</span> in terms of <span class="math">$X[k]$</span>.</p>
+<p>&#40;b&#41; The 5-point DFT <span class="math">$X[k]$</span> of a length-5 sequence <span class="math">$x[n]$</span> is shown in Figure P5.1. Sketch the 20-point DFT <span class="math">$Y[k]$</span> of a length-20 sequence <span class="math">$y[n]$</span> generated using Eq. &#40;5.202&#41;.</p>
+<p><img src="figures/p51.png" alt="The given 5-point DFT, Figure P5.1" /></p>
+<p><img src="figures/5_20.png" alt="Hand solution, Problem 5.20" /></p>
+<p>Figure P5.1</p>
+<h2>5.23 | Recovering a rational DTFT from the DFTs of its coefficients</h2>
+<p>Consider a rational discrete-time Fourier transform <span class="math">$X(e^{j\omega})$</span> with real coefficients of the form</p>
+<p class="math">\[
+X(e^{j\omega}) = \frac{P(e^{j\omega})}{D(e^{j\omega})}
+= \frac{p_0 + p_1 e^{-j\omega} + \cdots + p_{M-1} e^{-j\omega(M-1)}}{d_0 + d_1 e^{-j\omega} + \cdots + d_{N-1} e^{-j\omega(N-1)}}.
+\]</p>
+<p>Let <span class="math">$P[k]$</span> denote the <span class="math">$M$</span>-point DFT of the numerator coefficients <span class="math">$\{p_i\}$</span> and <span class="math">$D[k]$</span> denote the <span class="math">$N$</span>-point DFT of the denominator coefficients <span class="math">$\{d_i\}$</span>. Determine the exact expressions of the DFT <span class="math">$X(e^{j\omega})$</span> for <span class="math">$M = N = 4$</span> if the 4-point DFTs of its numerator and denominator coefficients are given by</p>
+<p class="math">\[
+P[k] = \{3.5,\ -0.5 - j9.5,\ 2.5,\ -0.5 + j9.5\}, \qquad
+D[k] = \{17,\ 7.4 + j12,\ 17.8,\ 7.4 - j12\}.
+\]</p>
+<p>Verify your result using MATLAB.</p>
+<p><img src="figures/5_23.png" alt="Hand solution, Problem 5.23" /></p>
+<h2>5.58 | DFT of the Circular Cross-Correlation</h2>
+<p>Consider two length-<span class="math">$N$</span> real-valued sequences <span class="math">$x[n]$</span> and <span class="math">$y[n]$</span> defined for <span class="math">$0 \le n \le N-1$</span> with <span class="math">$N$</span>-point DFTs <span class="math">$X[k]$</span> and <span class="math">$Y[k]$</span>, <span class="math">$0 \le k \le N-1$</span>, respectively. The circular cross-correlation of <span class="math">$x[n]$</span> and <span class="math">$y[n]$</span> is given by</p>
+<p class="math">\[
+r_{xy}[\ell] = \sum_{n=0}^{N-1} x[n]\, y[(n-\ell)_N], \qquad 0 \le \ell \le N-1.
+\tag{5.203}
+\]</p>
+<p>Express the DFT of <span class="math">$r_{xy}[\ell]$</span> in terms of <span class="math">$X[k]$</span> and <span class="math">$Y[k]$</span>.</p>
+<p><img src="figures/5_58.png" alt="Hand solution, Problem 5.58" /></p>
+<h2>5.65 | Circular Shift to a 12-point DFT</h2>
+<p>The first seven samples of the 12-point DFT <span class="math">$H[k]$</span>, <span class="math">$0 \le k \le 11$</span>, of a length-12 real sequence <span class="math">$h[n]$</span>, <span class="math">$0 \le n \le 11$</span>, are given by</p>
+<p class="math">\[
+H[k] = \{4.0,\ 17.19 + j1.46,\ -9.0 + j3.46,\ -9.0 + j5.0,\ 1.0 + 24.25j,\ 6.8 - j5.46,\ 6.0\}.
+\]</p>
+<p>Determine the 12-point DFT <span class="math">$G[k]$</span> of the length-12 sequence <span class="math">$g[n] = h[(n-17)_{12}]$</span> without computing <span class="math">$h[n]$</span>, forming the sequence <span class="math">$g[n]$</span>, and then taking its DFT.</p>
+<p><img src="figures/5_65.png" alt="Hand solution, Problem 5.65" /></p>
+<h2>M5.2 | Circular convolution via the DFT-based approach</h2>
+<p>Write a MATLAB program to compute the circular convolution of two length-<span class="math">$N$</span> sequences via the DFT-based approach. Using this program, determine the circular convolution of the following pairs of sequences:</p>
+<p>&#40;a&#41; <span class="math">$g[n] = \{3,\ 2,\ -2,\ 1,\ 0,\ 1\}$</span>, <span class="math">$h[n] = \{-5,\ -1,\ 3,\ -2,\ 4,\ 4\}$</span></p>
+<p>&#40;b&#41; <span class="math">$x[n] = \{3-j2,\ 4-j,\ -2+j3,\ j,\ 0\}$</span>, <span class="math">$v[n] = \{1-j3,\ -2-j,\ 2+j2,\ 3,\ -2+j4\}$</span></p>
+<p>&#40;c&#41; <span class="math">$x[n] = \cos(\pi n/2)$</span>, <span class="math">$y[n] = 3^n$</span>, <span class="math">$0 \le n \le 4$</span></p>
+<p>Verify your result using the function <code>circonv</code>.</p>
+<p><strong>Method.</strong> By the <span class="math">$N$</span>-point circular convolution theorem of Table 5.3, <span class="math">$g[n] \otimes_N h[n] \longleftrightarrow G[k]H[k]$</span>, so</p>
+<p class="math">\[
+y[n] = \mathrm{IDFT}\big\{\,\mathrm{DFT}\{g\}\cdot\mathrm{DFT}\{h\}\,\big\}.
+\]</p>
+<p><code>circonv</code> evaluates <span class="math">$y[n]=\sum_m x[m]\,h[\langle n-m\rangle_N]$</span> directly from the definition and serves as the independent check.</p>
+<pre><code class="language-matlab">function y &#61; circconv_dft&#40;g, h&#41;
+&#37;CIRCCONV_DFT  N-point circular convolution of two length-N sequences via the DFT.
+g &#61; g&#40;:&#41;.&#39;;  h &#61; h&#40;:&#41;.&#39;;
+if length&#40;g&#41; ~&#61; length&#40;h&#41;
+    error&#40;&#39;circconv_dft:lengthMismatch&#39;, &#39;Sequences must have equal length.&#39;&#41;;
+end
+G &#61; fft&#40;g&#41;;                 &#37; N-point DFT of g&#91;n&#93;
+H &#61; fft&#40;h&#41;;                 &#37; N-point DFT of h&#91;n&#93;
+y &#61; ifft&#40;G .* H&#41;;           &#37; N-point IDFT of the product
+if isreal&#40;g&#41; &amp;&amp; isreal&#40;h&#41;
+    y &#61; real&#40;y&#41;;            &#37; discard the round-off imaginary part
+end
+end</code></pre>
+
+
+<pre class='hljl'>
+<span class='hljl-s'>&quot;N-point circular convolution g[n] (*)_N h[n] computed with the DFT.&quot;</span><span class='hljl-t'>
+</span><span class='hljl-k'>function</span><span class='hljl-t'> </span><span class='hljl-nf'>circconv_dft</span><span class='hljl-p'>(</span><span class='hljl-n'>g</span><span class='hljl-oB'>::</span><span class='hljl-n'>AbstractVector</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>h</span><span class='hljl-oB'>::</span><span class='hljl-n'>AbstractVector</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-nf'>length</span><span class='hljl-p'>(</span><span class='hljl-n'>g</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>==</span><span class='hljl-t'> </span><span class='hljl-nf'>length</span><span class='hljl-p'>(</span><span class='hljl-n'>h</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>||</span><span class='hljl-t'>
+        </span><span class='hljl-nf'>throw</span><span class='hljl-p'>(</span><span class='hljl-nf'>DimensionMismatch</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;sequences must have equal length&quot;</span><span class='hljl-p'>))</span><span class='hljl-t'>
+    </span><span class='hljl-n'>y</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>idft</span><span class='hljl-p'>(</span><span class='hljl-nf'>dft</span><span class='hljl-p'>(</span><span class='hljl-n'>g</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>.*</span><span class='hljl-t'> </span><span class='hljl-nf'>dft</span><span class='hljl-p'>(</span><span class='hljl-n'>h</span><span class='hljl-p'>))</span><span class='hljl-t'>
+    </span><span class='hljl-k'>return</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-nf'>eltype</span><span class='hljl-p'>(</span><span class='hljl-n'>g</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;:</span><span class='hljl-t'> </span><span class='hljl-n'>Real</span><span class='hljl-t'> </span><span class='hljl-oB'>&amp;&amp;</span><span class='hljl-t'> </span><span class='hljl-nf'>eltype</span><span class='hljl-p'>(</span><span class='hljl-n'>h</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;:</span><span class='hljl-t'> </span><span class='hljl-n'>Real</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>?</span><span class='hljl-t'> </span><span class='hljl-n'>real</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>:</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-t'>
+</span><span class='hljl-k'>end</span>
+</pre>
+
+
+<p><strong>Results.</strong></p>
+<table><tr><th>case</th><th><span class="math">$N$</span></th><th><span class="math">$y[n]$</span></th><th>max error vs <code>circonv</code></th></tr><tr><td>&#40;a&#41;</td><td>6</td><td><span class="math">$\{-18,\ -14,\ 19,\ 1,\ 5,\ 22\}$</span></td><td><span class="math">$8.9\times10^{-16}$</span></td></tr><tr><td>&#40;b&#41;</td><td>5</td><td><span class="math">$\{-15+j18,\ -15-j23,\ 4+j7,\ 29-j3,\ 5+j13\}$</span></td><td><span class="math">$9.1\times10^{-15}$</span></td></tr><tr><td>&#40;c&#41;</td><td>5</td><td><span class="math">$\{-23,\ -69,\ 35,\ 105,\ 73\}$</span></td><td><span class="math">$2.8\times10^{-14}$</span></td></tr></table>
+<p>Hand check of case &#40;a&#41; at <span class="math">$n=0$</span>:</p>
+<p class="math">\[
+y[0]=g[0]h[0]+g[1]h[5]+g[2]h[4]+g[3]h[3]+g[4]h[2]+g[5]h[1]
+= -15+8-8-2+0-1 = -18 .
+\]</p>
+<p><img src="figures/m5_2.png" alt="M5.2 circular convolution via the DFT" /></p>
+<h2>M5.6 | DFTs of two real sequences using a single DFT</h2>
+<p>Write a MATLAB program to compute the DFTs of two real sequences of equal lengths based on the method outlined in Section 5.9.1. Using this program, compute the DFTs of the following pairs of sequences:</p>
+<p>&#40;a&#41; <span class="math">$\{x[n]\} = \{-3,\ 2,\ 4,\ -6,\ 1,\ 2\}$</span>, <span class="math">$\{h[n]\} = \{2,\ -1,\ 3,\ -4,\ 5,\ 6\}$</span></p>
+<p>&#40;b&#41; <span class="math">$\{x[n]\} = \{5,\ -4,\ -2,\ 6,\ 1,\ 3\}$</span>, <span class="math">$\{h[n]\} = \{4,\ -5,\ 5,\ 1,\ -2,\ 3\}$</span></p>
+<p><strong>Method &#40;Section 5.9.1&#41;.</strong> Pack the two real sequences into one complex sequence and split the single DFT using the symmetry relations of Table 5.1:</p>
+<p class="math">\[
+x[n] = g[n] + j\,h[n], \tag{5.116}
+\]</p>
+<p class="math">\[
+G[k] = \tfrac12\big(X[k] + X^*[\langle -k\rangle_N]\big), \tag{5.117}
+\]</p>
+<p class="math">\[
+H[k] = \tfrac{1}{2j}\big(X[k] - X^*[\langle -k\rangle_N]\big). \tag{5.118}
+\]</p>
+<p>Equation &#40;5.117&#41; extracts the conjugate-symmetric part of <span class="math">$X[k]$</span> &#40;the transform of the real <span class="math">$g[n]$</span>&#41; and &#40;5.118&#41; the conjugate-antisymmetric part divided by <span class="math">$j$</span> &#40;the transform of the real <span class="math">$h[n]$</span>&#41;. One complex <span class="math">$N$</span>-point FFT replaces two real ones.</p>
+<pre><code class="language-matlab">function &#91;G, H, X&#93; &#61; dft2real&#40;g, h&#41;
+&#37;DFT2REAL  N-point DFTs of two real length-N sequences from ONE N-point DFT.
+N &#61; length&#40;g&#41;;
+x &#61; g &#43; 1j*h;                     &#37; &#40;5.116&#41;  pack the two real sequences
+X &#61; fft&#40;x&#41;;                       &#37;          ONE N-point DFT
+k    &#61; 0:N-1;
+Xrev &#61; conj&#40;X&#40;mod&#40;-k, N&#41; &#43; 1&#41;&#41;;   &#37; X*&#91;&lt;-k&gt;_N&#93;
+G &#61; &#40;X &#43; Xrev&#41; / 2;               &#37; &#40;5.117&#41;  conjugate-symmetric part
+H &#61; &#40;X - Xrev&#41; / &#40;2j&#41;;            &#37; &#40;5.118&#41;  conjugate-antisymmetric part
+end</code></pre>
+
+
+<pre class='hljl'>
+<span class='hljl-s'>&quot;N-point DFTs of two real length-N sequences from a single N-point DFT.&quot;</span><span class='hljl-t'>
+</span><span class='hljl-k'>function</span><span class='hljl-t'> </span><span class='hljl-nf'>dft2real</span><span class='hljl-p'>(</span><span class='hljl-n'>g</span><span class='hljl-oB'>::</span><span class='hljl-nf'>AbstractVector</span><span class='hljl-p'>{</span><span class='hljl-oB'>&lt;:</span><span class='hljl-n'>Real</span><span class='hljl-p'>},</span><span class='hljl-t'> </span><span class='hljl-n'>h</span><span class='hljl-oB'>::</span><span class='hljl-nf'>AbstractVector</span><span class='hljl-p'>{</span><span class='hljl-oB'>&lt;:</span><span class='hljl-n'>Real</span><span class='hljl-p'>})</span><span class='hljl-t'>
+    </span><span class='hljl-n'>N</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>length</span><span class='hljl-p'>(</span><span class='hljl-n'>g</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>complex</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>float</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>g</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>float</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>h</span><span class='hljl-p'>))</span><span class='hljl-t'>              </span><span class='hljl-cs'># (5.116)</span><span class='hljl-t'>
+    </span><span class='hljl-n'>X</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>dft</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'>                                      </span><span class='hljl-cs'>#  ONE N-point DFT</span><span class='hljl-t'>
+    </span><span class='hljl-n'>Xr</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-nf'>conj</span><span class='hljl-p'>(</span><span class='hljl-n'>X</span><span class='hljl-p'>[</span><span class='hljl-nf'>circidx</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-n'>k</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>N</span><span class='hljl-p'>)])</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>k</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-oB'>:</span><span class='hljl-n'>N</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>]</span><span class='hljl-t'>   </span><span class='hljl-cs'># conj(X[&lt;-k&gt;_N])</span><span class='hljl-t'>
+    </span><span class='hljl-k'>return</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>X</span><span class='hljl-t'> </span><span class='hljl-oB'>.+</span><span class='hljl-t'> </span><span class='hljl-n'>Xr</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>./</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>X</span><span class='hljl-t'> </span><span class='hljl-oB'>.-</span><span class='hljl-t'> </span><span class='hljl-n'>Xr</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>./</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-ni'>2</span><span class='hljl-n'>im</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>X</span><span class='hljl-t'>    </span><span class='hljl-cs'># (5.117), (5.118)</span><span class='hljl-t'>
+</span><span class='hljl-k'>end</span>
+</pre>
+
+
+<p><strong>Results, case &#40;a&#41;.</strong> Packed <span class="math">$x_c[n] = \{-3+j2,\ 2-j,\ 4+j3,\ -6-j4,\ 1+j5,\ 2+j6\}$</span>:</p>
+<table><tr><th><span class="math">$k$</span></th><th><span class="math">$X_c[k]$</span> &#40;one DFT&#41;</th><th><span class="math">$X[k]$</span> &#61; DFT of <span class="math">$x$</span></th><th><span class="math">$H[k]$</span> &#61; DFT of <span class="math">$h$</span></th></tr><tr><td>0</td><td><span class="math">$0 + j11$</span></td><td><span class="math">$0$</span></td><td><span class="math">$11$</span></td></tr><tr><td>1</td><td><span class="math">$-5.2942 + j1.9019$</span></td><td><span class="math">$2.5 - j1.5\sqrt3$</span></td><td><span class="math">$4.5 + j4.5\sqrt3$</span></td></tr><tr><td>2</td><td><span class="math">$-17.8301 - j5.9019$</span></td><td><span class="math">$-13.5 + j1.5\sqrt3$</span></td><td><span class="math">$-8.5 + j2.5\sqrt3$</span></td></tr><tr><td>3</td><td><span class="math">$4 + j9$</span></td><td><span class="math">$4$</span></td><td><span class="math">$9$</span></td></tr><tr><td>4</td><td><span class="math">$-9.1699 - j11.0981$</span></td><td><span class="math">$-13.5 - j1.5\sqrt3$</span></td><td><span class="math">$-8.5 - j2.5\sqrt3$</span></td></tr><tr><td>5</td><td><span class="math">$10.2942 + j7.0981$</span></td><td><span class="math">$2.5 + j1.5\sqrt3$</span></td><td><span class="math">$4.5 - j4.5\sqrt3$</span></td></tr></table>
+<p><strong>Results, case &#40;b&#41;.</strong></p>
+<p class="math">\[
+X[k] = \{9,\ -1+j5\sqrt3,\ 12+j2\sqrt3,\ -1,\ 12-j2\sqrt3,\ -1-j5\sqrt3\}
+\]</p>
+<p class="math">\[
+H[k] = \{6,\ 0.5+j0.5\sqrt3,\ 4.5+j7.5\sqrt3,\ 8,\ 4.5-j7.5\sqrt3,\ 0.5-j0.5\sqrt3\}
+\]</p>
+<p>Both cases match <code>fft&#40;x&#41;</code> and <code>fft&#40;h&#41;</code> to better than <span class="math">$2\times10^{-15}$</span>. The DC and Nyquist samples are free checks: <span class="math">$X[0]=\sum_n x[n]$</span> and <span class="math">$X[3]=\sum_n(-1)^n x[n]$</span>, giving <span class="math">$0$</span> and <span class="math">$4$</span> in case &#40;a&#41;, <span class="math">$9$</span> and <span class="math">$-1$</span> in case &#40;b&#41;.</p>
+<p><img src="figures/m5_6.png" alt="M5.6 two real DFTs from a single complex DFT" /></p>
+<h2>M5.10 | Fourier-domain filtering</h2>
+<p>Write a MATLAB program to implement the Fourier-domain filtering illustrated in Example 5.14. Using this program, verify the results of this example.</p>
+<p><em>&#40;The printed statement refers to Example 5.13; per the assignment note it should read Example 5.14.&#41;</em></p>
+<p><strong>The example.</strong> The narrow-band lowpass signal</p>
+<p class="math">\[
+x[n] = 0.1\,n\,e^{-0.03n}, \qquad 0 \le n \le 255,
+\]</p>
+<p>is corrupted by high-frequency random noise. The 256-point DFT is taken, every sample in the band <span class="math">$50 \le k \le 206$</span> is set to zero, and the 256-point IDFT of the result is the filtered signal.</p>
+<p><strong>Why the real part is kept.</strong> The zeroed band is conjugate symmetric about <span class="math">$k = 128$</span>, since <span class="math">$206 = 256 - 50$</span>, so <span class="math">$k \in [50,206]$</span> if and only if <span class="math">$\langle -k\rangle_{256} \in [50,206]$</span>. The filtered DFT stays conjugate symmetric and <span class="math">$y[n]$</span> is real in exact arithmetic; the computed imaginary part is round-off only, about <span class="math">$10^{-13}$</span>.</p>
+<p><strong>The equivalent filter</strong> is an ideal zero-phase lowpass with cutoff</p>
+<p class="math">\[
+\omega_c = \frac{2\pi \cdot 50}{256} = 0.3906\,\pi .
+\]</p>
+<pre><code class="language-matlab">N  &#61; 256;  n &#61; 0:N-1;  k1 &#61; 50;  k2 &#61; 206;
+x  &#61; 0.1 * n .* exp&#40;-0.03*n&#41;;       &#37; original signal
+s  &#61; x &#43; d;                         &#37; d &#61; high-frequency noise
+S &#61; fft&#40;s&#41;;                         &#37; 256-point DFT
+Y &#61; S;  Y&#40;k1&#43;1 : k2&#43;1&#41; &#61; 0;         &#37; zero the band 50 &lt;&#61; k &lt;&#61; 206
+y &#61; real&#40;ifft&#40;Y&#41;&#41;;                  &#37; 256-point IDFT, keep the real part</code></pre>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>S</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>dft</span><span class='hljl-p'>(</span><span class='hljl-n'>s</span><span class='hljl-p'>)</span><span class='hljl-t'>                          </span><span class='hljl-cs'># 256-point DFT</span><span class='hljl-t'>
+</span><span class='hljl-n'>Y</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>copy</span><span class='hljl-p'>(</span><span class='hljl-n'>S</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>Y</span><span class='hljl-p'>[</span><span class='hljl-n'>k1</span><span class='hljl-oB'>+</span><span class='hljl-ni'>1</span><span class='hljl-oB'>:</span><span class='hljl-n'>k2</span><span class='hljl-oB'>+</span><span class='hljl-ni'>1</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-oB'>.=</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-t'>                   </span><span class='hljl-cs'># zero the band 50 &lt;= k &lt;= 206</span><span class='hljl-t'>
+</span><span class='hljl-n'>y</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>real</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-nf'>idft</span><span class='hljl-p'>(</span><span class='hljl-n'>Y</span><span class='hljl-p'>))</span><span class='hljl-t'>                  </span><span class='hljl-cs'># 256-point IDFT, keep the real part</span>
+</pre>
+
+
+<p><strong>Results.</strong></p>
+<table><tr><th></th><th>band-limited noise</th><th>white noise</th></tr><tr><td>relative error before filtering</td><td>1.4965</td><td>1.4989</td></tr><tr><td>relative error after filtering</td><td>0.0037</td><td>0.9801</td></tr><tr><td>noise reduction</td><td><span class="math">$404\times$</span></td><td><span class="math">$1.5\times$</span></td></tr><tr><td>max imaginary residue</td><td><span class="math">$4.5\times10^{-13}$</span></td><td><span class="math">$1.1\times10^{-12}$</span></td></tr></table>
+<p>The first column is the premise of Example 5.14: the noise really is confined to <span class="math">$50 \le k \le 206$</span>, so zeroing that band removes it almost completely and the residual <span class="math">$0.37\%$</span> error is only the signal&#39;s own energy inside the stopband. The second column shows what happens when the noise is <em>not</em> band-limited: only the <span class="math">$157/256 \approx 61\%$</span> of its energy lying inside the stopband can be removed.</p>
+<p>The small ripple at the tail of the filtered response is <strong>not</strong> leftover noise. An ideal brick-wall filter has an infinitely long impulse response, so sampling its Fourier transform onto 256 DFT points aliases it in time &#40;Section 5.3.4&#41;. That is the ripple visible in Figure 5.10&#40;c&#41; of the text.</p>
+<p><img src="figures/m5_10.png" alt="M5.10 Fourier-domain filtering, reproducing Figure 5.10" /></p>
+
+
+        <HR/>
+        <div class="footer">
+          <p>
+            Published from <a href="DSP_hk4.jmd">DSP_hk4.jmd</a>
+            using <a href="http://github.com/JunoLab/Weave.jl">Weave.jl</a> v0.10.12 on 2026-09-27.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BODY>
+
+</HTML>

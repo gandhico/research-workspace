@@ -1,0 +1,92 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 2}\\[2pt]
+{\large Master--Slave Flip-Flop and the N-Bit Register}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points, about twenty
+minutes, on paper, before you open Quartus.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- Paper first}
+
+Draw a timing diagram. The clock runs for two full periods. \code{D} goes high
+somewhere in the middle of the first low phase, and goes low again somewhere in
+the middle of the second high phase.
+
+Sketch \code{Clk}, \code{D}, the master output $Q_m$, and the final output
+\code{Q}. Mark every point where $Q_m$ changes and every point where \code{Q}
+changes.
+
+\answerbox{5.2cm}
+
+\textbf{One sentence:} \code{Q} changes at only one kind of instant. Which, and
+what physically prevents it changing at any other time?
+
+\answerbox{1.6cm}
+
+\section*{Question 2 --- Interface}
+
+Write the VHDL \code{entity} for \code{RegN}, including its \code{generic}.
+Interface only.
+
+\answerbox{4.4cm}
+
+Now write the \emph{sensitivity list} you will use for the process inside
+\code{RegN}, and say why each signal is or is not in it. \textbf{Careful:} this
+is not the same rule as Lab 1. Consider \code{Clk}, \code{Rst}, \code{Ld} and
+\code{D} one at a time.
+
+\answerbox{3.0cm}
+
+\section*{Question 3 --- Test plan}
+
+List the minimum set of vectors that would convince \emph{you} that a design is
+edge-triggered and not merely transparent.
+
+\begin{center}
+\begin{tabular}{@{}c@{\hskip 8pt}p{5.2cm}@{\hskip 8pt}p{7.4cm}@{}}
+\toprule
+\# & Stimulus (and \emph{when}, relative to the clock) & What this vector proves \\
+\midrule
+1 & \rule{5cm}{0.4pt} & \rule{7.2cm}{0.4pt} \\[8pt]
+2 & \rule{5cm}{0.4pt} & \rule{7.2cm}{0.4pt} \\[8pt]
+3 & \rule{5cm}{0.4pt} & \rule{7.2cm}{0.4pt} \\[8pt]
+4 & \rule{5cm}{0.4pt} & \rule{7.2cm}{0.4pt} \\[8pt]
+5 & \rule{5cm}{0.4pt} & \rule{7.2cm}{0.4pt} \\[8pt]
+6 & \rule{5cm}{0.4pt} & \rule{7.2cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Then, in one or two sentences:} a transparent latch would pass some of
+your vectors. Which of them would it \emph{fail}? That vector is the one doing
+the real work --- everything else is bookkeeping.
+
+\answerbox{2.2cm}
+
+\vfill
+{\small\emph{Question 3 is the one that matters.} It is the same question as
+Section 5 of your lab report.}
+
+\end{document}

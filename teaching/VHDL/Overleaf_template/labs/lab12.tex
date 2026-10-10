@@ -1,0 +1,135 @@
+% =============================================================================
+%  Lab 12 - CPU Integration
+%  THE LONGEST CHAPTER OF THE REPORT. Expect 8-12 pages.
+% =============================================================================
+
+\chapter{Lab 12 --- CPU Integration}
+
+\section{Objective}
+% Two or three sentences, your own words.
+
+\section{Specification}
+
+\subsection*{The timing contract}
+% REQUIRED, in your own words.
+
+\begin{table}[htbp]
+\centering
+\caption{The two-phase timing contract.}
+\label{tab:lab12-timing}
+\begin{tabular}{ll}
+\toprule
+rising edge & \textbf{FETCH} \quad \texttt{IRreg <= ROM[PC]} \\
+falling edge & \textbf{COMMIT} \quad register file writes, RAM writes, PC updates \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Answer: why does every piece of state commit half a period AFTER the
+% instruction is captured? What would break if the register file committed on
+% the rising edge instead?
+
+\subsection*{The three wiring decisions}
+% State each, and DERIVE the first one rather than quoting it:
+%   1. Asel = rt and Bsel = rs. Work through ADDI, SLL, SW and BLEZ and show
+%      that one assignment satisfies all of them.
+%   2. The store value comes from Aout.
+%   3. The ROM is addressed by PCreg, not NSA.
+
+\section{Design}
+% Answer all three:
+%   (a) Why do the register file and the NIAG need an INVERTED clock? What does
+%       inverting at the instantiation let you avoid doing?
+%   (b) If Asel and Bsel were swapped, three of the four instruction types would
+%       still work. Which one breaks, and why does that make the bug harder to
+%       find rather than easier?
+%   (c) Your CPU has ONE functional pin. In Lab 5 the ALU needed 108 as a
+%       top-level entity. Explain the difference.
+
+\section{Implementation}
+
+\vhdlfile{code/lab12/CPU.vhd}{\texttt{CPU} --- twelve components, wired}
+
+% State clearly which components are your own and which are TA reference
+% versions. Using a reference component costs nothing - but the report must be
+% honest about what you built.
+
+\section{Verification}
+
+\subsection*{Hand-computed trace}
+% REQUIRED, and done BEFORE simulating. Derive these from the ROM listing and
+% your control table, then put the simulated values beside them.
+
+\begin{table}[htbp]
+\centering
+\caption{The first five cycles: predicted by hand, then measured.}
+\label{tab:lab12-hand}
+\begin{tabular}{cllllll}
+\toprule
+cyc & PC & instruction & ALU (hand) & ALU (sim) & reg written & next PC \\
+\midrule
+0 & \texttt{0x00} & \texttt{LUI r1, 11} & & & & \\
+1 & \texttt{0x04} & & & & & \\
+2 & \texttt{0x08} & & & & & \\
+3 & \texttt{0x0C} & & & & & \\
+4 & \texttt{0x10} & & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{The full execution trace}
+% Paste the complete 45-row trace the testbench prints. This is the evidence
+% that the machine runs.
+
+\subsection*{Final state}
+
+\begin{table}[htbp]
+\centering
+\caption{Final state after 45 instructions.}
+\label{tab:lab12-final}
+\begin{tabular}{lll}
+\toprule
+quantity & expected & measured \\
+\midrule
+instructions executed & 45 & \\
+CPI & 1 & \\
+final \texttt{r1} & \texttt{0x00000000} & \\
+final \texttt{r2} & \texttt{0x00000400} & \\
+word stored at address 0 & \texttt{0x00000400} & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ONE SENTENCE: what number is 0x400, and where does it come from?
+
+\section{Results}
+% ALL SEVEN evidence sources. This is the only design in the course that
+% reports every one of them meaningfully. One sentence of interpretation each.
+
+\figplaceholder{the annotated waveform, about 20 cycles, with the instruction
+boundaries marked and at least one loop iteration visible end to end}
+
+\figplaceholder{the RTL Viewer, showing the twelve components and how they connect}
+
+% E1: errors and warnings. Explain the metavalue warnings: why they appear in
+%     the first few cycles and why they stop.
+% E3: Technology Map - what the fabric actually made of it.
+% E4: registers (PC 32, IR 64, register file ~1024) and block memory bits.
+% E5: the pin count. ONE functional pin. Compare with the ALU's 108 in Lab 5
+%     and say what that comparison means.
+% E6: Fmax on the Slow 1100mV 85C model, and the critical path. Which component
+%     is on it, and is that what you predicted?
+
+\section{Discussion}
+% REQUIRED, and the most important Discussion of the semester.
+%
+% For EACH integration bug you hit:
+%   - what the symptom was
+%   - WHICH OF THE FOUR CHECKS found it
+%   - what you would look for first if you saw that symptom again
+%
+% Nobody wires twelve components correctly first time. A Discussion claiming
+% otherwise scores zero.
+%
+% Then close with one paragraph: what did you actually learn from this lab that
+% you did not learn from building the components?

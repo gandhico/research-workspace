@@ -1,0 +1,267 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 6 --- Guided Examples: Solution}\\[2pt]
+{\itshape Ex 1 a file small enough to watch \quad$\cdot$\quad Ex 2 the second read port \quad$\cdot$\quad Ex 3 read-during-write and \$0}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+\hr
+
+\begin{center}
+\small
+\begin{tabular}{cl>{\raggedright\arraybackslash}p{6.2cm}>{\raggedright\arraybackslash}p{3.6cm}}
+\toprule
+& circuit & new idea & feeds the assignment as \\
+\midrule
+1 & \code{regfile\_small} ($4 \times 8$) & storage as an \textbf{array}, clocked write, combinational read & the shape of \code{RegFile} \\
+2 & \code{regfile\_two\_ports} & \textbf{read ports are cheap} & \code{Aout} and \code{Bout} \\
+3 & \code{read\_during\_write} & two decisions that look like details & read-old, and \$0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}\hr
+
+\section*{Example 1 --- A register file small enough to watch}
+
+Four registers, eight bits, one read port. The real thing is $32 \times 32$ with
+two read ports: \textbf{the same design}, and impossible to see in a waveform.
+
+\subsection*{1.1 Three components you already own}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+part & from & question it answers \\
+\midrule
+address \textbf{decoder} & Lab 0, Ex 3 & which register does this address mean? \\
+array of \textbf{registers} & Lab 2 & where is the value stored? \\
+\textbf{multiplexer} & Lab 3 & whose output reaches the port? \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{A register file is not a new kind of component.} That is the whole
+lesson of Example 1, and it is why this lab is buildable in one session.
+\end{quote}
+
+\subsection*{1.2 The array type}
+
+\begin{lstlisting}
+type reg_array is array (0 to 3) of std_logic_vector(7 downto 0);
+signal regs : reg_array;
+\end{lstlisting}
+
+\code{regs(2)} is the third register. \textbf{The index must be an integer}, which
+is why the address arrives as bits and gets converted --- Lab 4, Example 3:
+
+\begin{lstlisting}
+regs(to_integer(unsigned(Dsel))) <= Din;
+\end{lstlisting}
+
+\subsection*{1.3 The asymmetry: write is clocked, reads are not}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& when it happens & why \\
+\midrule
+\textbf{write} & on the rising edge & storage needs an edge to be unambiguous \\
+\textbf{reads} & continuously & change the address and the output follows at once \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{That asymmetry is deliberate, and it is exactly what the CPU needs.} In
+Lab 12 the register file must produce both operands \emph{during} a cycle and
+store the result \emph{at the end} of it.
+\end{quote}
+
+So the reads sit \textbf{outside} the clocked process. Putting them inside is the
+most common structural mistake in this lab: it delays every read by a cycle and
+the CPU then executes each instruction with last cycle's operands.
+
+\vspace{4pt}\hr
+
+\section*{Example 2 --- The second read port, and why it is nearly free}
+
+Compare Example 2 with Example 1. \textbf{The difference is two lines:}
+
+\begin{lstlisting}
+Bsel : in std_logic_vector(1 downto 0);          -- one more address port
+Bout <= regs(to_integer(unsigned(Bsel)));        -- one more multiplexer
+\end{lstlisting}
+
+\textbf{The storage did not change at all.}
+
+\subsection*{2.1 Read ports versus write ports}
+
+\begin{center}
+\small
+\begin{tabular}{l>{\raggedright\arraybackslash}p{11.0cm}}
+\toprule
+another \textbf{read} port & one more multiplexer hanging off storage that already exists. Any number of readers can look at a register at once, so there is no conflict to resolve. \\
+\midrule
+another \textbf{write} port & two sources may target the \textbf{same register on the same edge}. The hardware must decide who wins: arbitration, priority, and a mux on every register's input. \textbf{It is a new correctness problem, not one more mux.} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Compare the resource numbers of Examples 1 and 2 in your Fitter report to see the
+read-port cost yourself. It is small.
+
+\subsection*{2.2 Why exactly two reads and one write}
+
+Look at any R-type instruction: \code{ADD rd, rs, rt}. Two source registers are
+read, one destination is written.
+
+\begin{quote}
+\textbf{The register file's shape is dictated by the instruction format}, not
+chosen for convenience. That is also why a second write port is not needed: no
+instruction in this machine writes two registers.
+\end{quote}
+
+\vspace{4pt}\hr
+
+\section*{Example 3 --- Two decisions that look like details}
+
+\subsection*{3.1 Read-during-write}
+
+What should a read port produce when it addresses the register being written on
+this very edge?
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& the read port returns & cost \\
+\midrule
+\textbf{read-old} & the value stored before the edge & free --- it is what you get naturally \\
+\textbf{read-new} (bypass) & the value being written now & a comparator and a mux \emph{per read port} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{There is no universally right answer.} Both are buildable and both are
+used in real machines.
+
+\begin{quote}
+\textbf{Your design is read-old unless you deliberately add the bypass}, because
+the read multiplexer looks at each register's current output and nothing is stored
+until the edge.
+\end{quote}
+
+That is correct for this CPU: in Lab 12 the register file is read at the start of
+a cycle and written at the end, so the two never collide in a way that matters.
+
+\textbf{What you must do:} know which one you built, and say so in the report. A
+student who cannot answer ``old or new?'' has not understood their own design ---
+and it is a standard interview question.
+
+\textbf{How to test it:} put a known value in register $k$; then on one edge write
+a \emph{different} value to $k$ while reading $k$. Sample just before the edge and
+just after. The two designs disagree only on that one sample.
+
+\subsection*{3.2 Register zero}
+
+In MIPS, \code{\$0} always reads as zero --- not by a convention software politely
+follows, but because \textbf{the hardware refuses to store into it}:
+
+\[
+\mathit{We}_k = \code{Strb} \cdot m_k(\code{Dsel}) \cdot \underbrace{[\,k \neq 0\,]}_{\text{the whole mechanism}}
+\]
+
+\begin{lstlisting}
+if Strb = '1' and Dsel /= "00000" then
+    regs(to_integer(unsigned(Dsel))) <= Din;
+end if;
+\end{lstlisting}
+
+\begin{quote}
+\textbf{``Hardwired to zero'' is not a rule. It is a missing wire.}
+\end{quote}
+
+\textbf{Protect the read side as well:}
+
+\begin{lstlisting}
+Aout <= (others => '0') when Asel = "00000"
+   else regs(to_integer(unsigned(Asel)));
+\end{lstlisting}
+
+A design that blocks only the write passes its first test --- the array starts at
+zeros --- and returns stale data the moment anything targets register 0.
+
+\textbf{Why have such a register at all?} It makes the instruction set smaller: a
+permanent zero gives you several instructions for free. A move is an add with
+\code{\$0}; a clear is a write of \code{\$0}; a comparison against zero needs no
+literal.
+
+\vspace{4pt}\hr
+
+\section*{Into the assignment}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+example & becomes \\
+\midrule
+Ex 1 & the array, the conversion, the clocked write and combinational reads \\
+Ex 2 & two read ports, \code{Aout} and \code{Bout}, independent addresses \\
+Ex 3 & read-old, and register 0 blocked on \textbf{both} sides \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Four things to check in your own \code{RegFile}:
+
+\begin{enumerate}[leftmargin=2em,itemsep=2pt]
+\item register 0 blocked on the \textbf{write} side (\code{Dsel /= "00000"});
+\item register 0 forced on the \textbf{read} side too;
+\item reads \textbf{outside} the clocked process;
+\item \textbf{no \code{else}} on the \code{Strb} test --- not writing means hold,
+the same rule as Labs 1 and 2.
+\end{enumerate}
+
+\textbf{Expect this to be the largest component so far.} Thirty-two 32-bit
+registers is 1024 flip-flops, and in Lab 12's resource table the register file
+dominates the whole CPU. That is worth one sentence in your report, because it is
+the first time a design decision shows up clearly as area.
+
+\vspace{6pt}
+\hr
+{\small \textbf{Forward.} In Lab 12 this component supplies both ALU operands and
+receives every result. Its two read addresses come from the instruction's
+\code{rs} and \code{rt} fields, and its write address from \code{rd} or
+\code{rt} --- chosen by a multiplexer you built in Lab 3.}
+
+\end{document}

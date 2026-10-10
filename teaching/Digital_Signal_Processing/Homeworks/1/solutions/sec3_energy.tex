@@ -1,0 +1,182 @@
+\section{Summability, energy and power (2.31--2.36)}
+
+\Prob{2.31\quad Show that the following sequences are absolutely summable}
+
+\textbf{(a)} $x_a[n]=\dfrac{1}{4^{n}}\mu[n]$:
+\[
+\sum_{n=-\infty}^{\infty}|x_a[n]|=\sum_{n=0}^{\infty}\Bigl(\tfrac14\Bigr)^{n}
+=\frac{1}{1-\tfrac14}=\frac43<\infty . \qquad\checkmark
+\]
+
+\textbf{(b)} $x_b[n]=\dfrac{1}{(n+2)(n+3)}\mu[n]$. Partial fractions give a telescoping sum:
+\[
+\frac{1}{(n+2)(n+3)}=\frac{1}{n+2}-\frac{1}{n+3},
+\]
+so for the partial sums
+\[
+\sum_{n=0}^{K}\frac{1}{(n+2)(n+3)}
+=\Bigl(\frac12-\frac13\Bigr)+\Bigl(\frac13-\frac14\Bigr)+\cdots+\Bigl(\frac{1}{K+2}-\frac{1}{K+3}\Bigr)
+=\frac12-\frac{1}{K+3}.
+\]
+All terms are positive, hence $\sum_n |x_b[n]|=\lim_{K\to\infty}\bigl(\tfrac12-\tfrac{1}{K+3}\bigr)$:
+\[
+\boxed{\;\sum_{n}|x_b[n]|=\tfrac12<\infty .\;}\qquad\checkmark
+\]
+
+\Prob{2.32\quad Absolutely summable $\Rightarrow$ finite energy, but not conversely}
+
+\emph{Direction 1.} Let $S=\sum_n|x[n]|<\infty$. By Problem 2.23, $|x[n]|\le S$ for all $n$.
+Therefore
+\[
+\mathcal{E}_x=\sum_{n}|x[n]|^{2}=\sum_{n}|x[n]|\cdot|x[n]|
+\;\le\;S\sum_{n}|x[n]|=S^{2}<\infty .
+\]
+So every absolutely summable sequence has finite energy. (Equivalently
+$\|x\|_2\le\|x\|_1$.)
+
+\emph{Direction 2 (counterexample).} Take
+\[
+x[n]=\frac{1}{n}\,\mu[n-1].
+\]
+Its energy is finite,
+\[
+\mathcal{E}_x=\sum_{n=1}^{\infty}\frac{1}{n^{2}}=\frac{\pi^{2}}{6}\approx 1.6449<\infty,
+\]
+but its absolute sum is the divergent harmonic series,
+\[
+\sum_{n=1}^{\infty}\frac{1}{n}=\infty .
+\]
+Hence a finite-energy sequence need not be absolutely summable:
+\[
+\boxed{\;\ell_1\subsetneq\ell_2 .\;}
+\]
+
+\Prob{2.33\quad The square-summable $x_1[n]$ of Eq.\ (2.35) is not absolutely summable}
+
+Equation (2.35) defines
+\[
+x_1[n]=\begin{cases}\dfrac1n, & n\ge 1,\\[4pt] 0, & n\le 0 .\end{cases}
+\]
+\emph{Square-summable:} $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^{2}}=\frac{\pi^{2}}{6}<\infty$.
+(Bound it without knowing the exact value: $\frac{1}{n^2}<\frac{1}{n(n-1)}=\frac{1}{n-1}-\frac1n$
+for $n\ge2$, whose sum telescopes to $1$; so $\mathcal{E}\le 2$.)
+
+\emph{Not absolutely summable:} the harmonic series diverges. A quick proof by grouping,
+\[
+\sum_{n=1}^{2^{K}}\frac1n
+=1+\frac12+\underbrace{\Bigl(\frac13+\frac14\Bigr)}_{>\frac12}
+      +\underbrace{\Bigl(\frac15+\cdots+\frac18\Bigr)}_{>\frac12}+\cdots
+\;>\;1+\frac{K}{2}\;\xrightarrow[K\to\infty]{}\;\infty .
+\]
+\[
+\boxed{\;\sum_n|x_1[n]|=\infty\quad\text{while}\quad\sum_n|x_1[n]|^{2}=\tfrac{\pi^2}{6}<\infty .\;}
+\]
+This is precisely the counterexample used in Problem 2.32.
+
+\Prob{2.34\quad $x_2[n]=\dfrac{\cos\omega_c n}{\pi n}\mu[n-1]$ is square-summable but not absolutely summable}
+
+\emph{Square-summable.} Since $|\cos\omega_c n|\le 1$,
+\[
+\sum_{n=1}^{\infty}\Bigl|\frac{\cos\omega_c n}{\pi n}\Bigr|^{2}
+\;\le\;\frac{1}{\pi^{2}}\sum_{n=1}^{\infty}\frac{1}{n^{2}}
+=\frac{1}{\pi^{2}}\cdot\frac{\pi^{2}}{6}=\frac16<\infty . \qquad\checkmark
+\]
+
+\emph{Not absolutely summable} (for $0<\omega_c<\pi$). Use $|\cos\theta|\ge\cos^{2}\theta$
+together with the identity $\cos^{2}\theta=\tfrac12(1+\cos 2\theta)$:
+\[
+\sum_{n=1}^{\infty}\frac{|\cos\omega_c n|}{\pi n}
+\;\ge\;\frac{1}{\pi}\sum_{n=1}^{\infty}\frac{\cos^{2}\omega_c n}{n}
+=\underbrace{\frac{1}{2\pi}\sum_{n=1}^{\infty}\frac{1}{n}}_{=\;\infty}
+\;+\;\underbrace{\frac{1}{2\pi}\sum_{n=1}^{\infty}\frac{\cos 2\omega_c n}{n}}_{\text{finite}} .
+\]
+The first sum diverges (harmonic); the second converges by Dirichlet's test, since the partial
+sums of $\cos 2\omega_c n$ are bounded whenever $2\omega_c\not\equiv 0 \pmod{2\pi}$ and $1/n$
+decreases monotonically to $0$. (Its value is in fact $-\ln|2\sin\omega_c|$.) A divergent plus
+a finite quantity diverges, so
+\[
+\boxed{\;\sum_{n}|x_2[n]|=\infty\quad\text{while}\quad \mathcal{E}_{x_2}\le \tfrac16<\infty .\;}
+\]
+This sequence is the (causal half of the) ideal lowpass impulse response --- the classical
+example of an FIR-untruncatable, non-absolutely-summable but finite-energy signal.
+
+\Prob{2.35\quad Compute the energy of the following sequences}
+
+\textbf{(a)} $x_a[n]=A\alpha^{n}\mu[n]$, $|\alpha|<1$:
+\[
+\mathcal{E}_a=\sum_{n=0}^{\infty}\bigl|A\alpha^{n}\bigr|^{2}
+=|A|^{2}\sum_{n=0}^{\infty}\bigl(|\alpha|^{2}\bigr)^{n}
+\]
+\[
+\boxed{\;\mathcal{E}_a=\frac{|A|^{2}}{1-|\alpha|^{2}} .\;}
+\]
+(The geometric series converges exactly because $|\alpha|<1$; as $|\alpha|\to1$ the energy
+blows up, as it must.)
+
+\textbf{(b)} $x_b[n]=\dfrac{1}{n^{2}}\mu[n-1]$:
+\[
+\mathcal{E}_b=\sum_{n=1}^{\infty}\frac{1}{n^{4}}=\zeta(4)
+\]
+\[
+\boxed{\;\mathcal{E}_b=\frac{\pi^{4}}{90}\approx 1.0823 .\;}
+\]
+
+\Prob{2.36\quad Average power and energy}
+
+Recall $\mathcal{E}_x=\sum_n|x[n]|^{2}$ and
+$\mathcal{P}_x=\lim_{K\to\infty}\frac{1}{2K+1}\sum_{n=-K}^{K}|x[n]|^{2}$. A signal with finite
+nonzero energy always has $\mathcal{P}=0$; a signal with finite nonzero power always has
+$\mathcal{E}=\infty$.
+
+\textbf{(a)} $x_1[n]=(-1)^{n}$, so $|x_1[n]|^{2}=1$ for all $n$:
+\[
+\mathcal{E}_1=\sum_{n}1=\infty,\qquad
+\mathcal{P}_1=\lim_{K\to\infty}\frac{2K+1}{2K+1}
+\]
+\[
+\boxed{\;\mathcal{E}_1=\infty,\qquad \mathcal{P}_1=1 .\;}
+\]
+
+\textbf{(b)} $x_2[n]=\mu[n]$: $|x_2[n]|^{2}=1$ for $n\ge0$ and $0$ for $n<0$, so of the
+$2K+1$ terms only $K+1$ are nonzero:
+\[
+\mathcal{E}_2=\infty,\qquad
+\mathcal{P}_2=\lim_{K\to\infty}\frac{K+1}{2K+1}
+\]
+\[
+\boxed{\;\mathcal{E}_2=\infty,\qquad \mathcal{P}_2=\tfrac12 .\;}
+\]
+(Only half of the time axis is "on", which halves the power relative to (a).)
+
+\textbf{(c)} $x_3[n]=n\mu[n]$:
+\[
+\sum_{n=0}^{K}n^{2}=\frac{K(K+1)(2K+1)}{6}
+\;\Longrightarrow\;
+\mathcal{P}_3=\lim_{K\to\infty}\frac{1}{2K+1}\cdot\frac{K(K+1)(2K+1)}{6}
+=\lim_{K\to\infty}\frac{K(K+1)}{6}=\infty .
+\]
+\[
+\boxed{\;\mathcal{E}_3=\infty,\qquad \mathcal{P}_3=\infty .\;}
+\]
+$x_3[n]$ is \emph{neither} an energy signal nor a power signal.
+
+\textbf{(d)} $x_4[n]=A_o e^{j\omega_o n}$: $|x_4[n]|^{2}=|A_o|^{2}$ for every $n$:
+\[
+\boxed{\;\mathcal{E}_4=\infty,\qquad \mathcal{P}_4=|A_o|^{2} .\;}
+\]
+(The power of a complex exponential does not depend on $\omega_o$ --- its magnitude is
+constant.)
+
+\textbf{(e)} $x_5[n]=A\cos\bigl(\tfrac{2\pi n}{M}+\phi\bigr)$ is periodic with period $M$
+(for integer $M$), so the average power is the mean over one period:
+\[
+\mathcal{P}_5=\frac{1}{M}\sum_{n=0}^{M-1}A^{2}\cos^{2}\!\Bigl(\frac{2\pi n}{M}+\phi\Bigr)
+=\frac{A^{2}}{2}+\frac{A^{2}}{2M}\sum_{n=0}^{M-1}\cos\!\Bigl(\frac{4\pi n}{M}+2\phi\Bigr).
+\]
+The remaining sum is a full period of a complex exponential of frequency $2\cdot\frac{2\pi}{M}$
+and vanishes whenever $2/M\notin\mathbb{Z}$, i.e.\ for $M>2$:
+\[
+\boxed{\;\mathcal{E}_5=\infty,\qquad \mathcal{P}_5=\frac{A^{2}}{2}\quad (M>2).\;}
+\]
+Degenerate cases: for $M=1$, $x_5[n]=A\cos\phi$ and for $M=2$, $x_5[n]=A(-1)^{n}\cos\phi$;
+in both, $\mathcal{P}_5=A^{2}\cos^{2}\phi$.

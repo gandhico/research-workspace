@@ -1,0 +1,121 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 5}\\[2pt]
+{\large Arithmetic Logic Unit}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points, about twenty
+minutes, on paper. This one is worth doing properly --- the ALU is the biggest
+component so far and the students who arrive with these answers finish.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- Paper first}
+
+\textbf{(a)} Fill in the 32-bit result, in hex, for each operation. Assume
+\code{Shft = 1} where a shift amount is needed.
+
+\begin{center}
+\begin{tabular}{llll@{\hskip 8pt}||@{\hskip 8pt}l}
+\toprule
+\# & operation & \code{Ain} & \code{Bin} & \code{Rout} \\
+\midrule
+1 & \code{SUB}  & \code{0x00000004} & \code{0x00000007} & \rule{3.6cm}{0.4pt} \\[5pt]
+2 & \code{NOT}  & \code{0x00000000} & \code{0x0F0F0F0F} & \rule{3.6cm}{0.4pt} \\[5pt]
+3 & \code{SRL}  & \code{0xFFFFFFF8} & --- & \rule{3.6cm}{0.4pt} \\[5pt]
+4 & \code{SRA}  & \code{0xFFFFFFF8} & --- & \rule{3.6cm}{0.4pt} \\[5pt]
+5 & \code{SOLS} & \code{0xFFFFFFFF} & \code{0x00000001} & \rule{3.6cm}{0.4pt} \\[5pt]
+6 & \code{SOLU} & \code{0xFFFFFFFF} & \code{0x00000001} & \rule{3.6cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} Rows 3 and 4 have the same input and different answers. Rows 5 and 6
+also. In one sentence each, say what information decides the correct answer.
+
+\answerbox{2.0cm}
+
+\textbf{(c)} Write the two flag equations for a 32-bit result $R$:
+
+\vspace{4pt}
+$\text{Zero} = $ \rule{9cm}{0.4pt}
+\vspace{8pt}
+
+$\text{Neg} = $ \rule{9cm}{0.4pt}
+\vspace{6pt}
+
+One sentence: why does \code{Neg} require no computation at all?
+
+\answerbox{1.2cm}
+
+\section*{Question 2 --- Interface and structure}
+
+\textbf{(a)} Write the VHDL \code{entity} for \code{ALU}. Interface only.
+
+\answerbox{4.2cm}
+
+\textbf{(b)} An ALU computes every operation in parallel and multiplexes the
+answers. Suppose you took the \code{Zero} flag straight from the adder instead
+of from the selected result. Give one specific operation and operand pair that
+would then report the wrong flag, and say what the flag would be versus what it
+should be.
+
+\answerbox{2.2cm}
+
+\section*{Question 3 --- Test plan}
+
+You cannot test $2^{64}$ operand pairs. State your coverage argument, then give
+the vectors.
+
+\begin{center}
+\begin{tabular}{@{}c@{\hskip 8pt}p{4.6cm}@{\hskip 8pt}p{8.0cm}@{}}
+\toprule
+\# & operation and operands & which wrong implementation this catches \\
+\midrule
+1 & \rule{4.4cm}{0.4pt} & \rule{7.8cm}{0.4pt} \\[8pt]
+2 & \rule{4.4cm}{0.4pt} & \rule{7.8cm}{0.4pt} \\[8pt]
+3 & \rule{4.4cm}{0.4pt} & \rule{7.8cm}{0.4pt} \\[8pt]
+4 & \rule{4.4cm}{0.4pt} & \rule{7.8cm}{0.4pt} \\[8pt]
+5 & \rule{4.4cm}{0.4pt} & \rule{7.8cm}{0.4pt} \\[8pt]
+6 & \rule{4.4cm}{0.4pt} & \rule{7.8cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Then answer both, one or two sentences each:}
+
+\textbf{(a)} Which single vector in your table would catch an \code{SRA} that was
+accidentally written as an \code{SRL}? If you do not have one, add it now.
+
+\answerbox{1.6cm}
+
+\textbf{(b)} For arithmetic, ``test the boundaries'' replaces ``test
+exhaustively''. Name the five boundary values worth testing on a 32-bit signed
+operand, and say why the middle of the range is uninteresting.
+
+\answerbox{2.2cm}
+
+\vfill
+{\small\emph{Question 3 is the one that matters.} It is the same question as
+Section 5 of your lab report.}
+
+\end{document}

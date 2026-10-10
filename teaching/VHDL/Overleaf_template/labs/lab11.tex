@@ -1,0 +1,123 @@
+% =============================================================================
+%  Lab 11 - Instruction Decoder II
+% =============================================================================
+
+\chapter{Lab 11 --- Instruction Decoder II}
+
+\section{Objective}
+% Two or three sentences, your own words.
+
+\section{Specification --- the complete control table}
+
+% THIS IS THE MOST IMPORTANT TABLE IN YOUR REPORT.
+% Fill in every cell. Write "--" where CTRL_DEFAULT stands.
+% PRINT THIS PAGE AND BRING IT TO LAB 12 - step three of the debugging method
+% is "do the control signals match the table for this opcode?"
+
+\begin{table}[htbp]
+\centering
+\caption{The complete control table. All eight instructions, all sixteen signals.
+Differences from \texttt{CTRL\_DEFAULT} only.}
+\label{tab:lab11-ctrl}
+\scriptsize
+\begin{tabular}{lllllllllll}
+\toprule
+instr & \texttt{ALU\_func} & \texttt{ALU\_Asel} & \texttt{ALU\_Ssel} & \texttt{IR\_Xsel} & \texttt{IR\_Xlsft} & \texttt{DM\_en} & \texttt{DM\_rw} & \texttt{DM\_strb} & \texttt{RF\_Dsel} & \texttt{RF\_strb} \\
+\midrule
+\texttt{ADD}  & & & & & & & & & & \\
+\texttt{SLL}  & & & & & & & & & & \\
+\texttt{ADDI} & & & & & & & & & & \\
+\texttt{LUI}  & & & & & & & & & & \\
+\texttt{LW}   & & & & & & & & & & \\
+\texttt{SW}   & & & & & & & & & & \\
+\texttt{BLEZ} & & & & & & & & & & \\
+\texttt{J}    & & & & & & & & & & \\
+\bottomrule
+\end{tabular}
+
+\vspace{6pt}
+
+\begin{tabular}{lllll}
+\toprule
+instr & \texttt{RF\_Wsel} & \texttt{RF\_oe} & \texttt{NIAG\_sel} & \texttt{NIAG\_cond} \\
+\midrule
+\texttt{ADD}  & & & & \\
+\texttt{SLL}  & & & & \\
+\texttt{ADDI} & & & & \\
+\texttt{LUI}  & & & & \\
+\texttt{LW}   & & & & \\
+\texttt{SW}   & & & & \\
+\texttt{BLEZ} & & & & \\
+\texttt{J}    & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Design}
+
+\subsection*{Three observations}
+% REQUIRED, in your own words, one short paragraph each:
+%
+%   (a) ALU_Asel = IMMED for ADDI, LUI, LW and SW - four instructions with
+%       nothing obvious in common. Why? What does that tell you about the cost
+%       of a load compared with an add?
+%
+%   (b) DM_rw is determined by exactly ONE instruction out of eight, and most
+%       of J's row is default. What does that say about the SHAPE of a control
+%       table, and why does it make the default-first structure natural rather
+%       than merely convenient?
+%
+%   (c) RF_strb is STROBE for exactly five instructions and HOLD for three.
+%       State the rule that decides which.
+
+\subsection*{Don't cares}
+% REQUIRED. Example 2 gives two implementations of IR_Xsel that disagree on
+% ADD, SLL and J. Explain:
+%   - why both are correct
+%   - which is cheaper
+%   - and why a testbench that pinned IR_Xsel down for ADD would be testing an
+%     accident of the implementation rather than a requirement.
+
+\section{Implementation}
+
+\vhdlfile{code/lab11/Decoder.vhd}{\texttt{Decoder} --- the complete instruction decoder}
+
+\section{Verification}
+% Your testbench is TABLE-DRIVEN: the expected control bundle for each
+% instruction lives in an array, and one loop checks every field of every row.
+% Say why that structure suits a table-shaped design, and report the count:
+% "8 instructions, 14 fields each, N checks, all pass."
+%
+% Then explain the three latch tests and what class of bug they detect.
+
+\begin{table}[htbp]
+\centering
+\caption{Latch tests --- the checks a one-instruction-at-a-time testbench
+cannot make.}
+\label{tab:lab11-latch}
+\begin{tabular}{lll}
+\toprule
+sequence & signal checked & must be \\
+\midrule
+\texttt{LUI} after \texttt{ADDI} & \texttt{IR\_Xsel} & \\
+\texttt{SW} after \texttt{BLEZ} & \texttt{IR\_Xlsft} & \\
+\texttt{ADD} after \texttt{SW} & \texttt{RF\_oe} & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Results}
+% Evidence: E1, E2, E4, E7.
+
+\figplaceholder{the RTL Viewer for the complete \texttt{Decoder}}
+
+% E1: 0 errors, and say EXPLICITLY that there is no inferred-latch warning.
+% E4: register count MUST be zero.
+% E7: quote the transcript line with the total check count.
+
+\section{Discussion}
+% REQUIRED. One bug, how you found it, what it cost.
+%
+% A good topic: did your expectation table and your decoder ever disagree?
+% Which one turned out to be wrong - and what does that tell you about writing
+% the test from the SPECIFICATION rather than from the implementation?

@@ -1,0 +1,115 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Final Lab Preparation Sheet}\\[2pt]
+{\large Demonstration and Extension}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Bring this filled in.} It is not a pre-lab in the usual sense ---
+it is your demonstration plan and your track choice, and it exists so that the
+last session is spent building rather than deciding.}
+
+\vspace{4pt}\hrule
+
+\section*{Part 1 --- Demonstration readiness}
+
+\textbf{(a)} Does your CPU run the program to completion?
+
+\vspace{4pt}
+$\square$ yes \hfill
+$\square$ it runs but the result is wrong \hfill
+$\square$ no --- \emph{come to office hours before the session}
+\vspace{6pt}
+
+\textbf{(b)} Which components in your CPU are your own, and which are TA
+reference versions? Be honest --- the report has to say the same thing, and
+nobody is penalised for it.
+
+\answerbox{2.2cm}
+
+\textbf{(c)} Pick one cycle from your waveform now, and write down what is
+executing and how you can tell from the control signals alone. You will be asked
+to do this live.
+
+\answerbox{2.4cm}
+
+\textbf{(d)} Which component gave you the most trouble, and \emph{which of the
+four checks} found the bug?
+
+\answerbox{2.0cm}
+
+\section*{Part 2 --- Choose your track}
+
+\vspace{4pt}
+$\square$ \textbf{A} --- add \code{ORI} (or \code{SUB}, the harder variant)
+
+$\square$ \textbf{B} --- measure the instruction mix and reason about CPI
+
+$\square$ \textbf{C} --- one pipeline stage and the hazard analysis
+\hfill {\small\emph{a working pipeline is not required}}
+\vspace{8pt}
+
+\textbf{Now answer the question for the track you picked.}
+
+\subsection*{If you chose A}
+
+\code{ORI rt, rs, imm} zero-extends its immediate; \code{ADDI} sign-extends its
+own. Both are I-type and both write \code{rt}. In one or two sentences: why the
+difference?
+
+\answerbox{2.0cm}
+
+Which control signals will your new row change, relative to \code{CTRL\_DEFAULT}?
+
+\answerbox{2.0cm}
+
+\subsection*{If you chose B}
+
+The four instruction classes must be mutually exclusive and cover everything.
+Give the control-signal test for each, and say \textbf{which one must be tested
+first, and why} --- the order matters.
+
+\answerbox{3.0cm}
+
+\subsection*{If you chose C}
+
+The Lab 12 program contains this adjacent pair:
+
+\begin{center}
+\code{ADDI r1, r1, -1} \quad followed immediately by \quad \code{BLEZ r1, +2}
+\end{center}
+
+With one pipeline register between fetch and execute, what value does the
+\code{BLEZ} read, and what does the loop then do?
+
+\answerbox{2.4cm}
+
+Name the hazard, and name one real-world fix for it.
+
+\answerbox{1.6cm}
+
+\vfill
+{\small \emph{Whichever track you pick, the write-up matters as much as the work.}
+Sixty points of the hundred are the extension; twenty of those sixty are the
+analysis.}
+
+\end{document}

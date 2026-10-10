@@ -1,0 +1,113 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 6}\\[2pt]
+{\large Register File}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points, about twenty
+minutes, on paper.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- Paper first}
+
+\textbf{(a)} Complete the write-behaviour table.
+
+\begin{center}
+\begin{tabular}{ccl@{\hskip 8pt}||@{\hskip 8pt}l}
+\toprule
+\# & \code{Strb} & \code{Dsel} & effect at the rising edge \\
+\midrule
+0 & 0 & --- & \rule{6cm}{0.4pt} \\[5pt]
+1 & 1 & \code{"00000"} & \rule{6cm}{0.4pt} \\[5pt]
+2 & 1 & $k \neq 0$ & \rule{6cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} Write the write-enable equation for register $k$, in terms of
+\code{Strb}, the address minterm $m_k(\code{Dsel})$, and whatever else is needed:
+
+\vspace{6pt}
+$\mathit{We}_k = $ \rule{10cm}{0.4pt}
+\vspace{8pt}
+
+Circle the term that makes register 0 unwritable, and in one sentence say what
+``hardwired to zero'' actually means in hardware.
+
+\answerbox{1.6cm}
+
+\textbf{(c)} A register file is three components you have already built. Name
+them, and say which lab each came from.
+
+\answerbox{2.0cm}
+
+\section*{Question 2 --- Interface and cost}
+
+\textbf{(a)} Write the VHDL \code{entity} for \code{RegFile}. Interface only.
+Get the widths right: how many bits does an address need to select one of 32
+registers?
+
+\answerbox{4.4cm}
+
+\textbf{(b)} Adding a \emph{third read port} costs very little. Adding a
+\emph{second write port} is a much bigger problem. Explain the difference in two
+or three sentences.
+
+\answerbox{2.2cm}
+
+\section*{Question 3 --- Test plan}
+
+\begin{center}
+\begin{tabular}{@{}c@{\hskip 8pt}p{5.0cm}@{\hskip 8pt}p{7.6cm}@{}}
+\toprule
+\# & what you do & what it proves \\
+\midrule
+1 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+2 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+3 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+4 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+5 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\[8pt]
+6 & \rule{4.8cm}{0.4pt} & \rule{7.4cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Then answer both:}
+
+\textbf{(a)} Which of your vectors would catch a design that forgot to protect
+register 0? If you do not have one, add it now.
+
+\answerbox{1.4cm}
+
+\textbf{(b)} Suppose a read port addresses the same register that is being
+written on this clock edge. Two different designs could give two different
+answers, and both would be correct designs. Name the two behaviours, and say how
+your testbench would tell them apart.
+
+\answerbox{2.4cm}
+
+\vfill
+{\small\emph{Question 3 is the one that matters.} It is the same question as
+Section 5 of your lab report.}
+
+\end{document}

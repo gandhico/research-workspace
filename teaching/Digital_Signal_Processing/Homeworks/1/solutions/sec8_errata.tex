@@ -1,0 +1,95 @@
+\appendix
+\section{Misprints found on the assigned pages}
+\label{app:errata}
+
+The scanned pages come from a printing whose problem numbering runs about one to two ahead of
+(behind) the electronic 4th-edition chapter file --- the electronic file carries two extra
+problems, so its 2.16 and 2.25 have no counterpart here. Where the two disagree numerically,
+the \emph{scanned} statement was taken as authoritative. Five statements are internally
+inconsistent:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{@{}p{0.07\textwidth}p{0.40\textwidth}p{0.45\textwidth}@{}}
+\toprule
+\textbf{Prob.} & \textbf{As printed} & \textbf{Evidently intended}\\
+\midrule
+2.7 &
+$\{x_4[n]\}=\{1,1,0,0,0,1,1\}$, for which the required identity
+$x_1\circledast x_2=x_3\circledast x_4$ is \emph{false} &
+$\{x_4[n]\}=\{1,0,1,0,1,0,1\}$, i.e.\ $X_4(z)=(1+z^{-2})(1+z^{-4})$, which completes the
+factorization $(1+z^{-1})(1+z^{-2})(1+z^{-4})(1+z^{-8})$ and makes the identity hold\\
+\midrule
+2.8(b) &
+$x_2[n]=\{1,-1,0,1,-1\}$, $0\le n\le 5$ --- a stated range of six indices but only five
+listed samples &
+$0\le n\le 4$. (Padding with a trailing zero instead leaves every convolution value
+unchanged.)\\
+\midrule
+2.40 &
+(e) $\omega_o=0.75\pi$ and (f) $\omega_o=0.75\pi$ --- the same value twice &
+Part (f) should carry a different frequency. Both parts are answered with $N=8$ above. The
+electronic edition uses the list $0.6\pi,\,0.28\pi,\,0.45\pi,\,0.55\pi,\,0.65\pi$
+($N=10,50,40,40,40$).\\
+\midrule
+2.48(iii) &
+$g[n]=\mu[n-N]-\mu[n-N]$, which is identically zero &
+$g[n]=\mu[n-N]-\mu[n-M]$, i.e.\ a pulse of amplitude $-1$ over $M\le n\le N-1$\\
+\midrule
+2.48(c,d) &
+$y_3=g\circledast g$ and $y_4=g\circledast g$ --- the same convolution twice &
+$y_4=w\circledast w$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+None of these affects the method being taught; each is solved above both as printed (where
+that is meaningful) and as intended.
+
+\section{Summary of numerical answers}
+
+A one-page table for quick comparison against hand-worked results.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\footnotesize
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Problem} & \textbf{Answer}\\
+\midrule
+2.5, 2.6 & $M+N-1$; \quad $N+M+L-2$\\
+2.7 & sixteen consecutive ones, $0\le n\le15$\\
+2.8 & (a) $\{1,-2,3,-2,1\}$ \ (b) $\{1,-2,1,2,-4,2,1,-2,1\}$ \ (c) $\{1,-4,4,4,-10,4,4,-4,1\}$\\
+2.9 & (a) $-4\le n\le8$ \ (b) $2\le n\le14$ \ (c) $0\le n\le12$; values in \S1\\
+2.10, 2.11 & $y[n-N_1-N_2]$; \quad $g[n-N_1-N_2-N_3]$\\
+2.13 & $y[-1]=-39$\\
+2.14 & $n_{\max}=\lceil m^\star\rceil+N-3$, \ $m^\star=\tfrac12\bigl(5-2N+\sqrt{8N^2-24N+25}\bigr)$\\
+2.15 & (a) $\{1,4,3,1\}$ \ (b) $\{0,-3,-2,2\}$ \ (c) $\{-2,-4,0,1,-6\}$\\
+2.16 & $y[-3]=-4$; \quad $z[2]=-5$\\
+2.17 & (a) $\{9,2,0,-2,5,-3,0,4\}$ \ (b) $\{2,0,-2,5,-3,0,4,9\}$\\
+2.19 & $\mathcal{E}=N/2$ (zero if $2k/N\in\mathbb{Z}$)\\
+2.23 & yes, $|x[n]|\le\|x\|_1$\\
+2.28 & bounded: (a),(b),(c),(e),(f); unbounded: (d)\\
+2.31 & (a) $4/3$ \ (b) $1/2$\\
+2.35 & (a) $|A|^2/(1-|\alpha|^2)$ \ (b) $\pi^4/90$\\
+2.36 & $\mathcal{P}=1,\ \tfrac12,\ \infty,\ |A_o|^2,\ A^2/2$; all have $\mathcal{E}=\infty$\\
+2.37 & tables in \S4\\
+2.38 & (a) $\sqrt2,\pi/2,\pi/4$ \ (b) $0.5,\pi,\pi/2$ \ (c) $1,0.8\pi,0$ \ (d) $2,\pi/2,\pi/2$\\
+2.39 & $8,\ 10,\ 80,\ 200,\ 20$\\
+2.40 & $20,\ 25,\ 40,\ 80,\ 8,\ 8$\\
+2.41 & $N=100$; e.g.\ $\sin(0.14\pi n)$, $\sin(0.26\pi n)$\\
+2.42 & $N=6,5,7,14,10,30$; \ $\mathcal{P}=12.5,\,2,\,2,\,4.5,\,12.5,\,12.5$\\
+2.44 & $2.1\mu[n{+}1]-5.4\mu[n]+1.6\mu[n{-}1]+6.9\mu[n{-}2]-5.2\mu[n{-}3]$\\
+2.45 & $1+\mu[n-2]$\\
+2.46 & (a) $\dfrac{1-\alpha^{n+1}}{1-\alpha}\mu[n]$ \ (b) $\dfrac{\alpha[1-(n{+}1)\alpha^n+n\alpha^{n+1}]}{(1-\alpha)^2}\mu[n]$\\
+2.47 & (a) $-4\le n\le3$ \ (b) $-1\le n\le5$ \ (c) $-2\le n\le4$ \ (d) $-3\le n\le4$; values in \S5\\
+2.48 & peaks $N,\,M,\,N{-}M,\,N{+}M,\,M,\,-(N{-}M),\,N$; locations in \S5\\
+2.49 & (a) cs \ (b) ca \ (c) cs\\
+2.51 & periodic iff $\Omega_oT/2\pi\in\mathbb{Q}$; \ $N=2$\\
+2.52 & five sequences listed in \S6; $r_{xx}[0]=64$, $r_{yy}[0]=139$, $r_{ww}[0]=88$\\
+2.53 & (a) $\alpha^{|\ell|}/(1-\alpha^2)$ \ (b) $N-|\ell|$; both even, both peak at $\ell=0$\\
+2.54 & (a) $\tfrac12\cos(\pi\ell/M)$, period $2M$ \ (b) $\tfrac16\{55,40,31,28,31,40\}$, period 6
+       \ (c) $(-1)^\ell$, period 2\\
+\bottomrule
+\end{tabular}
+\end{center}

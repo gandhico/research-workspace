@@ -1,0 +1,235 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 8: Solution}\\[2pt]
+{\large Next Instruction Address Generation II}\\[4pt]
+Fall 2026 \quad$\cdot$\quad 5 points \quad$\cdot$\quad TA marking guide
+\end{center}
+\hr
+
+{\small Marking: Q1 = 2 points, Q2 = 2 points, Q3 = 1 point.}
+
+\vspace{4pt}\hr
+
+\section*{Question 1 --- The six equations (2 points)}
+
+\subsection*{(a) Taken, in terms of $Z$ and $N$}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+code & meaning & Taken $=$ \\
+\midrule
+\code{NONE} & always & $1$ \\
+\code{EQ} & $= 0$ & $Z$ \\
+\code{NEQ} & $\neq 0$ & $\overline{Z}$ \\
+\code{GTZ} & $> 0$ & $\overline{N} \cdot \overline{Z}$ \\
+\code{GEZ} & $\geq 0$ & $\overline{N}$ \\
+\code{LTZ} & $< 0$ & $N$ \\
+\code{LEZ} & $\leq 0$ & $N + Z$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{The two that carry the marks are \code{GTZ} and \code{LEZ}}, because they
+are the only ones needing \emph{both} flags. ``Greater than zero'' means not
+negative \textbf{and} not zero; ``less than or equal'' means negative
+\textbf{or} zero.
+
+\subsection*{(b) The three complement pairs}
+
+\[
+\code{GTZ} \leftrightarrow \code{LEZ}
+\qquad
+\code{GEZ} \leftrightarrow \code{LTZ}
+\qquad
+\code{EQ} \leftrightarrow \code{NEQ}
+\]
+
+\begin{quote}
+\textbf{Model answer:} Each pair is one inverter apart, so the seven conditions do
+not cost seven circuits. Three small gates and their complements cover all of
+them, and the condition code just selects which one reaches the output ---
+\textbf{the whole condition unit is a handful of gates and a multiplexer.}
+\end{quote}
+
+Check the complement algebraically once at the board:
+$\overline{\code{GTZ}} = \overline{\overline{N}\cdot\overline{Z}} = N + Z = \code{LEZ}$
+by De Morgan's law. That is the kind of line their report should contain.
+
+\subsection*{(c) A classmate writes \code{GTZ} as $\overline{N}$}
+
+\begin{center}
+\begin{tabular}{ccccl}
+\toprule
+$N$ & $Z$ & correct \code{GTZ} & their version & \\
+\midrule
+0 & 0 & 1 & 1 & agree (result positive) \\
+\textbf{0} & \textbf{1} & \textbf{0} & \textbf{1} & \textbf{disagree --- result is exactly zero} \\
+1 & 0 & 0 & 0 & agree (result negative) \\
+1 & 1 & 0 & 0 & agree (cannot occur) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{Model answer:} They disagree only at $N = 0$, $Z = 1$ --- a result of
+exactly zero. Their version is $\overline{N}$, which is \code{GEZ}, so a
+\code{BGTZ} would branch when the value is zero. A loop that should stop at zero
+would take the branch one extra time.
+\end{quote}
+
+\textbf{Mark strictly:} full credit needs the specific flag pair $N{=}0, Z{=}1$,
+not just ``when the result is zero''. The same slip in \code{LEZ} (writing $N$ and
+forgetting $+Z$) is the one that actually bites in Lab 12, because the reference
+program's loop ends with \code{BLEZ}.
+
+\vspace{4pt}\hr
+
+\section*{Question 2 --- Absolute jumps (2 points)}
+
+\subsection*{(a) \code{J 0x08} at \code{0x00000014}, encoding \code{0x08000002}}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+piece & value & working \\
+\midrule
+\code{NSA} & \code{0x00000018} & $\code{0x14} + 4$ \\
+top 4 bits & \code{0000} & inherited from \code{NSA(31..28)} \\
+\code{Index} & \code{0x0000002} & the low 26 bits of the encoding \\
+\textbf{\code{Abslt}} & \textbf{\code{0x00000008}} & \code{NSA(31..28)} \& \code{Index} \& \code{"00"} $= 2 \times 4$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{No arithmetic happens here.} \code{Abslt} is pure concatenation --- wiring,
+not an adder. A student who wrote an addition has built hardware the machine does
+not need.
+
+\subsection*{(b) Where the 32 bits come from, and the range limit}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+bits & from & why \\
+\midrule
+4 & \code{NSA(31..28)} & \textbf{inherited} from where we already are \\
+26 & the instruction's \code{Index} field & all the room the encoding has \\
+2 & constant \code{"00"} & instructions are word-aligned, so these are always zero \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{The range limit:} the top four bits cannot be changed by the instruction,
+so a \code{J} can only reach addresses inside the \textbf{same 256\,MB region}
+($2^{28}$ bytes) as the instruction after it. Jumping across a region boundary is
+impossible with \code{J}.
+\end{quote}
+
+Full credit needs $2^{28}$ (or 256\,MB) \emph{and} the reason --- the inherited
+top bits.
+
+\subsection*{(c) When you need to go further}
+
+\begin{quote}
+\textbf{Model answer:} A jump through a register (\code{JR}). The address comes
+from a 32-bit register instead of from the instruction, so all 32 bits are
+supplied at run time and nothing is inherited. That is why the \code{REG} path
+exists in the multiplexer.
+\end{quote}
+
+\vspace{4pt}\hr
+
+\section*{Question 3 --- Test plan (1 point)}
+
+\subsection*{(a) Two pairs differing only in \code{Taken}}
+
+\begin{center}
+\small
+\begin{tabular}{l>{\raggedright\arraybackslash}p{5.0cm}>{\raggedright\arraybackslash}p{6.4cm}}
+\toprule
+& vectors & expected \\
+\midrule
+\textbf{different} addresses & \code{Sel} = \code{REL}, \code{Taken} = 0 then 1 & \code{NSA}, then \code{Rel} --- \textbf{only the relative path is conditional} \\
+\textbf{same} address & \code{Sel} = \code{ABS} (or \code{REG}, or \code{NSA}), \code{Taken} = 0 then 1 & \code{Abslt} both times --- \textbf{jumps are unconditional by construction} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{The point:} \code{Sel} and \code{Cond} are two separate questions ---
+\emph{which} address is the candidate, and \emph{is the relative branch taken}. A
+student who merged them into one control signal cannot write the second pair, and
+that is exactly the confusion the question is designed to surface.
+\end{quote}
+
+\textbf{And note why there is no fifth select code for ``branch not taken'':} a
+branch that is not taken simply continues to the next instruction, which is
+already \code{NSA}. The fall-back is built in.
+
+\subsection*{(b) The scripted sequence}
+
+A model answer walks the PC through every path in order:
+
+\begin{center}
+\small
+\begin{tabular}{c>{\raggedright\arraybackslash}p{5.6cm}ll}
+\toprule
+\# & what happens & expected PC & what it proves \\
+\midrule
+1 & reset & \code{0x00000000} & the reset vector \\
+2 & \code{Sel}=\code{NSA}, one edge & \code{0x00000004} & sequential execution \\
+3 & \code{Sel}=\code{NSA}, one edge & \code{0x00000008} & it keeps advancing by 4 \\
+4 & \code{Sel}=\code{REL}, \code{Taken}=0 & \code{0x0000000C} & not-taken falls back to \code{NSA} \\
+5 & \code{Sel}=\code{REL}, \code{Taken}=1, offset $+2$ & target $=$ \code{NSA}$+8$ & the taken branch \\
+6 & \code{Sel}=\code{REL}, \code{Taken}=1, offset $-4$ & target below \code{NSA} & \textbf{backward branches} \\
+7 & \code{Sel}=\code{ABS} & \code{Abslt} & the jump path, unconditional \\
+8 & \code{Sel}=\code{REG} & the register value & the \code{JR} path \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{Why a scripted sequence rather than isolated vectors:} the PC is stateful,
+so each step's expected value depends on the one before. Writing the expected
+address next to every step turns the testbench into a small program trace --- and
+that is exactly what you will read in Lab 12 when the CPU runs.
+\end{quote}
+
+\vspace{6pt}
+\hr
+{\small \textbf{At the bench:} the two answers that predict trouble are a
+\code{GTZ} written as $\overline{N}$, and a test plan with no backward branch.
+Both produce a NIAG that passes its own tests and a CPU whose loop never ends.}
+
+\end{document}

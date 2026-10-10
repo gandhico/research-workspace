@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small DSP II --- Homework 1}
+\fancyhead[R]{\small Mitra, \emph{DSP: A Computer-Based Approach}, 4th ed., Ch.~2}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+\newcommand{\Prob}[1]{\vspace{9pt}\noindent\rule{\textwidth}{0.3pt}\par\vspace{2pt}\noindent\textbf{\large #1}\par\vspace{2pt}}
+\newcommand{\Mis}{\textcolor{red}{\textbf{Misprint.}}\ }
+
+\lstdefinestyle{mat}{
+  language=Matlab, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue!70!black}, commentstyle=\color{green!45!black},
+  stringstyle=\color{purple}, numbers=left, numberstyle=\tiny\color{gray},
+  frame=single, rulecolor=\color{gray!50}, breaklines=true,
+  showstringspaces=false, columns=fullflexible, xleftmargin=16pt
+}
+\lstset{style=mat}
+
+\title{\vspace{-1.6cm}\textbf{Homework 1 --- Worked Solutions}\\[3pt]
+\large Discrete-Time Signals in the Time Domain\\[3pt]
+\normalsize Mitra, \emph{Digital Signal Processing: A Computer-Based Approach}, 4th ed.\\
+\normalsize Problems 2.4--2.54 and \textsc{Matlab} Exercises M2.1--M2.10}
+\date{}
+\author{}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+\vspace{-1.3cm}
+
+\section*{Conventions}
+
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item $\mu[n]$ is the unit step, $\delta[n]$ the unit sample.
+\item $\circledast$ denotes \emph{linear} convolution,
+      $\displaystyle (x\circledast h)[n]=\sum_{k=-\infty}^{\infty}x[k]\,h[n-k]$.
+\item Energy $\mathcal{E}_x=\sum_n |x[n]|^2$; average power
+      $\mathcal{P}_x=\lim\limits_{K\to\infty}\dfrac{1}{2K+1}\sum_{n=-K}^{K}|x[n]|^2$.
+\item Correlation: $r_{xy}[\ell]=\sum_n x[n]\,y[n-\ell]$, \ $r_{x}[\ell]=r_{xx}[\ell]$.
+\item Conjugate-symmetric / antisymmetric parts:
+      $x_{\mathrm{cs}}[n]=\tfrac12\bigl(x[n]+x^*[-n]\bigr)$,
+      $x_{\mathrm{ca}}[n]=\tfrac12\bigl(x[n]-x^*[-n]\bigr)$;
+      even / odd parts $x_{\mathrm{ev}},x_{\mathrm{od}}$ are the real-sequence specialization.
+\item The sequences of \textbf{Problem 2.3}, used repeatedly below, are
+\[
+\begin{aligned}
+\{x[n]\}&=\{3,\,-4,\,-2,\,5,\,0,\,1,\,-3\}, && -1\le n\le 5,\\
+\{y[n]\}&=\{-5,\,-1,\,0,\,3,\,6,\,-2,\,8\}, && -3\le n\le 3,\\
+\{w[n]\}&=\{-1,\,3,\,-4,\,0,\,1,\,-5,\,6\}, && \phantom{-}3\le n\le 9.
+\end{aligned}
+\]
+\end{itemize}
+
+\paragraph{A note on misprints.} Five statements on the scanned pages are internally
+inconsistent (the printing used here differs slightly from the electronic 4th-edition file).
+Each one is flagged in red where it occurs and solved both as printed and as evidently
+intended. Appendix~\ref{app:errata} collects them.
+
+\paragraph{Numerical verification.} Every numerical answer below is reproduced by the
+\textsc{Matlab} scripts in the accompanying \texttt{matlab/} folder; run
+\texttt{hw1\_verify\_all} to check them all at once.
+
+\input{sec1_conv}
+\input{sec2_symmetry}
+\input{sec3_energy}
+\input{sec4_periodic}
+\input{sec5_repr}
+\input{sec6_sampling_corr}
+\input{sec7_matlab}
+\input{sec8_errata}
+
+\end{document}

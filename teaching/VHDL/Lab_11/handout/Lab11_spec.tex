@@ -1,0 +1,235 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 11 --- Instruction Decoder II}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Four more rows, and the control unit is finished.
+
+\begin{quote}
+\emph{Memory access and control flow are just four more rows.}
+\end{quote}
+
+\textbf{Step 1: paste in your Lab 10 decoder.} If it had inferred latches, fix
+that \emph{first} --- merging four more rows into a latched design makes it
+strictly worse, and Lab 12 is next week.
+
+\section*{2. This week's four rows}
+
+Differences from \code{CTRL\_DEFAULT} only. ``--'' means leave the default.
+
+\begin{center}
+\scriptsize
+\begin{tabular}{llllllllllll}
+\toprule
+instr & opcode & ALU\_Asel & IR\_Xsel & IR\_Xlsft & DM\_en & DM\_rw & DM\_strb & RF\_Dsel & RF\_strb & RF\_oe & NIAG\_sel/cond \\
+\midrule
+\code{LW}   & \code{100011} & IMMED & SIGN & NONE & EN & RD & -- & MEM & STROBE & -- & -- \\
+\code{SW}   & \code{101011} & IMMED & SIGN & NONE & EN & WR & STORE & -- & \textbf{HOLD} & \textbf{DRIVE} & -- \\
+\code{BLEZ} & \code{000110} & AOUT & SIGN & \textbf{TWO} & -- & -- & -- & -- & \textbf{HOLD} & -- & REL / LEZ \\
+\code{J}    & \code{000010} & -- & -- & -- & -- & -- & -- & -- & \textbf{HOLD} & -- & ABS / NONE \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+All four also set \code{ALU\_func = ADD}, except \code{J}, which does not use
+the ALU at all.
+
+\subsection*{Four things that are easy to get wrong}
+
+\begin{enumerate}[leftmargin=1.8em,itemsep=2pt]
+\item \textbf{\code{SW} has \code{RF\_strb = HOLD}.} A store writes
+\emph{memory}, not a register. Leave it at \code{STROBE} and every store
+silently corrupts a register --- and because the store itself still works, the
+program fails somewhere else entirely.
+
+\item \textbf{\code{SW} has \code{RF\_oe = DRIVE}.} During a store the RAM is
+not driving the data bus, so the register file must, through your Lab 4
+\code{TriBuffer}. Leave it at \code{HiZ} and the store writes \code{'Z'} ---
+which the RAM happily stores.
+
+\item \textbf{\code{BLEZ} has \code{IR\_Xlsft = TWO}.} It is the \emph{only}
+instruction in this CPU that scales its immediate. Miss it and every branch
+lands a quarter of the way to its target --- Lab 7's ``off by a factor'',
+arriving through the decoder instead of the adder.
+
+\item \textbf{\code{BLEZ} and \code{J} have \code{RF\_strb = HOLD}.} Control
+flow writes no register.
+\end{enumerate}
+
+Items 1, 3 and 4 are one idea: \code{RF\_strb} is \code{STROBE} for exactly the
+five instructions that produce a value worth keeping --- \code{ADD},
+\code{SLL}, \code{ADDI}, \code{LUI}, \code{LW} --- and \code{HOLD} for the other
+three.
+
+\section*{3. Three things to notice once the table is complete}
+
+Your report must state all three in your own words.
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+\item \textbf{\code{ALU\_Asel = IMMED} for \code{ADDI}, \code{LUI}, \code{LW}
+and \code{SW}} --- four instructions with nothing obvious in common. Why?
+\emph{Because the adder is shared.} Computing $a+b$ and computing
+$\text{base}+\text{offset}$ are the same operation, so a load costs no more
+hardware than an add. \textbf{When one control signal is high for a strange-looking
+set of instructions, look for the shared resource.}
+
+\item \textbf{\code{DM\_rw} is determined by exactly one instruction out of
+eight.} Real control tables are this sparse --- mostly default, a few exceptions
+per row. That is why the default-first structure is the natural shape of the
+problem, not a coding convenience.
+
+\item \textbf{\code{J} changes two signals out of sixteen.} It does not use the
+ALU, touch memory, write a register, or read the extender. Almost every control
+signal is a \emph{don't care} for \code{J} --- which is the freedom Example 2
+exploits.
+\end{itemize}
+
+\section*{4. Don't cares, and two correct answers}
+
+Example 2 builds two implementations of \code{IR\_Xsel}:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+transcribed & SIGN for \code{ADDI}, \code{LW}, \code{SW}, \code{BLEZ}; ZERO otherwise \\
+minimised & SIGN for everything \emph{except} \code{LUI} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+They \textbf{disagree} on \code{ADD}, \code{SLL} and \code{J} --- and those are
+exactly the three instructions that never read the extender output. Over the
+rows that matter they agree, so \textbf{both are correct}, and the minimised one
+is cheaper.
+
+This is what minimisation means in a real control unit: the same operation as a
+K-map in Lab 3, except the don't cares now come from the \emph{architecture}
+(which instructions read which signals) rather than from an incomplete table.
+
+It is also a warning about testing. A testbench that pinned \code{IR\_Xsel} down
+for \code{ADD} would be testing an accident of your implementation rather than a
+requirement. \textbf{Over-specifying a test is its own kind of bug.}
+
+\section*{5. Guided examples}
+
+\begin{description}[leftmargin=2.4em,style=nextline,itemsep=2pt]
+\item[Example 1 --- \code{decode\_lw\_sw}] Where \code{LW} and \code{SW} agree
+(the shared adder) and where they must not.
+\item[Example 2 --- \code{dontcare}] Two correct answers, and a test that proves
+both.
+\item[Example 3 --- \code{decode\_flow}] \code{BLEZ} and \code{J}, and how sparse
+a control row really is.
+\end{description}
+
+\section*{6. Assignment}
+
+Complete \code{Decoder.vhd}: your four Lab 10 rows plus the four above. This is
+the version your CPU instantiates next week.
+
+\subsection*{Testbench --- table-driven}
+
+The supplied testbench stores the expected control bundle for each instruction
+in an array and checks every field in a loop. \textbf{Eight instructions times
+fourteen fields is 112 checks, from one loop.} That is how you verify a
+table-shaped design: the test data and the specification become visibly the same
+object.
+
+Required: complete the table (one entry per instruction, full expected bundle);
+an unimplemented opcode; \code{SPECIAL} with an unimplemented \code{func}; and
+\textbf{three latch tests} ---
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+sequence & signal & must be \\
+\midrule
+\code{LUI} after \code{ADDI} & \code{IR\_Xsel} & ZERO \\
+\code{SW} after \code{BLEZ} & \code{IR\_Xlsft} & NONE \\
+\code{ADD} after \code{SW} & \code{RF\_oe} & HiZ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These matter more this week than last: with eight rows there are far more
+signals that some instructions set and others do not.
+
+\textbf{If your expectation table and your decoder disagree, one of them is
+wrong --- and finding out which is the exercise.}
+
+\section*{7. Evidence to collect (E1, E2, E4, E7)}
+
+Same as Lab 10, and the same red line: \textbf{zero registers}. Any register or
+latch means the \code{CTRL\_DEFAULT} assignment is missing.
+
+\section*{8. Report --- \code{lab11.tex}}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Specification:} the \textbf{complete eight-row control table}.
+\textbf{Print this.} It is your Lab 12 debugging reference and you will not get
+through next week without it.
+\item \textbf{Design:} the three observations from \S3, in your own words; and
+the don't-care discussion from \S4.
+\item \textbf{Verification:} the table-driven structure, and why the three latch
+tests are necessary.
+\item \textbf{Discussion:} required.
+\end{itemize}
+
+\section*{9. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Testbench and test vectors, coverage justified & 20 \\
+Simulation results match the specification & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{10. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{\code{SW} left with \code{RF\_strb = STROBE}.} Silently corrupts a
+register on every store.
+\item \textbf{\code{SW} left with \code{RF\_oe = HiZ}.} Stores \code{'Z'}.
+\item \textbf{\code{BLEZ} without \code{IR\_Xlsft = TWO}.} Every branch off by a
+factor of four.
+\item \textbf{Latches surviving from Lab 10.} Fix before merging.
+\item \textbf{Expectation table copied from the decoder instead of from the
+specification.} Then it cannot detect anything --- it agrees with the bug.
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small \textbf{Print your completed control table and bring it next week.} Lab
+12 is debugging, and step three of the debugging method is ``do the control
+signals match the table for this opcode?''.}
+
+\end{document}

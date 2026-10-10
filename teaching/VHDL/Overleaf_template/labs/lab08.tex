@@ -1,0 +1,123 @@
+% =============================================================================
+%  Lab 8 - Next Instruction Address Generation II
+% =============================================================================
+
+\chapter{Lab 8 --- Next Instruction Address Generation II}
+
+\section{Objective}
+% Two or three sentences, your own words.
+
+\section{Specification}
+
+\begin{table}[htbp]
+\centering
+\caption{PC source selection (Type C). Only the relative path is conditional.}
+\label{tab:lab08-sel}
+\begin{tabular}{cl||ll}
+\toprule
+\# & \texttt{Sel} & \texttt{NextPC} & \\
+\midrule
+0 & \texttt{NIAG\_SEL\_NSA} & \texttt{NSA} & unconditional \\
+1 & \texttt{NIAG\_SEL\_REL} & \texttt{Taken ? Rel : NSA} & \textbf{conditional} \\
+2 & \texttt{NIAG\_SEL\_REG} & \texttt{RegAddr} & unconditional \\
+3 & \texttt{NIAG\_SEL\_ABS} & \texttt{Abslt} & unconditional \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Branch conditions (Type E, exhaustive over the two ALU flags).}
+\label{tab:lab08-cond}
+\begin{tabular}{lll}
+\toprule
+code & meaning & Taken $=$ \\
+\midrule
+\texttt{NIAG\_COND\_NONE} & always   & $1$ \\
+\texttt{NIAG\_COND\_EQ}   & $=0$     & $Z$ \\
+\texttt{NIAG\_COND\_NEQ}  & $\neq 0$ & $\overline{Z}$ \\
+\texttt{NIAG\_COND\_GTZ}  & $>0$     & $\overline{N}\cdot\overline{Z}$ \\
+\texttt{NIAG\_COND\_GEZ}  & $\geq 0$ & $\overline{N}$ \\
+\texttt{NIAG\_COND\_LTZ}  & $<0$     & $N$ \\
+\texttt{NIAG\_COND\_LEZ}  & $\leq 0$ & $N + Z$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% REQUIRED, one or two sentences: three of these pairs are complements. Name
+% them, and say what that tells you about how much hardware the seven
+% conditions actually cost.
+
+\subsection*{Absolute target formation}
+
+\[
+\texttt{Abslt} = \underbrace{\texttt{NSA}(31..28)}_{\text{4 inherited}} \;\&\;
+\underbrace{\texttt{Index}(25..0)}_{\text{26 encoded}} \;\&\;
+\underbrace{\texttt{"00"}}_{\text{2 always zero}}
+\]
+
+% REQUIRED: work through the real J from the Lab 12 program (0x14,
+% 0x08000002) and show the target is 0x08.
+
+\section{Design}
+% Answer all three:
+%   (a) Why are Sel and Cond two SEPARATE control fields rather than one? What
+%       goes wrong if you gate the jump paths with Taken as well?
+%   (b) Why does a not-taken branch fall back to NSA rather than needing its own
+%       select code?
+%   (c) The top four bits of a jump target are inherited, not encoded. State the
+%       range limit that produces, explain where the number comes from, and say
+%       what instruction you would use to go further.
+
+\section{Implementation}
+
+\vhdlfile{code/lab08/NIAG_Cond.vhd}{\texttt{NIAG\_Cond} --- the six branch-condition equations}
+
+\vhdlfile{code/lab08/NIAG_MUX.vhd}{\texttt{NIAG\_MUX} --- the conditional gate and the four-way selection}
+
+\vhdlfile{code/lab08/NIAG.vhd}{\texttt{NIAG} --- the complete address generator, six components}
+
+\section{Verification}
+% Vectors, then the coverage argument.
+%
+% Two different arguments apply here and you should say so:
+%   * NIAG_Cond is Type E - two flags, seven conditions, 28 cases. Small enough
+%     to enumerate exhaustively, so there is no argument to make: just do it.
+%   * The full NIAG is Type C - test one representative of each PC source, plus
+%     the taken/not-taken pair that distinguishes conditional from unconditional.
+
+\begin{table}[htbp]
+\centering
+\caption{The scripted sequence.}
+\label{tab:lab08-sequence}
+\begin{tabular}{clllp{3.6cm}}
+\toprule
+\# & what happens & control & expected PC & what it proves \\
+\midrule
+1 & & & & \\
+2 & & & & \\
+3 & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Results}
+% Evidence: E1, E2, E4, E7.
+
+\figplaceholder{the scripted-sequence waveform --- the PC walking through
+sequential, not-taken branch, taken branch, \texttt{J}, register jump, stall and
+backward branch, with EVERY transition annotated by which source it took}
+% This is the centrepiece figure of the chapter. An unannotated 30-signal
+% waveform proves nothing. Label each PC change with NSA / Rel / Abslt / RegAddr.
+
+\figplaceholder{the RTL Viewer, showing the six components and how they connect}
+
+% E4: register count. Expect 32 - the PC - and nothing else. Everything else in
+%     this block is combinational. Say so explicitly.
+
+\section{Discussion}
+% REQUIRED. One bug, how you found it, what it cost.
+%
+% If you need a topic: did your GTZ condition fire when the result was zero?
+% Would your original test vectors have caught it? What does that tell you about
+% choosing test values for a condition code?

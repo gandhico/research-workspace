@@ -1,0 +1,227 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 10 --- Instruction Decoder I}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Read this first: the scope is small}
+
+This CPU implements \textbf{eight instructions} --- the ones its program uses.
+Not forty. You do four this week and four next week.
+
+\textbf{The instruction set manual is not your specification. The control table
+is}, and it is given to you below, filled in. You implement it; you do not have
+to derive it. Deriving it is the lecture's job, not fifty-five minutes at a
+bench.
+
+\section*{2. Objective}
+
+\begin{quote}
+\emph{A control unit is one truth table with sixteen output columns.}
+\end{quote}
+
+In Lab 1 you took a four-row truth table and wrote one Boolean equation from it.
+Today you take an eight-row table and write sixteen.
+
+\textbf{That is the entire difference.} Nothing new has been introduced since
+week one. The control unit of a processor \emph{is} a truth table --- that is
+not an analogy, it is literally what you are about to write.
+
+\section*{3. Background}
+
+\subsection*{Instruction fields}
+
+\begin{center}
+\begin{tabular}{llllll}
+\toprule
+R-type & \code{opcode} 6 & \code{rs} 5 & \code{rt} 5 & \code{rd} 5 \quad \code{sa} 5 & \code{func} 6 \\
+I-type & \code{opcode} 6 & \code{rs} 5 & \code{rt} 5 & \multicolumn{2}{l}{\code{immediate} 16} \\
+J-type & \code{opcode} 6 & \multicolumn{4}{l}{\code{index} 26} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The opcode is \emph{always} at bits 31--26. It has to be: until you have decoded
+it you do not know which format you are looking at, so the field you need first
+must sit at a fixed position. Likewise \code{rs} and \code{rt} are in the same
+place across R and I types, which lets the register file start reading before
+decoding finishes. \textbf{Field placement in an ISA is a hardware decision.}
+
+\subsection*{The control bundle}
+
+Your decoder produces \textbf{sixteen} control signals. Sixteen separate ports
+through every entity would be unreadable and would guarantee a wiring error, so
+they are bundled into one VHDL \code{record}, \code{CTRL\_REC}, provided
+complete in \code{CPU\_Pkg.vhd}. In hardware nothing changes --- a record is
+sixteen wires either way --- but at this size it is the difference between a
+design you can debug and one you cannot.
+
+\subsection*{The default, and why it is a safety property}
+
+\code{CTRL\_DEFAULT} sets the safe values: no register write, no memory access,
+no bus driving, PC advances sequentially. \textbf{Assign it first, then
+override only what each instruction changes.}
+
+Skip it and the synthesiser must keep unassigned fields unchanged --- which
+means \textbf{sixteen latches}, and control signals that depend on which
+instruction ran \emph{before}. Example 3 demonstrates this: the same \code{LUI}
+decodes differently depending on whether an \code{ADDI} preceded it.
+
+In Lab 12 the symptom is the worst kind: every instruction works when tested
+alone, the program still fails, and it fails \emph{differently} depending on
+instruction order.
+
+You have met this exact bug twice already --- Lab 1's missing \code{else} (where
+you wanted the latch) and Lab 3's missing \code{when others} (where you did
+not). Same sentence every time: \emph{no assignment means hold the previous
+value.}
+
+\section*{4. This week's four rows}
+
+Only the \emph{differences} from the default are shown. ``--'' means leave the
+default.
+
+\begin{center}
+\small
+\begin{tabular}{llllllllll}
+\toprule
+instr & opcode/func & ALU\_func & ALU\_Asel & ALU\_Ssel & IR\_Xsel & IR\_Xlsft & RF\_Dsel & RF\_strb & RF\_Wsel \\
+\midrule
+\code{ADD}  & \code{000000}/\code{100000} & ADD & AOUT & -- & -- & -- & ALU & STROBE & RD \\
+\code{SLL}  & \code{000000}/\code{000000} & SLL & AOUT & SA & -- & -- & ALU & STROBE & RD \\
+\code{ADDI} & \code{001000} & ADD & IMMED & -- & SIGN & NONE & ALU & STROBE & RT \\
+\code{LUI}  & \code{001111} & ADD & IMMED & -- & ZERO & NONE & ALU & STROBE & RT \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Three things worth noticing in that table}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+\item \code{ADD} and \code{SLL} write \code{rd}; \code{ADDI} and \code{LUI}
+write \code{rt}. \textbf{R-type and I-type put the destination in different
+fields.} That is what \code{RF\_Wsel} is for, and getting it backwards writes
+the wrong register \emph{silently}.
+
+\item \code{ADDI} sign-extends and \code{LUI} zero-extends. Same field, same
+width, different meaning --- decided by the instruction. This is the Lab 4
+question arriving for real: get it wrong and \code{ADDI r1,r1,-1} adds 65535
+instead of subtracting one, and the Lab 12 loop counts the wrong way forever.
+
+\item \code{ADD} and \code{SLL} never read the extender output, so
+\code{IR\_Xsel} and \code{IR\_Xlsft} are \textbf{don't cares} for them. Leaving
+them at the default is correct --- and next week you will see why that matters.
+\end{itemize}
+
+\section*{5. Guided examples}
+
+\begin{description}[leftmargin=2.4em,style=nextline,itemsep=2pt]
+\item[Example 1 --- \code{fields}] All three formats extracted at once, on real
+instructions.
+\item[Example 2 --- \code{decode\_add}] One instruction decoded end to end. Five
+signals set, eleven defaults kept. This is the template.
+\item[Example 3 --- \code{latch\_storm}] Two decoders differing in one line. One
+assert is \emph{expected} to fail.
+\end{description}
+
+\section*{6. Assignment}
+
+Complete \code{Decoder.vhd}: the four rows above. Structure is a \code{case} on
+the opcode with a nested test on \code{func} for the \code{SPECIAL} family ---
+\textbf{\code{SPECIAL} is not one instruction, it is a family}, so both fields
+must be checked.
+
+\subsection*{Testbench}
+
+\textbf{At least one vector per instruction}, plus all of: an unimplemented
+opcode (inert); \code{SPECIAL} with an unimplemented \code{func} (also inert);
+and \textbf{an order-dependence test} --- feed \code{ADDI} then \code{LUI} and
+check \code{LUI} still zero-extends, then the reverse.
+
+That last one is the check a single-instruction-at-a-time testbench can never
+make, and it is the one that catches the worst bug in this lab.
+
+\section*{7. Evidence to collect (E1, E2, E4, E7)}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& Source & What it must show \\
+\midrule
+E1 & Flow Summary + Messages & 0 errors and \textbf{no inferred-latch warning} \\
+E2 & RTL Viewer & combinational logic, \emph{no storage} \\
+E4 & Resource Utilisation & \textbf{zero registers} \\
+E7 & Transcript & every control signal asserted, 0 failures \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Any register or latch reported means you have the Example 3 bug.}
+
+\section*{8. Report --- \code{lab10.tex}}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Specification:} your four rows of the control table.
+\item \textbf{Design:} why the default must be assigned first; why
+\code{SPECIAL} needs the \code{func} field; and one sentence on any signal whose
+value surprised you.
+\item \textbf{Verification:} the order-dependence test, and why it is necessary.
+\item \textbf{Discussion:} required.
+\end{itemize}
+
+\section*{9. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Testbench and test vectors, coverage justified & 20 \\
+Simulation results match the specification & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{10. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{No default assignment.} Sixteen latches. This will happen to
+several people; the Messages panel will say so, and the register count will not
+be zero.
+\item \textbf{\code{RF\_Wsel} backwards.} Writes the wrong register, silently.
+\item \textbf{\code{SPECIAL} decoded on opcode alone.} Then every R-type is
+\code{ADD}.
+\item \textbf{\code{ADDI} and \code{LUI} given the same \code{IR\_Xsel}.} They
+differ on exactly that one signal.
+\item \textbf{Raw bit patterns instead of the package constants.}
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small Next week: loads, stores, branches and jumps --- four more rows, and the
+control unit is finished. The week after, you run the program.}
+
+\end{document}

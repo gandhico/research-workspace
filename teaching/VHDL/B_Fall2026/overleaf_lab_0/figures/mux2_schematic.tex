@@ -1,0 +1,22 @@
+% Schematic view of mux2: Y = S'D0 + S D1
+\begin{circuitikz}
+  \coordinate (D0) at (-3.0, 2.0);
+  \coordinate (D1) at (-2.3, 2.0);
+  \coordinate (S)  at (-1.6, 2.0);
+  \node[not port, scale=0.7] (n1) at (-0.9, -1.9) {};
+  \node[and port] (g1) at (0.9, 1.0)  {};
+  \node[and port] (g2) at (0.9, -1.0) {};
+  \node[or port]  (g3) at (3.4, 0)    {};
+  \draw (D0) node[above] {$D_0$} -- (D0 |- 0,-2.4);
+  \draw (D1) node[above] {$D_1$} -- (D1 |- 0,-2.4);
+  \draw (S)  node[above] {$S$}   -- (S |- 0,-2.4);
+  \draw (n1.in) -- (n1.in -| S) node[circ] {};
+  \draw (g1.in 1) -- (g1.in 1 -| D0) node[circ] {};
+  \draw (g1.in 2) -- (g1.in 2 -| n1.out) -- (n1.out);
+  \draw (g2.in 1) -- (g2.in 1 -| D1) node[circ] {};
+  \draw (g2.in 2) -- (g2.in 2 -| S) node[circ] {};
+  \node[right] at (n1.out) {\small $\overline{S}$};
+  \draw (g1.out) node[above right] {\small $\overline{S}D_0$} -| (g3.in 1);
+  \draw (g2.out) node[below right] {\small $SD_1$} -| (g3.in 2);
+  \draw (g3.out) -- ++(0.5,0) node[right] {$Y$};
+\end{circuitikz}

@@ -1,0 +1,245 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 7 --- Next Instruction Address Generation I}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Build the program counter and the address arithmetic that decides where the
+processor goes next.
+
+\begin{quote}
+\emph{The PC is a register; everything else is address arithmetic.}
+\end{quote}
+
+This is where the machine stops being a collection of parts and starts having a
+\emph{control flow}.
+
+\section*{2. Background}
+
+\subsection*{Why the PC is a loadable register, not a counter}
+
+A counter only counts. A program counter must also jump --- to a branch target,
+to a subroutine, back from one. So ``advance to the next instruction'' is not a
+special mechanism: it is simply loading $PC+4$.
+
+In Lab 8 you replace the single \code{NextPC} input with a multiplexer over five
+candidate addresses, and sequential execution becomes one input of that mux.
+
+\subsection*{Why the base is PC+4, and why the offset is shifted}
+
+Take a real instruction out of the program your CPU runs in Lab 12:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+address & encoding & instruction \\
+\midrule
+\code{0x0C} & \code{0x18200002} & \code{BLEZ r1, +2} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{align*}
+\code{NSA}    &= \code{0x0C} + 4 &&= \code{0x10}\\
+\text{offset} &= \text{SignExt}(\code{0x0002}) \ll 2 = 2 \times 4 &&= \code{0x08}\\
+\code{Rel}    &= \code{0x10} + \code{0x08} &&= \code{0x18} \quad \text{(the \code{SW} --- the loop exit)}
+\end{align*}
+
+\textbf{Why $PC+4$ and not $PC$?} By the time the branch is evaluated the fetch
+has already happened --- the hardware has moved on. Using $PC$ would put every
+target one instruction earlier than the assembler wrote, so the assembler would
+have to compensate. Basing on $PC+4$ keeps the encoding honest: ``+2'' really
+means ``skip 2 instructions''.
+
+\textbf{Why shift left by two?} Instructions are 4 bytes and word-aligned, so
+the low two bits of every instruction address are \emph{always zero}. Encoding
+them would waste two bits of the immediate on information we already have.
+Instead we shift, and get \textbf{four times the branch range for free}. That is
+a real architectural trade-off, and it fits in one line of concatenation.
+
+\subsection*{The two shapes of addressing bug}
+
+Example 3 builds all three versions side by side. Both wrong ones compile and
+produce plausible 32-bit addresses.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+error & shape & tell-tale \\
+\midrule
+forgot the $\ll 2$ & off by a \textbf{factor} & target is not a multiple of 4 \\
+used $PC$ not $PC+4$ & off by a \textbf{constant} 4 & still aligned, still nearly right \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The second is the harder to spot: loops simply run one instruction too many or
+too few. ``Off by a factor'' and ``off by a constant'' are worth naming, because
+they are the two shapes almost every addressing bug takes.
+
+\subsection*{Specification --- \code{NIAG\_Reg}, Table T}
+
+\begin{center}
+\begin{tabular}{cccl@{\hskip 8pt}||@{\hskip 8pt}l}
+\toprule
+\# & \code{Rst} & \code{Strb} & \code{Clk} & $PC^{+}$ \\
+\midrule
+0 & 1 & --- & --- & \code{RESET\_VEC} \quad (asynchronous) \\
+1 & 0 & --- & not $\uparrow$ & $PC$ \quad hold \\
+2 & 0 & 0 & $\uparrow$ & $PC$ \quad edge, but not loading (a stall) \\
+3 & 0 & 1 & $\uparrow$ & \code{NextPC} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\[
+PC^{+} = \overline{\code{Rst}} \cdot \left( \code{Strb} \cdot \code{NextPC} + \overline{\code{Strb}} \cdot PC \right)
+\]
+
+Compare with Lab 2: $Q^{+} = \overline{\code{Rst}}(\code{Ld}\cdot D + \overline{\code{Ld}}\cdot Q)$.
+\textbf{Same equation.} \code{Ld} became \code{Strb}, $D$ became \code{NextPC}.
+
+\section*{3. Guided examples}
+
+\begin{description}[leftmargin=2.4em,style=nextline,itemsep=2pt]
+\item[Example 1 --- \code{pc\_counter}] The PC at 8 bits, small enough to read
+in a waveform. Watch \code{PC} and \code{NSA} move together with no clock delay
+between them.
+\item[Example 2 --- \code{branch\_target}] The real \code{BLEZ} above, computed
+in hardware. Hand-compute each vector before running it.
+\item[Example 3 --- \code{addressing\_traps}] The correct version and the two
+wrong ones, side by side. Two asserts are \emph{expected} to fail.
+\end{description}
+
+\section*{4. Assignment}
+
+\textbf{Step 1: copy your own \code{ImmedXtnd.vhd} from Lab 4 into this folder},
+replacing the empty skeleton shipped with the project.
+
+\begin{enumerate}[leftmargin=2em,itemsep=3pt]
+\item \textbf{\code{NIAG\_NSA}} --- one line. $NSA = PC + 4$. Combinational.
+\item \textbf{\code{NIAG\_Rel}} --- one line. $Rel = NSA + \code{Xtnd32}$.
+
+\textbf{You are not writing the extender again.} \code{ImmedXtnd} with
+\code{Xsel='1'}, \code{Xlsft='1'} already produces the sign-extended, shifted
+offset. In the real CPU that extender is a \emph{shared} block whose output also
+feeds the ALU --- one extender, two consumers. That is why the extension happens
+outside \code{NIAG\_Rel} rather than inside it.
+
+\item \textbf{\code{NIAG\_Reg}} --- the program counter. Your Lab 2 \code{RegN}
+with a reset \emph{value} rather than reset-to-zero. Write it out or instantiate
+\code{RegN}; say in your report which you did and why.
+\end{enumerate}
+
+\subsection*{Testbench}
+
+Complete \code{tb\_Lab7.vhd}. The four components are already wired exactly as
+the CPU wires them. \textbf{At least six checked vectors}, including all of:
+
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item the real \code{BLEZ} above: $PC = \code{0x0C}$, offset $+2$, target
+\code{0x18};
+\item a \textbf{backward} branch with a negative offset --- if all your offsets
+are positive, sign extension is untested;
+\item \code{NSA} tracking \code{PC} with \textbf{no clock edge}, proving it is
+combinational;
+\item the PC loading an address that is \emph{not} \code{NSA};
+\item \code{Strb = '0'} at an edge: the PC holds;
+\item asynchronous reset asserted \emph{between} edges.
+\end{itemize}
+
+\textbf{Hand-compute every target before you simulate}, and put the arithmetic
+in your report. If you cannot predict the hardware you cannot debug it --- and
+Lab 12 is entirely debugging.
+
+\section*{5. Evidence to collect (E1, E2, E4, E7)}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& Source & What it must show \\
+\midrule
+E1 & Flow Summary + Messages & 0 errors; warnings sorted \\
+E2 & RTL Viewer & the PC register, and two adders \\
+E4 & Resource Utilisation & \textbf{32 registers} --- one per PC bit \\
+E7 & Waveform + transcript & a forward and a backward branch target \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Top level is \code{NIAG\_Reg}. \code{NIAG\_NSA} and \code{NIAG\_Rel} are pure
+adders and contain no storage at all.
+
+\section*{6. Report --- \code{lab07.tex}}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Specification:} Table T and the $PC^{+}$ equation, with a note
+that it is Lab 2's register renamed.
+\item \textbf{Design:} answer both --- \emph{why is the base $PC+4$?} and
+\emph{why is the offset shifted left by two?} Then say whether you reused
+\code{RegN}.
+\item \textbf{Verification:} your hand-computed arithmetic for at least one
+forward and one backward branch, next to the simulated result.
+\item \textbf{Discussion:} required.
+\end{itemize}
+
+\section*{7. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Testbench and test vectors, coverage justified & 20 \\
+Simulation results match the specification & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{8. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Forgetting the $\ll 2$.} Off by a factor; targets stop being
+word-aligned.
+\item \textbf{Using $PC$ as the branch base.} Off by a constant 4, and much
+harder to see.
+\item \textbf{Only testing positive offsets.} Sign extension goes untested and
+every backward branch in Lab 12 will be wrong.
+\item \textbf{\code{NSA} computed inside a clocked process.} It would arrive a
+cycle late, and the CPU needs it \emph{now}.
+\item \textbf{No reset vector.} A PC that powers up at \code{'U'} fetches
+garbage forever, and every waveform after that is meaningless.
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small Next week you add jump, register-jump and return addressing, and a
+multiplexer that chooses between all five. After that, the address side of the
+machine is finished.}
+
+\end{document}

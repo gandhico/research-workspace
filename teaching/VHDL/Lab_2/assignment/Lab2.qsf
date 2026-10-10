@@ -1,0 +1,57 @@
+# ------------------------------------------------------------------------------
+# EE 362 - Computer Organization Laboratory
+# Lab 2 - Quartus project settings (starter)
+#
+# STEP 1 BEFORE ANYTHING ELSE: overwrite TransLatch.vhd in this folder with
+# your own completed version from Lab 1. The copy shipped here is the empty
+# Lab 1 skeleton - it exists only so the project compiles when you open it.
+#
+# Top level is RegN, so the Fitter reports the register count for a 32-bit
+# register. That number is your correctness check: it must be 32.
+#
+# HOW TO USE
+#   1. Put Lab2.qpf and Lab2.qsf in the same folder as your .vhd files.
+#   2. Open Lab2.qpf from Quartus (File > Open Project).
+#   3. Everything below is already configured: device, simulator, file list.
+#
+# IMPORTANT: keep this folder on a SHORT LOCAL PATH with no spaces, e.g.
+#   C:\ee362\lab02
+# Project paths containing spaces, accented characters, or living inside a
+# cloud-synced folder (OneDrive, Dropbox) cause failures that look like
+# random Quartus bugs. They are not random.
+# ------------------------------------------------------------------------------
+
+set_global_assignment -name FAMILY "Cyclone V"
+set_global_assignment -name DEVICE 5CSEMA4U23C6
+set_global_assignment -name TOP_LEVEL_ENTITY RegN
+set_global_assignment -name LAST_QUARTUS_VERSION "25.1std.0 Lite Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+
+# --- Device operating conditions (defaults, do not change) --------------------
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+
+# --- Simulation: Questa, VHDL -------------------------------------------------
+# This is what makes Tools > Run Simulation Tool > RTL Simulation work.
+set_global_assignment -name EDA_SIMULATION_TOOL "Questa Altera FPGA (VHDL)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+
+# Run the testbench automatically from Quartus.
+set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH tb_Lab2 -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_NAME tb_Lab2 -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id tb_Lab2
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tb_Lab2 -section_id tb_Lab2
+set_global_assignment -name EDA_TEST_BENCH_FILE tb_Lab2.vhd -section_id tb_Lab2
+
+# --- Design files -------------------------------------------------------------
+set_global_assignment -name VHDL_FILE TransLatch.vhd
+set_global_assignment -name VHDL_FILE MSFlipFlop.vhd
+set_global_assignment -name VHDL_FILE RegN.vhd
+set_global_assignment -name VHDL_FILE tb_Lab2.vhd
+
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -1,0 +1,9 @@
+set_global_assignment -name FAMILY "Cyclone 10 GX"
+set_global_assignment -name TOP_LEVEL_ENTITY DselMUX
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.4.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "15:52:33  MARCH 02, 2021"
+set_global_assignment -name LAST_QUARTUS_VERSION "20.4.0 Pro Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name DEVICE 10CX220YF780I5G
+set_global_assignment -name VHDL_FILE DselMUX.vhd
+set_global_assignment -name VHDL_FILE tb_DselMUX.vhd

@@ -1,0 +1,16 @@
+name = "Project_Intro_and_Datascience"
+uuid = "0aecc680-6d5d-4b14-bb9a-77776b377a11"
+version = "0.1.0"
+authors = ["Nathan W Marlin <nwmarlin@nmsu.edu>"]
+
+[deps]
+DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+Weave = "44d3d7a6-8a23-5bf8-98c5-b353f8df5ec9"
+
+[compat]
+DelimitedFiles = "1.9.1"
+Plots = "1.41.7"
+Revise = "3.17.0"
+Weave = "0.10.12"

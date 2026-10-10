@@ -1,0 +1,114 @@
+% =============================================================================
+%  Final Lab - Demonstration and Extension
+%  Plus the material that closes the whole report.
+% =============================================================================
+
+\chapter{Final Lab --- Demonstration and Extension}
+
+\section{Executive summary}
+% ONE PAGE. What did you build, and what does it do?
+%
+% Write this for someone who has not read the other twelve chapters - a future
+% employer, or yourself in two years. What is the machine, what instruction set
+% does it implement, how is it organised, what program does it run, and what
+% does that program compute?
+%
+% Write it LAST, when everything else is finished.
+
+\section{Resource and timing summary}
+
+% One table, every component you built. Pull the numbers from the E4 and E6
+% sections of your earlier chapters. This is the first time they sit together,
+% and the comparison is the point.
+
+\begin{table}[htbp]
+\centering
+\caption{Resources and timing across the whole design.}
+\label{tab:final-resources}
+\begin{tabular}{lrrrr}
+\toprule
+component & ALMs & registers & block memory bits & Fmax (MHz) \\
+\midrule
+\texttt{TransLatch} (Lab 1) & & & & \\
+\texttt{RegN} (Lab 2) & & & & \\
+\texttt{Mux3x32} (Lab 3) & & & & \\
+\texttt{ImmedXtnd} (Lab 4) & & & & \\
+\texttt{ALU} (Lab 5) & & & & \\
+\texttt{RegFile} (Lab 6) & & & & \\
+\texttt{NIAG} (Lab 8) & & & & \\
+\texttt{ROM} (Lab 9) & & & & \\
+\texttt{Decoder} (Lab 11) & & & & \\
+\midrule
+\texttt{CPU} (Lab 12) & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Two sentences, required:
+%   (a) Which single component dominates the area, and why?
+%   (b) Compare the CPU's Fmax with the ALU's from Lab 5. Did adding everything
+%       else make the machine slower, and if not, why not?
+
+\section{Extension}
+% State which track you chose, then complete the matching subsection and DELETE
+% the other two.
+
+\subsection*{Track A --- a new instruction}
+% (a) Which instruction, and its encoding.
+% (b) Your new control-table row, as a table, showing only the differences
+%     from CTRL_DEFAULT.
+% (c) Why that extension choice - sign or zero - and what the alternative would
+%     have done to the test program.
+% (d) The verification: the decoder-level check AND the CPU-level run. Explain
+%     why either one alone would be insufficient.
+% (e) IF YOU DID SUB: what does your CPU's SUB actually compute, and why is it
+%     not what real MIPS computes? What in the datapath fixed that, and which
+%     earlier instructions hid the problem from you?
+
+\subsection*{Track B --- performance measurement}
+% (a) The measured instruction mix, as a table.
+% (b) The identity check: the four classes must sum to the cycle count. State
+%     yours, and say what a mismatch would have meant.
+% (c) CPI as built, and CPI under the two hypothetical machines.
+% (d) REQUIRED: which hypothetical hurts more, and why? Answer in terms of the
+%     measured mix, not in general terms. This is Amdahl's law applied to a
+%     number you measured yourself.
+% (e) Name one change to this program - not the hardware - that would change
+%     the mix substantially, and predict its effect on both hypotheticals.
+
+\subsection*{Track C --- pipeline and hazards}
+% (a) What you built, and the straight-line program that demonstrates stage 2
+%     working.
+% (b) THE HAZARD ANALYSIS. This is the graded part. For each of:
+%         control hazard, data hazard, structural hazard, reset state
+%     say whether it is PRESENT in your design, and:
+%         - if present: a CONCRETE instruction pair from the Lab 12 program
+%           that triggers it, one named real-world fix, and what that fix costs
+%         - if absent: why, and what design change would introduce it
+% (c) REQUIRED: the control hazard is the reason real MIPS has a branch delay
+%     slot. Explain that connection in your own words.
+% (d) An honest statement of what does not work, and why.
+
+\section{Reflection --- what I would design differently}
+% Not a summary. A judgement.
+%
+% Pick two or three specific decisions made for you during the semester - the
+% eight-instruction subset, big-endian byte order, Asel = rt, the two-phase
+% timing, LUI as a plain immediate load, the read-old register file - and say,
+% for each:
+%     what the decision bought
+%     what it cost
+%     what you would choose now, and why
+%
+% "I would add more instructions" is not an answer. Name a decision, name its
+% trade-off, take a position.
+
+\section{Discussion}
+% One last time: the most valuable thing you learned that you did NOT expect to
+% learn. Not the material - the method, the debugging, the testing, or the way
+% a specification turns into hardware.
+
+\appendix
+\chapter{Code}
+% Every .vhd file you wrote, via \vhdlfile. Components you did not write
+% yourself do not belong here - say which those are in the Executive Summary.

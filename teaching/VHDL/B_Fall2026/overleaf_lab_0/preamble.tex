@@ -1,0 +1,119 @@
+% =============================================================================
+%  EE 362 Computer Organization Laboratory - report preamble
+%  You do not need to edit this file. Everything here is set up for you.
+% =============================================================================
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=2.4cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage[american]{circuitikz}   % gate-level schematics (the "schematic view")
+\ctikzset{logic ports=ieee}
+\usepackage[hidelinks]{hyperref}
+
+% --- Colours -----------------------------------------------------------------
+\definecolor{nmsucrimson}{RGB}{140,21,42}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{codekw}{RGB}{0,90,160}
+\definecolor{codecomment}{RGB}{100,110,100}
+\definecolor{codestring}{RGB}{160,60,20}
+
+% --- VHDL code listings ------------------------------------------------------
+\lstdefinestyle{vhdlstyle}{
+  language=VHDL,
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\color{codekw}\bfseries,
+  commentstyle=\color{codecomment}\itshape,
+  stringstyle=\color{codestring},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=7pt,
+  frame=single,
+  framerule=0.4pt,
+  rulecolor=\color{gray!40},
+  breaklines=true,
+  breakatwhitespace=true,
+  showstringspaces=false,
+  tabsize=4,
+  columns=fullflexible,
+  keepspaces=true,
+  captionpos=b,
+  xleftmargin=14pt,
+}
+\lstset{style=vhdlstyle}
+
+% --- One-line macro for including a real .vhd file ---------------------------
+%  Usage:  \vhdlfile{code/lab01/TransLatch.vhd}{TransLatch: 1-bit latch}
+%
+%  ALWAYS include code this way. Never paste code into the .tex file - pasted
+%  code drifts out of date the moment you fix a bug, and graders can tell.
+\newcommand{\vhdlfile}[2]{%
+  \lstinputlisting[caption={#2},label={lst:\detokenize{#1}}]{#1}%
+}
+
+% --- Figure helper -----------------------------------------------------------
+%  Usage: \resultfig{figs/lab01/waveform.png}{What this proves.}{fig:lab01-wave}
+%
+%  The second argument is NOT optional and is NOT a title. It is the sentence
+%  that says what the figure proves. A figure without one earns zero marks.
+\newcommand{\resultfig}[3]{%
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{#1}
+    \caption{#2}
+    \label{#3}
+  \end{figure}%
+}
+
+% --- Waveform helper --------------------------------------------------------
+%  A Questa screenshot is mostly empty black area below the signals. This shows
+%  the signal rows directly above the time axis of the SAME image, so the
+%  traces are readable at page width. Nothing is redrawn or edited.
+%
+%  Usage: \wavefig{file}{trim below rows}{trim above axis}{What it proves.}{label}
+%         trims are in bp (1 px = 0.6 bp for a 120-dpi screenshot)
+\newcommand{\wavefig}[5]{%
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth,trim=0 #2 0 0,clip]{#1}\\[-1.5pt]
+    \includegraphics[width=\linewidth,trim=0 0 0 #3,clip]{#1}
+    \caption{#4}
+    \label{#5}
+  \end{figure}%
+}
+
+% --- Placeholder, so the template compiles before you have any screenshots ---
+%  DELETE these as you replace them with \resultfig. Any \figplaceholder left
+%  in your final report is a missing figure.
+\newcommand{\figplaceholder}[1]{%
+  \begin{figure}[H]
+    \centering
+    \fbox{\parbox[c][3.2cm][c]{0.86\linewidth}{\centering\itshape
+      PLACEHOLDER --- insert #1 here, then replace this command with
+      \texttt{\textbackslash resultfig}}}
+    \caption{Placeholder: #1.}
+  \end{figure}%
+}
+
+% --- Headers -----------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small EE\,362 Laboratory Report}
+\fancyhead[R]{\small\leftmark}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\captionsetup{font=small,labelfont=bf}
+\setlength{\parskip}{4pt}

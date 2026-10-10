@@ -1,0 +1,260 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 7 --- Guided Examples: Solution}\\[2pt]
+{\itshape Ex 1 the program counter \quad$\cdot$\quad Ex 2 a real branch target \quad$\cdot$\quad Ex 3 two ways to get it wrong}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+\hr
+
+\begin{center}
+\small
+\begin{tabular}{cl>{\raggedright\arraybackslash}p{6.0cm}>{\raggedright\arraybackslash}p{3.8cm}}
+\toprule
+& circuit & new idea & feeds the assignment as \\
+\midrule
+1 & \code{pc\_counter} & the PC is a \textbf{register with an adder in front} & \code{NIAG\_Reg} \\
+2 & \code{branch\_target} & \textbf{PC+4, sign-extend, shift, add} & \code{NIAG\_NSA}, \code{NIAG\_Rel} \\
+3 & \code{addressing\_traps} & off by a \textbf{factor} vs off by a \textbf{constant} & what your testbench must catch \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{4pt}\hr
+
+\section*{Example 1 --- The program counter}
+
+\begin{quote}
+\textbf{A program counter is a register with an adder in front of it.} You built
+the register in Lab 2; the adder is one line.
+\end{quote}
+
+\[
+PC^{+} = \overline{\code{Rst}}\cdot\left( \code{Ld}\cdot \code{NextPC} + \overline{\code{Ld}}\cdot PC \right)
+\]
+
+That is Lab 2's equation with \code{Ld} renamed. \textbf{Only the reset value
+changed.}
+
+\subsection*{1.1 Why a register and not a counter}
+
+A counter only counts. A program counter must also \textbf{jump} --- to a branch
+target, to a subroutine, back again. So it is a \emph{loadable register}, and
+``count'' is merely the special case of loading $PC+4$.
+
+\begin{quote}
+That is why Lab 8 replaces this \code{+4} with a multiplexer over five possible
+next addresses. \textbf{Sequential execution is not a separate mechanism; it is
+one input of the mux.}
+\end{quote}
+
+\subsection*{1.2 Why the reset vector matters}
+
+On reset the PC must go somewhere \textbf{defined}. If it powers up at \code{'U'}
+the CPU fetches garbage forever and every waveform you look at is meaningless.
+Here, and in your CPU, the reset vector is address 0.
+
+\textbf{In VHDL} the value is a \code{generic} used as a number, not a width:
+
+\begin{lstlisting}
+generic ( RESET_VEC : natural := 0 );
+...
+pc_reg <= std_logic_vector(to_unsigned(RESET_VEC, 32));
+\end{lstlisting}
+
+The example is 8 bits wide purely so the waveform is readable. Your
+\code{NIAG\_Reg} is 32.
+
+\vspace{4pt}\hr
+
+\section*{Example 2 --- A real branch target}
+
+This takes an actual instruction out of the ROM program your CPU runs in Lab 12.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+address & encoding & instruction \\
+\midrule
+\code{0x0C} & \code{0x18200002} & \code{BLEZ r1, +2} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{2.1 Field extraction}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+bits & field & value \\
+\midrule
+31--26 & opcode & \code{000110} $=$ \code{BLEZ} \\
+25--21 & \code{rs} & \code{00001} $=$ \code{r1} \\
+20--16 & \code{rt} & \code{00000} \\
+15--0 & immediate & \code{0x0002} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{2.2 The computation}
+
+\begin{align*}
+\code{NSA}  &= PC + 4 = \code{0x0C} + 4 = \code{0x10} \\
+\text{offset} &= \text{SignExt}(\code{0x0002}) \ll 2 = 2 \times 4 = \code{0x08} \\
+\text{target} &= \code{NSA} + \text{offset} = \code{0x18} \qquad \text{--- the \code{SW} instruction}
+\end{align*}
+
+\subsection*{2.3 The two questions worth answering properly}
+
+\textbf{Why is the base $PC+4$ and not $PC$?} Because by the time the branch is
+evaluated the fetch has already happened --- the hardware has moved on. Using $PC$
+would mean every target was one instruction earlier than the assembler wrote, so
+the assembler would have to compensate. \textbf{Basing on $PC+4$ keeps the
+encoding honest:} ``+2'' really means ``skip 2 instructions''.
+
+\textbf{Why shift left by two?} Instructions are 4 bytes and word-aligned, so
+\textbf{the low two bits of every instruction address are always zero}. Encoding
+them would waste two bits of the immediate on information we already know.
+Shifting instead gives \textbf{four times the branch range for free}.
+
+\begin{quote}
+That is a genuine architectural trade-off, and it fits in one line of
+concatenation. It is also why the offset counts \textbf{instructions, not bytes}.
+\end{quote}
+
+\subsection*{2.4 Reuse: you already built the offset unit}
+
+\code{ImmedXtnd} from Lab 4 already does sign-extend-then-shift. Set
+\code{Xsel = '1'} and \code{Xlsft = '1'} and its output \emph{is} the offset ---
+no new hardware. This is why \code{NIAG\_Rel} is one line:
+
+\begin{lstlisting}
+Rel <= std_logic_vector(unsigned(NSA) + unsigned(Xtnd32));
+\end{lstlisting}
+
+\textbf{And notice there is no subtractor.} Two's complement addition handles
+backward branches by itself; a negative offset is just a large unsigned addend
+that wraps.
+
+\vspace{4pt}\hr
+
+\section*{Example 3 --- Two ways to get it wrong}
+
+All three of these compile, and all three produce plausible 32-bit addresses.
+
+\begin{center}
+\small
+\begin{tabular}{l>{\raggedright\arraybackslash}p{6.4cm}>{\raggedright\arraybackslash}p{5.4cm}}
+\toprule
+version & formula & error shape \\
+\midrule
+\code{GOOD} & $(PC+4) + (\text{SignExt}(imm) \ll 2)$ & --- \\
+\code{NOSHIFT} & $(PC+4) + \text{SignExt}(imm)$ & \textbf{off by a factor} of 4 \\
+\code{BASEPC} & $PC + (\text{SignExt}(imm) \ll 2)$ & \textbf{off by a constant} 4 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{3.1 The symptoms, and which is worse}
+
+\textbf{\code{NOSHIFT}} lands 2 bytes along instead of 8 --- \emph{in the middle
+of an instruction}. The CPU then fetches a word straddling two instructions and
+executes garbage. \textbf{Tell-tale: the target is not a multiple of 4.}
+
+\textbf{\code{BASEPC}} is off by exactly 4, always, in the same direction. Every
+branch lands one instruction early. \textbf{Tell-tale: the target is still
+word-aligned and still nearly right}, which makes this the harder one to spot.
+Loops run one instruction too many or too few.
+
+\begin{quote}
+\textbf{``Off by a factor'' and ``off by a constant'' are worth naming}, because
+they are the two shapes almost every addressing bug takes --- here, in Lab 9's
+memory addressing, and in Lab 12.
+\end{quote}
+
+\subsection*{3.2 The vector that separates them}
+
+With $PC = \code{0x0C}$ and $imm = \code{0x0002}$:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+version & target \\
+\midrule
+\code{GOOD} & \code{0x18} \\
+\code{NOSHIFT} & \code{0x12} \quad (not word-aligned) \\
+\code{BASEPC} & \code{0x14} \quad (aligned, one instruction early) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{One vector distinguishes all three}, provided the immediate is not zero
+and the target is checked \emph{exactly} rather than ``looks about right''.
+
+\textbf{Add a negative immediate too.} A zero-extension bug is invisible for
+positive offsets, and every loop in the Lab 12 program ends with a backward
+branch.
+
+\vspace{4pt}\hr
+
+\section*{Into the assignment}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+component & what it is & storage? \\
+\midrule
+\code{NIAG\_NSA} & $\code{NSA} = PC + 4$ & \textbf{no} --- combinational \\
+\code{NIAG\_Rel} & $\code{Rel} = \code{NSA} + \code{Xtnd32}$ & \textbf{no} --- combinational \\
+\code{NIAG\_Reg} & the program counter & \textbf{yes} --- the only register here \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{The program counter is the only storage element in this lab.} Both adders
+must stay combinational: the CPU needs the next address \emph{during} the cycle in
+which it fetches, because the result has to be ready at the edge that loads the
+PC. Registering \code{NSA} makes the machine compute the next address from the
+previous PC.
+\end{quote}
+
+Check in the Fitter report: with \code{NIAG\_Reg} as top level the register count
+is \textbf{32}; with either adder as top level it is \textbf{0}.
+
+\vspace{6pt}
+\hr
+{\small \textbf{Forward.} Lab 8 adds the condition logic and the multiplexer that
+chooses among sequential, relative, absolute and return addresses. These three
+components do not change --- they become three inputs of that mux.}
+
+\end{document}

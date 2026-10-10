@@ -1,0 +1,237 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 5: Solution}\\[2pt]
+{\large Arithmetic Logic Unit}\\[4pt]
+Fall 2026 \quad$\cdot$\quad 5 points \quad$\cdot$\quad TA marking guide
+\end{center}
+\hr
+
+{\small Marking: Q1 = 2 points, Q2 = 1 point, Q3 = 2 points. The ALU is the
+biggest component so far; students who arrive with Q1 and Q3 done finish the
+session.}
+
+\vspace{4pt}\hr
+
+\section*{Question 1 --- Operations by hand (2 points)}
+
+\subsection*{(a) The six results \quad(\code{Shft} = 1)}
+
+\begin{center}
+\begin{tabular}{clll|l|l}
+\toprule
+\# & op & \code{Ain} & \code{Bin} & \code{Rout} & why \\
+\midrule
+1 & \code{SUB}  & \code{0x00000004} & \code{0x00000007} & \code{0xFFFFFFFD} & $4-7 = -3$ \\
+2 & \code{NOT}  & \code{0x00000000} & \code{0x0F0F0F0F} & \code{0xF0F0F0F0} & \code{NOT} acts on \code{Bin} \\
+3 & \code{SRL}  & \code{0xFFFFFFF8} & --- & \code{0x7FFFFFFC} & vacated bit filled with \code{0} \\
+4 & \code{SRA}  & \code{0xFFFFFFF8} & --- & \code{0xFFFFFFFC} & vacated bit filled with the sign; $-8/2 = -4$ \\
+5 & \code{SOLS} & \code{0xFFFFFFFF} & \code{0x00000001} & \code{0x00000001} & signed: $-1 < 1$ is true \\
+6 & \code{SOLU} & \code{0xFFFFFFFF} & \code{0x00000001} & \code{0x00000000} & unsigned: $4294967295 < 1$ is false \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Row 2 is a trap worth marking carefully.} In this ALU \code{NOT} operates
+on \code{Bin}, not \code{Ain}. A student who answered \code{0xFFFFFFFF} inverted
+\code{Ain} instead --- correct arithmetic, wrong operand, and it will fail the
+reference testbench.
+
+\textbf{Rows 3 and 4 are the heart of the lab.} If a student wrote the same answer
+twice, they have not yet seen the difference between the two right shifts.
+
+\subsection*{(b) Same inputs, different answers}
+
+\begin{quote}
+\textbf{Rows 3 vs 4:} whether the bits are a \textbf{signed} number or an
+\textbf{unsigned} one. \code{SRA} must preserve the sign, so it fills with copies
+of the top bit; \code{SRL} treats the bits as unsigned and fills with zeros.
+\end{quote}
+
+\begin{quote}
+\textbf{Rows 5 vs 6:} the same distinction applied to the comparison. As a signed
+number \code{0xFFFFFFFF} is $-1$, which is less than 1. As an unsigned number it
+is the largest 32-bit value, which is not.
+\end{quote}
+
+\textbf{The general point}, which is the same as Lab 4's: \emph{the bits do not
+say what they mean; the operation does.}
+
+\subsection*{(c) The two flag equations}
+
+\[
+\text{Zero} = \overline{R_{31} + R_{30} + \cdots + R_1 + R_0}
+\qquad\qquad
+\text{Neg} = R_{31}
+\]
+
+Zero is a 32-input NOR: it is 1 only when every bit is 0. Accept
+$\text{Zero} = \overline{R_{31}} \cdot \overline{R_{30}} \cdots \overline{R_0}$ ---
+De Morgan's law makes them the same thing, and a student who writes it that way
+should be able to say so.
+
+\begin{quote}
+\textbf{Why \code{Neg} needs no computation:} in two's complement the top bit
+\emph{is} the sign. \code{Neg} is a wire from $R_{31}$, not a gate.
+\end{quote}
+
+\vspace{4pt}\hr
+
+\section*{Question 2 --- Interface and the flag trap (1 point)}
+
+\subsection*{(a) The entity}
+
+\begin{lstlisting}
+entity ALU is
+    port (
+        Ain  : in  std_logic_vector(31 downto 0);
+        Bin  : in  std_logic_vector(31 downto 0);
+        Func : in  std_logic_vector(4 downto 0);   -- 16 operations, 5 bits
+        Shft : in  std_logic_vector(4 downto 0);   -- shift amount 0..31
+        Rout : out std_logic_vector(31 downto 0);
+        Zero : out std_logic;
+        Neg  : out std_logic
+    );
+end entity ALU;
+\end{lstlisting}
+
+\textbf{\code{Shft} is a separate port, and shifts act on \code{Ain}.} Students
+who assume the shift amount comes from \code{Bin} will pass their own testbench
+and fail in Lab 12 --- worth correcting now, in ink, on the pre-lab.
+
+Five bits for \code{Shft} is exactly $0 \ldots 31$: nothing wasted, nothing out of
+range.
+
+\subsection*{(b) Taking \code{Zero} from the adder instead of the selected result}
+
+\begin{quote}
+\textbf{Model answer:} \code{AND} with \code{Ain = 0x0F0F0F0F} and
+\code{Bin = 0xF0F0F0F0}. The selected result is \code{0x00000000}, so \code{Zero}
+\emph{should} be 1. The adder computes \code{0xFFFFFFFF}, which is not zero, so
+the flag would read 0 --- wrong.
+\end{quote}
+
+Any operation whose result differs from the sum earns full credit. The converse
+example is just as good: \code{AND} of \code{0x00000001} and \code{0xFFFFFFFF}
+gives 1 (\code{Zero} should be 0), while the adder's sum is \code{0x00000000} and
+would report \code{Zero} = 1.
+
+\begin{quote}
+\textbf{The rule:} \textbf{flags describe the selected result}, so they are
+computed \emph{after} the multiplexer, never inside one branch.
+\end{quote}
+
+In Lab 8 six one-line Boolean equations over \code{Zero} and \code{Neg} produce
+every conditional branch the machine has. A flag taken from the wrong place there
+breaks branching, not arithmetic --- which is much harder to find.
+
+\vspace{4pt}\hr
+
+\section*{Question 3 --- Test plan (2 points)}
+
+\subsection*{The coverage argument}
+
+\begin{quote}
+\textbf{Model answer:} $2^{64}$ operand pairs cannot be enumerated, so test
+\textbf{every operation at least once} --- the \code{case} is a multiplexer, and
+an untested branch is an unverified input to it --- and for each operation use
+\textbf{boundary operands} rather than random ones, because arithmetic bugs live
+at carries, at the sign bit and at overflow. Then check the flags on a result
+that is \emph{not} the adder's.
+\end{quote}
+
+\subsection*{Model vector list}
+
+\begin{center}
+\small
+\begin{tabular}{c>{\raggedright\arraybackslash}p{5.0cm}>{\raggedright\arraybackslash}p{7.6cm}}
+\toprule
+\# & operation and operands & which wrong implementation it catches \\
+\midrule
+1 & \code{ADD}, \code{0x7FFFFFFF} + \code{0x00000001} & a carry that is dropped at the sign bit \\
+2 & \code{SUB}, $4 - 7$ & operands swapped: gives $+3$ instead of \code{0xFFFFFFFD} \\
+3 & \code{SRA}, \code{0xFFFFFFF8}, \code{Shft}=1 & \textbf{\code{SRA} written with \code{unsigned()}} --- it silently becomes \code{SRL} \\
+4 & \code{SRL}, same operand and amount & the reverse swap, and it pins both shifts at once \\
+5 & \code{SOLS} vs \code{SOLU}, \code{0xFFFFFFFF} vs \code{0x00000001} & a signed comparison used where unsigned was meant \\
+6 & \code{AND}, \code{0x0F0F0F0F} \& \code{0xF0F0F0F0}, check \code{Zero} & \textbf{flags taken from the adder} instead of the selected result \\
+7 & shift with \code{Shft} = 0 and \code{Shft} = 31 & an off-by-one in the shift amount conversion \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Six vectors earn full credit. \textbf{Vectors 3 and 6 are the ones that must
+appear.}
+
+\subsection*{(a) Which vector catches an \code{SRA} written as an \code{SRL}?}
+
+\begin{quote}
+\textbf{Model answer:} Vector 3 --- \code{SRA} of a \textbf{negative} operand with
+a non-zero shift. \code{0xFFFFFFF8} shifted right by one gives \code{0xFFFFFFFC}
+($-4$) if the fill is the sign bit, and \code{0x7FFFFFFC} if it is zeros.
+\end{quote}
+
+\textbf{A positive operand cannot catch it}, because both shifts fill with zeros
+when the sign bit is already 0. Neither can a shift amount of zero. If a student's
+only shift vector uses a positive number, the bug survives their entire testbench
+--- and in VHDL it is an easy bug to write, since \code{shift\_right} is the same
+operator for both and only the \emph{type} decides the fill.
+
+\subsection*{(b) The five boundary values, and why the middle is dull}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+value & why it is a boundary \\
+\midrule
+\code{0x00000000} & zero: the only value that sets the \code{Zero} flag \\
+\code{0x00000001} & smallest positive; catches off-by-one \\
+\code{0x7FFFFFFF} & largest positive; $+1$ here overflows into the sign bit \\
+\code{0x80000000} & most negative; its negation cannot be represented \\
+\code{0xFFFFFFFF} & $-1$ signed, maximum unsigned: separates \code{SOLS} from \code{SOLU} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{Why the middle of the range proves little:} every value in the middle
+exercises the same carry chain in the same way. Bugs live where behaviour
+\emph{changes} --- at a carry out of the top bit, at the transition from positive
+to negative, and at the extremes of the shift amount. Testing \code{0x12345678}
+plus \code{0x11111111} tells you almost nothing that \code{1 + 1} did not.
+\end{quote}
+
+\vspace{6pt}
+\hr
+{\small \textbf{At the bench:} the two answers that predict trouble are a Q1 with
+rows 3 and 4 identical, and a Q3 with no negative-operand shift. Both students
+will produce an ALU that passes their own tests and fails in Lab 12.}
+
+\end{document}

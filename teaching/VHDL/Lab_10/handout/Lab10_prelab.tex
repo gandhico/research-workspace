@@ -1,0 +1,106 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 10}\\[2pt]
+{\large Instruction Decoder I}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points, about twenty
+minutes, on paper. Bring the instruction-format sheet.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- Pull the instruction apart}
+
+\textbf{(a)} Split each instruction into its fields.
+
+\begin{center}
+\begin{tabular}{lllllll}
+\toprule
+word & format & opcode & rs & rt & rd / immediate & func / sa \\
+\midrule
+\code{0x00221820} & \rule{1.4cm}{0.4pt} & \rule{1.6cm}{0.4pt} & \rule{1cm}{0.4pt} & \rule{1cm}{0.4pt} & \rule{2cm}{0.4pt} & \rule{1.6cm}{0.4pt} \\[6pt]
+\code{0x2021FFFF} & \rule{1.4cm}{0.4pt} & \rule{1.6cm}{0.4pt} & \rule{1cm}{0.4pt} & \rule{1cm}{0.4pt} & \rule{2cm}{0.4pt} & \rule{1.6cm}{0.4pt} \\[6pt]
+\code{0x00021040} & \rule{1.4cm}{0.4pt} & \rule{1.6cm}{0.4pt} & \rule{1cm}{0.4pt} & \rule{1cm}{0.4pt} & \rule{2cm}{0.4pt} & \rule{1.6cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} Two of those write a register. \emph{Which field holds the
+destination in each case}, and why is it not the same field for both?
+
+\answerbox{2.0cm}
+
+\textbf{(c)} The opcode always sits at bits 31--26, in every format. Give the
+reason --- it is a hardware reason, not a convention.
+
+\answerbox{1.6cm}
+
+\section*{Question 2 --- The control table}
+
+Fill in only the signals that DIFFER from the default. Write ``--'' for the
+rest.
+
+\begin{center}
+\small
+\begin{tabular}{lllllll}
+\toprule
+instr & ALU\_func & ALU\_Asel & IR\_Xsel & RF\_Dsel & RF\_strb & RF\_Wsel \\
+\midrule
+\code{ADD}  & \rule{1.5cm}{0.4pt} & \rule{1.5cm}{0.4pt} & \rule{1.3cm}{0.4pt} & \rule{1.3cm}{0.4pt} & \rule{1.5cm}{0.4pt} & \rule{1.3cm}{0.4pt} \\[6pt]
+\code{ADDI} & \rule{1.5cm}{0.4pt} & \rule{1.5cm}{0.4pt} & \rule{1.3cm}{0.4pt} & \rule{1.3cm}{0.4pt} & \rule{1.5cm}{0.4pt} & \rule{1.3cm}{0.4pt} \\[6pt]
+\code{LUI}  & \rule{1.5cm}{0.4pt} & \rule{1.5cm}{0.4pt} & \rule{1.3cm}{0.4pt} & \rule{1.3cm}{0.4pt} & \rule{1.5cm}{0.4pt} & \rule{1.3cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} \code{ADDI} and \code{LUI} differ on exactly \emph{one} of those
+signals. Circle it, and say what would go wrong in the Lab 12 program if
+\code{ADDI} were given \code{LUI}'s value.
+
+\answerbox{2.2cm}
+
+\section*{Question 3 --- The latch, and how to catch it}
+
+A classmate writes their decoder without assigning the default first. They test
+it by applying one instruction, checking the signals, applying the next, and so
+on. Every test passes.
+
+\textbf{(a)} Explain, in two or three sentences, what their hardware actually
+does and why their testing cannot detect it.
+
+\answerbox{2.4cm}
+
+\textbf{(b)} Design the vector that \emph{would} catch it. Give the exact
+sequence of instructions and the signal you would check.
+
+\answerbox{2.2cm}
+
+\textbf{(c)} You have met this bug twice before in this course. Name both labs
+and say what was different about them.
+
+\answerbox{2.0cm}
+
+\vfill
+{\small\emph{Question 3 is the one that matters.} It is the same question as
+Section 5 of your lab report.}
+
+\end{document}

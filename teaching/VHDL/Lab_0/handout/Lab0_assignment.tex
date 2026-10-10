@@ -1,0 +1,171 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 0 --- VHDL Fundamentals}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Learn the shape of a VHDL design --- the \code{entity} that declares an interface
+and the \code{architecture} that implements it --- and verify four small
+combinational circuits by simulation rather than by inspection.
+
+Every one of these four circuits reappears later in the course. Two of them end up
+inside your processor.
+
+\section*{2. The method, which does not change all semester}
+
+\begin{quote}
+\textbf{specification $\rightarrow$ truth table $\rightarrow$ Boolean equations
+$\rightarrow$ VHDL $\rightarrow$ simulation $\rightarrow$ back to the table}
+\end{quote}
+
+Today it is a four-row table and one equation. In week twelve it is an eight-row
+table with sixteen output columns, and nothing else will have changed.
+
+\subsection*{How to write a truth table}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Number every row.} Your report says ``row 5'', never a paragraph
+describing row 5.
+\item Inputs on the left, outputs on the right, separated by a visible bar.
+\item \code{--} means \emph{don't care}.
+\item With $n$ binary inputs an exhaustive table has $2^n$ rows. Four inputs or
+fewer: enumerate them all.
+\end{itemize}
+
+\subsection*{How to write the derivation}
+
+Three lines, every time:
+
+\begin{align*}
+\text{(1) canonical} \quad & \text{sum of minterms, straight off the table} \\
+\text{(2) simplified} \quad & \text{\textbf{and name the law or K-map grouping used}} \\
+\text{(3) VHDL} \quad & \text{the line of code that implements it}
+\end{align*}
+
+``It simplified'' is not line (2). Name what you did.
+
+\section*{3. The four circuits}
+
+\subsection*{Exercise 1 --- majority of three}
+
+$Y = 1$ when at least two of $A$, $B$, $C$ are $1$.
+
+Three inputs, so an exhaustive table has 8 rows. Fill it in, write
+$Y = \sum m(\ldots)$, then simplify to a three-term expression and name the law.
+
+\subsection*{Exercise 2 --- 2-to-1 multiplexer}
+
+$Y = D_0$ when $S = 0$, $Y = D_1$ when $S = 1$.
+
+Write it \emph{both} ways: the exhaustive 8-row table, and the 2-row table that
+names a \emph{source} rather than a value. You will use the second form for the
+rest of the course, and Lab 3 explains why.
+
+\subsection*{Exercise 3 --- 2-to-4 decoder with enable}
+
+Exactly one output is high when $E = 1$; all outputs low when $E = 0$.
+
+Write one equation per output. Notice what they have in common --- that pattern
+has a name, and you meet it again in Lab 6.
+
+\textbf{Warning:} the behavioural example given in class has a bug. Find it. It is
+Exercise 3's real lesson.
+
+\subsection*{Exercise 4 --- full adder}
+
+$A + B + C_{in}$, producing $Sum$ and $C_{out}$.
+
+Two outputs, so two equations. One of them does \emph{not} simplify by K-map ---
+work out why, and say what operator it needs instead. The other one you have
+already derived today; say which exercise it was.
+
+\section*{4. What to build}
+
+For each of the four circuits:
+
+\begin{enumerate}[leftmargin=2em,itemsep=2pt]
+\item the truth table, rows numbered;
+\item the three-line derivation, with the law named;
+\item a VHDL \code{entity} and \code{architecture};
+\item a \textbf{self-checking} testbench --- \code{assert} statements, not
+eyeballing a waveform;
+\item the waveform, and the transcript line showing the checks passed.
+\end{enumerate}
+
+For Exercises 1 and 4 write \textbf{two architectures} of the same entity ---
+\code{behavioral} and \code{structural} --- and have one testbench exercise both,
+asserting they agree on every vector.
+
+\section*{5. What to enter in Quartus}
+
+You build this project by hand. It is the only time you will --- from Lab 1 the
+\code{.qpf} is supplied --- and doing it once is why.
+
+\begin{enumerate}[leftmargin=2em,itemsep=2pt]
+\item \code{File $\rightarrow$ New Project Wizard}
+\item \textbf{Working directory:} a short local path, \emph{no spaces}, not inside
+OneDrive. \code{C:\textbackslash ee362\textbackslash lab00} is fine.
+\item \textbf{Project name} and \textbf{top-level entity name}: these must match
+the \code{entity} name in your VHDL file exactly.
+\item \textbf{Family:} Cyclone V. \quad \textbf{Device:} \code{5CSEMA4U23C6}.
+\item \textbf{EDA Tool Settings $\rightarrow$ Simulation:} tool
+\code{Questa Intel FPGA (VHDL)}, format VHDL.
+\item Add your \code{.vhd} files: \code{Project $\rightarrow$ Add/Remove Files}.
+\item \code{Assignments $\rightarrow$ Settings $\rightarrow$ EDA Tool Settings
+$\rightarrow$ Simulation $\rightarrow$ Compile test bench} $\rightarrow$
+\code{Test Benches...} $\rightarrow$ \code{New}, and give it your testbench entity
+name for both the test bench name and the top-level module.
+\end{enumerate}
+
+Then the flow:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& what & why \\
+\midrule
+1 & \code{Processing $\rightarrow$ Start $\rightarrow$ Analysis \& Elaboration} & fast syntax check \\
+2 & \code{Tools $\rightarrow$ Netlist Viewers $\rightarrow$ RTL Viewer} & did I describe what I meant? \\
+3 & \code{Processing $\rightarrow$ Start Compilation} (Ctrl+L) & full build \\
+4 & Compilation Report & errors, warnings, resources \\
+5 & \code{Tools $\rightarrow$ Run Simulation Tool $\rightarrow$ RTL Simulation} & does it behave? \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Do step 2 every time.} It costs ten seconds and catches most design
+mistakes before you have spent a compile on them.
+
+\section*{6. Report --- \code{lab00.tex}}
+
+All seven sections, for all four circuits. Specifically: the four truth tables
+with numbered rows, the four derivations with laws named, the code included by
+\code{\textbackslash lstinputlisting} (never pasted), the coverage argument for
+each testbench, and a Discussion describing one real bug you hit.
+
+\vspace{10pt}
+\hr
+{\small Two of these four circuits end up inside your processor, and a third is
+the mechanism behind the register file. Keep your files.}
+
+\end{document}

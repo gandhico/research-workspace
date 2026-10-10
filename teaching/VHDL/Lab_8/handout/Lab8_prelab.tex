@@ -1,0 +1,126 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\answerbox}[1]{\vspace{2pt}\fbox{\parbox[c][#1][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\ }}\vspace{4pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 8}\\[2pt]
+{\large Next Instruction Address Generation II}\\[6pt]
+\begin{tabular}{@{}p{6.5cm}p{4cm}p{4cm}@{}}
+Name: \hrulefill & Section: Mon / Tue & Date: \hrulefill
+\end{tabular}
+\end{center}
+
+\vspace{2pt}\hrule\vspace{4pt}
+
+{\small\textbf{Due at the start of the lab session.} Five points, about twenty
+minutes, on paper.}
+
+\vspace{4pt}\hrule
+
+\section*{Question 1 --- The six equations}
+
+\textbf{(a)} The ALU gives you two flags: $Z$ (result is zero) and $N$ (result
+is negative). Write the Boolean equation for \emph{Taken} for each condition.
+
+\begin{center}
+\begin{tabular}{lll@{\hskip 8pt}||@{\hskip 8pt}l}
+\toprule
+code & meaning & & Taken $=$ \\
+\midrule
+\code{NONE} & always   & & \rule{5cm}{0.4pt} \\[5pt]
+\code{EQ}   & $=0$     & & \rule{5cm}{0.4pt} \\[5pt]
+\code{NEQ}  & $\neq 0$ & & \rule{5cm}{0.4pt} \\[5pt]
+\code{GTZ}  & $>0$     & & \rule{5cm}{0.4pt} \\[5pt]
+\code{GEZ}  & $\geq 0$ & & \rule{5cm}{0.4pt} \\[5pt]
+\code{LTZ}  & $<0$     & & \rule{5cm}{0.4pt} \\[5pt]
+\code{LEZ}  & $\leq 0$ & & \rule{5cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(b)} Three of these pairs are complements of each other. Circle them in
+the table above, and say in one sentence what that tells you about how much
+hardware the seven conditions actually cost.
+
+\answerbox{1.6cm}
+
+\textbf{(c)} A classmate writes \code{GTZ} as $\overline{N}$. Give the exact
+flag values where their version and the correct one disagree, and say which
+instruction would then behave wrongly.
+
+\answerbox{2.0cm}
+
+\section*{Question 2 --- Absolute jumps}
+
+Here is a real instruction from the Lab 12 program:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\code{0x00000014} & \code{0x08000002} & \code{J 0x08} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(a)} Compute the target. Show the three pieces.
+
+\vspace{4pt}
+\code{NSA} $=$ \rule{3cm}{0.4pt} \hfill
+top 4 bits $=$ \rule{2.5cm}{0.4pt} \hfill
+\code{Abslt} $=$ \rule{4cm}{0.4pt}
+\vspace{8pt}
+
+\textbf{(b)} $4 + 26 + 2 = 32$. Say where each group of bits comes from, and
+then state the range limit this produces --- how far can a \code{J} reach, and
+why?
+
+\answerbox{2.4cm}
+
+\textbf{(c)} What instruction do you use when you need to go further than that,
+and what makes it able to?
+
+\answerbox{1.4cm}
+
+\section*{Question 3 --- Test plan}
+
+\textbf{(a)} \code{Sel} and \code{Cond} are two separate control fields. Give
+one pair of test vectors that differ \emph{only} in \code{Taken} and produce
+two different next addresses --- and one pair that differ only in \code{Taken}
+and produce the \emph{same} address.
+
+\answerbox{2.6cm}
+
+\textbf{(b)} Sketch your scripted sequence: the list of steps the PC will walk
+through, and the address you expect after each one.
+
+\begin{center}
+\begin{tabular}{@{}c@{\hskip 8pt}p{5.4cm}@{\hskip 8pt}p{3cm}@{\hskip 8pt}p{3.4cm}@{}}
+\toprule
+\# & what happens & expected PC & what it proves \\
+\midrule
+1 & \rule{5.2cm}{0.4pt} & \rule{2.8cm}{0.4pt} & \rule{3.2cm}{0.4pt} \\[7pt]
+2 & \rule{5.2cm}{0.4pt} & \rule{2.8cm}{0.4pt} & \rule{3.2cm}{0.4pt} \\[7pt]
+3 & \rule{5.2cm}{0.4pt} & \rule{2.8cm}{0.4pt} & \rule{3.2cm}{0.4pt} \\[7pt]
+4 & \rule{5.2cm}{0.4pt} & \rule{2.8cm}{0.4pt} & \rule{3.2cm}{0.4pt} \\[7pt]
+5 & \rule{5.2cm}{0.4pt} & \rule{2.8cm}{0.4pt} & \rule{3.2cm}{0.4pt} \\[7pt]
+6 & \rule{5.2cm}{0.4pt} & \rule{2.8cm}{0.4pt} & \rule{3.2cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vfill
+{\small\emph{Question 3 is the one that matters.} It is the same question as
+Section 5 of your lab report.}
+
+\end{document}

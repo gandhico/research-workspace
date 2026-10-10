@@ -1,0 +1,234 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 4 --- Datapath Support Components}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Build the three small blocks that glue the datapath together, and meet the first
+value in this course that is not Boolean.
+
+\begin{quote}
+\emph{\code{'Z'} is not a Boolean value --- some hardware lives outside Boolean
+algebra.}
+\end{quote}
+
+\section*{2. Background}
+
+\subsection*{Widening a number is two different operations}
+
+\textbf{Zero extension} pads the top with \code{'0'}: the value is unsigned.
+\textbf{Sign extension} pads the top with copies of the top bit: the value is
+two's complement, and its sign must survive.
+
+Both take the same input and give different answers, and neither is ``more
+correct''. The \emph{instruction} decides which is wanted:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \code{ADDI} \textbf{sign}-extends. Its immediate is a signed offset, so
+\code{ADDI r1,r1,-1} must actually subtract one. Zero-extend it and $-1$ becomes
+$+65535$, and your Lab 12 loop counts the wrong way.
+\item \code{LUI} \textbf{zero}-extends in this CPU. Its immediate is a bit
+pattern, not a number.
+\end{itemize}
+
+\subsection*{Why branch offsets are shifted left by two}
+
+Branch offsets are counted in \emph{instructions}, not bytes. Instructions are
+four bytes and word-aligned, so the low two bits of every instruction address are
+always zero. Encoding them would waste two bits; instead we shift, and get four
+times the branch range for free. You will use this again, deliberately, in Lab 7.
+
+\subsection*{The third state}
+
+A tri-state buffer has an output that is not \code{'0'} and not \code{'1'}:
+\code{'Z'}, high impedance, meaning \emph{``I am not driving this wire at all.''}
+That is not a value, it is the \emph{absence} of one, and Boolean algebra has no
+symbol for it.
+
+If two drivers touch one wire, something must decide what the wire reads.
+\code{std\_logic} is a \textbf{resolved} type --- it carries a function that
+combines all drivers:
+
+\begin{center}
+\begin{tabular}{c||ccc}
+\toprule
+& \code{0} & \code{1} & \code{Z} \\
+\midrule
+\code{0} & 0 & \textbf{X} & 0 \\
+\code{1} & \textbf{X} & 1 & 1 \\
+\code{Z} & 0 & 1 & Z \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Two drivers agreeing give that value. One driving and one at \code{'Z'} gives the
+driven value --- that is how a bus works. Two drivers disagreeing give \code{'X'}.
+
+\textbf{So \code{'X'} in your waveform never means the simulator is confused.} It
+means two things drove one wire and disagreed. In Labs 9 and 12 that will be the
+fastest diagnosis you own.
+
+Resolution happens \textbf{per bit}. Two 32-bit drivers that differ in only three
+bits produce \code{'X'} in exactly those three positions and correct values
+everywhere else.
+
+\subsection*{Specification --- \code{ImmedXtnd}, Table C}
+
+\begin{center}
+\begin{tabular}{ccc@{\hskip 8pt}||@{\hskip 8pt}ll}
+\toprule
+\# & \code{Xsel} & \code{Xlsft} & \code{Xtnd32} & used by \\
+\midrule
+0 & 0 & 0 & $0^{16} \,\&\, I$ & \code{LUI} \\
+1 & 1 & 0 & $I_{15}^{16} \,\&\, I$ & \code{ADDI}, \code{LW}, \code{SW} \\
+2 & 1 & 1 & $I_{15}^{14} \,\&\, I \,\&\, \code{"00"}$ & \code{BLEZ} \\
+3 & 0 & 1 & $0^{14} \,\&\, I \,\&\, \code{"00"}$ & (unused, but \emph{defined}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+$x^{n}$ means ``bit $x$ repeated $n$ times''. \textbf{Row 3 is not impossible and
+not don't-care.} Leave it out and you get an inferred latch --- Lab 3, Example 3.
+
+\begin{align*}
+\text{no shift:} \quad & \code{Xtnd32}_i = I_i && i = 0\ldots15\\
+                       & \code{Xtnd32}_i = \code{Xsel}\cdot I_{15} && i = 16\ldots31\\
+\text{with $\times4$:} \quad & \code{Xtnd32}_i = E_{i-2},\quad \code{Xtnd32}_1 = \code{Xtnd32}_0 = 0
+\end{align*}
+
+\section*{3. Guided examples}
+
+\begin{description}[leftmargin=2.4em,style=nextline,itemsep=2pt]
+\item[Example 1 --- tri-state and a shared bus] Two buffers driving one wire.
+Watch the four cases: nobody driving, A only, B only, both.
+\item[Example 2 --- the two extensions] $4\to8$ sign and zero extension side by
+side. The interesting inputs are the ones where the answers \emph{differ}.
+\item[Example 3 --- the conversion chain]
+\code{std\_logic\_vector} $\to$ \code{unsigned} $\to$ \code{integer}, and why you
+cannot index a vector with a vector.
+\end{description}
+
+\section*{4. Assignment}
+
+\begin{enumerate}[leftmargin=2em,itemsep=3pt]
+\item \textbf{\code{ImmedXtnd}} --- all four rows. Build it in two steps: extend
+first into an internal signal, then shift or not. Far clearer than one giant
+expression, and the RTL Viewer will show you the two stages.
+
+\item \textbf{\code{TriBuffer}} --- 32 bits. \code{Sel = '1'} drives,
+\code{Sel = '0'} releases with \code{(others => 'Z')}. Note in your report that
+this is \emph{not} a Boolean function, and why.
+
+\item \textbf{\code{ALUsftMUX}} --- selects the ALU shift amount from the
+instruction's \code{sa} field or from register~B. \textbf{This is a \code{Mux2}
+with \code{W = 5}}, which you already wrote in Lab 3. Write it directly or
+instantiate your \code{Mux2}; either is acceptable, but say which you did and
+why. Recognising that a ``new'' block is one you already own is a skill this
+course is trying to build.
+
+\item \textbf{Testbench} --- complete \code{tb\_Lab4.vhd}. \textbf{At least six
+checked vectors}, including all of:
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item \code{ImmedXtnd} on \code{x"8000"} both ways --- the value where the two
+extensions visibly differ (\code{0xFFFF8000} vs \code{0x00008000}). An input like
+\code{x"0001"} proves nothing: both give the same answer. \emph{Test where the
+implementations disagree, not where they agree.}
+\item rows 2 and 3 (both shifted cases). Skipping row 3 means you have a latch.
+\item the bus with \textbf{no} driver enabled $\to$ all \code{'Z'};
+\item the bus with \textbf{both} drivers enabled and data differing in every bit
+$\to$ all \code{'X'};
+\item \code{ALUsftMUX} for both values of \code{Ssel}.
+\end{itemize}
+\end{enumerate}
+
+\section*{5. Evidence to collect (E1, E2, E7)}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& Source & What it must show \\
+\midrule
+E1 & Flow Summary + Messages & 0 errors; \textbf{no inferred-latch warning} \\
+E2 & RTL Viewer & the extend stage and the shift stage, separately \\
+E7 & Questa waveform + transcript & the bus at \code{Z}, at a value, and at \code{X} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Top level is \code{ImmedXtnd}. \textbf{Its register count must be zero.}
+
+\section*{6. Report --- \code{lab04.tex}}
+
+All seven sections. Specifically:
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Specification:} the Type C table and the resolution table.
+\item \textbf{Design:} why \code{TriBuffer} is not a Boolean function; and
+whether you reused \code{Mux2} for \code{ALUsftMUX}, with your reasoning.
+\item \textbf{Results:} an annotated waveform showing the bus in all three
+states. Say what caused the \code{'X'}.
+\item \textbf{Discussion:} required, and it must answer: \emph{why does
+\code{ADDI} sign-extend but \code{LUI} zero-extend?}
+\end{itemize}
+
+\section*{7. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Testbench and test vectors, coverage justified & 20 \\
+Simulation results match the specification & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{8. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Extending the wrong bit.} The sign bit is \code{Immed16(15)}, not
+bit 0 and not bit 31.
+\item \textbf{Treating \code{'Z'} as \code{'0'}.} It is not a value. A released
+bus reads \code{'Z'}, and comparing it to \code{'0'} fails.
+\item \textbf{Expecting all-\code{'X'} from any contention.} Resolution is per
+bit. Drivers that agree on some bits produce \code{'X'} only where they differ.
+\item \textbf{Forgetting row 3.} Same latch as Lab 3.
+\item \textbf{\code{std\_logic\_arith} / \code{std\_logic\_unsigned}.} Never.
+Use \code{ieee.numeric\_std} only --- the others are not IEEE standard, conflict
+with each other, and produce errors that read as though the compiler has lost its
+mind.
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small \code{ImmedXtnd} is used by \code{NIAG\_Rel} in Lab 7 and by every
+immediate instruction in Lab 12. \code{TriBuffer} is how the register file
+reaches the memory bus in Lab 9. Keep your files.}
+
+\end{document}

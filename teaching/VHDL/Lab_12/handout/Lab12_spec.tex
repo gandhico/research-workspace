@@ -1,0 +1,270 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Computer Organization Laboratory}\\[2pt]
+{\large\bfseries Lab 12 --- CPU Integration}\\[4pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres \quad$\cdot$\quad Sections: Mon / Tue, 3:45--5:45~PM, ECIII 237
+\end{center}
+\hr
+
+\section*{1. Objective}
+
+Wire twelve components together and run a program.
+
+\begin{quote}
+\emph{Debugging a system means predicting it first.}
+\end{quote}
+
+\textbf{Almost no new VHDL.} This lab is wiring, timing and debugging. Expect it
+to be emotionally hard and technically shallow: nothing here is difficult to
+write, and finding out why it does not work is the entire exercise.
+
+\textbf{Bring your printed control table.} Step 3 of the debugging method needs
+it.
+
+\section*{2. What success looks like}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+instructions executed & \textbf{45}, one per clock period, CPI $= 1$ \\
+final \code{r1} & \code{0x00000000} \quad the loop counter ran out \\
+final \code{r2} & \code{0x00000400} \quad $1024 = 2^{10}$ \\
+word stored at address 0 & \code{0x00000400} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Your CPU computes $2^{10}$.} Every component you have built since Lab 1
+exists to make that happen.
+
+\section*{3. The timing contract}
+
+Write this on paper before you wire anything.
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{rising edge} & \textbf{FETCH.} \quad \code{IRreg <= ROM[PC]} \\
+\textbf{falling edge} & \textbf{COMMIT.} \quad register file writes, RAM writes, PC updates \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+One instruction per clock period. The instruction is captured at the start of
+the period; every piece of state changes in the middle of it, by which time the
+combinational logic has settled.
+
+\textbf{The register file and the NIAG need an inverted clock.} Their own
+architectures use \code{rising\_edge}, and you want them to commit on the
+falling edge with everything else. Inverting the clock at the instantiation is
+how you retime a component you do not want to modify.
+
+\textbf{Every bug in this lab that is not a mis-wire is an edge mistake.}
+
+\section*{4. Three wiring decisions that are easy to get wrong}
+
+\begin{enumerate}[leftmargin=1.8em,itemsep=3pt]
+\item \textbf{\code{Asel = rt} and \code{Bsel = rs}.} Not the other way round.
+Work it out rather than trusting the handout:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\code{ADDI}/\code{LW}/\code{SW} & the base register is \code{rs} and must arrive on \code{Bout}, \\
+ & because the ALU's A input is the immediate \\
+\code{SLL} & shifts \code{rt}, which must arrive on \code{Aout} \\
+\code{SW} & stores \code{rt}, driven onto the bus from \code{Aout} \\
+\code{BLEZ} & has \code{rt} $= 0$, so \code{Aout + Bout} $= 0 + rs$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+One assignment satisfies all eight instructions. \textbf{Swap them and three of
+the four instruction types still work} --- which is what makes it nasty.
+
+\item \textbf{The store value comes from \code{Aout}}, through the
+\code{TriBuffer}.
+
+\item \textbf{The ROM is addressed by \code{PCreg}, not by \code{NSA}.} Address
+it with \code{NSA} and every instruction executes one too early.
+\end{enumerate}
+
+\section*{5. The debugging method}
+
+When it does not work --- and it will not, the first time --- \textbf{do not
+open the waveform and stare at forty signals}. Bisect. Four checks, in this
+order, every time.
+
+\begin{center}
+\begin{tabular}{cll}
+\toprule
+& check & if it fails, the fault is in \\
+\midrule
+1 & Is the PC advancing by 4? & the NIAG, or reset \\
+2 & Is \code{IR} the instruction the ROM table says? & ROM addressing, or the fetch process \\
+3 & Do the control signals match your table? & the decoder \\
+4 & Only now, the datapath. & the wiring between components \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Each check depends on the ones before it. Checking the ALU while the PC is stuck
+tells you nothing --- the ALU is faithfully computing on garbage.
+
+\textbf{Do them in order even when you are sure you know what is wrong}, because
+you are usually not. Example 1 gives you a CPU with two deliberate wiring errors
+to practise on; both pass checks 1, 2 and 3, and establishing that is not wasted
+effort --- it is what tells you the fault is in the wiring rather than the
+control.
+
+\section*{6. Hand-compute before you simulate}
+
+\textbf{Work out the first five rows of the trace on paper first.} This is
+graded, and not only because it is good practice: a student who only ever reads
+values off a waveform has no way to tell a wrong trace from a right one.
+
+\begin{center}
+\begin{tabular}{cllll}
+\toprule
+cyc & PC & instruction & what it does & register written \\
+\midrule
+0 & \code{0x00} & \code{LUI r1, 11} & $r_1 \leftarrow 11$ & \code{r1} $=$ \code{0x0000000B} \\
+1 & \code{0x04} & \code{LUI r2, 1} & $r_2 \leftarrow 1$ & \code{r2} $=$ \code{0x00000001} \\
+2 & \code{0x08} & \code{ADDI r1, r1, -1} & $r_1 \leftarrow 10$ & \code{r1} $=$ \code{0x0000000A} \\
+3 & \code{0x0C} & \code{BLEZ r1, +2} & $10 > 0$, not taken & --- \\
+4 & \code{0x10} & \code{SLL r2, r2, 1} & $r_2 \leftarrow 2$ & \code{r2} $=$ \code{0x00000002} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{7. Assignment}
+
+\textbf{Step 1:} replace anything in \code{components/} with your own version.
+The reference copies exist so that nobody is blocked by an earlier lab.
+\textbf{Using a reference component costs you nothing on this lab} --- the
+earlier lab's grade simply stands as it was. Integration is never gated on an
+earlier miss; that is a deliberate rule of this course, not a favour.
+
+\textbf{Step 2:} complete \code{CPU.vhd}. Twelve instantiations, two clocked
+processes, named association throughout.
+
+The testbench is \textbf{provided complete} --- this lab is wiring and
+debugging, not test writing. It prints the execution trace and checks the final
+state.
+
+\subsection*{One thing in the testbench worth reading}
+
+The tracer samples \emph{just before} the falling edge, never after it. After
+the edge the write has committed, and for a self-referencing instruction such as
+\code{ADDI r1, r1, -1} the combinational logic immediately recomputes from the
+\emph{new} \code{r1} --- so a post-edge sample would show the result of the next
+iteration. The hardware would be correct and the observer would be lying.
+
+\textbf{When you sample is part of the measurement.} This is a real and common
+way to waste an hour.
+
+\subsection*{On the metavalue warnings}
+
+You will see several \code{NUMERIC\_STD.TO\_INTEGER: metavalue detected}
+warnings in the first few cycles. They are normal: before the first instruction
+is fetched some addresses are still \code{'U'}. They stop once the machine is
+running --- and a metavalue warning that \emph{never} stops means a signal is
+never being driven, which makes them the first thing to look at if your CPU is
+dead.
+
+\section*{8. Evidence to collect --- E1 through E7, all of them}
+
+This is the only design all semester that reports every evidence source
+meaningfully.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+& Source & What it must show \\
+\midrule
+E1 & Flow Summary + Messages & 0 errors; warnings sorted \\
+E2 & RTL Viewer & the twelve components, wired \\
+E3 & Technology Map Viewer & what the fabric made of it \\
+E4 & Resource Utilisation & PC 32, IR 64, register file $\sim$1024, block memory \\
+E5 & Pin-Out & \textbf{one} functional pin, \code{SysClk} \\
+E6 & Timing Analyzer & Fmax, and the critical path \\
+E7 & Waveform + transcript & $\sim$20 annotated cycles, and \code{PASS} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{E5 is worth a sentence.} In Lab 5 the ALU needed 108 pins as a top-level
+entity. Here the whole processor needs one clock. That contrast is what ``wide
+blocks live inside the chip'' means.
+
+\section*{9. Report --- \code{lab12.tex}, the longest chapter}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item the timing contract, in your own words;
+\item the \textbf{full 45-row execution trace};
+\item your \textbf{hand-computed first five rows}, beside the simulated ones;
+\item an annotated waveform of $\sim$20 cycles;
+\item the complete evidence set E1--E7, each with a sentence;
+\item \textbf{Discussion:} the integration bugs you hit, and which of the four
+checks found each one.
+\end{itemize}
+
+Expect 8--12 pages. This is the chapter that makes the report a portfolio piece.
+
+\section*{10. Grading (100 points)}
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Pre-lab, submitted at the start of the session & 5 \\
+Design compiles cleanly, warnings explained & 25 \\
+Hand-computed trace and verification & 20 \\
+Simulation results: the CPU runs the program & 20 \\
+Report chapter quality & 15 \\
+In-lab demonstration and explanation & 15 \\
+\midrule
+Total & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Late work is accepted for one week at $-20$ points.
+
+\section*{11. Things that will go wrong}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+\item \textbf{Positional \code{port map}.} Twelve components is where this stops
+being survivable.
+\item \textbf{Clock-edge mistakes.} The register file and NIAG need the inverted
+clock.
+\item \textbf{\code{'U'} propagating from one uninitialised signal.} Almost
+always the real cause of a dead CPU.
+\item \textbf{\code{Asel}/\code{Bsel} swapped.} Three instruction types keep
+working.
+\item \textbf{\code{TriBuffer} and \code{RAM} both driving the bus.} Look for
+\code{'X'}.
+\item \textbf{Reading an \code{out} port.} Use an internal signal.
+\end{itemize}
+
+\vspace{10pt}
+\hr
+{\small Three months ago you were writing a four-row truth table for a latch.
+Same loop, every week --- specification, truth table, equations, VHDL,
+simulation, check. That is how this was always going to end.}
+
+\end{document}

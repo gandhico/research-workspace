@@ -1,0 +1,32 @@
+% Schematic view of decoder2to4: D(k) = E . m_k(A1, A0)
+\begin{circuitikz}
+  \coordinate (E)   at (-4.2, 3.4);
+  \coordinate (A1)  at (-3.5, 3.4);
+  \coordinate (nA1) at (-2.6, 3.4);
+  \coordinate (A0)  at (-1.9, 3.4);
+  \coordinate (nA0) at (-1.0, 3.4);
+  \node[and port, number inputs=3] (d0) at (1.2,  2.1) {};
+  \node[and port, number inputs=3] (d1) at (1.2,  0.5) {};
+  \node[and port, number inputs=3] (d2) at (1.2, -1.1) {};
+  \node[and port, number inputs=3] (d3) at (1.2, -2.7) {};
+  \draw (E)  node[above] {$E$}   -- (E  |- 0,-3.4);
+  \draw (A1) node[above] {$A_1$} -- (A1 |- 0,-3.4);
+  \draw (A0) node[above] {$A_0$} -- (A0 |- 0,-3.4);
+  \node[not port, scale=0.55, rotate=-90] (i1) at ($(nA1)+(0,-0.35)$) {};
+  \node[not port, scale=0.55, rotate=-90] (i0) at ($(nA0)+(0,-0.35)$) {};
+  \draw (A1 |- 0,3.05) node[circ] {} -- ++(0,0.3) -| (i1.in);
+  \draw (A0 |- 0,3.05) node[circ] {} -- ++(0,0.3) -| (i0.in);
+  \draw (i1.out) -- (nA1 |- 0,-3.4);
+  \draw (i0.out) -- (nA0 |- 0,-3.4);
+  \node[above] at ($(nA1)+(0,0.35)$) {$\overline{A_1}$};
+  \node[above] at ($(nA0)+(0,0.35)$) {$\overline{A_0}$};
+  \foreach \g in {d0,d1,d2,d3} { \draw (\g.in 1) -- (\g.in 1 -| E) node[circ] {}; }
+  \draw (d0.in 2) -- (d0.in 2 -| nA1) node[circ] {};  \draw (d0.in 3) -- (d0.in 3 -| nA0) node[circ] {};
+  \draw (d1.in 2) -- (d1.in 2 -| nA1) node[circ] {};  \draw (d1.in 3) -- (d1.in 3 -| A0)  node[circ] {};
+  \draw (d2.in 2) -- (d2.in 2 -| A1)  node[circ] {};  \draw (d2.in 3) -- (d2.in 3 -| nA0) node[circ] {};
+  \draw (d3.in 2) -- (d3.in 2 -| A1)  node[circ] {};  \draw (d3.in 3) -- (d3.in 3 -| A0)  node[circ] {};
+  \draw (d0.out) -- ++(0.5,0) node[right] {$D_0$};
+  \draw (d1.out) -- ++(0.5,0) node[right] {$D_1$};
+  \draw (d2.out) -- ++(0.5,0) node[right] {$D_2$};
+  \draw (d3.out) -- ++(0.5,0) node[right] {$D_3$};
+\end{circuitikz}

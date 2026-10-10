@@ -1,0 +1,210 @@
+\section{Sampling and correlation (2.50--2.54)}
+
+\Prob{2.50\quad Unique recovery of $x_a(t)=A\cos(\Omega_o t+\phi)$ when $\Omega_T=2\pi/T>2\Omega_o$}
+
+Sampling at $t=nT$ gives
+\[
+x[n]=x_a(nT)=A\cos(\Omega_o T n+\phi)=A\cos(\omega_o n+\phi),
+\qquad \omega_o=\Omega_o T=\frac{2\pi\Omega_o}{\Omega_T}.
+\]
+Suppose a second sinusoid $x'_a(t)=A\cos(\Omega' t+\phi')$ produces the \emph{same} sequence.
+Then for all integers $n$,
+\[
+A\cos(\Omega' Tn+\phi')=A\cos(\Omega_o Tn+\phi)
+\;\Longleftrightarrow\;
+\Omega' Tn+\phi'=\pm(\Omega_o Tn+\phi)+2\pi k_n
+\]
+for some integers $k_n$. Since this must hold for every $n$ with a fixed $\phi'$, the only
+possibility is $k_n=kn$ for a fixed integer $k$, giving
+\[
+\boxed{\;\Omega'=\pm\Omega_o+k\,\Omega_T,\qquad k=0,\pm1,\pm2,\dots\;}
+\]
+which is exactly the family (2.65). The distinct frequencies that alias onto the same sequence
+are thus spaced by $\Omega_T$, together with their mirror images $-\Omega_o+k\Omega_T$.
+
+Now impose the hypothesis $\Omega_T>2\Omega_o$, i.e.\ $0\le\Omega_o<\Omega_T/2$, and restrict
+attention to nonnegative frequencies (as one may, since $\cos$ is even). The candidates are
+\[
+\Omega_o,\quad \Omega_T-\Omega_o,\quad \Omega_T+\Omega_o,\quad 2\Omega_T-\Omega_o,\ \dots
+\]
+All of the alternatives satisfy
+\[
+\Omega'\ \ge\ \Omega_T-\Omega_o\ >\ \frac{\Omega_T}{2}\ >\ \Omega_o ,
+\]
+so \emph{none} of them lies in the band $[0,\Omega_T/2)$. Hence $\Omega_o$ is the unique
+frequency in that band consistent with $\{x[n]\}$, and the map
+\[
+\Omega_o\in\Bigl[0,\tfrac{\Omega_T}{2}\Bigr)\;\longmapsto\;\omega_o=\Omega_o T\in[0,\pi)
+\]
+is one-to-one. Given $\omega_o$ and $\phi$ (both readable from the sequence), $x_a(t)$ is
+recovered as $A\cos\bigl(\tfrac{\omega_o}{T}t+\phi\bigr)$.
+\[
+\boxed{\;\Omega_T>2\Omega_o\ \Longrightarrow\ x_a(t)\ \text{is uniquely determined by}\ \{x_a(nT)\}.\;}
+\]
+This is the sinusoidal special case of the sampling theorem; $\Omega_T/2$ is the folding
+(Nyquist) frequency.
+
+\Prob{2.51\quad Periodicity of $x[n]=\cos(\Omega_o T n)$}
+
+With $\omega_o=\Omega_o T$, the sequence is periodic iff there exist positive integers $N$
+and integers $r$ with $\omega_o N=2\pi r$, i.e.\ iff
+\[
+\boxed{\;\frac{\Omega_o T}{2\pi}=\frac{r}{N}\ \ \text{is a \emph{rational} number}
+\quad\Longleftrightarrow\quad T=\frac{2\pi r}{\Omega_o N}\ \ \text{for some integers }r,N .\;}
+\]
+So only a countable (though dense) set of sampling periods yields a periodic sequence: the
+underlying $x_a(t)$ is always periodic, but its samples need not be.
+
+\textbf{Numerical part:} $\Omega_o=30$ rad/s and $T=\pi/6$ s give
+\[
+\omega_o=\Omega_o T=30\cdot\frac{\pi}{6}=5\pi,
+\qquad \frac{\omega_o}{2\pi}=\frac{5}{2}\ \ \text{(rational, already in lowest terms)} .
+\]
+Hence $N=2$ and $r=5$:
+\[
+\boxed{\;N=2 .\;}
+\]
+Direct check: $x[n]=\cos(5\pi n)=(-1)^{5n}=(-1)^{n}$, which indeed has fundamental period 2.
+Note the heavy aliasing here --- $\Omega_T=2\pi/T=12$ rad/s is far below $2\Omega_o=60$, so
+the $30$\,rad/s sinusoid is folded down to the highest representable frequency
+$\omega=\pi$.
+
+\Prob{2.52\quad Auto- and cross-correlation of the Problem-2.3 sequences}
+
+Using $r_{xy}[\ell]=\sum_n x[n]\,y[n-\ell]$; note the useful identity
+\[
+r_{xy}[\ell]=x[\ell]\circledast y[-\ell],
+\]
+so each correlation is a convolution with one sequence time-reversed. If $x$ occupies
+$n_1\le n\le n_2$ and $y$ occupies $m_1\le n\le m_2$, then $r_{xy}[\ell]$ occupies
+$n_1-m_2\le \ell\le n_2-m_1$.
+
+\textbf{(a) Autocorrelations} (each of length $2\cdot7-1=13$, on $-6\le\ell\le 6$, even about
+$\ell=0$):
+\[
+\boxed{
+\begin{aligned}
+\{r_{xx}[\ell]\}&=\{-9,\;15,\;2,\;-2,\;-21,\;-17,\;\underset{\uparrow}{64},\;-17,\;-21,\;-2,\;2,\;15,\;-9\},\\
+\{r_{yy}[\ell]\}&=\{-40,\;2,\;-28,\;3,\;39,\;-5,\;\underset{\uparrow}{139},\;-5,\;39,\;3,\;-28,\;2,\;-40\},\\
+\{r_{ww}[\ell]\}&=\{-6,\;23,\;-40,\;23,\;6,\;-50,\;\underset{\uparrow}{88},\;-50,\;6,\;23,\;-40,\;23,\;-6\}.
+\end{aligned}}
+\]
+Checks: $r_{xx}[0]=\mathcal{E}_x=9+16+4+25+0+1+9=64$,
+$r_{yy}[0]=\mathcal{E}_y=25+1+0+9+36+4+64=139$,
+$r_{ww}[0]=\mathcal{E}_w=1+9+16+0+1+25+36=88$. Each sequence attains its maximum at zero lag,
+and each is even --- both are general properties of autocorrelation.
+
+\textbf{(b) Cross-correlations.}
+$x$ occupies $-1\le n\le5$, $y$ occupies $-3\le n\le3$, $w$ occupies $3\le n\le9$, so
+\[
+r_{xy}[\ell]:\ -1-3\le\ell\le 5+3,\qquad r_{xw}[\ell]:\ -1-9\le\ell\le 5-3 .
+\]
+\[
+\boxed{
+\begin{aligned}
+\{r_{xy}[\ell]\}&=\{24,\;-38,\;10,\;29,\;\underset{\uparrow}{-34},\;29,\;-22,\;34,\;-10,\;-34,\;-1,\;-2,\;15\},
+&& -4\le\ell\le 8,\\[3pt]
+\{r_{xw}[\ell]\}&=\{18,\;-39,\;11,\;36,\;-39,\;36,\;-30,\;-6,\;14,\;-9,\;\underset{\uparrow}{15},\;-10,\;3\},
+&& -10\le\ell\le 2 .
+\end{aligned}}
+\]
+Check at zero lag: $r_{xy}[0]=\sum_n x[n]y[n]=(-4)(3)+(-2)(6)+(5)(-2)=-34$ \checkmark and
+$r_{xw}[0]=\sum_n x[n]w[n]=(1)(3)+(-3)(-4)=15$ \checkmark.
+Note $r_{xy}[\ell]\ne r_{xy}[-\ell]$ --- cross-correlation is not even; instead
+$r_{xy}[\ell]=r_{yx}[-\ell]$.
+
+\Prob{2.53\quad Autocorrelation of two sequences; evenness and location of the maximum}
+
+\textbf{General facts.} For a real sequence,
+\[
+r_{xx}[-\ell]=\sum_n x[n]x[n+\ell]\;\overset{m=n+\ell}{=}\;\sum_m x[m-\ell]x[m]=r_{xx}[\ell],
+\]
+so $r_{xx}$ is always \textbf{even}. Also, by Cauchy--Schwarz,
+$|r_{xx}[\ell]|\le r_{xx}[0]=\mathcal{E}_x$, so the maximum is always at $\ell=0$.
+
+\textbf{(a)} $x_1[n]=\alpha^{n}\mu[n]$, $|\alpha|<1$. For $\ell\ge0$ the overlap starts at
+$n=\ell$:
+\[
+r_{x_1x_1}[\ell]=\sum_{n=\ell}^{\infty}\alpha^{n}\alpha^{\,n-\ell}
+=\alpha^{-\ell}\sum_{n=\ell}^{\infty}\alpha^{2n}
+=\alpha^{-\ell}\cdot\frac{\alpha^{2\ell}}{1-\alpha^{2}}
+=\frac{\alpha^{\ell}}{1-\alpha^{2}} .
+\]
+By evenness,
+\[
+\boxed{\;r_{x_1x_1}[\ell]=\frac{\alpha^{|\ell|}}{1-\alpha^{2}}\;}
+\]
+which is manifestly even. Its maximum is at
+\[
+\boxed{\;\ell=0,\qquad r_{x_1x_1}[0]=\frac{1}{1-\alpha^{2}}=\mathcal{E}_{x_1}.\;}
+\]
+
+\textbf{(b)} $x_2[n]=1$ for $0\le n\le N-1$ and $0$ otherwise. The overlap of the pulse with
+its shift by $\ell$ contains $N-|\ell|$ samples when $|\ell|\le N-1$ and none otherwise:
+\[
+\boxed{\;r_{x_2x_2}[\ell]=
+\begin{cases}
+N-|\ell|, & |\ell|\le N-1,\\
+0, & |\ell|\ge N .
+\end{cases}\;}
+\]
+This triangle ("Bartlett window") is even by inspection, with maximum
+\[
+\boxed{\;\ell=0,\qquad r_{x_2x_2}[0]=N=\mathcal{E}_{x_2}.\;}
+\]
+
+\Prob{2.54\quad Autocorrelation of periodic sequences}
+
+For an $N$-periodic sequence the autocorrelation is defined as the periodic (circular) average
+\[
+\tilde{r}[\ell]=\frac{1}{N}\sum_{n=0}^{N-1}\tilde{x}[n]\,\tilde{x}[n-\ell],
+\]
+which is itself periodic in $\ell$ with the \emph{same} period $N$ (shifting $\ell$ by $N$
+leaves $\tilde x[n-\ell]$ unchanged).
+
+\textbf{(a)} $\tilde{x}_1[n]=\cos(\pi n/M)$, $M$ a positive integer. Its fundamental period is
+\[
+N=\frac{2\pi}{\pi/M}=2M .
+\]
+Using $\cos A\cos B=\tfrac12\bigl[\cos(A-B)+\cos(A+B)\bigr]$,
+\[
+\tilde{r}_1[\ell]=\frac{1}{2M}\sum_{n=0}^{2M-1}\cos\frac{\pi n}{M}\cos\frac{\pi(n-\ell)}{M}
+=\frac{1}{2}\cos\frac{\pi\ell}{M}
++\underbrace{\frac{1}{4M}\sum_{n=0}^{2M-1}\cos\!\Bigl(\frac{\pi(2n-\ell)}{M}\Bigr)}_{=\,0},
+\]
+the last sum vanishing because it runs over a whole number of periods of a nonzero-frequency
+cosine (for $M\ge 2$; for $M=1$ the sequence is $(-1)^n$, covered in part (c)). Hence
+\[
+\boxed{\;\tilde{r}_1[\ell]=\tfrac12\cos\frac{\pi\ell}{M},\qquad\text{period }2M .\;}
+\]
+Note $\tilde r_1[0]=\tfrac12=\mathcal{P}_{x_1}$: the zero-lag autocorrelation of a periodic
+sequence is its average power.
+
+\textbf{(b)} $\tilde{x}_2[n]=n \bmod 6$: one period is $\{0,1,2,3,4,5\}$, $N=6$. Computing
+$\tilde{r}_2[\ell]=\tfrac16\sum_{n=0}^{5}\tilde x_2[n]\tilde x_2[\langle n-\ell\rangle_6]$:
+\[
+\begin{array}{r|cccccc}
+\ell & 0 & 1 & 2 & 3 & 4 & 5\\\hline
+6\,\tilde{r}_2[\ell] & 55 & 40 & 31 & 28 & 31 & 40\\[2pt]
+\tilde{r}_2[\ell] & \frac{55}{6} & \frac{40}{6} & \frac{31}{6} & \frac{28}{6} & \frac{31}{6} & \frac{40}{6}\\[2pt]
+ & 9.1\overline{6} & 6.\overline{6} & 5.1\overline{6} & 4.\overline{6} & 5.1\overline{6} & 6.\overline{6}
+\end{array}
+\]
+\[
+\boxed{\;\{\tilde{r}_2[\ell]\}=\tfrac16\{55,\,40,\,31,\,28,\,31,\,40\},\qquad\text{period }6 .\;}
+\]
+(Sample computation: $6\tilde r_2[0]=0^2+1^2+\cdots+5^2=55$;
+$6\tilde r_2[1]=0\cdot5+1\cdot0+2\cdot1+3\cdot2+4\cdot3+5\cdot4=40$.)
+The result is even about $\ell=0$ modulo 6 ($\tilde r_2[1]=\tilde r_2[5]$,
+$\tilde r_2[2]=\tilde r_2[4]$) and peaks at $\ell=0$, as it must.
+
+\textbf{(c)} $\tilde{x}_3[n]=(-1)^{n}$: period $N=2$.
+\[
+\tilde{r}_3[\ell]=\frac12\sum_{n=0}^{1}(-1)^{n}(-1)^{n-\ell}
+=\frac12\,(-1)^{-\ell}\sum_{n=0}^{1}(-1)^{2n}=(-1)^{\ell}.
+\]
+\[
+\boxed{\;\tilde{r}_3[\ell]=(-1)^{\ell},\qquad\text{period }2 .\;}
+\]
+As expected, $\tilde r_3[0]=1=\mathcal{P}_{x_3}$ and the autocorrelation inherits the period
+of the sequence.

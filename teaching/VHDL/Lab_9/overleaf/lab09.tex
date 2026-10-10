@@ -1,0 +1,108 @@
+% =============================================================================
+%  Lab 9 - Memory: ROM and RAM
+% =============================================================================
+
+\chapter{Lab 9 --- Memory: ROM and RAM}
+
+\section{Objective}
+% Two or three sentences, your own words.
+
+\section{Specification}
+
+\subsection*{The program}
+% REQUIRED: fill in the last two columns YOURSELF, by decoding each word
+% against the instruction formats. Do not copy them from the comment block in
+% ROM.vhd - decoding them is the exercise.
+
+\begin{table}[htbp]
+\centering
+\caption{Contents of the instruction ROM, disassembled by hand.}
+\label{tab:lab09-rom}
+\begin{tabular}{lllll}
+\toprule
+addr & bytes & 32-bit word & instruction & meaning \\
+\midrule
+\texttt{0x00} & \texttt{3C 01 00 0B} & & & \\
+\texttt{0x04} & \texttt{3C 02 00 01} & & & \\
+\texttt{0x08} & \texttt{20 21 FF FF} & & & \\
+\texttt{0x0C} & \texttt{18 20 00 02} & & & \\
+\texttt{0x10} & \texttt{00 02 10 40} & & & \\
+\texttt{0x14} & \texttt{08 00 00 02} & & & \\
+\texttt{0x18} & \texttt{AC 02 00 00} & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ONE SENTENCE, required: state the endianness convention this CPU uses, and
+% say why an undocumented byte order makes a memory unusable.
+
+\subsection*{The RAM}
+
+\begin{table}[htbp]
+\centering
+\caption{RAM control (Type C). Note that \texttt{rw = '1'} is READ.}
+\label{tab:lab09-ram}
+\begin{tabular}{cccc||ll}
+\toprule
+\# & \texttt{en} & \texttt{rw} & \texttt{Strb} & Data bus & memory at $\downarrow$ \\
+\midrule
+0 & 0 & --- & --- & \texttt{Z...Z} & hold \\
+1 & 1 & 1 & --- & $M[A]$ word & hold (read) \\
+2 & 1 & 0 & 0 & \texttt{Z...Z} & hold \\
+3 & 1 & 0 & 1 & \texttt{Z} (driven in) & $M[A..A{+}3] \leftarrow$ \texttt{Data} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{align*}
+\text{DataDrive} &= \texttt{en} \cdot \texttt{rw} \\
+\text{Write} &= \texttt{en} \cdot \overline{\texttt{rw}} \cdot \texttt{Strb}
+   \qquad \text{sampled at the falling edge}
+\end{align*}
+
+\section{Design}
+% Answer all four:
+%   (a) Why is the ROM combinational and the RAM clocked?
+%   (b) Why do RAM writes happen on the FALLING edge? What does that buy, given
+%       that the instruction register loads on the rising edge?
+%   (c) During a store the RAM is enabled but must NOT drive the data bus. Who
+%       drives it instead, and what happens if both do?
+%   (d) Your memory has 512 bytes and a 32-bit address input. What does your
+%       design return for an out-of-range read, and why did you choose that?
+
+\section{Implementation}
+
+\vhdlfile{code/lab09/ROM.vhd}{\texttt{ROM} --- 512-byte instruction memory}
+
+\vhdlfile{code/lab09/RAM.vhd}{\texttt{RAM} --- 512-byte data memory on a shared bus}
+
+\section{Verification}
+% Vectors, then the coverage argument.
+%
+% For the ROM the argument is simple and strong: the contents are known, so
+% check EVERY word of the program against the table. That is exhaustive over
+% the part of memory that matters.
+%
+% For the RAM the argument is the four rows of Table 2 plus round-tripping:
+% store then load must be self-consistent, and adjacent words must not overlap.
+
+\section{Results}
+% Evidence: E1, E2, E4, E7.
+
+\figplaceholder{the data bus in all three states --- floating at \texttt{Z},
+driven by the RAM during a read, and driven by the other side during a write ---
+with each interval annotated by WHO is driving}
+
+\figplaceholder{the RTL Viewer, showing the memory array and the bus driver}
+
+% E4: THE INTERESTING NUMBER THIS WEEK. A 512-byte memory is 4096 bits. Did the
+%     Fitter implement it as BLOCK MEMORY or as logic? Quote the number, say
+%     which it chose, and explain why that is the sensible choice at this size.
+%     Compare with Lab 6, where 1024 flip-flops were the right answer.
+
+\section{Discussion}
+% REQUIRED. One bug, how you found it, what it cost.
+%
+% Good topic if you need one: did you get the rw polarity right first time?
+% Or did your bus read '0' somewhere it should have read 'Z' - and how would
+% that have shown up once the register file was connected to the same wires?

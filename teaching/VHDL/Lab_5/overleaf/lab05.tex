@@ -1,0 +1,120 @@
+% =============================================================================
+%  Lab 5 - Arithmetic Logic Unit
+% =============================================================================
+
+\chapter{Lab 5 --- Arithmetic Logic Unit}
+
+\section{Objective}
+% Two or three sentences, your own words.
+
+\section{Specification}
+
+\begin{table}[htbp]
+\centering
+\caption{ALU operations. One worked example per operation --- fill in the last
+column from your own simulation.}
+\label{tab:lab05-ops}
+\begin{tabular}{lll@{\hskip 10pt}l}
+\toprule
+code & operation & \texttt{Rout} & worked example \\
+\midrule
+\texttt{ALU\_FUNC\_ADD}  & add                & \texttt{Ain + Bin}   & \\
+\texttt{ALU\_FUNC\_SUB}  & subtract           & \texttt{Ain - Bin}   & \\
+\texttt{ALU\_FUNC\_NEG}  & negate             & \texttt{0 - Bin}     & \\
+\texttt{ALU\_FUNC\_AND}  & bitwise and        & \texttt{Ain and Bin} & \\
+\texttt{ALU\_FUNC\_NAND} & bitwise nand       &                      & \\
+\texttt{ALU\_FUNC\_OR}   & bitwise or         &                      & \\
+\texttt{ALU\_FUNC\_NOR}  & bitwise nor        &                      & \\
+\texttt{ALU\_FUNC\_XOR}  & bitwise xor        &                      & \\
+\texttt{ALU\_FUNC\_XNOR} & bitwise xnor       &                      & \\
+\texttt{ALU\_FUNC\_NOT}  & invert \texttt{Bin} &                     & \\
+\texttt{ALU\_FUNC\_SLL}  & shift left logical &                      & \\
+\texttt{ALU\_FUNC\_SLA}  & shift left arith.  & same as \texttt{SLL} & \\
+\texttt{ALU\_FUNC\_SRL}  & shift right logical &                     & \\
+\texttt{ALU\_FUNC\_SRA}  & shift right arith. &                      & \\
+\texttt{ALU\_FUNC\_SOLS} & set on less, signed &                     & \\
+\texttt{ALU\_FUNC\_SOLU} & set on less, unsigned &                   & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Flag equations}
+
+\begin{align*}
+\text{Zero} &= \overline{R_{31} + R_{30} + \cdots + R_{0}} \\
+\text{Neg}  &= R_{31}
+\end{align*}
+
+% ONE SENTENCE, required: why does Neg need no computation at all?
+
+\subsection*{Set on less than}
+
+\[
+\text{SOLS} = R_{31} \oplus V \qquad \text{where } R = \texttt{Ain} - \texttt{Bin}
+\]
+
+% REQUIRED, two or three sentences: the naive answer is "subtract and look at
+% the sign bit". Explain exactly when that fails and why the XOR with the
+% overflow flag repairs it.
+
+\section{Design}
+% Answer all three:
+%   (a) Your ALU is a 'case' statement. Explain why that IS a multiplexer, and
+%       point at your RTL Viewer figure as evidence.
+%   (b) Why are the flags computed AFTER the case, on the selected result?
+%       Give the specific operation and operands that would break if you took
+%       the adder's flags instead.
+%   (c) SRA and SRL use the same VHDL operator. What makes them behave
+%       differently, and why does that make the bug so easy to miss?
+
+\section{Implementation}
+
+\vhdlfile{code/lab05/ALU.vhd}{\texttt{ALU} --- sixteen operations and a multiplexer}
+
+\section{Verification}
+% Vectors, then the coverage argument.
+%
+% The argument for ARITHMETIC is different from Lab 3's. There is no selector to
+% enumerate. State it as BOUNDARIES:
+%     zero, one, 0x7FFFFFFF, 0x80000000, 0xFFFFFFFF
+% and say why the middle of the range is uninteresting.
+
+\begin{table}[htbp]
+\centering
+\caption{Test vectors. The last column is the point of the table.}
+\label{tab:lab05-vectors}
+\begin{tabular}{clllp{5cm}}
+\toprule
+\# & operation & operands & expected & which wrong implementation this catches \\
+\midrule
+1 & & & & \\
+2 & & & & \\
+3 & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Results}
+% Evidence: E1, E2, E4, E6, E7. Two of these are new this week.
+
+\figplaceholder{the RTL Viewer for \texttt{ALU}, with the multiplexer visible}
+% Required sentence: identify the multiplexer the synthesiser drew from your
+% case statement.
+
+\figplaceholder{the waveform showing \texttt{SRA} and \texttt{SRL} applied to the
+same negative value}
+% Required sentence: state both results and say which is the correct arithmetic
+% shift, with the decimal values.
+
+% E4: ALM count, and the register count. The register count MUST be zero -
+%     say why a non-zero count would mean the design is wrong, not just costly.
+% E6: Fmax on the Slow 1100mV 85C model, and the critical path. Say which
+%     operation the path runs through and why that is unsurprising. Hint: the
+%     logic operations are one gate deep; something here is 32 gates deep.
+
+\section{Discussion}
+% REQUIRED. One bug, how you found it, what it cost.
+%
+% If you are short of a bug, a good honest topic: did your first SRA use
+% unsigned()? How did you find out - and would your original test vectors have
+% caught it?

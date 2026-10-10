@@ -1,0 +1,64 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{pdfpages}
+\usepackage{booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[hidelinks,bookmarksopen=true]{hyperref}
+
+\setlength{\parindent}{0pt}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\begin{document}
+\pdfbookmark[1]{Contents}{contents}
+
+\begin{center}
+{\LARGE\bfseries EE\,362 --- Computer Organization Laboratory}\\[6pt]
+{\Large\bfseries Solutions: Lab 0 and Lab 1}\\[6pt]
+Fall 2026 \quad$\cdot$\quad Lab TA: Gandhi Torres
+\end{center}
+
+\vspace{14pt}
+\hrule
+\vspace{14pt}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{rlll}
+\toprule
+& document & covers & pages \\
+\midrule
+1 & \hyperlink{doc1.1}{Lab 0 --- Solution}
+  & majority-of-3, 2:1 mux, 2-to-4 decoder, full adder & 8 \\
+2 & \hyperlink{doc2.1}{Lab 0 --- Practice Exercises: Solution}
+  & P1 voting, P2 4:1 mux, P3 3-to-8 decoder & 8 \\
+3 & \hyperlink{doc3.1}{Lab 1 --- Guided Examples: Solution}
+  & majority3 flow, transparent latch, sensitivity list & 9 \\
+4 & \hyperlink{doc4.1}{Lab 1 --- Assignment Solution}
+  & \code{TransLatch}, \code{TransLatch8} & 7 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{14pt}
+
+Each solution follows the same order: specification, truth table, Boolean derivation
+with the laws named, VHDL, self-checking testbench, and the Quartus evidence to
+expect. All designs were verified in Questa, and all Quartus numbers were measured
+with Quartus Prime Lite 25.1std on device \code{5CSEMA4U23C6}.
+
+\vspace{10pt}
+\textbf{Release note.} Documents 1--3 cover work done together in class and may be
+shared after the session. Document 4 is the graded assignment: release it only after
+the Lab 1 due date.
+
+\includepdf[pages=-,link,linkname=doc1,
+  addtotoc={1,section,1,Lab 0 --- Solution,doc1bm}]{../Lab_0/handout/Lab0_solution.pdf}
+\includepdf[pages=-,link,linkname=doc2,
+  addtotoc={1,section,1,Lab 0 --- Practice Exercises: Solution,doc2bm}]{../Lab_0/handout/Lab0_practice_solution.pdf}
+\includepdf[pages=-,link,linkname=doc3,
+  addtotoc={1,section,1,Lab 1 --- Guided Examples: Solution,doc3bm}]{../Lab_1/handout/Lab1_examples_solution.pdf}
+\includepdf[pages=-,link,linkname=doc4,
+  addtotoc={1,section,1,Lab 1 --- Assignment Solution,doc4bm}]{../Lab_1/handout/Lab1_solution.pdf}
+
+\end{document}

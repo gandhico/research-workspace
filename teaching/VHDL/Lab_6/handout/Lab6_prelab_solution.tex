@@ -1,0 +1,227 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.6pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\hr}{\vspace{2pt}\hrule\vspace{6pt}}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{kw}{RGB}{0,90,160}
+\definecolor{cmt}{RGB}{110,110,110}
+\lstdefinestyle{vhdl}{
+  language=VHDL, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries, commentstyle=\color{cmt}\itshape,
+  showstringspaces=false, columns=fullflexible, breaklines=true,
+  frame=leftline, framesep=6pt, xleftmargin=8pt, aboveskip=6pt, belowskip=6pt
+}
+\lstset{style=vhdl}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries EE\,362 --- Pre-Lab 6: Solution}\\[2pt]
+{\large Register File}\\[4pt]
+Fall 2026 \quad$\cdot$\quad 5 points \quad$\cdot$\quad TA marking guide
+\end{center}
+\hr
+
+{\small Marking: Q1 = 2 points, Q2 = 1 point, Q3 = 2 points.}
+
+\vspace{4pt}\hr
+
+\section*{Question 1 --- The write behaviour (2 points)}
+
+\subsection*{(a) The table}
+
+\begin{center}
+\begin{tabular}{c|cc|l}
+\toprule
+\# & \code{Strb} & \code{Dsel} & effect at the rising edge \\
+\midrule
+0 & 0 & --- & \textbf{nothing is written}; every register holds \\
+1 & 1 & \code{"00000"} & \textbf{nothing is written}: register 0 cannot be changed \\
+2 & 1 & $k \neq 0$ & register $k$ takes \code{Din}; all others hold \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Row 1 is the one being marked.} ``Writes zero'' or ``writes \code{Din} to
+register 0'' both earn no credit --- register 0 is not \emph{cleared} by a write,
+it is \emph{unaffected} by one.
+
+\subsection*{(b) The write-enable equation}
+
+\[
+\mathit{We}_k = \code{Strb} \cdot m_k(\code{Dsel}) \cdot \boxed{[\,k \neq 0\,]}
+\]
+
+The boxed term is the one to circle: it is present only for $k = 0$, where it is
+constant 0, so $\mathit{We}_0$ can never be asserted.
+
+\begin{quote}
+\textbf{What ``hardwired to zero'' means in hardware:} register 0 is not a
+register that happens to contain zero. Its write enable is permanently false and
+its read path is forced to zero, so \textbf{there is no storage for register 0 at
+all} --- a good synthesiser optimises those 32 flip-flops away entirely.
+\end{quote}
+
+Full credit needs the idea that it cannot be written \emph{and} that reading it
+always yields zero. A student who protects only the write side has a design that
+reads back whatever the register file was initialised with.
+
+\textbf{Note the shape of the equation}: $m_k(\code{Dsel})$ is a minterm of a
+5-bit address --- exactly the decoder from Lab 0, Example 3, at 5-to-32.
+
+\subsection*{(c) Three components already built}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+component & from & role here \\
+\midrule
+\textbf{decoder} (5-to-32) & Lab 0, Example 3 & turns \code{Dsel} into 32 write enables \\
+\textbf{register} (\code{RegN}) & Lab 2 & 32 copies, each 32 bits wide \\
+\textbf{multiplexer} (32-to-1) & Lab 3 & each read port selects one register \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{The point of the question:} nothing in this lab is new. A register file is
+a decoder, a pile of registers, and two multiplexers. Students who see that build
+it in an hour; students who see it as a new kind of thing do not.
+\end{quote}
+
+\vspace{4pt}\hr
+
+\section*{Question 2 --- Interface and cost (1 point)}
+
+\subsection*{(a) The entity}
+
+\begin{lstlisting}
+entity RegFile is
+    port (
+        Asel : in  std_logic_vector(4 downto 0);   -- read port A address
+        Bsel : in  std_logic_vector(4 downto 0);   -- read port B address
+        Dsel : in  std_logic_vector(4 downto 0);   -- write address
+        Din  : in  std_logic_vector(31 downto 0);
+        Strb : in  std_logic;                      -- write strobe
+        clk  : in  std_logic;
+        Aout : out std_logic_vector(31 downto 0);
+        Bout : out std_logic_vector(31 downto 0)
+    );
+end entity RegFile;
+\end{lstlisting}
+
+\textbf{Five bits per address}, because $2^5 = 32$. A student who wrote 32-bit
+addresses has confused the \emph{number} of registers with their \emph{width} ---
+the same narrow-control / wide-data distinction as every lab since Lab 1.
+
+\subsection*{(b) Why a third read port is cheap and a second write port is not}
+
+\begin{quote}
+\textbf{Model answer:} A read port is just another multiplexer looking at the
+same stored values. Adding one costs one more 32-to-1 mux and changes nothing
+else, because reading does not modify anything and any number of readers can look
+at the same register at once.
+
+A second write port means two sources can target the \textbf{same register on the
+same edge}. The hardware must then decide which one wins, so it needs arbitration
+or priority logic, and every register's input becomes a multiplexer between the
+two write buses. The cost is in the \emph{conflict}, not in the wires.
+\end{quote}
+
+Full credit for ``readers cannot conflict, writers can''. A good extra sentence:
+this is why the MIPS instruction format has two source fields and only one
+destination field.
+
+\vspace{4pt}\hr
+
+\section*{Question 3 --- Test plan (2 points)}
+
+\subsection*{Model vector list}
+
+\begin{center}
+\small
+\begin{tabular}{c>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}p{7.2cm}}
+\toprule
+\# & what you do & what it proves \\
+\midrule
+1 & write a pattern to register 5, then read it on port A & the basic write-then-read path works \\
+2 & read the same register on port B & \textbf{both} read ports work, and independently \\
+3 & read two \emph{different} registers on A and B at once & the ports do not share a selector \\
+4 & write with \code{Strb} = 0 & no write happens without the strobe \\
+5 & \textbf{write to register 0, then read it} & \textbf{register 0 is protected} \\
+6 & write register $k$, then read a \emph{different} register $j$ & the decoder does not enable neighbours \\
+7 & read a register while writing it on the same edge & read-during-write behaviour (see below) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Six vectors earn full credit. \textbf{Vectors 5 and 6 are the discriminating
+ones.}
+
+Vector 6 deserves a comment: a decoder bug usually enables \emph{two} registers,
+not none, so the way you see it is that some other register changed. Writing
+distinct patterns to several registers and reading them all back is the cheap way
+to catch it.
+
+\subsection*{(a) Which vector catches an unprotected register 0?}
+
+\begin{quote}
+\textbf{Model answer:} Vector 5 --- write a non-zero pattern to register 0 with
+\code{Strb} high, then read register 0. A correct file returns zero; an
+unprotected one returns the pattern.
+\end{quote}
+
+\textbf{The vector must use a non-zero pattern.} Writing zeros to register 0 and
+reading zero back proves nothing at all.
+
+\subsection*{(b) Read-during-write: two correct behaviours}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+behaviour & what the read port returns \\
+\midrule
+\textbf{read-old} & the value stored \emph{before} the edge \\
+\textbf{read-new} (write-through, bypass) & the value being written \emph{on} that edge \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{quote}
+\textbf{Model answer:} Both are legitimate designs; they are different
+specifications, not a right and a wrong one. To tell them apart, put a known old
+value in register $k$, then on one edge write a \emph{different} value to $k$
+while reading $k$, and sample the read port \textbf{just before} the edge and
+again just after. Read-old shows the previous value up to and including that
+edge's read; read-new shows the new value immediately.
+\end{quote}
+
+\textbf{This course uses read-old}, because the read ports are combinational
+multiplexers looking at stored outputs, and nothing is stored until the edge. No
+bypass path is built.
+
+\textbf{The consequence, worth saying now:} it means an instruction cannot read a
+value written by the instruction immediately before it in the same cycle. In this
+single-cycle CPU that never happens, because each instruction has a whole cycle.
+It is exactly the hazard that appears in the Final Lab's pipeline track.
+
+\vspace{6pt}
+\hr
+{\small \textbf{At the bench:} the failure to look for is a student who protected
+register 0 on the write side only. Their vector 5 passes if the array was
+initialised to zeros, and fails as soon as anything ever targets register 0.}
+
+\end{document}
