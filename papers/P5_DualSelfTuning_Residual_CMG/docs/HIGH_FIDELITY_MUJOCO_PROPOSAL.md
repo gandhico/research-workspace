@@ -1,5 +1,7 @@
 # Proposal: high-fidelity MuJoCo models for CF2, X2 and the Omnicopter (v0, 2026-09-12)
 
+**Active scope update (2026-10-06):** Complete the X2 and CF2 variants first, then use the existing MuJoCo racing world as a stress test and QDrone2 as a separate, physically identified hardware endpoint. Do not transfer QDrone2 motor parameters to X2/CF2. The readiness/validation gates are in `QUAD_TWINS_QDRONE2_STABILITY_2026-10-06.md`. This original three-vehicle proposal remains the historical design basis.
+
 ## 0. Question and short answer
 
 **Can MuJoCo reproduce a virtual twin of these vehicles?** Yes, for everything a flight controller "sees":

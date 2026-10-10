@@ -1,0 +1,41 @@
+% F1 -- 6-DOF CASCADE. Position outer loop, attitude inner loop, shared
+% allocator. The residual acts on the inner loop only.
+\begin{tikzpicture}[node distance=6mm and 8mm]
+  \node[blk]                    (pref) {$\bm p_d(t),\psi_d$};
+  \node[clas,right=of pref]     (perr) {position error};
+  \node[clas,right=of perr]     (pos)  {outer PD\\$\bm\omega_{n,\rm pos}$};
+  \node[clas,right=of pos]      (dcp)  {thrust-vector\\decomposition\\$\to (q_d,T)$};
+
+  \node[clas,below=15mm of perr] (aerr) {quaternion error \eqref{eq:theta}};
+  \node[clas,right=of aerr]      (att)  {inner PD\\$\bm\omega_{n,\rm att}$};
+  \node[clas,right=of att]       (res)  {residual \eqref{eq:residual}};
+  \node[neuro,below=10mm of att] (cmg)  {CMG $+$ PES};
+  \node[clas,right=of res]       (alc)  {allocation $B^{-1}$};
+  \node[plant,below=10mm of alc] (plt)  {6-DOF rigid body};
+
+  \draw[sig] (pref) -- (perr);
+  \draw[sig] (perr) -- (pos);
+  \draw[sig] (pos)  -- node[lbl,above]{$\bm F_{\rm cmd}$} (dcp);
+  \draw[sig] (dcp.south) -- ++(0,-6mm) -| node[lbl,pos=.25,above]{$q_d$} (aerr.north);
+  \draw[sig] (dcp.east) -- ++(6mm,0) |- node[lbl,pos=.25,right]{$T$} (alc.north);
+  \draw[sig] (aerr) -- (att);
+  \draw[sig] (att)  -- node[lbl,above]{$\bm\tau_0$} (res);
+  \draw[sig] (res)  -- node[lbl,above]{$\bm\tau$} (alc);
+  \draw[sig] (att.south) -- (cmg.north);
+  \draw[sig] (cmg.east) -| node[lbl,pos=.25,below]{$\beta\bm\ell\odot\bm s_k$} (res.south);
+  \draw[sig] (alc) -- node[lbl,right]{$\bm f$} (plt);
+
+  \coordinate (busy) at ($(cmg.south)+(0,-9mm)$);
+  \coordinate (bx)   at ($(aerr.south west)+(-9mm,0)$);
+  \draw[thick] (plt.south) -- (plt|-busy) -- (bx|-busy);
+  \draw[sig]   (aerr|-busy) -- node[lbl,pos=.6,right]{$q,\bm\omega$} (aerr.south);
+  \draw[sig]   (bx|-busy) -- node[lbl,pos=.45,left]{$\bm p,\dot{\bm p}$} (bx|-perr.south)
+               -- (perr.south west);
+
+  \node[note,anchor=north west,text width=118mm] at ($(bx|-busy)+(0,-6mm)$)
+    {Time-scale separation is required, not optional: the validated ceiling
+     is $\bm\omega_{n,\rm pos}=[1.0,1.0,1.2]$ against
+     $\bm\omega_{n,\rm att}=[4,4,3.5]$\,rad/s. Both $q_d$ and the measured
+     $q$ must be expressed in the same quaternion convention before the
+     error is formed.};
+\end{tikzpicture}

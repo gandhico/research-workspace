@@ -1,0 +1,31 @@
+% B1 -- CMG UNIT INTERNALS, proposal 1: block form, single unit j.
+\begin{tikzpicture}[node distance=7mm and 11mm]
+  \node[blk]                      (I) {$I_j$};
+  \node[neuro,right=of I]         (v) {\textbf{membrane} $v_j$\\[1pt]
+        $\dot v_j=-\dfrac{v_j-v_{\rm rest}}{\tau}+\dfrac{I_j}{\tau}-c_j\,(v_j-v_{\rm reset})$\\[1pt]
+        \scriptsize exact exponential step \eqref{eq:mem_step}};
+  \node[neuro,below=14mm of v]    (r) {\textbf{gate} $r_j$\\[1pt]
+        $\dot r_j=\big[\sigma\!\big(\alpha_h(v_j-v_{\rm th}+\gamma r_j)\big)-r_j\big]/\tau_r$\\[1pt]
+        \scriptsize clipped Euler step \eqref{eq:gate_step}};
+  \node[clas,left=of r]           (c) {conductance\\$c_j=(g_0+\chi g_1|I_j|)\,r_j^2$};
+  \node[blk,right=of v]           (a) {activity\\$a_j=\clip_{[0,1]}(G\,r_j^{+})$};
+
+  \draw[sig] (I) -- (v);
+  \draw[sig] (v.south) -- node[lbl,right]{$v_j$ sets the gate target} (r.north);
+  \draw[sig] (r) -- node[lbl,above]{$r_j^{2}$} (c);
+  \draw[sig] (c.north) -- node[lbl,left,pos=.6]{$c_j$ shunts} (v.south west);
+  \draw[sig] (r.east) -| node[lbl,pos=.25,above]{$r_j$} (a.south);
+  \draw[sigd] (r.south east) to[out=-40,in=-140]
+        node[lbl,below]{$\gamma r_j$ shifts its own threshold} (r.south west);
+  \coordinate (lx) at ($(c.west)+(-9mm,0)$);
+  \draw[sig] (I.west) -- (I.west-|lx)
+        -- node[lbl,left]{$\chi g_1|I_j|$} (lx) -- (c.west);
+
+  \node[note,anchor=north west,text width=112mm] at ($(c.south west)+(-12mm,-14mm)$)
+    {Two coupling paths make the unit \emph{coupled} rather than a cascade:
+     the gate shifts its own activation threshold ($\gamma$) and shunts the
+     membrane through $c_j\!\propto\! r_j^{2}$. The dynamics are continuous
+     --- no spike and no discrete reset --- and only $a_j$ leaves the unit.
+     Setting $\chi{=}0$ removes the input-dependent part of the conductance
+     and gives the ablated variant.};
+\end{tikzpicture}

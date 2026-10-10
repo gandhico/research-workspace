@@ -1,0 +1,169 @@
+{
+  "schema": 2,
+  "experiment": "final_robustness_gating_2026-09-20",
+  "platform": "x2",
+  "model_interface": "rotor4",
+  "mission": "full3",
+  "duration_s": 45.0,
+  "dt_s": 0.0005,
+  "controller": "classical",
+  "controller_backend": "none",
+  "baseline": {
+    "name": "PD + desired-rate feedforward",
+    "implementation": "AdvancedBaseline(backstepping, no model feedforward)",
+    "rho": 3.0,
+    "base_wn_rad_s": [
+      4.0,
+      4.0,
+      3.5
+    ],
+    "effective_wn_rad_s": [
+      12.0,
+      12.0,
+      10.5
+    ],
+    "zeta": 0.95,
+    "reference_rate_convention": "left-neg",
+    "model_feedforward": false,
+    "shared_by_classical_and_cmg": true,
+    "stats": {
+      "bw_scale": 3.0,
+      "wn": [
+        12.0,
+        12.0,
+        10.5
+      ],
+      "update_every_steps": 1
+    }
+  },
+  "cmg_pes": {
+    "beta": 0.0,
+    "learning_rate_direct_equivalent": 0.0008,
+    "nengo_pes_learning_rate": null,
+    "k_error": 8.0,
+    "k_rate": 0.0,
+    "pes_learning_active_every_step": false,
+    "max_native_vs_reconstructed_command_error_Nm": null
+  },
+  "output_gate": {
+    "mode": "none",
+    "location": "after decoder/residual scaling and before outer torque-box clip",
+    "learning_semantics": "output-only; PES target/error/update are never masked",
+    "epsilon_fraction_of_axis_limit": 0.0,
+    "epsilon_Nm": 1e-12,
+    "load_threshold_fraction_of_axis_limit": 1.0,
+    "loaded_threshold_Nm": [
+      0.7285355381124109,
+      0.4376208392440796,
+      0.2541169811310755
+    ],
+    "blocked_fraction_any_axis": 0.0,
+    "blocked_fraction_per_axis": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "blocked_share_of_loaded_per_axis": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "noise": {
+    "attitude_std_rad_per_rotation_vector_component": 0.02,
+    "rate_std_rad_s_per_axis": 0.05,
+    "seed": 2,
+    "generator": "numpy.random.default_rng / PCG64",
+    "primary_metric_uses_true_state": true
+  },
+  "disturbance": {
+    "amplitude_Nm": 0.0,
+    "schedule": "continuous",
+    "warmup_s": 5.0,
+    "on_s": 5.0,
+    "off_s": 5.0,
+    "raised_cosine_ramp_s": 0.25
+  },
+  "actuation": {
+    "torque_policy": "model",
+    "torque_limits_Nm": [
+      0.7285355381134109,
+      0.43762083924507955,
+      0.2541169811320755
+    ],
+    "actuator_scale": 1.0,
+    "baseline_loaded_fraction_per_axis": [
+      0.00046666666666666666,
+      0.002788888888888889,
+      0.0009
+    ],
+    "torque_box_saturation_fraction_any_axis": 0.0032444444444444443,
+    "torque_box_saturation_fraction_per_axis": [
+      0.00046666666666666666,
+      0.002788888888888889,
+      0.0009
+    ],
+    "rotor_saturation_fraction_any_rotor": 0.0013444444444444445,
+    "rotor_saturation_fraction_per_rotor": [
+      0.000988888888888889,
+      3.3333333333333335e-05,
+      0.0003222222222222222,
+      0.0
+    ],
+    "allocation_torque_error_normalized_rms": 0.003852053048038083
+  },
+  "metrics": {
+    "qerr_true_mean_rad": 0.010273483185273663,
+    "qerr_true_max_rad": 0.5,
+    "qerr_true_rmse_rad": 0.029641253302532963,
+    "qerr_feedback_mean_rad": 0.035017778551586616,
+    "qerr_feedback_max_rad": 0.5503413137119175,
+    "qerr_feedback_rmse_rad": 0.04560645971574863,
+    "qerr_mean_rad": 0.010273483185273663,
+    "raw_residual_normalized_rms": 0.0,
+    "gated_residual_normalized_rms": 0.0,
+    "realized_residual_normalized_rms": 0.0,
+    "tau0_normalized_rms": 0.26607472228777096,
+    "tau_command_normalized_rms": 0.26607472228777096,
+    "tau_realized_normalized_rms": 0.26588327355083546,
+    "z_std_m": 0.012276528833349423
+  },
+  "hardstep": null,
+  "disturbance_phase_metrics_true_state": {
+    "active_definition": "disturbance_gain >= 0.5",
+    "quiet_definition": "disturbance_gain == 0 after warmup",
+    "warmup": {
+      "mean_rad": 0.027226884149228102,
+      "mean_deg": 1.5599855510424092,
+      "max_rad": 0.5,
+      "max_deg": 28.64788975654116,
+      "sample_fraction": 0.11112222222222222
+    },
+    "active": {
+      "mean_rad": 0.010273483185273663,
+      "mean_deg": 0.5886272274147984,
+      "max_rad": 0.5,
+      "max_deg": 28.64788975654116,
+      "sample_fraction": 1.0
+    },
+    "quiet": {
+      "mean_rad": null,
+      "mean_deg": null,
+      "max_rad": null,
+      "max_deg": null,
+      "sample_fraction": 0.0
+    }
+  },
+  "n_steps": 90000,
+  "logged_steps": 9000,
+  "log_every": 10,
+  "logged_dt_s": 0.005,
+  "nengo_version": "4.1.0",
+  "files": {
+    "trace": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\frame_aligned_2026-10-02\\experiments\\final_robustness_gating_2026-09-20\\results\\confirmatory\\noise\\x2\\full3\\pdff_rho3\\noise_realistic\\seed_002\\trace.csv",
+    "neural_trace_full_rate": null,
+    "neural_trace_schema": null
+  },
+  "run_id": "267b9abbbc292c502aa8",
+  "configuration_sha256": "09c3d9f48a8440019aa98181c32c218ea225ca5ea0fa7298d4149326da4f5d0f"
+}

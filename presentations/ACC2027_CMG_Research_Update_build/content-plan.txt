@@ -1,0 +1,26 @@
+Communication job: By the end, the advisor should understand that CMG-PES is a
+baseline-preserving, actuator-aware online residual architecture with strong
+multi-mission MuJoCo evidence and a smaller but mechanically validated first
+hardware result, and should be able to decide the submission scope and next
+validation priorities.
+
+Narrative: thesis -> architecture -> mechanism -> simulation breadth ->
+headline case -> mission interpretation -> actuator boundary -> adaptation
+mechanism -> physical path -> hardware evidence -> limitations -> execution
+plan -> decision.
+
+1. Title: Online CMG-PES Residual Control.
+2. Thesis: baseline retained, residual bounded, decoder learns online.
+3. Architecture: causal signal path from reference to rotor/motor actuation.
+4. Mechanism: coupled v/r dynamics and projected PES decoder.
+5. Breadth: all 10 matched MuJoCo mission-airframe pairs improve.
+6. Headline: X2 Hard45 improves 53.07% with zero saturation.
+7. Mission interpretation: yaw360/full3 benefit most; hardstep/roll less.
+8. Actuator truth: stock CF2 boundary vs declared 1.5x four-rotor design.
+9. Adaptation attribution: decoder PES matters; conductance is a null ablation.
+10. Hardware transfer: vendor LQR, positive voltage, limited residual authority.
+11. Hardware headline: Set E produces safe n=1 improvements on all missions.
+12. Hardware plots: full3 and yaw360 show modest mean-error reductions.
+13. Evidence boundary and next experiments.
+14. Closing decision: paper scope, repetitions, QDrone extension.
+

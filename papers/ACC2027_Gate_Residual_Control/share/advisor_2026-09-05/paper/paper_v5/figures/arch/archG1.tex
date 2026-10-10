@@ -1,0 +1,49 @@
+% G1 -- LEARNING-RULE COMPARISON: instantaneous PES versus the annealed
+% activity-trace (e-prop style) variant. Same inputs, same decoder.
+\begin{tikzpicture}
+  % ---- shared inputs ------------------------------------------------------
+  \node[blk] at (0,0)    (a)   {activities $\bm a_k$};
+  \node[blk] at (4.3,0)  (e)   {error $\bm\varepsilon_k=\bm y^*_k-\bm s_k$};
+  \node[blk] at (9.2,0)  (s)   {mission progress\\$s=t/T\in[0,1]$};
+
+  % ---- rule 1: instantaneous PES -----------------------------------------
+  \node[neuro,text width=44mm] at (1.6,-2.6) (r1)
+        {$\Delta W_k=\eta\,\bm\varepsilon_k\bm a_k\T-\lambda_W W_k$\\[2pt]
+         \scriptsize fixed rate, no memory of past activity};
+
+  % ---- rule 2: annealed activity trace ------------------------------------
+  \node[neuro,text width=48mm] at (7.9,-2.0) (r2a)
+        {$\bm z_k=\rho(s)\,\bm z_{k-1}+(1-\rho(s))\,\bm a_k$\\[2pt]
+         \scriptsize $\rho(s)=0.98-0.48\,s$ (trace shortens)};
+  \node[neuro,text width=48mm] at (7.9,-3.6) (r2b)
+        {$\Delta W_k=\eta(s)\,\bm\varepsilon_k\bm z_k\T$\\[2pt]
+         \scriptsize $\eta(s)=\eta_0(1-0.8\,s)$ (rate decays)};
+
+  \node[blk] at (4.3,-5.5) (W) {decoder update $W_{k+1}=W_k+\Delta W_k$};
+
+  % ---- wiring -------------------------------------------------------------
+  \draw[sig] (a.south) -- (a|-r1.north) ;
+  \draw[sig] (e.south) -- ++(0,-0.9) -| (r1.north east);
+  \draw[sig] (a.north) -- ++(0,0.7) -| node[lbl,pos=.25,above]{$\bm a_k$} (r2a.north west);
+  \draw[sig] (s.south) -- (s|-r2a.north) ;
+  \draw[sig] (s.east) -- ++(0.6,0) |- node[lbl,pos=.25,right]{$\eta(s)$} (r2b.east);
+  \draw[sig] (e.south) -- ++(0,-2.9) -| node[lbl,pos=.55,below]{$\bm\varepsilon_k$} (r2b.west);
+  \draw[sig] (r2a) -- node[lbl,right]{$\bm z_k$} (r2b);
+  \draw[sig] (r1.south) |- (W.west);
+  \draw[sig] (r2b.south) |- (W.east);
+
+  \begin{scope}[on background layer]
+    \node[grp,fit=(r1)]      (g1) {};
+    \node[grp,fit=(r2a)(r2b)](g2) {};
+  \end{scope}
+  \node[note,anchor=south] at (g1.north) {R1: instantaneous PES (this paper)};
+  \node[note,anchor=south] at (g2.north) {R2: annealed trace (precursor only)};
+
+  \node[note,anchor=north west,text width=118mm] at ($(W.south west)+(-3cm,-4mm)$)
+    {Both rules share the same activities, the same error signal and the same
+     projected decoder; they differ only in \emph{what} multiplies the error
+     and \emph{how fast} it is applied. R2 explores early and consolidates
+     late. Its outcome is mission dependent --- beneficial in some missions,
+     adverse in others --- so it is reported separately rather than folded
+     into the main results.};
+\end{tikzpicture}

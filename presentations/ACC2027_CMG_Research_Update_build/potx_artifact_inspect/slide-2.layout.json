@@ -1,0 +1,827 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/hwbqtkby",
+    "id": "hwbqtkby",
+    "slide": 2,
+    "layoutId": "/ppt/slideLayouts/slideLayout2.xml",
+    "layoutName": "2_Presentation Title 2",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "NMSU_2019",
+    "colors": {
+      "accent1": "#A7BABE",
+      "accent2": "#CFC7BD",
+      "accent3": "#A5A5A5",
+      "accent4": "#FEFFFF",
+      "accent5": "#5B9BD5",
+      "accent6": "#8C0B41",
+      "dk1": "#000000",
+      "lt1": "#FEFFFF",
+      "dk2": "#8C0B41",
+      "lt2": "#E7E6E6",
+      "hlink": "#50B9F2",
+      "folHlink": "#6D6E71"
+    },
+    "fontScheme": {
+      "name": "Office Theme",
+      "majorFont": {
+        "latinTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Tahoma"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout2.xml",
+      "name": "2_Presentation Title 2",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "backgroundColor": "bg1",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/22",
+          "id": "22",
+          "name": "Picture Placeholder 21",
+          "bbox": [
+            0,
+            0,
+            729.09,
+            720
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/16",
+          "id": "16",
+          "name": "Rectangle 15",
+          "bbox": [
+            746.26,
+            0,
+            533.74,
+            720
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "verticalAlignment": "middle"
+          },
+          "fillColor": "tx2",
+          "lineWidth": 0
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/12",
+          "id": "12",
+          "name": "Subtitle 2",
+          "bbox": [
+            763.93,
+            45.38,
+            479.1,
+            43.53
+          ],
+          "text": "Sub-header",
+          "textPreview": "Sub-header",
+          "resolvedTextStyle": {
+            "autoFit": "shrinkText"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Sub-header",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Sub-header"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/13",
+          "id": "13",
+          "name": "Text Placeholder 4",
+          "bbox": [
+            781.02,
+            297.91,
+            462.01,
+            35.17
+          ],
+          "text": "Name of Presenter and Job Title",
+          "textPreview": "Name of Presenter and Job Title",
+          "resolvedTextStyle": {
+            "autoFit": "shrinkText"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Name of Presenter and Job Title",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Name of Presenter and Job Title"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/14",
+          "id": "14",
+          "name": "Text Placeholder 4",
+          "bbox": [
+            781.02,
+            354.79,
+            462.01,
+            46.81
+          ],
+          "text": "College Name",
+          "textPreview": "College Name",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "College Name",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "College Name"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 6,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/15",
+          "id": "15",
+          "name": "Text Placeholder 4",
+          "bbox": [
+            781.02,
+            412.12,
+            462.01,
+            46.81
+          ],
+          "text": "Department or program",
+          "textPreview": "Department or program",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Department or program",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Department or program"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 7,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/9",
+          "id": "9",
+          "name": "TextBox 8",
+          "bbox": [
+            14.22,
+            -114.85,
+            1205.33,
+            42.01
+          ],
+          "geometry": "rect",
+          "text": "See all Presentation Slide options in the Layout options",
+          "textPreview": "See all Presentation Slide options in the Layout options",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "See all Presentation Slide options in the Layout options",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "See all Presentation Slide options in the Layout options",
+                  "fontSize": 26.67,
+                  "color": "bg1",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 8,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/25",
+          "id": "25",
+          "name": "Rectangle 24",
+          "bbox": [
+            952.01,
+            509.83,
+            120.5,
+            131.69
+          ],
+          "rotation": 0,
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "verticalAlignment": "middle"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "resolvedTextStyle": {
+                "alignment": "center"
+              },
+              "runs": [
+                {
+                  "index": 1,
+                  "text": " ",
+                  "fontSize": 24
+                }
+              ]
+            }
+          ],
+          "fillColor": "tx2",
+          "lineWidth": 0
+        },
+        {
+          "order": 9,
+          "kind": "image",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/26",
+          "id": "26",
+          "name": "Picture 25",
+          "bbox": [
+            968.71,
+            526.8,
+            86.62,
+            97.19
+          ],
+          "rotation": 0,
+          "contentType": "image/png",
+          "asset": {
+            "assetId": "/ppt/media/image1.png",
+            "contentType": "image/png",
+            "byteLength": 53400
+          },
+          "fillImage": {
+            "assetId": "/ppt/media/image1.png",
+            "contentType": "image/png",
+            "byteLength": 53400
+          }
+        },
+        {
+          "order": 10,
+          "kind": "image",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/27",
+          "id": "27",
+          "name": "Picture 23",
+          "bbox": [
+            869.54,
+            643.35,
+            284.97,
+            25.75
+          ],
+          "rotation": 0,
+          "contentType": "image/png",
+          "imageCrop": {
+            "left": 0,
+            "top": 0.44059,
+            "right": 0,
+            "bottom": 0
+          },
+          "asset": {
+            "assetId": "/ppt/media/image3.png",
+            "contentType": "image/png",
+            "byteLength": 54042
+          },
+          "fillImage": {
+            "assetId": "/ppt/media/image3.png",
+            "contentType": "image/png",
+            "byteLength": 54042
+          }
+        },
+        {
+          "order": 11,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/11",
+          "id": "11",
+          "name": "Title 1",
+          "bbox": [
+            409.11,
+            113.1,
+            703.44,
+            59.79
+          ],
+          "text": "Presentation Title",
+          "textPreview": "Presentation Title",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "verticalAlignment": "top",
+            "autoFit": "none"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Presentation Title",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Presentation Title"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 12,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/6",
+          "id": "6",
+          "name": "TextBox 5",
+          "bbox": [
+            14.22,
+            -179.7,
+            1205.33,
+            74.32
+          ],
+          "geometry": "rect",
+          "text": "Open the Slide Master change the image on this slide. View > Slide Master > Click image > Right click and select Change Picture > Close Slide Master.",
+          "textPreview": "Open the Slide Master change the image on this slide. View > Slide Master > Click image > Right click and select Change Picture > Close S...",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Open the Slide Master change the image on this slide. View > Slide Master > Click image > Right click and select Change Picture > Close Slide Master.",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Open the Slide Master change the image on this slide. View > Slide Master > Click image > Right click and select Change Picture > Close Slide Master.",
+                  "fontSize": 26.67,
+                  "color": "bg1",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "type": "master",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/2",
+          "id": "2",
+          "name": "Title Placeholder 1",
+          "bbox": [
+            88,
+            167.04,
+            1104,
+            139.17
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master title style",
+          "textPreview": "Click to edit Master title style",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master title style",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master title style"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/3",
+          "id": "3",
+          "name": "Text Placeholder 2",
+          "bbox": [
+            88,
+            320.37,
+            1104,
+            306.98
+          ],
+          "geometry": "rect",
+          "text": "Edit Master text styles\nSecond level\nThird level\nFourth level\nFifth level",
+          "textPreview": "Edit Master text styles | Second level | Third level | Fourth level | Fifth level",
+          "resolvedTextStyle": {
+            "vertical": 1,
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Edit Master text styles",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Edit Master text styles"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "text": "Second level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Second level"
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "text": "Third level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Third level"
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "text": "Fourth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fourth level"
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "text": "Fifth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fifth level"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/mpcv2l0b",
+      "id": "19",
+      "name": "Picture Placeholder 16",
+      "bbox": [
+        0,
+        0,
+        729.09,
+        720
+      ],
+      "contentType": "image/jpeg",
+      "imageCrop": {
+        "left": 0.16242,
+        "top": 0,
+        "right": 0.16242,
+        "bottom": 0
+      },
+      "asset": {
+        "assetId": "/ppt/media/image9.jpg",
+        "contentType": "image/jpeg",
+        "byteLength": 1498187
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image9.jpg",
+        "contentType": "image/jpeg",
+        "byteLength": 1498187
+      }
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/r65knqtk",
+      "id": "8",
+      "name": "Subtitle 7",
+      "bbox": [
+        763.93,
+        45.38,
+        479.1,
+        43.53
+      ],
+      "resolvedFontSize": 32,
+      "resolvedTextStyle": {
+        "vertical": 1,
+        "fontSize": 32,
+        "typeface": "Tahoma",
+        "color": "bg1",
+        "bold": true,
+        "alignment": "left",
+        "textTransform": "uppercase",
+        "autoFit": "shrinkText",
+        "autoFitLineSpaceReduction": 10000,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/q5wjelsz",
+      "id": "9",
+      "name": "Text Placeholder 8",
+      "bbox": [
+        781.02,
+        297.91,
+        462.01,
+        35.17
+      ],
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "vertical": 1,
+        "fontSize": 24,
+        "typeface": "Tahoma",
+        "color": "bg1",
+        "alignment": "center",
+        "autoFit": "shrinkText",
+        "autoFitLineSpaceReduction": 10000,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ove9o7yd",
+      "id": "10",
+      "name": "Text Placeholder 9",
+      "bbox": [
+        781.02,
+        354.79,
+        462.01,
+        46.81
+      ],
+      "resolvedFontSize": 21.33,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "vertical": 1,
+        "fontSize": 21.33,
+        "typeface": "Tahoma",
+        "color": "bg1",
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9wnqhczy",
+      "id": "11",
+      "name": "Text Placeholder 10",
+      "bbox": [
+        781.02,
+        412.12,
+        462.01,
+        46.81
+      ],
+      "resolvedFontSize": 21.33,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "vertical": 1,
+        "fontSize": 21.33,
+        "typeface": "Tahoma",
+        "color": "bg1",
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cnupgny5",
+      "id": "18",
+      "name": "Rectangle 17",
+      "bbox": [
+        440,
+        99.44,
+        729.09,
+        90.88
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "fillColor": "bg1",
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9072xkry",
+      "id": "2",
+      "name": "Title 1",
+      "bbox": [
+        452.65,
+        114.5,
+        703.44,
+        59.79
+      ],
+      "resolvedFontSize": 53.33,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "vertical": 1,
+        "fontSize": 53.33,
+        "typeface": "Tahoma",
+        "color": "tx2",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "textTransform": "none",
+        "autoFit": "none",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      }
+    }
+  ],
+  "composeRuns": []
+}

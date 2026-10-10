@@ -1,0 +1,32 @@
+% E1 -- 3DOF HOVER HARDWARE-IN-THE-LOOP ARCHITECTURE.
+% The two nested rates and the safety layer are the point of this figure.
+\begin{tikzpicture}[node distance=8mm and 14mm]
+  \node[plant]                   (rig) {Quanser 3DOF Hover\\3 encoders, 4 motors\\
+                                        \scriptsize via Q8 DAQ};
+  \node[meas,right=of rig]       (enc) {tare, unwrap, filter\\$\to q,\bm\omega$};
+  \node[clas,right=of enc]       (pd)  {quaternion PD\\\textbf{200\,Hz} ($5$\,ms budget)};
+  \node[neuro,below=15mm of pd]  (nn)  {CMG $+$ PES\\$10\times$ substeps at\\
+                                        $h=0.5$\,ms (\textbf{2\,kHz})};
+  \node[clas,left=of nn]         (cap) {residual cap\\$+$ slew limit};
+  \node[clas,left=of cap]        (alc) {torque $\to$ F/B/L/R\\$0$--$24$\,V, gain $3$};
+
+  \draw[sig] (rig) -- (enc);
+  \draw[sig] (enc) -- (pd);
+  \draw[sig] (pd.south) -- node[lbl,right]{$\bm u_0$} (nn.north);
+  \draw[sig] (nn) -- node[lbl,above]{$\bm s_k$} (cap);
+  \draw[sig] (cap) -- node[lbl,above]{$\bm u_k$} (alc);
+  \draw[sig] (alc.west) -| node[lbl,pos=.62,below]{$\bm f$} (rig.south);
+
+  \node[meas,below=11mm of cap,text width=62mm]
+        (grd) {safety layer: encoder-step check $\cdot$ attitude limit\\
+               $\cdot$ deadline-miss abort $\cdot$ zero-output cleanup};
+  \draw[sigd] (grd.north) -- (cap.south);
+  \draw[sigd] (grd.east) -| (nn.south);
+
+  \node[note,anchor=north west,text width=132mm] at ($(grd.south west)+(-14mm,-5mm)$)
+    {Hard real time: each 200\,Hz hardware step contains ten $0.5$\,ms neural
+     substeps, so the neural state advances at the same rate as in
+     simulation. The controller is driven directly from Nengo; running the
+     same model under the Nengo GUI produces interpreter-lock contention and
+     deadline-miss aborts.};
+\end{tikzpicture}

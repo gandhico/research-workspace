@@ -1,0 +1,42 @@
+[
+  {
+    "family": "cmg",
+    "S": 1.0,
+    "normalized_PES_increment_factor_vs_eta": 1.0,
+    "short_test_activity_peak": 1.0,
+    "equal_normalized_eta_requires_eta_N": "eta*n/(h*S^2); proposed correction NOT implemented",
+    "scope": "Isolated actual Nengo SimPES operator test plus 0.3-s live family activity check; no closed-loop ranking retest."
+  },
+  {
+    "family": "lif",
+    "S": 63.02391038718549,
+    "normalized_PES_increment_factor_vs_eta": 63.023910387185495,
+    "short_test_activity_peak": 3.1617138603484354,
+    "equal_normalized_eta_requires_eta_N": "eta*n/(h*S^2); proposed correction NOT implemented",
+    "scope": "Isolated actual Nengo SimPES operator test plus 0.3-s live family activity check; no closed-loop ranking retest."
+  },
+  {
+    "family": "alif",
+    "S": 46.91797205209601,
+    "normalized_PES_increment_factor_vs_eta": 46.91797205209602,
+    "short_test_activity_peak": 4.228920284646815,
+    "equal_normalized_eta_requires_eta_N": "eta*n/(h*S^2); proposed correction NOT implemented",
+    "scope": "Isolated actual Nengo SimPES operator test plus 0.3-s live family activity check; no closed-loop ranking retest."
+  },
+  {
+    "family": "izhikevich",
+    "S": 42.60207501796177,
+    "normalized_PES_increment_factor_vs_eta": 42.60207501796178,
+    "short_test_activity_peak": 4.528126906142778,
+    "equal_normalized_eta_requires_eta_N": "eta*n/(h*S^2); proposed correction NOT implemented",
+    "scope": "Isolated actual Nengo SimPES operator test plus 0.3-s live family activity check; no closed-loop ranking retest."
+  },
+  {
+    "family": "lifrate",
+    "S": 63.040002190641225,
+    "normalized_PES_increment_factor_vs_eta": 63.040002190641246,
+    "short_test_activity_peak": 1.0,
+    "equal_normalized_eta_requires_eta_N": "eta*n/(h*S^2); proposed correction NOT implemented",
+    "scope": "Isolated actual Nengo SimPES operator test plus 0.3-s live family activity check; no closed-loop ranking retest."
+  }
+]

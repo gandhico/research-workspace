@@ -1,0 +1,24 @@
+% Standalone preview of every architecture figure (one per page).
+%   pdflatex preview.tex
+\documentclass[border=8pt,tikz]{standalone}
+\usepackage{amsmath,amssymb,bm}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
+\newcommand{\T}{^{\mathsf T}}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\clip}{\operatorname{clip}}
+\newcommand{\sgnp}{\operatorname{sgn}_{+}}
+% Resolve \eqref outside the paper: show the label tag instead of a number.
+\renewcommand{\eqref}[1]{\textup{(\texttt{\tiny\detokenize{#1}})}}
+\input{arch_style.tex}
+\begin{document}
+\input{archA1.tex}
+\input{archA2.tex}
+\input{archA3.tex}
+\input{archB1.tex}
+\input{archB2.tex}
+\input{archC1.tex}
+\input{archD1.tex}
+\input{archE1.tex}
+\input{archF1.tex}
+\input{archG1.tex}
+\end{document}

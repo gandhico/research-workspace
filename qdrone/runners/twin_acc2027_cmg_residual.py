@@ -11,10 +11,10 @@ Skydio X2 MuJoCo model the ACC2027 paper uses for its "x2" platform -- they
 are NOT identified to the physical QDrone2 airframe. See
 ``docs/QLABS_TWIN_FIDELITY.md`` for the exact fidelity boundary.
 
-The real QLabs-native physics path (QUARC real-time model + pal.products.qdrone2)
-needs a local MATLAB/QUARC build of QDrone2_Workspace from
-Documents/Quanser/5_research/autonomous_vehicles/qdrone2/virtual/position_control
-and is tracked separately; it is not required for this script.
+The separate QLabs-native physics path (QUARC real-time model plus Quanser
+runtime) is not used here. A QDrone2_Workspace.rt-win64 file is present on
+this machine as of 2026-10-06, but its launch, physical fidelity, and command
+injection path remain unverified. See docs/NATIVE_VIRTUAL_INTERFACE_AUDIT_2026-10-06.md.
 """
 
 from __future__ import annotations

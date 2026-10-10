@@ -1,0 +1,185 @@
+{
+  "actuation": {
+    "actuator_scale": 1.5,
+    "allocation_torque_error_normalized_rms": 1.679712627102255e-15,
+    "baseline_loaded_fraction_per_axis": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotor_saturation_fraction_any_rotor": 0.0,
+    "rotor_saturation_fraction_per_rotor": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "torque_box_saturation_fraction_any_axis": 0.0,
+    "torque_box_saturation_fraction_per_axis": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "torque_limits_Nm": [
+      0.000287412,
+      0.000287412,
+      0.00032347
+    ],
+    "torque_policy": "model"
+  },
+  "baseline": {
+    "base_wn_rad_s": [
+      4.0,
+      4.0,
+      3.5
+    ],
+    "effective_wn_rad_s": [
+      12.0,
+      12.0,
+      10.5
+    ],
+    "implementation": "AdvancedBaseline(backstepping, no model feedforward)",
+    "model_feedforward": false,
+    "name": "PD + desired-rate feedforward",
+    "reference_rate_convention": "left-neg",
+    "rho": 3.0,
+    "shared_by_classical_and_cmg": true,
+    "stats": {
+      "bw_scale": 3.0,
+      "update_every_steps": 1,
+      "wn": [
+        12.0,
+        12.0,
+        10.5
+      ]
+    },
+    "zeta": 0.95
+  },
+  "cmg_pes": {
+    "beta": 0.2,
+    "k_error": 8.0,
+    "k_rate": 0.0,
+    "learning_rate_direct_equivalent": 0.0008,
+    "max_native_vs_reconstructed_command_error_Nm": 1.3552527156068805e-20,
+    "nengo_pes_learning_rate": 9.600000000000001,
+    "pes_learning_active_every_step": true
+  },
+  "comparison_contract": {
+    "baseline": "rho=3 PD + desired-rate feedforward",
+    "decoder_initialization": "[I3,-I3]",
+    "decoder_update": "PES (Nengo one-step ordering) + identical leak and projection",
+    "only_intended_difference": "paired-current-to-activity mapping",
+    "output_gate": "torque-saturation-opposition",
+    "paired_channels": 6,
+    "residual": "beta*torque_limit*clip(Wa,-1,1)",
+    "teacher": "clip(-k_error*e_q-k_rate*omega,-1,1)"
+  },
+  "configuration_sha256": "ab5217f6f50a052fbc0a7c26fed138f766c5fcea70df9cd2b9ac4600ddf16b62",
+  "controller": "cmg",
+  "controller_backend": "canonical Nengo CMG neuron (nengo_cmg.py) with configured G and chi",
+  "disturbance": {
+    "amplitude_Nm": 0.0,
+    "off_s": 5.0,
+    "on_s": 5.0,
+    "raised_cosine_ramp_s": 0.25,
+    "schedule": "continuous",
+    "warmup_s": 5.0
+  },
+  "disturbance_phase_metrics_true_state": {
+    "active": {
+      "max_deg": 0.315077604994411,
+      "max_rad": 0.0054991416064506015,
+      "mean_deg": 0.012961209613310634,
+      "mean_rad": 0.00022621578279341162,
+      "sample_fraction": 1.0
+    },
+    "active_definition": "disturbance_gain >= 0.5",
+    "quiet": {
+      "max_deg": null,
+      "max_rad": null,
+      "mean_deg": null,
+      "mean_rad": null,
+      "sample_fraction": 0.0
+    },
+    "quiet_definition": "disturbance_gain == 0 after warmup",
+    "warmup": {
+      "max_deg": 0.315077604994411,
+      "max_rad": 0.0054991416064506015,
+      "mean_deg": 0.026155361768161984,
+      "mean_rad": 0.0004564971799046724,
+      "sample_fraction": 0.11112222222222222
+    }
+  },
+  "dt_s": 0.0005,
+  "duration_s": 45.0,
+  "experiment": "cmg_mechanism_controls_2026-10-01",
+  "files": {
+    "neural_trace_full_rate": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\frame_aligned_2026-10-02\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\confirm\\cf2-rotor\\roll\\cmg_chi0\\neural_trace_full_rate.npz",
+    "neural_trace_schema": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\frame_aligned_2026-10-02\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\confirm\\cf2-rotor\\roll\\cmg_chi0\\neural_trace_schema.json",
+    "trace": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\frame_aligned_2026-10-02\\experiments\\cmg_mechanism_controls_2026-10-01\\results\\confirm\\cf2-rotor\\roll\\cmg_chi0\\trace.csv"
+  },
+  "hardstep": null,
+  "log_every": 10,
+  "logged_dt_s": 0.005,
+  "logged_steps": 9000,
+  "metrics": {
+    "gated_residual_normalized_rms": 0.004547534462629558,
+    "qerr_feedback_max_rad": 0.0054991416064506015,
+    "qerr_feedback_mean_rad": 0.00022621578279341162,
+    "qerr_feedback_rmse_rad": 0.0003530160755390921,
+    "qerr_mean_rad": 0.00022621578279341162,
+    "qerr_true_max_rad": 0.0054991416064506015,
+    "qerr_true_mean_rad": 0.00022621578279341162,
+    "qerr_true_rmse_rad": 0.0003530160755390921,
+    "raw_residual_normalized_rms": 0.004547534462629558,
+    "realized_residual_normalized_rms": 0.004547534462629558,
+    "tau0_normalized_rms": 0.005213217716221051,
+    "tau_command_normalized_rms": 0.007173022995348226,
+    "tau_realized_normalized_rms": 0.007173022995348235,
+    "z_std_m": 0.009434217224404287
+  },
+  "mission": "roll",
+  "model_interface": "rotor4",
+  "n_steps": 90000,
+  "nengo_version": "4.1.0",
+  "noise": {
+    "attitude_std_rad_per_rotation_vector_component": 0.0,
+    "generator": "numpy.random.default_rng / PCG64",
+    "primary_metric_uses_true_state": true,
+    "rate_std_rad_s_per_axis": 0.0,
+    "seed": 1
+  },
+  "output_gate": {
+    "blocked_fraction_any_axis": 0.0,
+    "blocked_fraction_per_axis": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "blocked_share_of_loaded_per_axis": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "epsilon_Nm": 1e-12,
+    "epsilon_fraction_of_axis_limit": 0.0,
+    "learning_semantics": "output-only; PES target/error/update are never masked",
+    "load_threshold_fraction_of_axis_limit": 1.0,
+    "loaded_threshold_Nm": [
+      0.000287411999,
+      0.000287411999,
+      0.000323469999
+    ],
+    "location": "after decoder/residual scaling and before outer torque-box clip",
+    "mode": "torque-saturation-opposition"
+  },
+  "platform": "cf2-rotor",
+  "residual_basis": {
+    "adaptive_conductance_chi": 0,
+    "description": "canonical Nengo CMG neuron (nengo_cmg.py) with configured G and chi",
+    "kind": "nengo-cmg",
+    "readout_gain_G": 100000.0
+  },
+  "run_id": "74d6cae6edc88e0aabe8",
+  "schema": 3
+}

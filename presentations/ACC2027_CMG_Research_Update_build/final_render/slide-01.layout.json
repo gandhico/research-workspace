@@ -1,0 +1,923 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/y90nupkv",
+    "id": "y90nupkv",
+    "slide": 1,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Custom Layout",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "NMSU_2019",
+    "colors": {
+      "accent1": "#A7BABE",
+      "accent2": "#CFC7BD",
+      "accent3": "#A5A5A5",
+      "accent4": "#FEFFFF",
+      "accent5": "#5B9BD5",
+      "accent6": "#8C0B41",
+      "dk1": "#000000",
+      "lt1": "#FEFFFF",
+      "dk2": "#8C0B41",
+      "lt2": "#E7E6E6",
+      "hlink": "#50B9F2",
+      "folHlink": "#6D6E71"
+    },
+    "fontScheme": {
+      "name": "Office Theme",
+      "majorFont": {
+        "latinTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Tahoma"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Custom Layout",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "image",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout1.xml/18",
+          "id": "18",
+          "name": "Picture 3",
+          "bbox": [
+            -3.5,
+            260.16,
+            1295.15,
+            466.56
+          ],
+          "contentType": "image/jpeg",
+          "imageCrop": {
+            "left": 0.00314,
+            "top": 0.19522,
+            "right": 0,
+            "bottom": 0.32446
+          },
+          "asset": {
+            "assetId": "/ppt/media/image.jpeg",
+            "contentType": "image/jpeg",
+            "byteLength": 1108402
+          },
+          "fillImage": {
+            "assetId": "/ppt/media/image.jpeg",
+            "contentType": "image/jpeg",
+            "byteLength": 1108402
+          }
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout1.xml/5",
+          "id": "5",
+          "name": "Title 1",
+          "bbox": [
+            96,
+            28.85,
+            1088,
+            127.22
+          ],
+          "text": "Presentation Title",
+          "textPreview": "Presentation Title",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "verticalAlignment": "top"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Presentation Title",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Presentation Title"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout1.xml/6",
+          "id": "6",
+          "name": "Subtitle 2",
+          "bbox": [
+            160,
+            179.25,
+            960,
+            71.87
+          ],
+          "text": "Sub-header",
+          "textPreview": "Sub-header",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Sub-header",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Sub-header"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout1.xml/7",
+          "id": "7",
+          "name": "Text Placeholder 4",
+          "bbox": [
+            312.78,
+            271.86,
+            654.44,
+            35.17
+          ],
+          "text": "Name of Presenter and Job Title",
+          "textPreview": "Name of Presenter and Job Title",
+          "resolvedTextStyle": {
+            "autoFit": "none"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Name of Presenter and Job Title",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Name of Presenter and Job Title"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout1.xml/8",
+          "id": "8",
+          "name": "Text Placeholder 4",
+          "bbox": [
+            96,
+            332.68,
+            519.78,
+            68.53
+          ],
+          "text": "College Name",
+          "textPreview": "College Name",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "College Name",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "College Name"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 6,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout1.xml/9",
+          "id": "9",
+          "name": "Text Placeholder 4",
+          "bbox": [
+            662.28,
+            332.68,
+            519.78,
+            68.53
+          ],
+          "text": "Department or program",
+          "textPreview": "Department or program",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Department or program",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Department or program"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 7,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout1.xml/2",
+          "id": "2",
+          "name": "TextBox 1",
+          "bbox": [
+            14.22,
+            -114.85,
+            1205.33,
+            42.01
+          ],
+          "geometry": "rect",
+          "text": "See all Presentation Slide options in the Layout options",
+          "textPreview": "See all Presentation Slide options in the Layout options",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "See all Presentation Slide options in the Layout options",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "See all Presentation Slide options in the Layout options",
+                  "fontSize": 26.67,
+                  "color": "bg1",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 8,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout1.xml/17",
+          "id": "17",
+          "name": "Rectangle 16",
+          "bbox": [
+            567.89,
+            453.16,
+            144.79,
+            158.23
+          ],
+          "rotation": 0,
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "verticalAlignment": "middle"
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "resolvedTextStyle": {
+                "alignment": "center"
+              },
+              "runs": [
+                {
+                  "index": 1,
+                  "text": " ",
+                  "fontSize": 24
+                }
+              ]
+            }
+          ],
+          "fillColor": "tx2",
+          "lineWidth": 0
+        },
+        {
+          "order": 9,
+          "kind": "image",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout1.xml/19",
+          "id": "19",
+          "name": "Picture 17",
+          "bbox": [
+            587.96,
+            473.56,
+            104.09,
+            116.78
+          ],
+          "rotation": 0,
+          "contentType": "image/png",
+          "asset": {
+            "assetId": "/ppt/media/image.png",
+            "contentType": "image/png",
+            "byteLength": 53400
+          },
+          "fillImage": {
+            "assetId": "/ppt/media/image.png",
+            "contentType": "image/png",
+            "byteLength": 53400
+          }
+        },
+        {
+          "order": 10,
+          "kind": "image",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout1.xml/20",
+          "id": "20",
+          "name": "Picture 15",
+          "bbox": [
+            468.8,
+            634.42,
+            342.4,
+            30.94
+          ],
+          "rotation": 0,
+          "contentType": "image/png",
+          "imageCrop": {
+            "left": 0,
+            "top": 0.44059,
+            "right": 0,
+            "bottom": 0
+          },
+          "asset": {
+            "assetId": "/ppt/media/image2.png",
+            "contentType": "image/png",
+            "byteLength": 54042
+          },
+          "fillImage": {
+            "assetId": "/ppt/media/image2.png",
+            "contentType": "image/png",
+            "byteLength": 54042
+          }
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "type": "master",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/2",
+          "id": "2",
+          "name": "Title Placeholder 1",
+          "bbox": [
+            88,
+            167.04,
+            1104,
+            139.17
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master title style",
+          "textPreview": "Click to edit Master title style",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master title style",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master title style"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/3",
+          "id": "3",
+          "name": "Text Placeholder 2",
+          "bbox": [
+            88,
+            320.37,
+            1104,
+            306.98
+          ],
+          "geometry": "rect",
+          "text": "Edit Master text styles\nSecond level\nThird level\nFourth level\nFifth level",
+          "textPreview": "Edit Master text styles | Second level | Third level | Fourth level | Fifth level",
+          "resolvedTextStyle": {
+            "vertical": 1,
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Edit Master text styles",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Edit Master text styles"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "text": "Second level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Second level"
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "text": "Third level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Third level"
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "text": "Fourth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fourth level"
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "text": "Fifth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fifth level"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/547294r6",
+      "id": "2",
+      "name": "Title 1",
+      "bbox": [
+        90,
+        18,
+        1100,
+        92
+      ],
+      "text": "Online PES-Adapted Neuromorphic Membrane–Gate Residual Control",
+      "textPreview": "Online PES-Adapted Neuromorphic Membrane–Gate Residual Control",
+      "resolvedFontSize": 34,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "vertical": 1,
+        "fontSize": 34,
+        "typeface": "Tahoma",
+        "color": "#5F0027",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "textTransform": "none",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Online PES-Adapted Neuromorphic Membrane–Gate Residual"
+          },
+          {
+            "index": 2,
+            "text": "Control"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Online PES-Adapted Neuromorphic Membrane–Gate Residual Control",
+          "resolvedTextStyle": {
+            "fontSize": 34,
+            "color": "#5F0027",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Online PES-Adapted Neuromorphic Membrane–Gate Residual Control",
+              "fontSize": 34,
+              "color": "#5F0027",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "bulletCharacter": "",
+          "lineSpacingPercent": 90000
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/k3yl0zql",
+      "id": "3",
+      "name": "Subtitle 2",
+      "bbox": [
+        140,
+        108,
+        1000,
+        55
+      ],
+      "text": "Actuator-Constrained UAV Quaternion Attitude Tracking",
+      "textPreview": "Actuator-Constrained UAV Quaternion Attitude Tracking",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "vertical": 1,
+        "fontSize": 24,
+        "typeface": "Tahoma",
+        "color": "#6D6E71",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "textTransform": "uppercase",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "ACTUATOR-CONSTRAINED UAV QUATERNION ATTITUDE TRACKING"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Actuator-Constrained UAV Quaternion Attitude Tracking",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "color": "#6D6E71",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Actuator-Constrained UAV Quaternion Attitude Tracking",
+              "fontSize": 24,
+              "color": "#6D6E71",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0,
+          "indent": 0,
+          "lineSpacingPercent": 90000
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7qp4be9c",
+      "id": "4",
+      "name": "Text Placeholder 3",
+      "bbox": [
+        290,
+        166,
+        700,
+        30
+      ],
+      "text": "ACC 2027 research update · 28 August 2026",
+      "textPreview": "ACC 2027 research update · 28 August 2026",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "vertical": 1,
+        "fontSize": 16,
+        "typeface": "Tahoma",
+        "color": "#6D6E71",
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "none",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "ACC 2027 research update · 28 August 2026"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "ACC 2027 research update · 28 August 2026",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#6D6E71",
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "ACC 2027 research update · 28 August 2026",
+              "fontSize": 16,
+              "color": "#6D6E71",
+              "alignment": "center"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0,
+          "indent": 0,
+          "lineSpacingPercent": 90000
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/65g3298r",
+      "id": "5",
+      "name": "Text Placeholder 4",
+      "bbox": [
+        105,
+        322,
+        500,
+        66
+      ],
+      "text": "Gandhico F. Roperos\nNew Mexico State University",
+      "textPreview": "Gandhico F. Roperos | New Mexico State University",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "vertical": 1,
+        "fontSize": 18,
+        "typeface": "Tahoma",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Gandhico F. Roperos"
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "New Mexico State University"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Gandhico F. Roperos",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Gandhico F. Roperos",
+              "fontSize": 18,
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0,
+          "indent": 0,
+          "lineSpacingPercent": 90000
+        },
+        {
+          "index": 2,
+          "text": "New Mexico State University",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "New Mexico State University",
+              "fontSize": 18,
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0,
+          "indent": 0,
+          "lineSpacingPercent": 90000
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ts7md4r2",
+      "id": "6",
+      "name": "Text Placeholder 5",
+      "bbox": [
+        675,
+        322,
+        500,
+        66
+      ],
+      "text": "MuJoCo drones + 3DOF Hover\nconstraint-aware residual control",
+      "textPreview": "MuJoCo drones + 3DOF Hover | constraint-aware residual control",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "vertical": 1,
+        "fontSize": 18,
+        "typeface": "Tahoma",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "MuJoCo drones + 3DOF Hover"
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "constraint-aware residual control"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "MuJoCo drones + 3DOF Hover",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "MuJoCo drones + 3DOF Hover",
+              "fontSize": 18,
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0,
+          "indent": 0,
+          "lineSpacingPercent": 90000
+        },
+        {
+          "index": 2,
+          "text": "constraint-aware residual control",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "constraint-aware residual control",
+              "fontSize": 18,
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0,
+          "indent": 0,
+          "lineSpacingPercent": 90000
+        }
+      ]
+    }
+  ],
+  "composeRuns": []
+}

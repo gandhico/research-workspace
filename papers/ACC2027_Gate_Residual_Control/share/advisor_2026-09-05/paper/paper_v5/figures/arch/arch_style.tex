@@ -1,0 +1,15 @@
+% Shared TikZ style for all architecture figures. Grayscale-safe.
+\tikzset{
+  blk/.style   ={draw,rounded corners=2pt,align=center,font=\footnotesize,
+                 minimum height=8mm,inner sep=3pt,fill=white},
+  clas/.style  ={blk,fill=black!4},
+  neuro/.style ={blk,fill=black!12,very thick},
+  plant/.style ={blk,fill=black!20},
+  meas/.style  ={blk,dashed},
+  sum/.style   ={draw,circle,inner sep=0pt,minimum size=4.5mm,font=\scriptsize},
+  sig/.style   ={-{Latex[length=2mm]},thick},
+  sigd/.style  ={-{Latex[length=2mm]},thick,dashed},
+  lbl/.style   ={font=\scriptsize,inner sep=1.5pt,fill=white},
+  grp/.style   ={draw,dashed,rounded corners=3pt,inner sep=6pt},
+  note/.style   ={font=\scriptsize\itshape,align=left},
+}

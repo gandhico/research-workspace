@@ -15,6 +15,48 @@ on Friday 2026-09-11.
 5. `THREE_STAGE_DEVELOPMENT_REPORT_2026-09-09.md` records implementation status, limitations, and
    the experiment plan.
 
+## Current research priority (2026-10-06)
+
+The current user request prioritizes single-neuron mathematics and two- to
+three-cell learning mechanisms under limited local memory. The continuation
+notes in `theory/` and their standard-library Julia scripts are the active
+starting point. The September HPC grid below is historical project context;
+do not treat it as the next action for this memory-limited phase. Preserve
+negative and no-event findings while comparing PES, exact internal-weight
+sensitivity, and local approximations.
+`theory/HH_JAXLEY_BASELINE_EVIDENCE_2026-10-06.md` audits the published HH-type
+learning evidence and defines the small matched HH/HyperLIF/stateful-LIF
+comparison. Use the final published Jaxley figures (94.2% MNIST and 607
+retina parameters), not preliminary talk figures. Do not compare accuracy
+across unlike datasets as if they were a controlled benchmark.
+`theory/HH_HYPERLIF_TINY_COMPARISON_2026-10-06.md` now records the first
+canonical-HH/HyperLIF/adaptive-leaky two-cell decoder experiment, an HH
+initial-basin counterexample, and validated constant-memory HH forward
+sensitivity. Its operating currents and feature budgets are not yet a
+matched benchmark; preserve the negative equilibrium-start transfer result.
+`theory/COUPLED_WEIGHT_HORIZON_AND_GATE_2026-10-06.md` is the current
+coupled-weight continuation. Exact and detached local traces were checked
+in canonical HH and ACC-type HyperLIF; short-to-long teacher-weight
+learning succeeds in tested HH regimes, while saturated gate-only
+eligibility vanishes late. Treat this as one-parameter teacher recovery,
+not independent-task learning. The next control is an external target
+with a coupled two-state leaky baseline and matched readout budget.
+`theory/COUPLED_EXTERNAL_DELAY_AND_BASIN_TRANSFER_2026-10-06.md` now adds
+that independent 20 ms delay target for coupled HyperLIF and a coupled
+continuous adaptive-leaky baseline. The gamma=2 local connection can
+improve a single validation phase while switching to a different gate
+basin and failing severely on a fresh test phase, despite zero events.
+Do not infer external-task success from the teacher-weight recovery.
+`ADVISOR_BRIEF_FRIDAY_2026-10-09.md` is the current advisor-facing
+conclusion, seven-slide talk outline, covered/open checklist, and
+claim-discipline guide for Friday 2026-10-09.
+`theory/ACC_CLOSED_LOOP_STABILITY_OPTIONS_2026-10-06.md` separates the
+ACC paper's proved bounded interface from a proposed regional practical
+tracking theorem. It includes the rotor-headroom condition and the
+disturbances needed for a valid plant-level claim. Two plot artifacts in
+`theory/results/current_*_2026-10-06.png` summarize readouts and learning
+limits from saved exploratory CSVs; no closed-loop theorem is yet proved.
+
 Do not treat old comments or filenames as evidence. In particular, several legacy Julia files under
 `code/apex_julia/` used phrases such as “fully differentiable,” “A-stable,” or “guarantees no dead
 band” without a complete proof. Those are historical implementations, not the claim authority.
@@ -96,10 +138,39 @@ crossing speed; grazing events are ill-conditioned. Compare pure `first_event_ti
   hyperparameters on the test split.
 - Preserve negative results, failed seeds, NaNs, no-event runs, and noncausal ablations.
 
-The exact TNNLS reviewer letter was not located in this workspace during this pass. The work addresses
-the remembered/core concerns (novelty, exact event definition, gradient legitimacy, stability,
-ablation, baselines, efficiency, reproducibility), but no response should say a specific reviewer
-comment is closed until the verbatim letter is found and mapped line by line.
+Update 2026-10-06: the exact TNNLS decision and reviewer letter is present at
+`tnnls/TNNLS_reviews.pdf` (four pages). The reviewer-specific map and new PES
+theory are in `theory/PES_SINGLE_NEURON_SMALL_NETWORK_2026-10-06.md`. Earlier
+notes saying the letter was missing are historical and should not be repeated.
+The letter is evidence of criticisms, not proof that any criticism is resolved.
+The follow-on local fold certificate, decoder-rule comparison, and one-weight
+recurrent sensitivity experiment are in
+`theory/PES_CONTINUATION_FOLDS_AND_TINY_NETWORK_2026-10-06.md`.
+That continuation also encloses canonical fixed/adaptive local linear
+stability crossings and records a high-drive no-event adaptive regime.
+The next ACC-specific result is
+`theory/ACC_ABSORBING_LATCH_AND_PES_IDENTIFIABILITY_2026-10-06.md`:
+for the supplied ACC parameters, a saturated high-readiness, no-event
+rectangle is forward invariant for arbitrary bounded input current.
+This gives a mathematical rank-loss obstruction for the clipped-readiness
+PES decoder. Use this result when assessing any claim that these
+parameters eliminate silent/dead regimes or guarantee PES learnability.
+The same note includes a small independent-target feature map across
+feedback and readout gains; it identifies candidate operating regions
+for a fair next PES-versus-sensitivity comparison.
+The follow-up multi-signal readout study is
+`theory/MULTISIGNAL_READOUTS_GATE_MEMBRANE_CONDUCTANCE_2026-10-06.md`.
+It tests raw/clipped gate, voltage, full and gate-only conductance,
+reset current, derivatives, and combinations on same-time and delayed
+targets. Its key distinction is that full conductance contains the
+applied input directly, while raw gate adds useful temporal information
+in the reduced-feedback operating regime.
+`theory/GATE_OBSERVABILITY_DECODER_GRAM_BOUNDS_2026-10-06.md` now adds
+finite-horizon local observability and finite-window decoder-Gram bounds.
+The gate's observability margin can vanish quadratically with sigmoid
+slope; a nearly constant gate also creates a near-null bias/gate decoder
+direction even when other readouts predict the target well. This is a
+mathematical limitation, not a new benchmark result.
 
 ## Commands
 
@@ -131,7 +202,8 @@ can take several minutes and gigabytes; do not estimate training throughput from
 5. Inspect event topology: upcrossings, occupancy, no-event fraction, crossing-speed conditioning.
 6. Start `serious` only after the Thursday profile has no systematic failures.
 7. Add matched LIF/ALIF and parameter/FLOP/latency controls before comparative performance claims.
-8. Find the verbatim TNNLS reviews and build a reviewer-comment → equation/code/experiment table.
+8. Use the now-located verbatim TNNLS reviews and keep the reviewer-comment to
+   equation/code/experiment table current as new evidence is obtained.
 
 ## Definition of done for a reported result
 

@@ -1,0 +1,15 @@
+\begin{table}[t]
+\caption{Nengo neuron-family benchmark, mean over ten cells (two models, five missions): error reduction over the shared PD baseline for a fixed and a PES decoder, PES residual effort as RMS fraction of the per-axis limit, and the fraction of unit-samples with $|a_j|>10^{-9}$.}
+\label{tab:family}\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Family&fixed [\%]&PES [\%]&PES effort&active\\\midrule
+CMG&3.8&41.5&0.121&0.999\\
+Izhikevich&2.6&46.8&0.371&1.000\\
+LIF&0.5&1.6&0.036&0.028\\
+ALIF&0.5&1.5&0.034&0.023\\
+LIFRate&0.8&2.7&0.040&0.036\\
+\bottomrule
+\end{tabular}
+\end{table}

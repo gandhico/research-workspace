@@ -1,0 +1,54 @@
+% A3 -- MAIN ARCHITECTURE, proposal 3: layered "mechanism separation" view.
+% Emphasises the paper's conceptual claim: three mechanisms coexist in one
+% loop and can be ablated independently. Use this when the point is *what*
+% is learned rather than *how* the signals are wired.
+\begin{tikzpicture}[node distance=5mm and 7mm]
+  % ---- Layer 0: fixed classical control ----------------------------------
+  \node[clas]                     (l0a) {reference $q_d$};
+  \node[clas,right=of l0a]        (l0b) {shortest-path error \eqref{eq:theta}};
+  \node[clas,right=of l0b]        (l0c) {quaternion PD \eqref{eq:pd}};
+  \node[clas,right=of l0c]        (l0d) {allocation $B^{-1}$ $+$ plant};
+
+  % ---- Layer 1: neural substrate ------------------------------------------
+  \node[neuro,below=17mm of l0a.south west,anchor=north west]
+                                  (l1a) {paired encoding \eqref{eq:encoding}};
+  \node[neuro,right=of l1a]       (l1b) {membrane $v_j$ \eqref{eq:mem_step}};
+  \node[neuro,right=of l1b]       (l1c) {gate $r_j$ \eqref{eq:gate_step}};
+  \node[neuro,right=of l1c]       (l1d) {activities $\bm a_k$};
+
+  % ---- Layer 2: online learning -------------------------------------------
+  \node[neuro,below=17mm of l1a.south west,anchor=north west]
+                                  (l2a) {PES error $\bm\varepsilon_k=\bm y^*_k-\bm s_k$};
+  \node[neuro,right=of l2a]       (l2b) {gradient $\eta\bm\varepsilon_k\bm a_k\T$};
+  \node[neuro,right=of l2b]       (l2c) {decay $\lambda_W W_k$};
+  \node[neuro,right=of l2c]       (l2d) {projection $\Pi_{\mathcal W}$};
+
+  \draw[sig] (l0a)--(l0b); \draw[sig] (l0b)--(l0c); \draw[sig] (l0c)--(l0d);
+  \draw[sig] (l1a)--(l1b); \draw[sig] (l1b)--(l1c); \draw[sig] (l1c)--(l1d);
+  \draw[sig] (l2a)--(l2b); \draw[sig] (l2b)--(l2c); \draw[sig] (l2c)--(l2d);
+  \draw[sigd] (l1c.south) to[out=-110,in=-70] node[lbl,below]{$\gamma,\;c_j$} (l1b.south);
+
+  \begin{scope}[on background layer]
+    \node[grp,fit=(l0a)(l0d)] (b0) {};
+    \node[grp,fit=(l1a)(l1d)] (b1) {};
+    \node[grp,fit=(l2a)(l2d)] (b2) {};
+  \end{scope}
+
+  \coordinate (xl) at (l1a);
+  \coordinate (xr) at (l1d);
+  \draw[sig] (xl|-b0.south) -- node[lbl,left]{$\bm u_0$}   (xl|-b1.north);
+  \draw[sig] (xl|-b1.south) -- node[lbl,left]{$\bm a_k$}   (xl|-b2.north);
+  \draw[sig] (xr|-b2.north) -- node[lbl,right]{$W_{k+1}$}  (xr|-b1.south);
+  \draw[sig] (xr|-b1.north) -- node[lbl,right]{$\beta\bm\ell\odot\bm s_k$} (xr|-b0.south);
+
+  \node[note,anchor=west,text width=42mm] at ($(b0.east)+(3mm,0)$)
+    {\textbf{L0 fixed.}\\Gains never adapt; the residual is added, not blended.};
+  \node[note,anchor=west,text width=42mm] at ($(b1.east)+(3mm,0)$)
+    {\textbf{L1 substrate.}\\Ablation knob $\chi\in\{0,1\}$\\(conductance modulation).};
+  \node[note,anchor=west,text width=42mm] at ($(b2.east)+(3mm,0)$)
+    {\textbf{L2 learning.}\\Ablation knobs $\eta,\lambda_W$\\(online decoder adaptation).};
+  \node[note,anchor=north west,text width=0.9\linewidth] at ($(b2.south west)+(0,-3mm)$)
+    {Interface knob $\beta\in[0,1]$ scales L1$\to$L0 authority. Setting
+     $\beta{=}0$ recovers the baseline exactly; setting $\eta{=}0$ freezes
+     $W_k{=}W_0$; setting $\chi{=}0$ removes input-dependent conductance.};
+\end{tikzpicture}

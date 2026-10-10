@@ -1,0 +1,44 @@
+% Code-aligned paper view; historical diagrams are unchanged.
+\begin{tikzpicture}[x=1mm,y=1mm,
+ box/.style={draw,rounded corners=1mm,align=center,font=\fontsize{8}{9}\selectfont,minimum height=12mm,inner sep=2mm},
+ neural/.style={box,fill=blue!6,thick},
+ fixed/.style={box,fill=black!3},
+ flow/.style={-{Latex[length=1.6mm]},semithick},
+ tag/.style={font=\fontsize{7}{8}\selectfont,fill=white,inner sep=.4mm}]
+\node[fixed,text width=35mm] (pd) at (0,0)
+ {Reference $q_d$ + state $q,\bm\omega$\\error and fixed PD, (\ref{eq:theta}), (\ref{eq:pd})\\$\bm u_0=\sat_{\bm\ell}(-K_q\bm e_q-K_\omega\bm\omega)$};
+\node[fixed,text width=30mm] (sum) at (46,0)
+ {Add and clip, (\ref{eq:residual})\\$\bm u=\sat_{\bm\ell}(\bm u_0+\beta\bm\ell\odot\bm s)$};
+\node[fixed,text width=36mm] (alloc) at (91,0)
+ {Rotor allocation, (\ref{eq:mixer})\\$\bm f_{\rm req}=B^{-1}[T,\bm u\T]\T$\\$\bm f_{\rm act}=\clip_{[0,\bm f_{\max}]}\bm f_{\rm req}$};
+\node[fixed,text width=29mm] (plant) at (139,0)
+ {MuJoCo: CF2 / X2\\$[T_{\rm act},\bm\tau_{\rm act}\T]\T=B\bm f_{\rm act}$\\rigid-body state update};
+\node[neural,text width=32mm] (enc) at (0,-24)
+ {Paired currents, (\ref{eq:encoding})\\$\bm I^\pm=I_b\bm1+I_g\max(\pm\bm u_0\oslash\bm\ell,0)$};
+\node[neural,text width=30mm] (cmg) at (46,-24)
+ {Six CMG units\\$(v_k,r_k)\to(v_k^+,r_k^+)$\\$\bm a_k=\clip_{[0,1]}(G\bm r_k^+)$};
+\node[neural,text width=32mm] (dec) at (91,-24)
+ {Decoder, (\ref{eq:readout})\\$\bm s_k=\clip_{[-1,1]}(W_k\bm a_k)$\\use pre-update $W_k$};
+\node[fixed,text width=29mm] (height) at (139,-24)
+ {Fixed height loop\\$z,\dot z,R(Q)_{33}\to T$\\Eq. (\ref{eq:collective})};
+\node[neural,text width=32mm] (target) at (0,-46)
+ {Teacher from $\bm e_q,\bm\omega$\\$\bm y_k^*=\clip_{[-1,1]}(-k_e\bm e_q-k_\omega^*\bm\omega)$};
+\node[neural,text width=53mm] (pes) at (69,-46)
+ {PES + leak + projection, (\ref{eq:pes})\\$\bm\varepsilon_k=\bm y_k^*-\bm s_k$\\$W_{k+1}=\Pi_{\mathcal W}[W_k+\eta\bm\varepsilon_k\bm a_k\T-\lambda_WW_k]$};
+\draw[flow] (pd)--node[tag,above]{$\bm u_0$}(sum);
+\draw[flow] (sum)--node[tag,above]{$\bm u$}(alloc);
+\draw[flow] (alloc)--node[tag,above]{$\bm f_{\rm act}$}(plant);
+\draw[flow] (pd)--node[tag,right]{$\bm u_0$}(enc);
+\draw[flow] (enc)--node[tag,above]{$\bm I$}(cmg);
+\draw[flow] (cmg)--node[tag,above]{$\bm a_k$}(dec);
+\draw[flow] (dec.north)--(91,-12)--node[tag,above]{$\bm s_k$}(46,-12)--(sum.south);
+\draw[flow] (cmg.south)--(46,-36)--(pes.north west);
+\draw[flow] (target)--node[tag,above]{$\bm y_k^*$}(pes);
+\draw[flow] (dec.south)--node[tag,right]{$\bm s_k$}(pes.north east);
+\draw[flow] (pes.east)--(114,-46)--node[tag,right]{$W_{k+1}$}(114,-24)--(dec.east);
+\draw[flow] (plant)--(height);
+\draw[flow] (height.west)--(117,-24)--(117,-9)--node[tag,below]{$T$}(102,-9)--(alloc.south east);
+\draw[flow] (plant.east)--(160,0)--(160,-61)--(-24,-61)--(-24,0)--(pd.west);
+\node[tag] at (70,-61) {State feedback: $q=Q^{-1}$, $\bm\omega$ (direct state; corrupted only in noise tests)};
+\draw[flow] (-24,-46)--(target.west);
+\end{tikzpicture}

@@ -1,0 +1,1075 @@
+% Audited revision, 2026-09-04. Original ACC2027_v4.tex is preserved.
+% Working IEEE two-column layout. Apply the official ACC author kit before
+% submission; the installed IEEEconf class is NOT the PaperPlaza ieeeconf.
+\documentclass[letterpaper,10pt,conference]{IEEEtran}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{booktabs,array,cite}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+% Figures live under figures/..., so keep that on the graphics path.
+\graphicspath{{figures/}{figures/disturbance/}{../experiments/nengo_nef_replication_2026-08-29/results/plots/}}
+
+
+% [v6] TikZ support for the architecture figures.
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
+% Architecture drawing helpers live in architectures/tikz/.
+\input{architectures/tikz/arch_style.tex}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\T}{^{\mathsf T}}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\clip}{\operatorname{clip}}
+\newcommand{\sgnp}{\operatorname{sgn}_{+}}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+
+% [v7] Title now names the mechanism and the learning, and claims the
+% controlled study rather than architectural novelty.
+\title{Online PES Decoder Learning in Neuromorphic Residual Control of UAV Quaternion Tracking}
+\author{%
+\IEEEauthorblockN{Gandhi Contreras\IEEEauthorrefmark{1}, Steven Sandoval\IEEEauthorrefmark{1}, Luis Garcia\IEEEauthorrefmark{2}}%
+\IEEEauthorblockA{\IEEEauthorrefmark{1}New Mexico State University (NMSU), Las Cruces, NM, USA}%
+\IEEEauthorblockA{\IEEEauthorrefmark{2}U.S. Air Force, Los Alamos, NM, USA}%
+}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+\begin{abstract}
+% [v7] Rewritten: leads with the mechanism and the result; scope limits kept
+% but stated once rather than after every claim.
+We present a compact neuromorphic residual controller for quaternion attitude
+tracking with bounded actuator commands. A fixed quaternion PD baseline is
+augmented by six paired coupled membrane--gate (CMG) units: continuous,
+non-spiking, conductance-based neurons whose gate-derived activities form a
+nonlinear basis. Eighteen decoder
+weights adapt online via prescribed error sensitivity (PES), and the bounded
+residual is \emph{added} to the saturated baseline so the baseline is recovered
+exactly at zero authority. We give bounds on internal states, command
+deviation, and projected decoder weights, and we isolate three commonly
+conflated mechanisms: intrinsic conductance modulation, decoder learning, and
+residual authority.
+In ten matched 45-s MuJoCo cases spanning five missions on Skydio X2 and
+Crazyflie~2.0 models (the latter completed with an explicit four-rotor
+interface), CMG--PES reduces mean quaternion-angle error by $17.3$--$60.6\%$
+relative to PD while respecting actuator limits (nonzero bound occupancy only
+in brief Hardstep intervals). Direct and Nengo implementations agree to
+$2.013\times10^{-6}$ relative mean error. In the tested gain regime, most of
+the improvement is carried by online decoder adaptation; toggling conductance
+modulation is numerically indistinguishable. A benchmark against LIF, ALIF,
+Izhikevich, and LIFRate bases shows the same hierarchy and exposes an
+effort--accuracy tradeoff: families that match CMG--PES on error spend
+several times its residual authority to do so. Noise reruns keep the reduction
+range at $18.1$--$55.8\%$ with seed standard deviation below $0.031\%$, and an
+intermittent-disturbance study shows learned corrections reused across
+episodes. Results are in simulation and establish boundedness, not closed-loop
+stability.
+\end{abstract}
+
+\section{Introduction}
+Learning-based augmentation can retain useful classical feedback structure
+while adapting a correction that is difficult to specify a priori.
+Residual robot control is established \cite{johannink2019}; quadrotor
+examples include geometric $\mathcal L_1$ augmentation with performance
+guarantees \cite{wu2025l1quad} and PID-plus-PPO attitude residuals
+\cite{li2027hpappo}. Thus, neither additive residual learning nor online
+flight adaptation is novel in isolation.
+
+Neuromorphic control offers a complementary implementation approach.
+Nengo supports the Neural Engineering Framework (NEF) and online decoder
+learning \cite{bekolay2014nengo}. PES-based adaptive control has been
+demonstrated on manipulators \cite{dewolf2016arm,dewolf2020nengo}, and a
+Nengo spiking PID controller with PES-based self-tuning has been validated
+on a free-flying UAV \cite{olivares2026selftuning}. Building on that line, we
+investigate a specific continuous membrane--gate basis for a bounded
+quaternion-torque residual, with a fixed classical controller and adaptation
+confined to its decoder.
+
+The central question is whether this small stateful basis can improve
+tracking, and which of its components explains the improvement. The paper
+contributes: (i) a code-aligned CMG--PES architecture with paired currents,
+explicit state and readout equations, and a fully specified actuator
+interface (Fig.~\ref{fig:arch}); (ii) boundedness and exact
+baseline-recovery properties, stated at the strength the analysis supports;
+(iii) a matched five-mission, two-model study in which the direct and Nengo
+realizations agree to $2.013\times10^{-6}$; (iv) a controlled ablation that
+separates conductance modulation, decoder learning, and output authority,
+and identifies which of the three carries the effect; and (v) robustness
+evidence that the reduction survives realistic measurement noise, together
+with a hold-equilibrium study in which the learned correction is reused
+across repeated disturbance episodes rather than relearned. The last three
+are the substantive contributions: the architecture is small and its
+components are individually replaceable, so establishing \emph{which} part
+does the work, and \emph{what it costs}, is more useful than reporting that
+the whole improves tracking.
+
+The CMG unit combines a leaky membrane with a coupled gating state that modulates its effective conductance, linking LIF-like membrane integration with Hodgkin--Huxley-inspired gating dynamics. Although related operating regimes can support spike-like responses, the present controller deliberately exploits the continuous, non-spiking membrane--gate trajectory rather than thresholding it into discrete events. In this regime, the gate readout preserves graded temporal transients that may encode timing and event-related information without reducing the state evolution to a binary spike sequence. This motivates the use of the continuous membrane--gate signal as a potentially richer control basis, while remaining compatible with the subthreshold analog primitives used in neuromorphic circuits, such as membrane leak, conductance modulation, and sigmoidal gating \cite{mahowald1991vlsi}. We therefore use ``neuromorphic'' here in this continuous conductance-based sense. No power or device-level advantage is claimed: the present implementation is digital, and the potential benefits of an analog realization remain to be established experimentally.
+
+PES is an established local, online error-driven learning rule \cite{voelker2015pes}; what is new
+here is the basis it decodes and the controlled separation of the mechanisms
+that basis contributes.
+
+We summarize the proposed residual controller visually before introducing the full
+problem statement and notation. Fig.~\ref{fig:arch} shows the fixed PD baseline
+and the learned residual pathway, and Fig.~\ref{fig:models} shows the two
+vehicles used throughout the study.
+
+% [v6] Architecture overview (TikZ source under architectures/tikz/).
+\begin{figure*}[t]
+
+\centering
+\resizebox{\textwidth}{!}{\input{architectures/tikz/archA2p.tex}}
+\caption{CMG--PES residual architecture. The light blocks are the fixed
+classical path: error \eqref{eq:theta}, PD law \eqref{eq:pd}, and
+allocation \eqref{eq:mixer} are never adapted. The heavy blocks encode the
+clipped baseline as paired currents \eqref{eq:encoding}, evolve $2m$
+membrane--gate units \eqref{eq:cmg}, and decode a bounded residual
+\eqref{eq:readout} that is \emph{added} to the saturated baseline
+\eqref{eq:residual}. Only $W_k$ adapts, through \eqref{eq:pes}; $\beta=0$
+recovers the baseline exactly.}
+\label{fig:arch}
+\end{figure*}
+
+% [v6] fig:scale and fig:models were merged: both showed the same two
+% aircraft. The old fig:scale call sites now point here.
+\begin{figure*}[t]
+\centering
+% Fig. 2 (standalone PDF in figures/01_mujoco_missions/)
+\includegraphics[width=\textwidth]{figures/01_mujoco_missions/fig2_drones_only.pdf}
+
+\caption{Vehicles and simulation models. Left: CF2 hardware and MuJoCo
+model. Centre: X2 hardware and MuJoCo model. Right: both geometries at
+relative scale. The axis triads are body-frame axes: they are rigidly
+attached to the vehicle and therefore rotate with it relative to the
+inertial (world) frame (cf.\ $Q\!:\,\text{body}\to\text{inertial}$ in
+Sec.~\ref{sec:problem}).}
+\label{fig:models}
+\end{figure*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [v6] Nomenclature. Every symbol that appears in an equation is listed
+% once here; the bracketed tag is the equation that defines it.
+\begin{table*}[t]
+\caption{Nomenclature. Parenthesised tags give the defining equation;
+vectors are bold; $\clip_{[a,b]}$ and $\sat_{\bm\ell}$ act elementwise.}
+\label{tab:nomen}\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{0.84}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{0.185\textwidth}l>{\raggedright\arraybackslash}p{0.185\textwidth}l>{\raggedright\arraybackslash}p{0.185\textwidth}@{}}
+\toprule
+\multicolumn{6}{@{}l}{\textit{Attitude, plant, and notation}}\\
+$q,\;q_d$ & state / reference quaternion & $q_e$ & error quaternion, $q_d\otimes q^{-1}$ & $q_{e,0},\bm q_{e,v}$ & scalar and vector parts\\
+$\bm e_q$ & shortest-path error \eqref{eq:theta} & $\theta_q$ & error angle \eqref{eq:theta} & $\bm\omega$ & body angular rate\\
+$J$ & inertia tensor & $Q$ & body-to-inertial rotation & $\otimes$ & quaternion product\\
+$\bm\omega_d,\bm\omega_e$ & reference and error rate \eqref{eq:errkin} & $R(\cdot)$ & rotation matrix of a quaternion & $z,z_d,\dot z$ & height, reference, rate \eqref{eq:collective}\\
+$\odot,\oslash$ & elementwise $\times$, $\div$ & $\sgnp$ & sign, with $\sgnp(0)=1$ & $\sigma$ & logistic function\\
+$I_m$ & identity of order $m$ & $\R$ & real numbers & $\Pi$ & Euclidean projection\\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Fixed baseline and actuator interface}}\\
+$\bm\tau_0=\bm u_0$ & baseline torque \eqref{eq:pd} & $K_q,K_\omega$ & PD gains \eqref{eq:pd} & $\bm\tau_{\max}$ & per-axis torque bound\\
+$\omega_n,\zeta$ & design frequency, damping & $\bm\ell$ & per-channel command bound & $\sat_{\bm\ell}$ & saturation at $\pm\bm\ell$\\
+$B$ & allocation matrix \eqref{eq:allocationmatrix} & $\bm f$ & rotor forces \eqref{eq:mixer} & $T$ & collective thrust \eqref{eq:collective}\\
+$\kappa_i$ & rotor reaction coefficient & $m$ & torque channels, $m=3$ & $M$ & vehicle mass\\
+$\bm f_{\max}$ & per-rotor force bound & $g$ & gravity, $9.81$\,m/s$^2$ & $\bm 1$ & vector of ones\\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Coupled membrane--gate unit}}\\
+$v_j$ & membrane state \eqref{eq:cmg} & $r_j$ & gate state \eqref{eq:cmg} & $c_j$ & shunt conductance \eqref{eq:cmg}\\
+$\bar{\bm u}$ & normalized baseline \eqref{eq:encoding} & $\bm I^{\pm},\bm I$ & paired currents \eqref{eq:encoding} & $I_b,I_g$ & current offset and gain\\
+$\tau,\tau_r$ & membrane, gate time constants & $v_{\rm th}$ & gate threshold & $v_{\rm rest},v_{\rm reset}$ & rest level, reversal level\\
+$\gamma$ & gate self-coupling & $\alpha_h$ & logistic sharpness & $\chi$ & conductance switch, $\chi\in\{0,1\}$\\
+$g_0,g_1$ & conductance gains (distinct from $g$) & $G$ & activity gain, $G=10^5$ & $h$ & integration step\\
+$b_{j,k}$ & gate target \eqref{eq:gate_step} & $r^+_{j,k},v^+_{j,k}$ & updated states \eqref{eq:mem_step} & $\lambda_{j,k},d_{j,k}$ & frozen membrane coefficients\\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Decoder, online learning, and residual authority}}\\
+$\bm a_k$ & clipped activity \eqref{eq:readout} & $W_k$ & decoder \eqref{eq:readout} & $W_0$ & initial decoder, $[I_m,-I_m]$\\
+$\bm s_k$ & clipped readout \eqref{eq:readout} & $\bm y^*_k$ & PES target \eqref{eq:pes} & $\bm\varepsilon_k$ & PES error \eqref{eq:pes}\\
+$k_e,k^*_\omega$ & target gains \eqref{eq:pes} & $\eta$ & per-step learning rate & $\lambda_W$ & per-step decoder decay\\
+$\Pi_{\mathcal W},W_{\max}$ & projection and weight bound & $\beta$ & residual authority \eqref{eq:residual} & $\bm u_k,\bm\delta_k$ & applied command, deviation \eqref{eq:residual}\\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Reported metrics}}\\
+$\bar\theta_q$ & mean quaternion-angle error & $S$ & actuator-bound occupancy [\%] & $n$ & runs per reported cell\\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section{Simulation Models, Attitude Baseline, and Actuator Interface}
+\label{sec:problem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{MuJoCo Platforms and CF2 Actuation Extension}
+We use Crazyflie 2.0 (CF2) and Skydio X2 (X2) models derived from MuJoCo
+Menagerie \cite{menagerieModels}. Each vehicle has six rigid-body degrees of freedom: three
+translations and three rotations, represented by seven free-joint position
+coordinates (position and unit quaternion) and six velocity coordinates.
+The attitude controller requests three body torques; a separate classical
+height loop requests collective thrust. Thus, attitude tracking is evaluated in a freely translating model with active height regulation, rather than in an attitude-only joint model. Both
+platforms use the same integration step $h=0.0005$\,s (Table~\ref{tab:models});
+CF2 uses RK4 and X2 uses Euler, but the step is small enough that this
+difference is not a visible source of tracking error in the reported cases.
+
+The upstream CF2 interface provides collective thrust and three abstract
+body-moment channels; its documentation identifies the original actuator
+limits as arbitrary and requiring tuning \cite{menagerieCF2}. Our four-rotor actuation extension replaces that
+interface with four nonnegative, spatially located thrust inputs while
+retaining the source mass, inertia, and visual geometry. Rotor moment arms
+and signed reaction-torque coefficients define an explicit allocation
+matrix, making the coupling between collective thrust, attitude torque,
+and individual actuator limits testable. This is a model-interface
+contribution, not a complete aerodynamic identification of CF2.
+
+\begin{table}[!ht]
+\centering
+\caption{Compiled simulation-model characteristics. CF2 authority is
+scaled relative to the upstream model limit, not a manufacturer rating.
+Hardware comparisons are given in Table~\ref{tab:manufacturer}.}
+\label{tab:models}
+\setlength{\tabcolsep}{3pt}
+\footnotesize
+\begin{tabular}{@{}p{0.40\linewidth}p{0.27\linewidth}p{0.25\linewidth}@{}}
+\toprule
+Property & CF2 rotor model & X2 model\\
+\midrule
+Mass $M$ (kg) & $0.027$ & $1.325$\\
+Rotor $|p_x|,|p_y|$ (m) & $0.0325,0.0325$ & $0.14,0.18$\\
+Reaction magnitude $|\kappa_i|$ (m) & $0.005$ & $0.0201$\\
+Unscaled rotor limit (N) & $0.0875$ & $13$\\
+Main-test authority scale & $1.5$ & $1$\\
+Main-test rotor limit (N) & $0.13125$ & $13$\\
+Main-test total limit (N) & $0.525$ & $52$\\
+Maximum thrust/weight & $1.321\to1.982$ & $4.001$\\
+Rigid-body integrator & RK4 & Euler\\
+Experiment timestep (s) & $0.0005$ & $0.0005$\\
+Motor activation/RPM states & None & None\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% [v7] The manufacturer comparison now leads, because it is the fact that
+% licenses the model, not an afterthought.
+The upstream CF2 model ships without a rotor-level actuation interface, and
+its $0.35$ N total thrust limit falls short of the $0.568$ N measured on
+stock hardware at $93.75\%$ PWM \cite{bitcrazeThrustMeasurements}. We
+therefore complete the model with an explicit four-rotor interface and set
+the per-rotor limit so the total is $0.525$ N (Table~\ref{tab:models}),
+which remains about $7.5\%$ \emph{below} that measured value. The
+correction is toward the manufacturer's own measurement, not beyond it: it
+raises modeled maximum thrust/weight from $1.321$ to $1.982$ at
+$g=9.81$ m/s$^2$, a figure the physical vehicle exceeds. For physical perspective,
+constant-height flight at a single-axis $45^\circ$ tilt requires
+$T/(Mg)=1/\cos45^\circ=\sqrt{2}$ even before reserving differential-thrust
+margin. The unscaled model cannot meet that idealized requirement; this
+does not establish such a limitation for stock CF2 hardware. The scale
+changes a simulation thrust bound, not rotor speed, stock propulsion
+capability, or tracking performance by $50\%$. Mass, inertia, and reaction
+coefficients are unchanged. PD and CMG use the same model and actuator
+bounds; any benefit from increased model authority is therefore distinct
+from the benefit of neural augmentation.
+
+\begin{table}[!ht]
+\centering
+\caption{Simulation parameters versus manufacturer information.
+``Not reported'' refers to the manufacturer sources reviewed, not proof
+that the parameter is unavailable elsewhere.}
+\label{tab:manufacturer}
+\setlength{\tabcolsep}{3pt}
+\footnotesize
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.30\linewidth}>{\raggedright\arraybackslash}p{0.37\linewidth}@{}}
+\toprule
+Quantity & Simulation & Manufacturer information\\
+\midrule
+CF2 mass & $27$ g & $27$ g \cite{bitcrazeCF20Specs}\\
+X2 mass & $1325$ g & $1325$ g with battery \cite{skydioX2ESpecs}\\
+CF2 total thrust & $0.350\to0.525$ N & $0.568$ N measured at $93.75\%$ PWM\textsuperscript{a} \cite{bitcrazeThrustMeasurements}\\
+X2 rotor limit & $13$ N per rotor & Not reported \cite{skydioX2ESpecs}\\
+CF2 motor response & No motor dynamics & $\sim180$ ms: $0\to25{,}000$ RPM\textsuperscript{b} \cite{bitcrazeMotorResponse}\\
+Inertia tensors & CF2 inherited; X2 geometry-derived & Not reported in product specifications \cite{bitcrazeCF20Specs,skydioX2ESpecs}\\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.97\linewidth}
+\scriptsize
+\textsuperscript{a}Historical total-thrust measurement with a power-supply
+test setup, not a guaranteed continuous battery-powered rating.
+\textsuperscript{b}One motor's reported full-command response with a
+charged battery; not an identified first-order time constant.
+\end{minipage}
+\end{table}
+
+The masses agree with published specifications, but this does not
+validate all dynamic parameters (Table~\ref{tab:manufacturer}). Bitcraze's
+historical measurement of $57.9$ gram-force corresponds to approximately
+$0.568$ N; the evaluated $0.525$ N limit is about $7.5\%$ below that
+operating point \cite{bitcrazeThrustMeasurements}. This supports a plausible
+thrust scale, not hardware validation, and does not establish that a
+stronger-than-stock motor is required. CF2 inertia is inherited from
+Menagerie, which cites system-identification work \cite{menagerieCF2}; the
+rotor-extension moment arms and $|\kappa_i|=0.005$ m remain design
+assumptions. X2 inertia, $13$ N rotor limits, and $|\kappa_i|=0.0201$ m are
+simulation parameters, not confirmed manufacturer characteristics.
+
+Geometric dimensions also require like-for-like definitions. Bitcraze
+lists $92\times92\times29$ mm motor-to-motor/height dimensions
+\cite{bitcrazeCF20Specs}; our sites give an opposite-motor separation of
+$91.92$ mm. Skydio lists an unfolded flying envelope of approximately
+$663\times569\times211$ mm \cite{skydioX2ESpecs}, whereas the model's rotor
+centers span $280\times360$ mm. Center spacing and overall flying envelope
+are different quantities and do not by themselves establish geometric
+agreement or mismatch. Propulsion identification, motor and battery
+dynamics, and experimental validation remain necessary for hardware
+transfer; no endurance or electrical-power fidelity is claimed.
+
+MuJoCo \cite{todorov2012mujoco} integrates rigid-body motion, gravity, site-applied actuator
+wrenches, and enabled passive/contact forces. Both models specify air
+density $1.225$ kg/m$^3$ and viscosity $1.8\times10^{-5}$ Pa\,s; their
+default inertia-based fluid model \cite{mujocoFluid} is a coarse drag approximation, not
+rotor-resolved aerodynamics. The runner overrides the timestep but retains
+each model's integrator. Actuators apply algebraic thrust commands without
+motor activation dynamics. Although gyro, accelerometer, and orientation
+sensors are defined, the evaluated feedback is read directly from
+\texttt{qpos}/\texttt{qvel}; optional measurement perturbations are separate
+runner settings. These experiments do not establish performance with a
+hardware state estimator.
+
+%\input{figure1_interface.tex}
+
+\subsection{Quaternion Convention and Error}
+Let $Q\in\mathbb S^3$ be the scalar-first Hamilton quaternion mapping body
+coordinates to inertial coordinates, and let $\bm\omega$ be body angular
+velocity. With physical inertia $\bm J\succ0$ about the center of mass,
+expressed in body axes, the free-flight rotational balance is
+\begin{align}
+ \dot Q&=\tfrac12 Q\otimes[0,\bm\omega\T]\T,\\
+ \bm J\dot{\bm\omega}&=\bm\tau_{\rm act}+\bm\tau_{\rm p}
+       +\bm\tau_{\rm d}-\bm\omega\times(\bm J\bm\omega).
+ \label{eq:plant}
+\end{align}
+Here $\bm\tau_{\rm p}$ denotes modeled passive torque and
+$\bm\tau_{\rm d}$ any applied disturbance; the nominal ideal rigid-body
+model sets both to zero. Contact, if present, contributes an additional
+external wrench. The requested torque and actuator torque are distinct
+signals in Fig.~\ref{fig:models}.
+
+The controller conjugates MuJoCo's orientation and uses the passive
+quaternion $q=Q^{-1}$, so
+\begin{equation}
+ \dot q=-\tfrac12[0,\bm\omega\T]\T\otimes q.
+ \label{eq:passive}
+\end{equation}
+The desired $q_d$ uses the same convention. Define
+\begin{align}
+ q_e&=q_d\otimes q^{-1}=[q_{e,0},\bm q_{e,v}\T]\T,\\
+ \bm e_q&=\sgnp(q_{e,0})\bm q_{e,v},\qquad \sgnp(0)=1,\\
+ \theta_q&=2\operatorname{atan2}(\|\bm q_{e,v}\|_2,|q_{e,0}|)
+             \in[0,\pi].
+ \label{eq:theta}
+\end{align}
+The reported error $\theta_q$ is the shortest rotation angle, invariant
+under $q_e\mapsto-q_e$. Sign selection introduces a discontinuity at
+$q_{e,0}=0$; it does not establish robust hybrid global stability
+\cite{mayhew2011hybrid}.
+For a desired-frame rate $\bm\omega_d$ satisfying the corresponding
+passive kinematics, differentiation gives
+\begin{align}
+ \dot q_e&=\tfrac12q_e\otimes[0,\bm\omega_e\T]\T,\\
+ \bm\omega_e&=\bm\omega-R(q_e)\T\bm\omega_d,\qquad
+ \dot q_{e,0}=-\tfrac12\bm q_{e,v}\T\bm\omega_e.
+ \label{eq:errkin}
+\end{align}
+This is a kinematic identity, not a convergence result. Reference Euler
+triples parameterize $q_d$ in the passive convention, rather than active
+body-to-world Euler commands.
+
+\subsection{Physical Inertia and Implemented PD Gains}
+MuJoCo stores principal moments $\bm j_{\rm p}$ in its inertial frame
+\cite{mujocoInertial}.
+If $R_{BI}$ maps that frame into body axes, the physical inertia is
+\begin{equation}
+ \bm J=R_{BI}\operatorname{diag}(\bm j_{\rm p})R_{BI}\T.
+ \label{eq:inertiaframe}
+\end{equation}
+The evaluated implementation uses a tuning vector
+$\bm j_{\rm tune}=\bm j_{\rm p}$ directly, in the returned array order:
+\begin{align*}
+ \bm j_{\rm tune}^{\rm CF2}&=(2.3951,2.3951,3.2347)\T10^{-5},\\
+ \bm j_{\rm tune}^{\rm X2}&=(0.0607113,0.0364684,0.0254117)\T,
+\end{align*}
+in kg\,m$^2$. CF2's inertial axes coincide with its body axes. For X2
+they do not; its physical body-frame tensor is approximately
+\begin{equation}
+ \bm J_{\rm X2}=\begin{bmatrix}
+ 0.0366517&0&-0.0021000\\
+ 0&0.0254117&0\\
+ -0.0021000&0&0.0605280
+ \end{bmatrix}\ \mathrm{kg\,m^2}.
+\end{equation}
+Thus the tuning vector must not be identified with
+$\operatorname{diag}(\bm J)$ for both vehicles.
+
+The fixed quaternion PD baseline is
+\begin{align}
+ \bm k_q&=2\bm j_{\rm tune}\odot\bm\omega_n^2,\qquad
+ \bm k_\omega=2\zeta\bm j_{\rm tune}\odot\bm\omega_n,\\
+ \bm u_0&=\sat_{\bm\ell}
+       (-\bm k_q\odot\bm e_q-\bm k_\omega\odot\bm\omega),
+ \label{eq:pd}
+\end{align}
+where $\odot$ denotes componentwise multiplication,
+$\bm\omega_n=(4,4,3.5)\T$ rad/s, $\zeta=0.95$, and
+$\sat_{\bm\ell}$ clips component $i$ to $[-\ell_i,\ell_i]$.
+For these rotor-interface models, the model-policy torque limits are
+$\ell_i=\max(j_{{\rm tune},i}a_i,10^{-6}\ \mathrm{N\,m})$,
+with $\bm a=(12,12,10)\T$ rad/s$^2$.
+These are controller torque bounds, not guaranteed feasible rotor torques.
+The law is quaternion feedback \cite{fresk2013quaternion};
+$\bm\omega_n$ parameterizes its gains but is not a verified set of
+closed-loop natural frequencies for coupled X2 dynamics.
+Desired-rate feedforward and gyroscopic cancellation are omitted.
+The resulting gains are vehicle-specific through $\bm j_{\rm tune}$, even though
+$\bm\omega_n$ and $\zeta$ are shared; the same fixed gains are then retained
+for PD and its CMG augmentation.
+
+For perspective only, take a constant reference, scalar proportional
+gain $\bm k_q=k_q\bm1$, the ideal plant
+($\bm\tau_{\rm p}=\bm\tau_{\rm d}=0$), no saturation or residual, and a
+trajectory confined to one smooth sign branch. Then
+$V=\frac12\bm\omega\T\bm J\bm\omega+2k_q(1-|q_{e,0}|)$ gives
+$\dot V=-\bm\omega\T\operatorname{diag}(\bm k_\omega)\bm\omega$.
+This restricted identity does not prove stability of the anisotropic,
+saturated, moving-reference experiments.
+
+\subsection{Requested and Realized Wrench}
+For rotor positions $\bm p_i$ in body coordinates, parallel $+z$ thrust
+axes, and signed reaction coefficients $\kappa_i$, define
+\begin{equation}
+ B=\begin{bmatrix}
+ 1&1&1&1\\p_{1,y}&p_{2,y}&p_{3,y}&p_{4,y}\\
+ -p_{1,x}&-p_{2,x}&-p_{3,x}&-p_{4,x}\\
+ \kappa_1&\kappa_2&\kappa_3&\kappa_4
+ \end{bmatrix}.
+ \label{eq:allocationmatrix}
+\end{equation}
+The signs follow $\bm p_i\times[0,0,f_i]\T$ and the actuator's local
+reaction torque $\kappa_i f_i$. Both models have zero body-frame
+center-of-mass $x,y$ offsets, so the site's $x,y$ coordinates also give
+the relevant center-of-mass moment arms. Figure~\ref{fig:models} fixes the
+rotor ordering used by $B$; $\kappa_i$ has units of meters, not angular
+velocity. The runner computes
+\begin{equation}
+ \begin{aligned}
+ \bm f_{\rm req}&=B^{-1}[T,\bm u\T]\T,\\
+ \bm f_{\rm act}&=\clip_{[\bm0,\bm f_{\max}]}(\bm f_{\rm req}),\\
+ [T_{\rm act},\bm\tau_{\rm act}\T]\T&=B\bm f_{\rm act}.
+ \end{aligned}
+ \label{eq:mixer}
+\end{equation}
+Here $\bm u=\bm u_0$ for PD; the CMG path in Section~\ref{sec:architecture}
+modifies that requested torque before the same allocation and clipping.
+Each $f_i$ is a commanded force in newtons, not a rotor-speed command.
+Exact wrench realization requires
+$B^{-1}[T,\bm u\T]\T\in[\bm0,\bm f_{\max}]$.
+A componentwise torque box is not generally contained in this
+collective-dependent feasible set. Clipped inverse allocation is used,
+not an optimization-based allocator \cite{monteiro2016allocation}.
+
+Collective thrust remains classical, with $z_d=1$ m:
+\begin{equation}
+ T=\clip_{[0,2.5Mg]}
+ \left(\frac{M[g+6(z_d-z)-4\dot z]}{\max(R(Q)_{33},0.35)}\right).
+ \label{eq:collective}
+\end{equation}
+This expression uses the model's $g=9.81$ m/s$^2$. The height loop reads
+free-joint height and vertical velocity; the denominator compensates tilt.
+The guard $0.35$ prevents near-singular tilt compensation as $R(Q)_{33}\to0$
+(i.e., near $90^\circ$ tilt) and corresponds to limiting the effective
+compensation to about $\arccos(0.35)\approx69.5^\circ$. Its upper bound does
+not supersede individual rotor limits. The CMG path has no direct collective
+output, but can affect height through attitude, tilt compensation, and
+allocation saturation.
+The resulting shared plant interface isolates changes in requested
+attitude torque while preserving the same physical simulation for both
+controllers.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CMG State Dynamics and Online Decoder Adaptation}
+\label{sec:architecture}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Encoding, States, and Numerical Update}
+Symbols are collected in Table~\ref{tab:nomen}.
+For $m$ torque channels and $2m$ units, normalize the clipped baseline and
+form positive/negative current pairs:
+\begin{equation}
+ \begin{aligned}
+ \bar{\bm u}&=\bm u_0\oslash\bm\ell,\\
+ \bm I^{\pm}&=I_b\bm1+I_g\max(\pm\bar{\bm u},\bm0),\\
+ \bm I&=[(\bm I^+)\T,(\bm I^-)\T]\T.
+ \end{aligned}
+ \label{eq:encoding}
+\end{equation}
+Each unit has a dimensionless membrane state $v_j$ and gate $r_j$:
+\begin{align}
+ \dot r_j&=[\sigma(\alpha_h(v_j-v_{\rm th}+\gamma r_j))-r_j]/\tau_r,\\
+ \dot v_j&=-(v_j-v_{\rm rest})/\tau+I_j/\tau-c_j(v_j-v_{\rm reset}),\\
+ c_j&=(g_0+\chi g_1|I_j|)r_j^2,\qquad \chi\in\{0,1\}.
+ \label{eq:cmg}
+\end{align}
+% [v6] CMG unit coupling topology (TikZ source under architectures/tikz/).
+\begin{figure}[t]
+\centering
+\resizebox{0.86\columnwidth}{!}{\input{architectures/tikz/archB1c.tex}}
+\caption{Coupling topology of one CMG unit, cf.~\eqref{eq:cmg}. The
+membrane sets the gate target; the gate acts back twice, shifting its own
+threshold through $\gamma$ and shunting the membrane through
+$c_j\propto r_j^2$ ($\chi=1$ makes that shunt input dependent). The
+dynamics are continuous: no spike, no reset, and only $a_j$ leaves the
+unit.}
+\label{fig:cmgunit}
+\end{figure}
+
+The logistic gate target depends on $v_j$, while $r_j$ shifts that target
+and modulates membrane conductance (Fig.~\ref{fig:cmgunit}). Thus, both states participate even
+though the decoder reads the gate-derived activity. The model has no
+threshold-triggered reset or spike event; $v_{\rm reset}$ is a reversal
+level in a continuous conductance term. The gains $g_0,g_1$ have the units
+needed to make $c_j$ a rate.
+
+The actual integration is sequential, not exponential Euler for both
+states. From the old states compute
+\begin{align}
+ b_{j,k}&=\sigma\!\left(\clip_{[-60,60]}
+       [\alpha_h(v_{j,k}-v_{\rm th}+\gamma r_{j,k})]\right),\\
+ r_{j,k}^{+}&=\clip_{[0,1]}
+       [r_{j,k}+(h/\tau_r)(b_{j,k}-r_{j,k})].
+ \label{eq:gate_step}
+\end{align}
+Then evaluate $c_{j,k}=(g_0+\chi g_1|I_{j,k}|)(r_{j,k}^{+})^2$,
+$\lambda_{j,k}=\tau^{-1}+c_{j,k}$, and
+$d_{j,k}=(v_{\rm rest}+I_{j,k})/\tau+c_{j,k}v_{\rm reset}$. The
+frozen-coefficient membrane step is
+\begin{equation}
+ v_{j,k}^{+}=e^{-\lambda_{j,k}h}v_{j,k}
+       +(1-e^{-\lambda_{j,k}h})d_{j,k}/\lambda_{j,k}.
+ \label{eq:mem_step}
+\end{equation}
+This exactly solves the scalar membrane equation with those frozen
+coefficients; it does not establish unconditional stability of the coupled
+nonlinear closed loop. Assign $(v_{j,k+1},r_{j,k+1})=(v_{j,k}^{+},r_{j,k}^{+})$.
+
+\subsection{Readout, PES, and Additive Residual}
+The within-step activity, initial decoder, and clipped readout are
+\begin{equation}
+ \begin{aligned}
+ \bm a_k&=\clip_{[0,1]}(G\bm r_k^+),\qquad W_0=[I_m,-I_m],\\
+ \bm s_k&=\clip_{[-1,1]}(W_k\bm a_k).
+ \end{aligned}
+ \label{eq:readout}
+\end{equation}
+Pair subtraction retains directional information from a nonnegative
+activity basis; state memory does not imply instantaneous sign agreement
+after a command reversal. With $G=10^5$ the activity saturates once
+$r_j\ge10^{-5}$, so $G$ is a primary design hyperparameter for how much of
+$r_j$'s dynamic range reaches the decoder. The teaching target and local update are
+\begin{align}
+ \bm y_k^*&=\clip_{[-1,1]}(-k_e\bm e_{q,k}-k_\omega^*\bm\omega_k),\\
+ \bm\varepsilon_k&=\bm y_k^*-\bm s_k,\\
+ W_{k+1}&=\Pi_{\mathcal W}
+       [W_k+\eta\bm\varepsilon_k\bm a_k\T-\lambda_W W_k].
+ \label{eq:pes}
+\end{align}
+Here $\mathcal W=[-W_{\max},W_{\max}]^{m\times2m}$, and
+$\eta$ and $\lambda_W$ are per-step coefficients, not continuous-time
+rates. Holding them fixed while changing $h$ changes the learning dynamics.
+PES learns a prescribed residual target; it does not differentiate through
+the plant or directly minimize the closed-loop tracking cost. In particular,
+with a clipped readout this rule is not the exact gradient of the clipped
+instantaneous squared loss. It is a PES-style error-directed update with
+projection and leak.
+
+Using $W_k$ before the update, the requested command is
+\begin{equation}
+ \bm u_k=\sat_{\bm\ell}(\bm u_{0,k}+\beta\bm\ell\odot\bm s_k),\quad
+ \bm\delta_k=\bm u_k-\bm u_{0,k},\qquad 0\le\beta\le1.
+ \label{eq:residual}
+\end{equation}
+The canonical UAV case has $m=3$, six CMG units, and eighteen decoder
+weights. Intrinsic conductance modulation ($\chi$), synaptic/decoder
+adaptation ($W_k$), and output authority ($\beta\bm\ell$) are distinct.
+
+\subsection{Structural Properties and Their Scope}
+\begin{proposition}[Bounded internal states]
+With the nonnegative conductance parameters in Table~\ref{tab:parameters},
+$r_{j,0}\in[0,1]$, and $0<h\le\tau_r$, the gate remains in $[0,1]$.
+The membrane iterate remains in the convex hull of its initial value,
+$v_{\rm reset}$, and the interval
+$[v_{\rm rest}+I_b,v_{\rm rest}+I_b+I_g]$.
+\end{proposition}
+\begin{proof}
+The unclipped gate step is a convex combination of $r_{j,k}$ and
+$b_{j,k}\in[0,1]$. Since $I_j\in[I_b,I_b+I_g]$ and $c_j\ge0$,
+$d_j/\lambda_j$ is a convex combination of $v_{\rm rest}+I_j$ and
+$v_{\rm reset}$. Equation~\eqref{eq:mem_step} is a convex combination of
+$v_{j,k}$ and $d_j/\lambda_j$. Induction proves both statements.
+\end{proof}
+
+\begin{proposition}[Bounded authority and baseline recovery]
+\label{prop:authority}
+For $\bm u_{0,k}\in\mathcal U$ and any finite $W_k$,
+$\bm u_k\in\mathcal U$ and $|\delta_{k,i}|\le\beta\ell_i$.
+If $\beta=0$, the requested baseline command is recovered at every step.
+If $W_k=0$ at a particular step, it is recovered at that step, but learning
+need not keep $W_{k+1}=0$.
+\end{proposition}
+\begin{proof}
+The outer clip enforces membership in $\mathcal U$. Its componentwise
+nonexpansiveness and $\sat_{\ell_i}(u_{0,k,i})=u_{0,k,i}$ give
+$|\delta_{k,i}|\le|\beta\ell_i s_{k,i}|\le\beta\ell_i$.
+The recovery statements follow by substitution.
+\end{proof}
+The same allocator and state then give the same actuator output when
+$\beta=0$. The proposition does not establish state safety, rotor
+headroom, stability, or a bound on tracking improvement. A bounded
+adversarial correction can still degrade or destabilize a nonlinear plant.
+
+\begin{proposition}[Decoder bound and restricted contraction]
+\label{prop:pes}
+If $W_0\in\mathcal W$, then \eqref{eq:pes} keeps $W_k\in\mathcal W$.
+If, additionally, the target and a nonzero activity $\bm a$ are fixed,
+leak is zero, and readout clipping and projection remain inactive, then
+\begin{equation}
+ \bm\varepsilon_{k+1}
+       =(1-\eta\|\bm a\|_2^2)\bm\varepsilon_k.
+ \label{eq:contraction}
+\end{equation}
+For a nonzero initial error, its norm contracts to zero when
+$0<\eta\|\bm a\|_2^2<2$.
+\end{proposition}
+\begin{proof}
+Projection gives the first result. Under the additional conditions,
+$(W_{k+1}-W_k)\bm a=\eta\bm\varepsilon_k\|\bm a\|_2^2$;
+subtracting this from the fixed target error gives
+\eqref{eq:contraction}. The scalar multiplier has modulus less than one
+under the stated condition.
+\end{proof}
+This is the constant-feature PES result \cite{voelker2015pes}, not a
+closed-loop convergence theorem. Since $\|\bm a\|^2\le2m$,
+$0<\eta<1/m$ is sufficient for that restricted model with nonzero
+activity; changing targets, loss of excitation, clipping, and leakage
+invalidate a direct application to the experiment. No unique identification
+of all decoder weights follows from one fixed regressor.
+
+% [v7] The statement a control audience looks for first. Scoped: it is a
+% conditional bound, not a stability theorem, and says so.
+\begin{remark}[Scope of a small-gain argument]
+\label{rem:smallgain}
+Propositions~\ref{prop:authority} and \ref{prop:pes} place the realized
+command deviation in a known box, $|\delta_{k,i}|\le\beta\ell_i$, uniformly
+in $k$ and independently of what the decoder has learned. If the baseline
+loop is input-to-state stable with respect to an additive torque
+perturbation, with gain $\gamma(\cdot)$ on that input, then the augmented
+loop inherits an ISS estimate with asymptotic bound
+$\gamma(\beta\|\bm\ell\|)$, and $\beta$ tunes it continuously to zero. Two
+conditions are not discharged here. The perturbation entering the plant is
+post-allocation, so the relevant bound is on $B^{-1}$ applied to
+$\bm\delta_k$ under rotor saturation, not on $\bm\delta_k$ itself; and the
+required ISS gain for the saturated quaternion-PD baseline is not
+established in this paper. The architecture therefore supplies the bounded
+perturbation such an argument needs, and identifies the two missing
+ingredients, without asserting the conclusion.
+\end{remark}
+
+\subsection{Nengo Realization}
+In Nengo 4.1.0, CMG is a custom \texttt{NeuronType} with
+probeable membrane and gate states. Constructed currents are injected into
+\texttt{ensemble.neurons}; conventional NEF gain/intercept fitting is
+bypassed. The result is a direct-current neural basis with a Nengo PES
+decoder, not a claim that the full classical controller has been compiled
+into an NEF population representation.
+
+With unfiltered activity and $n=2m$, Nengo's update scaling is matched using
+$\eta_N=\eta n/h$ and Nengo error $\bm s_k-\bm y_k^*$.
+The implementation subtracts $\lambda_WW_k$ using the pre-step weights
+and projects after the simulator step. The measured worst relative
+mean-error difference across the ten missions is $2.013\times10^{-6}$;
+an isolated command test gives approximately $1.05\times10^{-7}$.
+These are numerical comparisons over tested trajectories, not bitwise
+identity or independent validation of the control hypothesis.
+
+\section{Experimental Protocol and Cross-Mission Results}
+\label{sec:results}
+\subsection{Models, Parameters, and Measurements}
+MuJoCo supplies rigid-body and actuator simulation \cite{todorov2012mujoco}.
+The X2 model uses four rotor actuators. The CF2 case is an explicit
+four-rotor design with $1.5\times$ nominal upper thrust authority; it is
+neither stock-Crazyflie hardware validation nor a validated motor upgrade.
+For both rotor models,
+$\bm\ell=\max(\operatorname{diag}(J)\odot(12,12,10)\T,10^{-6}\bm1)$
+in N\,m, with the maxima taken componentwise.
+
+
+
+\begin{table}[t]
+\caption{Canonical 3-channel CMG--PES parameters. Neural states/currents
+are normalized model variables; learning coefficients are per step.}
+\label{tab:parameters}\centering\small
+\begin{tabular}{ll}
+\toprule
+Quantity & Value\\\midrule
+$h$, duration & $0.0005$ s, $45$ s\\
+$\tau,\tau_r$ & $0.05$ s, $0.005$ s\\
+$v_{\rm rest},v_{\rm reset},v_{\rm th}$ & $0,0,1$\\
+$v_{j,0},r_{j,0},\chi$ & $0,0,1$\\
+$\alpha_h,\gamma,g_0,g_1$ & $50,2,120,30$\\
+$I_b,I_g,G$ & $0.75,1.25,10^5$\\
+$\beta,\eta,\lambda_W,W_{\max}$ & $0.5,8\times10^{-4},10^{-6},6$\\
+$k_e,k_\omega^*$ & $8,0$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Each baseline/CMG pair uses the same initial pose/rate, reference, duration,
+allocator, model, and timestep. The primary campaign is nominal and
+deterministic, with no injected disturbances or sensor noise. One run per
+cell is reported; repeated numerical integration of the same deterministic
+case is not statistical replication. Learning remains active throughout
+evaluation. We report the sample mean $\bar\theta_q$ and relative reduction
+$100(\bar\theta_{q,\rm PD}-\bar\theta_{q,\rm CMG})/\bar\theta_{q,\rm PD}$.
+Summary metrics use all 90,000 integration samples; most saved plotting
+traces retain every tenth sample (5-ms spacing), while the X2 Hard45
+trace is full-rate. Thus recomputing a mean from
+the decimated plot data need not exactly reproduce the full-rate metric.
+
+The five reference triples are generated as follows (radians):
+Roll is $(0.25\sin0.7t,0,0)$; Full3 is
+$0.5\sin(t+(0,\pi/2,\pi)\T)$, componentwise. Hard45 is
+\begin{equation}
+ \begin{bmatrix}
+ 0.55\sin(0.75t)+0.20\sin(2.10t+0.40)\\
+ 0.45\sin(0.95t+\pi/3)+0.18\sin(1.75t)\\
+ 0.65\sin(0.55t+\pi)+0.25\sin(1.35t+0.20)
+ \end{bmatrix}.
+\end{equation}
+Hardstep holds zero for one second, then cycles every two seconds through
+the rows of
+\begin{equation}
+ \begin{bmatrix}
+ .75&-.45&.55\\-.65&.55&-.70\\.50&.50&.90\\-.80&-.35&.20
+ \end{bmatrix}.
+\end{equation}
+Yaw360 is $(0,0,2\pi(3\xi^2-2\xi^3))$ with $\xi=t/45$.
+The nominal Hover equilibrium is also available, but its essentially zero
+error does not support a meaningful percentage comparison.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/02_neural_activity/attitude_detail/x2_full3_attitude.png}
+\caption{X2 Full3 mission: PD baseline versus CMG--PES augmentation over the
+45-s run. Full3 commands all three axes simultaneously and is the largest
+reduction that is also insensitive to measurement noise, losing under one
+point between the clean and realistic columns of Table~\ref{tab:noise}.}
+\label{fig:tracking}
+\end{figure}
+
+\subsection{Primary Five-Mission Matrix}
+\begin{table}[h]
+\caption{Canonical Nengo CMG--PES versus PD: mean quaternion-angle error
+[rad], $45$ s, $n=1$ per cell. $S$ is the logged percentage of samples with
+at least one rotor command at a bound, PD/CMG. CF2 denotes the $1.5\times$
+rotor-authority design, not stock hardware.}
+\label{tab:mujoco}\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llrrrr}
+\toprule
+Model&Mission&PD&CMG--PES&Reduction&$S$ [\%]\\\midrule
+X2&Roll&.050565&.041785&17.36\%&0/0\\
+&Full3&.303275&.131748&56.56\%&0/0\\
+&Hard45&.294082&.138007&53.07\%&0/0\\
+&Hardstep&.454528&.359355&20.94\%&.016/.239\\
+&Yaw360&.075863&.029902&60.58\%&0/0\\\midrule
+CF2&Roll&.051337&.042439&17.33\%&0/0\\
+&Full3&.288383&.126476&56.14\%&0/0\\
+&Hard45&.285449&.132319&53.65\%&0/0\\
+&Hardstep&.426182&.347886&18.37\%&.137/.264\\
+&Yaw360&.075812&.029870&60.60\%&0/0\\\bottomrule
+\end{tabular}
+\end{table}
+All ten primary cases improve mean error (Table~\ref{tab:mujoco}). Gains
+are largest on Yaw360 and Full3 and smallest on Roll; the abrupt Hardstep
+case is intermediate. The reported bound-occupancy statistic detects
+post-clipping commands within the runner's tolerance of a limit. It is not
+a measurement of requested-wrench infeasibility magnitude. Hardstep has
+small but nonzero occupancy on both models, so a blanket zero-saturation
+claim would be incorrect. These cases establish repeatable nominal performance; robustness to model
+mismatch and comparison against other baseline families are separate
+questions, addressed in Sec.~\ref{sec:conclusion}. The two featured cases bracket the matrix. Figures~\ref{fig:tracking} and
+\ref{fig:full3_neurons} show X2 Full3, the largest reduction that is also
+noise-insensitive, with the neural activity that produced it;
+Figs.~\ref{fig:states} and \ref{fig:cf2_hardstep_neurons} show CF2 Hardstep,
+the smallest reduction and the only case whose rotor commands reach a bound.
+Yaw360 carries the largest clean reduction in Table~\ref{tab:mujoco} but is
+also the most noise-sensitive entry in Table~\ref{tab:noise}, so it is
+reported rather than featured.
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/02_neural_activity/x2_full3_neurons.png}
+\caption{X2 Full3: internal CMG signals on the trajectory of Fig.~\ref{fig:tracking}, separating membrane state, raw gate $r_j$, and the clipped activity $a_j$ presented to the decoder.}
+\label{fig:full3_neurons}
+\end{figure}
+
+
+% [v8] Noise sensitivity. Generated by compile_final_sweep.py; regenerate
+% from results/final_sweep_2026-09-05/compiled/table_noise.tex.
+\begin{table}[h]
+\caption{Mean-error reduction versus PD under measurement noise. Entries are X2/CF2. Clean
+reproduces Table~\ref{tab:mujoco}; moderate is $0.010$\,rad and
+$0.025$\,rad\,s$^{-1}$, realistic is $0.020$\,rad and $0.050$\,rad\,s$^{-1}$
+on the attitude and rate estimates. Noisy entries average two seeds; the
+seed standard deviation is given for the realistic level.}
+\label{tab:noise}\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrr@{\,}l}
+\toprule
+Mission&Clean&Moderate&\multicolumn{2}{c}{Realistic}\\\midrule
+Roll&17.4/17.3\%&32.3/32.4\%&32.2/32.5\%&$\pm$0.01\\
+Full3&56.6/56.1\%&56.4/55.9\%&55.7/55.2\%&$\pm$0.00\\
+Hard45&53.1/53.6\%&52.9/53.4\%&52.3/52.7\%&$\pm$0.01\\
+Hardstep&20.9/18.4\%&20.8/18.3\%&20.6/18.1\%&$\pm$0.02\\
+Yaw360&60.6/60.6\%&56.8/56.8\%&47.8/47.8\%&$\pm$0.03\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/02_neural_activity/attitude_detail/cf2_rotor_hardstep_attitude.png}
+\caption{CF2 Hardstep mission: PD baseline versus CMG--PES augmentation on
+the abrupt step reference. This is the hardest case in the matrix, the
+smallest reduction ($18.4\%$), and the only one whose rotor commands reach a
+bound (Table~\ref{tab:mujoco}, $S=.137/.264$). The residual stays inside its
+authority envelope and the augmented loop remains better than the baseline
+throughout.}
+\label{fig:states}
+\end{figure}
+
+\subsection{Sensitivity to Measurement Noise}
+\label{sec:noise}
+Table~\ref{tab:mujoco} uses noise-free feedback and one run per cell.
+Every cell was therefore rerun with zero-mean Gaussian noise on the attitude
+and rate estimates, at two levels and two seeds (Table~\ref{tab:noise}).
+
+Across the twenty noisy cells the seed standard deviation of the reduction
+is $0.002$--$0.031\%$, three orders of magnitude below the effect: under
+this disturbance model the missions are effectively deterministic, and noise
+\emph{magnitude}, not seed, is the axis that matters. The magnitude response
+is not uniform. Full3, Hard45, and Hardstep move by under one point. Yaw360
+loses $12.8$ points on both models: its absolute error is the smallest in the
+matrix, so a fixed noise floor takes a larger share of the ratio. Roll moves
+the other way, $17.4\%$ to $32.2\%$, consistent with the residual having more
+to correct once the baseline is disturbed. The realistic-noise range is
+$18.1$--$55.8\%$, narrower at both ends than $17.3$--$60.6\%$.
+
+\subsection{What Is Learning?}
+Fixed-decoder residuals already improve some missions: in the audited direct
+X2 runs their mean reductions range from about 0.12\% to 10.27\%; the
+corresponding CF2-design range is 0.06\% to 6.80\%. Thus it is inaccurate
+to say that fixing the decoder removes \emph{all} improvement. PES produces
+the much larger 17.3--60.6\% primary reductions. Separately, toggling
+$\chi$ with the decoder mode held fixed is numerically indistinguishable
+under the tested settings. Decoder adaptation is therefore the principal lever in the tested regime.
+
+Because $a_j=\clip(10^5r_j,0,1)$, decoder activity saturates already at
+$r_j=10^{-5}$. Tiny but nonzero gates can therefore yield order-one
+activity while $c_j\propto r_j^2$ remains small. This is a plausible
+mechanistic explanation for the observed conductance insensitivity, not
+a claim that every gate remains $O(10^{-6})$ at every instant. A calibrated
+gate-gain sweep and gate/membrane readout ablation are needed to determine
+whether CMG offers benefits beyond a simpler dynamical basis.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/02_neural_activity/cf2-rotor_hardstep_neurons.png}
+\caption{CF2 Hardstep: internal CMG signals on the same trajectory as
+Fig.~\ref{fig:states}. The plot separates membrane state, raw gate $r_j$, and
+the clipped activity $a_j=\clip_{[0,1]}(Gr_j)$ presented to the decoder,
+illustrating the readout saturation of Sec.~IV-D under the one mission that
+also drives the rotors to a bound.}
+\label{fig:cf2_hardstep_neurons}
+\end{figure}
+
+Figure~\ref{fig:states} shows the CF2 Hardstep case and
+Fig.~\ref{fig:cf2_hardstep_neurons} distinguishes the membrane, raw gate, and
+clipped activity on that same recorded trajectory rather than equating them.
+Hardstep is the useful case for this purpose: it is the one mission whose
+rotor commands reach a bound, so the readout saturation and the actuator
+saturation can be inspected together.
+
+
+% [v8] Disturbance rejection. Sources:
+% results/hover_intermittent_2026-09-05/ and final_sweep_2026-09-05/B_long_hover.
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/07_disturbance_and_noise/hover_intermittent.png}
+\caption{X2 hover hold under four $0.15$\,N\,m disturbance bursts (shaded)
+separated by quiet intervals. Top: attitude error. Centre: residual
+magnitude, logarithmic. Bottom: decoder displacement from $W_0$. The
+residual is at machine precision before the first burst, so the augmented
+loop costs nothing while the baseline is already exact.}
+\label{fig:hover_int}
+\end{figure}
+
+\subsection{Disturbance Rejection and Retention}
+\label{sec:disturbance}
+A complementary test holds the equilibrium attitude and applies a
+multi-sine body torque in bursts, so the controller is seen entering a
+disturbance, adapting inside it, and then holding a decoder adapted to a
+disturbance that has stopped (Fig.~\ref{fig:hover_int}).
+
+Before the first burst the residual norm is $O(10^{-16})$: the augmented
+loop is inert when the baseline is already exact. During bursts the mean
+error falls from $11.50^\circ$ to $6.65^\circ$ ($42.2\%$), and during the
+quiet intervals from $1.21^\circ$ to $0.99^\circ$ ($18.0\%$). The same study
+on CF2, with the disturbance scaled by the inertia ratio, gives $50.2\%$.
+
+Over $180$\,s and sixteen bursts the burst-phase reduction stays flat
+($43.3\%$ to $40.6\%$) while the quiet-phase reduction improves from
+$25.6\%$ to $63.4\%$ and $\|W_k-W_0\|_F$ grows from $0.14$ to $0.75$. The
+decoder accumulates a correction reused across episodes rather than
+relearning each one. Two caveats: in the second episode the augmented loop
+is $4\%$ \emph{worse} in the quiet phase, the only such interval observed;
+and the displacement is still growing at $180$\,s, with
+$\max_i|W_{k,i}|=1.09$ inside $\mathcal W$ but not saturated, so retention is
+not shown to converge on longer missions.
+
+\subsection{Neuron-Family Comparison}
+The Nengo benchmark contains two models, five missions, and eleven
+controllers: PD and fixed/PES variants of CMG, LIF, ALIF, Izhikevich
+\cite{izhikevich2003}, and LIFRate. All share the same bounded residual,
+saturation, and allocation interface; only the neuron dynamics and the
+mapping from native state to activity differ.
+
+Figure~\ref{fig:mech_dashboard} summarizes the full matrix on both
+platforms: mean tracking error and realized residual effort for every
+family and learning mode. Two consistent patterns emerge. First, PES adaptation is the dominant lever across families: fixed
+decoders rarely match their PES counterparts, even when the underlying
+neuron dynamics are more expressive. Second, lower error does not come for
+free. Some Izhikevich--PES cells achieve the smallest mean error, but the
+audit reports a substantially larger average normalized residual RMS
+(approximately 0.37 versus 0.12 for CMG--PES) and larger decoder movement,
+so equal output caps do not imply equal realized correction effort.
+
+Sparse LIF/ALIF activity in some cells limits the effective feature basis at
+the tested operating point, which can blunt online learning without
+implying that those families cannot learn under different encodings or gain
+settings. The supported conclusion is therefore a tracking--effort tradeoff:
+CMG--PES attains comparable tracking at markedly lower realized residual
+effort and more conservative decoder motion in this benchmark.
+
+% [v10] One two-column figure replaces the two single-column dashboards.
+% The 181 mm source was previously scaled into an 88 mm column, a 2.05x
+% reduction that left its labels near 3 pt. Drawn at 1:1 here.
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/08_Nengo_neuron_family/mechanism_both_platforms.pdf}
+    \caption{Mechanism separation across the Nengo neuron-family benchmark,
+    X2 (top) and CF2 (bottom). Left: mean $q$-error improvement over the PD
+    baseline. Right: normalized residual effort, the RMS residual as a
+    fraction of the per-axis limit. Rows are neuron family and learning
+    mode, columns are missions; every cell uses the same bounded residual,
+    saturation, and allocation interface. Two patterns hold on both
+    platforms: PES adaptation, not the neuron model, separates the improving
+    rows from the flat ones; and the families that match or exceed
+    CMG--PES on error do so at three to twenty times its residual effort.}
+    \label{fig:mech_dashboard}
+\end{figure*}
+
+\section{Discussion and Conclusion}
+\label{sec:conclusion}
+% [v7] Rewritten: states the positive result once and plainly, keeps the
+% limits in one place instead of after every sentence, and separates the
+% analog outlook from the claims.
+A fixed quaternion-PD law augmented by six paired continuous conductance-based
+membrane--gate units and eighteen online-adapted decoder weights reduces mean
+attitude error by $17.3$--$60.6\%$ across ten matched 45-s cases on two modeled
+platforms, with actuator bounds respected throughout and the baseline
+recovered exactly at zero authority. The direct and Nengo realizations agree
+to $2.013\times10^{-6}$, so the result is a property of the architecture
+rather than of one implementation.
+
+The ablation is the more informative half. Holding the decoder mode fixed
+and toggling conductance modulation is numerically indistinguishable under
+the tested settings, while freezing the decoder removes most of the gain.
+The broader neuron-family benchmark supports the same hierarchy: across CMG,
+LIF/ALIF, Izhikevich, and LIFRate, PES adaptation is the consistent source
+of improvement relative to fixed decoders (Fig.~\ref{fig:mech_dashboard}). Neuron dynamics still matter, but mainly
+through the \emph{effort--accuracy tradeoff} they induce: some families can
+match or slightly exceed CMG on mean error at the cost of substantially
+larger realized residual effort and decoder motion. Thus, in the tested
+regime, the primary mechanism is online decoder adaptation acting on a
+bounded nonlinear feature basis, while the specific neuron model shapes how
+much authority and parameter movement is required to achieve that error.
+
+Because $a_j=\clip(10^5r_j,0,1)$, activity saturates once $r_j$ exceeds
+$10^{-5}$, which plausibly explains the observed conductance insensitivity
+and identifies the gate gain as the parameter a follow-up should sweep
+first. Reporting this constrains the architecture's claim rather than
+supporting it, and it is the reason the contribution is stated as a
+controlled separation of mechanisms.
+
+Three limits bound the above. The study is in simulation: the noise
+sweep of Sec.~\ref{sec:noise} bounds sensitivity to measurement error and
+shows the missions are effectively deterministic under it, but it does not
+address model mismatch, and retention in Sec.~\ref{sec:disturbance} has not
+converged by $180$\,s. The comparison is against a well-tuned PD without
+integral action, not against every reasonable baseline. And bounded
+commands, states, and weights are implementation properties, not stability
+proofs; Remark~\ref{rem:smallgain} states exactly which two ingredients an
+ISS argument still needs.
+
+The continuous regime suggests a hardware direction that a spiking
+formulation forecloses. Membrane leak, sigmoidal gating, and a shunting
+conductance are the primitives analog neuromorphic circuits implement as
+device physics \cite{mahowald1991vlsi}, with no comparator, reset, or
+event-routing logic, and the gate transient carries the timing information a
+spike would otherwise discretize. Whether that translates into an energy
+advantage is untested and does not follow from these results: a graded
+analog system draws static rather than event-sparse power, and at six
+neurons and eighteen weights the controller is negligible on any substrate.
+The claim such a study would have to make is a per-decision energy
+comparison at matched tracking accuracy, including conversion and sensing;
+online decoder adaptation is attractive there mainly because it can absorb
+device mismatch, which is the standard argument for learning on analog
+hardware. We flag this as motivation for the continuous formulation, not as
+a result.
+
+Preliminary real-time tests on a Quanser 3DOF Hover confirm the controller
+meets a 200-Hz hardware deadline with ten 0.5-ms neural substeps per sample;
+three matched Roll pairs improved mean error by $2.65\%\pm1.08\%$. That rig
+is a different plant from either simulated airframe, so those runs establish
+real-time feasibility rather than validation and are analyzed separately.
+
+The architecture is small, and that is the point: six units and eighteen
+weights are enough to recover a measurable fraction of a well-tuned
+baseline's remaining error, and small enough that the mechanism responsible
+can be isolated rather than inferred. Follow-up work includes an integral-action baseline, a matched-effort
+comparison against non-neural bounded bases, a gate-gain sweep, longer
+disturbance horizons to test whether retention saturates against
+$\mathcal W$, and frozen-weight held-out tests. Beyond PD augmentation, the
+same bounded residual and projection framework can be wrapped around
+nonlinear and optimal baselines (e.g., geometric control, backstepping, MPC)
+by learning a bounded correction in the baseline's native input
+parameterization. The actuator-interface viewpoint also extends naturally to
+other unmanned platforms with hard limits and allocation effects, including
+fixed-wing attitude/aileron--rudder coordination, underwater vehicles with
+thruster saturation, and ground robots with friction-limited contact.
+
+
+
+% Finalize human authors, affiliations, funding, and any required tool-use
+% disclosure before submission. No invented author identities are supplied.
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\end{document}

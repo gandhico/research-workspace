@@ -1,0 +1,30 @@
+{
+  "tests": [
+    {
+      "test": "Core, family, GUI-model and two-platform smoke",
+      "exit_code": 0,
+      "seconds": 7.352094299996679
+    },
+    {
+      "test": "Hover emulated I/O only",
+      "exit_code": 0,
+      "seconds": 0.7819547000035527
+    },
+    {
+      "test": "Three legacy summary routes, smoke",
+      "exit_code": 0,
+      "seconds": 2.882160400004068
+    },
+    {
+      "test": "x2 full 45-s Nengo Hard45",
+      "exit_code": 0,
+      "seconds": 21.442707299996982
+    },
+    {
+      "test": "cf2-rotor full 45-s Nengo Hard45",
+      "exit_code": 0,
+      "seconds": 19.89020580000215
+    }
+  ],
+  "scope": "Existing previously clean-installed portable environment. Simulation only; no physical or interactive GUI actuation."
+}

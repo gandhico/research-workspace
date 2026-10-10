@@ -1,0 +1,192 @@
+{
+  "date": "2026-10-06",
+  "models": {
+    "x2": {
+      "name": "x2",
+      "scene_path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\third_party\\mujoco_menagerie\\skydio_x2\\scene.xml",
+      "scene_sha256": "d932ffbe9f0d1fa4bcfe5746d4cfc0c5652960f00223fdaf2ffd6aff6b217c97",
+      "body_xml_sha256": "9b7db6caec6936896dba8578c73c4c8d675a17b065b8bac9dc0f786b6bd6252b",
+      "body_mass_kg": 1.325,
+      "body_inertia_diagonal_kg_m2": [
+        0.060711294842784244,
+        0.0364684032704233,
+        0.025411698113207547
+      ],
+      "xml_timestep_s": 0.01,
+      "rotor_site_positions_body_m": [
+        [
+          -0.14,
+          -0.18,
+          0.05
+        ],
+        [
+          -0.14,
+          0.18,
+          0.05
+        ],
+        [
+          0.14,
+          0.18,
+          0.08
+        ],
+        [
+          0.14,
+          -0.18,
+          0.08
+        ]
+      ],
+      "actuator_gear": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.0201
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0201
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.0201
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0201
+        ]
+      ],
+      "rotor_force_ctrl_ranges_N": [
+        [
+          0.0,
+          13.0
+        ],
+        [
+          0.0,
+          13.0
+        ],
+        [
+          0.0,
+          13.0
+        ],
+        [
+          0.0,
+          13.0
+        ]
+      ],
+      "hover_force_per_rotor_N": 3.2495625,
+      "static_total_thrust_to_weight": 4.000538534033428,
+      "fidelity": "L0 ideal instantaneous force design model; no motor/battery/estimator calibration asserted"
+    },
+    "cf2_design": {
+      "name": "cf2_design",
+      "scene_path": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\models\\cf2_rotor_design\\scene.xml",
+      "scene_sha256": "410e0975d066abb1ad726415250c78948c0f25b2f99f3b73746c161603dfdaf6",
+      "body_xml_sha256": "4c9a22a148d896c11ac71ebe402f82cf5a5d75c99b51a20c476aab7636446b23",
+      "body_mass_kg": 0.027,
+      "body_inertia_diagonal_kg_m2": [
+        2.3951e-05,
+        2.3951e-05,
+        3.2347e-05
+      ],
+      "xml_timestep_s": 0.002,
+      "rotor_site_positions_body_m": [
+        [
+          -0.0325,
+          -0.0325,
+          0.0
+        ],
+        [
+          -0.0325,
+          0.0325,
+          0.0
+        ],
+        [
+          0.0325,
+          0.0325,
+          0.0
+        ],
+        [
+          0.0325,
+          -0.0325,
+          0.0
+        ]
+      ],
+      "actuator_gear": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.005
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.005
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.005
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.005
+        ]
+      ],
+      "rotor_force_ctrl_ranges_N": [
+        [
+          0.0,
+          0.0875
+        ],
+        [
+          0.0,
+          0.0875
+        ],
+        [
+          0.0,
+          0.0875
+        ],
+        [
+          0.0,
+          0.0875
+        ]
+      ],
+      "hover_force_per_rotor_N": 0.0662175,
+      "static_total_thrust_to_weight": 1.3214029523917392,
+      "fidelity": "L0 ideal instantaneous force design model; no motor/battery/estimator calibration asserted"
+    }
+  },
+  "cf2_authority_variants": {
+    "stock_xml": 1.0,
+    "P5_study": 1.5,
+    "racing_study": 1.7,
+    "interpretation": "declared force-limit design multipliers, not measured hardware capability"
+  },
+  "warning": "This file inventories compiled L0 models; it does not validate high-fidelity digital twins."
+}

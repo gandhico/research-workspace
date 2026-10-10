@@ -3,6 +3,44 @@
 **Research memorandum — 9 September 2026**  
 **Scope:** neuron mathematics, numerical realization, learning, architecture, biological extensions, and the path toward embodied and multi-agent AI.
 
+**Update (6 October 2026):** The exact TNNLS decision letter was subsequently found at
+`tnnls/TNNLS_reviews.pdf`. The reviewer-specific mapping and new neuron/two-unit
+PES analysis are in `theory/PES_SINGLE_NEURON_SMALL_NETWORK_2026-10-06.md`.
+Statements below that the letter was unavailable describe the September state
+of the workspace, not the current state.
+The follow-on interval analysis in
+`theory/PES_CONTINUATION_FOLDS_AND_TINY_NETWORK_2026-10-06.md` extends the
+canonical adaptive current range: a second local linear-stability crossing
+is near `I=15.776`, while event crossings cease earlier in a from-rest
+high-drive trajectory. Earlier scans ending at `I=6` do not establish
+the full high-drive stability boundary.
+The subsequent ACC-parameter analysis in
+`theory/ACC_ABSORBING_LATCH_AND_PES_IDENTIFIABILITY_2026-10-06.md`
+proves a high-readiness no-event rectangle is forward invariant under
+arbitrary bounded input current. Its clipped-readiness activity is
+constant, so decoder PES loses feature rank there. This specific
+counterexample must be considered before making broad no-dead-band or
+network-learnability claims.
+The published Jaxley evidence and a proposed memory-conscious canonical-HH
+comparison are audited in
+`theory/HH_JAXLEY_BASELINE_EVIDENCE_2026-10-06.md`. The published
+multi-compartment MNIST figure is 94.2%, and HH-type morphology is not the
+same baseline as the canonical four-state Hodgkin–Huxley cell.
+The first canonical-HH comparison and low-memory Julia execution are in
+`theory/HH_HYPERLIF_TINY_COMPARISON_2026-10-06.md`. It finds informative
+subthreshold HH gates, a competitive two-state linear adaptive control,
+and strong HH initial-basin dependence; the different currents and feature
+budgets do not support a model ranking.
+The coupled one-weight follow-up is in
+`theory/COUPLED_WEIGHT_HORIZON_AND_GATE_2026-10-06.md`: a short-to-long
+training horizon recovers a teacher connection in tested quiet and
+spiking HH regimes, whereas the direct long-horizon update can move
+away from the teacher. Its independent-target control is in
+`theory/COUPLED_EXTERNAL_DELAY_AND_BASIN_TRANSFER_2026-10-06.md`:
+reduced-feedback HyperLIF gains modestly, the two-state leaky control
+is stronger in these chosen settings, and saturated-gate coupling can
+switch finite-time basins across input phases despite improved validation.
+
 This memorandum separates four kinds of statements:
 
 - **proved here:** a mathematical consequence of the stated equations;

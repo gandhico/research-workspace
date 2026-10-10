@@ -1,0 +1,706 @@
+{
+  "noise": {
+    "moderate_sd_range_percentage_points": [
+      0.0010722110375813356,
+      0.10068226408612627
+    ],
+    "higher_sd_range_percentage_points": [
+      0.0019846524027956614,
+      0.031125817987602424
+    ],
+    "higher_reduction_range_percent": [
+      18.07933383440389,
+      55.746599732460055
+    ],
+    "metric": "runner computes qerr from noise-corrupted q_meas, not independent ground truth"
+  },
+  "family": {
+    "alif-fixed": {
+      "mean_requested_residual_utilization_rms": 0.014303903276074639,
+      "mean_reduction": 0.5441402903236575
+    },
+    "alif-pes": {
+      "mean_requested_residual_utilization_rms": 0.03419695619348905,
+      "mean_reduction": 1.4607155337818898
+    },
+    "cmg-fixed": {
+      "mean_requested_residual_utilization_rms": 0.021851424351648597,
+      "mean_reduction": 3.763469739632766
+    },
+    "cmg-pes": {
+      "mean_requested_residual_utilization_rms": 0.12084825700737686,
+      "mean_reduction": 41.46103966827128
+    },
+    "izhikevich-fixed": {
+      "mean_requested_residual_utilization_rms": 0.24973529125538824,
+      "mean_reduction": 2.5958285115131874
+    },
+    "izhikevich-pes": {
+      "mean_requested_residual_utilization_rms": 0.37062154968352107,
+      "mean_reduction": 46.779249263490044
+    },
+    "lif-fixed": {
+      "mean_requested_residual_utilization_rms": 0.014310800445020741,
+      "mean_reduction": 0.5403881999314668
+    },
+    "lif-pes": {
+      "mean_requested_residual_utilization_rms": 0.036027023079464385,
+      "mean_reduction": 1.6060273022257263
+    },
+    "lifrate-fixed": {
+      "mean_requested_residual_utilization_rms": 0.013253135186555293,
+      "mean_reduction": 0.7715867902733015
+    },
+    "lifrate-pes": {
+      "mean_requested_residual_utilization_rms": 0.04010763949021122,
+      "mean_reduction": 2.707265202910111
+    }
+  },
+  "local_theory": {
+    "CF2": {
+      "J_body": [
+        [
+          2.3951e-05,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.3951e-05,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          3.2347e-05
+        ]
+      ],
+      "j_tune": [
+        2.3951e-05,
+        2.3951e-05,
+        3.2347e-05
+      ],
+      "A": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.5,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.5,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.5
+        ],
+        [
+          -32.0,
+          -0.0,
+          -0.0,
+          -7.6000000000000005,
+          -0.0,
+          -0.0
+        ],
+        [
+          -0.0,
+          -32.0,
+          -0.0,
+          -0.0,
+          -7.6000000000000005,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          -24.5,
+          -0.0,
+          -0.0,
+          -6.65
+        ]
+      ],
+      "P": [
+        [
+          4.513815789473684,
+          0.0,
+          0.0,
+          0.015625,
+          -0.0,
+          -0.0
+        ],
+        [
+          0.0,
+          4.513815789473684,
+          0.0,
+          -0.0,
+          0.015625,
+          -0.0
+        ],
+        [
+          0.0,
+          0.0,
+          4.030827067669173,
+          -0.0,
+          -0.0,
+          0.02040816326530612
+        ],
+        [
+          0.015625,
+          -0.0,
+          -0.0,
+          0.06681743421052631,
+          -0.0,
+          -0.0
+        ],
+        [
+          -0.0,
+          0.015625,
+          -0.0,
+          -0.0,
+          0.06681743421052631,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          0.02040816326530612,
+          -0.0,
+          -0.0,
+          0.07672241829062453
+        ]
+      ],
+      "eigenvalues_A": [
+        [
+          -3.8000000000000007,
+          1.248999599679678
+        ],
+        [
+          -3.8000000000000007,
+          -1.248999599679678
+        ],
+        [
+          -3.3249999999999993,
+          1.0928746497197215
+        ],
+        [
+          -3.3249999999999993,
+          -1.0928746497197215
+        ],
+        [
+          -3.8,
+          1.2489995996796794
+        ],
+        [
+          -3.8,
+          -1.2489995996796794
+        ]
+      ],
+      "P_eigenvalue_range": [
+        0.06676253479488621,
+        4.513870688889323
+      ],
+      "lyapunov_residual_norm": 2.482534153247273e-16,
+      "allocator_L2_gain": 3.326923076923078,
+      "random_allocator_bound_max_violation": 0.0,
+      "conservative_example_r": 0.04014481867940906,
+      "sufficient_dbar_Nm_strictly_below": 4.260239685453242e-07,
+      "beta_0_5_allocator_bound_Nm": 0.0008641104806427816,
+      "scope": "Local nominal continuous-time attitude result. Bounds do NOT certify beta=0.5 experiments or sampled-data implementation."
+    },
+    "X2": {
+      "J_body": [
+        [
+          0.03665169811320774,
+          0.0,
+          -0.0021
+        ],
+        [
+          0.0,
+          0.025411698113207686,
+          0.0
+        ],
+        [
+          -0.0021,
+          0.0,
+          0.060528000000000325
+        ]
+      ],
+      "j_tune": [
+        0.060711294842784244,
+        0.0364684032704233,
+        0.025411698113207547
+      ],
+      "A": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.5,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.5,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.5
+        ],
+        [
+          -53.1116206442429,
+          -0.0,
+          -0.590517567730964,
+          -12.61400990300769,
+          -0.0,
+          -0.16028333981269022
+        ],
+        [
+          -0.0,
+          -45.923294832744965,
+          -0.0,
+          -0.0,
+          -10.906782522776929,
+          -0.0
+        ],
+        [
+          -1.8426910413843096,
+          -0.0,
+          -10.306415058581427,
+          -0.43763912232877356,
+          -0.0,
+          -2.797455515900673
+        ]
+      ],
+      "P": [
+        [
+          4.489421532074842,
+          0.0,
+          -0.022564047420862644,
+          0.009831363867774735,
+          -0.0,
+          -0.012025710042048646
+        ],
+        [
+          0.0,
+          4.4938693496040605,
+          0.0,
+          -0.0,
+          0.01088772053096421,
+          -0.0
+        ],
+        [
+          -0.022564047420862477,
+          0.0,
+          4.134258491606441,
+          0.000542221622502502,
+          -0.0,
+          0.0484824069054215
+        ],
+        [
+          0.009831363867774737,
+          -0.0,
+          0.0005422216225024971,
+          0.040240588089150015,
+          -0.0,
+          -0.006122612419214147
+        ],
+        [
+          -0.0,
+          0.01088772053096421,
+          -0.0,
+          -0.0,
+          0.046342159955050914,
+          -0.0
+        ],
+        [
+          -0.012025710042048656,
+          -0.0,
+          0.04848240690542157,
+          -0.006122612419214146,
+          -0.0,
+          0.18775010120242777
+        ]
+      ],
+      "eigenvalues_A": [
+        [
+          -9.951310312896844,
+          0.0
+        ],
+        [
+          -1.3951811326616816,
+          1.7872005382039637
+        ],
+        [
+          -1.3951811326616816,
+          -1.7872005382039637
+        ],
+        [
+          -2.6697928406881593,
+          0.0
+        ],
+        [
+          -8.056817625512407,
+          0.0
+        ],
+        [
+          -2.8499648972645297,
+          0.0
+        ]
+      ],
+      "P_eigenvalue_range": [
+        0.039965706077011956,
+        4.493896003010079
+      ],
+      "lyapunov_residual_norm": 4.504739862595579e-16,
+      "allocator_L2_gain": 4.533445273631843,
+      "random_allocator_bound_max_violation": 0.0,
+      "conservative_example_r": 0.023125007255668836,
+      "sufficient_dbar_Nm_strictly_below": 0.0001698029927823096,
+      "beta_0_5_allocator_bound_Nm": 2.0106883510153084,
+      "scope": "Local nominal continuous-time attitude result. Bounds do NOT certify beta=0.5 experiments or sampled-data implementation."
+    }
+  },
+  "disturbance": {
+    "X2_45": {
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\hover_intermittent_2026-09-05",
+      "torque_Nm": 0.15,
+      "full_rate_mean_rad": [
+        0.09861393300413972,
+        0.059248051612545066
+      ],
+      "mean_reduction_pct": 39.91918808262328,
+      "burst_means_deg": [
+        11.503182816615428,
+        6.645685311096625
+      ],
+      "quiet_means_deg": [
+        1.2099696281818695,
+        0.9924732600233825
+      ],
+      "intervals": [
+        {
+          "start_s": 5,
+          "phase": "burst",
+          "reduction_pct": 43.298165130716406
+        },
+        {
+          "start_s": 10,
+          "phase": "quiet",
+          "reduction_pct": 25.636118518899544
+        },
+        {
+          "start_s": 15,
+          "phase": "burst",
+          "reduction_pct": 42.11973195083033
+        },
+        {
+          "start_s": 20,
+          "phase": "quiet",
+          "reduction_pct": -3.9509504871549472
+        },
+        {
+          "start_s": 25,
+          "phase": "burst",
+          "reduction_pct": 41.62769396431349
+        },
+        {
+          "start_s": 30,
+          "phase": "quiet",
+          "reduction_pct": 18.507262970909355
+        },
+        {
+          "start_s": 35,
+          "phase": "burst",
+          "reduction_pct": 41.83342461140839
+        },
+        {
+          "start_s": 40,
+          "phase": "quiet",
+          "reduction_pct": 26.810015577039657
+        }
+      ],
+      "burst_count": 4,
+      "last_decoder_displacement": 0.2599841713436071,
+      "maximum_absolute_decoder_entry": 1.089059250599089
+    },
+    "X2_180": {
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\final_sweep_2026-09-05\\B_long_hover",
+      "torque_Nm": 0.15,
+      "full_rate_mean_rad": [
+        0.11136659344884889,
+        0.06663114626667627
+      ],
+      "mean_reduction_pct": 40.16953899440211,
+      "burst_means_deg": [
+        11.312963854782344,
+        6.7664868915113265
+      ],
+      "quiet_means_deg": [
+        1.5339633469856344,
+        0.9200130863718724
+      ],
+      "intervals": [
+        {
+          "start_s": 5,
+          "phase": "burst",
+          "reduction_pct": 43.298165130716406
+        },
+        {
+          "start_s": 10,
+          "phase": "quiet",
+          "reduction_pct": 25.636118518899544
+        },
+        {
+          "start_s": 15,
+          "phase": "burst",
+          "reduction_pct": 42.11973195083033
+        },
+        {
+          "start_s": 20,
+          "phase": "quiet",
+          "reduction_pct": -3.9509504871549472
+        },
+        {
+          "start_s": 25,
+          "phase": "burst",
+          "reduction_pct": 41.62769396431349
+        },
+        {
+          "start_s": 30,
+          "phase": "quiet",
+          "reduction_pct": 18.507262970909355
+        },
+        {
+          "start_s": 35,
+          "phase": "burst",
+          "reduction_pct": 41.83342461140839
+        },
+        {
+          "start_s": 40,
+          "phase": "quiet",
+          "reduction_pct": 26.810015577039657
+        },
+        {
+          "start_s": 45,
+          "phase": "burst",
+          "reduction_pct": 42.22844064066151
+        },
+        {
+          "start_s": 50,
+          "phase": "quiet",
+          "reduction_pct": 52.51289907726013
+        },
+        {
+          "start_s": 55,
+          "phase": "burst",
+          "reduction_pct": 38.59995317117233
+        },
+        {
+          "start_s": 60,
+          "phase": "quiet",
+          "reduction_pct": 57.13168567973524
+        },
+        {
+          "start_s": 65,
+          "phase": "burst",
+          "reduction_pct": 39.25865734910447
+        },
+        {
+          "start_s": 70,
+          "phase": "quiet",
+          "reduction_pct": 61.73024139618774
+        },
+        {
+          "start_s": 75,
+          "phase": "burst",
+          "reduction_pct": 35.33351361705145
+        },
+        {
+          "start_s": 80,
+          "phase": "quiet",
+          "reduction_pct": 56.67125182657722
+        },
+        {
+          "start_s": 85,
+          "phase": "burst",
+          "reduction_pct": 36.71858130339447
+        },
+        {
+          "start_s": 90,
+          "phase": "quiet",
+          "reduction_pct": 53.512180011571765
+        },
+        {
+          "start_s": 95,
+          "phase": "burst",
+          "reduction_pct": 37.0208245940009
+        },
+        {
+          "start_s": 100,
+          "phase": "quiet",
+          "reduction_pct": 43.91353045831627
+        },
+        {
+          "start_s": 105,
+          "phase": "burst",
+          "reduction_pct": 39.18045122849492
+        },
+        {
+          "start_s": 110,
+          "phase": "quiet",
+          "reduction_pct": 36.178349074297586
+        },
+        {
+          "start_s": 115,
+          "phase": "burst",
+          "reduction_pct": 41.55013430025737
+        },
+        {
+          "start_s": 120,
+          "phase": "quiet",
+          "reduction_pct": 14.04968286659447
+        },
+        {
+          "start_s": 125,
+          "phase": "burst",
+          "reduction_pct": 42.60674231856838
+        },
+        {
+          "start_s": 130,
+          "phase": "quiet",
+          "reduction_pct": 6.284520223363899
+        },
+        {
+          "start_s": 135,
+          "phase": "burst",
+          "reduction_pct": 41.98620600203622
+        },
+        {
+          "start_s": 140,
+          "phase": "quiet",
+          "reduction_pct": 0.89572763279816
+        },
+        {
+          "start_s": 145,
+          "phase": "burst",
+          "reduction_pct": 42.13986772750773
+        },
+        {
+          "start_s": 150,
+          "phase": "quiet",
+          "reduction_pct": 39.51740910345324
+        },
+        {
+          "start_s": 155,
+          "phase": "burst",
+          "reduction_pct": 39.402133811699215
+        },
+        {
+          "start_s": 160,
+          "phase": "quiet",
+          "reduction_pct": 51.715321758191266
+        },
+        {
+          "start_s": 165,
+          "phase": "burst",
+          "reduction_pct": 40.623843166164974
+        },
+        {
+          "start_s": 170,
+          "phase": "quiet",
+          "reduction_pct": 63.42432919514356
+        },
+        {
+          "start_s": 175,
+          "phase": "burst",
+          "reduction_pct": 36.7652541989249
+        }
+      ],
+      "burst_count": 18,
+      "last_decoder_displacement": 0.7972964909475292,
+      "maximum_absolute_decoder_entry": 1.089059250599089
+    },
+    "CF2_45": {
+      "source": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\final_sweep_2026-09-05\\C_cf2_hover",
+      "torque_Nm": 0.00015,
+      "full_rate_mean_rad": [
+        0.14119898100619874,
+        0.07025878890643031
+      ],
+      "mean_reduction_pct": 50.24129182395028,
+      "burst_means_deg": [
+        16.76950078610066,
+        8.558243026186203
+      ],
+      "quiet_means_deg": [
+        1.4336562386258775,
+        0.4994181054772586
+      ],
+      "intervals": [
+        {
+          "start_s": 5,
+          "phase": "burst",
+          "reduction_pct": 51.249374885818774
+        },
+        {
+          "start_s": 10,
+          "phase": "quiet",
+          "reduction_pct": 63.75472031895549
+        },
+        {
+          "start_s": 15,
+          "phase": "burst",
+          "reduction_pct": 48.92340711070434
+        },
+        {
+          "start_s": 20,
+          "phase": "quiet",
+          "reduction_pct": 54.23283949811557
+        },
+        {
+          "start_s": 25,
+          "phase": "burst",
+          "reduction_pct": 47.92207574129347
+        },
+        {
+          "start_s": 30,
+          "phase": "quiet",
+          "reduction_pct": 70.03514698539807
+        },
+        {
+          "start_s": 35,
+          "phase": "burst",
+          "reduction_pct": 47.56658293817417
+        },
+        {
+          "start_s": 40,
+          "phase": "quiet",
+          "reduction_pct": 68.70209537287921
+        }
+      ],
+      "burst_count": 4,
+      "last_decoder_displacement": 0.23336381353764762,
+      "maximum_absolute_decoder_entry": 1.0856311106975203
+    }
+  }
+}

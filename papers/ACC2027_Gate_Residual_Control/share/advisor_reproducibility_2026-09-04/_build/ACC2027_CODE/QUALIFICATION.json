@@ -1,0 +1,58 @@
+{
+  "scope": "Fresh Windows Python 3.13.11 venv; original CSVs and physical hardware untouched.",
+  "tests": [
+    {
+      "test": "pip dependency consistency",
+      "exit_code": 0,
+      "wall_seconds": 2.8029892000013206
+    },
+    {
+      "test": "fresh-environment core/neuron/GUI/dual-platform smoke suite",
+      "exit_code": 0,
+      "wall_seconds": 29.987776699999813
+    },
+    {
+      "test": "relocated Hover engine, PD and Nengo, emulated I/O only",
+      "exit_code": 0,
+      "wall_seconds": 4.373386499999469
+    },
+    {
+      "test": "legacy dependencies and all three comparison routes, short smoke only",
+      "exit_code": 0,
+      "wall_seconds": 13.0225262999993
+    },
+    {
+      "test": "x2 full 45-s Nengo Hard45 regression",
+      "exit_code": 0,
+      "wall_seconds": 135.94776600000114
+    },
+    {
+      "test": "cf2-rotor full 45-s Nengo Hard45 regression",
+      "exit_code": 0,
+      "wall_seconds": 183.43274549999842
+    },
+    {
+      "test": "cf2-rotor 45-s saved mean comparison",
+      "actual": 0.132318911763789,
+      "saved": 0.13231918577118862,
+      "relative_difference": 2.070806270716021e-06,
+      "tolerance": 1e-05
+    },
+    {
+      "test": "x2 45-s saved mean comparison",
+      "actual": 0.13800734958784802,
+      "saved": 0.13800738916863206,
+      "relative_difference": 2.8680191892364514e-07,
+      "tolerance": 1e-05
+    }
+  ],
+  "status": "PASS",
+  "not_tested": [
+    "Physical Q8 actuation",
+    "interactive 3D viewer rendering",
+    "all 110 full-length neuron-family cases in the fresh environment",
+    "full-length legacy annealing results",
+    "cross-OS bitwise equivalence"
+  ],
+  "known_metadata_issue": "The unchanged run_mujoco_nef.py can label direct-online-pes controller_backend as Nengo. The controller field and _build_augmentor select the actual direct NumPy implementation. No algorithm changed to hide this inherited metadata issue."
+}

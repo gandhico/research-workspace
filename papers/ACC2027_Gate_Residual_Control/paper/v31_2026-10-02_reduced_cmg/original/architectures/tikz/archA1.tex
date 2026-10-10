@@ -1,0 +1,35 @@
+% A1 -- MAIN ARCHITECTURE, proposal 1: single-column compact.
+\begin{tikzpicture}[node distance=5mm and 6mm]
+  \node[blk]                      (ref) {$q_d(t)$};
+  \node[clas,right=of ref]        (err) {quaternion\\error \eqref{eq:theta}};
+  \node[clas,right=of err]        (pd)  {quaternion\\PD \eqref{eq:pd}};
+  \node[clas,right=9mm of pd]     (res) {bounded additive\\residual \eqref{eq:residual}};
+  \node[plant,right=of res]       (mix) {mixer $B^{-1}$\\$+$ plant};
+
+  \node[neuro,below=16mm of pd]   (enc) {encode\\\eqref{eq:encoding}};
+  \node[neuro,right=of enc]       (cmg) {$2m$ CMG\\units \eqref{eq:cmg}};
+  \node[neuro,right=of cmg]       (dec) {decoder $W_k$\\\eqref{eq:readout}};
+  \node[neuro,below=9mm of cmg]   (pes) {PES update \eqref{eq:pes}};
+
+  \draw[sig] (ref) -- (err);
+  \draw[sig] (err) -- node[lbl,above]{$\bm e_q$} (pd);
+  \draw[sig] (pd)  -- node[lbl,above]{$\bm u_0$} (res);
+  \draw[sig] (res) -- node[lbl,above]{$\bm u_k$} (mix);
+  \draw[sig] (pd.south) -- node[lbl,right]{$\bm u_0$} (enc.north);
+  \draw[sig] (enc) -- node[lbl,above]{$\bm I^{\pm}$} (cmg);
+  \draw[sig] (cmg) -- node[lbl,above]{$\bm a_k$} (dec);
+  \draw[sig] (dec.north) -- ++(0,5mm) -| node[lbl,pos=.28,above]{$\beta\bm\ell\odot\bm s_k$} (res.south);
+  \draw[sig] (cmg.south) -- (pes.north);
+  \draw[sig] (pes.east) -| node[lbl,pos=.3,above]{$\Delta W$} (dec.south);
+
+  \coordinate (busy) at ($(pes.south)+(0,-11mm)$);
+  \draw[thick] (mix.south) -- (mix|-busy) -- (err|-busy);
+  \draw[sig]   (err|-busy) -- node[lbl,pos=.55,left]{$q,\bm\omega$} (err.south);
+  \draw[sig]   (pes|-busy) -- node[lbl,pos=.5,right]{$\bm\varepsilon_k$} (pes.south);
+
+  \begin{scope}[on background layer]
+    \node[grp,fit=(enc)(cmg)(dec)(pes)] (nb) {};
+  \end{scope}
+  \node[note,anchor=south west] at ([yshift=0.5mm]nb.north west)
+    {neuromorphic residual path};
+\end{tikzpicture}

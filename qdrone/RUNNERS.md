@@ -17,6 +17,9 @@ visualized live in Quanser Interactive Labs. The QLabs-native physics twin
 (real QUARC-simulated dynamics) is still a to-do — see §1a's fidelity note
 and `docs\QLABS_TWIN_FIDELITY.md`.
 
+**Availability audit 2026-10-06:** A `QDrone2_Workspace.rt-win64` file is now present under `C:\Users\gandhico\Documents\Quanser\0_libraries\resources\rt_models\QDrone2\`. The notes below saying it is absent are historical. Its ability to launch, physical fidelity, command injection point, and logging are **not yet verified**; the existing QLabs runner remains a kinematic mirror.
+The read-only interface findings and next native-virtual checks are recorded in `docs\NATIVE_VIRTUAL_INTERFACE_AUDIT_2026-10-06.md`.
+
 ---
 
 ## 1. Python — offline (no hardware, no QLabs)
@@ -114,10 +117,9 @@ lives under `C:\Users\gandhico\Documents\Quanser\5_research\autonomous_vehicles\
 
 ## Known gaps
 
-- **QLabs-native physics digital twin**: not built yet. `qvl`/`pal` are
-  installed and QLabs connectivity is verified (§1a), but the compiled
-  airframe model `RTMODELS_DIR\QDrone2\QDrone2_Workspace` doesn't exist —
-  it needs a one-time MATLAB R2025a + QUARC win64 build from the vendor
-  `.slx` source (§4). Until then, §1a's kinematic-mirror twin is the
-  available QLabs option.
+- **QLabs-native physics digital twin**: not validated here. `qvl`/`pal` are
+  installed, and the compiled `QDrone2_Workspace.rt-win64` file is present,
+  but launch, dynamics, logging and low-level command injection have not been
+  verified. The existing §1a runner remains a kinematic mirror.
+- **2026-10-06 correction:** the compiled `QDrone2_Workspace.rt-win64` file is now present at the path above. Treat the native path as *available for verification*, not as a validated twin. The current Python runner and telemetry-only hardware status are unchanged.
 - No arming/closed-loop hardware code — telemetry read-only.

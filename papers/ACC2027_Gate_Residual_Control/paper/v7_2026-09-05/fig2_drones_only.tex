@@ -1,0 +1,27 @@
+% Fig. 2 image row with no caption. Vector throughout: the three source
+% panels are PDFs, so this is lossless at any scale.
+%
+%   pdflatex fig2_drones_only.tex
+\documentclass[border=2pt]{standalone}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+% Panel width. Raise for a physically larger PDF; quality does not change,
+% since nothing here is rasterised.
+\newlength{\panel}
+\setlength{\panel}{7cm}
+
+\begin{document}
+\begin{minipage}{\dimexpr 3\panel + 1.6cm\relax}
+\centering
+\begin{minipage}[b]{\panel}\centering
+\includegraphics[width=\linewidth]{\detokenize{all/crazyflie2_cropped (1)}}
+\end{minipage}\hfill
+\begin{minipage}[b]{\panel}\centering
+\includegraphics[width=\linewidth]{all/skydiox2_cropped}
+\end{minipage}\hfill
+\begin{minipage}[b]{\dimexpr\panel + 0.8cm\relax}\centering
+\includegraphics[width=\linewidth]{\detokenize{all/skydio_crazyflie_models_cropped (1)}}
+\end{minipage}
+\end{minipage}
+\end{document}

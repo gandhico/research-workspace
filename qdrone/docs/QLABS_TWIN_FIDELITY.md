@@ -4,6 +4,8 @@
 not a QLabs-native physics twin. Read this before citing or screen-recording
 its output.
 
+**2026-10-06 file audit:** `QDrone2_Workspace.rt-win64` is now present in the local Quanser `rt_models/QDrone2` directory. The historical absence statement below is superseded. The native model has not been launched or validated in this audit; the runner described here still sends only poses to QLabs.
+
 ## What it is
 
 - The exact canonical controller from the ACC2027 repository, imported
@@ -42,11 +44,10 @@ its output.
   Mission Server socket. That path was investigated 2026-08-27: `qvl` and
   `pal` are installed (`C:\Research\qdrone\.venv`), `QAL_DIR`/`RTMODELS_DIR`
   are correctly set, but the compiled airframe model
-  `RTMODELS_DIR\QDrone2\QDrone2_Workspace` does not exist on this machine yet
-  — it has to be built once from
-  `virtual\position_control\virtual_QD2_DroneStack_PID_2024a.slx` via
-  MATLAB R2025a + QUARC's win64 real-time target. That build is tracked as a
-  separate follow-on, not required for this script.
+  `RTMODELS_DIR\QDrone2\QDrone2_Workspace.rt-win64` is now present, but a
+  native launch and command-interface check is still outstanding. The former
+  `virtual\position_control` source folder is absent in the current local
+  vendor tree. Native verification is separate from this mirror runner.
 - **No position/velocity feedback.** Exactly like the paper's own MuJoCo `x2`
   runs, only attitude (roll/pitch/yaw) and altitude (`z`) are controlled;
   `x`/`y` are free. Under `hard45`'s large attitude excursions the simulated

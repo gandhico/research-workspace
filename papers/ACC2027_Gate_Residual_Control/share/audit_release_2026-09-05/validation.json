@@ -1,0 +1,2004 @@
+{
+  "manuscript": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\paper\\study\\section_II_2026-09-05\\source\\ACC2027.tex",
+  "manuscript_sha256": "d489fd4d8f0cfca845078c098acb9a86f6e3ac26299d5b12fb0ba9dc1900ce12",
+  "scope": "Saved-data reconciliation and code/algebra checks, not a stability proof or physical retest.",
+  "algebra": {
+    "passive_quaternion_product_identity_max_abs_error": 1.3322676295501878e-15,
+    "quaternion_cases": 1000,
+    "authority_bound_random_cases": 10000,
+    "frozen_feature_PES_and_AAT_identities": "PASS",
+    "scope": "Numerical algebra checks, not full-loop stability tests."
+  },
+  "primary": [
+    {
+      "platform": "cf2-rotor",
+      "mission": "roll",
+      "runs": [
+        {
+          "controller": "PD",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_roll_classical",
+          "trace_sha256": "55b0d3dbd32b573b56a177fffc1ba21bfe61a5e20b9cf351b09825d1dc6a8d2b",
+          "summary_sha256": "c9bf6ddda6886b152fba838c4adb18c52cd18fcee44115ae737244c496f20ea5",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.05133721442547469,
+          "trace_mean_rad": 0.051333179771069486,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        },
+        {
+          "controller": "CMG",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_roll_nengo_nef_pes",
+          "trace_sha256": "247c2074a5436403be32ccfd8d84a48c86cae678f99ebf64dcac1047fe78810c",
+          "summary_sha256": "5ee8e125a0475ab233e299437033336e32a1af06a3600209e6505c273b9b6b11",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.0424387393690757,
+          "trace_mean_rad": 0.04243493452647104,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        }
+      ],
+      "matching_summary_configuration": {
+        "duration": 45.0,
+        "dt": 0.0005,
+        "mission": "roll",
+        "platform": "cf2-rotor",
+        "actuator_scale": 1.5,
+        "torque_policy": "model",
+        "torque_limits_Nm": [
+          0.000287412,
+          0.000287412,
+          0.00032347
+        ],
+        "initial_angle_deg": 0.0,
+        "seed": 1,
+        "disturbance_torque": null,
+        "attitude_noise_std": null,
+        "rate_noise_std": null
+      },
+      "reduction_percent": 17.333381166048166
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "full3",
+      "runs": [
+        {
+          "controller": "PD",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_full3_classical",
+          "trace_sha256": "e82ce5ff235bbb4ab88067253a81c1a4e2ee111862af5c591e3ca86424fb331b",
+          "summary_sha256": "4801a18e76a1fdf00802b015a024d06dba6f819e47fc2c5e50dbc39ae118b3c8",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.2883826024590945,
+          "trace_mean_rad": 0.28838974123718286,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        },
+        {
+          "controller": "CMG",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_full3_nengo_nef_pes",
+          "trace_sha256": "9b53567cac92ad8fc410ec6922a5b6c4f78650681eb69e0790bc93a263fe33cf",
+          "summary_sha256": "c37e97e8fbb51b47ac70c588e0bb3f4ad49d2eaeb20c9c53ad0da1c4d0424201",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.12647580728368626,
+          "trace_mean_rad": 0.12649466202259285,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        }
+      ],
+      "matching_summary_configuration": {
+        "duration": 45.0,
+        "dt": 0.0005,
+        "mission": "full3",
+        "platform": "cf2-rotor",
+        "actuator_scale": 1.5,
+        "torque_policy": "model",
+        "torque_limits_Nm": [
+          0.000287412,
+          0.000287412,
+          0.00032347
+        ],
+        "initial_angle_deg": 0.0,
+        "seed": 1,
+        "disturbance_torque": null,
+        "attitude_noise_std": null,
+        "rate_noise_std": null
+      },
+      "reduction_percent": 56.14305224892124
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hard45",
+      "runs": [
+        {
+          "controller": "PD",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_hard45_classical",
+          "trace_sha256": "3b379b970e5603b847320ea23ef200fdab906811770328361e680cd7dc9e875e",
+          "summary_sha256": "b9529a5463b156c11afb5f38145c4e3aaf2a2dd29f85c3983c505a41e80b0a7d",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.28544871119158205,
+          "trace_mean_rad": 0.2854545312794628,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        },
+        {
+          "controller": "CMG",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_hard45_nengo_nef_pes",
+          "trace_sha256": "00b75f2d668724af3f4afd8e8b03078923205e6f305a92d6cde2de9d2181d651",
+          "summary_sha256": "603846247c9f1c5c67fc4b9b0dde47c00ad7e3deacb0074b3176d9c046967a87",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.13231918577118862,
+          "trace_mean_rad": 0.1323343814993193,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        }
+      ],
+      "matching_summary_configuration": {
+        "duration": 45.0,
+        "dt": 0.0005,
+        "mission": "hard45",
+        "platform": "cf2-rotor",
+        "actuator_scale": 1.5,
+        "torque_policy": "model",
+        "torque_limits_Nm": [
+          0.000287412,
+          0.000287412,
+          0.00032347
+        ],
+        "initial_angle_deg": 0.0,
+        "seed": 1,
+        "disturbance_torque": null,
+        "attitude_noise_std": null,
+        "rate_noise_std": null
+      },
+      "reduction_percent": 53.645197689338616
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "hardstep",
+      "runs": [
+        {
+          "controller": "PD",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_hardstep_classical",
+          "trace_sha256": "f7e63a18254ff7f58d09910b63b5c8581769d79a9884693505641c3bb2f2b7ee",
+          "summary_sha256": "073aa3d10f505f56b62331a6729f41628ec26d95c320d61ee4f694b6cce4a01a",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.42618235490000983,
+          "trace_mean_rad": 0.42595395346237286,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0013666666666666666
+        },
+        {
+          "controller": "CMG",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_hardstep_nengo_nef_pes",
+          "trace_sha256": "165896825d93699cbc87f5cad70dabf7ab7922fa5554fbcd1837d4536dfe99b4",
+          "summary_sha256": "3243799a0892dc6347b23920338d82de581d8e3f1b1a8ef633ac613336251f25",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.3478861316016082,
+          "trace_mean_rad": 0.34765738129910895,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0026444444444444445
+        }
+      ],
+      "matching_summary_configuration": {
+        "duration": 45.0,
+        "dt": 0.0005,
+        "mission": "hardstep",
+        "platform": "cf2-rotor",
+        "actuator_scale": 1.5,
+        "torque_policy": "model",
+        "torque_limits_Nm": [
+          0.000287412,
+          0.000287412,
+          0.00032347
+        ],
+        "initial_angle_deg": 0.0,
+        "seed": 1,
+        "disturbance_torque": null,
+        "attitude_noise_std": null,
+        "rate_noise_std": null
+      },
+      "reduction_percent": 18.371530965136124
+    },
+    {
+      "platform": "cf2-rotor",
+      "mission": "yaw360",
+      "runs": [
+        {
+          "controller": "PD",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_yaw360_classical",
+          "trace_sha256": "e38dac15773c89e92b34eef61286967115d068cb38aba58b1e3f2084f2b833ca",
+          "summary_sha256": "500fd3875da0de6f14e68f647f0500fe94d22d7eba6ba74f0ae2c5fdf3513be1",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.07581165661169766,
+          "trace_mean_rad": 0.07581146071225343,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        },
+        {
+          "controller": "CMG",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\cf2_rotor_yaw360_nengo_nef_pes",
+          "trace_sha256": "5750fb117e2310b60e858031a4da61bb6af5b496e47e375eb7cb4c3ba0e2ce43",
+          "summary_sha256": "72e5b399db12fe76c0b130da31930d0c63cf3da5597470e6f33854cbb207b05d",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.029870420003966065,
+          "trace_mean_rad": 0.02987010572538045,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        }
+      ],
+      "matching_summary_configuration": {
+        "duration": 45.0,
+        "dt": 0.0005,
+        "mission": "yaw360",
+        "platform": "cf2-rotor",
+        "actuator_scale": 1.5,
+        "torque_policy": "model",
+        "torque_limits_Nm": [
+          0.000287412,
+          0.000287412,
+          0.00032347
+        ],
+        "initial_angle_deg": 0.0,
+        "seed": 1,
+        "disturbance_torque": null,
+        "attitude_noise_std": null,
+        "rate_noise_std": null
+      },
+      "reduction_percent": 60.59917255606167
+    },
+    {
+      "platform": "x2",
+      "mission": "roll",
+      "runs": [
+        {
+          "controller": "PD",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_roll_classical",
+          "trace_sha256": "62297d67395b220f215a84871bea8b410d71382792a1c4e93963a6111ab1ec8b",
+          "summary_sha256": "6616a6915b203ae4aa0210aa12c11add35da54d1a936bad198e3c3b2abe5723a",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.050564888661756006,
+          "trace_mean_rad": 0.050560932864256586,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        },
+        {
+          "controller": "CMG",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_roll_nengo_nef_pes",
+          "trace_sha256": "a59d318ce8fe04fde96168cc0d8897eed51b9bcd24622017d6ed88a4a697434a",
+          "summary_sha256": "6f519e8f38ee65ebec29856375d94cf0f0dbd38381fb51d4bc70de17792a9631",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.041784694224930745,
+          "trace_mean_rad": 0.04178090855776431,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        }
+      ],
+      "matching_summary_configuration": {
+        "duration": 45.0,
+        "dt": 0.0005,
+        "mission": "roll",
+        "platform": "x2",
+        "actuator_scale": 1.0,
+        "torque_policy": "model",
+        "torque_limits_Nm": [
+          0.7285355381134109,
+          0.43762083924507955,
+          0.2541169811320755
+        ],
+        "initial_angle_deg": 0.0,
+        "seed": 1,
+        "disturbance_torque": null,
+        "attitude_noise_std": null,
+        "rate_noise_std": null
+      },
+      "reduction_percent": 17.36421194469282
+    },
+    {
+      "platform": "x2",
+      "mission": "full3",
+      "runs": [
+        {
+          "controller": "PD",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_full3_classical",
+          "trace_sha256": "4973976831483847eac911c426d30f2e091f9ca796852554d42dcb53f93fa1f4",
+          "summary_sha256": "1119031450c0701ec081f141d1e1e6d05a85d06a5928f07bb1e30888cb0f7617",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.30327506175616276,
+          "trace_mean_rad": 0.3032819399697739,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        },
+        {
+          "controller": "CMG",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_full3_nengo_nef_pes",
+          "trace_sha256": "fa66d9ecff729e4cc74703d2b178122e351bb7f1d30026031e97f3f997fdc131",
+          "summary_sha256": "b975d6dde03ca354ffa2a81d9ba2aa57ad842376825ae4fedc9b5f1a05684e61",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.13174802808968383,
+          "trace_mean_rad": 0.1317676016996275,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        }
+      ],
+      "matching_summary_configuration": {
+        "duration": 45.0,
+        "dt": 0.0005,
+        "mission": "full3",
+        "platform": "x2",
+        "actuator_scale": 1.0,
+        "torque_policy": "model",
+        "torque_limits_Nm": [
+          0.7285355381134109,
+          0.43762083924507955,
+          0.2541169811320755
+        ],
+        "initial_angle_deg": 0.0,
+        "seed": 1,
+        "disturbance_torque": null,
+        "attitude_noise_std": null,
+        "rate_noise_std": null
+      },
+      "reduction_percent": 56.55823880579702
+    },
+    {
+      "platform": "x2",
+      "mission": "hard45",
+      "runs": [
+        {
+          "controller": "PD",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_hard45_classical",
+          "trace_sha256": "3f709d5a7675586a256eefb3f1a75ec758f3f82a3a9c462ced3328a941d5e555",
+          "summary_sha256": "e9cd0c193c8667c7ed058aa800eea112ba2204bff0aab6ed275bcc8e76e08d11",
+          "rows": 90000,
+          "last_t": 44.99950000003284,
+          "mean_rad": 0.2940819591458115,
+          "trace_mean_rad": 0.2940819591458115,
+          "full_rate": true,
+          "bound_occupancy_fraction": 0.0
+        },
+        {
+          "controller": "CMG",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_hard45_nengo_nef_pes",
+          "trace_sha256": "156b57645e6942112da34f533746f83646a0489e9372f4625e43a6c27e512007",
+          "summary_sha256": "664bebfb702859b303e075af32ee14cb15ac37a56c3ba90602fe5972b7f91249",
+          "rows": 90000,
+          "last_t": 44.99950000003284,
+          "mean_rad": 0.13800738916863206,
+          "trace_mean_rad": 0.138007389168632,
+          "full_rate": true,
+          "bound_occupancy_fraction": 0.0
+        }
+      ],
+      "matching_summary_configuration": {
+        "duration": 45.0,
+        "dt": 0.0005,
+        "mission": "hard45",
+        "platform": "x2",
+        "actuator_scale": 1.0,
+        "torque_policy": "model",
+        "torque_limits_Nm": [
+          0.7285355381134109,
+          0.43762083924507955,
+          0.2541169811320755
+        ],
+        "initial_angle_deg": 0.0,
+        "seed": 1,
+        "disturbance_torque": null,
+        "attitude_noise_std": null,
+        "rate_noise_std": null
+      },
+      "reduction_percent": 53.07179346550621
+    },
+    {
+      "platform": "x2",
+      "mission": "hardstep",
+      "runs": [
+        {
+          "controller": "PD",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_hardstep_classical",
+          "trace_sha256": "53b201e5ed678b28d992139f3f112df96a45acc1bdda580737e42d45a8040e99",
+          "summary_sha256": "2b4545f884b0b56a792e0f75268593da419086552f970bee9dae171135c45355",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.4545280276959306,
+          "trace_mean_rad": 0.45430073887765965,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.00015555555555555556
+        },
+        {
+          "controller": "CMG",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_hardstep_nengo_nef_pes",
+          "trace_sha256": "aa4df06fd95baa9d5dd93c3c7721c72d28314c72cc701146adfbf1d3c40c378a",
+          "summary_sha256": "b7ea80f039aa98c44d71291de2b845e5713681541f3dd4edb4ffd63a7f00f6ed",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.35935475224657837,
+          "trace_mean_rad": 0.35913821979365923,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0023888888888888887
+        }
+      ],
+      "matching_summary_configuration": {
+        "duration": 45.0,
+        "dt": 0.0005,
+        "mission": "hardstep",
+        "platform": "x2",
+        "actuator_scale": 1.0,
+        "torque_policy": "model",
+        "torque_limits_Nm": [
+          0.7285355381134109,
+          0.43762083924507955,
+          0.2541169811320755
+        ],
+        "initial_angle_deg": 0.0,
+        "seed": 1,
+        "disturbance_torque": null,
+        "attitude_noise_std": null,
+        "rate_noise_std": null
+      },
+      "reduction_percent": 20.93892337768466
+    },
+    {
+      "platform": "x2",
+      "mission": "yaw360",
+      "runs": [
+        {
+          "controller": "PD",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_yaw360_classical",
+          "trace_sha256": "2bcfd5630fc644c0626995b4aaa1e4e0fa681802cc5c292d7bf3481df210ff59",
+          "summary_sha256": "68223760e230727ee40db7076453651f2f74e027358d48a76e1d123101982ff0",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.07586304185989136,
+          "trace_mean_rad": 0.07586294580372613,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        },
+        {
+          "controller": "CMG",
+          "directory": "C:\\Research\\papers\\ACC2027_Gate_Residual_Control\\experiments\\nengo_nef_replication_2026-08-29\\results\\matched_45s\\x2_yaw360_nengo_nef_pes",
+          "trace_sha256": "4f5df48bb929afe6273ef4691ed3f7adb133c0020f973b7a2cd32955905acfb2",
+          "summary_sha256": "47797e64dc42fae106742fb955a3e6b29d0c65b555e90ea8f8dde34eae1092e9",
+          "rows": 9000,
+          "last_t": 44.99500000003282,
+          "mean_rad": 0.029901681640544523,
+          "trace_mean_rad": 0.029901357056143336,
+          "full_rate": false,
+          "bound_occupancy_fraction": 0.0
+        }
+      ],
+      "matching_summary_configuration": {
+        "duration": 45.0,
+        "dt": 0.0005,
+        "mission": "yaw360",
+        "platform": "x2",
+        "actuator_scale": 1.0,
+        "torque_policy": "model",
+        "torque_limits_Nm": [
+          0.7285355381134109,
+          0.43762083924507955,
+          0.2541169811320755
+        ],
+        "initial_angle_deg": 0.0,
+        "seed": 1,
+        "disturbance_torque": null,
+        "attitude_noise_std": null,
+        "rate_noise_std": null
+      },
+      "reduction_percent": 60.58465241115848
+    }
+  ],
+  "family": {
+    "cells": 110,
+    "compiled_neural_rows": 100,
+    "trace_rows_checked": 990000,
+    "max_logged_activity": 6.283893292671149,
+    "scope": "All summary means reconciled; all CSV time/error sequences checked. Full NPZ contents not re-audited in this release."
+  },
+  "hover_roll": {
+    "n_pairs": 3,
+    "pd_mean_deg": 5.440526976020819,
+    "pd_sd_deg": 0.0647834054873954,
+    "cmg_mean_deg": 5.295958423170877,
+    "cmg_sd_deg": 0.04284701860456412,
+    "reduction_mean_percent": 2.650768738258034,
+    "reduction_sd_percent": 1.0765223741290586,
+    "metric": "wrapped Euler-error vector norm, not quaternion angle",
+    "scope": "paired table recomputation; raw hardware trace audit recorded separately"
+  },
+  "packaged_source_audit": [
+    {
+      "path": "project/src/acc2027_gate_residual_control.egg-info/dependency_links.txt",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/acc2027_gate_residual_control.egg-info/entry_points.txt",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/acc2027_gate_residual_control.egg-info/PKG-INFO",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/acc2027_gate_residual_control.egg-info/requires.txt",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/acc2027_gate_residual_control.egg-info/SOURCES.txt",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/acc2027_gate_residual_control.egg-info/top_level.txt",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/__init__.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/cli.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/gate.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/hardware_bridges.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/math3d.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/perception/__init__.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/perception/qcar_snn.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/platforms/__init__.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/platforms/drone.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/platforms/hardware.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/platforms/surrogate.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/src/gra_control/provenance.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/models/cf2_rotor_design/cf2_rotor.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/models/cf2_rotor_design/LICENSE",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/models/cf2_rotor_design/README.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/models/cf2_rotor_design/scene.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/models/hover3dof_surrogate.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/models/pendulum_surrogate.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/models/qcar_surrogate.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/configs/platforms.yaml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/tests/test_core.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/tests/test_qcar_snn.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_0.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_1.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_2.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_3.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_4.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_5.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_6.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_0.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_1.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_10.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_11.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_12.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_13.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_14.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_15.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_16.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_17.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_18.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_19.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_2.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_20.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_21.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_22.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_23.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_24.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_25.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_26.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_27.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_28.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_29.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_3.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_30.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_31.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_4.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_5.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_6.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_7.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_8.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_9.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/cf2.png",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/cf2.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/CHANGELOG.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/LICENSE",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/README.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/bitcraze_crazyflie_2/scene.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/skydio_x2/assets/X2_lowpoly.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/skydio_x2/assets/X2_lowpoly_texture_SpinningProps_1024.png",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/skydio_x2/CHANGELOG.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/skydio_x2/LICENSE",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/skydio_x2/README.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/skydio_x2/scene.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/skydio_x2/x2.png",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/third_party/mujoco_menagerie/skydio_x2/x2.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/pyproject.toml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/README.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/build_paper.ps1",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/build_validation_report.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/catalog_experiment_data.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/freeze_result_tree.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/plot_mujoco_drone_results.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/plot_neuron_activity.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/reproduce_legacy_skydio.ps1",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/rerun_with_euler_logging.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/run_cf2_authority_sweep.ps1",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/run_cf2_paper_matrix.ps1",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/run_cross_platform_surrogates.ps1",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/run_robustness_matrix.ps1",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/run_x2_paper_matrix.ps1",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/setup.ps1",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/smoke_all.ps1",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/scripts/summarize_run_tree.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/analyze_neural_archive.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/audit_neuron_family_campaign.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/calibrate_neuron_features.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/compile_and_plot.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/compile_neuron_family_benchmark.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/gui_cmg_pes_mujoco.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/gui_cmg_pes_mujoco.py.cfg",
+      "original_exists": true,
+      "source_unchanged": false,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/GUI_GUIDE_2026-08-29.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/launch_gui.py",
+      "original_exists": true,
+      "source_unchanged": false,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/make_neuron_family_architecture_figure.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/nengo_cmg.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/nengo_dt0005_backend.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/nengo_neuron_family.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/plot_attitude_detail.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/plot_comprehensive.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/plot_neuron_family_archive.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/PROGRESS_2026-08-29.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/README.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/run_campaign.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/run_neuron_family_campaign.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/smoke_test_gui.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/test_nengo_cmg.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/test_neuron_family.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/verify_archived_equivalence.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/feature_calibration.json",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "documentation/ACC2027_V4_TO_V5_AUDIT_2026-09-04.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "documentation/FULL_PROJECT_AUDIT_2026-09-02.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "documentation/FULL_PROJECT_RESULT_LEDGER_2026-09-02.csv",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "documentation/FULL_PROJECT_PARAMETER_LEDGER_2026-09-02.csv",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "hover3dof/nengo_gui_hil_2026-08-29/hover_nengo_hil_gui.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": false,
+      "declared_change": "Two absolute root constants relocated; no controller, timing, learning, safety, or I/O changes."
+    },
+    {
+      "path": "hover3dof/nengo_gui_hil_2026-08-29/hover_nengo_hil_gui.py.cfg",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "hover3dof/nengo_gui_hil_2026-08-29/launch_hover_nengo_gui.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "hover3dof/nengo_gui_hil_2026-08-29/run_hover_direct_nengo.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "hover3dof/nengo_gui_hil_2026-08-29/run_hover_headless.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "hover3dof/nengo_gui_hil_2026-08-29/nengo_gui_backend_50hz.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "hover3dof/nengo_gui_hil_2026-08-29/LAB_RUNBOOK.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "hover3dof/nengo_gui_hil_2026-08-29/README.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "hover3dof/pd_cmg_focused_final_round_2026-08-28/src/pd_baseline.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "hover3dof/SAFETY_CHECKLIST.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/experiments/controller_benchmarks/benchmark_metrics.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/experiments/controller_benchmarks/learned_gate_experiment.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/experiments/controller_benchmarks/mujoco_classical_vs_neural_stn.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/experiments/controller_benchmarks/neural_torque_controllers.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/experiments/controller_benchmarks/neuron_dynamics.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/experiments/mujoco_stn_hyperlif_benchmark/stn_pid_attitude_controller.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/skydio_x2/assets/X2_lowpoly.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/skydio_x2/assets/X2_lowpoly_texture_SpinningProps_1024.png",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/skydio_x2/CHANGELOG.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/skydio_x2/LICENSE",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/skydio_x2/README.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/skydio_x2/scene.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/skydio_x2/x2.png",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/skydio_x2/x2.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_0.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_1.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_2.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_3.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_4.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_5.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_6.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_0.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_1.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_10.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_11.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_12.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_13.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_14.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_15.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_16.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_17.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_18.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_19.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_2.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_20.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_21.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_22.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_23.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_24.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_25.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_26.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_27.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_28.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_29.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_3.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_30.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_31.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_4.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_5.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_6.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_7.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_8.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/assets/cf2_collision_9.obj",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/cf2.png",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/cf2.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/CHANGELOG.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/LICENSE",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/README.md",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/bitcraze_crazyflie_2/scene.xml",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/LICENSE",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "legacy/code/third_party/mujoco_menagerie/CITATION.cff",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/paper/tools/plot_v5_evidence.py",
+      "original_exists": true,
+      "source_unchanged": true,
+      "package_matches_source": true,
+      "declared_change": "none"
+    }
+  ],
+  "source_change_count": 2,
+  "changed_sources": [
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/gui_cmg_pes_mujoco.py.cfg",
+      "original_exists": true,
+      "source_unchanged": false,
+      "package_matches_source": true,
+      "declared_change": "none"
+    },
+    {
+      "path": "project/experiments/nengo_nef_replication_2026-08-29/launch_gui.py",
+      "original_exists": true,
+      "source_unchanged": false,
+      "package_matches_source": true,
+      "declared_change": "none"
+    }
+  ],
+  "paper_crossrefs": {
+    "undefined": [],
+    "duplicate_labels": [],
+    "figures": [
+      {
+        "label": "fig:scale",
+        "graphics": [
+          "\\includegraphics[width=\\linewidth]{\\detokenize{all/skydio_crazyflie_models_cropped (1)}}"
+        ]
+      },
+      {
+        "label": "fig:models",
+        "graphics": [
+          "\\includegraphics[width=\\linewidth]{\\detokenize{all/crazyflie2_cropped (1)}}",
+          "\\includegraphics[width=\\linewidth]{all/skydiox2_cropped}"
+        ]
+      },
+      {
+        "label": "fig:tracking",
+        "graphics": [
+          "\\includegraphics[width=\\linewidth]{X2/Hard45/x2_hard45_classical_vs_cmg}"
+        ]
+      },
+      {
+        "label": "fig:hard45_neurons",
+        "graphics": [
+          "\\includegraphics[width=\\linewidth]{X2/Hard45/x2_hard45_neurons}"
+        ]
+      },
+      {
+        "label": "fig:hardstep_attitude",
+        "graphics": [
+          "\\includegraphics[width=\\linewidth]{X2/Hardstep/x2_hardstep_attitude}"
+        ]
+      },
+      {
+        "label": "fig:hardstep_neurons",
+        "graphics": [
+          "\\includegraphics[width=\\linewidth]{X2/Hardstep/x2_hardstep_neurons}"
+        ]
+      },
+      {
+        "label": "fig:states",
+        "graphics": [
+          "\\includegraphics[width=\\linewidth]{CF2/Yaw360/cf2_yaw360_classical_vs_cmg}"
+        ]
+      },
+      {
+        "label": "fig:cf2_yaw360_neurons",
+        "graphics": [
+          "\\includegraphics[width=\\linewidth]{CF2/Yaw360/cf2-rotor_yaw360_neurons}"
+        ]
+      }
+    ]
+  },
+  "status": "Completed within stated scopes; substantive interpretation findings in AUDIT.md"
+}

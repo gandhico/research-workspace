@@ -1,0 +1,19 @@
+% B1c -- column-native CMG unit: coupling topology only. The state
+% equations stay in the text; the figure shows which variable acts on which.
+% Natural width is about one IEEE column, so no \resizebox is needed.
+\begin{tikzpicture}[node distance=6mm and 9mm,font=\footnotesize]
+  \node[blk]                       (I) {$I_j$};
+  \node[neuro,right=of I]          (v) {membrane\\$v_j$};
+  \node[neuro,below=11mm of v]     (r) {gate\\$r_j$};
+  \node[clas,left=of r]            (c) {conductance\\$c_j\!\propto\! r_j^{2}$};
+  \node[blk,right=of r]            (a) {$a_j=\sat_{[0,1]}(G r_j)$};
+
+  \draw[sig] (I) -- (v);
+  \draw[sig] (v.south) -- node[lbl,right]{$v_j$} (r.north);
+  \draw[sig] (r) -- node[lbl,above]{$r_j^{2}$} (c);
+  \draw[sig] (c) -- node[lbl,left]{$c_j$} (v);
+  \draw[sig] (r) -- (a);
+  \draw[sigd] (r.south east) to[out=-45,in=-135]
+        node[lbl,below]{$\gamma r_j$} (r.south west);
+  \draw[sig] (I.south) -- ++(0,-7mm) -| node[lbl,pos=.14,below]{$\chi g_1|I_j|$} (c.north);
+\end{tikzpicture}

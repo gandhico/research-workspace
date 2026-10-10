@@ -1,0 +1,1046 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/fu1gfa1s",
+    "id": "fu1gfa1s",
+    "slide": 8,
+    "layoutId": "/ppt/slideLayouts/slideLayout7.xml",
+    "layoutName": "Blank",
+    "layoutType": "blank",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "backgroundColor": "#1B2230",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1279.97,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "Office",
+    "colors": {
+      "accent1": "#4F81BD",
+      "accent2": "#C0504D",
+      "accent3": "#9BBB59",
+      "accent4": "#8064A2",
+      "accent5": "#4BACC6",
+      "accent6": "#F79646",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#1F497D",
+      "lt2": "#EEECE1",
+      "hlink": "#0000FF",
+      "folHlink": "#800080"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Cambria"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout7.xml",
+      "name": "Blank",
+      "type": "blank",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/2",
+          "id": "2",
+          "name": "Date Placeholder 1",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "1/27/13",
+          "textPreview": "1/27/13",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "1/27/13",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "1/27/13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/3",
+          "id": "3",
+          "name": "Footer Placeholder 2",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/4",
+          "id": "4",
+          "name": "Slide Number Placeholder 3",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "‹#›",
+          "textPreview": "‹#›",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹#›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹#›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "type": "master",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/2",
+          "id": "2",
+          "name": "Title Placeholder 1",
+          "bbox": [
+            48,
+            28.83,
+            864,
+            120
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master title style",
+          "textPreview": "Click to edit Master title style",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master title style",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master title style"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/3",
+          "id": "3",
+          "name": "Text Placeholder 2",
+          "bbox": [
+            48,
+            168,
+            864,
+            475.17
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master text styles\nSecond level\nThird level\nFourth level\nFifth level",
+          "textPreview": "Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level",
+          "resolvedTextStyle": {
+            "vertical": 1,
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master text styles",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master text styles"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "text": "Second level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Second level"
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "text": "Third level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Third level"
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "text": "Fourth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fourth level"
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "text": "Fifth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fifth level"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/4",
+          "id": "4",
+          "name": "Date Placeholder 3",
+          "bbox": [
+            48,
+            667.33,
+            224,
+            38.33
+          ],
+          "geometry": "rect",
+          "text": "1/27/13",
+          "textPreview": "1/27/13",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "1/27/13",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "1/27/13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/5",
+          "id": "5",
+          "name": "Footer Placeholder 4",
+          "bbox": [
+            328,
+            667.33,
+            304,
+            38.33
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/6",
+          "id": "6",
+          "name": "Slide Number Placeholder 5",
+          "bbox": [
+            688,
+            667.33,
+            224,
+            38.33
+          ],
+          "geometry": "rect",
+          "text": "‹#›",
+          "textPreview": "‹#›",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹#›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹#›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/18byd4zy",
+      "id": "2",
+      "name": "TextBox 1",
+      "bbox": [
+        52.8,
+        43.2,
+        768,
+        33.6
+      ],
+      "geometry": "rect",
+      "text": "FIRST PHYSICAL HARDWARE RUN",
+      "textPreview": "FIRST PHYSICAL HARDWARE RUN",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "FIRST PHYSICAL HARDWARE RUN"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "FIRST PHYSICAL HARDWARE RUN",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FIRST PHYSICAL HARDWARE RUN",
+              "fontSize": 15.33,
+              "typeface": "Calibri",
+              "color": "#F2A54A",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/g72x4zyd",
+      "id": "3",
+      "name": "TextBox 2",
+      "bbox": [
+        52.8,
+        74.88,
+        1123.2,
+        105.6
+      ],
+      "geometry": "rect",
+      "text": "Quanser 3DOF Hover: same controller, real motors",
+      "textPreview": "Quanser 3DOF Hover: same controller, real motors",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Quanser 3DOF Hover: same controller, real motors"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Quanser 3DOF Hover: same controller, real motors",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Quanser 3DOF Hover: same controller, real motors",
+              "fontSize": 42.67,
+              "typeface": "Cambria",
+              "color": "#ECEEF0",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ri9g7uhw",
+      "id": "4",
+      "name": "TextBox 3",
+      "bbox": [
+        52.8,
+        168,
+        604.8,
+        499.2
+      ],
+      "geometry": "rect",
+      "text": "The vendor's own LQR baseline\nK reproduced via MATLAB lqr(A,B,Q,R) from the vendor Laboratory Guide, matched to published precision — not a controller chosen for this paper.\nPositive-voltage-only actuation\nu ≥ 0 always — the vendor warns negative excursions can damage the amplifier. A real physical constraint the simulated drones don't have.\nResidual authority: ~13% of total\n3V of 24V, capped outside the baseline by a disarmed-by-default safety bridge — deliberate, not a tuning limitation.",
+      "textPreview": "The vendor's own LQR baseline | K reproduced via MATLAB lqr(A,B,Q,R) from the vendor Laboratory Guide, matched to published precision — n...",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 9,
+        "lines": [
+          {
+            "index": 1,
+            "text": "The vendor's own LQR baseline"
+          },
+          {
+            "index": 2,
+            "text": "K reproduced via MATLAB lqr(A,B,Q,R) from the vendor Laboratory Guide, matched to"
+          },
+          {
+            "index": 3,
+            "text": "published precision — not a controller chosen for this paper."
+          },
+          {
+            "index": 4,
+            "text": "Positive-voltage-only actuation"
+          },
+          {
+            "index": 5,
+            "text": "u ≥ 0 always — the vendor warns negative excursions can damage the amplifier. A real"
+          },
+          {
+            "index": 6,
+            "text": "physical constraint the simulated drones don't have."
+          },
+          {
+            "index": 7,
+            "text": "Residual authority: ~13% of total"
+          },
+          {
+            "index": 8,
+            "text": "3V of 24V, capped outside the baseline by a disarmed-by-default safety bridge —"
+          },
+          {
+            "index": 9,
+            "text": "deliberate, not a tuning limitation."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "The vendor's own LQR baseline",
+          "lineSpacingPercent": 118000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "The vendor's own LQR baseline",
+              "fontSize": 18,
+              "typeface": "Calibri",
+              "color": "#F2A54A",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "K reproduced via MATLAB lqr(A,B,Q,R) from the vendor Laboratory Guide, matched to published precision — not a controller chosen for this paper.",
+          "lineSpacingPercent": 118000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "K reproduced via MATLAB lqr(A,B,Q,R) from the vendor Laboratory Guide, matched to published precision — not a controller chosen for this paper.",
+              "fontSize": 16.67,
+              "typeface": "Calibri",
+              "color": "#9BA8B4"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Positive-voltage-only actuation",
+          "lineSpacingPercent": 118000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Positive-voltage-only actuation",
+              "fontSize": 18,
+              "typeface": "Calibri",
+              "color": "#F2A54A",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "u ≥ 0 always — the vendor warns negative excursions can damage the amplifier. A real physical constraint the simulated drones don't have.",
+          "lineSpacingPercent": 118000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "u ≥ 0 always — the vendor warns negative excursions can damage the amplifier. A real physical constraint the simulated drones don't have.",
+              "fontSize": 16.67,
+              "typeface": "Calibri",
+              "color": "#9BA8B4"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "Residual authority: ~13% of total",
+          "lineSpacingPercent": 118000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Residual authority: ~13% of total",
+              "fontSize": 18,
+              "typeface": "Calibri",
+              "color": "#F2A54A",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 6,
+          "text": "3V of 24V, capped outside the baseline by a disarmed-by-default safety bridge — deliberate, not a tuning limitation.",
+          "lineSpacingPercent": 118000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "3V of 24V, capped outside the baseline by a disarmed-by-default safety bridge — deliberate, not a tuning limitation.",
+              "fontSize": 16.67,
+              "typeface": "Calibri",
+              "color": "#9BA8B4"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6h0fypgb",
+      "id": "5",
+      "name": "Rounded Rectangle 4",
+      "bbox": [
+        691.2,
+        168,
+        532.8,
+        499.2
+      ],
+      "geometry": "roundRect",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "fillColor": "#242E40",
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tkby9kzm",
+      "id": "6",
+      "name": "TextBox 5",
+      "bbox": [
+        720,
+        192,
+        475.2,
+        451.2
+      ],
+      "geometry": "rect",
+      "text": "FOUR BUGS, FOUND ONLY BY RUNNING REAL HARDWARE\n1.  Channel swap — vendor's own figure disagreed with its own table; silently inverted roll correction sign.\n2.  No encoder tare, raw-difference velocity — spurious 60° error + amplified quantization noise.\n3.  Full baseline fed into the safety bridge's bounded argument — silently discarded nearly all authority.\n4.  Gate drive == learning target — decoder had nothing to learn beyond a saturated copy of one signal.",
+      "textPreview": "FOUR BUGS, FOUND ONLY BY RUNNING REAL HARDWARE | 1.  Channel swap — vendor's own figure disagreed with its own table; silently inverted r...",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 9,
+        "lines": [
+          {
+            "index": 1,
+            "text": "FOUR BUGS, FOUND ONLY BY RUNNING REAL HARDWARE"
+          },
+          {
+            "index": 2,
+            "text": "1.  Channel swap — vendor's own figure disagreed with its own table;"
+          },
+          {
+            "index": 3,
+            "text": "silently inverted roll correction sign."
+          },
+          {
+            "index": 4,
+            "text": "2.  No encoder tare, raw-difference velocity — spurious 60° error +"
+          },
+          {
+            "index": 5,
+            "text": "amplified quantization noise."
+          },
+          {
+            "index": 6,
+            "text": "3.  Full baseline fed into the safety bridge's bounded argument — silently"
+          },
+          {
+            "index": 7,
+            "text": "discarded nearly all authority."
+          },
+          {
+            "index": 8,
+            "text": "4.  Gate drive == learning target — decoder had nothing to learn beyond"
+          },
+          {
+            "index": 9,
+            "text": "a saturated copy of one signal."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "FOUR BUGS, FOUND ONLY BY RUNNING REAL HARDWARE",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FOUR BUGS, FOUND ONLY BY RUNNING REAL HARDWARE",
+              "fontSize": 14.67,
+              "typeface": "Calibri",
+              "color": "#F2A54A",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "1.  Channel swap — vendor's own figure disagreed with its own table; silently inverted roll correction sign.",
+          "lineSpacingPercent": 114000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "1.",
+              "fontSize": 17.33,
+              "typeface": "Calibri",
+              "color": "#F2A54A",
+              "bold": true
+            },
+            {
+              "index": 2,
+              "text": "  Channel swap — vendor's own figure disagreed with its own table; silently inverted roll correction sign.",
+              "fontSize": 16,
+              "typeface": "Calibri",
+              "color": "#ECEEF0"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "2.  No encoder tare, raw-difference velocity — spurious 60° error + amplified quantization noise.",
+          "lineSpacingPercent": 114000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "2.",
+              "fontSize": 17.33,
+              "typeface": "Calibri",
+              "color": "#F2A54A",
+              "bold": true
+            },
+            {
+              "index": 2,
+              "text": "  No encoder tare, raw-difference velocity — spurious 60° error + amplified quantization noise.",
+              "fontSize": 16,
+              "typeface": "Calibri",
+              "color": "#ECEEF0"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "3.  Full baseline fed into the safety bridge's bounded argument — silently discarded nearly all authority.",
+          "lineSpacingPercent": 114000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "3.",
+              "fontSize": 17.33,
+              "typeface": "Calibri",
+              "color": "#F2A54A",
+              "bold": true
+            },
+            {
+              "index": 2,
+              "text": "  Full baseline fed into the safety bridge's bounded argument — silently discarded nearly all authority.",
+              "fontSize": 16,
+              "typeface": "Calibri",
+              "color": "#ECEEF0"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "4.  Gate drive == learning target — decoder had nothing to learn beyond a saturated copy of one signal.",
+          "lineSpacingPercent": 114000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "4.",
+              "fontSize": 17.33,
+              "typeface": "Calibri",
+              "color": "#F2A54A",
+              "bold": true
+            },
+            {
+              "index": 2,
+              "text": "  Gate drive == learning target — decoder had nothing to learn beyond a saturated copy of one signal.",
+              "fontSize": 16,
+              "typeface": "Calibri",
+              "color": "#ECEEF0"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sjix0zy1",
+      "id": "7",
+      "name": "TextBox 6",
+      "bbox": [
+        52.8,
+        679.68,
+        960,
+        28.8
+      ],
+      "geometry": "rect",
+      "text": "Coupled Membrane–Gate Residual Control",
+      "textPreview": "Coupled Membrane–Gate Residual Control",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Coupled Membrane–Gate Residual Control"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Coupled Membrane–Gate Residual Control",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Coupled Membrane–Gate Residual Control",
+              "fontSize": 13.33,
+              "typeface": "Calibri",
+              "color": "#9BA8B4"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/je9g3ahk",
+      "id": "8",
+      "name": "TextBox 7",
+      "bbox": [
+        1209.6,
+        679.68,
+        57.6,
+        28.8
+      ],
+      "geometry": "rect",
+      "text": "8",
+      "textPreview": "8",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "8"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "8",
+          "resolvedTextStyle": {
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "8",
+              "fontSize": 13.33,
+              "typeface": "Calibri",
+              "color": "#9BA8B4"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    }
+  ],
+  "composeRuns": []
+}

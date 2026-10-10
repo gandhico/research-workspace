@@ -1,0 +1,565 @@
+% =============================================================================
+% ACC 2027 CMG--PES paper: full derivations and code map (personal companion)
+% =============================================================================
+% Build (from this folder, after the paper itself has been compiled once so
+% ../ACC2027.aux exists):
+%     pdflatex ACC2027_derivations_code_map
+%     bibtex   ACC2027_derivations_code_map
+%     pdflatex ACC2027_derivations_code_map   (x2)
+%
+% Paper equation, table, proposition and theorem numbers are imported from
+% ../ACC2027.aux with xr-hyper, so they stay correct if the paper renumbers.
+% Code listings are read directly from the source files at the quoted line
+% ranges (\lstinputlisting), so a listing can never silently disagree with
+% the code; if a file changes, its SHA-256 in Appendix A changes too.
+% =============================================================================
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=0.9in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm,mathtools}
+\usepackage{booktabs,array}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{xr-hyper}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=green!35!black,urlcolor=blue!50!black]{hyperref}
+\externaldocument[P-]{../ACC2027}
+
+\newcommand{\srcroot}{../../..}
+\newcommand{\R}{\mathbb R}
+\newcommand{\T}{^{\mathsf T}}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\clip}{\operatorname{clip}}
+\newcommand{\sgnp}{\operatorname{sgn}_{+}}
+\newcommand{\vecpart}{\operatorname{vec}}
+\newcommand{\PE}[1]{P-(\ref{P-#1})}          % paper equation
+\newcommand{\PT}[1]{\ref{P-#1}}               % paper theorem/prop/table/section number
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem*{status}{Status}
+
+\definecolor{codebg}{gray}{0.97}
+\lstdefinestyle{py}{language=Python,basicstyle=\ttfamily\scriptsize,
+  numbers=left,numberstyle=\tiny\color{gray},numbersep=6pt,frame=single,
+  backgroundcolor=\color{codebg},rulecolor=\color{gray!60},breaklines=true,
+  columns=fullflexible,keepspaces=true,showstringspaces=false,
+  keywordstyle=\color{blue!60!black},commentstyle=\color{green!40!black},
+  stringstyle=\color{red!50!black},captionpos=t,xleftmargin=1.5em,framexleftmargin=1.5em}
+\newcommand{\listing}[4]{% file, first, last, title
+  \lstinputlisting[style=py,firstline=#2,lastline=#3,firstnumber=#2,
+    title={\scriptsize\code{#1}\,:\,#2--#3\quad #4}]{\srcroot/#1}}
+
+\input{../certificate_macros.tex}
+
+\title{CMG--PES Residual Control of UAV Quaternion Tracking\\[2pt]
+\large Full derivations, cited fundamentals, and equation-to-code map\\
+\normalsize companion to the ACC~2027 manuscript (v9, 2026-09-12)}
+\author{Gandhi Contreras (personal working document)}
+\date{September 12, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{How to read this document}
+\begin{itemize}
+\item \textbf{Paper references.} ``\PE{eq:pd}'' is equation (\ref{P-eq:pd}) of the paper;
+  Proposition~\PT{prop:states}, Theorem~\PT{thm:local}, Table~\PT{tab:mujoco} likewise.
+\item \textbf{Code references.} Every listing is read from the file at the quoted line range. Paths are
+  relative to the repository root \texttt{C:/Research/papers/ACC2027\_Gate\_Residual\_Control}.
+  File hashes are in Appendix~\ref{app:hashes}.
+\item \textbf{Status tags.} \emph{Standard} results carry a citation; \emph{derived here} steps are
+  written out in full; \emph{verified} numbers come from
+  \code{experiments/theory_certificate_2026-09-12/compute_local_certificate.py}, whose output also
+  generates the paper's macros (\code{certificate_macros.tex}).
+\item \textbf{Two implementations.} The direct NumPy controller (\code{src/gra_control/gate.py}) and the Nengo
+  realization (\code{experiments/.../nengo_cmg.py}) implement the same equations; the paper's
+  tables use the Nengo runner \code{run_mujoco_nef.py}.
+\end{itemize}
+
+\tableofcontents
+\newpage
+
+% =============================================================================
+\section{Quaternion algebra, kinematics, and attitude error}\label{sec:quat}
+% =============================================================================
+\subsection{Hamilton product, conjugate, rotation}
+For $p=[p_0,\bm p\T]\T$, $q=[q_0,\bm q\T]\T$ (scalar first) the Hamilton product is
+\begin{equation}
+p\otimes q=\begin{bmatrix}p_0q_0-\bm p\T\bm q\\ p_0\bm q+q_0\bm p+\bm p\times\bm q\end{bmatrix},
+\label{eq:hamilton}
+\end{equation}
+associative but not commutative; $q^*=[q_0,-\bm q\T]\T$ and, for unit $q$, $q^{-1}=q^*$.
+A unit quaternion rotates vectors by $R(q)\bm v=\vecpart(q\otimes[0,\bm v\T]\T\otimes q^*)$,
+so $R(q)\T\bm v=R(q^*)\bm v=\vecpart(q^*\otimes[0,\bm v\T]\T\otimes q)$
+\cite{diebel2006quaternion,schaub2018amss}.
+\begin{status}Standard.\end{status}
+\listing{src/gra_control/math3d.py}{12}{25}{conjugate and Hamilton product \eqref{eq:hamilton}}
+
+\subsection{Active and passive kinematics \PE{eq:plant}--\PE{eq:passive}}
+With $Q$ the body-to-inertial quaternion and $\bm\omega$ the body rate, $\dot Q=\tfrac12Q\otimes\tilde{\bm\omega}$ with
+$\tilde{\bm\omega}=[0,\bm\omega\T]\T$ \cite{schaub2018amss}. For the passive $q=Q^{-1}=Q^*$:
+differentiating $Q\otimes Q^*=1$ gives $\dot Q\otimes Q^*+Q\otimes\dot{(Q^*)}=0$, hence
+\begin{align*}
+\dot q=\dot{(Q^*)}&=-Q^*\otimes\dot Q\otimes Q^*
+=-\tfrac12\,Q^*\otimes Q\otimes\tilde{\bm\omega}\otimes Q^*
+=-\tfrac12\,\tilde{\bm\omega}\otimes q,
+\end{align*}
+which is \PE{eq:passive}. \emph{Derived here.}
+
+\textbf{Code convention.} MuJoCo stores the free-joint quaternion $Q$ (body$\to$world) in \code{qpos};
+the runner forms $q=Q^*$ and reads $\bm\omega$ in body axes from \code{qvel}:
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py}{216}{230}{measurement, optional noise, reference, error, PD, PES target}
+
+\subsection{Error quaternion and its kinematics \PE{eq:theta}--\PE{eq:errkin}}
+Let $q_e=q_d\otimes q^{-1}$ with $\dot q_d=-\tfrac12\tilde{\bm\omega}_d\otimes q_d$ (same passive convention).
+Using $\dot{(q^*)}=\tfrac12 q^*\otimes\tilde{\bm\omega}$ (same argument as above),
+\begin{align*}
+\dot q_e&=\dot q_d\otimes q^*+q_d\otimes\dot{(q^*)}
+=-\tfrac12\tilde{\bm\omega}_d\otimes q_e+\tfrac12 q_e\otimes\tilde{\bm\omega}.
+\end{align*}
+Insert $q_e\otimes q_e^*=1$: $\tilde{\bm\omega}_d\otimes q_e=q_e\otimes(q_e^*\otimes\tilde{\bm\omega}_d\otimes q_e)
+=q_e\otimes[0,(R(q_e)\T\bm\omega_d)\T]\T$. Therefore
+\begin{equation}
+\dot q_e=\tfrac12q_e\otimes[0,\bm\omega_e\T]\T,\qquad \bm\omega_e=\bm\omega-R(q_e)\T\bm\omega_d .
+\end{equation}
+Taking scalar and vector parts of \eqref{eq:hamilton}:
+\begin{equation}
+\dot q_{e,0}=-\tfrac12\bm q_{e,v}\T\bm\omega_e,\qquad
+\dot{\bm q}_{e,v}=\tfrac12\big(q_{e,0}\bm\omega_e+\bm q_{e,v}\times\bm\omega_e\big).
+\label{eq:qev_dot}
+\end{equation}
+The first is \PE{eq:errkin}; the second is used in Sec.~\ref{sec:local}. \emph{Derived here.}
+
+\textbf{Shortest-path error.} Write $q_e=[\cos\frac\theta2,\ \sin\frac\theta2\,\bm n\T]\T$. Then
+$\|\bm q_{e,v}\|=|\sin\frac\theta2|$ and $|q_{e,0}|=|\cos\frac\theta2|$, so
+$\theta_q=2\operatorname{atan2}(\|\bm q_{e,v}\|,|q_{e,0}|)\in[0,\pi]$ is the smallest rotation angle and is
+invariant under $q_e\mapsto-q_e$. Sign selection $\bm e_q=\sgnp(q_{e,0})\bm q_{e,v}$ picks the hemisphere
+$q_{e,0}\ge0$; it is discontinuous at $q_{e,0}=0$, and no continuous feedback can globally stabilize
+attitude \cite{bhat2000topological,chaturvedi2011rigid}; robust global tracking needs hybrid
+\cite{mayhew2011hybrid} or geometric-algebra \cite{rubioscola2026ga,escamilla2023ga} designs.
+\listing{src/gra_control/math3d.py}{40}{51}{error quaternion, $\sgnp$ (\code{if qe[0] < 0}), angle $\theta_q$}
+
+\subsection{References (Euler 3-2-1 to quaternion)}
+The reference Euler triple $(\phi,\vartheta,\psi)$ is mapped by the standard 3-2-1 half-angle formula
+\cite{diebel2006quaternion}; missions are the closed forms of Sec.~\PT{sec:results}-A.
+\listing{src/gra_control/math3d.py}{28}{37}{3-2-1 Euler to quaternion}
+\listing{src/gra_control/math3d.py}{54}{82}{mission references (Roll, Full3, Hard45, Hardstep, Yaw360)}
+
+% =============================================================================
+\section{Rigid body, inertia frame, and the PD baseline}
+% =============================================================================
+\subsection{Body tensor from principal moments \PE{eq:inertiaframe}}
+MuJoCo stores principal moments \code{body_inertia} $=\bm j_{\rm p}$ and the principal-frame orientation
+\code{body_iquat}. The body-frame tensor is $\bm J=R_{BI}\operatorname{diag}(\bm j_{\rm p})R_{BI}\T$ with
+$R_{BI}=R(\text{\code{body_iquat}})$ (similarity transform of a symmetric tensor, \cite{schaub2018amss}).
+\begin{status}Verified: the certificate script reproduces the paper's X2 tensor
+$10^{-2}[3.66517,0,-.21;\,0,2.54117,0;\,-.21,0,6.05280]$\,kg\,m$^2$ from the model file.\end{status}
+\listing{experiments/theory_certificate_2026-09-12/compute_local_certificate.py}{92}{101}{$\bm J$ from \code{body_iquat} and \code{body_inertia}}
+
+\subsection{Why $k_q=2j\omega_n^2$ and $k_\omega=2\zeta j\omega_n$ \PE{eq:pd}}
+For one principal axis with small error, $e_q\approx\frac\theta2$ and (from \eqref{eq:qev_dot} with
+$q_{e,0}\approx1$) $\dot e_q\approx\frac12\omega$. With $j\dot\omega=-k_qe_q-k_\omega\omega$ and
+$\omega=\dot\theta$:
+\[
+j\ddot\theta+k_\omega\dot\theta+\tfrac{k_q}{2}\theta=0
+\quad\Longrightarrow\quad
+\omega_n^2=\frac{k_q}{2j},\qquad 2\zeta\omega_n=\frac{k_\omega}{j},
+\]
+so $k_q=2j\omega_n^2$ and $k_\omega=2\zeta j\omega_n$. The factor 2 compensates the half angle. With
+$\bm J$ not diagonal and $\bm j_{\rm tune}\ne\operatorname{diag}(\bm J)$ (X2), $\omega_n$ is a tuning
+label, not an exact closed-loop frequency (as the paper states). \emph{Derived here.}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py}{159}{165}{inertia, limits, gains}
+
+\subsection{Torque box}
+$\ell_i=\max(j_{{\rm tune},i}\nu_i,10^{-6})$ with $\bm\nu=(12,12,10)$\,rad/s$^2$: the torque that gives
+each axis a $\nu_i$ angular acceleration. The campaign uses \code{--torque-policy model}, which for the
+rotor-interface platforms returns exactly this inertia limit.
+\listing{src/gra_control/platforms/drone.py}{76}{98}{\code{torque_limits}}
+
+% =============================================================================
+\section{Allocation and the height loop}
+% =============================================================================
+\subsection{Allocation matrix \PE{eq:allocationmatrix}}
+A rotor at $\bm p_i=(p_{i,x},p_{i,y},p_{i,z})$ with thrust $[0,0,f_i]\T$ produces torque
+$\bm p_i\times[0,0,f_i]\T=[p_{i,y}f_i,\,-p_{i,x}f_i,\,0]\T$; the drag reaction adds $\kappa_if_i$ about $z$
+\cite{garciacarrillo2013quad}. Summing over rotors gives
+$[T,\bm\tau\T]\T=B\bm f$ with rows $(1,\ p_{i,y},\ -p_{i,x},\ \kappa_i)$. For four rotors $B$ is square and
+invertible, so $B^{-1}=B^\dagger$.
+\listing{src/gra_control/platforms/drone.py}{67}{73}{$B$ from site positions and gear, \code{np.linalg.inv(B)}}
+
+\subsection{Clipped inverse allocation \PE{eq:mixer}}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py}{309}{314}{$\bm f_{\rm req}=B^{-1}[T,\bm u\T]\T$, clip to $[0,\bm f_{\max}]$}
+The CF2 authority scale multiplies only the upper force limit:
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py}{183}{188}{actuator scale}
+
+\subsection{Collective thrust \PE{eq:collective}}
+Vertical force balance: $T R(Q)_{33}-Mg=M\ddot z$. Imposing
+$\ddot z=6(z_d-z)-4\dot z$ gives $T=M[g+6(z_d-z)-4\dot z]/R_{33}$, a PD altitude loop with
+$\omega_{n,z}=\sqrt6=2.449$\,rad/s and $\zeta_z=4/(2\sqrt6)=0.816$. The guard $R_{33}\ge0.35$ caps the
+tilt compensation at $\arccos(0.35)=69.5^\circ$ (factor $\le2.86$), and $T\le2.5Mg$. \emph{Derived here.}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py}{289}{295}{collective thrust}
+
+% =============================================================================
+\section{The coupled membrane--gate unit}\label{sec:cmg}
+% =============================================================================
+\subsection{Encoding \PE{eq:encoding}}
+$\bar{\bm u}=\bm u_0\oslash\bm\ell\in[-1,1]^3$ (because $\bm u_0$ is already saturated), and
+$\bm I^\pm=I_b\bm1+I_g\max(\pm\bar{\bm u},0)\in[I_b,I_b+I_g]^3$. A pair never has both currents above
+$I_b$: one sign carries the request, the other rests.
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py}{231}{239}{normalized request and paired currents (logging copy)}
+\listing{experiments/nengo_nef_replication_2026-08-29/nengo_cmg.py}{318}{330}{the same encoding inside the Nengo augmentor}
+
+\subsection{Continuous dynamics \PE{eq:cmg} and the frozen-coefficient membrane step \PE{eq:mem_step}}
+The model is conductance-based in the Hodgkin--Huxley sense \cite{hodgkin1952quantitative}: a gate $r_j$
+relaxes to a logistic target set by the membrane, and a gate-dependent shunt conductance pulls the membrane
+toward a reversal level. Rewrite the membrane equation as an affine ODE:
+\[
+\dot v=-\underbrace{\big(\tfrac1\tau+c\big)}_{\lambda}v+\underbrace{\tfrac{v_{\rm rest}+I}{\tau}+c\,v_{\rm reset}}_{d}.
+\]
+With $\lambda,d$ frozen over $[t_k,t_k+h]$, the integrating factor $e^{\lambda t}$ gives
+$\frac{d}{dt}(e^{\lambda t}v)=e^{\lambda t}d$, hence
+\[
+v(t_k+h)=e^{-\lambda h}v_k+(1-e^{-\lambda h})\,\frac d\lambda,
+\]
+exactly \PE{eq:mem_step} (an exponential integrator \cite{hochbruck2010exponential}). Because
+$0<e^{-\lambda h}<1$, this is a convex combination of $v_k$ and the frozen equilibrium $d/\lambda$.
+\emph{Derived here.}
+
+\subsection{Gate step \PE{eq:gate_step}: implemented forward Euler vs.\ exponential Euler}
+\textbf{Implemented.} $r^+=\clip_{[0,1]}\big[(1-\tfrac h{\tau_r})r+\tfrac h{\tau_r}b\big]$. For $0<h\le\tau_r$ the
+weights are nonnegative and sum to one, so with $r,b\in[0,1]$ the argument is already in $[0,1]$ and the
+clip is inactive. For $h>\tau_r$ the weight $1-h/\tau_r$ is negative and the clip is what bounds $r$.
+The paper uses $h/\tau_r=0.1$.
+
+\textbf{Exponential Euler (Dr.\ Sandoval's proposal).} Freezing $b$, $\dot r=(b-r)/\tau_r$ is solved exactly by
+$r^+=e^{-h/\tau_r}r+(1-e^{-h/\tau_r})b$, convex for every $h>0$, so no clip is needed
+\cite{hochbruck2010exponential}. At $h/\tau_r=0.1$ the weights are $0.9048/0.0952$ vs.\ $0.9/0.1$; the
+two schemes agree to $O((h/\tau_r)^2)$ per step. All reported results use the implemented step.
+\listing{src/gra_control/gate.py}{41}{55}{direct CMG bank: gate (Euler + clip), then membrane (exact frozen step)}
+\listing{experiments/nengo_nef_replication_2026-08-29/nengo_cmg.py}{71}{89}{Nengo \code{NeuronType.step}: identical update, activity $\clip(G r)$}
+
+\textbf{Order matters.} The code updates $r$ first and uses the \emph{updated} $r^+$ in $c$; the paper states
+$c_{j,k}=(g_0+\chi g_1|I|)(r^+)^2$ accordingly.
+
+\subsection{Proposition~\PT{prop:states} (bounded internal states), full proof}
+\emph{Gate:} as above. \emph{Membrane:} $I_j\in[I_b,I_b+I_g]$ and $c_j\ge0$, so
+$d/\lambda=\frac{1/\tau}{1/\tau+c}(v_{\rm rest}+I)+\frac{c}{1/\tau+c}v_{\rm reset}$ is a convex combination of
+$v_{\rm rest}+I\in[v_{\rm rest}+I_b,v_{\rm rest}+I_b+I_g]$ and $v_{\rm reset}$. The update is a convex
+combination of $v_k$ and $d/\lambda$. By induction $v_k$ stays in the convex hull of
+$\{v_0,v_{\rm reset}\}\cup[v_{\rm rest}+I_b,v_{\rm rest}+I_b+I_g]$. \qed
+
+\subsection{Rest point, resting activity, and gate latching (Sec.~\PT{sec:ablation})}
+\textbf{Rest.} With $\bar u=0$, $I=I_b=0.75$, and $r\approx0$ (so $c\approx0$): $v^\star=v_{\rm rest}+I_b=0.75$.
+The gate target is $b=\sigma(\alpha_h(v^\star-v_{\rm th}+\gamma r))\approx\sigma(50\cdot(-0.25))=\sigma(-12.5)
+=3.7267\times10^{-6}$, and $r^\star\approx b$ (the $\gamma r$ correction is $O(10^{-4})$ in the argument).
+The resting activity is $a^\star=\min(1,Gr^\star)=10^5\cdot3.7267\times10^{-6}=0.3727$.
+
+\textbf{Latch.} Suppose $r_k\ge\frac12$ and $v_k\ge0$ (Proposition~\PT{prop:states} gives $v\ge0$ here since
+$v_{\rm reset}=v_{\rm rest}=0$). Then $\alpha_h(v-v_{\rm th}+\gamma r)\ge\alpha_h(0-1+2\cdot\tfrac12)=0$, so
+$b_k\ge\frac12$, and the convex Euler step keeps $r_{k+1}\ge\frac12$. The set $\{r\ge\frac12\}$ is forward
+invariant: an opened gate cannot close.
+
+\textbf{Shunted membrane.} With $r\approx1$ and unexcited $I=0.75$:
+$c=g_0+g_1I=120+22.5=142.5$, $\lambda=20+142.5$, $d=I/\tau=15$, so $v^\star=15/162.5=0.0923$
+(``$v_j$ near $0.09$''). \emph{Derived here; numbers match the archived traces.}
+
+% =============================================================================
+\section{Readout, PES learning, and the bounded residual}
+% =============================================================================
+\subsection{Readout \PE{eq:readout}}
+$\bm a=\clip_{[0,1]}(G\bm r^+)$ saturates once $r\ge1/G=10^{-5}$. $W_0=[I_3,-I_3]$ gives
+$\bm s=\clip(\bm a^+-\bm a^-)$: pair subtraction recovers a signed quantity from nonnegative features.
+\listing{src/gra_control/gate.py}{104}{134}{direct augmentor: encoding, readout, PES, residual}
+
+\subsection{PES as a local gradient step \PE{eq:pes}}
+PES \cite{macneil2011pes,voelker2015pes} descends $E=\frac12\|\bm y^*-W\bm a\|^2$ in $W$:
+$-\partial E/\partial W=(\bm y^*-W\bm a)\bm a\T=\bm\varepsilon\bm a\T$, so $W\leftarrow W+\eta\bm\varepsilon\bm a\T$.
+The code uses the clipped readout inside $\bm\varepsilon$ (a projected-output variant). The leak $-\lambda_W W$ is
+the $\sigma$-modification of robust adaptive control \cite{ioannou1984sigma,ioannou1996robust}, and
+$\Pi_{\mathcal W}$ is elementwise clipping to $[-6,6]$. The residual uses $W_k$ \emph{before} the update
+(\code{signed} is computed first).
+
+\subsection{Nengo learning-rate conversion}
+Nengo~4.1.0's \code{SimPES} applies $\Delta W=\alpha\,\bm e\,\bm a\T$ with $\alpha=-\kappa\,dt/n$ (source:
+\code{nengo/builder/learning_rules.py}, \code{SimPES.make_step}; $n$ = number of presynaptic neurons) and
+error $\bm e=\bm s-\bm y^*=-\bm\varepsilon$. Hence $\Delta W=(\kappa\,dt/n)\,\bm\varepsilon\bm a\T$; matching
+$\eta\bm\varepsilon\bm a\T$ requires $\kappa=\eta n/dt=8\times10^{-4}\cdot6/5\times10^{-4}=9.6$.
+Leak (on pre-step weights) and projection are applied after the simulator step.
+\listing{experiments/nengo_nef_replication_2026-08-29/nengo_cmg.py}{147}{150}{$\eta_N=\eta\,n/dt$}
+\listing{experiments/nengo_nef_replication_2026-08-29/nengo_cmg.py}{335}{359}{step: leak on pre-step weights, clip, residual}
+
+\subsection{Proposition~\PT{prop:authority} (bounded authority), full proof}
+$\bm u_0\in\mathcal U$. The outer saturation gives $\bm u\in\mathcal U$. Componentwise, $\sat_{\ell_i}$ is
+1-Lipschitz and fixes $u_{0,i}$, so
+$|\delta_i|=|\sat_{\ell_i}(u_{0,i}+\beta\ell_is_i)-\sat_{\ell_i}(u_{0,i})|\le|\beta\ell_is_i|\le\beta\ell_i$
+since $|s_i|\le1$. $\beta=0$ gives $\bm u=\sat(\bm u_0)=\bm u_0$. \qed
+
+\subsection{Proposition~\PT{prop:pes} (restricted contraction), full proof, and the clip lemma}
+Fix $\bm a\ne0$ and $\bm y^*$, $\lambda_W=0$, clip and projection inactive, and let $\bm z_k=W_k\bm a$. Then
+$\bm z_{k+1}=(W_k+\eta\bm\varepsilon_k\bm a\T)\bm a=\bm z_k+\eta\|\bm a\|^2\bm\varepsilon_k$, and
+$\bm\varepsilon_{k+1}=\bm y^*-\bm z_{k+1}=(1-\eta\|\bm a\|^2)\bm\varepsilon_k$ \PE{eq:contraction}. \qed
+
+\begin{lemma}[Clip never enlarges the PES error]\label{lem:clip}
+If $y\in[-1,1]$ then $|\clip_{[-1,1]}(z)-y|\le|z-y|$ for all $z$; hence
+$\|\clip(\bm z)-\bm y^*\|\le\|\bm z-\bm y^*\|$ for $\bm y^*\in[-1,1]^m$.
+\end{lemma}
+\begin{proof}
+If $|z|\le1$ equality holds. If $z>1$, $\clip(z)=1$ and $|1-y|=1-y<z-y$. If $z<-1$ symmetric. The vector
+case follows coordinatewise. Equivalently, projection onto a closed convex set is nonexpansive and
+$\bm y^*$ is a fixed point \cite{bauschke2017convex}.
+\end{proof}
+Note: Dr.\ Sandoval's v7 wording ``$\bm y^*$ strictly within $[-1,1]^m$'' is not needed (the closed box
+suffices, and $\bm y^*$ itself is clipped, so it can equal $\pm1$). The bound on $W$ comes from
+$\Pi_{\mathcal W}$, not from the readout clip.
+
+% =============================================================================
+\section{Latched regime: lagged proportional action and $\sigma$-modification}\label{sec:latched}
+% =============================================================================
+\subsection{Constant-basis recursion \PE{eq:constantbasis}}
+With $\bm a_k=\bar{\bm a}$ constant and projection inactive, set $\bm z_k=W_k\bar{\bm a}$. From
+$W_{k+1}=W_k+\eta\bm\varepsilon_k\bar{\bm a}\T-\lambda_WW_k$,
+\[
+\bm z_{k+1}=(1-\lambda_W)\bm z_k+\eta\|\bar{\bm a}\|^2\big[\bm y_k^*-\clip(\bm z_k)\big].
+\]
+\emph{Derived here.} When all six gates latch, $\bar{\bm a}=\bm1$ and $\|\bar{\bm a}\|^2=2m=6$.
+
+\subsection{Pole, time constant, DC gain, frequency response}
+With the clip inactive the recursion is linear:
+$\bm z_{k+1}=p\,\bm z_k+(1-p-\lambda_W)\bm y_k^*$, $p=1-\lambda_W-\eta\|\bar{\bm a}\|^2$. Its transfer function
+is $\frac{\eta\|\bar{\bm a}\|^2}{\mathsf z-p}$ with
+\[
+p=\pesPole,\quad \tau_f=\frac{h}{1-p}=\pesTau\ \text{s},\quad
+\omega_c=\frac1{\tau_f}=\pesCorner\ \text{rad/s},\quad
+\text{DC gain}=\frac{\eta\|\bar{\bm a}\|^2}{\eta\|\bar{\bm a}\|^2+\lambda_W}=0.99979.
+\]
+For $\omega h\ll1$ the response is that of $1/(1+\tau_f s)$: gain $1/\sqrt{1+(\omega\tau_f)^2}$, lag
+$\arctan(\omega\tau_f)$.
+
+\textbf{Why this is not integral action} (correcting the v7 highlight). An integrator has a pole at
+$\mathsf z=1$ and infinite DC gain; here $p<1$ and the DC gain is $\approx1$, so the residual converges to
+$\beta\ell_i\,y^*_i=-\beta\ell_ik_e\,e_{q,i}$: proportional, low-pass filtered. It does not remove
+steady-state error by itself.
+
+\textbf{Added stiffness.} The PD stiffness is $k_{q,i}=2j_i\omega_{n,i}^2$; the latched residual adds
+$\beta k_e\ell_i=\beta k_e j_i\nu_i$ (while $|k_ee_{q,i}|<1$), a ratio
+\[
+\frac{\beta k_e\ell_i}{k_{q,i}}=\frac{\beta k_e\nu_i}{2\omega_{n,i}^2}
+=\frac{0.5\cdot8\cdot12}{2\cdot16}=1.50\ \text{(roll, pitch)},\qquad
+\frac{0.5\cdot8\cdot10}{2\cdot12.25}=1.63\ \text{(yaw)},
+\]
+independent of the vehicle. \emph{Derived here; verified in the script.}
+
+\textbf{Reference content.} Roll, Full3 and Hard45 are sums of constant-amplitude, constant-frequency
+AM--FM components, whose instantaneous frequencies are the component frequencies
+\cite{sandoval2018instantaneous}: at most $0.7$, $1.0$ and $2.10$\,rad/s. At $2.10$\,rad/s the filter
+gain is $\lagHardGain$ and the lag $\lagHardPhase^\circ$ (Roll: $0.997$, $4.2^\circ$; Full3: $0.995$,
+$5.9^\circ$). Yaw360 is a smoothstep whose yaw rate peaks at $2\pi\cdot1.5/45=0.209$\,rad/s.
+
+\textbf{Graded-tail regime.} With every unit at rest, $\|\bar{\bm a}\|^2=6\cdot0.3727^2=0.833$, giving
+$p=\pesTailPole$ and $\tau_f=\pesTailTau$\,s. (Activities are not exactly constant there, so this is an
+approximation.)
+\listing{experiments/theory_certificate_2026-09-12/compute_local_certificate.py}{149}{162}{regimes, lag, stiffness ratio}
+
+\subsection{$\sigma$-modification fixed point}
+At a fixed point of \PE{eq:pes} with constant $\bar{\bm a}$ and inactive clip/projection,
+$0=\eta\bm\varepsilon\bar{\bm a}\T-\lambda_WW$. Right-multiplying by $\bar{\bm a}$:
+$\eta\|\bar{\bm a}\|^2\bm\varepsilon=\lambda_W\bm s$, so
+$\|\bm\varepsilon\|=\frac{\lambda_W}{\eta\|\bar{\bm a}\|^2}\|\bm s\|$: $\pesLeakLatched\,\|\bm s\|$ latched and
+$\pesLeakTail\,\|\bm s\|$ at the tail. This is an \emph{equality} for the PES mismatch
+$\bm y^*-\bm s$, not a bound on the tracking error $\theta_q$ (correcting the v7 wording).
+
+\subsection{Why silent bases do not learn (Sec.~\PT{sec:ablation}, neuron families)}
+Proposition~\PT{prop:pes}'s factor $1-\eta\|\bm a\|^2\approx1$ when $\bm a\approx0$. The benchmark's occupancy
+metric is the fraction of \emph{unit-samples} with $|a_j|>10^{-9}$:
+\listing{experiments/nengo_nef_replication_2026-08-29/compile_neuron_family_benchmark.py}{86}{93}{occupancy, drift, update RMS}
+\begin{center}\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Family (both vehicles) & Full3 & Hard45 & Hardstep & Roll & Yaw360\\\midrule
+LIF / ALIF / LIFRate occupancy & $0.001$ & $0.001$ & $0.06$--$0.20$ & $<0.0005$ & $<0.0005$\\
+LIF / ALIF / LIFRate PES gain [\%] & $\le0.06$ & $\le0.09$ & $7$--$18$ & $0$ & $0$\\
+CMG occupancy / PES gain [\%] & $0.999$ / $56$ & $0.999$ / $53$ & $0.999$ / $18$--$21$ & $0.999$ / $17$ & $0.999$ / $61$\\
+Izhikevich occupancy / PES gain [\%] & $1.0$ / $52$ & $1.0$ / $50$ & $1.0$ / $21$--$23$ & $1.0$ / $51$ & $1.0$ / $56$--$61$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Persistent activity is necessary for learning, but Izhikevich--PES has it too while spending more effort,
+so contraction alone does not explain CMG's effort advantage (correcting the v7 claim that it is ``the
+formal reason CMG breaks the tradeoff'').
+
+% =============================================================================
+\section{Allocation-aware local stability (Sec.~\PT{sec:local})}\label{sec:local}
+% =============================================================================
+\subsection{Secant lemma and $L_A$ \PE{eq:allocbound}}\label{sec:secant}
+For scalar $\clip_{[0,f_{\max}]}$, which is monotone and 1-Lipschitz,
+$\clip(x)-\clip(y)=d\,(x-y)$ with $d\in[0,1]$ (take $d=0$ if $x=y$). At the same state and collective,
+$\bm f_{\rm act}(\bm u)-\bm f_{\rm act}(\bm u_0)=D\,B^{-1}E\bm\delta$, and the torque difference is
+$HBDB^{-1}E\bm\delta$. $D\mapsto\|HBDB^{-1}E\|_2$ is convex (a norm of an affine map), so its maximum over
+the box $[0,1]^4$ is attained at one of the 16 vertices. \emph{Derived here.}
+
+\textbf{Numbers.} $L_A=\certXLA$ (X2), $\certCLA$ (CF2). At hover collective, every vertex of the torque box
+$\mathcal U$ is rotor-feasible for CF2 (so $D=I$ and $1$ replaces $L_A$ locally) but not for X2.
+\listing{experiments/theory_certificate_2026-09-12/compute_local_certificate.py}{122}{130}{$L_A$ over 16 vertices; hover feasibility of $\mathcal U$}
+
+\subsection{Local model \PE{eq:localmodel}--\PE{eq:localremainder}}
+Constant reference ($\bm\omega_d=0$), smooth branch $q_{e,0}=\sqrt{1-\|\bm e_q\|^2}$. From \eqref{eq:qev_dot},
+$\dot{\bm e}_q=\frac12\bm\omega+\frac12[(\sqrt{1-\|\bm e_q\|^2}-1)\bm\omega+\bm e_q\times\bm\omega]$.
+From \PE{eq:plant}, add and subtract the ideal PD torque:
+$\bm J\dot{\bm\omega}=-K_q\bm e_q-K_\omega\bm\omega+\bm d-\bm\omega\times\bm J\bm\omega$ with
+$\bm d=\bm\tau_{\rm act}+\bm\tau_{\rm p}+\bm\tau_{\rm d}+K_q\bm e_q+K_\omega\bm\omega$. Multiplying by
+$\bm J^{-1}$ gives $A$, $F$ and $\bm g$ as in the paper. \emph{Derived here.}
+
+\subsection{Quadratic-growth constant $L_r$ \PE{eq:Lr}}
+\textbf{First block.} $\bm\alpha=(\sqrt{1-s}-1)\bm\omega$ with $s=\|\bm e_q\|^2$ is parallel to $\bm\omega$;
+$\bm e_q\times\bm\omega\perp\bm\omega$. So
+$\|\bm\alpha+\bm e_q\times\bm\omega\|^2=(1-\sqrt{1-s})^2\|\bm\omega\|^2+\|\bm e_q\times\bm\omega\|^2$.
+For $s\in[0,1]$, $\sqrt{1-s}\ge1-s$, so $0\le1-\sqrt{1-s}\le s\le\sqrt s$, i.e.\ $(1-\sqrt{1-s})^2\le s$. With
+$\|\bm e_q\times\bm\omega\|\le\|\bm e_q\|\|\bm\omega\|$ the first block is at most
+$\tfrac12\sqrt2\,\|\bm e_q\|\|\bm\omega\|\le\frac{\sqrt2}{4}\|\bm x\|^2$ (AM--GM:
+$\|\bm e_q\|\|\bm\omega\|\le\frac12\|\bm x\|^2$).
+
+\textbf{Second block (Dr.\ Sandoval's bound).} $\|\bm J^{-1}(\bm\omega\times\bm J\bm\omega)\|\le\|\bm J^{-1}\|\,
+\|\bm\omega\|\,\|\bm J\|\,\|\bm\omega\|=\kappa(\bm J)\|\bm\omega\|^2$.
+
+\textbf{Second block (refined here).} Since $\bm\omega\times\bm\omega=0$,
+$\bm\omega\times\bm J\bm\omega=\bm\omega\times(\bm J-\mu I)\bm\omega$ for every $\mu\in\R$. With
+$\mu=\frac12(\lambda_{\max}+\lambda_{\min})$, $\|\bm J-\mu I\|=\frac12(\lambda_{\max}-\lambda_{\min})$ and
+$\|\bm J^{-1}\|=1/\lambda_{\min}$, so the block is at most $\frac12(\kappa(\bm J)-1)\|\bm\omega\|^2$, which
+vanishes for isotropic inertia (no gyroscopic torque), as it should.
+
+\textbf{Combine.} $\|\bm g\|\le\|\text{block}_1\|+\|\text{block}_2\|\le L_r\|\bm x\|^2$ with
+$L_r=\frac{\sqrt2}4+\frac12(\kappa-1)$ (or $\frac{\sqrt2}4+\kappa$).
+\begin{center}\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+& $\kappa(\bm J)$ & $L_r$ (v7) & $L_r$ (refined) & sampled $\sup\|\bm g\|/\|\bm x\|^2$ & spectral abscissa of $A$\\\midrule
+X2 & $\certXkappaJ$ & $\certXLrSteven$ & $\certXLr$ & $\certXLrEmp$ & $\certXEigA$\\
+CF2 & $\certCkappaJ$ & $\certCLrSteven$ & $\certCLr$ & $\certCLrEmp$ & $\certCEigA$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The sampled supremum uses $2\times10^5$ random points in the unit ball; both bounds hold.
+\listing{experiments/theory_certificate_2026-09-12/compute_local_certificate.py}{110}{120}{$\kappa$, both $L_r$, sampled supremum}
+
+\subsection{$A$ is Hurwitz (energy + LaSalle)}
+Take $V_L=\bm e_q\T K_q\bm e_q+\frac12\bm\omega\T\bm J\bm\omega$ (positive definite). Along
+$\dot{\bm e}_q=\frac12\bm\omega$, $\bm J\dot{\bm\omega}=-K_q\bm e_q-K_\omega\bm\omega$:
+$\dot V_L=2\bm e_q\T K_q\cdot\frac12\bm\omega+\bm\omega\T(-K_q\bm e_q-K_\omega\bm\omega)=-\bm\omega\T K_\omega\bm\omega\le0$,
+using $K_q=K_q\T$ (and $\bm J=\bm J\T$; off-diagonal products of inertia are allowed). On
+$\{\dot V_L=0\}$, $\bm\omega\equiv0\Rightarrow\dot{\bm\omega}\equiv0\Rightarrow K_q\bm e_q=0\Rightarrow\bm e_q=0$.
+By LaSalle's invariance principle \cite{khalil2002nonlinear} the origin of the linear system is globally
+asymptotically stable, so $A$ is Hurwitz, and for every $Q_L\succ0$ the Lyapunov equation has a unique
+$P\succ0$ \cite{khalil2002nonlinear}. (v7 said ``linear momentum''; it is the angular-momentum equation.)
+\listing{experiments/theory_certificate_2026-09-12/compute_local_certificate.py}{59}{65}{Lyapunov equation by vectorization}
+
+\subsection{Theorem~\PT{thm:local}, full proof}
+On $\|\bm x\|\le r<1$:
+\begin{align*}
+\dot V&=\bm x\T(A\T P+PA)\bm x+2\bm x\T P\bm g+2\bm x\T PF\bm d
+\le-\lambda_{\min}(Q_L)\|\bm x\|^2+2\|P\|L_r\|\bm x\|^3+2b\|\bm x\|\bar d\\
+&\le-c\|\bm x\|^2+2b\|\bm x\|\bar d
+\le-\tfrac c2\|\bm x\|^2+\tfrac{2b^2}{c}\bar d^2\qquad(\text{Young: }2b\|\bm x\|\bar d\le\tfrac c2\|\bm x\|^2+\tfrac{2b^2}c\bar d^2).
+\end{align*}
+\emph{Invariance.} $p_-\|\bm x\|^2\le V\le p_+\|\bm x\|^2$, so $\{V\le p_-r^2\}\subset\{\|\bm x\|\le r\}$. On the
+boundary $V=p_-r^2$, $\|\bm x\|^2\ge p_-r^2/p_+$, and $\dot V<0$ iff
+$\bar d^2<\frac{c^2}{4b^2}\|\bm x\|^2$, which holds under \PE{eq:localsmallness}. \emph{Bound.}
+$\dot V\le-\frac c{2p_+}V+\frac{2b^2}c\bar d^2$; the comparison lemma \cite{khalil2002nonlinear} gives
+$V(t)\le e^{-\alpha t}V(0)+\frac{2b^2\bar d^2/c}{\alpha}=e^{-\alpha t}V(0)+\frac{4p_+b^2}{c^2}\bar d^2$,
+$\alpha=c/(2p_+)$. This is local input-to-state stability \cite{sontag1989iss}. \qed
+
+\subsection{Optimal radius, maximal admissible disturbance, and $\beta_{\max}$ \PE{eq:betamax}}
+The admissible bound is $\bar d<\phi(r)\frac{1}{2b}\sqrt{p_-/p_+}$ with $\phi(r)=(\lambda-2\|P\|L_rr)r$,
+$\lambda=\lambda_{\min}(Q_L)$. $\phi'(r)=\lambda-4\|P\|L_rr=0$ at $r^*=\lambda/(4\|P\|L_r)$, where
+$c=\lambda/2>0$ and $\phi(r^*)=\lambda^2/(8\|P\|L_r)$. If $r^*\ge1$ the constraint $r<1$ binds instead. Hence
+$\bar d_{\max}=\frac{\lambda^2}{16\,b\,\|P\|L_r}\sqrt{p_-/p_+}$. With $\bar d=\bar d_0+L_A\beta\|\bm\ell\|$
+(Sec.~\ref{sec:secant}), $\beta<(\bar d_{\max}-\bar d_0)/(L_A\|\bm\ell\|)$, meaningful only if $\bar d_0<\bar d_{\max}$.
+$\bar d_{\max}$ is invariant to scaling $Q_L$ ($P,b,\lambda$ scale together); only its shape matters.
+
+\textbf{Justifying $\bar d_0=0$ at hover.} Nominal model ($\bm\tau_{\rm p}=\bm\tau_{\rm d}=0$); inside the
+certified ball $r^*\sqrt{k_{q,i}^2+k_{\omega,i}^2}\le\ell_i$ (PD unsaturated, checked in the script), and the
+resulting rotor forces stay inside $[0,\bm f_{\max}]$ at hover collective. Sampled-data and solver errors are
+excluded, as the paper states.
+\begin{center}\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+& $r^*$ & $\bar d_{\max}$ [N\,m] & $\beta_{\max}$ (with $L_A$) & $\beta_{\max}$ (exact allocation) & experiment\\\midrule
+X2 & $\certXrstar$ & $\certXdbarmax$ & $\certXbetamax$ & $\certXbetamaxNoClip$ & $\beta=0.5$\\
+CF2 & $\certCrstar$ & $\certCdbarmax$ & $\certCbetamax$ & $\certCbetamaxNoClip$ & $\beta=0.5$\\
+\bottomrule
+\end{tabular}
+\end{center}
+With the v7 constant $L_r=\sqrt2/4+\kappa$ the margins are $2.6\times$ (X2) and $3.2\times$ (CF2) smaller.
+\listing{experiments/theory_certificate_2026-09-12/compute_local_certificate.py}{78}{89}{certificate: $r^*$, $c$, $b$, $\bar d_{\max}$}
+\listing{experiments/theory_certificate_2026-09-12/compute_local_certificate.py}{132}{147}{$Q_L$ shape scan, PD saturation check, $\beta_{\max}$}
+
+\subsection{Remark (sign selection on certified trajectories)}
+$\|\bm e_q\|\le\|\bm x\|\le r<1\Rightarrow q_{e,0}^2=1-\|\bm e_q\|^2\ge1-r^2>0$. The branch never reaches
+$q_{e,0}=0$, so the smooth-branch model used in the proof is self-consistent. A measurement perturbation
+of $q_{e,0}$ smaller than $\sqrt{1-r^2}$ cannot flip $\sgnp$. This is local: it does not contradict
+\cite{bhat2000topological}, and it does not make the controller globally robust near $q_{e,0}=0$
+\cite{mayhew2011hybrid} (the v7 phrase ``robustly avoiding unwinding'' overstates it).
+
+% =============================================================================
+\section{Protocol, metrics, noise, and disturbance}
+% =============================================================================
+\subsection{Metric}
+$\bar\theta_q=\frac1N\sum_k\theta_{q,k}$ over all $N=90{,}000$ control steps (45\,s at $h=5\times10^{-4}$);
+reduction $=100(\bar\theta_{q,\rm PD}-\bar\theta_{q,\rm CMG})/\bar\theta_{q,\rm PD}$.
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py}{346}{347}{per-step error}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py}{549}{551}{summary statistics}
+
+\subsection{Campaign settings}
+\listing{experiments/nengo_nef_replication_2026-08-29/run_neuron_family_campaign.py}{50}{58}{matched runner arguments ($\beta$, $\eta$, $k_e$, $k_\omega^*$, $h$, scale)}
+
+\subsection{Measurement noise (Sec.~\PT{sec:noise})}
+A small-angle quaternion from i.i.d.\ Gaussian Euler angles is left-multiplied into $q$, and Gaussian noise
+is added to $\bm\omega$ (listing in Sec.~\ref{sec:quat}, lines 220--224). $\theta_q$ is computed from the
+\emph{corrupted} $q$, so the noisy columns measure noisy-feedback error; the floor for isotropic
+attitude noise $\sigma$ is roughly $\sigma\sqrt{8/\pi}$.
+
+\subsection{Disturbance (Sec.~\PT{sec:disturbance})}
+$\bm\tau_{\rm d}(t)=d_b\rho(t)[\sin(1.31t+.2),\,.8\sin(1.73t+1.1),\,.6\sin(2.17t+2)]\T$ in body axes, applied
+as a world-frame torque $R\bm\tau_{\rm d}$ through \code{xfrc_applied}.
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef.py}{299}{307}{body-frame multi-sine disturbance}
+$\rho(t)$: zero during warm-up, then on/off with raised-cosine edges
+$\rho=\frac12(1-\cos(\pi\,\xi/t_r))$ over ramp $t_r=0.25$\,s:
+\listing{experiments/nengo_nef_replication_2026-08-29/run_mujoco_nef_perturbed.py}{88}{117}{intermittent envelope $\rho(t)$}
+
+% =============================================================================
+\section{What changed relative to the highlighted v7, mathematically}
+% =============================================================================
+\begin{enumerate}
+\item \textbf{Gate step.} Exponential Euler is correct and unconditionally convex, but it is not the implemented
+  scheme; kept as a cited remark, the paper keeps the implemented forward Euler with clip, and Proposition~\PT{prop:states}
+  states both regimes of $h$.
+\item \textbf{Allocation.} $B^\dagger=B^{-1}$ for four rotors; code uses \code{np.linalg.inv}. $L_A$ now has numbers,
+  and the CF2 hover-feasibility case replaces $L_A$ by 1. The weighted-norm idea needs the theorem restated in
+  weighted coordinates; the symbol $W$ (decoder) is avoided.
+\item \textbf{Remainder constant.} v7's $\sqrt2/4+\kappa$ is valid; the centred-inertia bound
+  $\sqrt2/4+\frac12(\kappa-1)$ is tighter. It is a quadratic-growth constant, not a Lipschitz constant, and not
+  ``exact''.
+\item \textbf{Hurwitz proof.} v7's energy/LaSalle argument is correct; wording fixed (symmetric $\bm J$ with products of
+  inertia; angular momentum).
+\item \textbf{Optimal radius, $\beta_{\max}$.} Algebra confirmed; $r^*<1$ caveat added; renamed from ``Ultimate
+  Robustness Margin'' (``ultimate bound'' already means something else in ISS); numbers show the certificate is
+  about three orders of magnitude below $\beta=0.5$, so ``maximum mathematically safe authority'' must read
+  ``sufficient''.
+\item \textbf{Topological remark.} Correct as a local statement; ``robustly avoiding unwinding'' removed.
+\item \textbf{Latched PES.} First-order low-pass of the proportional target, pole $\pesPole$, DC gain $\approx1$:
+  lagged proportional action adding $1.5$--$1.63\times$ PD stiffness, not integral action.
+\item \textbf{$\sigma$-modification.} Analogy correct; the relation is an equality for the PES mismatch, not a bound on
+  tracking error; ``permanently resolving'' removed.
+\item \textbf{Silent bases.} Confirmed with the occupancy data; the claim that it is ``the formal reason CMG breaks the
+  tradeoff'' is not supported (Izhikevich has persistent activity too).
+\item \textbf{Projection lemma.} Correct; ``strictly within'' unnecessary; weight boundedness is from $\Pi_{\mathcal W}$.
+\end{enumerate}
+
+\appendix
+\section{Source files and hashes}\label{app:hashes}
+{\small\input{code_hashes.tex}}
+
+\bibliographystyle{IEEEtran}
+\bibliography{../references}
+\end{document}

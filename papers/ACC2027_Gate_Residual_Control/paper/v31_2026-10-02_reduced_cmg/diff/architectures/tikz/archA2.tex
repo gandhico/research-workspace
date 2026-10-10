@@ -1,0 +1,62 @@
+% A2 -- MAIN ARCHITECTURE, proposal 2: two-column (figure*) detailed form.
+% Every block carries the equation it implements; the three separately
+% ablatable mechanisms (chi, W, beta) are called out explicitly.
+\begin{tikzpicture}[node distance=6mm and 8mm]
+  % ---- forward path -------------------------------------------------------
+  \node[blk]                    (ref)  {mission\\reference\\$q_d(t)$};
+  \node[clas,right=of ref]      (err)  {shortest-path error\\
+                                        $q_e=q_d\otimes q^{-1}$\\
+                                        $\bm e_q=\sgnp(q_{e,0})\bm q_{e,v}$};
+  \node[clas,right=of err]      (pd)   {quaternion PD\\
+                                        $\bm\tau_0=\sat_{\bm\tau_{\max}}(-K_q\bm e_q-K_\omega\bm\omega)$};
+  \node[clas,right=12mm of pd]  (res)  {bounded additive residual\\
+                                        $\bm u_k=\sat_{\bm\ell}(\bm u_{0,k}+\beta\bm\ell\odot\bm s_k)$};
+  \node[clas,right=of res]      (alc)  {allocation\\$\bm f=B^{-1}[T,\bm\tau\T]\T$};
+  \node[plant,right=of alc]     (plt)  {MuJoCo rigid body\\X2 / CF2};
+
+  % ---- neuromorphic residual path ----------------------------------------
+  \node[neuro,below=18mm of pd] (enc)  {paired encoding\\
+                                        $\bar{\bm u}=\bm u_0\oslash\bm\ell$\\
+                                        $\bm I^{\pm}=I_b\bm 1+I_g\max(\pm\bar{\bm u},0)$};
+  \node[neuro,right=of enc]     (cmg)  {$2m$ CMG units\\
+                                        gate $r_j$, membrane $v_j$\\
+                                        $c_j=(g_0+\chi g_1|I_j|)r_j^2$\\
+                                        $\bm a_k=\sat_{[0,1]}(G\bm r_k^{+})$};
+  \node[neuro,right=of cmg]     (dec)  {linear decoder\\
+                                        $\bm s_k=\sat_{[-1,1]}(W_k\bm a_k)$\\
+                                        $W_0=[I_m,\,-I_m]$};
+  \node[neuro,below=10mm of cmg](pes)  {projected PES\\
+                                        $W_{k+1}=\Pi_{\mathcal W}[W_k+\eta\bm\varepsilon_k\bm a_k\T-\lambda_W W_k]$};
+  \node[meas,left=of pes]       (tgt)  {PES target\\
+                                        $\bm y^*_k=\sat_{[-1,1]}(-k_e\bm e_q-k^*_\omega\bm\omega)$};
+
+  % ---- signals ------------------------------------------------------------
+  \draw[sig] (ref) -- (err);
+  \draw[sig] (err) -- node[lbl,above]{$\bm e_q$} (pd);
+  \draw[sig] (pd)  -- node[lbl,above]{$\bm u_0=\bm\tau_0$} (res);
+  \draw[sig] (res) -- node[lbl,above]{$\bm u_k$} (alc);
+  \draw[sig] (alc) -- node[lbl,above]{$\bm f$} (plt);
+
+  \draw[sig] (pd.south) -- node[lbl,right]{$\bm u_0$} (enc.north);
+  \draw[sig] (enc) -- node[lbl,above]{$\bm I$} (cmg);
+  \draw[sig] (cmg) -- node[lbl,above]{$\bm a_k$} (dec);
+  \draw[sig] (dec.north) -- ++(0,7mm) -| node[lbl,pos=.93,right]{$\beta\bm\ell\odot\bm s_k$} (res.south);
+  \draw[sig] (cmg.south) -- node[lbl,right]{$\bm a_k$} (pes.north);
+  \draw[sig] (tgt) -- node[lbl,above]{$\bm y^*_k$} (pes);
+  \draw[sig] (dec.south west) -- ++(0,-6mm) -| node[lbl,pos=.3,above]{$\bm s_k$} (pes.north east);
+  \coordinate (wx) at ($(dec.east)+(9mm,0)$);
+  \draw[sig] (pes.east) -- node[lbl,pos=.75,below]{$W_{k+1}$} (pes.east-|wx) -- (wx) -- (dec.east);
+
+  % ---- measurement bus ----------------------------------------------------
+  \coordinate (busy) at ($(pes.south)+(0,-13mm)$);
+  \draw[thick] (plt.south) -- (plt|-busy) -- (err|-busy);
+  \draw[sig]   (err|-busy) -- node[lbl,pos=.6,left]{$q,\bm\omega$} (err.south);
+  \draw[sig]   (tgt|-busy) -- (tgt.south);
+
+  \begin{scope}[on background layer]
+    \node[grp,fit=(enc)(cmg)(dec)(pes)(tgt)(wx)] (nb) {};
+  \end{scope}
+  \node[note,anchor=south west] at ([yshift=0.5mm]nb.north west)
+    {CMG--PES residual path};
+
+\end{tikzpicture}

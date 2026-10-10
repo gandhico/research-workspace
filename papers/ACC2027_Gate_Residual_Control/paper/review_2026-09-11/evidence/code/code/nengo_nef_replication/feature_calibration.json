@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "method": "mean over second half of constant maximum canonical J=2 calibration",
+  "dt_s": 0.0005,
+  "duration_s": 2.0,
+  "feature_tau_s": 0.005,
+  "families": {
+    "cmg": {
+      "family": "cmg",
+      "feature_scale": 1.0,
+      "observable": "gate-derived continuous activity"
+    },
+    "lif": {
+      "family": "lif",
+      "feature_scale": 63.02391038718549,
+      "native_current_scale": 1.0,
+      "observable": "5-ms low-pass spike trace",
+      "canonical_J_calibration": 2.0,
+      "native_J_calibration": 2.0,
+      "tail_mean": 63.02391038718549,
+      "tail_max": 199.26357100452208
+    },
+    "alif": {
+      "family": "alif",
+      "feature_scale": 46.91797205209601,
+      "native_current_scale": 1.0,
+      "observable": "5-ms low-pass spike trace",
+      "canonical_J_calibration": 2.0,
+      "native_J_calibration": 2.0,
+      "tail_mean": 46.91797205209601,
+      "tail_max": 193.86993801648185
+    },
+    "izhikevich": {
+      "family": "izhikevich",
+      "feature_scale": 42.60207501796177,
+      "native_current_scale": 10.0,
+      "observable": "5-ms low-pass spike trace",
+      "canonical_J_calibration": 2.0,
+      "native_J_calibration": 20.0,
+      "tail_mean": 42.60207501796177,
+      "tail_max": 192.07211301950142
+    },
+    "lifrate": {
+      "family": "lifrate",
+      "feature_scale": 63.040002190641225,
+      "native_current_scale": 1.0,
+      "observable": "5-ms low-pass rate output",
+      "canonical_J_calibration": 2.0,
+      "native_J_calibration": 2.0,
+      "tail_mean": 63.040002190641225,
+      "tail_max": 63.040002190641225
+    }
+  }
+}

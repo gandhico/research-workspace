@@ -1,0 +1,54 @@
+{
+  "alif": {
+    "admissible": true,
+    "current_bias": 0.97,
+    "current_gain": 1.03,
+    "family": "alif",
+    "feature_tau_s": 0.02,
+    "geomean_ratio": 0.8714040526261162,
+    "hard45_ratio": 0.7611689935156166,
+    "mean_residual_nrms": 0.045632518653549586,
+    "roll_ratio": 0.9976037245369478,
+    "score": 0.9111684143123562,
+    "tag": "b0p97_g1p03_tau0p020"
+  },
+  "izhikevich": {
+    "admissible": true,
+    "current_bias": 0.25,
+    "current_gain": 1.75,
+    "family": "izhikevich",
+    "feature_tau_s": 0.02,
+    "geomean_ratio": 0.9070798239213218,
+    "hard45_ratio": 0.8227938069651362,
+    "mean_residual_nrms": 0.03116678538465691,
+    "roll_ratio": 1.0,
+    "score": 0.93535058612023,
+    "tag": "b0p25_g1p75_tau0p020"
+  },
+  "lif": {
+    "admissible": true,
+    "current_bias": 0.97,
+    "current_gain": 1.03,
+    "family": "lif",
+    "feature_tau_s": 0.02,
+    "geomean_ratio": 0.8124340090708556,
+    "hard45_ratio": 0.6635028095970639,
+    "mean_residual_nrms": 0.04777525340119823,
+    "roll_ratio": 0.9947946105846663,
+    "score": 0.851248249725967,
+    "tag": "b0p97_g1p03_tau0p020"
+  },
+  "lifrate": {
+    "admissible": true,
+    "current_bias": 1.03,
+    "current_gain": 0.97,
+    "family": "lifrate",
+    "feature_tau_s": 0.005,
+    "geomean_ratio": 0.6791779903919773,
+    "hard45_ratio": 0.7908921836616332,
+    "mean_residual_nrms": 0.01968647762761416,
+    "roll_ratio": 0.5832435218884843,
+    "score": 0.692548612704997,
+    "tag": "b1p03_g0p97_tau0p005"
+  }
+}

@@ -1,0 +1,35 @@
+% B2 -- CMG UNIT INTERNALS, proposal 2: the antagonistic +/- pair.
+% Explains why non-negative activities can produce a signed residual, and
+% why W_0 = [I_m, -I_m] is the natural initialisation.
+\begin{tikzpicture}[node distance=6mm and 10mm]
+  \node[blk]                        (u)  {channel $i$\\$\bar u_i=u_{0,i}/\ell_i\in[-1,1]$};
+
+  \node[clas,above right=6mm and 12mm of u] (ip) {$I_i^{+}=I_b+I_g\max(\bar u_i,0)$};
+  \node[clas,below right=6mm and 12mm of u] (im) {$I_i^{-}=I_b+I_g\max(-\bar u_i,0)$};
+
+  \node[neuro,right=of ip]          (cp) {CMG unit $i^{+}$\\$(v_{i^+},r_{i^+})$};
+  \node[neuro,right=of im]          (cm) {CMG unit $i^{-}$\\$(v_{i^-},r_{i^-})$};
+
+  \node[blk,right=of cp]            (ap) {$a_{i^+}\in[0,1]$};
+  \node[blk,right=of cm]            (am) {$a_{i^-}\in[0,1]$};
+
+  \node[neuro,right=13mm of $(ap)!0.5!(am)$] (w)
+        {decoder row $i$ of $W_k$\\
+         $s_i=\sat_{[-1,1]}\!\big(W_{k,i}\bm a_k\big)$\\[1pt]
+         \scriptsize at $k{=}0$: $s_i=a_{i^+}-a_{i^-}$};
+  \node[blk,right=of w]             (out) {signed residual $s_i$};
+
+  \draw[sig] (u) -- (ip);   \draw[sig] (u) -- (im);
+  \draw[sig] (ip) -- (cp);  \draw[sig] (im) -- (cm);
+  \draw[sig] (cp) -- (ap);  \draw[sig] (cm) -- (am);
+  \draw[sig] (ap) -- node[lbl,above]{$+1$} (w);
+  \draw[sig] (am) -- node[lbl,below]{$-1$} (w);
+  \draw[sig] (w) -- (out);
+
+  \node[note,anchor=north west,text width=140mm] at ($(u.south west)+(0,-20mm)$)
+    {Each of the $m$ command channels drives an antagonistic pair, so the
+     population has $2m$ units. Activities are non-negative by construction;
+     the sign is carried by the decoder. Initialising $W_0=[I_m,-I_m]$ makes
+     the untrained residual exactly the pair difference, so learning starts
+     from a meaningful, not a random, readout.};
+\end{tikzpicture}

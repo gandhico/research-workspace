@@ -1,5 +1,7 @@
 # Plan (declared 2026-09-12, before any P5 results)
 
+**Direction update (2026-10-06):** QDrone2, rather than Aero2, is the intended hardware platform. The active proof and twin completion plan is `docs/QUAD_TWINS_QDRONE2_STABILITY_2026-10-06.md`. The Aero2 Phase 5 sections below record historical planning and should not be read as the current hardware gate.
+
 ## Hypotheses
 
 - **H1.** A CMG–PES self-tuned PID (S) reduces attitude error versus the fixed PID on moving-reference missions.
@@ -508,6 +510,8 @@ correction has no family-specific optimality structure to conflict with, and Pro
 of the baseline). S is hardware-ready *after* v6 lands with the saturation-gate fix confirmed, not before --
 this deep-dive is precisely the "conclusion needed before hardware" that was asked for, and the answer is
 "promising and worth finishing, not yet done."
+
+**Stability clarification (2026-10-06).** The preceding "R alone is hardware-ready now" is a historical experimental-readiness judgment, not a stability or safety certificate. The saved CF2 Hardstep R-only run has a severe tracking and altitude regression despite bounded commands. For the proposed Aero2 hardware endpoint, porting R or dual requires an application-specific certified operating region, actuator and timing uncertainty bounds, a feasible fallback, and supervised staging. The mathematical route and an ideal-axis common-Lyapunov certificate are in `docs/DUAL_HARDWARE_STABILITY_PROOF_2026-10-06.md`.
 
 ## Phase 5 (new, 2026-09-25): Quanser Aero2 hardware -- scoping note, not yet a declaration
 

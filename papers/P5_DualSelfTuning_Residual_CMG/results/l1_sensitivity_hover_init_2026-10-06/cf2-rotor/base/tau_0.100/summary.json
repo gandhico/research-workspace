@@ -1,0 +1,71 @@
+{
+ "platform": "cf2-rotor",
+ "mission": "hardstep",
+ "family": "lqr",
+ "arm": "base",
+ "controller": "lqr_base",
+ "allocation": "apa",
+ "sat_gate_axes": true,
+ "gate_blocked_fraction": 0.0,
+ "duration_s": 8.0,
+ "dt_s": 0.0005,
+ "steps": 16001,
+ "diverged": false,
+ "z_min_m": 0.018015703501857133,
+ "beta": 0.5,
+ "learning_rate": 0.0008,
+ "k_error": 8.0,
+ "rotor_tau_s": 0.1,
+ "rotor_model": "normalized-speed first-order, quadratic force",
+ "rotor_tau_provenance": "synthetic sensitivity; not platform identified",
+ "rotor_initial_force_N_each": 0.0662175,
+ "motor_force_mismatch_rms_N": 0.0061740087786657846,
+ "tuner": null,
+ "qerr_mean_rad": 2.1092443075780296,
+ "qerr_rmse_rad": 2.377269526842915,
+ "qerr_max_rad": 3.1408948299094033,
+ "saturation_fraction": 0.8116992687957003,
+ "residual_rms_Nm": 0.0,
+ "torque_limits_Nm": [
+  0.000287412,
+  0.000287412,
+  0.00032347
+ ],
+ "multiplier_mean": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_min": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "multiplier_max": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "WS_final_fro": null,
+ "WR_final_fro": null,
+ "wall_s": 2.402123300002131,
+ "hashes": {
+  "run_l1_v5.py": "b0f62e5aaa08d1ab",
+  "rotor_response.py": "d854f789eb11b04b",
+  "run_dual_v5.py": "6c93217276417a3c",
+  "dual_controller_v5.py": "1af5cd0c0a625f5b",
+  "dual_controller.py": "4786d16cc2f51140",
+  "run_dual.py": "024712601f975101",
+  "run_mujoco_nef_baselines.py": "3c12f663e4034fd9",
+  "model": "410e0975d066abb1"
+ }
+}

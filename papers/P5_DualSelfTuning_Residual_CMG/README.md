@@ -25,6 +25,10 @@ In both learning paths the spiking/LIF basis is replaced by the continuous coupl
 | `docs/PLAN.md` | Phases, hypotheses, pre-declared evaluation rules, milestones |
 | `docs/ARCHITECTURE_MATH.md` | Dual architecture, bounded gains, stability facts, open questions |
 | `docs/HIGH_FIDELITY_MUJOCO_PROPOSAL.md` | Motor/propeller/aero/sensor/animation plan for CF2, X2 and Omnicopter |
+| `docs/DUAL_HARDWARE_STABILITY_PROOF_2026-10-06.md` | Audit of the dual stability claims, narrow common-Lyapunov certificate, and proposed robust sampled-data hardware theorem |
+| `docs/QUAD_TWINS_QDRONE2_STABILITY_2026-10-06.md` | Active quadrotor route: X2/CF2 MuJoCo twin completion, racing stress tests, and QDrone2 hardware proof gates |
+| `docs/TWIN_L0_AUDIT_2026-10-06.json` | Compiled X2/CF2 L0 model inventory with source hashes, rotor geometry, inertia and authority assumptions |
+| `hifi/rotor_response.py` | Opt-in normalized rotor-speed lag model; zero-lag mode preserves ideal commanded force exactly |
 | `experiments/quat_dual_v0/` | First quaternion-tracking experiment (PID, PID+residual, self-tuned PID, dual) |
 | `results/` | Run outputs; never overwritten, one dated folder per campaign |
 
@@ -36,6 +40,8 @@ In both learning paths the spiking/LIF basis is replaced by the continuous coupl
 - Build LaTeX with pdflatex + bibtex; latexmk has no Perl here.
 
 ## Status
+
+**2026-10-06 direction:** QDrone2 is the intended hardware endpoint, after X2/CF2 MuJoCo variants and a quadrotor-specific stability filter are validated. The earlier Aero2 Phase 5 text is historical. See `docs/QUAD_TWINS_QDRONE2_STABILITY_2026-10-06.md`.
 
 - **v0 (2026-09-12).** All gates pass. On X2, dual is best (geometric mean 0.540 vs PID; residual alone 0.585).
   On CF2 Hardstep the target-scheduled tuner winds up and diverges. See `results/quat_dual_v0_2026-09-12/REPORT.md`.
