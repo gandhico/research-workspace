@@ -60,6 +60,20 @@ def from_euler(roll, pitch, yaw):
                      [-sp, sr * cp, cr * cp]])
 
 
+def standard_orientation(roll, pitch, yaw):
+    """AHRS_ORIENTATION value for single-axis rotations, else None.
+
+    Only unambiguous cases (one rotation axis) are mapped: their meaning does not depend on the
+    composition order of the label (Yaw45..Yaw315 = 1..7, Roll180 = 8, Pitch180 = 12, Roll90 = 16,
+    Roll270 = 20, Pitch90 = 24, Pitch270 = 25; Copter-4.7.1 AHRS_ORIENTATION value list).
+    """
+    r, p, y = (round(a) % 360 for a in (roll, pitch, yaw))
+    if r == 0 and p == 0 and y % 45 == 0:
+        return y // 45
+    return {(180, 0, 0): 8, (0, 180, 0): 12, (90, 0, 0): 16, (270, 0, 0): 20,
+            (0, 90, 0): 24, (0, 270, 0): 25}.get((r, p, y))
+
+
 def angle_deg(r):
     return math.degrees(math.acos(max(-1.0, min(1.0, (np.trace(r) - 1) / 2))))
 
@@ -143,6 +157,18 @@ def main():
     if angle_deg(from_euler(*snapped).T @ r) < 5:
         roll, pitch, yaw = (a + 0.0 for a in snapped)       # board on a cube face: use exact 90-deg angles
     out = HERE / "config" / "stage3_board_orientation.param"
+    standard = standard_orientation(roll, pitch, yaw)
+    if standard is not None and angle_deg(from_euler(roll, pitch, yaw).T @ r) < 5:
+        out.write_text("\n".join([
+            f"# Omnidrone board orientation, measured {datetime.now().isoformat(timespec='seconds')} by board_orientation.py",
+            f"# board->FRD = roll {roll:.0f}, pitch {pitch:.0f}, yaw {yaw:.0f} deg; per-pose fit "
+            f"{[round(f, 2) for f in fit]} deg -> standard rotation, no custom rotation needed.",
+            "# Load: python ap_param_load.py config\\stage3_board_orientation.param, reboot,",
+            "# then rerun board_orientation.py (must say CORRECT), then accel calibration + level.",
+            f"AHRS_ORIENTATION,{standard}", ""]), encoding="utf-8")
+        print(f"board -> FRD: roll {roll:.0f}, pitch {pitch:.0f}, yaw {yaw:.0f} deg = standard AHRS_ORIENTATION {standard}")
+        print(f"wrote {out}")
+        return
     out.write_text("\n".join([
         f"# Omnidrone board orientation, measured {datetime.now().isoformat(timespec='seconds')} by board_orientation.py",
         f"# board->FRD rotation {residual:.1f} deg; per-pose fit {[round(f, 2) for f in fit]} deg",

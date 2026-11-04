@@ -1,0 +1,7 @@
+# Omnidrone board orientation, measured 2026-11-04T14:53:20 by board_orientation.py
+# Readings (mg): BOTTOM down (0,-20,-988), FORWARD down (1005,11,5), RIGHT down (-20,999,-4).
+# board->FRD fit = roll 0.7, pitch 0.1, yaw 179.1 deg (per-pose fit 0.46/0.30/0.51 deg)
+# = the Cube's arrow points to the BACK face -> standard Yaw180, no custom rotation needed.
+# Load: python ap_param_load.py config\stage3_board_orientation.param, reboot,
+# then rerun board_orientation.py (must say CORRECT), then accel calibration + level.
+AHRS_ORIENTATION,4
