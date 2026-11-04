@@ -143,24 +143,31 @@ python ap_param_audit.py
 
 ✔ **Pass when** the audit says **OK** for the EKF3 sources, `VISO_TYPE`, `COMPASS_USE` and `GPS1_TYPE`.
 
-## Step 3: ESC check (props OFF, battery connected)
+## Step 3: ESCs, identify them and set bidirectional (3D) mode (props OFF)
 
-This is the hard gate for everything after it.
+Why this step is different on this Cube (checked in the Copter-4.7.1 source, 2026-11-04):
+- **The motors run on MAIN 1–8 through the I/O coprocessor** (`BRD_IO_DSHOT 1`). ArduPilot's
+  BLHeli pass-through only reaches the FMU/AUX outputs (`AP_BLHeli.cpp`: "with IOMCU the local
+  (FMU) channels start at 8"), so **the ESCs cannot be configured through the Cube as wired.**
+- **ArduPilot never sends a "3D on" command.** With `SERVO_BLH_3DMASK` it only remaps 1000–2000 µs
+  to reverse/forward DShot values (1500 = stop). Each **ESC must itself be set to
+  bidirectional (3D)**.
 
-1. Battery connected (the ESCs need power), USB connected.
-2. Mission Planner **closed**: pass-through uses the same USB port.
-3. Open the ESC tool that matches your ESCs:
-   - **BLHeli_32:** BLHeliSuite32. Choose the BLHeli32 flight-controller pass-through interface,
-     select the Cube's COM port, **Connect**, then **Read Setup**.
-   - **BLHeli_S / Bluejay / AM32:** https://esc-configurator.com in Chrome. **Select Port**
-     (the Cube's COM port) → **Connect** → **Read Settings**.
-4. Write down the firmware name and version shown for ESC 1–8.
-5. If the tool offers a motor direction **Bidirectional / 3D** setting, set it on all 8 and
-   write the settings.
-6. Close the ESC tool.
+What to do:
+1. Read the ESC model from the board, label or purchase page. That tells you the firmware:
+   BLHeli_32, BLHeli_S/Bluejay, AM32 or other.
+2. Set **bidirectional / 3D** mode on all 8 ESCs, using one of:
+   - a **USB linker or a spare Betaflight flight controller**: connect each ESC's signal wire
+     there, then use BLHeliSuite32 (BLHeli_32) or https://esc-configurator.com (BLHeli_S, Bluejay,
+     AM32) → motor direction **Bidirectional** → write;
+   - the ESCs may already ship in bidirectional mode: step 5 will tell.
+3. The final proof comes in **step 5, props off**: every motor must spin the **other way** at 1460 µs.
+   - On an ESC that is not in 3D mode, 1460 µs gives about 55 % **forward** instead. That is
+     harmless with props off, and the tool flags it.
 
-✔ **Pass when** all 8 ESCs run firmware that supports DShot 3D (bidirectional rotation).
-Otherwise **stop: this vehicle cannot hover without reversible thrust.**
+✔ **Pass when** the firmware supports bidirectional/3D and it is set on all 8 (or you go to
+step 5 to verify). If any motor fails to reverse in step 5, **stop: this vehicle cannot hover
+without reversible thrust.** Keep the props off until step 5 passes.
 
 ## Step 4: Stage 2, 6DoF frame and mixer (props OFF)
 

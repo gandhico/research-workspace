@@ -119,8 +119,9 @@ def main():
         gated = [n for n, _, v, _ in changes
                  if (n == "FRAME_CLASS" and v == 16) or (n == "SERVO_BLH_3DMASK" and v != 0)]
         if gated:
-            print("\nThis enables the 6DoF frame / reversible DShot-3D outputs. Only continue if all 8 ESCs are "
-                  "confirmed 3D-capable (runbook step 3) and the mixer .lua is in APM/scripts (step 4).")
+            print("\nThis enables the 6DoF frame / reversible DShot-3D outputs. Only continue with PROPS OFF, "
+                  "the ESCs set to bidirectional/3D (runbook step 3) and the mixer .lua in APM/scripts (step 4). "
+                  "Keep the props off until motor_test_6dof.py shows every motor reversing (step 5).")
             if input("Type ESC 3D CONFIRMED to continue: ").strip().upper() != "ESC 3D CONFIRMED":
                 sys.exit("cancelled; nothing was written")
         if input(f"\nType WRITE to write {len(changes)} parameter(s): ").strip().upper() != "WRITE":
