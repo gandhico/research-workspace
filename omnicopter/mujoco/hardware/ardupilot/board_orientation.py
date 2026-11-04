@@ -74,7 +74,20 @@ def read_param(link, name):
     return None
 
 
-def collect(link, seconds=3.0):
+def drain(link):
+    """Discard every message already buffered (they were sent while the vehicle was being moved)."""
+    count = 0
+    while link.rx.recv_match(blocking=False) is not None:
+        count += 1
+    return count
+
+
+def collect(link, seconds=3.0, settle_s=1.0):
+    # 2026-11-04 fix: the first version averaged RAW_IMU messages that had queued up in the UDP
+    # buffer while the operator was turning the cube (622 samples in a 3 s window instead of ~60),
+    # mixing the previous pose into the new one.  Settle, drop the backlog, then measure.
+    time.sleep(settle_s)
+    drain(link)
     samples = []
     end = time.time() + seconds
     while time.time() < end:
@@ -101,7 +114,8 @@ def main():
                 sys.exit("no RAW_IMU data received")
             mean, spread = data.mean(0), data.std(0).max()
             norm = np.linalg.norm(mean)
-            print(f"   accel {np.round(mean).astype(int)} mg, |a| {norm:.0f} mg, noise {spread:.0f} mg, {len(data)} samples")
+            print(f"   accel {np.round(mean).astype(int)} mg, |a| {norm:.0f} mg, noise {spread:.0f} mg, "
+                  f"{len(data)} samples in 3 s")
             if spread > 30 or not 900 < norm < 1100:
                 sys.exit("   not still (or accelerometer uncalibrated): repeat this pose")
             sources.append(mean / norm)
