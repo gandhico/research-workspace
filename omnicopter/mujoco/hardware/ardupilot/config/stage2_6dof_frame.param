@@ -1,0 +1,13 @@
+# Omnidrone stage 2: 6DoF scripting frame with reversible (3D) DShot motors.
+# Target: ArduPilot Copter 4.7.1 on the Cube Orange (audit 2026-11-04: FRAME_CLASS 3 Octa, DShot300, SERVO1-8 = Motor1-8).
+#
+# DO NOT LOAD until BOTH are true:
+#   1. The ESC firmware is confirmed to support DShot 3D / bidirectional rotation
+#      (BLHeli_32, BLHeli_S/Bluejay or AM32 with 3D enabled). On a non-3D ESC, 3D DShot values are misread.
+#   2. generated/omnidrone_6dof_mixer.lua is on the SD card in APM/scripts/ (Mission Planner > Config > MAVFTP).
+# Props OFF. Write, reboot, and look for "Omnidrone 6DoF mixer loaded" in Messages.
+# Known 6DoF quirk (ArduPilot forum): if DShot outputs stop after the frame change, set FRAME_CLASS to 3,
+# reboot, set it back to 16, reboot.
+SCR_ENABLE,1
+FRAME_CLASS,16
+SERVO_BLH_3DMASK,255

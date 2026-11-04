@@ -1,0 +1,73 @@
+{
+ "3.1 Z-up unicast": {
+  "calibration rotation error deg": 0.0,
+  "motive_up": "+Z",
+  "status lines (last 4)": [
+   "mocap 125 Hz in / 31 Hz sent | NED +0.279 -0.191 -0.500 yaw   +1.0 | Cube disarmed Stabilize | EKF-mocap  0.0 cm | Cube-mocap roll  +0.0 pitch  -0.0 yaw  +0.3 deg",
+   "mocap 120 Hz in / 30 Hz sent | NED +0.292 -0.368 -0.500 yaw   -8.7 | Cube disarmed Stabilize | EKF-mocap  0.0 cm | Cube-mocap roll  -0.0 pitch  -0.0 yaw  +0.3 deg",
+   "mocap 126 Hz in / 15 Hz sent | NOT TRACKED - nothing sent | NED +0.259 -0.451 -0.500 yaw  -12.9 | Cube disarmed Stabilize | EKF-mocap  0.0 cm | Cube-mocap roll  +0.0 pitch  +0.0 yaw  -0.0 deg",
+   "mocap 122 Hz in / 17 Hz sent | NED +0.029 -0.599 -0.500 yaw  -19.9 | Cube disarmed Stabilize | EKF-mocap  0.0 cm | Cube-mocap roll  +0.0 pitch  +0.0 yaw  +0.0 deg"
+  ],
+  "status during gap": [
+   "mocap 126 Hz in / 15 Hz sent | NOT TRACKED - nothing sent | NED +0.259 -0.451 -0.500 yaw  -12.9 | Cube disarmed Stabilize | EKF-mocap  0.0 cm | Cube-mocap roll  +0.0 pitch  +0.0 yaw  -0.0 deg"
+  ],
+  "NED pos err max cm": 0.258,
+  "NED yaw err max deg (yaw_NED = -yaw_room)": 0.143,
+  "roll/pitch max deg": 0.0,
+  "twin quaternion vs XML hover (still) max": 0.0,
+  "untracked frames (fake gap 40-41 s)": 120,
+  "sent while untracked": 0,
+  "VPE received": 1007,
+  "VPE vs log max abs diff": 5e-06,
+  "VPE rate Hz": 29.2,
+  "reset_counter before/after gap": [
+   0,
+   1
+  ],
+  "relay Pico->MP heartbeats": 45,
+  "relay MP->Pico PARAM_REQUEST_LIST": 1,
+  "origin received": [
+   [
+    15000000,
+    -22500000,
+    100000
+   ]
+  ]
+ },
+ "4.1 Y-up multicast": {
+  "calibration rotation error deg": 0.0,
+  "motive_up": "+Y",
+  "status lines (last 4)": [
+   "mocap 121 Hz in / 17 Hz sent | NED +0.029 -0.599 -0.500 yaw  -19.9 | Cube disarmed Stabilize | EKF-mocap  0.0 cm | Cube-mocap roll  -0.0 pitch  +0.0 yaw  +0.0 deg",
+   "mocap 120 Hz in / 30 Hz sent | NED -0.145 -0.563 -0.500 yaw  -18.3 | Cube disarmed Stabilize | EKF-mocap  0.0 cm | Cube-mocap roll  -0.0 pitch  -0.0 yaw  -0.2 deg",
+   "mocap 120 Hz in / 30 Hz sent | NED -0.268 -0.435 -0.500 yaw  -12.1 | Cube disarmed Stabilize | EKF-mocap  0.0 cm | Cube-mocap roll  -0.0 pitch  -0.0 yaw  -0.4 deg",
+   "mocap 120 Hz in / 30 Hz sent | NED -0.297 -0.260 -0.500 yaw   -3.0 | Cube disarmed Stabilize | EKF-mocap  0.0 cm | Cube-mocap roll  +0.0 pitch  -0.0 yaw  -0.5 deg"
+  ],
+  "status during gap": [
+   "mocap 124 Hz in / 14 Hz sent | NOT TRACKED - nothing sent | NED +0.259 -0.451 -0.500 yaw  -12.9 | Cube disarmed Stabilize | EKF-mocap  0.0 cm | Cube-mocap roll  +0.0 pitch  +0.0 yaw  +0.0 deg"
+  ],
+  "NED pos err max cm": 0.276,
+  "NED yaw err max deg (yaw_NED = -yaw_room)": 0.153,
+  "roll/pitch max deg": 0.0,
+  "twin quaternion vs XML hover (still) max": 0.0,
+  "untracked frames (fake gap 40-41 s)": 120,
+  "sent while untracked": 0,
+  "VPE received": 915,
+  "VPE vs log max abs diff": 5e-06,
+  "VPE rate Hz": 29.1,
+  "reset_counter before/after gap": [
+   0,
+   1
+  ],
+  "relay Pico->MP heartbeats": 45,
+  "relay MP->Pico PARAM_REQUEST_LIST": 1,
+  "origin received": [
+   [
+    15000000,
+    -22500000,
+    100000
+   ]
+  ]
+ },
+ "PASS": true
+}

@@ -1,0 +1,21 @@
+# Omnidrone stage 1: OptiTrack as the only navigation source.
+# Target: ArduPilot Copter 4.7.1 on the Cube Orange (audit 2026-11-04: GPS + compass active, VISO off).
+# Source: ArduPilot wiki "OptiTrack for Non-GPS Navigation" (common-optitrack).
+# Safe to load before the 6DoF frame change: it touches sensors/EKF only, no motor outputs.
+#
+# Mission Planner: Config > Full Parameter List > Load from file > review highlighted rows > Write Params > reboot.
+# VISO_POS_M_NSE / VISO_YAW_M_NSE only exist after VISO_TYPE=1 and a reboot: load this file a second time.
+AHRS_EKF_TYPE,3
+EK3_ENABLE,1
+VISO_TYPE,1
+EK3_SRC1_POSXY,6
+EK3_SRC1_VELXY,0
+EK3_SRC1_POSZ,6
+EK3_SRC1_VELZ,0
+EK3_SRC1_YAW,6
+COMPASS_USE,0
+COMPASS_USE2,0
+COMPASS_USE3,0
+GPS1_TYPE,0
+VISO_POS_M_NSE,0.1
+VISO_YAW_M_NSE,0.1
