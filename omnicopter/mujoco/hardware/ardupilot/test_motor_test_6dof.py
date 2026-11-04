@@ -21,9 +21,10 @@ TOOL_PORT, CUBE_PORT = 14560, 14670
 
 
 class FakeCube(threading.Thread):
-    def __init__(self, params):
+    def __init__(self, params, drop_first_motor_command=False):
         super().__init__(daemon=True)
         self.params = params
+        self.drop_next = drop_first_motor_command        # simulate one lost packet on the Wi-Fi link
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind(("127.0.0.1", CUBE_PORT))
         self.sock.settimeout(0.05)
@@ -52,6 +53,8 @@ class FakeCube(threading.Thread):
                     name = m.param_id.rstrip("\x00")
                     if name in self.params:
                         self.send(self.enc.param_value_encode(name.encode(), self.params[name], 9, 1000, 0))
+                elif kind == "COMMAND_LONG" and m.command == 209 and self.drop_next:
+                    self.drop_next = False                       # lost: no test, no ACK
                 elif kind == "COMMAND_LONG" and m.command == 209:
                     self.motor_tests.append((int(m.param1), int(m.param2), round(m.param3), m.param4))
                     self.send(self.enc.command_ack_encode(209, mavlink2.MAV_RESULT_ACCEPTED))
@@ -59,8 +62,8 @@ class FakeCube(threading.Thread):
                     self.disarms += int(m.param1 == 0)
 
 
-def run(params, answers):
-    cube = FakeCube(params)
+def run(params, answers, drop_first=False):
+    cube = FakeCube(params, drop_first)
     cube.start()
     try:
         proc = subprocess.run([sys.executable, str(HERE / "motor_test_6dof.py"), "--motors", "1,2,3",
@@ -98,6 +101,16 @@ def cases():
     if not case1:
         print(proc.stdout[-1500:], proc.stderr[-1500:])
     ok &= case1
+    # Case 1b: the first motor command is lost on the link. The tool must resend and continue normally.
+    proc, tests, disarms = run({"FRAME_CLASS": 16, "SERVO_BLH_3DMASK": 255}, "YES\nr\n4\ny\ns\nr\n7\ny\n",
+                               drop_first=True)
+    pulses = [t for t in tests if t[3] > 0.2]
+    case1b = ("sending again" in proc.stdout
+              and [(t[0], t[2]) for t in pulses] == [(1, 1540), (1, 1460), (3, 1540), (3, 1460)])
+    print("case 1b (one lost packet): retried and completed ->", "PASS" if case1b else "FAIL")
+    if not case1b:
+        print(proc.stdout[-1500:], proc.stderr[-1500:])
+    ok &= case1b
     # Case 2: normal octa. Must refuse and send nothing.
     proc, tests, disarms = run({"FRAME_CLASS": 3, "SERVO_BLH_3DMASK": 0}, "YES\n")
     case2 = tests == [] and "Refusing" in (proc.stdout + proc.stderr)

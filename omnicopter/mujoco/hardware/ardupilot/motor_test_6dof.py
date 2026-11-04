@@ -47,23 +47,31 @@ def read_param(link, name, timeout_s=3.0):
     return None
 
 
-def motor_test(link, motor, pwm, seconds):
-    """Returns the MAV_RESULT name (or 'NO_ACK')."""
-    while link.rx.recv_match(type="COMMAND_ACK", blocking=False):
-        pass
-    link.send_heartbeat()
-    link.tx.mav.command_long_send(link.target_system, link.target_component, MAV_CMD_DO_MOTOR_TEST, 0,
-                                  motor, THROTTLE_PWM, pwm, seconds, 1, 0, 0)
-    end = time.time() + 2.0
-    while time.time() < end:
-        m = link.rx.recv_match(type=["COMMAND_ACK", "STATUSTEXT"], blocking=True, timeout=0.25)
-        if m is None:
-            continue
-        if m.get_type() == "STATUSTEXT":
-            print("   CUBE:", m.text)
-        elif m.command == MAV_CMD_DO_MOTOR_TEST:
-            entry = mavutil.mavlink.enums["MAV_RESULT"].get(m.result)
-            return entry.name if entry else str(m.result)
+def motor_test(link, motor, pwm, seconds, attempts=3):
+    """Returns the MAV_RESULT name (or 'NO_ACK' after all attempts).
+
+    The Pico Wi-Fi / 57600-baud link can drop a single packet (2026-11-04: one NO_ACK right after
+    successful parameter reads). Re-sending is safe: the Cube simply restarts the same short test
+    on the same motor with the same PWM.
+    """
+    for attempt in range(1, attempts + 1):
+        while link.rx.recv_match(type="COMMAND_ACK", blocking=False):
+            pass
+        link.send_heartbeat()
+        link.tx.mav.command_long_send(link.target_system, link.target_component, MAV_CMD_DO_MOTOR_TEST, attempt - 1,
+                                      motor, THROTTLE_PWM, pwm, seconds, 1, 0, 0)
+        end = time.time() + 1.5
+        while time.time() < end:
+            m = link.rx.recv_match(type=["COMMAND_ACK", "STATUSTEXT"], blocking=True, timeout=0.25)
+            if m is None:
+                continue
+            if m.get_type() == "STATUSTEXT":
+                print("   CUBE:", m.text)
+            elif m.command == MAV_CMD_DO_MOTOR_TEST:
+                entry = mavutil.mavlink.enums["MAV_RESULT"].get(m.result)
+                return entry.name if entry else str(m.result)
+        if attempt < attempts:
+            print(f"   no reply from the Cube (attempt {attempt}/{attempts}), sending again ...", flush=True)
     return "NO_ACK"
 
 
@@ -136,9 +144,14 @@ def main():
                 print(f"   {label}: {pwm} us for {args.seconds:.1f} s ...", flush=True)
                 result = motor_test(link, motor, pwm, args.seconds)
                 print(f"   ack: {result}")
+                if result == "NO_ACK":
+                    stop_all(link)
+                    sys.exit("No reply from the Cube after 3 attempts: the Wi-Fi link is dropping packets. Check the "
+                             "Pico W signal/power, close other programs on UDP 14550, and run again.")
                 if result != "MAV_RESULT_ACCEPTED":
                     stop_all(link)
-                    sys.exit("motor test rejected: check Messages in Mission Planner (safety, RC, arming checks)")
+                    sys.exit(f"motor test rejected ({result}): check Messages in Mission Planner "
+                             "(safety switch, arming checks)")
                 time.sleep(args.seconds + 0.8)
                 if sign > 0:
                     entry["twin_rotor"] = int(ask("   Which twin rotor (1-8, as labelled) spun? ",
