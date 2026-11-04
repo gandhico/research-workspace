@@ -24,6 +24,7 @@ lines and a go/no-go gate for each. This README explains the reasons behind them
 |---|---|
 | [RUNBOOK.md](RUNBOOK.md) | Step-by-step commands and gates from bench to OptiTrack flight |
 | [ap_param_audit.py](ap_param_audit.py) | Read-only Cube audit: all parameters, firmware, RC receiver, readiness TODOs |
+| [ap_param_load.py](ap_param_load.py) | Writes a `.param` file with read-back verification and an optional reboot. Stage-2 values need `ESC 3D CONFIRMED` ([test](test_ap_param_load.py)) |
 | [motor_test_6dof.py](motor_test_6dof.py) | 6DoF motor map, reversal and thrust-direction test, PWM 1500±Δ only. Refuses to run on a non-6DoF frame ([test](test_motor_test_6dof.py)) |
 | [board_orientation.py](board_orientation.py) | `AHRS_ORIENTATION` from gravity on three labelled faces, written as Custom 1 (`config/stage3_board_orientation.param`); also verifies an existing setting |
 | [make_6dof_mixer.py](make_6dof_mixer.py) → [generated/omnidrone_6dof_mixer.lua](generated/omnidrone_6dof_mixer.lua) | ArduPilot 6DoF mixer from the twin's 6×8 matrix |

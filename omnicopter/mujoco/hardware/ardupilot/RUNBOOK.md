@@ -44,6 +44,23 @@ The Python tools always use the Pico (UDP 14550), so they work while Mission Pla
 
 ### Load a parameter file (steps 2, 4, 6)
 
+**Preferred: the verified loader.** It writes through the Pico link and reads every value back.
+Mission Planner must not be on UDP 14550 (USB is fine).
+
+```powershell
+python ap_param_load.py config\<file>.param
+```
+
+1. It shows current → new and asks you to type `WRITE`.
+2. It reads every value back.
+3. It offers the reboot.
+
+Run the same command again after the reboot until it says
+`Everything in this file is already set on the Cube.`
+
+**Alternative, Mission Planner:** this only takes effect after **Write Params**. On
+2026-11-04 a load without a completed write left the Cube unchanged.
+
 1. Top menu **CONFIG** → left list **Full Parameter List**.
 2. Right-hand buttons → **Load from file** → browse to the `.param` file → **Open**.
 3. The changed rows are highlighted. If a message lists parameters that were "not found",
@@ -108,14 +125,17 @@ python ap_param_audit.py
 
 ## Step 2: Stage 1, OptiTrack navigation parameters (props OFF)
 
-1. Mission Planner → connect by **USB**.
-2. **CONFIG → Full Parameter List → Load from file** → choose
-   `C:\Users\user\Desktop\Omnidrone\research-workspace\omnicopter\mujoco\hardware\ardupilot\config\stage1_optitrack_ekf.param`.
-   A "not found" note for `VISO_POS_M_NSE` / `VISO_YAW_M_NSE` is expected → **OK**.
-3. **Write Params**, then reboot and reconnect.
-4. Do the load again (same file), then **Write Params**, reboot and reconnect. The two `VISO_*`
-   parameters now exist and get written.
-5. In the terminal (Mission Planner may stay on USB):
+1. Mission Planner: **DISCONNECT** (or connect it by USB).
+2. Write the file, then type `WRITE`. Ten values change; `VISO_POS_M_NSE` and `VISO_YAW_M_NSE`
+   show as "not on the Cube yet". Answer `y` to reboot.
+
+   ```powershell
+   python ap_param_load.py config\stage1_optitrack_ekf.param
+   ```
+
+3. Wait about 20 s, then run the **same command** again → `WRITE` → `y`. This writes the two `VISO_*` values.
+4. Run it a third time. It must say `Everything in this file is already set on the Cube.`
+5. In the terminal:
 
    ```powershell
    python ap_param_audit.py
@@ -152,8 +172,12 @@ Otherwise **stop: this vehicle cannot hover without reversible thrust.**
    3. Open **scripts** → right-click in the file list → **Upload** → choose
       `C:\Users\user\Desktop\Omnidrone\research-workspace\omnicopter\mujoco\hardware\ardupilot\generated\omnidrone_6dof_mixer.lua`.
    4. Check that `omnidrone_6dof_mixer.lua` is now listed in `APM/scripts`.
-3. **CONFIG → Full Parameter List → Load from file** →
-   `...\ardupilot\config\stage2_6dof_frame.param` → **Write Params** → reboot → reconnect.
+3. Disconnect Mission Planner if it is on UDP, then write stage 2. It asks for
+   `ESC 3D CONFIRMED`, then `WRITE`; answer `y` to reboot. Run it again and it must say everything is set.
+
+   ```powershell
+   python ap_param_load.py config\stage2_6dof_frame.param
+   ```
 4. **DATA → Messages**: look for **`Omnidrone 6DoF mixer loaded`**.
 5. In the terminal:
 
@@ -204,8 +228,14 @@ back to **16** → Write → reboot (a known 6DoF quirk).
    **RIGHT**), take your hands off, and press **Enter**.
 3. If it says "keep AHRS_ORIENTATION 0", go to 6.5. If it wrote
    `...\ardupilot\config\stage3_board_orientation.param`:
-   1. **Load from file** → that file → **Write Params** → reboot → reconnect.
-   2. Load it **again** (the `CUST_ROT1_*` rows appear after the first reboot) → **Write Params** → reboot.
+   1. Write it, then `WRITE` → `y` (reboot):
+
+      ```powershell
+      python ap_param_load.py config\stage3_board_orientation.param
+      ```
+
+   2. Run it **again** after about 20 s. `CUST_ROT1_*` only exist after the first reboot, so
+      they are written now. Then `y` to reboot.
 4. Check the result:
 
    ```powershell
