@@ -35,8 +35,16 @@ class Link:
 def connect(port: int = 14550, timeout_s: float = 15.0, pico_ip: str | None = None,
             pico_port: int | None = None) -> Link:
     """Commands go to (Pico IP, pico_port or port), as in the tested motor_test_1.py."""
-    rx = mavutil.mavlink_connection(f"udpin:0.0.0.0:{port}", source_system=GCS_SYSTEM,
-                                    source_component=GCS_COMPONENT)
+    try:
+        rx = mavutil.mavlink_connection(f"udpin:0.0.0.0:{port}", source_system=GCS_SYSTEM,
+                                        source_component=GCS_COMPONENT)
+    except OSError as error:                       # WinError 10013 / 10048: the port is taken
+        raise SystemExit(
+            f"UDP port {port} is already in use by another program ({error.strerror}).\n"
+            "Usually Mission Planner connected over UDP/Wi-Fi, or the OptiTrack bridge.\n"
+            "  -> Mission Planner: click DISCONNECT (or close it), or connect it by USB (COM port, 115200).\n"
+            "  -> Bridge: stop it with Ctrl+C.\n"
+            "Then run this command again.") from None
     deadline = time.time() + timeout_s
     while True:
         remaining = deadline - time.time()
