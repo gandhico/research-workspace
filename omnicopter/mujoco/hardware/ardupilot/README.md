@@ -77,10 +77,14 @@ configuration stage. Nothing is written to the Cube.
 3. **Upload the mixer.** In Mission Planner, go to Config → MAVFTP and copy
    `generated/omnidrone_6dof_mixer.lua` into `APM/scripts/`.
 4. **Stage 2: 6DoF frame.** `python ap_param_load.py config\stage2_6dof_frame.param`
-   (`SCR_ENABLE 1`, `FRAME_CLASS 16`, `SERVO_DSHOT_ESC 1`, `SERVO_BLH_3DMASK 255`), then reboot.
-   Messages should show `Omnidrone 6DoF mixer loaded`.
-   - If the DShot outputs then stay silent, set the frame class to 3, reboot, set it back to 16,
-     and reboot again (a known 6DoF quirk).
+   (`SCR_ENABLE 1`, `FRAME_CLASS 16`, `SERVO_DSHOT_ESC 1`, `SERVO_BLH_3DMASK 255`,
+   `SERVO_BLH_MASK 255`, `SERVO_BLH_OTYPE 5`), then reboot.
+   - The boot messages must show `Frame: Omnidrone 6DoF…` and **`RCOut: DS300:1-8 …`**.
+   - **Why the last two:** the 6DoF frame never puts its motor outputs into DShot. The boot
+     banner read `RCOut: PWM:1-14` on 2026-11-04. `AP_MotorsMatrix::init(frame_class)` only
+     configures motors that exist at boot, and the script-called
+     `AP_MotorsMatrix_6DoF_Scripting::init()` skips `set_update_rate()`. `SERVO_BLH_OTYPE`
+     forces the output type on the `SERVO_BLH_MASK` outputs at boot (`AP_BLHeli::init`).
 5. **Motor map** (props off): run `python motor_test_6dof.py`. Each motor runs 1500+Δ, then
    1500−Δ µs; you name the labelled twin rotor that spun. The tool prints the `--motor-map`
    for `make_6dof_mixer.py` and flags any motor that does not reverse.

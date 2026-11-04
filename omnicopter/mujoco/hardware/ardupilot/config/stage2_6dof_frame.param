@@ -8,12 +8,21 @@
 # DSHOT_REVERSE (21) to every channel in SERVO_BLH_RVMASK, once per second, but ONLY when SERVO_DSHOT_ESC is
 # a BLHeli type (1 = BLHeli32/Kiss/AM32). IOMCU channels receive them through iomcu.send_dshot_command.
 #
+# Why SERVO_BLH_MASK / SERVO_BLH_OTYPE (found 2026-11-04, boot banner "RCOut: PWM:1-14" with FRAME_CLASS 16):
+# the 6DoF frame never switches its motor outputs to DShot. AP_MotorsMatrix::init(frame_class) sets DShot only
+# for motors that exist at boot (none: the Lua script adds them later), and
+# AP_MotorsMatrix_6DoF_Scripting::init() (called by the script) does not call set_update_rate().
+# SERVO_BLH_OTYPE "overrides the output type for the output channels given by SERVO_BLH_MASK" and is applied
+# at boot by AP_BLHeli::init() from SRV_Channels::init(), independent of the motors. Expected banner after
+# reboot: "RCOut: DS300:1-8 PWM:9-14".
+#
 # Load with:  python ap_param_load.py config\stage2_6dof_frame.param   (PROPS OFF)
 # Before loading: generated/omnidrone_6dof_mixer.lua must be in APM/scripts on the SD card (MAVFTP).
 # After loading and rebooting: python motor_test_6dof.py (props off) must show every motor reversing.
-# Known 6DoF quirk (ArduPilot forum): if DShot outputs stop after the frame change, set FRAME_CLASS to 3,
-# reboot, set it back to 16, reboot.
+# The forum's "toggle FRAME_CLASS" workaround is not needed: SERVO_BLH_MASK/OTYPE below force DShot at boot.
 SCR_ENABLE,1
 FRAME_CLASS,16
 SERVO_DSHOT_ESC,1
 SERVO_BLH_3DMASK,255
+SERVO_BLH_MASK,255
+SERVO_BLH_OTYPE,5

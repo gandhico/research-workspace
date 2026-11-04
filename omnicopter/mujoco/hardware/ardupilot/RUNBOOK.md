@@ -175,24 +175,29 @@ Checked in the Copter-4.7.1 source (2026-11-04):
    3. Open **scripts** → right-click in the file list → **Upload** → choose
       `C:\Users\user\Desktop\Omnidrone\research-workspace\omnicopter\mujoco\hardware\ardupilot\generated\omnidrone_6dof_mixer.lua`.
    4. Check that `omnidrone_6dof_mixer.lua` is now listed in `APM/scripts`.
-3. Disconnect Mission Planner if it is on UDP, then write stage 2. It shows 4 changes
-   (`SCR_ENABLE`, `FRAME_CLASS`, `SERVO_DSHOT_ESC`, `SERVO_BLH_3DMASK`) and asks for `PROPS OFF`,
-   then `WRITE`; answer `y` to reboot. Run it again and it must say everything is set.
+3. Disconnect Mission Planner if it is on UDP, then write stage 2. The 6 values are
+   `SCR_ENABLE 1`, `FRAME_CLASS 16`, `SERVO_DSHOT_ESC 1`, `SERVO_BLH_3DMASK 255`,
+   `SERVO_BLH_MASK 255` and `SERVO_BLH_OTYPE 5`. It asks for `PROPS OFF`, then `WRITE`; answer
+   `y` to reboot. Run it again and it must say everything is set.
+   - The last two force DShot on MAIN 1–8. The 6DoF frame never switches its motor outputs to
+     DShot by itself; the 2026-11-04 boot showed `RCOut: PWM:1-14`. The reason is in the
+     comments of the `.param` file.
 
    ```powershell
    python ap_param_load.py config\stage2_6dof_frame.param
    ```
-4. **DATA → Messages**: look for **`Omnidrone 6DoF mixer loaded`**.
+4. **DATA → Messages**, in the boot lines:
+   - **`Frame: Omnidrone 6DoF (twin-d…`**: the mixer script is running.
+   - **`RCOut: DS300:1-8 PWM:9-14`**: DShot is active on the motors. If it says `RCOut: PWM:1-14`,
+     DShot is **not** active: rerun the audit and fix the `SERVO_BLH_MASK` / `SERVO_BLH_OTYPE` line.
 5. In the terminal:
 
    ```powershell
    python ap_param_audit.py
    ```
 
-If the motors do not respond in step 5: set `FRAME_CLASS` to **3** → Write → reboot → set it
-back to **16** → Write → reboot (a known 6DoF quirk).
-
-✔ **Pass when** the message appeared and the audit says **OK** for `FRAME_CLASS`, `SCR_ENABLE` and `SERVO_BLH_3DMASK`.
+✔ **Pass when** the frame line and **`RCOut: DS300:1-8`** appear, and the audit says **OK** for
+`FRAME_CLASS`, `SCR_ENABLE`, `SERVO_BLH_3DMASK`, `SERVO_DSHOT_ESC` and the 6DoF DShot override.
 
 ## Step 5: Motor map and reversal (props OFF, battery connected)
 
@@ -247,8 +252,12 @@ back to **16** → Write → reboot (a known 6DoF quirk).
    ```
 
    It must print **CORRECT**.
-5. **SETUP → Mandatory Hardware → Accel Calibration → Calibrate Accel.** For each prompt put
-   the named face down, hold still, and click the button to continue:
+5. **SETUP → Mandatory Hardware → Accel Calibration → Calibrate Accel.**
+   - **Use Mission Planner on USB.** On 2026-11-04, over the Wi-Fi link, the Cube only ever logged
+     "Place vehicle level and press any key" and then "Calibration FAILED": the per-pose clicks
+     did not reach it.
+   - Let the Cube sit powered for about 5 minutes first (the IMU heater).
+   - For each prompt put the named face down, take your hands off, click, and wait for the next prompt:
 
    | Prompt | Face down |
    |---|---|

@@ -131,6 +131,8 @@ def audit(p):
         "SERVO_BLH_3DMASK (3D/reversible DShot channels)": channels(g("SERVO_BLH_3DMASK") or 0),
         "SERVO_DSHOT_ESC (1 = BLHeli32/Kiss/AM32) / BRD_IO_DSHOT": f"{fmt(g('SERVO_DSHOT_ESC'))} / {fmt(g('BRD_IO_DSHOT'))}",
         "SERVO_BLH_RVMASK (reversed channels)": channels(g("SERVO_BLH_RVMASK") or 0),
+        "SERVO_BLH_MASK / SERVO_BLH_OTYPE (forced output type)": f"{channels(g('SERVO_BLH_MASK') or 0)} / "
+                                                                 f"{fmt(g('SERVO_BLH_OTYPE'), {**PWM_TYPE, 0: 'None'})}",
         "SERVO_BLH_BDMASK (bidirectional-telemetry channels)": channels(g("SERVO_BLH_BDMASK") or 0),
         "AHRS_ORIENTATION": fmt(g("AHRS_ORIENTATION")),
         "EK3_SRC1_POSXY / VELXY / POSZ / VELZ / YAW": " / ".join([
@@ -165,6 +167,13 @@ def audit(p):
         # (AP_HAL_ChibiOS/RCOutput_serial.cpp update_channel_masks, Copter-4.7.1).
         need(g("SERVO_DSHOT_ESC") in (1, 2, 3, 4),
              "SERVO_DSHOT_ESC = 1 (BLHeli32/Kiss/AM32) so ArduPilot switches the ESCs to 3D mode")
+        if g("FRAME_CLASS") == 16:
+            # The 6DoF frame never sets its motor outputs to DShot (AP_MotorsMatrix_6DoF_Scripting::init does
+            # not call set_update_rate); force it with the BLHeli output-type override (AP_BLHeli::init).
+            forced = set(channels(g("SERVO_BLH_MASK") or 0))
+            need(set(motors) <= forced and g("SERVO_BLH_OTYPE") == g("MOT_PWM_TYPE"),
+                 "6DoF frame: SERVO_BLH_MASK must cover the motor outputs and SERVO_BLH_OTYPE = MOT_PWM_TYPE "
+                 "to force DShot (boot banner must read 'RCOut: DS300:1-8 ...')")
     else:
         findings.append("CHECK  PWM ESCs: reversibility (1500 us = stop) must be configured in the ESC firmware itself")
     need(g("EK3_SRC1_POSXY") == 6 and g("EK3_SRC1_POSZ") == 6 and g("EK3_SRC1_YAW") == 6
