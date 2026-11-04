@@ -1,13 +1,19 @@
 # Omnidrone stage 2: 6DoF scripting frame with reversible (3D) DShot motors.
-# Target: ArduPilot Copter 4.7.1 on the Cube Orange (audit 2026-11-04: FRAME_CLASS 3 Octa, DShot300, SERVO1-8 = Motor1-8).
+# Target: ArduPilot Copter 4.7.1 on the Cube Orange (audit 2026-11-04: FRAME_CLASS 3 Octa, DShot300 on
+# MAIN 1-8 through the IOMCU (BRD_IO_DSHOT 1), SERVO1-8 = Motor1-8).
+# ESCs: 2x HGLRC SPECTER 60A 4-in-1, BLHeli_32 (SPECTER60_G_128).
 #
-# DO NOT LOAD until BOTH are true:
-#   1. The ESC firmware is confirmed to support DShot 3D / bidirectional rotation
-#      (BLHeli_32, BLHeli_S/Bluejay or AM32 with 3D enabled). On a non-3D ESC, 3D DShot values are misread.
-#   2. generated/omnidrone_6dof_mixer.lua is on the SD card in APM/scripts/ (Mission Planner > Config > MAVFTP).
-# Props OFF. Write, reboot, and look for "Omnidrone 6DoF mixer loaded" in Messages.
+# How 3D mode is switched on (Copter-4.7.1 AP_HAL_ChibiOS/RCOutput_serial.cpp update_channel_masks):
+# while DISARMED, ArduPilot sends DShot command DSHOT_3D_ON (10) to every channel in SERVO_BLH_3DMASK, and
+# DSHOT_REVERSE (21) to every channel in SERVO_BLH_RVMASK, once per second, but ONLY when SERVO_DSHOT_ESC is
+# a BLHeli type (1 = BLHeli32/Kiss/AM32). IOMCU channels receive them through iomcu.send_dshot_command.
+#
+# Load with:  python ap_param_load.py config\stage2_6dof_frame.param   (PROPS OFF)
+# Before loading: generated/omnidrone_6dof_mixer.lua must be in APM/scripts on the SD card (MAVFTP).
+# After loading and rebooting: python motor_test_6dof.py (props off) must show every motor reversing.
 # Known 6DoF quirk (ArduPilot forum): if DShot outputs stop after the frame change, set FRAME_CLASS to 3,
 # reboot, set it back to 16, reboot.
 SCR_ENABLE,1
 FRAME_CLASS,16
+SERVO_DSHOT_ESC,1
 SERVO_BLH_3DMASK,255

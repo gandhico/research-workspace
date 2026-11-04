@@ -118,6 +118,10 @@ def main():
             sys.exit("Refusing: this test is only for the 6DoF frame (FRAME_CLASS 16) with SERVO_BLH_3DMASK "
                      "covering outputs 1-8. On a normal DShot output, 1500 us is ~50% thrust. Nothing was sent.")
         reversible_confirmed = True
+        esc_type = read_param(link, "SERVO_DSHOT_ESC")
+        if esc_type not in (1, 2, 3, 4):
+            print(f"WARNING: SERVO_DSHOT_ESC={esc_type}. ArduPilot only sends DSHOT_3D_ON to the ESCs when it is a "
+                  "BLHeli type (1 for BLHeli_32). Expect motors NOT to reverse until it is set (stage 2 file).")
 
         for motor in motors:
             print(f"\n=== ArduPilot Motor{motor} ===")
@@ -174,7 +178,8 @@ def main():
         print("Motor map incomplete or duplicated: test all 8 motors once each.")
     not_reversing = [r["ap_motor"] for r in rows if r.get("minus_reversed") is False]
     if not_reversing:
-        print(f"Motors {not_reversing} did NOT reverse: ESC 3D mode is not working on them. Do not fly.")
+        print(f"Motors {not_reversing} did NOT reverse: ESC 3D mode is not working on them. Do not fly. "
+              "Check SERVO_DSHOT_ESC=1 and SERVO_BLH_3DMASK=255, reboot (3D_ON is sent while disarmed), and retest.")
     wrong = [r["ap_motor"] for r in rows if r.get("plus_pushes_along_plusZ") is False]
     if wrong:
         bits = sum(1 << (m - 1) for m in wrong)

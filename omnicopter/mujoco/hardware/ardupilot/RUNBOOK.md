@@ -143,31 +143,27 @@ python ap_param_audit.py
 
 ✔ **Pass when** the audit says **OK** for the EKF3 sources, `VISO_TYPE`, `COMPASS_USE` and `GPS1_TYPE`.
 
-## Step 3: ESCs, identify them and set bidirectional (3D) mode (props OFF)
+## Step 3: ESCs and 3D mode (nothing to run; done by stage 2)
 
-Why this step is different on this Cube (checked in the Copter-4.7.1 source, 2026-11-04):
-- **The motors run on MAIN 1–8 through the I/O coprocessor** (`BRD_IO_DSHOT 1`). ArduPilot's
-  BLHeli pass-through only reaches the FMU/AUX outputs (`AP_BLHeli.cpp`: "with IOMCU the local
-  (FMU) channels start at 8"), so **the ESCs cannot be configured through the Cube as wired.**
-- **ArduPilot never sends a "3D on" command.** With `SERVO_BLH_3DMASK` it only remaps 1000–2000 µs
-  to reverse/forward DShot values (1500 = stop). Each **ESC must itself be set to
-  bidirectional (3D)**.
+The ESCs are **2× HGLRC SPECTER 60A 4-in-1, BLHeli_32** (stock firmware `SPECTER60_G_128`,
+STM32G071). BLHeli_32 accepts the DShot commands **3D on** (10) and **reverse** (21).
 
-What to do:
-1. Read the ESC model from the board, label or purchase page. That tells you the firmware:
-   BLHeli_32, BLHeli_S/Bluejay, AM32 or other.
-2. Set **bidirectional / 3D** mode on all 8 ESCs, using one of:
-   - a **USB linker or a spare Betaflight flight controller**: connect each ESC's signal wire
-     there, then use BLHeliSuite32 (BLHeli_32) or https://esc-configurator.com (BLHeli_S, Bluejay,
-     AM32) → motor direction **Bidirectional** → write;
-   - the ESCs may already ship in bidirectional mode: step 5 will tell.
-3. The final proof comes in **step 5, props off**: every motor must spin the **other way** at 1460 µs.
-   - On an ESC that is not in 3D mode, 1460 µs gives about 55 % **forward** instead. That is
-     harmless with props off, and the tool flags it.
+Checked in the Copter-4.7.1 source (2026-11-04):
+- **ArduPilot switches the ESCs to 3D itself.** While disarmed, it sends `DSHOT_3D_ON` once per
+  second to every output in `SERVO_BLH_3DMASK`, and `DSHOT_REVERSE` to every output in
+  `SERVO_BLH_RVMASK` (`RCOutput_serial.cpp`, `update_channel_masks`).
+- **This only happens when `SERVO_DSHOT_ESC` is a BLHeli type.** Yours was 0. The stage 2 file
+  sets **`SERVO_DSHOT_ESC 1`** (BLHeli32/Kiss/AM32) together with `SERVO_BLH_3DMASK 255`.
+- **It reaches your MAIN 1–8 outputs.** They run DShot through the I/O coprocessor
+  (`BRD_IO_DSHOT 1`), and the commands are forwarded there (`iomcu.send_dshot_command`).
+- **No ESC tool or USB linker is needed.** BLHeli pass-through could not reach these outputs
+  anyway: it is AUX-only when the I/O coprocessor is on.
 
-✔ **Pass when** the firmware supports bidirectional/3D and it is set on all 8 (or you go to
-step 5 to verify). If any motor fails to reverse in step 5, **stop: this vehicle cannot hover
-without reversible thrust.** Keep the props off until step 5 passes.
+✔ **Pass when** step 5 (props off) shows every motor spinning the **other way** at 1460 µs.
+- On an ESC that did not switch to 3D, 1460 µs gives about 55 % **forward** instead: harmless
+  without props, and the tool flags it.
+- If any motor fails to reverse, **stop: this vehicle cannot hover without reversible thrust.**
+- Keep the props off until step 5 passes.
 
 ## Step 4: Stage 2, 6DoF frame and mixer (props OFF)
 
@@ -179,8 +175,9 @@ without reversible thrust.** Keep the props off until step 5 passes.
    3. Open **scripts** → right-click in the file list → **Upload** → choose
       `C:\Users\user\Desktop\Omnidrone\research-workspace\omnicopter\mujoco\hardware\ardupilot\generated\omnidrone_6dof_mixer.lua`.
    4. Check that `omnidrone_6dof_mixer.lua` is now listed in `APM/scripts`.
-3. Disconnect Mission Planner if it is on UDP, then write stage 2. It asks for
-   `ESC 3D CONFIRMED`, then `WRITE`; answer `y` to reboot. Run it again and it must say everything is set.
+3. Disconnect Mission Planner if it is on UDP, then write stage 2. It shows 4 changes
+   (`SCR_ENABLE`, `FRAME_CLASS`, `SERVO_DSHOT_ESC`, `SERVO_BLH_3DMASK`) and asks for `PROPS OFF`,
+   then `WRITE`; answer `y` to reboot. Run it again and it must say everything is set.
 
    ```powershell
    python ap_param_load.py config\stage2_6dof_frame.param

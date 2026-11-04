@@ -51,8 +51,8 @@ lines and a go/no-go gate for each. This README explains the reasons behind them
 
 - Git 2.56 and GitHub CLI 2.103.
 - Python 3.11 with `mujoco` 3.17, `numpy`, `scipy`, `pandas`, `matplotlib`, `pymavlink`.
-- Mission Planner, for parameters, MAVFTP script upload, motor test and DataFlash logs.
-  For pass-through ESC checks use BLHeliSuite32, the ESC Configurator or AM32 tools, depending on the ESC.
+- Mission Planner, for MAVFTP script upload, calibrations, HUD and DataFlash logs.
+  Parameters are written with `ap_param_load.py`.
 
 ## 1. Audit the Cube (read-only)
 
@@ -67,19 +67,18 @@ configuration stage. Nothing is written to the Cube.
 
 ## 2. Configure (props OFF)
 
-1. **Stage 1: OptiTrack navigation.**
-   - In Mission Planner, go to Config → Full Parameter List → Load from file and choose
-     `config/stage1_optitrack_ekf.param`. Write, then reboot.
-   - Load it again: `VISO_POS_M_NSE` and `VISO_YAW_M_NSE` only appear after `VISO_TYPE=1`
-     and a reboot.
-2. **ESC check, the gate for stage 2.** Identify the ESC and its firmware through pass-through
-   (`SERVO_BLH_AUTO=1` is already set). The 6DoF mixer needs DShot **3D** (bidirectional
-   rotation): BLHeli_32, BLHeli_S/Bluejay or AM32. Without it this vehicle cannot hover.
+1. **Stage 1: OptiTrack navigation.** `python ap_param_load.py config\stage1_optitrack_ekf.param`.
+   Done and verified on 2026-11-04.
+2. **ESCs:** 2× HGLRC SPECTER 60A 4-in-1, BLHeli_32. 3D mode is switched on by ArduPilot itself.
+   While disarmed it sends `DSHOT_3D_ON` to every output in `SERVO_BLH_3DMASK`, but only when
+   `SERVO_DSHOT_ESC` is a BLHeli type (1). This also works through the I/O coprocessor on MAIN 1–8
+   (Copter-4.7.1 `RCOutput_serial.cpp`). BLHeli pass-through cannot reach MAIN outputs, so no ESC
+   tool is used.
 3. **Upload the mixer.** In Mission Planner, go to Config → MAVFTP and copy
    `generated/omnidrone_6dof_mixer.lua` into `APM/scripts/`.
-4. **Stage 2: 6DoF frame.** Load `config/stage2_6dof_frame.param` (`SCR_ENABLE 1`,
-   `FRAME_CLASS 16`, `SERVO_BLH_3DMASK 255`), then reboot. Messages should show
-   `Omnidrone 6DoF mixer loaded`.
+4. **Stage 2: 6DoF frame.** `python ap_param_load.py config\stage2_6dof_frame.param`
+   (`SCR_ENABLE 1`, `FRAME_CLASS 16`, `SERVO_DSHOT_ESC 1`, `SERVO_BLH_3DMASK 255`), then reboot.
+   Messages should show `Omnidrone 6DoF mixer loaded`.
    - If the DShot outputs then stay silent, set the frame class to 3, reboot, set it back to 16,
      and reboot again (a known 6DoF quirk).
 5. **Motor map** (props off): run `python motor_test_6dof.py`. Each motor runs 1500+Δ, then

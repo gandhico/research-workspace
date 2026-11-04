@@ -9,7 +9,7 @@
 4. Offers a reboot (the Cube must be disarmed).  Run the same command again after the reboot
    until it reports nothing missing and nothing to change.
 
-Stage-2 values (FRAME_CLASS 16, SERVO_BLH_3DMASK) also require typing ESC 3D CONFIRMED.
+Stage-2 values (FRAME_CLASS 16, SERVO_BLH_3DMASK) also require typing PROPS OFF.
 Mission Planner must not be connected on UDP 14550 (USB is fine).  Its parameter table is a
 cached copy: press Refresh Params there afterwards.
 """
@@ -119,10 +119,10 @@ def main():
         gated = [n for n, _, v, _ in changes
                  if (n == "FRAME_CLASS" and v == 16) or (n == "SERVO_BLH_3DMASK" and v != 0)]
         if gated:
-            print("\nThis enables the 6DoF frame / reversible DShot-3D outputs. Only continue with PROPS OFF, "
-                  "the ESCs set to bidirectional/3D (runbook step 3) and the mixer .lua in APM/scripts (step 4). "
-                  "Keep the props off until motor_test_6dof.py shows every motor reversing (step 5).")
-            if input("Type ESC 3D CONFIRMED to continue: ").strip().upper() != "ESC 3D CONFIRMED":
+            print("\nThis enables the 6DoF frame / reversible DShot-3D outputs. Only continue with PROPS OFF and "
+                  "the mixer .lua in APM/scripts (runbook step 4). Keep the props off until motor_test_6dof.py "
+                  "shows every motor reversing (step 5).")
+            if input("Type PROPS OFF to continue: ").strip().upper() != "PROPS OFF":
                 sys.exit("cancelled; nothing was written")
         if input(f"\nType WRITE to write {len(changes)} parameter(s): ").strip().upper() != "WRITE":
             sys.exit("cancelled; nothing was written")

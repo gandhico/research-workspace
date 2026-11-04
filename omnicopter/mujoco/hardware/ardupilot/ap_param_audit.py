@@ -129,6 +129,8 @@ def audit(p):
         "MOT_THST_EXPO / MOT_THST_HOVER": f"{fmt(g('MOT_THST_EXPO'))} / {fmt(g('MOT_THST_HOVER'))}",
         "Motor outputs (servo channel -> MotorN)": {f"SERVO{ch}": f"Motor{m}" for ch, m in sorted(motors.items())},
         "SERVO_BLH_3DMASK (3D/reversible DShot channels)": channels(g("SERVO_BLH_3DMASK") or 0),
+        "SERVO_DSHOT_ESC (1 = BLHeli32/Kiss/AM32) / BRD_IO_DSHOT": f"{fmt(g('SERVO_DSHOT_ESC'))} / {fmt(g('BRD_IO_DSHOT'))}",
+        "SERVO_BLH_RVMASK (reversed channels)": channels(g("SERVO_BLH_RVMASK") or 0),
         "SERVO_BLH_BDMASK (bidirectional-telemetry channels)": channels(g("SERVO_BLH_BDMASK") or 0),
         "AHRS_ORIENTATION": fmt(g("AHRS_ORIENTATION")),
         "EK3_SRC1_POSXY / VELXY / POSZ / VELZ / YAW": " / ".join([
@@ -159,6 +161,10 @@ def audit(p):
     if dshot:
         threed = set(channels(g("SERVO_BLH_3DMASK") or 0))
         need(set(motors) <= threed, "DShot: every motor channel should be in SERVO_BLH_3DMASK (3D/reversible)")
+        # ArduPilot only sends DSHOT_3D_ON / DSHOT_REVERSE when the ESC type is a BLHeli type
+        # (AP_HAL_ChibiOS/RCOutput_serial.cpp update_channel_masks, Copter-4.7.1).
+        need(g("SERVO_DSHOT_ESC") in (1, 2, 3, 4),
+             "SERVO_DSHOT_ESC = 1 (BLHeli32/Kiss/AM32) so ArduPilot switches the ESCs to 3D mode")
     else:
         findings.append("CHECK  PWM ESCs: reversibility (1500 us = stop) must be configured in the ESC firmware itself")
     need(g("EK3_SRC1_POSXY") == 6 and g("EK3_SRC1_POSZ") == 6 and g("EK3_SRC1_YAW") == 6
