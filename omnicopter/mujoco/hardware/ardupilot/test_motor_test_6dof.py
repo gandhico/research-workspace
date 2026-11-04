@@ -62,13 +62,13 @@ class FakeCube(threading.Thread):
                     self.disarms += int(m.param1 == 0)
 
 
-def run(params, answers, drop_first=False):
+def run(params, answers, drop_first=False, extra=()):
     cube = FakeCube(params, drop_first)
     cube.start()
     try:
         proc = subprocess.run([sys.executable, str(HERE / "motor_test_6dof.py"), "--motors", "1,2,3",
                                "--seconds", "0.3", "--delta", "40", "--pico-ip", "127.0.0.1",
-                               "--port", str(TOOL_PORT), "--pico-port", str(CUBE_PORT)],
+                               "--port", str(TOOL_PORT), "--pico-port", str(CUBE_PORT), *extra],
                               input=answers, text=True, capture_output=True, timeout=60, cwd=str(HERE))
         time.sleep(0.3)
         return proc, cube.motor_tests, cube.disarms
@@ -111,6 +111,18 @@ def cases():
     if not case1b:
         print(proc.stdout[-1500:], proc.stderr[-1500:])
     ok &= case1b
+    # Case 3: props on, normal props. Hover signs from the mixer: Motor1 +Z, Motor2 -Z, Motor3 -Z.
+    # Motor1 strong on plus (ok), Motor2 strong on minus (ok), Motor3 strong on plus (wrong) -> only Motor3 flagged.
+    proc, tests, disarms = run({"FRAME_CLASS": 16, "SERVO_BLH_3DMASK": 255},
+                               "PROPS ON RESTRAINED\nr\n1\ny\ny\np\nr\n2\ny\ny\nm\nr\n3\ny\ny\np\n",
+                               extra=("--props-on",))
+    case3 = ("Motors [3]: the prop's strong side points the WRONG way" in proc.stdout
+             and "Motors [1" not in proc.stdout.split("Strong side")[1].split("\n", 2)[2]
+             and all(t[1] == 1 for t in tests))
+    print("case 3 (props on, strong-side check): only Motor3 flagged ->", "PASS" if case3 else "FAIL")
+    if not case3:
+        print(proc.stdout[-2000:], proc.stderr[-1500:])
+    ok &= case3
     # Case 2: normal octa. Must refuse and send nothing.
     proc, tests, disarms = run({"FRAME_CLASS": 3, "SERVO_BLH_3DMASK": 0}, "YES\n")
     case2 = tests == [] and "Refusing" in (proc.stdout + proc.stderr)

@@ -1,0 +1,27 @@
+# Omnidrone stage 4: settings for the first tethered hover (ArduPilot Copter 4.7.1, Cube Orange+).
+# Every value below was checked against the Copter-4.7.1 parameter definitions on 2026-11-04.
+#
+# ATC_ANGLE_MAX 20 deg (was 30): with NORMAL props mounted by hover sign, the twin shows a rotor's hover thrust
+#   reaches zero (its weak side) after 35 deg of tilt from the hover attitude on the worst axis, keeps >= 1 N to
+#   29 deg and >= 2 N to 22.5 deg. 20 deg keeps every rotor on its strong side with margin.
+# MOT_THST_HOVER 0.5 (was 0.35): twin estimate 0.54 at 10 N/rotor (unverified); MOT_HOVER_LEARN 2 learns it.
+# Flight modes on channel 5 (3-position switch gives modes 1, 4, 6): Stabilize / AltHold / Loiter.
+# FS_THR_ENABLE 3 = RC loss -> "Enabled always Land".  FS_GCS_ENABLE 5 = GCS loss -> "Land".
+# Fence: NOT used indoors. Copter-4.7.1 documents FENCE_RADIUS >= 30 m and FENCE_ALT_MAX >= 10 m; the tether
+#   is the fence for these flights.
+# Still set by hand, because they depend on your hardware: the RC E-stop switch (RCx_OPTION 31 on the channel
+#   you choose) and the battery monitor (BATT_MONITOR 4 + your power module, BATT_LOW_VOLT, BATT_FS_LOW_ACT 1).
+#
+# Load with:  python ap_param_load.py config\stage4_first_hover.param
+ATC_ANGLE_MAX,20
+MOT_THST_HOVER,0.5
+MOT_HOVER_LEARN,2
+FLTMODE_CH,5
+FLTMODE1,0
+FLTMODE2,0
+FLTMODE3,2
+FLTMODE4,2
+FLTMODE5,5
+FLTMODE6,5
+FS_THR_ENABLE,3
+FS_GCS_ENABLE,5

@@ -12,14 +12,18 @@ stop) is 1000 us = FULL reverse (AP_HAL_ChibiOS/RCOutput.cpp DShot-3D mapping).
 
 Each motor runs 1500+delta, pauses, then 1500-delta.  You answer which twin rotor
 (1-8, as labelled on the frame) moved and, with props on, whether the +delta pulse pushed
-along that rotor's +Z (the blue axis in the twin viewer).  The result is saved and the
---motor-map for make_6dof_mixer.py and any SERVO_BLH_RVMASK bits are printed.
+along that rotor's +Z (the blue axis in the twin viewer) and which pulse blew harder.
+The result is saved and the --motor-map for make_6dof_mixer.py and any SERVO_BLH_RVMASK
+bits are printed.  With normal (one-direction) props it also checks that every rotor's
+strong side equals its hover direction (+Z for rotors 1,4,5,8, -Z for 2,3,6,7 at the twin's
+hover attitude), so all 8 hover on their strong side.
 """
 from __future__ import annotations
 
 import argparse
 import csv
 from datetime import datetime
+import json
 from pathlib import Path
 import sys
 import time
@@ -162,6 +166,10 @@ def main():
                             {"y", "n"}) == "y"
                 else:
                     entry["minus_reversed"] = ask("   Did -delta spin it the OTHER way? [y/n] ", {"y", "n"}) == "y"
+            if args.props_on:
+                # Normal (one-direction) props: each rotor must hover on its strong side.
+                entry["stronger_pulse"] = ask("   Which pulse blew HARDER: [p]lus (1500+delta), [m]inus (1500-delta), "
+                                              "or [s]ame? ", {"p", "m", "s"})
             rows.append(entry)
     except KeyboardInterrupt:
         print("\nCtrl+C")
@@ -198,6 +206,42 @@ def main():
         bits = sum(1 << (m - 1) for m in wrong)
         print(f"Motors {wrong} push the wrong way: add {bits} to SERVO_BLH_RVMASK (bits = output numbers), "
               "reboot, and repeat this test.")
+    strong_side_report(rows)
+
+
+def hover_sign_by_ap_motor():
+    """+1 / -1: hover thrust direction along each motor's site +Z, from the generated mixer's throttle column."""
+    summary = json.loads((HERE / "generated" / "omnidrone_6dof_mixer.json").read_text(encoding="utf-8"))
+    return {int(name[5:]): (1 if f[3] > 0 else -1) for name, f in summary["factors_by_ap_motor"].items()}
+
+
+def strong_side_report(rows):
+    """Normal (one-direction) props: the strong thrust direction of every rotor must equal its hover direction
+    (twin: +Z for rotors 1,4,5,8 and -Z for 2,3,6,7), so all 8 hover on their strong side."""
+    tested = [r for r in rows if "stronger_pulse" in r]
+    if not tested:
+        return
+    expected = hover_sign_by_ap_motor()
+    unclear, mismatched = [], []
+    for r in tested:
+        if r["stronger_pulse"] == "s":
+            unclear.append(r["ap_motor"])
+            continue
+        plus_dir = 1 if r.get("plus_pushes_along_plusZ", True) else -1      # physical +Z/-Z of the +delta pulse
+        strong_dir = plus_dir if r["stronger_pulse"] == "p" else -plus_dir
+        if strong_dir != expected[r["ap_motor"]]:
+            mismatched.append(r["ap_motor"])
+    print("\nStrong side (normal props must hover on their strong side): "
+          f"+Z for Motors {[m for m, s in sorted(expected.items()) if s > 0]}, "
+          f"-Z for Motors {[m for m, s in sorted(expected.items()) if s < 0]}")
+    if unclear:
+        print(f"Motors {unclear}: no clear difference. Repeat with a larger --delta (up to 60).")
+    if mismatched:
+        print(f"Motors {mismatched}: the prop's strong side points the WRONG way. Re-mount it flipped over "
+              "(use the opposite-rotation prop so it still pushes when flipped), then repeat this test. "
+              "Do not use SERVO_BLH_RVMASK for this: that only changes which command sign is 'positive'.")
+    if not unclear and not mismatched and len(tested) == 8:
+        print("All 8 props hover on their strong side.")
 
 
 if __name__ == "__main__":

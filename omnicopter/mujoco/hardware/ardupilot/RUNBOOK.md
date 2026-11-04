@@ -276,22 +276,38 @@ Checked in the Copter-4.7.1 source (2026-11-04):
 
 ✔ **Pass when** the HUD behaves like that and `board_orientation.py` still says CORRECT.
 
-## Step 7: Thrust direction (props ON, vehicle strapped down)
+## Step 7: Thrust direction and strong side (props ON, vehicle strapped down)
+
+The props are **normal (one-direction)**, so they push much harder one way than the other.
+Mount them **by hover sign**, so that all 8 rotors hover on their strong side:
+
+| Rotors | Strong side must push along | How to mount |
+|---|---|---|
+| **1, 4, 5, 8** | **+Z**, the blue axis in the twin viewer (away from the beam face) | normal mounting |
+| **2, 3, 6, 7** | **−Z** (toward the beam face) | pusher: the opposite-rotation prop, flipped over |
 
 1. Strap the vehicle to a heavy base or fixture. Everyone stays ≥ 3 m away; one person stands at the battery plug.
 2. Run:
 
    ```powershell
-   python motor_test_6dof.py --props-on --delta 30
+   python motor_test_6dof.py --props-on --delta 50
    ```
 
-3. Type `PROPS ON RESTRAINED`.
-4. For each motor, hold a tissue strip near the rotor. The air must **leave along −Z**, the
-   opposite of the blue axis in the twin viewer, so the thrust pushes along +Z. Answer `y` or `n`.
-5. If it prints a `SERVO_BLH_RVMASK` value: **Full Parameter List** → search
-   `SERVO_BLH_RVMASK` → set that value → **Write Params** → reboot → repeat step 7.
+3. Type `PROPS ON RESTRAINED`. For each motor:
+   1. **Plus pulse (1550 µs).** Hold a tissue strip near the rotor. On the blue-axis (+Z) side
+      it must be **pulled toward** the prop, and on the other side **blown away**, so the thrust
+      is along +Z. Answer `y` or `n`.
+   2. **Minus pulse (1450 µs).** It must spin the other way: `y`.
+   3. **Which pulse blew harder:** answer `p` or `m`.
+4. Read the result:
+   - **`SERVO_BLH_RVMASK` value printed** (plus pushes along −Z): **Full Parameter List** →
+     `SERVO_BLH_RVMASK` → that value → **Write Params** → reboot → repeat step 7.
+   - **"strong side points the WRONG way"**: re-mount that prop as the opposite-rotation prop,
+     flipped over. Then repeat step 7. RVMASK cannot fix this.
+   - **"no clear difference"**: repeat that motor with `--motors N --delta 60`.
 
-✔ **Pass when** all 8 motors are answered **y**.
+✔ **Pass when** all 8 answer **y** to both direction questions and the tool prints
+**"All 8 props hover on their strong side."**
 
 ## Step 8: OptiTrack (props off)
 
@@ -371,19 +387,19 @@ Checked in the Copter-4.7.1 source (2026-11-04):
    and Current**, Sensor = your power module → reboot. Check that the HUD voltage matches a
    multimeter. Then **SETUP → Mandatory Hardware → FailSafe**: battery low voltage = cells × 3.5 V,
    action **Land**.
-6. **Fence and failsafes** (**Full Parameter List**, then **Write Params**, then reboot):
+6. **First-hover parameters.** Stop the bridge and use Mission Planner on USB, because the
+   loader needs UDP 14550. Then run:
 
-   | Parameter | Value |
-   |---|---|
-   | `FENCE_ENABLE` | 1 |
-   | `FENCE_TYPE` | 3 (max altitude + circle) |
-   | `FENCE_RADIUS` | your cage half-width − 0.5 m |
-   | `FENCE_ALT_MAX` | your cage height − 0.5 m |
-   | `FENCE_ACTION` | **Always Land** |
-   | `FS_GCS_ENABLE` | **Enabled always Land** |
-   | `MOT_HOVER_LEARN` | 2 |
-   | `MOT_THST_HOVER` | 0.5 |
+   ```powershell
+   python ap_param_load.py config\stage4_first_hover.param
+   ```
 
+   It writes `ATC_ANGLE_MAX 20`, `MOT_THST_HOVER 0.5`, `MOT_HOVER_LEARN 2`, the flight modes
+   (channel 5: Stabilize / AltHold / Loiter), `FS_THR_ENABLE 3` (RC loss → Land) and
+   `FS_GCS_ENABLE 5` (GCS loss → Land). All of these were checked against the Copter-4.7.1
+   definitions. This replaces 3 above if you use it.
+   - **No fence indoors.** Copter-4.7.1 documents `FENCE_RADIUS` ≥ 30 m and `FENCE_ALT_MAX`
+     ≥ 10 m, so the tether is the fence.
 7. Run the audit. Stop the bridge first (**Ctrl+C**), because the audit needs UDP 14550:
 
    ```powershell
