@@ -1,34 +1,91 @@
-# Omnidrone runbook: bench → tethered hover → OptiTrack flight
+# Omnidrone runbook: click-by-click, bench → tethered hover → OptiTrack flight
 
-Run the steps in order. Each step ends with a **GATE**: if the gate fails, stop and fix before
-continuing. Background and reasons are in [README.md](README.md).
+Do the steps in order. **✔ Pass when** is the gate: if it fails, stop and fix before going on.
+Background is in [README.md](README.md). Step 1 was done on 2026-11-04
+(`audits\audit_20261104_135526`).
 
-## Rules that apply to every step
+---
 
-1. **Props OFF until step 7.**
-2. **After step 4, never run a percent motor test.** That includes Mission Planner's Motor Test
-   tab and `Desktop\Omnidrone\motor_tests\motor_test_1.py`.
-   - On reversible outputs ArduPilot 4.7.1 turns "10 %" into 1100 µs, which is about
-     **80 % reverse**. "0 %" (`motor_test_1.py`'s emergency stop) is 1000 µs, which is **full reverse**.
-   - Use `motor_test_6dof.py` only. Since 2026-11-04, `motor_test_1.py` checks `FRAME_CLASS`
-     and `SERVO_BLH_3DMASK` itself and refuses, sending nothing, on reversible outputs or when
-     it cannot read them.
-3. **One program on UDP 14550 at a time.** The Python tools talk to the Cube through the Pico W
-   on UDP 14550, and so does the bridge.
-   - For configuration, connect Mission Planner over **USB** (COM port), so it never competes for UDP 14550.
-   - During flights, the bridge owns 14550 and Mission Planner connects to it on **UDP 14551**.
-4. **Same terminal setup every time:**
+## A. Things used in every step
+
+### Folders and files
+
+| What | Full path |
+|---|---|
+| Tools folder (run every command here) | `C:\Users\user\Desktop\Omnidrone\research-workspace\omnicopter\mujoco\hardware\ardupilot` |
+| Stage 1 parameters | `...\ardupilot\config\stage1_optitrack_ekf.param` |
+| Stage 2 parameters | `...\ardupilot\config\stage2_6dof_frame.param` |
+| Stage 3 parameters (written by step 6) | `...\ardupilot\config\stage3_board_orientation.param` |
+| 6DoF mixer script for the Cube | `...\ardupilot\generated\omnidrone_6dof_mixer.lua` |
+| Bridge logs | `...\ardupilot\mocap\logs\` |
+| Mission Planner | `C:\Program Files (x86)\Mission Planner\MissionPlanner.exe` (1.3.83) |
+
+### Open a terminal
+
+Windows Start → type **PowerShell** → open it, then run:
+
+```powershell
+cd C:\Users\user\Desktop\Omnidrone\research-workspace\omnicopter\mujoco\hardware\ardupilot
+```
+
+### Connect Mission Planner (three ways)
+
+The connection controls are at the **top right**: a port drop-down, a baud drop-down and the
+**CONNECT** button.
+
+| Way | When | How |
+|---|---|---|
+| **USB** (preferred for configuration) | Steps 2–7 and 10 | 1. USB cable into the Cube's USB port. 2. Port drop-down → the COM port named like `COMx CubeOrange` / `ArduPilot`. 3. Baud → **115200**. 4. **CONNECT**. 5. Wait until the parameter download bar finishes. |
+| **Wi-Fi through the Pico** | Only if USB is not reachable | Port drop-down → **UDP** → **CONNECT** → the port box shows 14550 → **OK**. Click **DISCONNECT** before running any Python tool (they need UDP 14550). |
+| **Through the bridge** | Steps 9 and 11–15 | Start the bridge first (step 9). Then port drop-down → **UDP** → **CONNECT** → type **14551** → **OK**. |
+
+The Python tools always use the Pico (UDP 14550), so they work while Mission Planner is on
+**USB**, but not while it is on UDP 14550.
+
+### Load a parameter file (steps 2, 4, 6)
+
+1. Top menu **CONFIG** → left list **Full Parameter List**.
+2. Right-hand buttons → **Load from file** → browse to the `.param` file → **Open**.
+3. The changed rows are highlighted. If a message lists parameters that were "not found",
+   click **OK**. That is expected on the first load of stage 1 and stage 3.
+4. Click **Write Params**. Mission Planner confirms the parameters were saved.
+5. Reboot the Cube (next section).
+
+### Change a single parameter
+
+**CONFIG** → **Full Parameter List** → type the name in the **Search** box (top) → click the
+**Value** cell → type the value, or pick it from the drop-down → **Write Params**.
+
+### Reboot the Cube
+
+- **Most reliable:** unplug the battery and USB, wait 5 s, then plug them back.
+- **Alternative:** **DATA** (top-left) → tab row under the HUD → **Actions** → in the action
+  drop-down choose **PREFLIGHT_REBOOT_SHUTDOWN** → **Do Action**.
+
+After a reboot Mission Planner loses the link: click **CONNECT** again.
+
+### Read the Cube's messages
+
+**DATA** → tab row under the HUD → **Messages**.
+
+### Hard rule from step 4 on
+
+**Do not use** Mission Planner's **SETUP → Optional Hardware → Motor Test** page.
+Percent tests spin reversible motors in reverse. Only `motor_test_6dof.py` spins motors.
+`motor_test_1.py` now refuses by itself on reversible outputs.
+
+---
+
+## Step 0: Label the frame (once, ~20 min)
+
+1. In the terminal, open the twin with rotor labels:
 
    ```powershell
-   cd C:\Users\user\Desktop\Omnidrone\research-workspace\omnicopter\mujoco\hardware\ardupilot
+   python ..\..\review\review_models.py omni --view
    ```
 
-## Step 0: Label the frame (once)
-
-Open the twin with rotor labels: `python ..\..\review\review_models.py omni --view`.
-
-1. Put a sticker with the **twin rotor number** (1–8) next to each physical motor.
-2. Label the six faces with tape:
+2. Put a sticker with the **twin rotor number** (1–8) next to each physical motor, matching the viewer.
+3. Label the six faces with tape:
 
    | Face | Twin axis | Rotors on that face |
    |---|---|---|
@@ -39,227 +96,328 @@ Open the twin with rotor labels: `python ..\..\review\review_models.py omni --vi
    | **RIGHT** | −y | 1, 2, 5, 6 |
    | **LEFT** | +y | 3, 4, 7, 8 |
 
-**GATE:** every motor and face is labelled, and two people agree on it.
+✔ **Pass when** two people agree on every sticker and face.
 
-## Step 1: Baseline audit (props off)
+## Step 1: Baseline audit (done)
 
 ```powershell
 python ap_param_audit.py
 ```
 
-**GATE:** 1066/1066 parameters received. The first audit is saved in `audits\audit_20261104_131835`.
+✔ 1066/1066 parameters received.
 
-## Step 2: Stage 1, OptiTrack navigation parameters (props off)
+## Step 2: Stage 1, OptiTrack navigation parameters (props OFF)
 
-1. In Mission Planner (USB): CONFIG → Full Parameter List → **Load from file** →
-   `config\stage1_optitrack_ekf.param` → Write Params → reboot.
-2. Load the same file a second time, write and reboot. `VISO_*_M_NSE` only appears after the first reboot.
-3. Close Mission Planner's connection (or unplug USB), then run:
-
-   ```powershell
-   python ap_param_audit.py
-   ```
-
-**GATE:** the audit shows **OK** for the EKF3 sources, `VISO_TYPE`, `COMPASS_USE` and `GPS1_TYPE`.
-
-## Step 3: ESC check, the hard gate for everything after
-
-Read the ESC firmware through ArduPilot pass-through (`SERVO_BLH_AUTO=1` is already set),
-using BLHeliSuite32 or the web ESC Configurator, with Mission Planner disconnected.
-- The firmware must support **DShot 3D / bidirectional** rotation: BLHeli_32, BLHeli_S/Bluejay or AM32.
-- Enable 3D/bidirectional mode in the ESC settings if that firmware requires it.
-
-**GATE:** all 8 ESCs are confirmed 3D-capable. Otherwise **stop: this vehicle cannot hover
-without reversible thrust.**
-
-## Step 4: 6DoF frame and mixer (props OFF)
-
-1. In Mission Planner (USB): CONFIG → **MAVFTP** → open `APM/scripts` (create it if missing).
-   Upload `generated\omnidrone_6dof_mixer.lua`.
-2. Load `config\stage2_6dof_frame.param` → Write → reboot.
-3. In the Messages tab, look for `Omnidrone 6DoF mixer loaded`.
-   If motors do not respond later, set `FRAME_CLASS` to 3, reboot, set it back to 16, and reboot again.
-4. Disconnect Mission Planner, then run:
+1. Mission Planner → connect by **USB**.
+2. **CONFIG → Full Parameter List → Load from file** → choose
+   `C:\Users\user\Desktop\Omnidrone\research-workspace\omnicopter\mujoco\hardware\ardupilot\config\stage1_optitrack_ekf.param`.
+   A "not found" note for `VISO_POS_M_NSE` / `VISO_YAW_M_NSE` is expected → **OK**.
+3. **Write Params**, then reboot and reconnect.
+4. Do the load again (same file), then **Write Params**, reboot and reconnect. The two `VISO_*`
+   parameters now exist and get written.
+5. In the terminal (Mission Planner may stay on USB):
 
    ```powershell
    python ap_param_audit.py
    ```
 
-**GATE:** **OK** for `FRAME_CLASS` 16, `SCR_ENABLE` and `SERVO_BLH_3DMASK`, and the message appeared.
+✔ **Pass when** the audit says **OK** for the EKF3 sources, `VISO_TYPE`, `COMPASS_USE` and `GPS1_TYPE`.
 
-## Step 5: Motor map and reversal (props OFF)
+## Step 3: ESC check (props OFF, battery connected)
 
-```powershell
-python motor_test_6dof.py
-```
+This is the hard gate for everything after it.
 
-Each motor runs 1540 µs and then 1460 µs. Answer which labelled rotor spun, and whether it
-reversed. The tool prints `--motor-map`.
+1. Battery connected (the ESCs need power), USB connected.
+2. Mission Planner **closed**: pass-through uses the same USB port.
+3. Open the ESC tool that matches your ESCs:
+   - **BLHeli_32:** BLHeliSuite32. Choose the BLHeli32 flight-controller pass-through interface,
+     select the Cube's COM port, **Connect**, then **Read Setup**.
+   - **BLHeli_S / Bluejay / AM32:** https://esc-configurator.com in Chrome. **Select Port**
+     (the Cube's COM port) → **Connect** → **Read Settings**.
+4. Write down the firmware name and version shown for ESC 1–8.
+5. If the tool offers a motor direction **Bidirectional / 3D** setting, set it on all 8 and
+   write the settings.
+6. Close the ESC tool.
 
-- If the map is not `1,2,3,4,5,6,7,8`, regenerate the mixer, upload the new `.lua`
-  (step 4.1), reboot, and rerun this step:
+✔ **Pass when** all 8 ESCs run firmware that supports DShot 3D (bidirectional rotation).
+Otherwise **stop: this vehicle cannot hover without reversible thrust.**
 
-  ```powershell
-  python make_6dof_mixer.py --motor-map <map printed by the tool>
-  ```
+## Step 4: Stage 2, 6DoF frame and mixer (props OFF)
 
-**GATE:** all 8 motors reverse, and the map is the identity (or the mixer has been regenerated with it).
+1. Mission Planner → connect by **USB**.
+2. **Upload the mixer:**
+   1. **CONFIG** → left list **MAVFtp**.
+   2. In the file tree, open **APM**. If there is no **scripts** folder, right-click inside APM →
+      create a new folder named `scripts`.
+   3. Open **scripts** → right-click in the file list → **Upload** → choose
+      `C:\Users\user\Desktop\Omnidrone\research-workspace\omnicopter\mujoco\hardware\ardupilot\generated\omnidrone_6dof_mixer.lua`.
+   4. Check that `omnidrone_6dof_mixer.lua` is now listed in `APM/scripts`.
+3. **CONFIG → Full Parameter List → Load from file** →
+   `...\ardupilot\config\stage2_6dof_frame.param` → **Write Params** → reboot → reconnect.
+4. **DATA → Messages**: look for **`Omnidrone 6DoF mixer loaded`**.
+5. In the terminal:
 
-## Step 6: Board orientation and accelerometer calibration (props off)
+   ```powershell
+   python ap_param_audit.py
+   ```
 
-```powershell
-python board_orientation.py
-```
+If the motors do not respond in step 5: set `FRAME_CLASS` to **3** → Write → reboot → set it
+back to **16** → Write → reboot (a known 6DoF quirk).
 
-Rest the cube on its BOTTOM, then its FORWARD, then its RIGHT face when asked.
+✔ **Pass when** the message appeared and the audit says **OK** for `FRAME_CLASS`, `SCR_ENABLE` and `SERVO_BLH_3DMASK`.
 
-1. If it writes `config\stage3_board_orientation.param`, load it in Mission Planner, reboot,
-   load it again (`CUST_ROT1_*` appear after the first reboot), and reboot again.
-2. Run the check:
+## Step 5: Motor map and reversal (props OFF, battery connected)
+
+1. Mission Planner on USB, or disconnected; **not** on UDP 14550.
+2. Run:
+
+   ```powershell
+   python motor_test_6dof.py
+   ```
+
+3. Type `YES` (props removed). For each motor:
+   1. Type `r`.
+   2. Watch which labelled motor spins at 1540 µs and type its twin number.
+   3. Watch the 1460 µs pulse and answer `y` if it spun the other way.
+4. At the end it prints `Motor map: --motor-map ...`. If that is **not** `1,2,3,4,5,6,7,8`:
+   1. Regenerate the mixer:
+
+      ```powershell
+      python make_6dof_mixer.py --motor-map <the map it printed>
+      ```
+
+   2. Repeat step 4.2 (upload the `.lua` again; overwrite it).
+   3. Reboot, then repeat step 5.
+
+✔ **Pass when** all 8 motors reverse and the map matches.
+
+## Step 6: Board orientation and accelerometer calibration (props OFF)
+
+1. Mission Planner on USB, or disconnected; **not** on UDP 14550.
+2. Run:
 
    ```powershell
    python board_orientation.py
    ```
 
-   It must print **CORRECT** (residual under 3°).
-3. In Mission Planner: SETUP → Mandatory Hardware → **Accel Calibration**.
-   - Do the 6-pose calibration using the labelled faces: "level" = BOTTOM down,
-     "nose down" = FORWARD down, "left" = LEFT down, and so on.
-   - Then **Calibrate Level** with BOTTOM down.
+   At each prompt rest the cube on the named face (**BOTTOM**, then **FORWARD**, then
+   **RIGHT**), take your hands off, and press **Enter**.
+3. If it says "keep AHRS_ORIENTATION 0", go to 6.5. If it wrote
+   `...\ardupilot\config\stage3_board_orientation.param`:
+   1. **Load from file** → that file → **Write Params** → reboot → reconnect.
+   2. Load it **again** (the `CUST_ROT1_*` rows appear after the first reboot) → **Write Params** → reboot.
+4. Check the result:
 
-**GATE:** `board_orientation.py` says CORRECT after the accelerometer calibration, and the HUD
-is level with BOTTOM down. Tilting the FORWARD face down must give negative pitch (nose down).
+   ```powershell
+   python board_orientation.py
+   ```
 
-## Step 7: Thrust direction (props ON, vehicle RESTRAINED)
+   It must print **CORRECT**.
+5. **SETUP → Mandatory Hardware → Accel Calibration → Calibrate Accel.** For each prompt put
+   the named face down, hold still, and click the button to continue:
 
-Strap the vehicle to a heavy base or fixture. Everyone stays clear, with the E-stop in hand.
+   | Prompt | Face down |
+   |---|---|
+   | LEVEL | BOTTOM |
+   | LEFT | LEFT |
+   | RIGHT | RIGHT |
+   | NOSE DOWN | FORWARD |
+   | NOSE UP | BACK |
+   | BACK | TOP |
 
-```powershell
-python motor_test_6dof.py --props-on --delta 30
-```
+6. Same page: BOTTOM down → **Calibrate Level**.
+7. **DATA** HUD checks:
+   - BOTTOM down → the horizon is level.
+   - Tilt toward FORWARD → nose-down pitch.
+   - Tilt toward RIGHT → right roll.
 
-For each motor, a tissue strip must show the air leaving along that rotor's **−Z**, so the
-thrust is along the blue +Z axis in the twin viewer.
-- The tool prints a `SERVO_BLH_RVMASK` value for any wrong motors. Set it, reboot, and repeat this step.
+✔ **Pass when** the HUD behaves like that and `board_orientation.py` still says CORRECT.
 
-**GATE:** all 8 motors answer **y**.
+## Step 7: Thrust direction (props ON, vehicle strapped down)
 
-## Step 8: OptiTrack
+1. Strap the vehicle to a heavy base or fixture. Everyone stays ≥ 3 m away; one person stands at the battery plug.
+2. Run:
 
-Motive settings:
-- Rigid body `Aries_Omnidrone`, pivot at the cube centre.
-- Data Streaming ON, Local Interface = the Motive PC's network IP.
+   ```powershell
+   python motor_test_6dof.py --props-on --delta 30
+   ```
 
-```powershell
-cd mocap
-python omni_mocap_bridge.py --server <MOTIVE_PC_IP> --list
-python omni_mocap_bridge.py --server <MOTIVE_PC_IP> --calibrate
-python omni_mocap_bridge.py --server <MOTIVE_PC_IP> --check
-```
+3. Type `PROPS ON RESTRAINED`.
+4. For each motor, hold a tissue strip near the rotor. The air must **leave along −Z**, the
+   opposite of the blue axis in the twin viewer, so the thrust pushes along +Z. Answer `y` or `n`.
+5. If it prints a `SERVO_BLH_RVMASK` value: **Full Parameter List** → search
+   `SERVO_BLH_RVMASK` → set that value → **Write Params** → reboot → repeat step 7.
 
-- `--list` must show `Aries_Omnidrone` at ≥100 Hz. If the name is missing, add `--id N`.
-- **Calibrate:**
-  1. BOTTOM down at the take-off spot, with FORWARD facing the direction you want as room +x.
-  2. Lift it straight up about 30 cm, then put it back.
-  3. Slide it about 40 cm toward FORWARD, then back.
-- **Check:** move FORWARD → N increases; move RIGHT → E increases; lift → D decreases;
-  turn right → yaw increases. At the calibration pose the twin quaternion must read
-  (0.707, 0, 0.707, 0).
+✔ **Pass when** all 8 motors are answered **y**.
 
-**GATE:** all four hand checks pass, and roll and pitch read about 0 with BOTTOM down.
+## Step 8: OptiTrack (props off)
+
+1. **On the Motive PC:**
+   - Rigid body **Aries_Omnidrone** is tracked, with its pivot at the cube centre.
+   - **View → Data Streaming**: Broadcast Frame Data **ON**, Rigid Bodies **ON**,
+     **Local Interface** = the Motive PC's lab-network IP (not loopback).
+   - Find that IP: on the Motive PC run `ipconfig` and take the IPv4 address of the lab adapter.
+   - If Motive runs on **this** PC, use this PC's IPv4 address (from `ipconfig` here).
+2. In the terminal, replace `<MOTIVE_PC_IP>` and run:
+
+   ```powershell
+   python mocap\omni_mocap_bridge.py --server <MOTIVE_PC_IP> --list
+   ```
+
+   It must show `'Aries_Omnidrone' ... <== Omnidrone` at about 100 Hz or more. If no name is
+   shown, add `--id N` with the id it lists to every bridge command.
+3. Calibrate:
+
+   ```powershell
+   python mocap\omni_mocap_bridge.py --server <MOTIVE_PC_IP> --calibrate
+   ```
+
+   1. BOTTOM down at the take-off spot, with FORWARD facing your chosen room +x → **Enter**.
+   2. Lift it straight up ~30 cm, put it back on the same spot → **Enter**.
+   3. Slide it ~40 cm toward FORWARD and back → **Enter**.
+4. Check:
+
+   ```powershell
+   python mocap\omni_mocap_bridge.py --server <MOTIVE_PC_IP> --check
+   ```
+
+   Move it by hand, then press **Ctrl+C**:
+   - toward FORWARD → **N** increases;
+   - toward RIGHT → **E** increases;
+   - lift it → **D** decreases;
+   - turn it right → **yaw** increases.
+
+   At the calibration pose the twin quaternion reads (0.707, 0, 0.707, 0).
+
+✔ **Pass when** all four hand checks are right and roll/pitch read about 0 with BOTTOM down.
 
 ## Step 9: Bridge, EKF and Mission Planner (props off)
 
-```powershell
-python omni_mocap_bridge.py --server <MOTIVE_PC_IP> --stream --origin 0,0,0
-```
+1. **Unplug the Cube's USB cable.** From now on Mission Planner goes through the bridge.
+2. Terminal (leave it running all session):
 
-Then in Mission Planner: choose **UDP** at the top right → Connect → port **14551**.
+   ```powershell
+   python mocap\omni_mocap_bridge.py --server <MOTIVE_PC_IP> --stream --origin 0,0,0
+   ```
 
-**GATE, all of these with the vehicle moved and tilted by hand:**
-- The status line shows about 30 Hz sent and **EKF-mocap < 3 cm**.
-- It also shows **Cube-mocap roll, pitch and yaw within ±3°**.
-- Mission Planner Messages show the EKF using external navigation (e.g. `EKF3 IMU0 is using
-  external nav data`), with no EKF errors.
-- The Mission Planner map and HUD follow the hand motion.
-- Pausing Motive streaming: the bridge shows `NOT TRACKED - nothing sent`, and Mission
-  Planner's EKF status degrades within a few seconds. Resuming restores both.
+3. Mission Planner: **UDP** → **CONNECT** → **14551** → **OK**.
+4. **DATA → Messages**: look for the EKF using external navigation (e.g.
+   `EKF3 IMU0 is using external nav data`) and no EKF errors.
+5. Move and tilt the vehicle by hand. Watch the bridge status line, the HUD and the map.
+6. In Motive, pause streaming for a few seconds: the bridge shows `NOT TRACKED - nothing sent`.
+   Resume streaming.
 
-## Step 10: Safety configuration (Mission Planner, props off)
+✔ **Pass when:**
+- the status line shows ~30 Hz sent;
+- **EKF-mocap < 3 cm**;
+- **Cube-mocap roll/pitch/yaw within ±3°**;
+- the HUD and map follow your hand.
 
-- **RC:** bind the receiver and run Radio Calibration. Then rerun `python ap_param_audit.py`;
-  it must say **OK** for "RC receiver".
-- **Flight modes** (`FLTMODE_CH 5`, 3-position switch = modes 1, 4 and 6): Stabilize, AltHold, Loiter.
-  Put Land on another switch or mode slot.
-- **E-stop:** on a 2-position switch, set `RCx_OPTION = 31` (Motor Emergency Stop) for that
-  channel. Test it in step 11.
-- **Battery:** set `BATT_MONITOR` to match the power module (e.g. Analog Voltage and Current),
-  set the cell voltages, and battery failsafe = Land.
-- **Fence:** `FENCE_ENABLE 1`, type = altitude + circle, radius and altitude smaller than the
-  cage, action = Land.
-- **GCS failsafe:** `FS_GCS_ENABLE` = Land. `FS_EKF_ACTION` is already 1 (Land).
-- **Learning:** `MOT_HOVER_LEARN 2`, and start `MOT_THST_HOVER` at 0.5.
+## Step 10: Safety configuration (props off)
 
-**GATE:** the audit has no TODO except items you have consciously accepted.
+1. **RC receiver.** Plug it into the Cube's **RCIN** port and bind it to the transmitter (see
+   the receiver manual).
+2. **Radio:** **SETUP → Mandatory Hardware → Radio Calibration → Calibrate Radio**. Click
+   **OK** on the prompts, move every stick and switch to both ends, then click **Click when Done**.
+3. **Flight modes:** **SETUP → Mandatory Hardware → Flight Modes**. Set modes 1–6 to
+   Stabilize, Stabilize, AltHold, AltHold, Loiter, Loiter → **Save Modes**. Flip the channel-5
+   switch through its 3 positions: the highlighted mode must be Stabilize, then AltHold, then Loiter.
+4. **E-stop:** choose a free 2-position switch channel, for example 7. **Full Parameter List**
+   → `RC7_OPTION` → **Motor Emergency Stop** (31) → **Write Params**.
+5. **Battery:** **SETUP → Optional Hardware → Battery Monitor**. Monitor = **Analog Voltage
+   and Current**, Sensor = your power module → reboot. Check that the HUD voltage matches a
+   multimeter. Then **SETUP → Mandatory Hardware → FailSafe**: battery low voltage = cells × 3.5 V,
+   action **Land**.
+6. **Fence and failsafes** (**Full Parameter List**, then **Write Params**, then reboot):
 
-## Step 11: Arming test (props OFF, bridge streaming)
+   | Parameter | Value |
+   |---|---|
+   | `FENCE_ENABLE` | 1 |
+   | `FENCE_TYPE` | 3 (max altitude + circle) |
+   | `FENCE_RADIUS` | your cage half-width − 0.5 m |
+   | `FENCE_ALT_MAX` | your cage height − 0.5 m |
+   | `FENCE_ACTION` | **Always Land** |
+   | `FS_GCS_ENABLE` | **Enabled always Land** |
+   | `MOT_HOVER_LEARN` | 2 |
+   | `MOT_THST_HOVER` | 0.5 |
 
-Arm in **Stabilize** with the RC.
-1. At zero throttle the motors stay stopped; the 6DoF mixer outputs 1500 µs at ground idle.
-2. Raise the throttle slightly: the motors spin.
-3. Flip the **E-stop**: everything stops.
-4. Disarm.
+7. Run the audit. Stop the bridge first (**Ctrl+C**), because the audit needs UDP 14550:
 
-**GATE:** arming, E-stop and disarm all behave exactly like that, with no pre-arm errors left.
+   ```powershell
+   python ap_param_audit.py
+   ```
 
-## Step 12: Restrained wrench check (props ON, strapped down with a few cm of play)
+   Then start the bridge again (step 9.2) and reconnect Mission Planner on 14551.
 
-In Stabilize, bring the throttle to about 30 %, below lift-off. Push and tilt the frame by hand
-(gloves, from the side): every push must be resisted, with no growing oscillation. Then disarm.
+✔ **Pass when** the audit shows **OK** for the RC receiver, the flight modes, the E-stop switch and `BATT_MONITOR`.
 
-**GATE:** stable, and corrections oppose the pushes on all three axes.
+## Step 11: Arming test (props OFF, bridge running, Mission Planner on 14551)
+
+1. Mode switch → **Stabilize**, throttle stick fully down.
+2. **Arm:** throttle down + yaw stick fully **right** for 2 s.
+   - Motors must stay **stopped**: the 6DoF mixer outputs 1500 µs at idle.
+3. Raise the throttle a little: motors spin.
+4. Flip the **E-stop** switch: everything stops. Flip it back.
+5. Throttle down. **Disarm:** throttle down + yaw stick fully **left** for 2 s.
+
+If it refuses to arm, **DATA → Messages** shows a `PreArm:` line. Send me that text.
+
+✔ **Pass when** it arms, the E-stop stops everything, and it disarms.
+
+## Step 12: Restrained push test (props ON, strapped down with a few cm of play)
+
+1. Arm in **Stabilize** and raise the throttle to about 30 %, well below lift-off.
+2. Push and tilt the frame gently with a stick or pole, not your hands, on all three axes.
+3. Throttle down, disarm.
+
+✔ **Pass when** every push is resisted and nothing oscillates or grows.
 
 ## Step 13: First tethered hover (Stabilize)
 
-Use a three-point tether that keeps altitude ≤ 0.5 m and drift ≤ 0.5 m. Keep the bridge
-streaming for the logs. The pilot raises the throttle slowly until lift-off, holds 10–20 s,
-then lands and disarms.
-- **If it oscillates:** land and lower `ATC_RAT_RLL/PIT/YAW_P` and `_D` by 30 %.
-- **If it is sluggish:** land and raise them by 20 %.
+1. Tether: three lines from the frame to floor anchors, long enough for ≤ 0.5 m altitude and ≤ 0.5 m drift.
+2. Bridge running, Mission Planner on 14551. Arm in **Stabilize**, raise the throttle slowly to
+   lift-off, hover 10–20 s, land, disarm.
+3. **Download the log:** **DATA** → tab row under the HUD → **DataFlash Logs** →
+   **Download DataFlash Log Via Mavlink** → tick the newest log → download. Mission Planner
+   saves it under `C:\Users\user\Documents\Mission Planner\logs\` (it shows the folder).
+4. **Send me** the `.bin` log and the matching
+   `...\ardupilot\mocap\logs\mocap_<date>_<time>.csv`.
+5. Quick tuning, only if needed (in **Full Parameter List**):
+   - **Oscillates:** lower `ATC_RAT_RLL_P`, `ATC_RAT_PIT_P`, `ATC_RAT_YAW_P` and the `_D`
+     terms by 30 %.
+   - **Sluggish:** raise them by 20 %.
 
-Download the DataFlash log: Mission Planner → DataFlash Logs → Download via MAVLink.
-Keep it together with `mocap\logs\mocap_*.csv`.
-
-**GATE:** a steady hover, `MOT_THST_HOVER` learned (check the parameter), and vibration
-(`VIBE`) under 30 m/s².
+✔ **Pass when** the hover is steady and `MOT_THST_HOVER` has changed from 0.5 (learned).
 
 ## Step 14: AltHold, then Loiter (tethered)
 
-From a Stabilize hover, switch to AltHold (height held from OptiTrack). Then switch to Loiter
-(position held). Be ready to switch back to Stabilize at any time.
+1. From a steady Stabilize hover, flip the mode switch to **AltHold**: the height must hold by itself.
+2. Flip to **Loiter**: the position must hold by itself.
+3. Flip back to **Stabilize** immediately if anything looks wrong.
 
-**GATE:** Loiter holds within about 10 cm, and the bridge keeps EKF-mocap under 5 cm in flight.
+✔ **Pass when** Loiter holds within ~10 cm and the bridge shows EKF-mocap < 5 cm in flight.
 
-## Step 15: System identification sweeps (hover, Loiter → SystemID)
+## Step 15: System-identification sweeps (tethered, land between sweeps)
 
-Put SystemID (mode 25) on a mode slot.
+1. On the ground, disarmed: **Full Parameter List** → set the sweep, then **Write Params**:
 
-| Sweep | `SID_AXIS` | `SID_MAGNITUDE` | Notes |
-|---|---|---|---|
-| Roll | 10 (Mixer Roll) | 0.05 | |
-| Pitch | 11 (Mixer Pitch) | 0.05 | |
-| Yaw | 12 (Mixer Yaw) | 0.05 | |
-| Thrust | 13 (Mixer Thrust) | 0.03 | |
+   | Parameter | Value |
+   |---|---|
+   | `SID_AXIS` | 10 (Mixer Roll) |
+   | `SID_MAGNITUDE` | **0.05** (never the default 15 on mixer axes) |
+   | `SID_F_START_HZ` | 0.5 |
+   | `SID_F_STOP_HZ` | 15 |
+   | `SID_T_FADE_IN` | 5 |
+   | `SID_T_REC` | 40 |
+   | `SID_T_FADE_OUT` | 2 |
 
-- For mixer axes the magnitude is a 0–1 fraction. **Never** use the default 15 on these axes.
-- Common settings: `SID_F_START_HZ 0.5`, `SID_F_STOP_HZ 15`, `SID_T_FADE_IN 5`,
-  `SID_T_REC 40`, `SID_T_FADE_OUT 2`.
-- Start each sweep from a steady Loiter hover. Raise the magnitude in small steps only if the
-  response is barely visible.
+2. Take off, and settle in a steady **Loiter** hover.
+3. **DATA → Actions** → mode drop-down **SystemId** → **Set Mode**. The sweep lasts about 47 s.
+   To abort, move the RC mode switch.
+4. Land, disarm, then repeat with `SID_AXIS` **11** (pitch), **12** (yaw), and **13**
+   (thrust, `SID_MAGNITUDE` **0.03**).
+5. Download all logs (as in 13.3) and send them with the bridge CSVs.
 
-Download the logs and keep the bridge CSVs: they are the identification data (README §4).
+✔ **Pass when** all four sweeps finish inside the tether and fence limits.
 
-**GATE:** all four sweeps complete without leaving the fence or tether limits.
-
-After step 15: fit the twin (thrust gains, motor lag, delays), retune in simulation, then go
-untethered. That is the next build.
+**Next, on my side:** fit the twin (thrust per motor, motor lag, delays), retune in simulation, then plan the untethered flight.
