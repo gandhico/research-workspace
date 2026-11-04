@@ -10,7 +10,9 @@ continuing. Background and reasons are in [README.md](README.md).
    tab and `Desktop\Omnidrone\motor_tests\motor_test_1.py`.
    - On reversible outputs ArduPilot 4.7.1 turns "10 %" into 1100 µs, which is about
      **80 % reverse**. "0 %" (`motor_test_1.py`'s emergency stop) is 1000 µs, which is **full reverse**.
-   - Use `motor_test_6dof.py` only.
+   - Use `motor_test_6dof.py` only. Since 2026-11-04, `motor_test_1.py` checks `FRAME_CLASS`
+     and `SERVO_BLH_3DMASK` itself and refuses, sending nothing, on reversible outputs or when
+     it cannot read them.
 3. **One program on UDP 14550 at a time.** The Python tools talk to the Cube through the Pico W
    on UDP 14550, and so does the bridge.
    - For configuration, connect Mission Planner over **USB** (COM port), so it never competes for UDP 14550.
