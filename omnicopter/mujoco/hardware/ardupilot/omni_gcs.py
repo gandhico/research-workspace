@@ -106,16 +106,15 @@ class App:
         for c in range(3):
             root.columnconfigure(c, weight=1)
 
+        # SPACE = KILL works everywhere. The other keys are ignored while typing in a number box,
+        # otherwise an arrow key or "e" typed into the height box would move the vehicle.
         root.bind("<space>", lambda e: gs.kill("SPACE key"))
-        root.bind("l", lambda e: self.run(gs.land))
-        root.bind("<Up>", lambda e: self.nudge(1, 0, 0, 0))
-        root.bind("<Down>", lambda e: self.nudge(-1, 0, 0, 0))
-        root.bind("<Right>", lambda e: self.nudge(0, 1, 0, 0))
-        root.bind("<Left>", lambda e: self.nudge(0, -1, 0, 0))
-        root.bind("<Prior>", lambda e: self.nudge(0, 0, 1, 0))
-        root.bind("<Next>", lambda e: self.nudge(0, 0, -1, 0))
-        root.bind("q", lambda e: self.nudge(0, 0, 0, -10))
-        root.bind("e", lambda e: self.nudge(0, 0, 0, 10))
+        for key, action in [("l", lambda: self.run(gs.land)),
+                            ("<Up>", lambda: self.nudge(1, 0, 0, 0)), ("<Down>", lambda: self.nudge(-1, 0, 0, 0)),
+                            ("<Right>", lambda: self.nudge(0, 1, 0, 0)), ("<Left>", lambda: self.nudge(0, -1, 0, 0)),
+                            ("<Prior>", lambda: self.nudge(0, 0, 1, 0)), ("<Next>", lambda: self.nudge(0, 0, -1, 0)),
+                            ("q", lambda: self.nudge(0, 0, 0, -10)), ("e", lambda: self.nudge(0, 0, 0, 10))]:
+            root.bind(key, lambda event, act=action: None if isinstance(event.widget, tk.Entry) else act())
         self.refresh()
 
     # -------------------------------------------------------------- actions
