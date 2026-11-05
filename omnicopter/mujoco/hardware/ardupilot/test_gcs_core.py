@@ -45,6 +45,7 @@ class FakeCubeGuided(threading.Thread):
         self.force_disarms, self.gcs_heartbeats = 0, 0
         self.sent, self.drop_every = 0, 10                # drop 10 % of the Cube's packets, like the real link
         self.origin_requests, self.ignore_first_origins, self.home_set = 0, 2, False
+        self.vpe_z, self.takeoff_z0, self.targets_during_takeoff = 0.0, None, 0
         self.stop = threading.Event()
 
     def send(self, msg, drop_every=0):
@@ -89,6 +90,9 @@ class FakeCubeGuided(threading.Thread):
             self.gcs_heartbeats += 1
         elif kind == "VISION_POSITION_ESTIMATE":
             self.vpe_t = time.time()                      # perfect EKF: echo the pose back
+            self.vpe_z = m.z
+            if self.takeoff_z0 is not None and self.takeoff_z0 - m.z >= 0.05:
+                self.takeoff_z0 = None                    # climbed: the TakeOff phase is over
             self.send(self.enc.local_position_ned_encode(0, m.x, m.y, m.z, 0, 0, 0))
             self.send(self.enc.attitude_encode(0, m.roll, m.pitch, m.yaw, 0, 0, 0))
         elif kind == "SET_GPS_GLOBAL_ORIGIN":
@@ -100,6 +104,9 @@ class FakeCubeGuided(threading.Thread):
             if self.origin is None:
                 self.origin = (m.latitude, m.longitude, m.altitude)
         elif kind == "SET_POSITION_TARGET_LOCAL_NED":
+            # Copter-4.7.1: a position target switches Guided TakeOff -> Pos; still landed = ground idle
+            if self.takeoff_z0 is not None and self.takeoff_z0 - self.vpe_z < 0.05:
+                self.targets_during_takeoff += 1
             self.targets.append((m.x, m.y, m.z, m.yaw, m.type_mask, m.coordinate_frame))
         elif kind == "COMMAND_LONG":
             c = m.command
@@ -125,6 +132,7 @@ class FakeCubeGuided(threading.Thread):
                 # ModeGuided::do_user_takeoff_start_m needs home and the EKF origin (Copter-4.7.1)
                 ok = self.armed and self.mode == 4 and self.origin is not None and self.home_set
                 self.takeoff_alt = m.param7 if ok else None
+                self.takeoff_z0 = self.vpe_z if ok else None
                 self.ack(c, ok)
 
 
@@ -188,6 +196,8 @@ def main():
         results["armed in GUIDED"] = gs.arm() and cube.armed and cube.mode == 4
         results["home confirmed after arming"] = wait_until(lambda: gs.status()["home_set"], 3)
         results["takeoff 0.2 m accepted"] = gs.takeoff(0.2) and abs((cube.takeoff_alt or 0) - 0.2) < 1e-6
+        results["nudge refused during takeoff"] = not gs.nudge(dn=0.10)
+        results["takeoff completes (OptiTrack height)"] = wait_until(lambda: gs.takeoff_done, 8)
         n_targets = len(cube.targets)
         results["nudge sends a position target"] = gs.nudge(dn=0.10) and wait_until(
             lambda: len(cube.targets) > n_targets and abs(cube.targets[-1][0] - (gs.home[0] + 0.10)) < 1e-3
@@ -214,6 +224,7 @@ def main():
         fake.wait()
         twin.close()
     logs = {p.name: p.stat().st_size for p in tmp.glob("*.csv")}
+    results["no position target during takeoff"] = cube.targets_during_takeoff == 0
     results["logs written"] = len(logs) == 2 and all(size > 1000 for size in logs.values())
     for event in gs.events:
         print(f"   [{event.level}] {event.text}")

@@ -134,6 +134,8 @@ class GroundStation:
         self.home = None              # NED of the arming spot
         self.target = None            # [n, e, d, yaw] current Guided position target
         self.airborne = False
+        self.takeoff_height, self.takeoff_started, self.takeoff_done = None, None, False
+        self.takeoff_warned = False
         self.killing_until = 0.0
         self.auto_action_done = None  # reason of the last automatic LAND/KILL (one per flight)
         self._stop = threading.Event()
@@ -314,6 +316,8 @@ class GroundStation:
             self.home = m[1].copy()
             self.target = [*self.home, m[2][2]]
             self.airborne = False
+            self.takeoff_height, self.takeoff_started, self.takeoff_done = None, None, False
+            self.takeoff_warned = False
             self.auto_action_done = None
         self.event("ARMED (GUIDED)" if ok else f"Arm rejected: {self._result_name(result)} (see Cube messages)",
                    "action" if ok else "warn")
@@ -331,8 +335,15 @@ class GroundStation:
         ok = result == mavlink2.MAV_RESULT_ACCEPTED
         if ok:
             self.target = [self.home[0], self.home[1], self.home[2] - height_m, self.target[3]]
-            self.airborne = True
-            self.event(f"Takeoff to {height_m:.2f} m: accepted", "action")
+            self.airborne = True                  # safety limits active from now on
+            # No position target until the takeoff has climbed: any SET_POSITION_TARGET switches Guided from
+            # its TakeOff sub-mode to Pos, which keeps a landed vehicle at ground idle (motors stopped) and
+            # lets DISARM_DELAY disarm it (found on the vehicle 2026-11-04, Copter-4.7.1 ModeGuided).
+            self.takeoff_height = height_m
+            self.takeoff_started = br.now()
+            self.takeoff_done = False
+            self.event(f"Takeoff to {height_m:.2f} m: accepted (nudges enabled once it reaches the height)",
+                       "action")
         else:
             s = self.status()
             hints = []
@@ -348,6 +359,12 @@ class GroundStation:
         """Move the Guided position target, clamped inside the tether limits."""
         if not (self.armed() and self.mode() == "GUIDED" and self.airborne and self.target and self.home is not None):
             self.event("Nudge needs an airborne GUIDED flight", "warn")
+            return False
+        if not self.takeoff_done:
+            m = self.mocap()
+            height = None if m is None else self.home[2] - m[1][2]
+            self.event("Nudge ignored: the takeoff has not reached its height yet"
+                       + ("" if height is None else f" ({height:.2f} of {self.takeoff_height:.2f} m)"), "warn")
             return False
         n, e, d, yaw = self.target
         n, e, d = n + dn, e + de, d - dup
@@ -410,6 +427,20 @@ class GroundStation:
         and the background loop that reads those ACKs must never block (2026-11-04 test finding)."""
         self.auto_action_done = reason
         threading.Thread(target=self.land, args=(reason,), daemon=True).start()
+
+    def _watch_takeoff(self, t):
+        """Enable position targets once OptiTrack shows the takeoff height (within 3 cm)."""
+        if not self.airborne or self.takeoff_done or self.takeoff_height is None or self.home is None:
+            return
+        m = self.mocap()
+        if m is not None and self.home[2] - m[1][2] >= self.takeoff_height - 0.03:
+            self.takeoff_done = True
+            self.event(f"Takeoff complete at {self.home[2] - m[1][2]:.2f} m: holding, nudges enabled", "action")
+        elif not self.takeoff_warned and t - self.takeoff_started > 15.0:
+            self.takeoff_warned = True
+            height = None if m is None else self.home[2] - m[1][2]
+            self.event("Takeoff has not reached its height after 15 s"
+                       + ("" if height is None else f" (at {height:.2f} m)") + ": LAND (L) or KILL (SPACE)", "warn")
 
     def _safety(self, t):
         if not self.armed():
@@ -482,10 +513,11 @@ class GroundStation:
             if t < self.killing_until and self.armed() and t >= next_kill:
                 next_kill = t + 0.1
                 self._force_disarm_burst()
+            self._watch_takeoff(t)
             if t >= next_target:
                 next_target = t + 1.0
-                if self.airborne and self.armed() and self.mode() == "GUIDED":
-                    self._send_target()                   # refresh: covers a lost packet
+                if self.airborne and self.takeoff_done and self.armed() and self.mode() == "GUIDED":
+                    self._send_target()                   # refresh: covers a lost packet (never during takeoff)
             if t >= next_safety:
                 next_safety = t + 0.05
                 self._safety(t)
