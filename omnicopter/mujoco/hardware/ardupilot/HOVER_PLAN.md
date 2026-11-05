@@ -18,22 +18,41 @@ Run every command from
 | Props mounted by hover sign (normal props) | ⏳ **step B not run yet**: do it first on 2026-11-05 |
 | OptiTrack room calibration on the real vehicle | ✅ step C (18:25) |
 | Real-vehicle checks with the app (props off, then strapped) | ✅ step D (arm, KILL, takeoff spool-up). Step E pending |
-| First tethered takeoff (19:03) | ⚠️ lifted about 0.08 m, then **tipped left to 46°** in about 1 s and was KILLed. Left-back rotors 3 and 7 saturated (95/90 %), left-front 4 and 8 high, right side low: the left side lacks thrust |
+| First tethered takeoff (19:03) | ⚠️ lifted 8 cm, rolled **left** past −30° 1.3 s after lift-off and ended on its left face; KILLed. See the analysis below |
 | Battery monitor | ⏳ recommended (audit TODO) |
 
-### Next session (2026-11-05)
+### Analysis of the 2026-11-04 attempts (done 2026-11-05)
 
-1. **Propellers.** Check the type, direction and mounting of every prop, rotors **3, 7, 4, 8**
-   (left side) first:
+Full write-up, plots and the rotor record sheet:
+[Omnidrone workflow document](https://claude.ai/artifact/XFicFSkqcDCzY15TcdTRod).
+Re-run it from the logs with `python analyze_flight.py 20261104_190320 --png` (plots in `reports/`).
+
+- **Same signature in both motor-on attempts.** At lift-off all 8 rotors sat at 53–62 % of their
+  range on their hover side. Then left-back rotors **3 and 7** climbed to **95 % and 92 %** and
+  right-front 2 and 6 fell to 34 % and 27 %, while the roll still ran away left with +15° pitch.
+- **The twin points at rotors 3 and 7.** Weak or wrong-way thrust there gives both the left roll and
+  the nose-up pitch. A 1 cm centre-of-mass offset (0.25 N·m) or the worst propeller reaction
+  torque (≤ 0.49 N·m) is small against the 4.2 N·m of roll authority, so neither should saturate
+  a correct vehicle.
+- **The safety monitor was too slow for this failure.** It read the Cube's 10 Hz attitude, chose
+  LAND at 46° just after the manual KILL, and logged it 1.5 s later. Fix planned before the next
+  lift-off: tilt from OptiTrack, KILL above 30° while below tether height.
+
+### Next session
+
+1. **Damage.** The vehicle fell on its left face: inspect props, motors and arms on 3, 4, 7, 8.
+2. **Rotor check against the twin**, rotors **3 and 7** first (table in the document): corner and
+   +Z label, prop type and leading edge, airflow direction, spin direction seen from the +Z tip:
    - rotors 1, 4, 5, 8 strongest along +Z;
    - rotors 2, 3, 6, 7 strongest along −Z (pusher: the opposite-rotation prop, flipped).
 
    Then run **step B** strapped down: `python motor_test_6dof.py --props-on --delta 50`.
-2. **Centre of mass.** Balance the cube on a finger or edge left/right and front/back with the
-   battery installed. A left-heavy vehicle explains the same symptom.
-3. **Step E**, strapped down: TAKEOFF 0.10, 1–2 s, SPACE. The motor outputs of the left and right
-   sides should be similar.
-4. Second tethered takeoff only after 1–3 pass. Send the new `flight_logs` CSVs for analysis.
+3. **Centre of mass.** Balance the cube on an edge left/right and front/back with the battery
+   installed; note the offset in mm.
+4. **Step E**, strapped down: TAKEOFF 0.10, 1–2 s, SPACE. Then `python analyze_flight.py`.
+   Pass: every rotor ≤ 80 % and left/right within 10 %.
+5. Second tethered takeoff only after 1–4 pass. Then `python analyze_flight.py --png` and send the
+   output with the new `flight_logs` CSVs.
 
 ## 2. How flying works without RC
 

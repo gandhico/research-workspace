@@ -229,6 +229,81 @@ public-safety review before they are copied into the GitHub repository.
   3. Strapped spool-up (step E): left and right outputs should be balanced.
   4. Then a second tethered hover.
 
+### 2026-11-05 — Analysis of the first lift-off, audit, workflow document
+
+- **Objective:** plot and explain the 2026-11-04 lift-off, audit the work so far, and write the
+  set-up/run guide and the feedback cycle that leads to a first stable hover.
+- **People involved:** Gandhi, with Claude Code (log analysis, twin calculations, document).
+- **Hardware revision:** unchanged from 2026-11-04. No flight today; the vehicle is waiting for the
+  rotor check.
+- **Software/model/parameter version:**
+  - **Branch:** `feature/system-identification`.
+  - **New tool:** `hardware/ardupilot/analyze_flight.py`, a read-only report per session, with
+    plots in `hardware/ardupilot/reports/`.
+  - **Twin and Cube parameters:** unchanged.
+- **Change or experiment:**
+  1. Read-only analysis of `telemetry_20261104_190320.csv` / `mocap_20261104_190320.csv`, both
+     motor-on attempts.
+  2. Twin calculation of the torque from each suspected cause.
+  3. Re-run of every offline test.
+- **Evidence and file links:**
+  - `hardware/ardupilot/reports/flight_20261104_190320_1.png` and `_2.png`.
+  - The workflow document (plots, audit, setup, run guide, rotor check, cycle):
+    <https://claude.ai/artifact/XFicFSkqcDCzY15TcdTRod>.
+- **Measured results** (OptiTrack at 360 Hz, Cube outputs at 10 Hz; times after the TAKEOFF
+  command, attempt 2):
+  - **Motors** on at +0.3 s, **lift-off** (height ≥ 5 mm) at +2.1 s, peak height 8.0 cm at +3.5 s.
+  - **Roll** stayed within 1.5° until lift-off. It then passed −10° at +2.8 s, −30° at +3.4 s and
+    −38° at the KILL (+3.47 s), and the vehicle ended on its left face at −90°. Pitch reached +9°
+    while armed and +15° during the fall; yaw stayed within −9° to +3°.
+  - **Output on each rotor's hover side, % of the 500 µs range:**
+    - At lift-off, all 8 rotors were at 53–62 %.
+    - At the KILL:
+      - left-back 3 and 7 at 95 % and 92 %;
+      - left-front 4 and 8 at 78 % and 75 %;
+      - right-back 1 and 5 at 60 % and 55 %;
+      - right-front 2 and 6 at 34 % and 27 %.
+    - Left and right means: 85 % and 44 %.
+  - **Left/right imbalance** grew from +1.7 s, before lift-off: the left side was asked
+    22–41 µs more per rotor.
+  - **Attempt 1** (lost takeoff reply, motors on for 2.9 s): the same signature. At the KILL the
+    left side was at 71 % and the right at 53 %, with roll −8°.
+  - **Correction to the 2026-11-04 entry:** the 95/90 % outputs of rotors 3/7 were reached
+    about 1 s after lift-off, not at lift-off.
+- **Derived (twin, 2.5 kg, assumed 10 N per rotor):**
+  - Hover thrust 5.3 N per rotor; roll authority while hovering 4.18 N·m.
+  - **Rotors 3 and 7 at 60 % of commanded thrust:** roll −0.57 N·m, pitch +0.15 N·m (nose-up),
+    2.5 N of lift lost. This matches the sign of both observed tilts.
+  - **Centre of mass 1 cm left:** roll −0.25 N·m and no pitch.
+  - **Worst-case propeller reaction torque:** 0.25–0.49 N·m for a drag-to-thrust ratio of
+    0.01–0.02 m.
+
+  Neither of the last two should saturate a correct vehicle. Weak or wrong-way thrust on rotors 3
+  and 7 is the leading hypothesis. A wrong-way rotor also explains the run-away: more output there
+  makes the roll worse.
+- **Unexpected behavior:**
+  1. **The safety monitor reads the Cube's 10 Hz attitude first.** It chose LAND at 46°, 0.1 s
+     after the manual KILL, and logged the event 1.5 s later, when the LAND command finished.
+     LAND cannot recover a roll that goes from −5° to −35° in 0.9 s near the ground.
+  2. **The vehicle tipped onto its left face** (rotors 3, 4, 7, 8 side): possible prop damage.
+- **Insight/decision:**
+  - The software chain and the parameters are verified; the propulsion is not. The next laps of
+    the cycle are the rotor check against the twin (position, +Z, strong side, leading edge,
+    spin direction), step B, the centre of mass, and step E with `analyze_flight.py`.
+  - Exit criterion for the first hover: a 20 s tethered hover at 0.25 m within 5 cm and 5°,
+    left/right outputs within 10 %, no rotor above 80 %.
+- **Assumptions and limitations:**
+  - Output % is not thrust %: ArduPilot linearises thrust, and the thrust curve is not identified.
+  - The twin's mass (2.5 kg) and 10 N per rotor are still unverified.
+- **Tests:** `test_gcs_core.py` (20 checks), `test_motor_test_6dof.py`, `test_ap_param_load.py`,
+  `mocap/test_omni_bridge.py`: all PASS on 2026-11-05.
+- **Next gate:**
+  1. Inspect for damage, then do the rotor check (3 and 7 first) and step B.
+  2. Measure the centre-of-mass offset.
+  3. Step E strapped, with `analyze_flight.py` passing.
+  4. Safety-monitor change (OptiTrack tilt, earlier KILL), then the second tethered takeoff.
+  5. Spin directions and reaction torque into the twin, then regenerate the mixer.
+
 ## Main scientific insights to preserve
 
 1. An STL supplies geometry, not the true mass distribution.

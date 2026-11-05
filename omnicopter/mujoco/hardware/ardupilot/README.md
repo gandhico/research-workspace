@@ -26,6 +26,7 @@ lines and a go/no-go gate for each. This README explains the reasons behind them
 | [omni_gcs.py](omni_gcs.py) | Ground-station window: OptiTrack → EKF, pre-flight gates, ARM/TAKEOFF/nudge/LAND/DISARM, KILL (space), motor strong/weak display, logs |
 | [gcs_core.py](gcs_core.py) | Its engine: Cube link, GUIDED commands with retries, safety monitor (auto LAND/KILL) ([test](test_gcs_core.py)) |
 | [twin_view.py](twin_view.py) | MuJoCo window showing the twin at the real vehicle's OptiTrack pose |
+| [analyze_flight.py](analyze_flight.py) | Read-only report of a `flight_logs` session: lift-off, tilt milestones, each rotor's output on its hover side, left/right balance, pass/fail; `--png` saves plots to `reports/` |
 | [config/stage5_gcs_only.param](config/stage5_gcs_only.param) | Cube settings for GCS-only flight (RC checks skipped, GCS-loss → Land) |
 | [RUNBOOK.md](RUNBOOK.md) | Step-by-step commands and gates from bench to OptiTrack flight (RC version) |
 | [ap_param_audit.py](ap_param_audit.py) | Read-only Cube audit: all parameters, firmware, RC receiver, readiness TODOs |
