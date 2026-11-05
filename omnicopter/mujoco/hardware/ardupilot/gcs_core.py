@@ -84,7 +84,9 @@ class Config:
     pico_port: int = 14550
     relay: bool = False
     gcs_port: int = 14551
-    origin: str = "0,0,0"
+    # EKF origin: any valid NON-ZERO location. Copter-4.7.1 GCS_MAVLINK::set_ekf_origin silently denies
+    # 0,0,0 (Location::is_zero). Default: approximate NMSU campus, Las Cruces; only a reference point.
+    origin: str = "32.2828,-106.7473,1200"
     log_dir: str = str(HERE / "flight_logs")
     twin_port: int = TWIN_PORT
     limits: Limits = field(default_factory=Limits)
@@ -98,6 +100,7 @@ def tilt_deg(roll, pitch):
 class GroundStation:
     def __init__(self, cfg: Config):
         self.cfg, self.lim = cfg, cfg.limits
+        br.check_origin(cfg.origin)
         a = SimpleNamespace(server=cfg.server, local_ip=cfg.local_ip, unicast=cfg.unicast,
                             multicast=br.natnet.MULTICAST, natnet=cfg.natnet, rb_name=cfg.rb_name, id=cfg.rb_id,
                             cal=cfg.cal, pivot_height=0.0, listen_port=cfg.listen_port, pico_ip=cfg.pico_ip,

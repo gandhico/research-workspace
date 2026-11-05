@@ -359,7 +359,7 @@ Mount them **by hover sign**, so that all 8 rotors hover on their strong side:
 2. Terminal (leave it running all session):
 
    ```powershell
-   python mocap\omni_mocap_bridge.py --server <MOTIVE_PC_IP> --stream --origin 0,0,0
+   python mocap\omni_mocap_bridge.py --server <MOTIVE_PC_IP> --stream --origin 32.2828,-106.7473,1200
    ```
 
 3. Mission Planner: **UDP** → **CONNECT** → **14551** → **OK**.

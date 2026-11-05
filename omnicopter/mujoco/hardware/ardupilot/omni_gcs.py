@@ -233,7 +233,8 @@ def main():
     p.add_argument("--listen-port", type=int, default=14550)
     p.add_argument("--pico-port", type=int, default=14550)
     p.add_argument("--relay", action="store_true", help="also forward telemetry to Mission Planner on UDP 14551")
-    p.add_argument("--origin", default="0,0,0")
+    p.add_argument("--origin", default="32.2828,-106.7473,1200",
+                   help="EKF origin LAT,LON,ALT_M: any valid non-zero location (0,0,0 is rejected by ArduPilot)")
     # Defaults trigger before a tether that allows 0.5 m drift / 0.5 m height goes taut.
     p.add_argument("--tether-radius", type=float, default=0.35, help="LAND beyond this horizontal distance [m]")
     p.add_argument("--max-height", type=float, default=0.45, help="LAND above this height [m]")

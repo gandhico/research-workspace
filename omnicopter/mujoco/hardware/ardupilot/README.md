@@ -125,7 +125,7 @@ cd mocap
 python omni_mocap_bridge.py --server <MotivePC> --list          # finds 'Aries_Omnidrone' and its id/rate
 python omni_mocap_bridge.py --server <MotivePC> --calibrate     # 3 prompts; see below
 python omni_mocap_bridge.py --server <MotivePC> --check         # move by hand, check signs
-python omni_mocap_bridge.py --server <MotivePC> --stream --origin 0,0,0
+python omni_mocap_bridge.py --server <MotivePC> --stream --origin 32.2828,-106.7473,1200
 ```
 
 - **Calibrate:** place the vehicle in its hover attitude with ArduPilot-forward (twin body +z)
@@ -144,7 +144,7 @@ python omni_mocap_bridge.py --server <MotivePC> --stream --origin 0,0,0
     `AHRS_ORIENTATION` and the calibration pose.
 - **What it never sends:** untracked frames, single-frame jumps (marker swaps), or anything
   before the first Cube packet. After a tracking gap longer than 0.5 s, `reset_counter`
-  increments. `--origin 0,0,0` sets the EKF origin that Guided/Auto/RTL need indoors.
+  increments. `--origin 32.2828,-106.7473,1200` sets the EKF origin that Guided/Auto/RTL need indoors. Any valid **non-zero** location works. Copter 4.7.1 silently rejects 0,0,0 (`Location::is_zero` in `set_ekf_origin`), which made Guided takeoff fail on 2026-11-04.
 - **Logs:** `mocap/logs/mocap_*.csv` (twin-frame columns follow
   [COMMON_LOG_SCHEMA.md](../COMMON_LOG_SCHEMA.md)) and `vehicle_*.csv` (EKF echo).
 - **Delay:** keep `VISO_DELAY_MS` at its default until ID-4 measures the real Motive→Wi-Fi→Cube delay.

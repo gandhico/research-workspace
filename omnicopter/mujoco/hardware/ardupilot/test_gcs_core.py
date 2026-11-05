@@ -94,8 +94,11 @@ class FakeCubeGuided(threading.Thread):
         elif kind == "SET_GPS_GLOBAL_ORIGIN":
             self.origin_requests += 1
             if self.origin_requests <= self.ignore_first_origins:
-                return                                    # EKF not ready yet: silently ignored (seen on hardware)
-            self.origin = (m.latitude, m.longitude, m.altitude)
+                return                                    # EKF not ready yet: silently ignored
+            if m.latitude == 0 and m.longitude == 0 and m.altitude == 0:
+                return                                    # Copter-4.7.1: Location::is_zero -> DENIED, silently
+            if self.origin is None:
+                self.origin = (m.latitude, m.longitude, m.altitude)
         elif kind == "SET_POSITION_TARGET_LOCAL_NED":
             self.targets.append((m.x, m.y, m.z, m.yaw, m.type_mask, m.coordinate_frame))
         elif kind == "COMMAND_LONG":
@@ -191,7 +194,7 @@ def main():
             and cube.targets[-1][4] == gcs_core.POSITION_ONLY_MASK, 2)
         results["nudge clamped inside tether"] = gs.nudge(dn=5.0) and math.hypot(
             gs.target[0] - gs.home[0], gs.target[1] - gs.home[1]) <= limits.tether_radius_m - 0.15 + 1e-9
-        results["origin sent"] = cube.origin == (0, 0, 0)
+        results["origin sent (non-zero, as configured)"] = cube.origin == (322828000, -1067473000, 1200000)
         # fake moves 0.40 m forward between 14 and 22 s: must trip the 0.25 m tether limit -> LAND
         results["auto LAND on tether breach"] = wait_until(lambda: cube.mode == 9, 25 - (time.time() - t0))
         results["auto action reason"] = gs.auto_action_done

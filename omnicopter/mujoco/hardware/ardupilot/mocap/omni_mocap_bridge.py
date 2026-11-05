@@ -431,6 +431,25 @@ class Hub:
         self.gcs.close()
 
 
+def check_origin(origin):
+    """EKF origin "LAT,LON,ALT_M" must be a valid, NON-ZERO location.
+
+    Copter-4.7.1 GCS_MAVLINK::set_ekf_origin returns DENIED for Location::is_zero() (lat, lon and alt all 0) and
+    the SET_GPS_GLOBAL_ORIGIN handler ignores that result, so 0,0,0 is dropped silently: no origin, no home,
+    and Guided TAKEOFF returns FAILED (found on the vehicle 2026-11-04).
+    """
+    try:
+        lat, lon, alt = (float(v) for v in origin.split(","))
+    except ValueError:
+        raise SystemExit(f"--origin must be LAT,LON,ALT_M, got {origin!r}") from None
+    if not (-90 <= lat <= 90 and -180 <= lon <= 180):
+        raise SystemExit(f"--origin {origin}: latitude/longitude out of range")
+    if int(lat * 1e7) == 0 and int(lon * 1e7) == 0 and int(alt * 1000) == 0:
+        raise SystemExit("--origin 0,0,0 is silently rejected by ArduPilot 4.7 (Location::is_zero). "
+                         "Use any valid non-zero location, e.g. 32.2828,-106.7473,1200")
+    return lat, lon, alt
+
+
 MOCAP_LOG_COLUMNS = ["time_s", "frame", "valid", "accepted", "sent", "reset_counter",
                      "x_m", "y_m", "z_m", "q_w", "q_x", "q_y", "q_z", "wx_rad_s", "wy_rad_s", "wz_rad_s",
                      "n_m", "e_m", "d_m", "roll_rad", "pitch_rad", "yaw_rad", "marker_error_mm"]
@@ -502,6 +521,8 @@ class PoseStreamer:
 
 
 def do_stream(a):
+    if a.origin:
+        check_origin(a.origin)
     room = load_room(a)
     if room is None:
         return 2
