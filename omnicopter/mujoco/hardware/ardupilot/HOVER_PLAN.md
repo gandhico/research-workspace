@@ -61,6 +61,21 @@ Run every command from
 4. **Battery monitor** (recommended): the power module on POWER1. Tell me the module and I'll give
    the `BATT_*` values.
 
+### OptiTrack on this PC (verified 2026-11-04)
+
+Motive:Tracker **3.3.2** runs on this PC. The cameras use the 169.254.199.60 adapter.
+Edit → Settings → Streaming → NatNet:
+- **Enable** on;
+- **Local Interface 192.168.2.2** (the wired adapter, never the Wi-Fi). Loopback did not work
+  here, and a blank interface means no streaming at all;
+- **Transmission Type Unicast**;
+- Rigid Bodies on.
+
+Result: `Aries_Omnidrone` = rigid body **id 2**, about **360 Hz**, NatNet 4.2. Every OptiTrack
+command takes the same three options:
+
+`--server 192.168.2.2 --local-ip 192.168.2.2 --unicast`
+
 ### Steps
 
 Mission Planner is not needed for any of these. Close it and every other tool that uses UDP 14550.
@@ -69,8 +84,8 @@ Mission Planner is not needed for any of these. Close it and every other tool th
 |---|---|---|---|
 | A | GCS-only parameters (props off) | `python ap_param_load.py config\stage5_gcs_only.param` → `WRITE` → `y` (reboot). Run again, then `python ap_param_audit.py` | Audit: everything OK except `BATT_MONITOR`; `ARMING_SKIPCHK = 64: GCS-only setup` |
 | B | Thrust direction and strong side (**props ON, strapped down**) | `python motor_test_6dof.py --props-on --delta 50` | All 8 push along +Z on plus, and "All 8 props hover on their strong side" |
-| C | OptiTrack room frame (props off) | `python mocap\omni_mocap_bridge.py --server <MOTIVE_PC_IP> --list`, then `--calibrate`, then `--check` | Hand checks: forward → N+, right → E+, up → D−, turn right → yaw+ |
-| D | App check (**props OFF**) | `python omni_gcs.py --server <MOTIVE_PC_IP>`, then click **Twin view** | See below |
+| C | OptiTrack room frame (props off) | `python mocap\omni_mocap_bridge.py --server 192.168.2.2 --local-ip 192.168.2.2 --unicast --list`, then `--calibrate`, then `--check` | Hand checks: forward → N+, right → E+, up → D−, turn right → yaw+ |
+| D | App check (**props OFF**) | `python omni_gcs.py --server 192.168.2.2 --local-ip 192.168.2.2 --unicast`, then click **Twin view** | See below |
 | E | Restrained spool-up (**props ON, strapped to the floor**) | In the app: ARM → TAKEOFF **0.10 m** → watch 3 s → **SPACE** (KILL) | See below |
 
 **Step D passes when:**
@@ -101,7 +116,7 @@ If any motor box turns amber or the vehicle twists, **stop** and send me the app
 2. Props tight and as in step B.
 3. Tether attached and clear of every rotor.
 4. Vehicle BOTTOM down at the calibration spot, FORWARD toward room +x.
-5. `python omni_gcs.py --server <MOTIVE_PC_IP>`: every gate green. Tick the box only when the
+5. `python omni_gcs.py --server 192.168.2.2 --local-ip 192.168.2.2 --unicast`: every gate green. Tick the box only when the
    tether is attached, the area is clear and the kill person is ready.
 
 **Flight:**
