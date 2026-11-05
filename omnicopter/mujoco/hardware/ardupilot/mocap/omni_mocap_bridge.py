@@ -310,10 +310,15 @@ def do_check(a):
 class Hub:
     """UDP hub: Pico <-> Mission Planner relay plus pose injection and vehicle monitoring."""
 
-    def __init__(self, a):
+    def __init__(self, a, print_status=True):
         self.a = a
-        self.vehicle = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.vehicle.bind(("0.0.0.0", a.listen_port))
+        self.print_status = print_status
+        try:
+            self.vehicle = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            self.vehicle.bind(("0.0.0.0", a.listen_port))
+        except OSError as error:
+            raise SystemExit(f"UDP port {a.listen_port} is already in use ({error.strerror}). Disconnect Mission "
+                             "Planner from UDP / stop the other tool, then start again.") from None
         self.gcs = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.gcs.bind(("127.0.0.1", 0))
         self.gcs_dest = ("127.0.0.1", a.gcs_port)
@@ -323,10 +328,15 @@ class Hub:
         self.encoder = mavlink2.MAVLink(None, srcSystem=BRIDGE_SYSTEM, srcComponent=BRIDGE_COMPONENT)
         self.lock = threading.Lock()
         self.target_system = None
-        self.vehicle_hb = None
+        self.vehicle_hb = None             # (t, armed, custom_mode)
         self.ekf_flags = None
         self.local = None                  # (t, x, y, z) from LOCAL_POSITION_NED
         self.attitude = None               # (t, roll, pitch, yaw)
+        self.battery = None                # (t, volts, amps, percent) from SYS_STATUS
+        self.servo = None                  # (t, [servo1..8 us]) from SERVO_OUTPUT_RAW
+        self.acks = {}                     # command id -> (t, MAV_RESULT)
+        self.messages = collections.deque(maxlen=200)   # (wall time, severity, text) from STATUSTEXT
+        self.seq_last, self.seq_received, self.seq_lost = None, 0, 0   # link quality, autopilot stream
         self.relayed_up = self.relayed_down = 0
 
     def send_to_vehicle(self, buf):
@@ -340,7 +350,10 @@ class Hub:
 
     def encode(self, message):
         with self.lock:
-            return message.pack(self.encoder)
+            buf = message.pack(self.encoder)
+            # pack() does not advance the MAVLink sequence number (only MAVLink.send() does)
+            self.encoder.seq = (self.encoder.seq + 1) % 256
+            return buf
 
     def pump(self, timeout):
         ready, _, _ = select.select([self.vehicle, self.gcs], [], [], timeout)
@@ -371,6 +384,14 @@ class Hub:
         t = now()
         for m in messages:
             kind = m.get_type()
+            if kind == "BAD_DATA":
+                continue
+            if m.get_srcComponent() == 1 and (self.target_system is None or m.get_srcSystem() == self.target_system):
+                seq = m.get_seq()                             # autopilot packets: count gaps = lost packets
+                if self.seq_last is not None:
+                    self.seq_lost += (seq - self.seq_last - 1) % 256
+                self.seq_last = seq
+                self.seq_received += 1
             if kind == "HEARTBEAT" and m.type != mavlink2.MAV_TYPE_GCS and m.get_srcComponent() == 1:
                 self.target_system = m.get_srcSystem()
                 self.vehicle_hb = (t, bool(m.base_mode & mavlink2.MAV_MODE_FLAG_SAFETY_ARMED), m.custom_mode)
@@ -380,12 +401,98 @@ class Hub:
                 self.local = (t, m.x, m.y, m.z)
             elif kind == "ATTITUDE":
                 self.attitude = (t, m.roll, m.pitch, m.yaw)
+            elif kind == "SYS_STATUS":
+                self.battery = (t, m.voltage_battery / 1000.0, m.current_battery / 100.0, m.battery_remaining)
+            elif kind == "SERVO_OUTPUT_RAW":
+                self.servo = (t, [getattr(m, f"servo{i}_raw") for i in range(1, 9)])
+            elif kind == "COMMAND_ACK":
+                self.acks[m.command] = (t, m.result)
             elif kind == "STATUSTEXT":
-                print(f"   CUBE: {m.text}", flush=True)
+                self.messages.append((time.time(), m.severity, m.text))
+                if self.print_status:
+                    print(f"   CUBE: {m.text}", flush=True)
+
+    def link_loss(self, reset=False):
+        """Fraction of autopilot packets lost since the last reset (from MAVLink sequence gaps)."""
+        total = self.seq_received + self.seq_lost
+        loss = self.seq_lost / total if total else 0.0
+        if reset:
+            self.seq_received = self.seq_lost = 0
+        return loss, total
 
     def close(self):
         self.vehicle.close()
         self.gcs.close()
+
+
+MOCAP_LOG_COLUMNS = ["time_s", "frame", "valid", "accepted", "sent", "reset_counter",
+                     "x_m", "y_m", "z_m", "q_w", "q_x", "q_y", "q_z", "wx_rad_s", "wy_rad_s", "wz_rad_s",
+                     "n_m", "e_m", "d_m", "roll_rad", "pitch_rad", "yaw_rad", "marker_error_mm"]
+
+
+class PoseStreamer:
+    """OptiTrack frame -> validated pose -> VISION_POSITION_ESTIMATE at a fixed rate; logs every frame.
+
+    Untracked frames, single-frame jumps (marker swaps) and frames before the first Cube packet are
+    never sent.  After a tracking gap longer than gap_s the reset_counter increments.  Shared by the
+    CLI bridge (--stream) and the ground-station app.
+    """
+
+    def __init__(self, room, hub, rate, writer, max_jump_m=0.10, max_jump_deg=20.0, gap_s=0.5):
+        self.room, self.hub, self.writer = room, hub, writer
+        self.period = 1.0 / rate
+        self.max_jump_m, self.max_jump_deg, self.gap_s = max_jump_m, max_jump_deg, gap_s
+        self.st = {"in": 0, "sent": 0, "untracked": 0, "jumps": 0, "reset": 0, "last_ok": None,
+                   "next_send": 0.0, "last_pose": None, "last_valid_t": None, "send_fail": 0, "no_pico": 0}
+        self.latest = None        # (t, pose dict, accepted) of the newest frame, for displays
+
+    def on_body(self, rb):
+        st, hub = self.st, self.hub
+        if rb.id != self.room.id:
+            return
+        t = now()
+        st["in"] += 1
+        s = self.room.pose(rb)
+        accepted = bool(rb.valid)
+        if not rb.valid:
+            st["untracked"] += 1
+        omega = np.full(3, np.nan)
+        last = st["last_ok"]
+        if accepted and last is not None:
+            dt = max(t - last[0], 1e-4)
+            if t - last[0] > self.gap_s:
+                st["reset"] = (st["reset"] + 1) % 256        # tracking regained after a gap
+            elif (np.linalg.norm(s["p_room"] - last[1]) > self.max_jump_m + 4.0 * dt
+                  or math.degrees(rotation_angle(last[2].T @ s["R_world_mj"])) > self.max_jump_deg + 400.0 * dt):
+                accepted = False
+                st["jumps"] += 1
+            if accepted:
+                omega = rotvec(last[2].T @ s["R_world_mj"]) / dt        # twin-body rate (derived)
+        sent = False
+        if accepted:
+            st["last_ok"] = (t, s["p_room"], s["R_world_mj"])
+            st["last_valid_t"] = t
+            # Fixed send schedule: frames arrive in OS-timer bursts, so "time since last send"
+            # would round the period up to whole bursts and undershoot the requested rate.
+            if t >= st["next_send"]:
+                st["next_send"] = t + self.period if t - st["next_send"] > self.period else st["next_send"] + self.period
+                n, e, d = s["p_ned"]
+                r, p, y = s["rpy_ned"]
+                msg = hub.encoder.vision_position_estimate_encode(int(t * 1e6), n, e, d, r, p, y,
+                                                                  reset_counter=st["reset"])
+                st["last_pose"] = (t, s["p_ned"], s["rpy_ned"])
+                if hub.pico is None:
+                    st["no_pico"] += 1                         # no Cube telemetry seen yet
+                elif hub.send_to_vehicle(hub.encode(msg)):
+                    sent = True
+                    st["sent"] += 1
+                else:
+                    st["send_fail"] += 1
+        self.latest = (t, s, accepted)
+        self.writer.writerow([f"{t:.6f}", rb.frame, int(rb.valid), int(accepted), int(sent), st["reset"],
+                              *(f"{v:.5f}" for v in s["p_twin"]), *(f"{v:.6f}" for v in s["q_twin"]),
+                              *(f"{v:.4f}" for v in omega), *(f"{v:.5f}" for v in s["p_ned"]),
+                              *(f"{v:.6f}" for v in s["rpy_ned"]), f"{1e3 * rb.err:.3f}"])
 
 
 def do_stream(a):
@@ -399,64 +506,14 @@ def do_stream(a):
     log_path = log_dir / f"mocap_{stamp}.csv"
     fh = log_path.open("w", newline="", encoding="utf-8")
     writer = csv.writer(fh)
-    writer.writerow(["time_s", "frame", "valid", "accepted", "sent", "reset_counter",
-                     "x_m", "y_m", "z_m", "q_w", "q_x", "q_y", "q_z", "wx_rad_s", "wy_rad_s", "wz_rad_s",
-                     "n_m", "e_m", "d_m", "roll_rad", "pitch_rad", "yaw_rad", "marker_error_mm"])
+    writer.writerow(MOCAP_LOG_COLUMNS)
     vlog = (log_dir / f"vehicle_{stamp}.csv").open("w", newline="", encoding="utf-8")
     vwriter = csv.writer(vlog)
     vwriter.writerow(["time_s", "ekf_n_m", "ekf_e_m", "ekf_d_m", "roll_rad", "pitch_rad", "yaw_rad",
                       "armed", "mode", "ekf_flags"])
-    st = {"in": 0, "sent": 0, "untracked": 0, "jumps": 0, "reset": 0, "last_ok": None, "next_send": 0.0,
-          "last_pose": None, "last_valid_t": None, "send_fail": 0, "no_pico": 0}
-    period = 1.0 / a.rate
-
-    def on_body(rb):
-        if rb.id != room.id:
-            return
-        t = now()
-        st["in"] += 1
-        s = room.pose(rb)
-        accepted = bool(rb.valid)
-        if not rb.valid:
-            st["untracked"] += 1
-        omega = np.full(3, np.nan)
-        last = st["last_ok"]
-        if accepted and last is not None:
-            dt = max(t - last[0], 1e-4)
-            if t - last[0] > a.gap_s:
-                st["reset"] = (st["reset"] + 1) % 256        # tracking regained after a gap
-            elif (np.linalg.norm(s["p_room"] - last[1]) > a.max_jump_m + 4.0 * dt
-                  or math.degrees(rotation_angle(last[2].T @ s["R_world_mj"])) > a.max_jump_deg + 400.0 * dt):
-                accepted = False
-                st["jumps"] += 1
-            if accepted:
-                omega = rotvec(last[2].T @ s["R_world_mj"]) / dt        # twin-body rate (derived)
-        sent = False
-        if accepted:
-            st["last_ok"] = (t, s["p_room"], s["R_world_mj"])
-            st["last_valid_t"] = t
-            # Fixed send schedule: frames arrive in OS-timer bursts, so "time since last send"
-            # would round the period up to whole bursts and undershoot the requested rate.
-            if t >= st["next_send"]:
-                st["next_send"] = t + period if t - st["next_send"] > period else st["next_send"] + period
-                n, e, d = s["p_ned"]
-                r, p, y = s["rpy_ned"]
-                msg = hub.encoder.vision_position_estimate_encode(int(t * 1e6), n, e, d, r, p, y,
-                                                                  reset_counter=st["reset"])
-                st["last_pose"] = (t, s["p_ned"], s["rpy_ned"])
-                if hub.pico is None:
-                    st["no_pico"] += 1                         # no Cube telemetry seen yet
-                elif hub.send_to_vehicle(hub.encode(msg)):
-                    sent = True
-                    st["sent"] += 1
-                else:
-                    st["send_fail"] += 1
-        writer.writerow([f"{t:.6f}", rb.frame, int(rb.valid), int(accepted), int(sent), st["reset"],
-                         *(f"{v:.5f}" for v in s["p_twin"]), *(f"{v:.6f}" for v in s["q_twin"]),
-                         *(f"{v:.4f}" for v in omega), *(f"{v:.5f}" for v in s["p_ned"]),
-                         *(f"{v:.6f}" for v in s["rpy_ned"]), f"{1e3 * rb.err:.3f}"])
-
-    cl = make_client(a, on_body=on_body)
+    streamer = PoseStreamer(room, hub, a.rate, writer, a.max_jump_m, a.max_jump_deg, a.gap_s)
+    st = streamer.st
+    cl = make_client(a, on_body=streamer.on_body)
     print(f"Hub on UDP {a.listen_port}; Mission Planner: connect UDP port {a.gcs_port}. "
           f"Pose of rigid body {room.id} '{room.name}' at {a.rate:.0f} Hz. Ctrl+C to stop.\nLogs: {log_path}", flush=True)
     origin_sent, t_status, counts, last_local_t = 0, now() + 1.0, (0, 0), None

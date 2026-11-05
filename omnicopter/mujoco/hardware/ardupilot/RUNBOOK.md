@@ -1,5 +1,8 @@
 # Omnidrone runbook: click-by-click, bench → tethered hover → OptiTrack flight
 
+> **No RC link?** From step 7 on, follow [HOVER_PLAN.md](HOVER_PLAN.md) instead. It flies with the
+> Python ground station `omni_gcs.py` (no Mission Planner) and stage 5 instead of steps 9–13.
+
 Do the steps in order. **✔ Pass when** is the gate: if it fails, stop and fix before going on.
 Background is in [README.md](README.md). Step 1 was done on 2026-11-04
 (`audits\audit_20261104_135526`).

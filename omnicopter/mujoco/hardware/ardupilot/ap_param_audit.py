@@ -183,18 +183,30 @@ def audit(p):
     need(all(g(k) in (None, 0) for k in ("COMPASS_USE", "COMPASS_USE2", "COMPASS_USE3")),
          "COMPASS_USE, COMPASS_USE2, COMPASS_USE3 = 0 indoors (yaw comes from OptiTrack)")
     need(g("GPS1_TYPE", g("GPS_TYPE")) in (None, 0), "GPS1_TYPE = 0 indoors (no GPS)")
+    gcs_only = g("ARMING_SKIPCHK") == 64 and g("FS_THR_ENABLE") == 0
     if "ARMING_SKIPCHK" in p:                              # ArduPilot 4.7+: bitmask of checks to SKIP
-        need(g("ARMING_SKIPCHK") == 0, "ARMING_SKIPCHK should be 0 (no pre-arm checks skipped)")
+        if gcs_only:
+            findings.append("OK    ARMING_SKIPCHK = 64: GCS-only setup (stage 5), only the RC checks are skipped")
+            need(g("FS_GCS_ENABLE") not in (None, 0) and (g("FS_GCS_TIMEOUT") or 99) <= 5,
+                 "GCS-only: FS_GCS_ENABLE must be set (5 = Land) with FS_GCS_TIMEOUT <= 5 s")
+        else:
+            need(g("ARMING_SKIPCHK") == 0, "ARMING_SKIPCHK should be 0 (no pre-arm checks skipped), "
+                                           "or 64 with FS_THR_ENABLE 0 for GCS-only flight (stage 5)")
     else:
         need(g("ARMING_CHECK") not in (None, 0), "ARMING_CHECK should not be 0 (all pre-arm checks disabled)")
     need((g("BATT_MONITOR") or 0) > 0, "BATT_MONITOR is 0: no voltage reading, no battery failsafe, "
                                          "no thrust voltage compensation")
     modes = {g(f"FLTMODE{i}") for i in range(1, 7)}
-    need({0, 2, 9} <= modes or {0, 2, 5} <= modes,
-         "Flight modes should include Stabilize (0), AltHold (2) and Loiter (5) or Land (9) on the mode switch")
+    if not gcs_only:
+        need({0, 2, 9} <= modes or {0, 2, 5} <= modes,
+             "Flight modes should include Stabilize (0), AltHold (2) and Loiter (5) or Land (9) on the mode switch")
     need("SID_AXIS" in p, "SystemID mode is needed for the in-flight frequency sweeps")
-    need(any(g(f"RC{i}_OPTION") in (31, 32) for i in range(1, 17)),
-         "An RC switch should be set to Motor Emergency Stop (31) or Motor Interlock (32)")
+    if gcs_only:
+        findings.append("NOTE  GCS-only: no RC E-stop. KILL is omni_gcs.py (SPACE) plus a physical battery "
+                        "disconnect; the Cube lands on its own if the app's heartbeat stops (FS_GCS)")
+    else:
+        need(any(g(f"RC{i}_OPTION") in (31, 32) for i in range(1, 17)),
+             "An RC switch should be set to Motor Emergency Stop (31) or Motor Interlock (32)")
 
     groups = {prefix: {k: v for k, v in sorted(p.items()) if k.startswith(prefix)} for prefix in GROUP_PREFIXES}
     return key, findings, groups
@@ -230,8 +242,9 @@ def main():
         "".join(f"{k},{v:.7g}\n" for k, v in sorted(params.items())), encoding="utf-8")
     key, findings, groups = audit(params)
     complete = count is not None and len(params) >= count
-    findings.append(("OK  " if rc.get("receiver_detected") else "TODO") + "  RC receiver connected and bound "
-                    "(a safety pilot with an E-stop switch is required for armed tests)")
+    if not (params.get("ARMING_SKIPCHK") == 64 and params.get("FS_THR_ENABLE") == 0):
+        findings.append(("OK  " if rc.get("receiver_detected") else "TODO") + "  RC receiver connected and bound "
+                        "(a safety pilot with an E-stop switch is required for armed tests; or GCS-only, stage 5)")
     report = {"firmware": version, "rc": rc, "params_received": len(params), "params_expected": count,
               "complete": complete, "key_settings": key, "findings": findings, "groups": groups}
     (out / "audit.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

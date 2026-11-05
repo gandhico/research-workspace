@@ -1,0 +1,21 @@
+# Omnidrone stage 5: GCS-only flight with omni_gcs.py (no RC link, no Mission Planner).
+# ArduPilot Copter 4.7.1, Cube Orange+. Values checked against the Copter-4.7.1 parameter definitions (2026-11-04).
+# Use INSTEAD of stage 4 (stage 4 is the RC version).
+#
+# ARMING_SKIPCHK 64: bit 6 = "RC Channels" (AP_Arming.cpp bitmask). Skips ONLY the RC pre-arm checks
+#   ("PreArm: RC not found"); every other pre-arm check stays on.
+# FS_THR_ENABLE 0: there is no RC link, so no RC-loss failsafe.
+# FS_GCS_ENABLE 5 (Land) + FS_GCS_TIMEOUT 3 s: if omni_gcs.py's 5 Hz heartbeat stops (program closed, PC or
+#   Wi-Fi down) the Cube lands by itself. FS_EKF_ACTION 1 (already set) lands if the OptiTrack pose stops.
+# ATC_ANGLE_MAX 20: normal props mounted by hover sign stay on their strong side up to 35 deg of tilt
+#   (twin, worst axis), >= 2 N margin to 22.5 deg.
+# MOT_THST_HOVER 0.5 + MOT_HOVER_LEARN 2: twin estimate 0.54 at 10 N/rotor (unverified), learned in flight.
+#
+# Load with:  python ap_param_load.py config\stage5_gcs_only.param   (omni_gcs.py closed: it needs UDP 14550)
+ARMING_SKIPCHK,64
+FS_THR_ENABLE,0
+FS_GCS_ENABLE,5
+FS_GCS_TIMEOUT,3
+ATC_ANGLE_MAX,20
+MOT_THST_HOVER,0.5
+MOT_HOVER_LEARN,2
