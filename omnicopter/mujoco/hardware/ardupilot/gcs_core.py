@@ -39,7 +39,9 @@ MODES = {"STABILIZE": 0, "ALT_HOLD": 2, "GUIDED": 4, "LOITER": 5, "LAND": 9, "BR
 MODE_NAMES = {**{v: k for k, v in br.COPTER_MODES.items()}, **{v: k for k, v in MODES.items()}}
 FORCE_DISARM_MAGIC = 21196
 POSITION_ONLY_MASK = 2552            # SET_POSITION_TARGET: use x, y, z and yaw; ignore vel/acc/yaw-rate
-STREAMS_HZ = {30: 10, 32: 10, 1: 2, 193: 2, 36: 5}   # ATTITUDE, LOCAL_POSITION_NED, SYS_STATUS, EKF_STATUS, SERVO_OUT
+# ATTITUDE, LOCAL_POSITION_NED, SYS_STATUS, EKF_STATUS, SERVO_OUTPUT_RAW, GPS_GLOBAL_ORIGIN, HOME_POSITION.
+# ArduPilot only sends the last two once the EKF origin / home exist, so their arrival confirms them.
+STREAMS_HZ = {30: 10, 32: 10, 1: 2, 193: 2, 36: 5, 49: 0.5, 242: 0.5}
 TWIN_PORT = 14600
 TWIN_PACKET = struct.Struct("<4sd3d4d8H")   # b"OMNT", t, twin xyz, twin quat wxyz, servo1..8 us
 TWIN_MAGIC = b"OMNT"
@@ -242,7 +244,9 @@ class GroundStation:
              "battery": None if hub.battery is None or hub.battery[1] <= 0 else hub.battery[1:],
              "servo": None if hub.servo is None or t - hub.servo[0] > 2 else hub.servo[1],
              "home": self.home, "target": self.target, "airborne": self.airborne,
-             "jumps": st["jumps"], "auto_action": self.auto_action_done}
+             "jumps": st["jumps"], "auto_action": self.auto_action_done,
+             "origin_set": hub.origin_msg is not None and t - hub.origin_msg[0] < 6.0,
+             "home_set": hub.home_msg is not None and t - hub.home_msg[0] < 6.0}
         if hub.local and t - hub.local[0] < 1.0:
             s["ekf_ned"] = np.array(hub.local[1:])
             if m is not None:
@@ -274,6 +278,10 @@ class GroundStation:
             (s["link_packets"] > 20 and s["link_loss"] < lim.gate_link_loss, "Link quality",
              f"{100 * s['link_loss']:.0f} % lost of {s['link_packets']}"),
             (not recent_prearm, "Cube pre-arm checks", recent_prearm[-1][2] if recent_prearm else "no PreArm messages"),
+            # Guided takeoff converts "height above home" to "above EKF origin": without an origin the
+            # Cube refuses TAKEOFF with FAILED (ModeGuided::do_user_takeoff_start_m, Copter-4.7.1).
+            (s["origin_set"], "EKF origin set on the Cube",
+             "confirmed by the Cube" if s["origin_set"] else "not confirmed yet (the app keeps sending it)"),
             (near_home, "At the take-off spot", "no pose" if s["mocap_ned"] is None else
              f"{100 * math.hypot(*s['mocap_ned'][:2]):.0f} cm from the calibration spot"),
             (self.operator_confirmed, "Operator: tether, area clear, kill ready", "tick the box"),
@@ -321,8 +329,16 @@ class GroundStation:
         if ok:
             self.target = [self.home[0], self.home[1], self.home[2] - height_m, self.target[3]]
             self.airborne = True
-        self.event(f"Takeoff to {height_m:.2f} m: {'accepted' if ok else self._result_name(result)}",
-                   "action" if ok else "warn")
+            self.event(f"Takeoff to {height_m:.2f} m: accepted", "action")
+        else:
+            s = self.status()
+            hints = []
+            if not s["origin_set"]:
+                hints.append("EKF origin not confirmed")
+            if not s["home_set"]:
+                hints.append("home not set on the Cube")
+            self.event(f"Takeoff to {height_m:.2f} m: {self._result_name(result)} (the Cube refused"
+                       + (": " + ", ".join(hints) if hints else "; it must be landed, armed in GUIDED") + ")", "warn")
         return ok
 
     def nudge(self, dn=0.0, de=0.0, dup=0.0, dyaw_deg=0.0):
@@ -426,6 +442,8 @@ class GroundStation:
 
     def _run(self):
         next_hb = next_streams = next_safety = next_log = next_twin = next_rate = next_target = next_kill = 0.0
+        next_origin = 0.0
+        self._origin_confirmed = self._home_confirmed = False
         self._event_for_log = ""
         while not self._stop.is_set():
             self.hub.pump(0.01)
@@ -434,6 +452,9 @@ class GroundStation:
             if hb and (self._last_hb_seen is None or hb[0] - self._last_hb_seen > 5.0):
                 self.event("Cube connected" if self._last_hb_seen is None else "Cube heartbeat back (rebooted?)")
                 next_streams, self._origin_sends = 0.0, 0
+                # a rebooted Cube has lost its EKF origin and home: forget the old confirmations
+                self.hub.origin_msg = self.hub.home_msg = None
+                self._origin_confirmed = self._home_confirmed = False
             self._last_hb_seen = hb[0] if hb else self._last_hb_seen
             if t >= next_hb:
                 next_hb = t + 0.2
@@ -441,11 +462,20 @@ class GroundStation:
             if hb and t >= next_streams:
                 next_streams = t + (10.0 if self.hub.attitude and t - self.hub.attitude[0] < 2 else 2.0)
                 self._request_streams()
-            if hb and self._origin_sends < 3 and self.streamer.st["sent"] > 10:
+            # EKF origin: send until the Cube confirms it with GPS_GLOBAL_ORIGIN. A single burst at start-up can
+            # arrive while the EKF is still initialising (2026-11-04: TAKEOFF then FAILED).
+            if hb and self.streamer.st["sent"] > 10 and self.hub.origin_msg is None and t >= next_origin:
+                next_origin = t + 2.0
                 self._send_origin()
                 self._origin_sends += 1
-                if self._origin_sends == 3:
-                    self.event(f"EKF origin sent ({self.cfg.origin})")
+                if self._origin_sends == 1:
+                    self.event(f"EKF origin sent ({self.cfg.origin}), waiting for the Cube to confirm")
+            if self.hub.origin_msg is not None and not self._origin_confirmed:
+                self._origin_confirmed = True
+                self.event("EKF origin confirmed by the Cube")
+            if self.hub.home_msg is not None and not self._home_confirmed:
+                self._home_confirmed = True
+                self.event("Home set on the Cube")
             if t < self.killing_until and self.armed() and t >= next_kill:
                 next_kill = t + 0.1
                 self._force_disarm_burst()

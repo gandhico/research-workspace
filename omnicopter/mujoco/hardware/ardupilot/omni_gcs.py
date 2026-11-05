@@ -52,19 +52,19 @@ class App:
         gates = ttk.LabelFrame(root, text="Pre-flight gates (all green to ARM)")
         gates.grid(row=1, column=0, sticky="nsew", padx=6, pady=6)
         self.gate_labels = []
-        for i in range(9):
+        for i in range(len(gs.preflight())):
             label = tk.Label(gates, anchor="w", font=("Consolas", 10), width=58)
             label.grid(row=i, column=0, sticky="w")
             self.gate_labels.append(label)
         self.confirm = tk.BooleanVar(value=False)
         tk.Checkbutton(gates, text="Tether attached, area clear, kill person ready", variable=self.confirm,
-                       command=self.on_confirm, font=("Segoe UI", 10, "bold")).grid(row=10, column=0, sticky="w")
+                       command=self.on_confirm, font=("Segoe UI", 10, "bold")).grid(row=20, column=0, sticky="w")
 
         vehicle = ttk.LabelFrame(root, text="Vehicle")
         vehicle.grid(row=1, column=1, sticky="nsew", padx=6, pady=6)
         self.values = {}
         for i, key in enumerate(["Link", "OptiTrack", "Position (NED)", "EKF - OptiTrack", "Attitude r/p/y",
-                                 "Cube - OptiTrack", "From arming spot", "Battery", "Target"]):
+                                 "Cube - OptiTrack", "Origin / Home", "From arming spot", "Battery", "Target"]):
             tk.Label(vehicle, text=key, anchor="w", font=("Segoe UI", 10)).grid(row=i, column=0, sticky="w")
             self.values[key] = tk.Label(vehicle, anchor="w", font=("Consolas", 10), width=40)
             self.values[key].grid(row=i, column=1, sticky="w")
@@ -179,6 +179,9 @@ class App:
                                    " ".join(f"{math.degrees(x):+7.1f}" for x in s["cube_rpy"]) + " deg")
         v["Cube - OptiTrack"].config(text="-" if s["att_diff_deg"] is None else
                                      " ".join(f"{x:+6.1f}" for x in s["att_diff_deg"]) + " deg")
+        v["Origin / Home"].config(
+            text=f"EKF origin {'set' if s['origin_set'] else 'NOT set'}, home {'set' if s['home_set'] else 'not set'}",
+            fg=GREEN if s["origin_set"] and s["home_set"] else (AMBER if s["origin_set"] else RED))
         if s["home"] is not None and s["mocap_ned"] is not None:
             d = s["mocap_ned"] - s["home"]
             v["From arming spot"].config(text=f"{math.hypot(d[0], d[1]):.2f} m horizontal, {-d[2]:+.2f} m up")
@@ -234,13 +237,15 @@ def main():
     # Defaults trigger before a tether that allows 0.5 m drift / 0.5 m height goes taut.
     p.add_argument("--tether-radius", type=float, default=0.35, help="LAND beyond this horizontal distance [m]")
     p.add_argument("--max-height", type=float, default=0.45, help="LAND above this height [m]")
+    p.add_argument("--log-dir", default=None, help="where to write the CSV logs (default flight_logs)")
     p.add_argument("--close-after", type=float, default=None, help=argparse.SUPPRESS)   # smoke tests
     a = p.parse_args()
     limits = Limits(tether_radius_m=a.tether_radius, max_height_m=a.max_height,
                     max_takeoff_m=min(0.4, a.max_height - 0.1))
     cfg = Config(server=a.server, local_ip=a.local_ip, unicast=a.unicast, natnet=a.natnet, rb_name=a.rb_name,
                  rb_id=a.id, rate=a.rate, listen_port=a.listen_port, pico_ip=a.pico_ip, pico_port=a.pico_port,
-                 relay=a.relay, origin=a.origin, limits=limits, **({"cal": a.cal} if a.cal else {}))
+                 relay=a.relay, origin=a.origin, limits=limits, **({"cal": a.cal} if a.cal else {}),
+                 **({"log_dir": a.log_dir} if a.log_dir else {}))
     gs = GroundStation(cfg).start()
     root = tk.Tk()
     App(root, gs)

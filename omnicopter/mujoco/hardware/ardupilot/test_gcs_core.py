@@ -44,6 +44,7 @@ class FakeCubeGuided(threading.Thread):
         self.streams, self.origin, self.targets, self.takeoff_alt = set(), None, [], None
         self.force_disarms, self.gcs_heartbeats = 0, 0
         self.sent, self.drop_every = 0, 10                # drop 10 % of the Cube's packets, like the real link
+        self.origin_requests, self.ignore_first_origins, self.home_set = 0, 2, False
         self.stop = threading.Event()
 
     def send(self, msg, drop_every=0):
@@ -70,6 +71,11 @@ class FakeCubeGuided(threading.Thread):
                 next_slow = now + 0.5
                 self.send(self.enc.sys_status_encode(0, 0, 0, 0, 16400, 500, 90, 0, 0, 0, 0, 0, 0))
                 self.send(self.enc.servo_output_raw_encode(0, 0, *([1500] * 8)))
+                # like ArduPilot: these exist only once the EKF origin / home are set
+                if self.origin is not None and 49 in self.streams:
+                    self.send(self.enc.gps_global_origin_encode(*self.origin))
+                if self.home_set and 242 in self.streams:
+                    self.send(self.enc.home_position_encode(0, 0, 0, 0, 0, 0, [1, 0, 0, 0], 0, 0, 0))
             try:
                 data, _ = self.sock.recvfrom(65535)
             except (socket.timeout, OSError):
@@ -86,6 +92,9 @@ class FakeCubeGuided(threading.Thread):
             self.send(self.enc.local_position_ned_encode(0, m.x, m.y, m.z, 0, 0, 0))
             self.send(self.enc.attitude_encode(0, m.roll, m.pitch, m.yaw, 0, 0, 0))
         elif kind == "SET_GPS_GLOBAL_ORIGIN":
+            self.origin_requests += 1
+            if self.origin_requests <= self.ignore_first_origins:
+                return                                    # EKF not ready yet: silently ignored (seen on hardware)
             self.origin = (m.latitude, m.longitude, m.altitude)
         elif kind == "SET_POSITION_TARGET_LOCAL_NED":
             self.targets.append((m.x, m.y, m.z, m.yaw, m.type_mask, m.coordinate_frame))
@@ -101,6 +110,7 @@ class FakeCubeGuided(threading.Thread):
                 if m.param1 == 1:
                     ok = self.mode == 4 and time.time() - self.vpe_t < 1.0
                     self.armed = self.armed or ok
+                    self.home_set = self.home_set or (ok and self.origin is not None)
                     self.ack(c, ok)
                 elif int(m.param2) == gcs_core.FORCE_DISARM_MAGIC:
                     self.force_disarms += 1
@@ -109,7 +119,8 @@ class FakeCubeGuided(threading.Thread):
                 else:
                     self.ack(c, False)                    # in flight: normal disarm refused
             elif c == mavlink2.MAV_CMD_NAV_TAKEOFF:
-                ok = self.armed and self.mode == 4
+                # ModeGuided::do_user_takeoff_start_m needs home and the EKF origin (Copter-4.7.1)
+                ok = self.armed and self.mode == 4 and self.origin is not None and self.home_set
                 self.takeoff_alt = m.param7 if ok else None
                 self.ack(c, ok)
 
@@ -162,7 +173,9 @@ def main():
     gs = gcs_core.GroundStation(cfg).start()
     results = {}
     try:
-        results["streams requested"] = wait_until(lambda: {30, 32, 1, 193, 36} <= cube.streams, 5)
+        results["streams requested"] = wait_until(lambda: {30, 32, 1, 193, 36, 49, 242} <= cube.streams, 5)
+        results["origin resent until the Cube confirms"] = wait_until(
+            lambda: cube.origin is not None and gs.status()["origin_set"], 12) and cube.origin_requests > cube.ignore_first_origins
         results["preflight all green except operator"] = wait_until(
             lambda: [label for ok, label, _ in gs.preflight() if not ok] == ["Operator: tether, area clear, kill ready"], 5)
         if not results["preflight all green except operator"]:
@@ -170,6 +183,7 @@ def main():
         results["arm refused before operator confirms"] = (not gs.arm()) and not cube.armed
         gs.operator_confirmed = True
         results["armed in GUIDED"] = gs.arm() and cube.armed and cube.mode == 4
+        results["home confirmed after arming"] = wait_until(lambda: gs.status()["home_set"], 3)
         results["takeoff 0.2 m accepted"] = gs.takeoff(0.2) and abs((cube.takeoff_alt or 0) - 0.2) < 1e-6
         n_targets = len(cube.targets)
         results["nudge sends a position target"] = gs.nudge(dn=0.10) and wait_until(

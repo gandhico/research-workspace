@@ -335,6 +335,8 @@ class Hub:
         self.battery = None                # (t, volts, amps, percent) from SYS_STATUS
         self.servo = None                  # (t, [servo1..8 us]) from SERVO_OUTPUT_RAW
         self.acks = {}                     # command id -> (t, MAV_RESULT)
+        self.origin_msg = None             # (t, lat, lon, alt_mm) from GPS_GLOBAL_ORIGIN: the EKF origin is set
+        self.home_msg = None               # (t, x, y, z) from HOME_POSITION (NED from origin): home is set
         self.messages = collections.deque(maxlen=200)   # (wall time, severity, text) from STATUSTEXT
         self.seq_last, self.seq_received, self.seq_lost = None, 0, 0   # link quality, autopilot stream
         self.relayed_up = self.relayed_down = 0
@@ -407,6 +409,10 @@ class Hub:
                 self.servo = (t, [getattr(m, f"servo{i}_raw") for i in range(1, 9)])
             elif kind == "COMMAND_ACK":
                 self.acks[m.command] = (t, m.result)
+            elif kind == "GPS_GLOBAL_ORIGIN":
+                self.origin_msg = (t, m.latitude, m.longitude, m.altitude)
+            elif kind == "HOME_POSITION":
+                self.home_msg = (t, m.x, m.y, m.z)
             elif kind == "STATUSTEXT":
                 self.messages.append((time.time(), m.severity, m.text))
                 if self.print_status:
