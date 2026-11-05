@@ -86,7 +86,7 @@ Mission Planner is not needed for any of these. Close it and every other tool th
 | B | Thrust direction and strong side (**props ON, strapped down**) | `python motor_test_6dof.py --props-on --delta 50` | All 8 push along +Z on plus, and "All 8 props hover on their strong side" |
 | C | OptiTrack room frame (props off) | `python mocap\omni_mocap_bridge.py --server 192.168.2.2 --local-ip 192.168.2.2 --unicast --list`, then `--calibrate`, then `--check` | Hand checks: forward → N+, right → E+, up → D−, turn right → yaw+ |
 | D | App check (**props OFF**) | `python omni_gcs.py --server 192.168.2.2 --local-ip 192.168.2.2 --unicast`, then click **Twin view** | See below |
-| E | Restrained spool-up (**props ON, strapped to the floor**) | In the app: ARM → TAKEOFF **0.10 m** → watch 3 s → **SPACE** (KILL) | See below |
+| E | Restrained spool-up (**props ON, strapped to the floor**) | In the app: ARM → TAKEOFF **0.10 m** → watch **1–2 s** → **SPACE** (KILL). The takeoff ramps the throttle to 90 % in about 2 s (`TKOFF_SLEW_TIME`) until it detects lift-off, so strapped down it pulls hard on the straps | See below |
 
 **Step D passes when:**
 1. Every pre-flight gate is green except the operator box: Cube link, OptiTrack to EKF ≥ 20 Hz,
