@@ -331,8 +331,14 @@ class GroundStation:
         if not self.armed() or self.mode() != "GUIDED" or self.home is None:
             self.event("Takeoff needs ARMED in GUIDED", "warn")
             return False
+        sent_at = br.now()
         result = self._command(mavlink2.MAV_CMD_NAV_TAKEOFF, [0, 0, 0, 0, 0, 0, height_m])
         ok = result == mavlink2.MAV_RESULT_ACCEPTED
+        reply_lost = False
+        if not ok and self._motors_spooling_since(sent_at):
+            # 2026-11-04 on the vehicle: the ACCEPTED reply was lost, the retry got FAILED because the takeoff was
+            # already running, and the app believed it was still on the ground (safety limits inactive).
+            ok = reply_lost = True
         if ok:
             self.target = [self.home[0], self.home[1], self.home[2] - height_m, self.target[3]]
             self.airborne = True                  # safety limits active from now on
@@ -342,8 +348,9 @@ class GroundStation:
             self.takeoff_height = height_m
             self.takeoff_started = br.now()
             self.takeoff_done = False
-            self.event(f"Takeoff to {height_m:.2f} m: accepted (nudges enabled once it reaches the height)",
-                       "action")
+            self.event(f"Takeoff to {height_m:.2f} m: accepted"
+                       + (" (reply lost on the link, but the motors are spooling up)" if reply_lost else "")
+                       + " (nudges enabled once it reaches the height)", "action")
         else:
             s = self.status()
             hints = []
@@ -354,6 +361,17 @@ class GroundStation:
             self.event(f"Takeoff to {height_m:.2f} m: {self._result_name(result)} (the Cube refused"
                        + (": " + ", ".join(hints) if hints else "; it must be landed, armed in GUIDED") + ")", "warn")
         return ok
+
+    def _motors_spooling_since(self, since, wait_s=1.5, threshold_us=40):
+        """True if SERVO_OUTPUT_RAW shows any motor leaving 1500 us (6DoF idle) after `since` (waits up to wait_s)."""
+        end = br.now() + wait_s
+        while True:
+            servo = self.hub.servo
+            if servo and servo[0] > since and any(abs(us - 1500) > threshold_us for us in servo[1]):
+                return True
+            if br.now() >= end:
+                return False
+            time.sleep(0.05)
 
     def nudge(self, dn=0.0, de=0.0, dup=0.0, dyaw_deg=0.0):
         """Move the Guided position target, clamped inside the tether limits."""

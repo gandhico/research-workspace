@@ -136,6 +136,99 @@ public-safety review before they are copied into the GitHub repository.
 - **Insight:** adding ROS 2 does not itself create a digital twin. Predictive validity
   requires independently measured parameters and successful held-out prediction.
 
+### 2026-11-04 — ArduPilot 6DoF bring-up, Python ground station, first lift-off
+
+- **Objective:** connect the twin to the real vehicle with onboard ArduPilot control and OptiTrack
+  navigation, and reach a first tethered hover without Mission Planner and without an RC link.
+- **People involved:** Gandhi (hardware and tests), with Claude Code (tools, source checks, tests).
+- **Hardware revision:**
+  - **Flight controller:** Cube Orange+ with ArduCopter 4.7.1 (official).
+  - **ESCs:** 2× HGLRC SPECTER 60A 4-in-1, BLHeli_32 (`SPECTER60_G_128`), DShot300 on MAIN 1–8
+    through the I/O coprocessor.
+  - **Link:** Pico W MAVLink Wi-Fi bridge on UDP 14550.
+  - **Props:** normal (one-direction), mounted by hover sign.
+  - **Motion capture:** OptiTrack Motive:Tracker 3.3.2 on the ground PC (NatNet 4.2, interface
+    192.168.2.2, unicast). Rigid body `Aries_Omnidrone` is id 2, at 360 Hz.
+  - **Not fitted:** battery monitor.
+- **Software/model/parameter version:**
+  - **Branch:** `feature/system-identification` (commits 87ebe229 … 1106d8f3 plus this entry).
+  - **Code:** `hardware/ardupilot/`.
+  - **Twin:** canonical XML unchanged (sha256 6303b7b90a40c15c…). The ArduPilot 6DoF Lua mixer
+    is generated from its 6×8 matrix; every column gives a pure wrench in MuJoCo (off-axis
+    < 1e-14).
+  - **Cube parameter stages:** 1 (OptiTrack EKF), 2 (6DoF frame, forced DShot, BLHeli 3D),
+    3 (`AHRS_ORIENTATION 4`), 5 (GCS-only).
+- **Change or experiment, in order:**
+  1. Read-only parameter audit.
+  2. Stage 1 written with a verified loader.
+  3. 6DoF frame and Lua mixer.
+  4. Motor map and reversal test, props off.
+  5. Board orientation from gravity.
+  6. 6-face accelerometer calibration.
+  7. OptiTrack room calibration.
+  8. Ground station `omni_gcs.py`: OptiTrack to the EKF, GUIDED arm/takeoff/land, KILL, safety
+     monitor, MuJoCo live twin view.
+  9. Props-off arm and KILL checks.
+  10. First tethered takeoff.
+- **Evidence and file links:**
+  - `hardware/ardupilot/audits/`: parameter audits and the motor-test CSVs.
+  - `hardware/ardupilot/mocap/omni_mocap_calib.json`.
+  - `hardware/ardupilot/flight_logs/` (not in git, keep): telemetry and OptiTrack CSVs, sessions
+    18:26, 18:36, 18:45, 18:54 and 19:03.
+  - The first lift-off is `telemetry_20261104_190320.csv` / `mocap_20261104_190320.csv`.
+- **Measured results:**
+  - **Motors:** map Motor1–8 = twin rotors 1–8; all 8 reverse on DShot-3D.
+  - **Board orientation:** Yaw180, residual 1.1°.
+  - **Accelerometer** readings 988–1005 mg per face.
+  - **EKF vs OptiTrack:** 0.1 cm; Cube vs OptiTrack attitude within 0.1°.
+  - **Pico link loss:** 1–12 %.
+  - **First lift-off** (19:03, second attempt):
+    - Every motor on its expected hover side.
+    - Lift-off at about 0.08 m, then a tip to the **left**: 46° within about 1 s, 25 cm toward −E.
+    - Yaw changed only +7°.
+    - Outputs at lift-off: left-back rotors 3 and 7 at 1025/1050 µs (95/90 % of range,
+      saturated); left-front 4 and 8 at 1887/1858 µs; right-side rotors 2 and 6 at only
+      1333/1387 µs. The controller was trying to raise the left side and ran out of authority.
+- **Unexpected behavior** (each one fixed or documented in the tools):
+  1. **Mission Planner load-from-file** left the Cube unchanged. Replaced by
+     `ap_param_load.py`, which reads every value back.
+  2. **Percent motor tests are unsafe on reversible outputs.** "10 %" = 1100 µs ≈ 80 % reverse,
+     and "0 %" = full reverse (`motor_test.cpp`, DShot-3D mapping). `motor_test_1.py` was guarded,
+     and `motor_test_6dof.py` uses PWM 1500 ± Δ.
+  3. **The 6DoF scripting frame never enables DShot** on its motors (boot banner `RCOut: PWM:1-14`):
+     the motors are created after boot, and `AP_MotorsMatrix_6DoF_Scripting::init()` skips
+     `set_update_rate()`. Forced with `SERVO_BLH_MASK 255` + `SERVO_BLH_OTYPE 5`.
+  4. **ArduPilot sends `DSHOT_3D_ON`** (and `DSHOT_REVERSE`) only when `SERVO_DSHOT_ESC` is a
+     BLHeli type; it was 0.
+  5. **BLHeli pass-through cannot reach outputs driven by the I/O coprocessor.**
+  6. **Mission Planner accelerometer calibration fails over the lossy Wi-Fi link**; it works over USB.
+  7. **ArduPilot 4.7.1 silently rejects EKF origin 0,0,0** (`Location::is_zero` in
+     `set_ekf_origin`): no home, so Guided takeoff FAILED. A non-zero origin is now required.
+  8. **Any Guided position target during takeoff cancels it.** The TakeOff sub-mode switches to
+     Pos, a landed vehicle is held at ground idle, and `DISARM_DELAY` then disarms it. The app now
+     sends no targets until the takeoff height is reached.
+  9. **A lost ACCEPTED reply** made the retry return FAILED while the takeoff was running. The app
+     now checks the motor outputs.
+  10. **Motive 3.3.2 streams only with a Local Interface selected**; loopback did not work.
+  11. **The Pico Wi-Fi link drops packets**, so every command needs retries plus a physical kill.
+- **Insight/decision:**
+  - **Onboard ArduPilot control** with a twin-derived mixer. The twin's hover attitude (body −x up)
+    is the most efficient one: 5.36 N per rotor.
+  - **Normal props are acceptable only when mounted by hover sign**, with `ATC_ANGLE_MAX 20`. The
+    twin keeps every rotor on its strong side up to 35° of tilt.
+  - **GCS-only flight** with `ARMING_SKIPCHK 64` (RC checks only), `FS_THR_ENABLE 0` and
+    `FS_GCS_ENABLE 5` / `FS_GCS_TIMEOUT 3`.
+- **Assumptions and limitations:**
+  - Mass (2.5 kg), inertia and 10 N/rotor are still unverified.
+  - The weak-side thrust of normal props and the propeller reaction torque are not in the twin.
+  - The kill travels over a lossy link, so a physical battery kill and a tether are required.
+- **Next gate:**
+  1. Check the propellers, rotors 3, 4, 7 and 8 first, with the props-on strong-side test
+     (`motor_test_6dof.py --props-on --delta 50`, hover-plan step B, not yet run).
+  2. Check the centre of mass left/right (battery position).
+  3. Strapped spool-up (step E): left and right outputs should be balanced.
+  4. Then a second tethered hover.
+
 ## Main scientific insights to preserve
 
 1. An STL supplies geometry, not the true mass distribution.

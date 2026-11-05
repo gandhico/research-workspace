@@ -14,11 +14,26 @@ Run every command from
 | Motor map Motor1–8 = twin rotors 1–8 | ✅ |
 | Board orientation (`AHRS_ORIENTATION 4`, Yaw180) and accelerometer/level calibration | ✅ |
 | Ground station `omni_gcs.py` + `gcs_core.py` + `twin_view.py` | ✅ built; tested against fake Motive and a fake Cube with 10 % packet loss (`test_gcs_core.py`) |
-| GCS-only Cube parameters (stage 5) | ⏳ step A |
-| Props mounted by hover sign (normal props) | ⏳ step B |
-| OptiTrack room calibration on the real vehicle | ⏳ step C |
-| Real-vehicle checks with the app (props off, then strapped) | ⏳ steps D–E |
+| GCS-only Cube parameters (stage 5) | ✅ step A, audited 18:35 |
+| Props mounted by hover sign (normal props) | ⏳ **step B not run yet**: do it first on 2026-11-05 |
+| OptiTrack room calibration on the real vehicle | ✅ step C (18:25) |
+| Real-vehicle checks with the app (props off, then strapped) | ✅ step D (arm, KILL, takeoff spool-up). Step E pending |
+| First tethered takeoff (19:03) | ⚠️ lifted about 0.08 m, then **tipped left to 46°** in about 1 s and was KILLed. Left-back rotors 3 and 7 saturated (95/90 %), left-front 4 and 8 high, right side low: the left side lacks thrust |
 | Battery monitor | ⏳ recommended (audit TODO) |
+
+### Next session (2026-11-05)
+
+1. **Propellers.** Check the type, direction and mounting of every prop, rotors **3, 7, 4, 8**
+   (left side) first:
+   - rotors 1, 4, 5, 8 strongest along +Z;
+   - rotors 2, 3, 6, 7 strongest along −Z (pusher: the opposite-rotation prop, flipped).
+
+   Then run **step B** strapped down: `python motor_test_6dof.py --props-on --delta 50`.
+2. **Centre of mass.** Balance the cube on a finger or edge left/right and front/back with the
+   battery installed. A left-heavy vehicle explains the same symptom.
+3. **Step E**, strapped down: TAKEOFF 0.10, 1–2 s, SPACE. The motor outputs of the left and right
+   sides should be similar.
+4. Second tethered takeoff only after 1–3 pass. Send the new `flight_logs` CSVs for analysis.
 
 ## 2. How flying works without RC
 

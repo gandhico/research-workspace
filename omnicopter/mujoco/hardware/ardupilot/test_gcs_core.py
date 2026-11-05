@@ -46,6 +46,7 @@ class FakeCubeGuided(threading.Thread):
         self.sent, self.drop_every = 0, 10                # drop 10 % of the Cube's packets, like the real link
         self.origin_requests, self.ignore_first_origins, self.home_set = 0, 2, False
         self.vpe_z, self.takeoff_z0, self.targets_during_takeoff = 0.0, None, 0
+        self.takeoff_running, self.drop_first_takeoff_ack = False, True
         self.stop = threading.Event()
 
     def send(self, msg, drop_every=0):
@@ -71,7 +72,9 @@ class FakeCubeGuided(threading.Thread):
             if now >= next_slow and self.streams:
                 next_slow = now + 0.5
                 self.send(self.enc.sys_status_encode(0, 0, 0, 0, 16400, 500, 90, 0, 0, 0, 0, 0, 0))
-                self.send(self.enc.servo_output_raw_encode(0, 0, *([1500] * 8)))
+                # 6DoF idle = 1500 us; during takeoff each motor leaves 1500 on its hover side
+                spool = [1700, 1300, 1300, 1700, 1700, 1300, 1300, 1700] if self.takeoff_running else [1500] * 8
+                self.send(self.enc.servo_output_raw_encode(0, 0, *spool))
                 # like ArduPilot: these exist only once the EKF origin / home are set
                 if self.origin is not None and 49 in self.streams:
                     self.send(self.enc.gps_global_origin_encode(*self.origin))
@@ -128,11 +131,17 @@ class FakeCubeGuided(threading.Thread):
                     self.ack(c)
                 else:
                     self.ack(c, False)                    # in flight: normal disarm refused
+            elif c == mavlink2.MAV_CMD_NAV_TAKEOFF and self.takeoff_running:
+                self.ack(c, False)                        # already taking off: Copter answers FAILED
             elif c == mavlink2.MAV_CMD_NAV_TAKEOFF:
                 # ModeGuided::do_user_takeoff_start_m needs home and the EKF origin (Copter-4.7.1)
                 ok = self.armed and self.mode == 4 and self.origin is not None and self.home_set
                 self.takeoff_alt = m.param7 if ok else None
                 self.takeoff_z0 = self.vpe_z if ok else None
+                self.takeoff_running = ok
+                if ok and self.drop_first_takeoff_ack:
+                    self.drop_first_takeoff_ack = False
+                    return                                # ACCEPTED reply lost on the link (seen 2026-11-04)
                 self.ack(c, ok)
 
 
@@ -196,6 +205,7 @@ def main():
         results["armed in GUIDED"] = gs.arm() and cube.armed and cube.mode == 4
         results["home confirmed after arming"] = wait_until(lambda: gs.status()["home_set"], 3)
         results["takeoff 0.2 m accepted"] = gs.takeoff(0.2) and abs((cube.takeoff_alt or 0) - 0.2) < 1e-6
+        results["takeoff seen through a lost reply"] = any("reply lost" in e.text for e in gs.events) and gs.airborne
         results["nudge refused during takeoff"] = not gs.nudge(dn=0.10)
         results["takeoff completes (OptiTrack height)"] = wait_until(lambda: gs.takeoff_done, 8)
         n_targets = len(cube.targets)
