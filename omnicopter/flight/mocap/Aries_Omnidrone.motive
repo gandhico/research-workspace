@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile version="1">
+    <node_assets>
+        <rigid_body version="1001" id="5018eb43bb96acb4:f5c9dc00d87a11f1">
+            <properties>
+                <property name="NodeName" value="Aries_Omnidrone" default_value="Rigid Body 001"/>
+                <property name="AssetName" value="Aries_Omnidrone"/>
+                <property name="JointName" value="Aries_Omnidrone"/>
+                <property name="ParentInfo" value="None"/>
+                <property name="ChildInfo" value="Marker 001"/>
+                <property name="DegreesOfFreedom" value="T:XYZ + R:XYZ"/>
+                <property name="SyntheticLabelGraphScale" value="1.000000" default_value="1.000000"/>
+                <property name="Color" value="4286620671"/>
+                <property name="ShowBones" value="true" default_value="true"/>
+                <property name="BoneColor" value="65793"/>
+                <property name="ShowAxis" value="true" default_value="true"/>
+                <property name="ShowTargetMarkerLines" value="false"/>
+                <property name="ShowMarkerLines" value="true" default_value="true"/>
+                <property name="GeometryType" value="None"/>
+                <property name="UserData" value="2" default_value="2"/>
+            </properties>
+            <constraints>
+                <constraint name="Marker 001" id="5018eb43bb96acb4:f5c9dc01d87a11f1" member_id="1" joint_name="Aries_Omnidrone">
+                    <offset>0.166395,-0.206577,-0.185169</offset>
+                    <active_id>0</active_id>
+                    <diameter>0.0185748</diameter>
+                    <weight>1</weight>
+                    <color>#00010101</color>
+                </constraint>
+                <constraint name="Marker 002" id="5018eb43bb96acb4:f5c9dc02d87a11f1" member_id="2" joint_name="Aries_Omnidrone">
+                    <offset>0.148903,-0.164208,0.185941</offset>
+                    <active_id>0</active_id>
+                    <diameter>0.0192711</diameter>
+                    <weight>1</weight>
+                    <color>#00010101</color>
+                </constraint>
+                <constraint name="Marker 003" id="5018eb43bb96acb4:f5c9dc03d87a11f1" member_id="3" joint_name="Aries_Omnidrone">
+                    <offset>0.168616,0.192184,-0.169615</offset>
+                    <active_id>0</active_id>
+                    <diameter>0.0180137</diameter>
+                    <weight>1</weight>
+                    <color>#00010101</color>
+                </constraint>
+                <constraint name="Marker 004" id="5018eb43bb96acb4:f5c9dc04d87a11f1" member_id="4" joint_name="Aries_Omnidrone">
+                    <offset>-0.00110617,0.000111841,0.200628</offset>
+                    <active_id>0</active_id>
+                    <diameter>0.0194983</diameter>
+                    <weight>1</weight>
+                    <color>#00010101</color>
+                </constraint>
+                <constraint name="Marker 005" id="5018eb43bb96acb4:f5c9dc05d87a11f1" member_id="5" joint_name="Aries_Omnidrone">
+                    <offset>-0.201752,-0.14826,-0.16883</offset>
+                    <active_id>0</active_id>
+                    <diameter>0.0181783</diameter>
+                    <weight>1</weight>
+                    <color>#00010101</color>
+                </constraint>
+                <constraint name="Marker 006" id="5018eb43bb96acb4:f5c9dc06d87a11f1" member_id="6" joint_name="Aries_Omnidrone">
+                    <offset>-0.181086,-0.189771,0.153493</offset>
+                    <active_id>0</active_id>
+                    <diameter>0.013057</diameter>
+                    <weight>1</weight>
+                    <color>#00010101</color>
+                </constraint>
+                <constraint name="Marker 007" id="5018eb43bb96acb4:f5c9dc07d87a11f1" member_id="7" joint_name="Aries_Omnidrone">
+                    <offset>-0.187471,0.184019,0.158551</offset>
+                    <active_id>0</active_id>
+                    <diameter>0.0152464</diameter>
+                    <weight>1</weight>
+                    <color>#00010101</color>
+                </constraint>
+            </constraints>
+            <marker_sticks>
+                <!--The "origin" and "end" tags in this section correspond with the "name" values in <constraint>-->
+                <marker_stick origin="Marker 001" end="Marker 002" color="1 1 1"/>
+                <marker_stick origin="Marker 001" end="Marker 003" color="1 1 1"/>
+                <marker_stick origin="Marker 001" end="Marker 004" color="1 1 1"/>
+                <marker_stick origin="Marker 001" end="Marker 005" color="1 1 1"/>
+                <marker_stick origin="Marker 001" end="Marker 006" color="1 1 1"/>
+                <marker_stick origin="Marker 001" end="Marker 007" color="1 1 1"/>
+                <marker_stick origin="Marker 002" end="Marker 003" color="1 1 1"/>
+                <marker_stick origin="Marker 002" end="Marker 004" color="1 1 1"/>
+                <marker_stick origin="Marker 002" end="Marker 005" color="1 1 1"/>
+                <marker_stick origin="Marker 002" end="Marker 006" color="1 1 1"/>
+                <marker_stick origin="Marker 002" end="Marker 007" color="1 1 1"/>
+                <marker_stick origin="Marker 003" end="Marker 004" color="1 1 1"/>
+                <marker_stick origin="Marker 003" end="Marker 005" color="1 1 1"/>
+                <marker_stick origin="Marker 003" end="Marker 006" color="1 1 1"/>
+                <marker_stick origin="Marker 003" end="Marker 007" color="1 1 1"/>
+                <marker_stick origin="Marker 004" end="Marker 005" color="1 1 1"/>
+                <marker_stick origin="Marker 004" end="Marker 006" color="1 1 1"/>
+                <marker_stick origin="Marker 004" end="Marker 007" color="1 1 1"/>
+                <marker_stick origin="Marker 005" end="Marker 006" color="1 1 1"/>
+                <marker_stick origin="Marker 005" end="Marker 007" color="1 1 1"/>
+                <marker_stick origin="Marker 006" end="Marker 007" color="1 1 1"/>
+            </marker_sticks>
+            <constraint_graph version="2.0">
+                <row index="0" id="5018eb43bb96acb4:f5c9dc01d87a11f1"/>
+                <row index="1" id="5018eb43bb96acb4:f5c9dc02d87a11f1">
+                    <item index="0">0.139821 3.05229e+06</item>
+                </row>
+                <row index="2" id="5018eb43bb96acb4:f5c9dc03d87a11f1">
+                    <item index="0">0.159266 3.11987e+06</item>
+                    <item index="1">0.253835 2.04499e+06</item>
+                </row>
+                <row index="3" id="5018eb43bb96acb4:f5c9dc04d87a11f1">
+                    <item index="0">0.219651 2.14184e+06</item>
+                    <item index="1">0.0497382 9.12002e+06</item>
+                    <item index="2">0.20279 2.4949e+06</item>
+                </row>
+                <row index="4" id="5018eb43bb96acb4:f5c9dc05d87a11f1">
+                    <item index="0">0.139189 3.61925e+06</item>
+                    <item index="1">0.249085 2.076e+06</item>
+                    <item index="2">0.253063 1.96263e+06</item>
+                    <item index="3">0.198808 2.55046e+06</item>
+                </row>
+                <row index="5" id="5018eb43bb96acb4:f5c9dc06d87a11f1">
+                    <item index="0">0.235716 2.04741e+06</item>
+                    <item index="1">0.1106 4.24589e+06</item>
+                    <item index="2">0.372574 1.3566e+06</item>
+                    <item index="3">0.0706762 6.58588e+06</item>
+                    <item index="4">0.10606 4.61182e+06</item>
+                </row>
+                <row index="6" id="5018eb43bb96acb4:f5c9dc07d87a11f1">
+                    <item index="0">0.395907 1.2316e+06</item>
+                    <item index="1">0.235162 2.2056e+06</item>
+                    <item index="2">0.234542 2.20216e+06</item>
+                    <item index="3">0.0703102 6.54455e+06</item>
+                    <item index="4">0.217786 2.17627e+06</item>
+                    <item index="5">0.13977 3.59184e+06</item>
+                </row>
+            </constraint_graph>
+        </rigid_body>
+    </node_assets>
+</profile>

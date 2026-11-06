@@ -1,0 +1,10 @@
+# Python 3.11. Tested on the lab PC (2026-11-05) with the versions noted.
+numpy>=2.2          # 2.2.6
+mujoco>=3.3         # 3.17.0  twin model, mixer generator, live twin view
+pymavlink>=2.4.49   # 2.4.49  Cube link (ground station, tools, tests)
+matplotlib>=3.10    # 3.10.5  analyze_flight.py --png
+# twin/control only (Nengo controllers, GIFs)
+nengo>=4.1          # 4.1.0
+pillow>=11          # 11.3.0
+# flight/legacy/xbee_serial only
+pyserial>=3.5       # 3.5

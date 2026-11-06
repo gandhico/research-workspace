@@ -1,0 +1,47 @@
+<mujoco model="omnidrone_configured">
+  <compiler angle="radian" meshdir="assets/"/>
+
+  <visual>
+    <scale framelength="0.117342" framewidth="0.00410697"/>
+  </visual>
+
+  <asset>
+    <mesh name="omnidrone_mesh" content_type="model/stl" file="Omnidrone.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+
+  <worldbody>
+    <geom size="5 5 0.1" type="plane" rgba="0.8 0.9 0.8 1"/>
+    <light pos="0 0 3" type="directional"/>
+    <body name="drone" pos="0 0 1" quat="0.707107 0 0.707107 0">
+      <joint name="root" type="free"/>
+      <geom name="drone_geom" pos="0.1936 -0.2036 0.1786" quat="1 0 0 0" type="mesh" mass="2.5" mesh="omnidrone_mesh"/>
+      <!-- Full rotor frames: +X follows the beam; +Z is the selected beam-face normal. -->
+      <site name="rotor_8" xyaxes="0.577350269 0.577350269 0.577350269 -0.577350269 0.788675135 -0.211324865" size="0.025 0.005" type="cylinder" pos="0.0973 0.0973 0.0973" rgba="1 0 0 0.5"/>
+      <site name="rotor_4" xyaxes="-0.577350269 0.577350269 0.577350269 0.577350269 0.788675135 -0.211324865" size="0.025 0.005" type="cylinder" pos="-0.0973 0.0973 0.0973" rgba="1 0 0 0.5"/>
+      <site name="rotor_6" xyaxes="0.577350269 -0.577350269 0.577350269 0.577350269 -0.211324865 -0.788675135" size="0.025 0.005" type="cylinder" pos="0.0973 -0.0973 0.0973" rgba="1 0 0 0.5"/>
+      <site name="rotor_2" xyaxes="-0.577350269 -0.577350269 0.577350269 -0.577350269 -0.211324865 -0.788675135" size="0.025 0.005" type="cylinder" pos="-0.0973 -0.0973 0.0973" rgba="1 0 0 0.5"/>
+      <site name="rotor_7" xyaxes="0.577350269 0.577350269 -0.577350269 0.577350269 0.211324865 0.788675135" size="0.025 0.005" type="cylinder" pos="0.0973 0.0973 -0.0973" rgba="0 0 1 0.5"/>
+      <site name="rotor_3" xyaxes="-0.577350269 0.577350269 -0.577350269 -0.577350269 0.211324865 0.788675135" size="0.025 0.005" type="cylinder" pos="-0.0973 0.0973 -0.0973" rgba="0 0 1 0.5"/>
+      <site name="rotor_5" xyaxes="0.577350269 -0.577350269 -0.577350269 -0.577350269 -0.788675135 0.211324865" size="0.025 0.005" type="cylinder" pos="0.0973 -0.0973 -0.0973" rgba="0 0 1 0.5"/>
+      <site name="rotor_1" xyaxes="-0.577350269 -0.577350269 -0.577350269 0.577350269 -0.788675135 0.211324865" size="0.025 0.005" type="cylinder" pos="-0.0973 -0.0973 -0.0973" rgba="0 0 1 0.5"/>
+      <site name="imu_site" size="0.01 0.01 0.01" type="box" rgba="0 1 0 1"/>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <general name="thrust_1" site="rotor_1" ctrlrange="-10 10" gear="0 0 1"/>
+    <general name="thrust_2" site="rotor_2" ctrlrange="-10 10" gear="0 0 1"/>
+    <general name="thrust_3" site="rotor_3" ctrlrange="-10 10" gear="0 0 1"/>
+    <general name="thrust_4" site="rotor_4" ctrlrange="-10 10" gear="0 0 1"/>
+    <general name="thrust_5" site="rotor_5" ctrlrange="-10 10" gear="0 0 1"/>
+    <general name="thrust_6" site="rotor_6" ctrlrange="-10 10" gear="0 0 1"/>
+    <general name="thrust_7" site="rotor_7" ctrlrange="-10 10" gear="0 0 1"/>
+    <general name="thrust_8" site="rotor_8" ctrlrange="-10 10" gear="0 0 1"/>
+  </actuator>
+
+  <sensor>
+    <accelerometer site="imu_site" name="accel"/>
+    <gyro site="imu_site" name="gyro"/>
+    <velocimeter site="imu_site" name="vel"/>
+  </sensor>
+</mujoco>

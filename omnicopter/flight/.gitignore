@@ -1,0 +1,7 @@
+__pycache__/
+# Raw OptiTrack-bridge logs (mocap/omni_mocap_bridge.py).
+mocap/logs/
+# Live ground-station logs stay out of git; `python analyze_flight.py --archive` adds a
+# verified .csv.gz copy of each session, and those copies ARE committed.
+data/logs/*.csv
+data/logs/*.part

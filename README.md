@@ -13,6 +13,7 @@ C:\Research\
 ├── qcar\               <- QCar/QCar2 — offline (host) + hardware (on-car), see qcar\RUNNERS.md
 ├── qdrone\             <- QDrone/QDrone2 — offline + telemetry-only hardware, see qdrone\RUNNERS.md
 ├── hover3dof\          <- 3DOF Hover — vendored courseware
+├── omnicopter\         <- Omnidrone: MuJoCo twin + ArduPilot 6DoF real vehicle — start at omnicopter\README.md
 ├── gyro3dof\ qbot\ haptic_hd\ qarm\ qarm_mini\  <- theory paper only, no code yet (see each RUNNERS.md)
 ├── julia_bridge\       <- cross-platform Julia<->Quanser bridge (all robots' Julia code lives here)
 ├── julia_env\          <- shared Julia project (Pkg environment)
